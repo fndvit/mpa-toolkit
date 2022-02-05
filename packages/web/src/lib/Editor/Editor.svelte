@@ -38,11 +38,11 @@
 </svelte:head>
 
 {#if view}
-<EditorMenu {editorState} dispatchTransaction={view.dispatch} on:change={handleChange} />
+  <EditorMenu {editorState} dispatchTransaction={view.dispatch} on:change={handleChange} />
 {/if}
 
 <div class="editor-container">
-  <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view />
+  <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view bind:focus={focusEditor} />
 </div>
 
 <style lang="scss">
@@ -52,13 +52,44 @@
     text-align: left;
     font-family: 'Montserrat', sans-serif;
     --heading-color: #000;
-    :global(h1) {
+    :global(h1), :global(h2) {
       font-weight: 300;
+    }
+    :global(h1) {
       font-size: 3rem;
+    }
+    :global(h2) {
+      font-size: 2rem;
     }
     :global(p) {
       font-weight: 400;
       font-size: 1.125rem;
+    }
+    :global(cards) {
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.1rem;
+    }
+    :global(cards:not(.selected) card:not(:first-child)) {
+      display: none;      
+    }
+    :global(card) {
+      display: block;
+      background: #096EAE;
+      color: white;
+      padding: 0 2rem;
+      padding-bottom: 1rem;
+      font-size: 1rem;
+      border-radius: 20px 20px 0px 0px;
+      :global(h3), :global(p) {
+        color: white;
+      }
+      :global(h3) {
+        margin-bottom: 1rem;
+      }
+      :global(p) {
+        font-size: 1rem;
+      }
     }
   }
 

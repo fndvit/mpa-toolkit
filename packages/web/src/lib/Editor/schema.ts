@@ -118,7 +118,41 @@ export const schema = new Schema({
       toDOM() {
         return ['br'];
       }
-    }
+    },
+
+    cardheading: {
+      content: 'inline*',
+      group: 'block',
+      defining: true,
+      parseDOM:  [{ tag: 'h3' }],
+      toDOM() {
+        return ['h3', 0];
+      }
+    },
+    
+    cardbody: {
+      content: 'text*',
+      group: 'block',
+      parseDOM: [{ tag: 'p' }],
+      toDOM() {
+        return ['p', 0];
+      }
+    },
+
+    card: {
+      content: "cardheading cardbody",
+      toDOM: () => ["card", 0],
+      parseDOM: [{tag: "card"}]
+    },
+
+    cards: {
+      content: "card+",
+      group: 'block',
+      defining: true,
+      toDOM() { return ["cards", 0]; },
+      parseDOM: [{tag: "cards"}]
+    },
+
   },
   marks: {
     // :: MarkSpec A link. Has `href` and `title` attributes. `title`

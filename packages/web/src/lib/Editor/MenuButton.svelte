@@ -23,9 +23,13 @@
     background: transparent;
     text-align: center;
     color: #333;
-    font-size: 1rem;
     border: 0;
     border-radius: 3px;
+    font-size: 0.75rem;
+
+    &.material-icons {
+      font-size: 1rem;
+    }
 
     &.active {
       background: #eee;

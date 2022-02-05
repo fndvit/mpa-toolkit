@@ -1,6 +1,6 @@
 <script lang="ts">
   import ProsemirrorEditor from '$lib/Editor/ProsemirrorEditor.svelte';
-  import { EditorState, Transaction } from 'prosemirror-state';
+  import { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { onMount } from 'svelte';
   import EditorMenu from './EditorMenu.svelte';
@@ -22,15 +22,7 @@
   });
 
   function handleChange(event) {
-    editorState = event.detail.editorState;
-    console.log('STATE CHANGED');
   }
-
-  const dispatchTransaction = (tr: Transaction) => {
-    editorState = editorState.apply(tr);
-  };
-
-  $: console.log('editorState changed', editorState);
 
   onMount(() => focusEditor());
 </script>
@@ -38,14 +30,16 @@
 <svelte:head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,400;1,700&display=swap"
     rel="stylesheet"
   />
 </svelte:head>
 
-<EditorMenu {editorState} {dispatchTransaction} on:change={handleChange} />
+{#if view}
+<EditorMenu {editorState} dispatchTransaction={view.dispatch} on:change={handleChange} />
+{/if}
 
 <div class="editor-container">
   <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view />

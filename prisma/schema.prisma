@@ -23,7 +23,6 @@ model User {
   googleId  String? @unique
   role      Role    @default(USER)
   pages     Page[]
-  // pages     PageAuthors[]
 }
 
 model Page {
@@ -37,14 +36,4 @@ model Page {
   summary   String
   content   Json
   authors   User[]
-  // authors   PageAuthors[]
 }
-
-// model PageAuthors {
-  // page      Page  @relation(fields: [pageId], references: [id])
-  // pageId    Int
-  // authors   User  @relation(fields: [authorId], references: [id])
-  // authorId  Int
-
-  // @@id([pageId, authorId])
-// }

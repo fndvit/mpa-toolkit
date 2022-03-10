@@ -20,6 +20,7 @@
 </script>
 
 <div>
+  <img class="unep-logo" src="/unep.svg" alt="unep-logo" />
   <div class="splash" style="background-image: url({staticUrl(page.img)});">
     <h1>{page.title}</h1>
   </div>
@@ -63,6 +64,10 @@
       max-width: 800px;
       color: white;
     }
+  }
+  .unep-logo {
+    position: absolute;
+    margin: 2rem;
   }
   .meta {
     background: #096EAE;

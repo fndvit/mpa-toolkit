@@ -10,9 +10,18 @@ export interface UserInfo {
   name: string;
 }
 
-export type PageHTMLContent = {
-  type: 'html',
-  value: string;
+export type HTMLBlock<T extends string> = {
+  type: T,
+  html: string;
+  text: string;
 }
 
-export type PageContent = PageHTMLContent;
+export type HeadingBlock = HTMLBlock<'heading'>;
+export type ParagraphBlock = HTMLBlock<'paragraph'>;
+
+export type CardsBlock = {
+  type: 'cards';
+  node: any;
+}
+
+export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock;

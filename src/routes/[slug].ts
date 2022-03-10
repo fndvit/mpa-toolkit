@@ -23,15 +23,19 @@ export const get: RequestHandler = async ({ params }) => {
   const content = [...Array(contentNode.childCount).keys()]
     .map(i => contentNode.child(i))
     .map(node => {
-      const customTypes = [];
-      if (customTypes.indexOf(node.type.name) === -1) {
+      if (['heading', 'paragraph'].includes(node.type.name)) {
         const nodeEl = serializer.serializeNode(node, { document: dom.window.document }) as Element;
         return {
-          type: 'html',
-          value: nodeEl.outerHTML
+          type: node.type.name,
+          html: nodeEl.outerHTML,
+          text: nodeEl.textContent
+        };
+      } else {
+        return {
+          type: node.type.name,
+          node: node.toJSON()
         };
       }
-      throw new Error('Not implemented');
     });
 
   return {

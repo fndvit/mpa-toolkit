@@ -10,11 +10,12 @@
 
 <script lang="ts">
   import { staticUrl } from "$lib/helpers";
-  import type { Page, PageContent, User } from "$lib/types";
-
+  import type { Page, ContentBlock, User, HeadingBlock } from "$lib/types";
 
   export let page: Page & { authors: User[] };
-  export let content: PageContent[];
+  export let content: ContentBlock[];
+
+  const headings = content.filter(b => b.type === 'heading') as HeadingBlock[];
 
 </script>
 
@@ -32,13 +33,22 @@
     <div class="summary">{page.summary}</div>
   </div>
   <div class="content">
-    {#each content as block}
-      {#if block.type === 'html'}
-        {@html block.value}
-      {:else}
-        Not implemented
-      {/if}
-    {/each}
+    <div class="menu-column">
+      <div class="menu">
+        {#each headings as heading}
+          <h3>{heading.text}</h3>
+        {/each}
+      </div>
+    </div>
+    <div class="body-column">
+      {#each content as block}
+        {#if block.type === 'heading' || block.type === 'paragraph'}
+          {@html block.html}
+        {:else}
+          Not implemented
+        {/if}
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -70,6 +80,11 @@
   }
   .content {
     padding: 2rem 6rem;
-
+    display: grid;
+    grid-template-columns: 15rem 40rem;
+    column-gap: 1rem;
+    :global(h1) {
+      font-size: 2.5rem;
+    }
   }
 </style>

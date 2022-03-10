@@ -12,18 +12,12 @@ export const get = authMiddleware(
   }
   else {
     const pageId = parseInt(id);
-    const page = await prisma.page.findUnique({
+    const page = !isNaN(pageId) && await prisma.page.findUnique({
       where: { id: pageId },
       include: { authors: true }
     });
-    if (!page) {
-      return error404('Page not found');
-    };
-    return {
-      body: {
-        users,
-        page
-      }
-    };
+    return page
+      ? { body: { users, page } }
+      : error404('Page not found');
   }
 });

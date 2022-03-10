@@ -37,7 +37,10 @@ export const patch = authMiddleware(
 
     const page = await prisma.page.update({
       where: { id: parseInt(params.id) },
-      data: prismaParams
+      data: {
+        ... prismaParams,
+        editedAt: new Date()
+      }
     });
 
     return {

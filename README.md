@@ -1,5 +1,10 @@
 # MPA toolkit
 
+## Requirements
+
+- Postgres
+- yarn
+
 ## Getting started
 
 1. Fill out `.env` file (see `.env.example` for keys)

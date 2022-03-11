@@ -35,8 +35,8 @@ const getOrCreateUser = async (profile: GoogleProfile) => {
   const firstUser = (await prisma.user.count()) === 0;
 
   log.info(firstUser
-    ? 'User not found, creating...'
-    : 'First user, creating admin...'
+    ? 'First user, creating admin...'
+    : 'User not found, creating...'
   );
 
   return prisma.user.create({

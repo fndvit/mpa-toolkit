@@ -3,7 +3,7 @@ import { GoogleOAuth2Provider } from "sk-auth/providers";
 import { prisma } from '$lib/prisma';
 import { logger } from "./log";
 import type { RequestHandler } from "@sveltejs/kit";
-import type { Role } from "@prisma/client";
+import { Role } from "@prisma/client";
 
 const log = logger.child({module: 'auth'});
 
@@ -32,13 +32,19 @@ const getOrCreateUser = async (profile: GoogleProfile) => {
     return user;
   }
 
-  log.info('User not found, creating...');
+  const firstUser = (await prisma.user.count()) === 0;
+
+  log.info(firstUser
+    ? 'User not found, creating...'
+    : 'First user, creating admin...'
+  );
 
   return prisma.user.create({
     data: {
       googleId: profile.sub,
       name: profile.name,
-      email: profile.email
+      email: profile.email,
+      role: firstUser ? Role.ADMIN : Role.USER
     }
   });
 };

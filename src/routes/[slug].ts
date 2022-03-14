@@ -1,9 +1,9 @@
 import { schema } from "$lib/Editor/schema";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import { DOMSerializer, Node } from "prosemirror-model";
-import { JSDOM } from 'jsdom';
+import { Node } from "prosemirror-model";
 import type { RequestHandler } from "@sveltejs/kit";
+import type { ContentDocument } from "$lib/types";
 
 export const get: RequestHandler = async ({ params }) => {
   const slug = params['slug'];
@@ -15,33 +15,21 @@ export const get: RequestHandler = async ({ params }) => {
     return error404('Page not found');
   }
 
-  // some crude promsemirror node -> HTML conversion
-  const dom = new JSDOM();
   const contentNode = Node.fromJSON(schema, page.content as any);
-  const serializer = DOMSerializer.fromSchema(schema);
+  const headings = [...Array(contentNode.childCount).keys()]
+  .map(i => contentNode.child(i))
+  .filter(node => node.type.name === 'heading')
+  .map(node => ({
+    text: node.textContent,
+  }));
 
-  const content = [...Array(contentNode.childCount).keys()]
-    .map(i => contentNode.child(i))
-    .map(node => {
-      if (['heading', 'paragraph'].includes(node.type.name)) {
-        const nodeEl = serializer.serializeNode(node, { document: dom.window.document }) as Element;
-        return {
-          type: node.type.name,
-          html: nodeEl.outerHTML,
-          text: nodeEl.textContent
-        };
-      } else {
-        return {
-          type: node.type.name,
-          node: node.toJSON()
-        };
-      }
-    });
+  const document = page.content as ContentDocument;
 
   return {
     body: {
       page,
-      content
+      document,
+      headings
     }
   };
 };

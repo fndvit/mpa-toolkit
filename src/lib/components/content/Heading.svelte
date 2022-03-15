@@ -3,8 +3,11 @@
   import Inline from "./Inline.svelte";
 
   export let block: HeadingBlock;
+  console.log(block)
 </script>
+<div id={block.content[0].text.replace(/\s/g, '')}>
+  <h1>
+    {#each block.content as child}<Inline block={child}/>{/each}
+  </h1>
+</div>
 
-<h1>
-  {#each block.content as child}<Inline block={child}/>{/each}
-</h1>

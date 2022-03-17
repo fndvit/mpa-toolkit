@@ -1,16 +1,9 @@
 <script>
-    import { createEventDispatcher } from 'svelte'
-    import Dot from './Dot.svelte'
+    import Dot from './Dot.svelte';
+
     export let progress = false;
-    const dispatch = createEventDispatcher()
-    /**
-     * Amount of pages (amount of dots)
-     */
-    export let pagesCount = 1
-    /**
-     * Index of the current page
-     */
-    export let currentPageIndex = 0
+    export let pagesCount = 1;
+    export let currentPageIndex = 0;
     export let color = 'black';
     export let handleDotClick;
   </script>

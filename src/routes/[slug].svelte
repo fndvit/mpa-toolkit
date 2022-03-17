@@ -25,9 +25,8 @@
   const components = {
     'heading': Heading,
     'paragraph': Paragraph,
-    'card' : TextSlider
+    'cards' : TextSlider
   }
-
 </script>
 
 <div>

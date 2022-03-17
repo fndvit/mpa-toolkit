@@ -1,45 +1,37 @@
 <script lang='ts'>
     import {Splide, SplideSlide} from "@splidejs/svelte-splide";
     import { onMount } from "svelte";
-    import './styles.css';
     import '@splidejs/splide/dist/css/splide.min.css';
     import CarouselDots from './CarouselDots.svelte'
+    import CardHeading from "./TextSlider/CardHeading.svelte";
+    import CardBody from "./TextSlider/CardBody.svelte";
 
     export let block;
     export let backgroundColor : string = '#fbe26b';
     export let buttonColor : string = '#fbe26b';
     export let textColor : string = '#202020';
-    export let slides = [];
     export let currentPageIndex : number = 0;
     export let width : number = 800;
     export let height : number = 300;
+
     let splide : any;
     let controller : any;
     let splideElement : HTMLElement;
-    let box : HTMLElement;
-    let yScroll : number = 0;
-    let overflowActive : boolean = false;
     let options =
     {
         rewind: true,
         width : width,
         height : height,
         gap: -3,
-        classes: {
-            pagination : 'vanish',
-            arrows: 'vanish',
-        },
+        pagination: false,
+        arrows: false
     }
-    function parseScroll(e) {
-        let element = e.target;
-        yScroll= element.scrollTop;
-        if (element.scrollHeight - element.scrollTop === element.clientHeight){
-            overflowActive = false;
-        }
-        else{
-            overflowActive = true;
-        }
+
+    const components = {
+        'cardbody': CardBody,
+        'cardheading': CardHeading,
     }
+
     onMount(() => {
         controller = splide.splide.Components.Controller;
         splideElement = document.getElementById('splide');
@@ -56,24 +48,11 @@
     let handleMove = (event) => {
         currentPageIndex = event.detail.index;
     }
-    function checkOverflow(el)
-    {
-        let curOverflow = el.style.overflow;
-        if ( !curOverflow || curOverflow === "visible" )
-            el.style.overflow = "hidden";
-        let isOverflowing = el.clientWidth < el.scrollWidth
-            || el.clientHeight < el.scrollHeight;
-        el.style.overflow = curOverflow;
-        return isOverflowing;
-    }
+
     $: if(currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
-    $: if(box) overflowActive = checkOverflow(box);
-    $: if(yScroll > 0) document.documentElement.classList.remove('no-scrollbars');
-       else document.documentElement.classList.add('no-scrollbars');
     $: if(width) options.width = width;
     $: if(options) console.log(options);
 
-    console.log(block);
 </script>
 
 <div class="container" style="background-color: {backgroundColor};">
@@ -90,24 +69,23 @@
                 &#10095;
             </div>
         </div>
-        {#each slides as slide, i}
-        <SplideSlide>
+        {#each block.content as slide, i}
+        <SplideSlide
+        bind:options={options}
+        bind:this={splide}
+        on:move={handleMove}>
             <div  class="slide" style="background: {backgroundColor};">
             <div class="info" style="color: {textColor};">
-                <div class="title">{slide.title}</div>
-                {#if currentPageIndex === i}
-                <div bind:this={box}
-                class="content"
-                class:bottomGradientFadeOut='{overflowActive}'
-                on:scroll={parseScroll}>
-                    {slide.content}
-                </div>
+                {#each slide.content as slideblock}
+                {#if components[slideblock.type] && slide.type === 'card'}
+                  <svelte:component this={components[slideblock.type]} block={slideblock} />
                 {:else}
-                <div class="content" on:scroll={parseScroll}>
-                    {slide.content}
-                 </div>
+                  {@debug block}
+                  <div class="unknown-block">
+                    Unknown block type: {slideblock.type}
+                  </div>
                 {/if}
-
+              {/each}
             </div>
             </div>
         </SplideSlide>
@@ -115,8 +93,8 @@
         <div slot="after-track" class="custom-dots">
             <CarouselDots
             currentPageIndex={currentPageIndex}
-            pagesCount={slides.length}
-            progress={false}
+            pagesCount={block.content.length}
+            progress={true}
             color={textColor}
             handleDotClick={handleDotClick}/>
         </div>
@@ -167,46 +145,9 @@
         padding: 15px var(--contentPadding);
         height: 80%;
     }
-    .slide .info .title{
-        font-size: 16px;
-        font-weight: 700;
-        height: 25%;
-    }
-    .slide .info .content{
-        max-width: 100%;
-        font-size: 16px;
-        overflow: auto;
-        height: 75%;
-    }
     .custom-dots{
         position: absolute;
         bottom: 10px;
         left: 0;
-    }
-    .bottomGradientFadeOut::before {
-        content: '';
-        width: calc((100%) - var(--scrollbarWidth) - var(--contentPadding)); /*30px padding + 10px scrollbar width*/
-        height: 75%;
-        position:absolute;
-        left:0;
-        top:100;
-        background: linear-gradient(180deg, rgba(251,226,107,0) 50%, rgba(251,226,107,1) 80%);
-    }
-    /* width */
-    ::-webkit-scrollbar {
-        width: var(--scrollbarWidth);
-        z-index: 100;
-    }
-    /* Track */
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: #888;
-    }
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #555;
     }
 </style>

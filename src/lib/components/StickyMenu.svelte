@@ -3,10 +3,12 @@
     import MenuSpy from '../menuspy';
     import type { MenuSpyParams} from '../menuspy';
     import * as animateScroll from "svelte-scrollto";
-    export let menuOptions = []
-    let elm : Element;
+
+    export let menuOptions = [];
+
+    let nav : HTMLElement;
     let ms : MenuSpy;
-    var msParams : MenuSpyParams = {
+    let msParams : MenuSpyParams = {
         menuItemSelector : '[href^="#"]',
         activeClass: 'active',
         threshold: 150,
@@ -15,15 +17,25 @@
         callback: null
     };
     let width : number;
-    let smallScreen : boolean;
+    let sticky : number;
+    let stickyFlag : boolean = false;
+
+    let checkSticky = () => {
+        if (window.pageYOffset >= sticky) {
+            stickyFlag = true;
+        } else {
+            stickyFlag = false;
+        }
+    }
+
     onMount(() => {
-        elm = document.querySelector('#main-menu');
-        ms = new MenuSpy(elm, msParams);
+        ms = new MenuSpy(nav, msParams);
+        sticky = nav.offsetTop;
     })
 </script>
 
-<svelte:window bind:innerWidth={width}/>
-<nav class="mainnav" id="main-menu">
+<svelte:window bind:innerWidth={width} on:scroll={checkSticky}/>
+<nav class="mainnav" id="main-menu" bind:this={nav} class:sticky={stickyFlag}>
     {#each menuOptions as option, i}
     <div
         class='menuoption {i === 0 ? "active" : ""}'
@@ -52,10 +64,7 @@
 
 <style>
     .mainnav{
-        position: fixed;
-        top: 0;
         width: 215px;
-        left: 66px;
         z-index: 10;
         background: #F9F9F9;
         box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
@@ -73,5 +82,10 @@
     }
     .active{
         font-weight: 700;
+    }
+    .sticky{
+        position: fixed;
+        top: 0;
+        left: 96px; /* Same as body padding */
     }
 </style>

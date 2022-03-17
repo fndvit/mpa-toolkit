@@ -3,7 +3,6 @@
   import Inline from "./Inline.svelte";
 
   export let block: HeadingBlock;
-  console.log(block)
 </script>
 <div id={block.content[0].text.replace(/\s/g, '')}>
   <h1>

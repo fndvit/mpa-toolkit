@@ -9,13 +9,20 @@
 </script>
 
 <script lang="ts">
+  import Heading from "$lib/components/content/Heading.svelte";
+  import Paragraph from "$lib/components/content/Paragraph.svelte";
+
   import { staticUrl } from "$lib/helpers";
-  import type { Page, ContentBlock, User, HeadingBlock } from "$lib/types";
+  import type { Page, User, ContentDocument } from "$lib/types";
 
   export let page: Page & { authors: User[] };
-  export let content: ContentBlock[];
+  export let document: ContentDocument;
+  export let headings: { text: string }[];
 
-  const headings = content.filter(b => b.type === 'heading') as HeadingBlock[];
+  const components = {
+    'heading': Heading,
+    'paragraph': Paragraph,
+  }
 
 </script>
 
@@ -42,11 +49,14 @@
       </div>
     </div>
     <div class="body-column">
-      {#each content as block}
-        {#if block.type === 'heading' || block.type === 'paragraph'}
-          {@html block.html}
+      {#each document.content as block}
+        {#if components[block.type]}
+          <svelte:component this={components[block.type]} {block} />
         {:else}
-          Not implemented
+          {@debug block}
+          <div class="unknown-block">
+            Unknown block type: {block.type}
+          </div>
         {/if}
       {/each}
     </div>
@@ -54,6 +64,7 @@
 </div>
 
 <style lang="scss">
+
   .splash {
     min-height: 60vh;
     display: flex;
@@ -65,24 +76,29 @@
       color: white;
     }
   }
+
   .unep-logo {
     position: absolute;
     margin: 2rem;
   }
+
   .meta {
     background: #096EAE;
     color: white;
     padding: 2rem 6rem;
   }
+
   .authors {
     margin-bottom: 2rem;
   }
+
   .summary {
     font-family: var(--font-serif);
     font-size: 1.8rem;
     line-height: 1.5;
     max-width: 800px;
   }
+
   .content {
     padding: 2rem 6rem;
     display: grid;
@@ -91,5 +107,12 @@
     :global(h1) {
       font-size: 2.5rem;
     }
+  }
+
+  .unknown-block {
+    background: #fca5a5;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem -1rem;
   }
 </style>

@@ -3,8 +3,8 @@
     import { onMount } from "svelte";
     import '@splidejs/splide/dist/css/splide.min.css';
     import CarouselDots from './CarouselDots.svelte'
-    import CardHeading from "./TextSlider/CardHeading.svelte";
-    import CardBody from "./TextSlider/CardBody.svelte";
+    import CardHeading from "./CardHeading.svelte";
+    import CardBody from "./CardBody.svelte";
 
     export let block;
     export let backgroundColor : string = '#fbe26b';

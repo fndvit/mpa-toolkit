@@ -4,7 +4,7 @@
 
   export let block: HeadingBlock;
 </script>
-<div id={block.content[0].text.replace(/\s/g, '')}>
+<div id={block.content[0].text.replace(/\s/g, '').split('.').join("")}>
   <h1>
     {#each block.content as child}<Inline block={child}/>{/each}
   </h1>

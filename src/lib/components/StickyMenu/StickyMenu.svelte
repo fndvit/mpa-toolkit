@@ -1,7 +1,7 @@
 <script lang='ts'>
     import { onMount } from 'svelte';
-    import MenuSpy from '../menuspy';
-    import type { MenuSpyParams} from '../menuspy';
+    import MenuSpy from './menuspy';
+    import type { MenuSpyParams} from './menuspy';
     import * as animateScroll from "svelte-scrollto";
 
     export let menuOptions = [];
@@ -42,7 +42,7 @@
         on:click=
         {
         animateScroll.scrollTo({
-            element: `#${option.text.replace(/\s/g, '')}`,
+            element: `#${option.text.replace(/\s/g, '').split('.').join("")}`,
 
             onStart: () => {
                 console.log(ms);
@@ -52,9 +52,9 @@
             onDone: () => { ms.enableUpdate(); }
         })
         }
-        id="{option.text.replace(/\s/g, '')}div"
+        id="{option.text.replace(/\s/g, '').split('.').join("")}div"
     >
-    <div href='#{option.text.replace(/\s/g, '')}'>
+    <div href='#{option.text.replace(/\s/g, '').split('.').join("")}'>
         {option.text}
     </div>
 </div>

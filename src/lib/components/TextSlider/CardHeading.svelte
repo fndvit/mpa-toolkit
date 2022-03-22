@@ -1,15 +1,15 @@
 <script lang="ts">
-    export let block;
+  export let block;
 </script>
 
 {#if block.content}
-<div class="heading">{block.content[0].text}</div>
+  <div class="heading">{block.content[0].text}</div>
 {/if}
 
 <style>
-    .heading{
-        font-size: 16px;
-        font-weight: 700;
-        height: 25%;
-    }
+  .heading {
+    font-size: 16px;
+    font-weight: 700;
+    height: 25%;
+  }
 </style>

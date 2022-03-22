@@ -5,18 +5,19 @@
     import CarouselDots from './CarouselDots.svelte'
     import CardHeading from "./CardHeading.svelte";
     import CardBody from "./CardBody.svelte";
+    import type { CardsBlock } from "$lib/types";
 
-    export let block;
-    export let backgroundColor : string = '#fbe26b';
-    export let buttonColor : string = '#fbe26b';
-    export let textColor : string = '#202020';
-    export let currentPageIndex : number = 0;
-    export let width : number = 800;
-    export let height : number = 300;
+    export let block : CardsBlock;
+    export let backgroundColor: string = '#fbe26b';
+    export let buttonColor: string = '#fbe26b';
+    export let textColor: string = '#202020';
+    export let currentPageIndex: number = 0;
+    export let width: number = 800;
+    export let height: number = 300;
 
     let splide : any;
     let controller : any;
-    let splideElement : HTMLElement;
+
     let options =
     {
         rewind: true,
@@ -34,33 +35,25 @@
 
     onMount(() => {
         controller = splide.splide.Components.Controller;
-        splideElement = document.getElementById('splide');
     });
-    let handlePrevButton = () => {
+    const handlePrevButton = () => {
         splide.go(controller.getPrev())
     }
-    let handleNextButton = () => {
+    const handleNextButton = () => {
         splide.go(controller.getNext())
     }
-    let handleDotClick = (index) => {
+    const handleDotClick = (index) => {
         splide.go(index)
     }
-    let handleMove = (event) => {
+    const handleMove = (event) => {
         currentPageIndex = event.detail.index;
     }
 
     $: if(currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
-    $: if(width) options.width = width;
-    $: if(options) console.log(options);
-
 </script>
 
 <div class="container" style="background-color: {backgroundColor};">
-    <Splide
-    bind:options={options}
-    bind:this={splide}
-    on:move={handleMove}
-    >
+    <Splide bind:options={options} bind:this={splide} on:move={handleMove}>
         <div class="navigationButtons" slot="before-track">
             <div on:click={handlePrevButton} class="button prev" style="background-color: {buttonColor};">
                 &#10094;
@@ -70,10 +63,7 @@
             </div>
         </div>
         {#each block.content as slide, i}
-        <SplideSlide
-        bind:options={options}
-        bind:this={splide}
-        on:move={handleMove}>
+        <SplideSlide on:move={handleMove}>
             <div  class="slide" style="background: {backgroundColor};">
             <div class="info" style="color: {textColor};">
                 {#each slide.content as slideblock}
@@ -92,11 +82,11 @@
         {/each}
         <div slot="after-track" class="custom-dots">
             <CarouselDots
-            currentPageIndex={currentPageIndex}
-            pagesCount={block.content.length}
-            progress={true}
-            color={textColor}
-            handleDotClick={handleDotClick}/>
+                currentPageIndex={currentPageIndex}
+                pagesCount={block.content.length}
+                progress={true}
+                color={textColor}
+                handleDotClick={handleDotClick}/>
         </div>
     </Splide>
 </div>
@@ -106,7 +96,7 @@
         --contentPadding: 30px;
         --scrollbarWidth: 10px;
     }
-    .container :global(.splide__track){
+    .container :global( .splide__track ){
         border-radius: 15px;
     }
     .container{

@@ -3,6 +3,7 @@
     import MenuSpy from './menuspy';
     import type { MenuSpyParams} from './menuspy';
     import * as animateScroll from "svelte-scrollto";
+    import { parseTextToID } from '$lib/helpers';
 
     export let menuOptions = [];
 
@@ -28,6 +29,18 @@
         }
     }
 
+    let scrollToFunction = (option, index) => {
+        animateScroll.scrollTo({
+            element: `#${option.text.replace(/\s/g, '').split('.').join("")}`,
+
+            onStart: () => {
+                ms.activateItem(ms.scrollItems[index]);
+                ms.dissableUpdate();
+            },
+            onDone: () => { ms.enableUpdate(); }
+        })
+    }
+
     onMount(() => {
         ms = new MenuSpy(nav, msParams);
         sticky = nav.offsetTop;
@@ -39,22 +52,10 @@
     {#each menuOptions as option, i}
     <div
         class='menuoption {i === 0 ? "active" : ""}'
-        on:click=
-        {
-        animateScroll.scrollTo({
-            element: `#${option.text.replace(/\s/g, '').split('.').join("")}`,
-
-            onStart: () => {
-                console.log(ms);
-                ms.activateItem(ms.scrollItems[i]);
-                ms.dissableUpdate();
-            },
-            onDone: () => { ms.enableUpdate(); }
-        })
-        }
-        id="{option.text.replace(/\s/g, '').split('.').join("")}div"
+        on:click={()=>scrollToFunction(option, i)}
+        id="{parseTextToID(option.text)}div"
     >
-    <div href='#{option.text.replace(/\s/g, '').split('.').join("")}'>
+    <div href='#{parseTextToID(option.text)}'>
         {option.text}
     </div>
 </div>

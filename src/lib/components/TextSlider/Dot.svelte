@@ -1,16 +1,18 @@
-<script>
+<script lang="ts">
     import { createEventDispatcher, afterUpdate } from 'svelte'
-      /**
-       * Indicates if dot is active
-       */
-    export let active = false
-    export let progress = false;
-    export let color = '#2D2B2F';
-    let animatonCurrentDot;
-    const dispatch = createEventDispatcher();
+
+    export let active: boolean = false
+    export let progress: boolean = false;
+    export let color: string = '#2D2B2F';
+
+    let animatonCurrentDot: Animation;
+    let progressBar: HTMLElement;
+
+    const dispatch: <EventKey extends string>(type: EventKey, detail?: any) => void = createEventDispatcher();
+
     afterUpdate(() => {
       if(progress && active){
-        animatonCurrentDot = document.querySelector('.progressBar').animate([
+        animatonCurrentDot = progressBar.animate([
                 // keyframes
                 { width: '8px' },
                 { width: '100%' },
@@ -29,15 +31,12 @@
   </script>
 
   {#if active && progress}
-    <div class="progressContainer"  style="background-color: {color}80;">
-      <div class="progressBar" style="background-color: {color}; display: block"  on:click/>
+    <div class="progress-container"  style="background-color: {color}80;">
+      <div class="progress-bar" style="background-color: {color}; display: block"  on:click bind:this={progressBar}/>
     </div>
   {:else}
     <div class="dot" class:active={active} style="background-color: {color};" on:click/>
   {/if}
-
-
-
 
   <style>
     :root{
@@ -56,14 +55,14 @@
       height: var(--dot-size);
       width: var(--dot-size);
     }
-    .progressBar{
+    .progress-bar{
       display: block;
       border-radius: 10px;
       width: 8px;
       height: 10px;
       cursor: pointer;
     }
-    .progressContainer{
+    .progress-container{
         display: inline-block;
         width: 200px;
         height: 10px;

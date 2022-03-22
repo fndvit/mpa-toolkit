@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
     import Dot from './Dot.svelte';
 
-    export let progress = false;
-    export let pagesCount = 1;
-    export let currentPageIndex = 0;
-    export let color = 'black';
+    export let progress: boolean = false;
+    export let pagesCount: number = 1;
+    export let currentPageIndex: number = 0;
+    export let color: string = 'black';
     export let handleDotClick;
   </script>
 

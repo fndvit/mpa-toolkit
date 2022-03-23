@@ -5,7 +5,7 @@
   import * as animateScroll from 'svelte-scrollto';
   import { parseTextToID } from '$lib/helpers';
 
-  export let menuOptions = [];
+  export let menuOptions: { text: string }[] = [];
 
   let nav: HTMLElement;
   let ms: MenuSpy;
@@ -22,16 +22,12 @@
   let stickyFlag: boolean = false;
 
   let checkSticky = () => {
-    if (window.pageYOffset >= sticky) {
-      stickyFlag = true;
-    } else {
-      stickyFlag = false;
-    }
+    stickyFlag = window.pageYOffset >= sticky;
   };
 
-  let scrollToFunction = (option, index) => {
+  let scrollToFunction = (option: { text: string }, index: number) => {
     animateScroll.scrollTo({
-      element: `#${option.text.replace(/\s/g, '').split('.').join('')}`,
+      element: `#${parseTextToID(option.text)}`,
 
       onStart: () => {
         ms.activateItem(ms.scrollItems[index]);
@@ -49,13 +45,12 @@
   });
 </script>
 
-<svelte:window bind:innerWidth={width} on:scroll={checkSticky} />
-<nav class="mainnav" id="main-menu" bind:this={nav} class:sticky={stickyFlag}>
+<svelte:window on:scroll={checkSticky} />
+<nav class="mainnav" bind:this={nav} class:sticky={stickyFlag}>
   {#each menuOptions as option, i}
     <div
       class="menuoption {i === 0 ? 'active' : ''}"
       on:click={() => scrollToFunction(option, i)}
-      id="{parseTextToID(option.text)}div"
     >
       <div href="#{parseTextToID(option.text)}">
         {option.text}

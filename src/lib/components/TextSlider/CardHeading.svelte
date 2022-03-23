@@ -1,5 +1,7 @@
 <script lang="ts">
-  export let block;
+  import type { CardHeadingBlock } from "$lib/types";
+
+  export let block: CardHeadingBlock;
 </script>
 
 {#if block.content}

@@ -9,11 +9,9 @@
   let parseScroll: svelte.JSX.MouseEventHandler<HTMLDivElement> = (e) => {
     let element = e.currentTarget;
 
-    if (element.scrollTop > 0) isScrolling = true;
-    else isScrolling = false;
+    isScrolling = element.scrollTop > 0;
 
-    if (element.scrollHeight - element.scrollTop === element.clientHeight) isScrollingEnd = true;
-    else isScrollingEnd = false;
+    isScrollingEnd = element.scrollHeight - element.scrollTop === element.clientHeight;
   };
 </script>
 

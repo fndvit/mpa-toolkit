@@ -15,8 +15,7 @@
   export let width: number = 800;
   export let height: number = 300;
 
-  let splide: any;
-  let controller: any;
+  let splide: Splide;
 
   let options = {
     rewind: true,
@@ -32,14 +31,11 @@
     cardheading: CardHeading
   };
 
-  onMount(() => {
-    controller = splide.splide.Components.Controller;
-  });
   const handlePrevButton = () => {
-    splide.go(controller.getPrev());
+    splide.go(splide.splide.Components.Controller.getPrev());
   };
   const handleNextButton = () => {
-    splide.go(controller.getNext());
+    splide.go(splide.splide.Components.Controller.getNext());
   };
   const handleDotClick = (index) => {
     splide.go(index);

@@ -8,7 +8,7 @@
   let animatonCurrentDot: Animation;
   let progressBar: HTMLElement;
 
-  const dispatch: <EventKey extends string>(type: EventKey, detail?: any) => void = createEventDispatcher();
+  const dispatch = createEventDispatcher();
 
   afterUpdate(() => {
     if (progress && active) {
@@ -29,7 +29,7 @@
       };
     }
   });
-  $: if (!active && animatonCurrentDot != undefined) animatonCurrentDot.cancel();
+  $: if (!active && animatonCurrentDot !== undefined) animatonCurrentDot.cancel();
 </script>
 
 {#if active && progress}

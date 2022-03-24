@@ -12,15 +12,12 @@
   export let buttonColor: string = '#fbe26b';
   export let textColor: string = '#202020';
   export let currentPageIndex: number = 0;
-  export let width: number = 800;
-  export let height: number = 300;
 
   let splide: Splide;
 
   let options = {
     rewind: true,
-    width: width,
-    height: height,
+    autoHeight: true,
     gap: -3,
     pagination: false,
     arrows: false
@@ -55,30 +52,30 @@
     </div>
     {#each block.content as slide, i}
       <SplideSlide on:move={handleMove}>
-        <div class="slide" style="background: {backgroundColor};">
-          <div class="info" style="color: {textColor};">
-            {#each slide.content as slideblock}
-              {#if components[slideblock.type] && slide.type === 'card'}
-                <svelte:component this={components[slideblock.type]} block={slideblock} />
-              {:else}
-                {@debug block}
-                <div class="unknown-block">
-                  Unknown block type: {slideblock.type}
-                </div>
-              {/if}
-            {/each}
-          </div>
+        <div class="slide" style="background: {backgroundColor}; color: {textColor};">
+          {#each slide.content as slideblock}
+            {#if components[slideblock.type] && slide.type === 'card'}
+              <svelte:component this={components[slideblock.type]} block={slideblock} />
+            {:else}
+              {@debug block}
+              <div class="unknown-block">
+                Unknown block type: {slideblock.type}
+              </div>
+            {/if}
+          {/each}
         </div>
       </SplideSlide>
     {/each}
-    <div slot="after-track" class="custom-dots">
-      <CarouselDots
-        {currentPageIndex}
-        pagesCount={block.content.length}
-        progress={true}
-        color={textColor}
-        {handleDotClick}
-      />
+    <div slot="after-track">
+      {#if block.content.length > 1}
+        <CarouselDots
+          {currentPageIndex}
+          pagesCount={block.content.length}
+          progress={true}
+          color={textColor}
+          {handleDotClick}
+        />
+      {/if}
     </div>
   </Splide>
 </div>
@@ -93,7 +90,6 @@
   }
   .container {
     border-radius: 15px;
-    width: max-content;
   }
   .navigationButtons {
     width: 100px;
@@ -119,18 +115,9 @@
   }
   .slide {
     overflow: hidden;
-    height: 100%;
-  }
-  .info {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
       sans-serif;
     top: 0;
     padding: 15px var(--contentPadding);
-    height: 80%;
-  }
-  .custom-dots {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
   }
 </style>

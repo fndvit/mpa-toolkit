@@ -12,6 +12,5 @@
   .heading {
     font-size: 16px;
     font-weight: 700;
-    height: 25%;
   }
 </style>

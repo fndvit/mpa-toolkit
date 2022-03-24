@@ -30,7 +30,8 @@
     max-width: 100%;
     font-size: 16px;
     overflow: auto;
-    height: 75%;
+    min-height: 50px;
+    max-height: 170px;
     visibility: visible;
   }
   .content:hover {

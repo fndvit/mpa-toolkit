@@ -44,7 +44,6 @@
   </div>
   <div class="content">
     <div class="menu-column">
-
       <div class="menu">
         <StickyMenu
           menuOptions = {headings}
@@ -117,5 +116,9 @@
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1rem -1rem;
+  }
+
+  .menu {
+    position: sticky;
   }
 </style>

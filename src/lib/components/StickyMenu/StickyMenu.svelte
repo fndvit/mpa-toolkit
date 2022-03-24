@@ -17,13 +17,6 @@
     hashTimeout: 0,
     callback: null
   };
-  let width: number;
-  let sticky: number;
-  let stickyFlag: boolean = false;
-
-  let checkSticky = () => {
-    stickyFlag = window.pageYOffset >= sticky;
-  };
 
   let scrollToFunction = (option: { text: string }, index: number) => {
     animateScroll.scrollTo({
@@ -41,12 +34,10 @@
 
   onMount(() => {
     ms = new MenuSpy(nav, msParams);
-    sticky = nav.offsetTop;
   });
 </script>
 
-<svelte:window on:scroll={checkSticky} />
-<nav class="mainnav" bind:this={nav} class:sticky={stickyFlag}>
+<nav class="mainnav" bind:this={nav}>
   {#each menuOptions as option, i}
     <div
       class="menuoption {i === 0 ? 'active' : ''}"
@@ -79,10 +70,5 @@
   }
   .active {
     font-weight: 700;
-  }
-  .sticky {
-    position: fixed;
-    top: 0;
-    left: 96px; /* Same as body padding */
   }
 </style>

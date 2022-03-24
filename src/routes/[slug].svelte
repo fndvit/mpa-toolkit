@@ -120,5 +120,6 @@
 
   .menu {
     position: sticky;
+    top: 10px;
   }
 </style>

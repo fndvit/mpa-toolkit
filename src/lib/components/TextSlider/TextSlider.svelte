@@ -9,7 +9,6 @@
 
   export let block: CardsBlock;
   export let backgroundColor: string = '#fbe26b';
-  export let buttonColor: string = '#fbe26b';
   export let textColor: string = '#202020';
   export let currentPageIndex: number = 0;
 
@@ -47,9 +46,11 @@
 <div class="container" style="background-color: {backgroundColor};">
   <Splide bind:options bind:this={splide} on:move={handleMove}>
     <div class="navigationButtons" slot="before-track">
-      <div on:click={handlePrevButton} class="button prev" style="background-color: {buttonColor};">&#10094;</div>
-      <div on:click={handleNextButton} class="button next" style="background-color: {buttonColor};">&#10095;</div>
-    </div>
+    {#if block.content.length > 1}
+      <div on:click={handlePrevButton} class="button prev">&#10094;</div>
+      <div on:click={handleNextButton} class="button next">&#10095;</div>
+    {/if}
+  </div>
     {#each block.content as slide, i}
       <SplideSlide on:move={handleMove}>
         <div class="slide" style="background: {backgroundColor}; color: {textColor};">
@@ -71,7 +72,7 @@
         <CarouselDots
           {currentPageIndex}
           pagesCount={block.content.length}
-          progress={true}
+          progress={false}
           color={textColor}
           {handleDotClick}
         />
@@ -101,7 +102,6 @@
     margin-right: 20px;
   }
   .navigationButtons .button {
-    border: rgba(0, 0, 0, 0.1) solid 1px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -109,9 +109,12 @@
     margin-right: 10px;
     text-align: center;
     line-height: 40px;
+    font-size: 25px;
+    color: rgba(0, 0, 0, 0.7);
+    background-color: transparent;
   }
   .navigationButtons .button:hover {
-    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+    color:  black
   }
   .slide {
     overflow: hidden;

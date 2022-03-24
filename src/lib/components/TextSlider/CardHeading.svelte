@@ -10,6 +10,7 @@
 
 <style>
   .heading {
+    margin-top: 20px;
     font-size: 16px;
     font-weight: 700;
   }

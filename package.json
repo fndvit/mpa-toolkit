@@ -43,6 +43,7 @@
     "@aws-sdk/client-s3": "^3.53.1",
     "@lukeed/uuid": "^2.0.0",
     "@prisma/client": "^3.10.0",
+    "@splidejs/svelte-splide": "^0.1.18",
     "clsx": "^1.1.1",
     "cookie": "^0.4.1",
     "jwt-decode": "^3.1.2",
@@ -62,6 +63,7 @@
     "sk-auth": "^0.4.1",
     "svelte-modals": "^1.1.0",
     "svelte-multiselect": "^4.0.1",
+    "svelte-scrollto": "^0.2.0",
     "uuid": "^8.3.2"
   }
 }

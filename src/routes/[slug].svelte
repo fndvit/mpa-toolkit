@@ -11,6 +11,8 @@
 <script lang="ts">
   import Heading from "$lib/components/content/Heading.svelte";
   import Paragraph from "$lib/components/content/Paragraph.svelte";
+  import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
+  import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
 
   import { staticUrl } from "$lib/helpers";
   import type { Page, User, ContentDocument } from "$lib/types";
@@ -22,8 +24,8 @@
   const components = {
     'heading': Heading,
     'paragraph': Paragraph,
+    'cards' : TextSlider
   }
-
 </script>
 
 <div>
@@ -43,9 +45,9 @@
   <div class="content">
     <div class="menu-column">
       <div class="menu">
-        {#each headings as heading}
-          <h3>{heading.text}</h3>
-        {/each}
+        <StickyMenu
+          menuOptions = {headings}
+        />
       </div>
     </div>
     <div class="body-column">
@@ -114,5 +116,10 @@
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1rem -1rem;
+  }
+
+  .menu {
+    position: sticky;
+    top: 10px;
   }
 </style>

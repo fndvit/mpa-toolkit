@@ -12,6 +12,7 @@
   // export let pageId: number;
   export let users: UserInfo[];
   export let page: Page & { authors: UserInfo[]};
+  export let cs: boolean;
 
   let newPage = !page;
 
@@ -118,38 +119,75 @@
 
   <div class="fields">
 
-    <label for="title">Title</label>
-    <input type="text" id="title" bind:value={title} disabled={!editable} />
+    {#if cs}
 
-    <label for="slug">Slug</label>
-    <input class="slug" type="text" id="slug" bind:value={slug} disabled={!editable}
-      on:beforeinput={onBeforeInputSlug}
-      on:change={onChangeSlug}
-    />
+      <label for="title">Title</label>
+      <input type="text" id="title" bind:value={title} disabled={!editable} />
 
-    <label for="image">Image</label>
-    <div>
-      <input type="file" id="image" on:change={onImageChange} accept=".jpg, .jpeg" disabled={!editable} >
-    </div>
+      <label for="slug">Slug</label>
+      <input class="slug" type="text" id="slug" bind:value={slug} disabled={!editable}
+        on:beforeinput={onBeforeInputSlug}
+        on:change={onChangeSlug}
+      />
 
-    <div></div>
-    <div>
-      {#if uploadingImage}
-        <Spinner />
-      {:else if imgPath}
-        <img class="splashpreview" src={staticUrl(imgPath)} alt="splash" />
-      {/if}
+      <label for="image">Image</label>
+      <div>
+        <input type="file" id="image" on:change={onImageChange} accept=".jpg, .jpeg" disabled={!editable} >
+      </div>
 
-    </div>
+      <div></div>
+      <div>
+        {#if uploadingImage}
+          <Spinner />
+        {:else if imgPath}
+          <img class="splashpreview" src={staticUrl(imgPath)} alt="splash" />
+        {/if}
 
-    <label for="summary">Summary</label>
-    <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
+      </div>
 
-    <label for="authors">
-      Authors
-    </label>
-    <MultiSelect bind:selected={authors} options={authorOptions} disabled={!editable} />
+      <label for="summary">Summary</label>
+      <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
 
+      <label for="authors">
+        Authors
+      </label>
+      <MultiSelect bind:selected={authors} options={authorOptions} disabled={!editable} />
+
+    {:else}
+
+      <label for="title">Title</label>
+      <input type="text" id="title" bind:value={title} disabled={!editable} />
+
+      <label for="slug">Slug</label>
+      <input class="slug" type="text" id="slug" bind:value={slug} disabled={!editable}
+        on:beforeinput={onBeforeInputSlug}
+        on:change={onChangeSlug}
+      />
+
+      <label for="image">Image</label>
+      <div>
+        <input type="file" id="image" on:change={onImageChange} accept=".jpg, .jpeg" disabled={!editable} >
+      </div>
+
+      <div></div>
+      <div>
+        {#if uploadingImage}
+          <Spinner />
+        {:else if imgPath}
+          <img class="splashpreview" src={staticUrl(imgPath)} alt="splash" />
+        {/if}
+
+      </div>
+
+      <label for="summary">Summary</label>
+      <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
+
+      <label for="authors">
+        Authors
+      </label>
+      <MultiSelect bind:selected={authors} options={authorOptions} disabled={!editable} />
+
+    {/if}
   </div>
 
   <div class="controls">

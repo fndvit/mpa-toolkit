@@ -25,6 +25,20 @@ model User {
   pages     Page[]
 }
 
+model CaseStudyFields {
+  name String @unique
+  yearEstablished Int
+  Size String
+  Governance String
+  Staff String
+  Budget String
+  BudgetLevel String
+  LatitudeCoord Float
+  AltitudeCoord Float
+  pages Page @relation(fields: [pageID], references: [id])
+  pageID Int 
+}
+
 model Page {
   id        Int      @id @default(autoincrement())
   slug      String   @unique
@@ -34,6 +48,7 @@ model Page {
   title     String
   img       String
   summary   String
+  caseStudyFields  CaseStudyFields?
   content   Json
   authors   User[]
 }

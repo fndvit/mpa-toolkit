@@ -20,7 +20,8 @@
     {/each}
   </div>
 
-  <a href="/cms/pages/new">New Page</a>
+  <a href="/cms/pages/newCH">New Chapter Page</a>
+  <a href="/cms/pages/newCS">New Case Study Page</a>
 </div>
 
 <style>

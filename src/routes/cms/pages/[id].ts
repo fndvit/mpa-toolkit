@@ -7,8 +7,11 @@ export const get = authMiddleware(
   async ({ params }) => {
   const { id } = params;
   const users = await prisma.user.findMany();
-  if (id === 'new') {
-    return { body: { users } };
+  if (id === 'newCH') {
+    return { body: { users, cs: false } };
+  }
+  else if (id === 'newCS'){
+    return { body: { users, cs: true } };
   }
   else {
     const pageId = parseInt(id);

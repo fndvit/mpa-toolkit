@@ -41,10 +41,8 @@
 {/if}
 
 <style>
-  :root {
-    --dot-size: 10px;
-  }
   .dot {
+    --dot-size: 10px;
     border-radius: 50%;
     display: inline-block;
     opacity: 0.5;

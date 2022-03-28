@@ -11,6 +11,8 @@
   export let backgroundColor: string = '#fbe26b';
   export let textColor: string = '#202020';
   export let currentPageIndex: number = 0;
+  export let contentPadding = `30px`;
+
 
   let splide: Splide;
 
@@ -72,7 +74,7 @@
         <CarouselDots
           {currentPageIndex}
           pagesCount={block.content.length}
-          progress={false}
+          progress={true}
           color={textColor}
           {handleDotClick}
         />
@@ -81,20 +83,18 @@
   </Splide>
 </div>
 
-<style type="text/postcss">
-  :root {
-    --contentPadding: 30px;
-    --scrollbarWidth: 10px;
-  }
+<style type="scss">
   .container :global(.splide__track) {
     border-radius: 15px;
   }
   .container {
+    --contentPadding: 30px;
+    --scrollbarWidth: 10px;
     border-radius: 15px;
   }
   .navigationButtons {
     width: 100px;
-    display: inline-flex;
+    display: flex;
     position: absolute;
     z-index: 2;
     right: 0;
@@ -104,7 +104,6 @@
   .navigationButtons .button {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
     cursor: pointer;
     margin-right: 10px;
     text-align: center;

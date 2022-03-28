@@ -26,7 +26,6 @@
   .sc-carousel-dots__container {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
     padding: 10px 30px;
   }
   .sc-carousel-dots__dot-container {

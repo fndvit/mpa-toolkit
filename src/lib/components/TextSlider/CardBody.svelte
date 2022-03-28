@@ -30,7 +30,6 @@
 <style>
   .content {
     margin-top: 25px;
-    max-width: 100%;
     font-size: 18px;
     overflow: auto;
     min-height: 50px;

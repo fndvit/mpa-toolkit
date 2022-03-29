@@ -28,15 +28,15 @@ model User {
 model CaseStudyFields {
   name String @unique
   yearEstablished Int
-  Size String
-  Governance String
-  Staff String
-  Budget String
-  BudgetLevel String
-  LatitudeCoord Float
-  AltitudeCoord Float
-  pages Page @relation(fields: [pageID], references: [id])
-  pageID Int 
+  size String
+  governance String
+  staff String
+  budget String
+  budgetLevel String
+  coordLatitude Float
+  coordAltitude Float
+  pages Page @relation(fields: [pageId], references: [id])
+  pageId Int @id
 }
 
 model Page {

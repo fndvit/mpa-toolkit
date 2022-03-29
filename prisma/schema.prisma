@@ -48,7 +48,9 @@ model Page {
   title     String
   img       String
   summary   String
+  isCaseStudy Boolean
   caseStudyFields  CaseStudyFields?
+  milestones Json
   content   Json
   authors   User[]
 }

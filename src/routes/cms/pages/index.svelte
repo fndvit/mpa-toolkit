@@ -21,6 +21,7 @@
   </div>
 
   <a href="/cms/pages/newCH">New Chapter Page</a>
+  <br>
   <a href="/cms/pages/newCS">New Case Study Page</a>
 </div>
 

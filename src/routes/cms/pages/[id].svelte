@@ -196,12 +196,11 @@
           </div>
           <div class="grid-item-first">
               <div class="property-name">Size</div>
-              <div contenteditable="true" class="property-value-first">404.68
-                <select name="select">
-                  <option value="value1">km2</option>
-                  <option value="value2">m2</option>
-                </select>
-              </div>
+              <div contenteditable="true" class="property-value-first">404.68</div>
+              <select name="select">
+                <option value="value1">km2</option>
+                <option value="value2">m2</option>
+              </select>
           </div>
           <div class="globe">
             <GlobeViz width={245} highlight={{"lat": 40.7128, "lon": -74.0059}}/>

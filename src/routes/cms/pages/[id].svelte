@@ -123,11 +123,10 @@
     openModal(DeleteModal, { onYes: deletePage })
   }
 
-  $: saveable = !saving && !deleting && title && summary && imgPath && authors.length > 0;
-
-  //$: saveable = cs ? !saving && !deleting && title && : !saving && !deleting && title && summary && imgPath && authors.length > 0;
-
-
+  $: saveable = cs ?
+    !saving && !deleting && title && imgPath && name && yearEstablished
+    && size && governance && staff && budget && budgetLevel && coordLatitude && coordAltitude
+    : !saving && !deleting && title && summary && imgPath && authors.length > 0;
 
   $: editable = !saving && !deleting;
 

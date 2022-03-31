@@ -8,7 +8,6 @@
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
-  import GlobeViz from "/src/lib/components/GlobeViz.svelte";
 
   // export let pageId: number;
   export let users: UserInfo[];
@@ -32,8 +31,6 @@
   let deleting = false;
   let autoPopulateSlug = !slug;
 
-
-  //Case Study fields declaration
   let name: string;
   let yearEstablished: number;
   let size: string;
@@ -41,6 +38,8 @@
   let staff: string;
   let budget: string;
   let budgetLevel: string;
+  let coordLatitude: number;
+  let coordAltitude: number;
 
 
   $: console.log(name);
@@ -56,14 +55,37 @@
   }));
 
   function getFormData() {
-    const authorIds = authors.map(a => a.value as number);
     const formData = new FormData();
     formData.append('title', title);
     formData.append('slug', slug);
-    formData.append('summary', summary);
     formData.append('image', imgPath);
-    formData.append('authors', authorIds.join(','));
     formData.append('content', JSON.stringify(editor.getDocumentJson()));
+
+    if (cs) {
+      formData.append('summary', null);
+      formData.append('authors', null);
+      formData.append('milestones', JSON.stringify("MILESTONES JSON"));
+      const csfields = {
+        name: name,
+        yearEstablished: yearEstablished,
+        size: size,
+        governance: governance,
+        staff: staff,
+        budget: budget,
+        budgetLevel: budgetLevel,
+        coordLatitude: coordLatitude,
+        coordAltitude: coordAltitude
+      }
+      formData.append('caseStudyFields', null);
+    }
+    else {
+      const authorIds = authors.map(a => a.value as number);
+      formData.append('summary', summary);
+      formData.append('authors', authorIds.join(','));
+      formData.append('milestones', null);
+      formData.append('caseStudyFields', null);
+    }
+
     return formData;
   }
 
@@ -102,6 +124,11 @@
   }
 
   $: saveable = !saving && !deleting && title && summary && imgPath && authors.length > 0;
+
+  //$: saveable = cs ? !saving && !deleting && title && : !saving && !deleting && title && summary && imgPath && authors.length > 0;
+
+
+
   $: editable = !saving && !deleting;
 
   const onImageChange: svelte.JSX.EventHandler<FormDataEvent, HTMLInputElement> = async (e) => {
@@ -176,55 +203,33 @@
         {/if}
       </div>
 
+      <label for="name">Name</label>
+      <input type="text" id="name" bind:value={name} disabled={!editable} />
+
+      <label for="yearEstablished">Year established</label>
+      <input type="number" id="yearEstablished" bind:value={yearEstablished} disabled={!editable} maxlength="4"/>
+
+      <label for="size">Size</label>
+      <input type="number" id="size" bind:value={size} disabled={!editable}/>
+
+      <label for="governance">Governance</label>
+      <textarea type="text" id="governance" bind:value={governance} rows="4" maxlength={MAX_LENGTH} disabled={!editable}/>
+
+      <label for="staff">Staff</label>
+      <textarea type="text" id="staff" bind:value={staff} rows="4" maxlength={MAX_LENGTH} disabled={!editable}/>
+
+      <label for="budget">Budget</label>
+      <textarea type="text" id="budget" bind:value={budget} rows="4" maxlength={MAX_LENGTH} disabled={!editable}/>
+
+      <label for="budgetLevel">Budget level</label>
+      <textarea type="text" id="budgetLevel" bind:value={budgetLevel} rows="4" maxlength={MAX_LENGTH} disabled={!editable}/>
+
       <label for="latitude">Latitude coordinate</label>
-      <input type="number" id="latitude" disabled={!editable} placeholder="e.g. 40.7128"/>
+      <input type="number" id="latitude" bind:value={coordLatitude} disabled={!editable} placeholder="e.g. 40.7128"/>
 
       <label for="altitude">Altitude coordinate</label>
-      <input type="number" id="altitude" disabled={!editable} placeholder="e.g. -74.0059"/>
+      <input type="number" id="altitude" bind:value={coordAltitude} disabled={!editable} placeholder="e.g. -74.0059"/>
 
-    </div>
-
-    <div class="information-container">
-      <div class="grid-container-first">
-          <div class="grid-item-first">
-              <div class="property-name">Name</div>
-              <div contenteditable="true" bind:textContent={name} class="property-value-first">Lorem ipsum dolor sit amet</div>
-          </div>
-          <div class="grid-item-first">
-              <div class="property-name">Established in</div>
-              <div contenteditable="true" class="property-value-first">1900</div>
-          </div>
-          <div class="grid-item-first">
-              <div class="property-name">Size</div>
-              <div contenteditable="true" class="property-value-first">404.68</div>
-              <select name="select">
-                <option value="value1">km2</option>
-                <option value="value2">m2</option>
-              </select>
-          </div>
-          <div class="globe">
-            <GlobeViz width={245} highlight={{"lat": 40.7128, "lon": -74.0059}}/>
-          </div>
-      </div>
-
-      <div class="grid-container-second">
-          <div class="grid-item-second">
-              <div class="property-name">Governance</div>
-              <div contenteditable="true" class="property-value-second">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mattis nulla blandit, sagittis felis non, porttitor metus.</div>
-          </div>
-          <div class="grid-item-second">
-              <div class="property-name">Staff</div>
-              <div contenteditable="true" class="property-value-second">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mattis nulla blandit, sagittis felis non, porttitor metus.</div>
-          </div>
-          <div class="grid-item-second">
-              <div class="property-name">Budget</div>
-              <div contenteditable="true" class="property-value-second">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mattis nulla blandit, sagittis felis non, porttitor metus.</div>
-          </div>
-          <div class="grid-item-second">
-              <div class="property-name">Budget level</div>
-              <div contenteditable="true" class="property-value-second">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mattis nulla blandit, sagittis felis non, porttitor metus.</div>
-          </div>
-      </div>
     </div>
 
   {:else}
@@ -350,75 +355,6 @@
       flex: 1;
     }
   }
-
-  /*--------------------CASE STUDY FIELDS STYLE SHEET-------------------------*/
-
-  .information-container {
-    margin-top: 100px;
-    position: relative;
-    padding-top: 35px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-  }
-
-    .grid-container-first {
-      display: grid;
-      grid-template-columns: 325px 225px 425px 325px; /* This has to sum a total of 1.300px*/
-      padding-left: 100px;
-      padding-right: 100px;
-    }
-
-    .grid-item-first {
-      text-align: left;
-      padding: 20px;
-    }
-
-    .grid-container-second {
-      display: grid;
-      grid-template-columns: 325px 325px 325px 325px;
-      padding-left: 100px;
-      padding-right: 100px;
-    }
-
-    .grid-item-second {
-      text-align: left;
-      padding: 20px;
-    }
-
-    .property-value-first {
-      font-family: 'Bitter';
-      font-size: 28px;
-      line-height: 42px;
-      color: black;
-    }
-
-    .property-value-second {
-      font-family: 'Bitter';
-      font-size: 18px;
-      line-height: 32px;
-      color: black;
-    }
-
-    .property-name {
-      font-family: 'Montserrat';
-      font-weight: bold;
-      color: black;
-      font-size: 16px;
-      line-height: 24px;
-    }
-
-    .globe {
-      transform: translate(975px, -122.5px);
-      position: absolute;
-    }
-
-
-
 
 
 </style>

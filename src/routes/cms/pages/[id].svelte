@@ -8,6 +8,7 @@
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
+  import LifeCycle from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
 
   // export let pageId: number;
   export let users: UserInfo[];
@@ -166,6 +167,10 @@
 <div class="editor-container">
   <Editor bind:this={editor} initialDoc={content} />
 </div>
+<LifeCycle>
+
+</LifeCycle>
+
 
 <style lang="scss">
   .meta {

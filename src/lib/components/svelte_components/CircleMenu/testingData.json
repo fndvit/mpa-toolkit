@@ -1,0 +1,44 @@
+[
+    {
+        "percentatge": 20,
+        "group": 1,
+        "type": "main",
+        "color": "#fbe26b"
+    },
+    {
+        "percentatge": 20,
+        "group": 2,
+        "type": "main",
+        "color": "#fbe26b"
+    },
+    {
+        "percentatge": 10,
+        "group": 3,
+        "type": "main",
+        "color": "#fbe26b"
+    },
+    {
+        "percentatge": 5,
+        "group": 4,
+        "type": "main",
+        "color": "#fbe26b"
+    },
+    {
+        "percentatge": 5,
+        "group": 4,
+        "type": "main",
+        "color": "#fbe26b"
+    },
+    {
+        "percentatge": 10,
+        "group": 4,
+        "type": "secondary",
+        "color": "#fbe26b80"
+    },
+    {
+        "percentatge": 30,
+        "group": 5,
+        "type": "main",
+        "color": "#fbe26b"
+    }
+]

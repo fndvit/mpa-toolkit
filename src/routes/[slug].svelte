@@ -11,8 +11,8 @@
 <script lang="ts">
   import Heading from "$lib/components/content/Heading.svelte";
   import Paragraph from "$lib/components/content/Paragraph.svelte";
-  import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
-  import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
+  import StickyMenu from "$lib/components/svelte_components/StickyMenu/StickyMenu.svelte";
+  import TextSlider from "$lib/components/svelte_components/TextSlider/TextSlider.svelte";
 
   import { staticUrl } from "$lib/helpers";
   import type { Page, User, ContentDocument } from "$lib/types";

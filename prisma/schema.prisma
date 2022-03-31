@@ -35,6 +35,7 @@ model CaseStudyFields {
   budgetLevel String
   coordLatitude Float
   coordAltitude Float
+  milestones Json
   pages Page @relation(fields: [pageId], references: [id])
   pageId Int @id
 }
@@ -49,7 +50,6 @@ model Page {
   img       String
   summary   String
   caseStudyFields  CaseStudyFields?
-  milestones Json
   content   Json
   authors   User[]
 }

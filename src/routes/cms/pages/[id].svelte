@@ -62,9 +62,6 @@
     formData.append('content', JSON.stringify(editor.getDocumentJson()));
 
     if (cs) {
-      formData.append('summary', null);
-      formData.append('authors', null);
-      formData.append('milestones', JSON.stringify("MILESTONES JSON"));
       const csfields = {
         name: name,
         yearEstablished: yearEstablished,
@@ -74,18 +71,19 @@
         budget: budget,
         budgetLevel: budgetLevel,
         coordLatitude: coordLatitude,
-        coordAltitude: coordAltitude
+        coordAltitude: coordAltitude,
+        milestones: JSON.stringify("MILESTONES JSON")
       }
-      formData.append('caseStudyFields', null);
+      formData.append('summary', null);
+      formData.append('authors', null);
+      formData.append('caseStudyFields', JSON.stringify(csfields));
     }
     else {
       const authorIds = authors.map(a => a.value as number);
       formData.append('summary', summary);
       formData.append('authors', authorIds.join(','));
-      formData.append('milestones', null);
       formData.append('caseStudyFields', null);
     }
-
     return formData;
   }
 

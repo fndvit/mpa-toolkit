@@ -11,3 +11,4 @@ node_modules
 .output
 cdk.out
 yarn-error.log
+package-lock.json

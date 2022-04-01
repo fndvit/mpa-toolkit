@@ -41,9 +41,6 @@
   let coordLatitude: number;
   let coordAltitude: number;
 
-
-  $: console.log(name);
-
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
   }
@@ -74,15 +71,15 @@
         coordAltitude: coordAltitude,
         milestones: JSON.stringify("MILESTONES JSON")
       }
-      formData.append('summary', null);
-      formData.append('authors', null);
+      formData.append('summary', undefined);
+      formData.append('authors', undefined);
       formData.append('caseStudyFields', JSON.stringify(csfields));
     }
     else {
       const authorIds = authors.map(a => a.value as number);
       formData.append('summary', summary);
       formData.append('authors', authorIds.join(','));
-      formData.append('caseStudyFields', null);
+      formData.append('caseStudyFields', undefined);
     }
     return formData;
   }
@@ -121,8 +118,8 @@
     openModal(DeleteModal, { onYes: deletePage })
   }
 
-  $: saveable = cs ?
-    !saving && !deleting && title && imgPath && name && yearEstablished
+  $: saveable = cs
+    ? !saving && !deleting && title && imgPath && name && yearEstablished
     && size && governance && staff && budget && budgetLevel && coordLatitude && coordAltitude
     : !saving && !deleting && title && summary && imgPath && authors.length > 0;
 

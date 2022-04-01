@@ -24,8 +24,6 @@
     'paragraph': Paragraph,
   }
 
-  //const caseStudy = page.caseStudyFields
-
 </script>
 
 <div>

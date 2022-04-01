@@ -120,10 +120,10 @@
 
 
   :global(sup) {
-        font-size: 0.6em;
-        vertical-align: top;
-        position: relative;
-        top: -0.5em;
+      font-size: 0.6em;
+      vertical-align: top;
+      position: relative;
+      top: -0.5em;
     }
 
   .information-container {

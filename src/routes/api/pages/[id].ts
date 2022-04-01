@@ -20,20 +20,27 @@ export const requestToPrismaParams = async (request: Request) => {
   const content = JSON.parse(contentStr);
 
 
-  if (isCaseStudy){
-    const summary = undefined;
-    const authors = undefined;
+  //if (isCaseStudy){
+    const summary = '';
+    const authors = {};
     const caseStudyFieldsStr = formData.get("caseStudyFields") as string;
     const caseStudyFields = JSON.parse(caseStudyFieldsStr);
-    return {
-      title, slug, content, caseStudyFields, summary, authors,
-      img: image
-    };
-  }
 
-  else {
+    return {
+      title, slug, content, authors, summary,
+      img: image,
+      caseStudyFields: {
+        connect: {
+          pageId: 45
+        }
+      }
+    };
+  //}
+
+  /*else {
     const summary = formData.get("summary") as string;
-    const authors = formData.get("authors") as string;
+    //const authors = formData.get("authors") as string;
+    const authors = {};
     const caseStudyFields = undefined;
 
     return {
@@ -45,7 +52,7 @@ export const requestToPrismaParams = async (request: Request) => {
         //}))
       //},
     };
-  }
+  }*/
 };
 
 export const patch = authMiddleware(

@@ -59,7 +59,7 @@
     formData.append('content', JSON.stringify(editor.getDocumentJson()));
 
     if (cs) {
-      const csfields = {
+      const csfields = [{
         name: name,
         yearEstablished: yearEstablished,
         size: size,
@@ -69,8 +69,8 @@
         budgetLevel: budgetLevel,
         coordLatitude: coordLatitude,
         coordAltitude: coordAltitude,
-        milestones: JSON.stringify("MILESTONES JSON")
-      }
+        milestones: "milestones"
+      }];
       formData.append('summary', undefined);
       formData.append('authors', undefined);
       formData.append('caseStudyFields', JSON.stringify(csfields));

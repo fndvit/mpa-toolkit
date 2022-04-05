@@ -24,15 +24,14 @@ export const requestToPrismaParams = async (request: Request) => {
     const summary = '';
     const authors = {};
     const caseStudyFieldsStr = formData.get("caseStudyFields") as string;
-    const caseStudyFields = JSON.parse(caseStudyFieldsStr);
+    const csf = JSON.parse(caseStudyFieldsStr);
+    csf.pageId = 45;
 
     return {
       title, slug, content, authors, summary,
       img: image,
       caseStudyFields: {
-        connect: {
-          pageId: 45
-        }
+        create: {name: "1", size: "2", governance: "-", yearEstablished: 1, staff: "-", budget: "-", budgetLevel: "-", milestones: "-", coordAltitude: 12, coordLatitude: 12}
       }
     };
   //}

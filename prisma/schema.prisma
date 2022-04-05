@@ -36,4 +36,21 @@ model Page {
   summary   String
   content   Json
   authors   User[]
+  tags      Tag[]
 }
+
+model Tag{
+  id        Int       @id @default(autoincrement())
+  value     String
+  type      TagType?  @relation(fields: [typeId], references: [id])
+  typeId    Int?
+  alt       String
+  pages     Page[]
+}
+
+model TagType {
+  id        Int       @id @default(autoincrement())
+  type      String
+  tags      Tag[]
+}
+

@@ -9,7 +9,7 @@ export const get: RequestHandler = async ({ params }) => {
   const slug = params['slug'];
   const page = await prisma.page.findUnique({
     where: { slug },
-    include: { authors: true }
+    include: { authors: true, tags: true }
   });
   if (!page) {
     return error404('Page not found');

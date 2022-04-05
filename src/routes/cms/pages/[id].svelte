@@ -3,26 +3,27 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { Page, UserInfo } from '$lib/types';
+  import type { Page, TagInfo, UserInfo } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
-  import LifeCycle from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
+  import LifeCycle, { LifeCycleTags, TagEnum } from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
+
 
   // export let pageId: number;
   export let users: UserInfo[];
-  export let page: Page & { authors: UserInfo[]};
+  export let page: Page & { authors: UserInfo[], tags: TagInfo[] };
+  export let tags: TagInfo[];
 
   let newPage = !page;
-
   let title: string = page && page.title;
   let slug: string = page && page.slug;
   let summary: string = page && page.summary;
   let authors: Option[] = page && page.authors.map(author => ({label: author.name, value: author.id}));
+  let pageTags: Option[] = page && page.tags.map(tag => ({label: tag.value, value: tag.id, typeId: tag.typeId}));
   let imgPath: string = page && page.img;
   let content: {[key: string]: any} = page && page.content as Prisma.JsonObject;
-
   let editor: Editor;
   let uploadingImage = false;
   let saving = false;
@@ -39,14 +40,40 @@
     preselected: authors && authors.some(a => a.value === u.id),
   }));
 
+  const testOptions:Option[] = tags.map(t => ({
+    value: t.id,
+    label: t.value,
+    [t.id]: t.typeId,
+    preselected: (pageTags && pageTags.find(pt => t.id === pt.value))? true: false,
+  }));
+
+  let  tagOptions: LifeCycleTags = <LifeCycleTags>{};
+  tagOptions.wherein = tags.filter(t => t.typeId === TagEnum.Wherein).map(t => ({
+    value: t.id,
+    label: t.value,
+    preselected: (pageTags && pageTags.find(pt => t.id === pt.value))? true: false,
+  }));
+  tagOptions.whatsabout = tags.filter(t => t.typeId === TagEnum.Whatsabout).map(t => ({
+    value: t.id,
+    label: t.value,
+    preselected: (pageTags && pageTags.find(pt => t.id === pt.value))? true: false,
+  }));
+  tagOptions.goodfor = tags.filter(t => t.typeId === TagEnum.Goodfor).map(t => ({
+    value: t.id,
+    label: t.value,
+    preselected: (pageTags && pageTags.find(pt => t.id === pt.value))? true: false,
+  }));
+
   function getFormData() {
     const authorIds = authors.map(a => a.value as number);
+    const tagsIds = pageTags.map(a => a.value  as number);
     const formData = new FormData();
     formData.append('title', title);
     formData.append('slug', slug);
     formData.append('summary', summary);
     formData.append('image', imgPath);
     formData.append('authors', authorIds.join(','));
+    formData.append('tags', tagsIds.join(','));
     formData.append('content', JSON.stringify(editor.getDocumentJson()));
     return formData;
   }
@@ -111,9 +138,8 @@
     const validChars = /[a-zA-Z0-9-]/;
     if (!validChars.exec(e.data)) e.preventDefault();
   }
-
 </script>
-
+<LifeCycle editable={true} tagsOptions={testOptions} bind:tags={pageTags}/>
 <div class="meta">
   <h1>{#if newPage}New Page{:else}Edit Page{/if}</h1>
 
@@ -167,9 +193,10 @@
 <div class="editor-container">
   <Editor bind:this={editor} initialDoc={content} />
 </div>
-<LifeCycle>
 
-</LifeCycle>
+
+
+
 
 
 <style lang="scss">

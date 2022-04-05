@@ -91,7 +91,6 @@
   let currentColor: string = segmentConfig.color.background.unselected;
 
   $: {
-    console.log(selectedStyle)
     currentState =  states[selectedStyle];
     if(selectedStyle === 'unselected')currentColor = segmentConfig.color.background.unselected;
     else currentColor = segmentConfig.color.background.selected;

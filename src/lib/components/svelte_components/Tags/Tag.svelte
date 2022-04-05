@@ -1,16 +1,24 @@
-<script context="module" lang="ts">
-  export interface TagParameters {
-    tag : string;
-    alt : string;
-};
-</script>
 <script lang="ts">
-  export let data: TagParameters;
+  import ConfigPopup from "../ConfigPopup/ConfigPopup.svelte";
+  import type {TagInfo} from '../../../types';
+  export let data: TagInfo;
+  export let editable: boolean = false;
+  export let showModal: boolean = false;
+  export let id: number = -1;
 
   export let onClickFn = () => {
-    console.log('clicked');
+    showModal=true;
+    event.stopPropagation();
   };
+
+  const handleSelectChange = (event) => {
+    data.value = event.detail.value;
+  }
+
+  let element: HTMLElement;
   let style: string;
+
+
   let calcStyle = () => {
     if (data.alt === 'grey') {
       style = 'tag-area alternative';
@@ -20,10 +28,19 @@
       style = 'tag-area';
     }
   };
+
   $: if (data.alt) calcStyle();
+
 </script>
 
-<div class={style} on:click={onClickFn} tabindex="0">{data.tag}</div>
+
+<div class={style} on:click={onClickFn} tabindex="0" bind:this={element}>{data.value}</div>
+
+{#if editable && showModal}
+  <ConfigPopup x={element.offsetLeft + element.offsetWidth / 2} y={element.offsetTop} hasFeedback={true} bind:showModal on:removeTag id={id} on:selectChange={handleSelectChange}>
+
+  </ConfigPopup>
+{/if}
 
 <style>
   .alternative {

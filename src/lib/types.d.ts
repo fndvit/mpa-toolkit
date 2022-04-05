@@ -10,6 +10,13 @@ export interface UserInfo {
   name: string;
 }
 
+export interface TagInfo {
+  id: string;
+  value: string;
+  typeId: number;
+  alt: string;
+}
+
 // **********************
 //  TOP LEVEL COMPONENTS
 // **********************

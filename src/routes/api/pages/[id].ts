@@ -4,7 +4,7 @@ import { prisma } from "$lib/prisma";
 export const requestToPrismaParams = async (request: Request) => {
   const formData = await request.formData();
 
-  const REQUIRED = ['title', 'slug', 'summary', 'authors', 'image', 'content'];
+  const REQUIRED = ['title', 'slug', 'summary', 'authors', 'image', 'content', 'tags'];
   const missingFields = REQUIRED.filter(key => !formData.has(key));
   if (missingFields.length > 0) {
     throw new Error(`Missing required fields: ${missingFields.join(',')}`);
@@ -14,6 +14,7 @@ export const requestToPrismaParams = async (request: Request) => {
   const slug = formData.get("slug") as string;
   const summary = formData.get("summary") as string;
   const authors = formData.get("authors") as string;
+  const tags = formData.get("tags") as string;
   const image = formData.get("image") as string;
   const contentStr = formData.get("content") as string;
   const content = JSON.parse(contentStr);
@@ -26,6 +27,11 @@ export const requestToPrismaParams = async (request: Request) => {
         id: parseInt(id)
       }))
     },
+    tags:{
+      connect: tags.split(",").map(id => ({
+        id: parseInt(id)
+      }))
+    }
   };
 };
 

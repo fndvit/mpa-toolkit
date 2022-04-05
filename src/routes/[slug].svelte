@@ -15,9 +15,10 @@
   import TextSlider from "$lib/components/svelte_components/TextSlider/TextSlider.svelte";
 
   import { staticUrl } from "$lib/helpers";
-  import type { Page, User, ContentDocument } from "$lib/types";
+  import type { Page, User, Tag, ContentDocument } from "$lib/types";
 
-  export let page: Page & { authors: User[] };
+
+  export let page: Page & { authors: User[], tags: Tag[]};
   export let document: ContentDocument;
   export let headings: { text: string }[];
 

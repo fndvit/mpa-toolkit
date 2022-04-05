@@ -7,17 +7,19 @@ export const get = authMiddleware(
   async ({ params }) => {
   const { id } = params;
   const users = await prisma.user.findMany();
+  const tags = await prisma.tag.findMany();
   if (id === 'new') {
-    return { body: { users } };
+    return { body: { users, tags } };
   }
   else {
     const pageId = parseInt(id);
     const page = !isNaN(pageId) && await prisma.page.findUnique({
       where: { id: pageId },
-      include: { authors: true }
+      include: { authors: true, tags: true }
     });
+
     return page
-      ? { body: { users, page } }
+      ? { body: { users, page, tags } }
       : error404('Page not found');
   }
 });

@@ -36,16 +36,15 @@ model Page {
   summary   String
   content   Json
   authors   User[]
-  tags      Tag[]
+  tags      TagsOnPages[]
 }
 
-model Tag{
+model Tag {
   id        Int       @id @default(autoincrement())
   value     String
   type      TagType?  @relation(fields: [typeId], references: [id])
   typeId    Int?
-  alt       String
-  pages     Page[]
+  pages     TagsOnPages[]
 }
 
 model TagType {
@@ -54,3 +53,19 @@ model TagType {
   tags      Tag[]
 }
 
+model TagCategory {
+  id          Int       @id @default(autoincrement())
+  category    String
+  tags        TagsOnPages[]
+}
+
+model TagsOnPages {
+  page        Page     @relation(fields: [pageId], references: [id])
+  pageId      Int // relation scalar field (used in the `@relation` attribute above)
+  tag         Tag @relation(fields: [tagId], references: [id])
+  tagId       Int // relation scalar field (used in the `@relation` attribute above)
+  category    TagCategory?  @relation(fields: [categoryId], references: [id])
+  categoryId  Int?
+
+  @@id([tagId, pageId])
+}

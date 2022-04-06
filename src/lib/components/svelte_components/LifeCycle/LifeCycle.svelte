@@ -3,10 +3,17 @@
     Wherein = 1, Whatsabout = 2, Goodfor = 3
   }
 
+  export enum TagCategory {
+    Primary = 1, Secondary = 2
+  }
+
   export interface LifeCycleTags {
-    wherein: Option[],
-    whatsabout: Option[],
-    goodfor: Option[]
+    wherein: {
+      primary: Option[];
+      secondary: Option[];
+    }
+    whatsabout: Option[];
+    goodfor: Option[];
   }
 </script>
 <script lang='ts'>
@@ -19,8 +26,8 @@
 
   export let circleMenuConfig: CircleMenuConfig = menuConfigFile;
   export let menuData: MenuElement[] = menuDataFile;
-  export let tagsOptions: Option[] = [];
-  export let tags: Option[];
+  export let tagsOptions: LifeCycleTags;
+  export let tagsSelected: LifeCycleTags;
   export let editable: boolean = false;
   export let currentIndex: number = 0;
 
@@ -30,19 +37,11 @@
     currentGroup = menuData[currentIndex].group;
   }
 
-  let whereinTags = tagsOptions.filter(t => t[t.value] === TagEnum.Wherein);
-  let whatsaboutTags = tagsOptions.filter(t => t[t.value] === TagEnum.Whatsabout);
-  let goodforTags = tagsOptions.filter(t => t[t.value] === TagEnum.Goodfor);
-
-  let whereinSeletedOptions: {primary: Option[], secondary: Option[]} = {primary: [], secondary: tags.filter(t => t.typeId === TagEnum.Wherein)};
-  let whatsaboutSelectedOptions: Option[] = tags.filter(t => t.typeId === TagEnum.Whatsabout);
-  let goodforSelectedOptions: Option[] = tags.filter(t => t.typeId === TagEnum.Goodfor);
-
   const maxWhereinOptions = 7;
   const maxWhereinPrimarySelectedOption = 2;
 
   $: {
-    tags = whereinSeletedOptions.primary.concat(whereinSeletedOptions.secondary.concat(whatsaboutSelectedOptions.concat(goodforSelectedOptions)));
+    //tags = whereinSeletedOptions.primary.concat(whereinSeletedOptions.secondary.concat(whatsaboutSelectedOptions.concat(goodforSelectedOptions)));
   }
 </script>
 <div class='container'>
@@ -58,16 +57,16 @@
       <div class="tagContainer">
         {#if editable}
         <div class="subtitle">Primary Tags</div>
-        <MultiSelect bind:selected={whereinSeletedOptions.primary} options={whereinTags} disabled={false} maxSelect={maxWhereinPrimarySelectedOption}/>
+        <MultiSelect bind:selected={tagsSelected.wherein.primary} options={tagsOptions.wherein.primary} disabled={false} maxSelect={maxWhereinPrimarySelectedOption}/>
         <div class="subtitle">Secondary Tags</div>
-        <MultiSelect bind:selected={whereinSeletedOptions.secondary} options={whereinTags.filter((st) => !whereinSeletedOptions.primary.find((pt) => pt.label === st.label))} disabled={false} maxSelect={maxWhereinOptions}/>
+        <MultiSelect bind:selected={tagsSelected.wherein.secondary} options={tagsOptions.wherein.secondary.filter((st) => !tagsOptions.wherein.primary.find((pt) => pt.label === st.label))} disabled={false} maxSelect={maxWhereinOptions}/>
         {/if}
       </div>
   </div>
   <h5 class='title'>What&apos;s this about</h5>
   <div class="tagContainer">
     {#if editable}
-    <MultiSelect bind:selected={whatsaboutSelectedOptions} options={whatsaboutTags} disabled={false} />
+    <MultiSelect bind:selected={tagsSelected.whatsabout} options={tagsOptions.whatsabout} disabled={false} />
 
 
     {/if}
@@ -75,7 +74,7 @@
   <h5 class='title'>Good for ...</h5>
   <div class="tagContainer">
     {#if editable}
-    <MultiSelect bind:selected={goodforSelectedOptions} options={goodforTags} disabled={false} />
+    <MultiSelect bind:selected={tagsSelected.goodfor} options={tagsOptions.goodfor} disabled={false} />
 
     {/if}
   </div>

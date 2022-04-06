@@ -28,9 +28,20 @@ export const requestToPrismaParams = async (request: Request) => {
       }))
     },
     tags:{
-      connect: tags.split(",").map(id => ({
-        id: parseInt(id)
-      }))
+      create: [
+        {
+          category: {
+            connect: {
+              id: 1,
+            }
+          },
+          tag: {
+            connect: {
+              id: 2,
+            },
+          },
+        },
+      ]
     }
   };
 };

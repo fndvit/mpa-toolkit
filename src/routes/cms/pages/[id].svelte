@@ -3,25 +3,24 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { Page, TagInfo, UserInfo } from '$lib/types';
+  import type { Page, TagInfo, UserInfo, Tag } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
-  import LifeCycle, { LifeCycleTags, TagEnum } from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
-
+  import LifeCycle, { LifeCycleTags, TagEnum, TagCategory } from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
 
   // export let pageId: number;
   export let users: UserInfo[];
   export let page: Page & { authors: UserInfo[], tags: TagInfo[] };
-  export let tags: TagInfo[];
+  export let tags: Tag[];
 
   let newPage = !page;
   let title: string = page && page.title;
   let slug: string = page && page.slug;
   let summary: string = page && page.summary;
   let authors: Option[] = page && page.authors.map(author => ({label: author.name, value: author.id}));
-  let pageTags: Option[] = page && page.tags.map(tag => ({label: tag.value, value: tag.id, typeId: tag.typeId}));
+  let pageTags: (Option & { category: number })[] = page && page.tags.map(t => ({label: t.tag.value, value: t.tag.id, typeId: t.tag.typeId, category: t.category.id}));
   let imgPath: string = page && page.img;
   let content: {[key: string]: any} = page && page.content as Prisma.JsonObject;
   let editor: Editor;
@@ -29,6 +28,8 @@
   let saving = false;
   let deleting = false;
   let autoPopulateSlug = !slug;
+  let tagsOptions: LifeCycleTags =  <LifeCycleTags>{};;
+  let tagsSelected: LifeCycleTags = <LifeCycleTags>{};
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -47,22 +48,30 @@
     preselected: (pageTags && pageTags.find(pt => t.id === pt.value))? true: false,
   }));
 
-  let  tagOptions: LifeCycleTags = <LifeCycleTags>{};
-  tagOptions.wherein = tags.filter(t => t.typeId === TagEnum.Wherein).map(t => ({
+  const selectTagsOptions = (tagType: TagEnum, category?: TagCategory) => tags.filter(t => t.typeId === tagType).map(t => ({
     value: t.id,
     label: t.value,
-    preselected: (pageTags && pageTags.find(pt => t.id === pt.value))? true: false,
+    [t.id]: t.typeId,
+    preselected: (pageTags && pageTags.find(pt => t.id === pt.value && (category === pt.category || category === undefined)))? true: false,
   }));
-  tagOptions.whatsabout = tags.filter(t => t.typeId === TagEnum.Whatsabout).map(t => ({
-    value: t.id,
-    label: t.value,
-    preselected: (pageTags && pageTags.find(pt => t.id === pt.value))? true: false,
-  }));
-  tagOptions.goodfor = tags.filter(t => t.typeId === TagEnum.Goodfor).map(t => ({
-    value: t.id,
-    label: t.value,
-    preselected: (pageTags && pageTags.find(pt => t.id === pt.value))? true: false,
-  }));
+
+  tagsOptions = {
+      wherein: {
+        primary: selectTagsOptions(TagEnum.Wherein, TagCategory.Primary),
+        secondary: selectTagsOptions(TagEnum.Wherein, TagCategory.Secondary),
+      },
+      whatsabout: selectTagsOptions(TagEnum.Whatsabout),
+      goodfor: selectTagsOptions(TagEnum.Goodfor),
+  };
+  tagsSelected = {
+      wherein: {
+        primary: [],
+        secondary: [],
+      },
+      whatsabout: [],
+      goodfor: [],
+  };
+
 
   function getFormData() {
     const authorIds = authors.map(a => a.value as number);
@@ -139,8 +148,9 @@
     if (!validChars.exec(e.data)) e.preventDefault();
   }
 </script>
-<LifeCycle editable={true} tagsOptions={testOptions} bind:tags={pageTags}/>
+
 <div class="meta">
+  <LifeCycle tagsOptions={tagsOptions} tagsSelected={tagsSelected} editable={true}/>
   <h1>{#if newPage}New Page{:else}Edit Page{/if}</h1>
 
   <div class="fields">

@@ -10,11 +10,22 @@ export interface UserInfo {
   name: string;
 }
 
-export interface TagInfo {
+export interface Tag {
   id: string;
   value: string;
   typeId: number;
+}
+
+export interface TagInfo {
+  category: Category;
+  tag: Tag;
+  typeId: number;
   alt: string;
+}
+
+export interface Category {
+  id: number;
+  category: string;
 }
 
 // **********************

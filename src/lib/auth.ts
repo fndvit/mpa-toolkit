@@ -38,9 +38,13 @@ const getOrCreateUser = async (profile: GoogleProfile) => {
     return user;
   }
 
-  const firstUser = (await prisma.user.count()) === 0;
+  const realUser = await prisma.user.findFirst({
+    where: { NOT: { googleId: null }}
+  });
 
-  log.info(firstUser
+  const isFirstUser = realUser === null;
+
+  log.info(isFirstUser
     ? 'First user, creating admin...'
     : 'User not found, creating...'
   );
@@ -50,7 +54,7 @@ const getOrCreateUser = async (profile: GoogleProfile) => {
       googleId: profile.sub,
       name: profile.name,
       email: profile.email,
-      role: firstUser ? Role.ADMIN : Role.USER
+      role: isFirstUser ? Role.ADMIN : Role.USER
     }
   });
 };

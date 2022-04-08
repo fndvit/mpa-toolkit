@@ -15,9 +15,9 @@
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
 
   import { staticUrl } from "$lib/helpers";
-  import type { Page, User, ContentDocument } from "$lib/types";
+  import type { ContentDocument, CompletePage } from "$lib/types";
 
-  export let page: Page & { authors: User[] };
+  export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
 
@@ -36,11 +36,11 @@
 
   <div class="meta">
     <div class="authors">
-      {#each page.authors as author}
+      {#each page.chapter.authors as author}
         <div>{author.name}</div>
       {/each}
     </div>
-    <div class="summary">{page.summary}</div>
+    <div class="summary">{page.chapter.summary}</div>
   </div>
   <div class="content">
     <div class="menu-column">

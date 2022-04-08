@@ -7,17 +7,21 @@ export const get = authMiddleware(
   async ({ params }) => {
   const { id } = params;
   const users = await prisma.user.findMany();
-  if (id === 'newCH') {
-    return { body: { users, cs: false } };
-  }
-  else if (id === 'newCS'){
-    return { body: { users, cs: true } };
+  if (id === 'new') {
+    return { body: { users } };
   }
   else {
     const pageId = parseInt(id);
     const page = !isNaN(pageId) && await prisma.page.findUnique({
       where: { id: pageId },
-      include: { authors: true }
+      include: {
+        caseStudy: true,
+        chapter: {
+          include: {
+            authors: true
+          }
+        }
+      }
     });
     return page
       ? { body: { users, page } }

@@ -1,0 +1,48 @@
+{
+    "type": "object",
+    "properties": {
+  
+      "title": { "type": "string" },
+      "slug": { "type": "string" },
+      "content": { "type": "object" },
+      "img": { "type": "string" },
+  
+      "caseStudy": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "established": { "type": "integer" },
+          "size": { "type": "number" },
+          "governance": { "type": "string" },
+          "budget": { "type": "string" },
+          "budgetLevel": { "type": "string" },
+          "lat": { "type": "number" },
+          "long": { "type": "number" },
+          "milestones": { "type": "object" }
+        }
+      },
+  
+      "chapter": {
+        "type": "object",
+        "properties": {
+          "summary": { "type": "string" },
+          "authors": {
+            "type": "array",
+            "items": { "type": "integer" }
+          }
+        }
+      }
+  
+    },
+    "required": ["title", "slug", "content", "img"],
+    "oneOf": [
+      {
+        "required": ["caseStudy"],
+        "not": { "required": ["chapter"] }
+      },
+      {
+        "required": ["chapter"],
+        "not": { "required": ["caseStudy"] }
+      }
+    ]
+  }

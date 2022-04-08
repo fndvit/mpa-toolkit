@@ -3,27 +3,28 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { Page, UserInfo } from '$lib/types';
+  import type { CompletePage, Page, UserInfo } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
 
-  // export let pageId: number;
   export let users: UserInfo[];
-  export let page: Page & { authors: UserInfo[]};
-  export let cs: boolean;
+  export let page: CompletePage;
 
   const MAX_LENGTH = 140;
 
   let newPage = !page;
 
-  let title: string = page && page.title;
-  let slug: string = page && page.slug;
-  let summary: string = page && page.summary;
-  let authors: Option[] = page && page.authors.map(author => ({label: author.name, value: author.id}));
-  let imgPath: string = page && page.img;
-  let content: {[key: string]: any} = page && page.content as Prisma.JsonObject;
+  type PageType = "Case Study" | "Chapter";
+  let pageType: PageType = page?.caseStudy ? "Case Study" : "Chapter";
+
+  let title: string = page?.title;
+  let slug: string = page?.slug;
+  let summary: string = page?.chapter?.summary;
+  let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
+  let imgPath: string = page?.img;
+  let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
   let editor: Editor;
   let uploadingImage = false;
@@ -32,14 +33,14 @@
   let autoPopulateSlug = !slug;
 
   let name: string;
-  let yearEstablished: number;
+  let established: number;
   let size: string;
   let governance: string;
   let staff: string;
   let budget: string;
   let budgetLevel: string;
-  let coordLatitude: number;
-  let coordAltitude: number;
+  let lat: number;
+  let long: number;
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -52,46 +53,36 @@
   }));
 
   function getFormData() {
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('slug', slug);
-    formData.append('image', imgPath);
-    formData.append('content', JSON.stringify(editor.getDocumentJson()));
-
-    if (cs) {
-      const csfields = [{
-        name: name,
-        yearEstablished: yearEstablished,
-        size: size,
-        governance: governance,
-        staff: staff,
-        budget: budget,
-        budgetLevel: budgetLevel,
-        coordLatitude: coordLatitude,
-        coordAltitude: coordAltitude,
-        milestones: "milestones"
-      }];
-      formData.append('summary', undefined);
-      formData.append('authors', undefined);
-      formData.append('caseStudyFields', JSON.stringify(csfields));
-    }
-    else {
-      const authorIds = authors.map(a => a.value as number);
-      formData.append('summary', summary);
-      formData.append('authors', authorIds.join(','));
-      formData.append('caseStudyFields', undefined);
-    }
-    return formData;
+    return {
+      title,
+      slug,
+      img: imgPath,
+      content: editor.getDocumentJson(),
+      caseStudy: pageType === "Case Study"
+        ? {
+          name, established, size, governance,
+          staff, budget, budgetLevel, lat, long,
+          milestones: {}
+        }
+        : undefined,
+      chapter: pageType === "Chapter"
+        ? {
+          authors: authors?.map(a => a.value),
+          summary
+        }
+        : undefined
+    };
   }
 
   async function savePost() {
     saving = true;
     const formData = getFormData();
+    const body = JSON.stringify(formData);
 
     const response = await (
       newPage
-      ? fetch('/api/pages/create', { method: 'PUT', body: formData })
-      : fetch(`/api/pages/${page.id}`, { method: 'PATCH', body: formData })
+        ? fetch('/api/pages/create', { method: 'PUT', body })
+        : fetch(`/api/pages/${page.id}`, { method: 'PATCH', body })
     );
 
     saving = false;
@@ -118,9 +109,9 @@
     openModal(DeleteModal, { onYes: deletePage })
   }
 
-  $: saveable = cs
-    ? !saving && !deleting && title && imgPath && name && yearEstablished
-    && size && governance && staff && budget && budgetLevel && coordLatitude && coordAltitude
+  $: saveable = pageType === "Case Study"
+    ? !saving && !deleting && title && imgPath && name && established
+    && size && governance && staff && budget && budgetLevel && lat && long
     : !saving && !deleting && title && summary && imgPath && authors.length > 0;
 
   $: editable = !saving && !deleting;
@@ -154,54 +145,53 @@
 <div class="meta">
 
   <h1>
-    {#if newPage}
-      {#if cs}
-        Create a new Case Study page
-      {:else}
-        Create a new Chapter page
-      {/if}
-    {:else}
-      {#if cs}
-        Edit a Case Study page
-      {:else}
-        Edit a Chapter page
-      {/if}
-    {/if}
+    {`${newPage ? 'Create a new' : 'Edit a'} ${pageType} Page`}
   </h1>
 
 
-  {#if cs}
+  <div class="fields">
 
-    <div class="fields">
+    <label for="type">Page type</label>
+    <div class="radiogroup">
+      <label class:selected={pageType === "Chapter"}>
+        <input type="radio" bind:group={pageType} value="Chapter" name="pagetype" />
+        Chapter
+      </label>
+      <label class:selected={pageType === "Case Study"}>
+        <input type="radio" bind:group={pageType} value="Case Study" name="pagetype" />
+        Case Study
+      </label>
+    </div>
 
-      <label for="title">Title</label>
-      <input type="text" id="title" bind:value={title} disabled={!editable} />
+    <label for="title">Title</label>
+    <input type="text" id="title" bind:value={title} disabled={!editable} />
 
-      <label for="slug">Slug</label>
-      <input class="slug" type="text" id="slug" bind:value={slug} disabled={!editable}
-        on:beforeinput={onBeforeInputSlug}
-        on:change={onChangeSlug}
-      />
+    <label for="slug">Slug</label>
+    <input class="slug" type="text" id="slug" bind:value={slug} disabled={!editable}
+      on:beforeinput={onBeforeInputSlug}
+      on:change={onChangeSlug}
+    />
 
-      <label for="image">Image</label>
-      <div>
-        <input type="file" id="image" on:change={onImageChange} accept=".jpg, .jpeg" disabled={!editable} >
-      </div>
+    <label for="image">Image</label>
+    <div>
+      <input type="file" id="image" on:change={onImageChange} accept=".jpg, .jpeg" disabled={!editable} >
+    </div>
 
-      <div></div>
-      <div>
-        {#if uploadingImage}
-          <Spinner />
-        {:else if imgPath}
-          <img class="splashpreview" src={staticUrl(imgPath)} alt="splash" />
-        {/if}
-      </div>
+    <div></div>
+    <div>
+      {#if uploadingImage}
+        <Spinner />
+      {:else if imgPath}
+        <img class="splashpreview" src={staticUrl(imgPath)} alt="splash" />
+      {/if}
+    </div>
 
+    {#if pageType === "Case Study"}
       <label for="name">Name</label>
       <input type="text" id="name" bind:value={name} disabled={!editable} />
 
-      <label for="yearEstablished">Year established</label>
-      <input type="number" id="yearEstablished" bind:value={yearEstablished} disabled={!editable} maxlength="4"/>
+      <label for="established">Year established</label>
+      <input type="number" id="established" bind:value={established} disabled={!editable} maxlength="4"/>
 
       <label for="size">Size</label>
       <input type="number" id="size" bind:value={size} disabled={!editable}/>
@@ -219,41 +209,13 @@
       <textarea type="text" id="budgetLevel" bind:value={budgetLevel} rows="4" maxlength={MAX_LENGTH} disabled={!editable}/>
 
       <label for="latitude">Latitude coordinate</label>
-      <input type="number" id="latitude" bind:value={coordLatitude} disabled={!editable} placeholder="e.g. 40.7128"/>
+      <input type="number" id="latitude" bind:value={lat} disabled={!editable} placeholder="e.g. 40.7128"/>
 
       <label for="altitude">Altitude coordinate</label>
-      <input type="number" id="altitude" bind:value={coordAltitude} disabled={!editable} placeholder="e.g. -74.0059"/>
+      <input type="number" id="altitude" bind:value={long} disabled={!editable} placeholder="e.g. -74.0059"/>
 
-    </div>
 
-  {:else}
-
-    <div class="fields">
-
-      <label for="title">Title</label>
-      <input type="text" id="title" bind:value={title} disabled={!editable} />
-
-      <label for="slug">Slug</label>
-      <input class="slug" type="text" id="slug" bind:value={slug} disabled={!editable}
-        on:beforeinput={onBeforeInputSlug}
-        on:change={onChangeSlug}
-      />
-
-      <label for="image">Image</label>
-      <div>
-        <input type="file" id="image" on:change={onImageChange} accept=".jpg, .jpeg" disabled={!editable} >
-      </div>
-
-      <div></div>
-      <div>
-        {#if uploadingImage}
-          <Spinner />
-        {:else if imgPath}
-          <img class="splashpreview" src={staticUrl(imgPath)} alt="splash" />
-        {/if}
-
-      </div>
-
+    {:else}
       <label for="summary">Summary</label>
       <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
 
@@ -262,9 +224,9 @@
       </label>
       <MultiSelect bind:selected={authors} options={authorOptions} disabled={!editable} />
 
-    </div>
+    {/if}
 
-  {/if}
+  </div>
 
 
   <div class="controls">
@@ -329,7 +291,6 @@
     background: rgb(226, 101, 101);
     border-color: rgb(179, 31, 31);
     align-self: flex-end;
-    // color: ;
   }
 
   .splashpreview {
@@ -350,5 +311,27 @@
     }
   }
 
+  .radiogroup {
+    display: flex;
+    column-gap: 10px;
+    label {
+      padding: 10px 14px;
+      background: rgb(191, 191, 191);
+      color: white;
+      border-radius: 5px;
 
+      &:not(.selected):hover {
+        background: rgb(121, 141, 196);
+        cursor: pointer;
+      }
+
+      &.selected {
+        background: rgb(68, 104, 203);
+      }
+    }
+
+    input {
+      display: none
+    }
+  }
 </style>

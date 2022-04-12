@@ -3,8 +3,9 @@
   import Inline from "./Inline.svelte";
 
   export let block: ParagraphBlock;
+
 </script>
 
 <p>
-  {#each block.content as child}<Inline block={child}/>{/each}
+  {#each (block.content || []) as child}<Inline block={child}/>{/each}
 </p>

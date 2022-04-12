@@ -1,4 +1,4 @@
-import type { Page , User, Role } from '@prisma/client';
+import type { Page, User, Role } from '@prisma/client';
 export type * from '@prisma/client';
 
 export interface Locals {
@@ -32,7 +32,7 @@ export type HeadingBlock = {
 
 export type ParagraphBlock = {
   type: 'paragraph';
-  content: InlineBlock[];
+  content?: InlineBlock[];
 }
 
 export type CardsBlock = {

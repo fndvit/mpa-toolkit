@@ -109,12 +109,15 @@
     openModal(DeleteModal, { onYes: deletePage })
   }
 
-  $: saveable = pageType === "Case Study"
-    ? !saving && !deleting && title && imgPath && name && established
-    && size && governance && staff && budget && budgetLevel && lat && long
-    : !saving && !deleting && title && summary && imgPath && authors.length > 0;
+  $: sharedFieldsComplete = title && slug && imgPath;
+
+  $: selectedTypeFieldsComplete = pageType === "Case Study"
+    ? name && established && size && governance && staff && budget && budgetLevel && lat && long
+    : summary && authors?.length;
 
   $: editable = !saving && !deleting;
+  $: saveable = !saving && !deleting && sharedFieldsComplete && selectedTypeFieldsComplete;
+
 
   const onImageChange: svelte.JSX.EventHandler<FormDataEvent, HTMLInputElement> = async (e) => {
     const file = e.currentTarget.files[0];

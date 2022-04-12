@@ -34,20 +34,33 @@
     <h1>{page.title}</h1>
   </div>
 
-  <div class="meta">
-    <div class="authors">
-      {#each page.chapter.authors as author}
-        <div>{author.name}</div>
-      {/each}
+  {#if page.chapter }
+
+    <div class="meta">
+      <div class="authors">
+        {#each page.chapter.authors as author}
+          <div>{author.name}</div>
+        {/each}
+      </div>
+      <div class="summary">{page.chapter.summary}</div>
     </div>
-    <div class="summary">{page.chapter.summary}</div>
-  </div>
+
+  {:else if page.caseStudy}
+
+    <div class="meta">
+      Placeholder
+    </div>
+
+    <div class="milestones">
+      Placeholder
+    </div>
+
+  {/if}
+
   <div class="content">
     <div class="menu-column">
       <div class="menu">
-        <StickyMenu
-          menuOptions = {headings}
-        />
+        <StickyMenu menuOptions={headings} />
       </div>
     </div>
     <div class="body-column">

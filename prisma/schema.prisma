@@ -23,7 +23,29 @@ model User {
   name      String?
   googleId  String? @unique
   role      Role    @default(USER)
-  pages     Page[]
+  chapter   Chapter[]
+}
+
+model CaseStudy {
+  name        String @unique
+  established Int
+  size        Float
+  governance  String
+  staff       String
+  budget      String
+  budgetLevel String
+  lat         Float
+  long        Float
+  milestones  Json
+  page        Page   @relation(fields: [pageId], references: [id])
+  pageId      Int    @id
+}
+
+model Chapter {
+  summary   String
+  authors   User[]
+  page      Page   @relation(fields: [pageId], references: [id])
+  pageId    Int    @id
 }
 
 model Page {
@@ -34,7 +56,8 @@ model Page {
   editedAt  DateTime @default(now())
   title     String
   img       String
-  summary   String
   content   Json
-  authors   User[]
+
+  caseStudy CaseStudy?
+  chapter   Chapter?
 }

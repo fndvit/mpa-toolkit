@@ -3,30 +3,44 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { Page, UserInfo } from '$lib/types';
+  import type { CompletePage, Page, UserInfo } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
 
-  // export let pageId: number;
   export let users: UserInfo[];
-  export let page: Page & { authors: UserInfo[]};
+  export let page: CompletePage;
+
+  const MAX_LENGTH = 140;
 
   let newPage = !page;
 
-  let title: string = page && page.title;
-  let slug: string = page && page.slug;
-  let summary: string = page && page.summary;
-  let authors: Option[] = page && page.authors.map(author => ({label: author.name, value: author.id}));
-  let imgPath: string = page && page.img;
-  let content: {[key: string]: any} = page && page.content as Prisma.JsonObject;
+  type PageType = "Case Study" | "Chapter";
+  let pageType: PageType = page?.caseStudy ? "Case Study" : "Chapter";
+
+  let title: string = page?.title;
+  let slug: string = page?.slug;
+  let summary: string = page?.chapter?.summary;
+  let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
+  let imgPath: string = page?.img;
+  let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
   let editor: Editor;
   let uploadingImage = false;
   let saving = false;
   let deleting = false;
   let autoPopulateSlug = !slug;
+
+  let name: string;
+  let established: number;
+  let size: string;
+  let governance: string;
+  let staff: string;
+  let budget: string;
+  let budgetLevel: string;
+  let lat: number;
+  let long: number;
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -39,25 +53,36 @@
   }));
 
   function getFormData() {
-    const authorIds = authors.map(a => a.value as number);
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('slug', slug);
-    formData.append('summary', summary);
-    formData.append('image', imgPath);
-    formData.append('authors', authorIds.join(','));
-    formData.append('content', JSON.stringify(editor.getDocumentJson()));
-    return formData;
+    return {
+      title,
+      slug,
+      img: imgPath,
+      content: editor.getDocumentJson(),
+      caseStudy: pageType === "Case Study"
+        ? {
+          name, established, size, governance,
+          staff, budget, budgetLevel, lat, long,
+          milestones: {}
+        }
+        : undefined,
+      chapter: pageType === "Chapter"
+        ? {
+          authors: authors?.map(a => a.value),
+          summary
+        }
+        : undefined
+    };
   }
 
   async function savePost() {
     saving = true;
     const formData = getFormData();
+    const body = JSON.stringify(formData);
 
     const response = await (
       newPage
-      ? fetch('/api/pages/create', { method: 'PUT', body: formData })
-      : fetch(`/api/pages/${page.id}`, { method: 'PATCH', body: formData })
+        ? fetch('/api/pages/create', { method: 'PUT', body })
+        : fetch(`/api/pages/${page.id}`, { method: 'PATCH', body })
     );
 
     saving = false;
@@ -84,8 +109,15 @@
     openModal(DeleteModal, { onYes: deletePage })
   }
 
-  $: saveable = !saving && !deleting && title && summary && imgPath && authors.length > 0;
+  $: sharedFieldsComplete = title && slug && imgPath;
+
+  $: selectedTypeFieldsComplete = pageType === "Case Study"
+    ? name && established && size && governance && staff && budget && budgetLevel && lat && long
+    : summary && authors?.length;
+
   $: editable = !saving && !deleting;
+  $: saveable = !saving && !deleting && sharedFieldsComplete && selectedTypeFieldsComplete;
+
 
   const onImageChange: svelte.JSX.EventHandler<FormDataEvent, HTMLInputElement> = async (e) => {
     const file = e.currentTarget.files[0];
@@ -114,9 +146,25 @@
 </script>
 
 <div class="meta">
-  <h1>{#if newPage}New Page{:else}Edit Page{/if}</h1>
+
+  <h1>
+    {`${newPage ? 'Create a new' : 'Edit a'} ${pageType} Page`}
+  </h1>
+
 
   <div class="fields">
+
+    <label for="type">Page type</label>
+    <div class="radiogroup">
+      <label class:selected={pageType === "Chapter"}>
+        <input type="radio" bind:group={pageType} value="Chapter" name="pagetype" />
+        Chapter
+      </label>
+      <label class:selected={pageType === "Case Study"}>
+        <input type="radio" bind:group={pageType} value="Case Study" name="pagetype" />
+        Case Study
+      </label>
+    </div>
 
     <label for="title">Title</label>
     <input type="text" id="title" bind:value={title} disabled={!editable} />
@@ -139,18 +187,50 @@
       {:else if imgPath}
         <img class="splashpreview" src={staticUrl(imgPath)} alt="splash" />
       {/if}
-
     </div>
 
-    <label for="summary">Summary</label>
-    <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
+    {#if pageType === "Case Study"}
+      <label for="name">Name</label>
+      <input type="text" id="name" bind:value={name} disabled={!editable} />
 
-    <label for="authors">
-      Authors
-    </label>
-    <MultiSelect bind:selected={authors} options={authorOptions} disabled={!editable} />
+      <label for="established">Year established</label>
+      <input type="number" id="established" bind:value={established} disabled={!editable} maxlength="4"/>
+
+      <label for="size">Size</label>
+      <input type="number" id="size" bind:value={size} disabled={!editable}/>
+
+      <label for="governance">Governance</label>
+      <textarea type="text" id="governance" bind:value={governance} rows="4" maxlength={MAX_LENGTH} disabled={!editable}/>
+
+      <label for="staff">Staff</label>
+      <textarea type="text" id="staff" bind:value={staff} rows="4" maxlength={MAX_LENGTH} disabled={!editable}/>
+
+      <label for="budget">Budget</label>
+      <textarea type="text" id="budget" bind:value={budget} rows="4" maxlength={MAX_LENGTH} disabled={!editable}/>
+
+      <label for="budgetLevel">Budget level</label>
+      <textarea type="text" id="budgetLevel" bind:value={budgetLevel} rows="4" maxlength={MAX_LENGTH} disabled={!editable}/>
+
+      <label for="latitude">Latitude coordinate</label>
+      <input type="number" id="latitude" bind:value={lat} disabled={!editable} placeholder="e.g. 40.7128"/>
+
+      <label for="altitude">Altitude coordinate</label>
+      <input type="number" id="altitude" bind:value={long} disabled={!editable} placeholder="e.g. -74.0059"/>
+
+
+    {:else}
+      <label for="summary">Summary</label>
+      <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
+
+      <label for="authors">
+        Authors
+      </label>
+      <MultiSelect bind:selected={authors} options={authorOptions} disabled={!editable} />
+
+    {/if}
 
   </div>
+
 
   <div class="controls">
     <button class="save" on:click={savePost} disabled={!saveable}>Save</button>
@@ -177,7 +257,7 @@
 
   .fields {
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 150px 1fr;
     row-gap: 20px;
   }
 
@@ -214,7 +294,6 @@
     background: rgb(226, 101, 101);
     border-color: rgb(179, 31, 31);
     align-self: flex-end;
-    // color: ;
   }
 
   .splashpreview {
@@ -235,4 +314,27 @@
     }
   }
 
+  .radiogroup {
+    display: flex;
+    column-gap: 10px;
+    label {
+      padding: 10px 14px;
+      background: rgb(191, 191, 191);
+      color: white;
+      border-radius: 5px;
+
+      &:not(.selected):hover {
+        background: rgb(121, 141, 196);
+        cursor: pointer;
+      }
+
+      &.selected {
+        background: rgb(68, 104, 203);
+      }
+    }
+
+    input {
+      display: none
+    }
+  }
 </style>

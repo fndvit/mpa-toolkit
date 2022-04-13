@@ -1,4 +1,5 @@
-export type { Page , User, Role } from '@prisma/client';
+import type { Page, User, Role, CaseStudy } from '@prisma/client';
+export type * from '@prisma/client';
 
 export interface Locals {
 	userid: string;
@@ -8,6 +9,13 @@ export interface UserInfo {
   id: string;
   email: string;
   name: string;
+}
+
+export type CompletePage = Page & {
+  caseStudy: CaseStudy;
+  chapter: Chapter & {
+    authors: User[];
+  };
 }
 
 // **********************
@@ -24,7 +32,7 @@ export type HeadingBlock = {
 
 export type ParagraphBlock = {
   type: 'paragraph';
-  content: InlineBlock[];
+  content?: InlineBlock[];
 }
 
 export type CardsBlock = {

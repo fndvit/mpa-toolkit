@@ -4,22 +4,18 @@
   "type": "module",
   "scripts": {
     "dev": "svelte-kit dev",
-
     "prebuild": "yarn build:adapter && yarn clean",
     "build": "svelte-kit build",
-
     "presynth": "yarn build",
     "synth": "cdk synth --app ./adapter/build/stack.js \"*\" --require-approval never",
-    
     "predeploy": "yarn build",
     "deploy": "cdk deploy --app ./adapter/build/stack.js \"*\" --require-approval never",
-    
     "prebuild:adapter": "yarn clean:adapter",
     "build:adapter": "tsc -p adapter && cp -R adapter/lambda adapter/build/lambda",
-
     "clean:adapter": "rimraf adapter/build",
     "clean": "rimraf build cdk.out",
-
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "ts-node --esm prisma/seed.ts",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
@@ -35,6 +31,7 @@
     "@sveltejs/kit": "next",
     "@types/aws-lambda": "^8.10.93",
     "@types/cookie": "^0.4.1",
+    "@types/d3-geo": "^3.0.2",
     "@types/debug": "^4.1.7",
     "@types/fs-extra": "^9.0.13",
     "@types/js-cookie": "^3.0.1",
@@ -61,6 +58,7 @@
     "svelte": "^3.46.0",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
+    "ts-node": "^10.7.0",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },
@@ -68,8 +66,10 @@
     "@lukeed/uuid": "^2.0.0",
     "@prisma/client": "^3.10.0",
     "@splidejs/svelte-splide": "^0.1.18",
+    "ajv": "^8.11.0",
     "clsx": "^1.1.1",
     "cookie": "^0.4.1",
+    "d3-geo": "^3.0.1",
     "dotenv": "^16.0.0",
     "jwt-decode": "^3.1.2",
     "mime-types": "^2.1.34",
@@ -89,6 +89,7 @@
     "svelte-modals": "^1.1.0",
     "svelte-multiselect": "^4.0.1",
     "svelte-scrollto": "^0.2.0",
+    "topojson": "^3.0.2",
     "uuid": "^8.3.2"
   }
 }

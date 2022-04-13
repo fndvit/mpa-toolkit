@@ -9,15 +9,16 @@
 </script>
 
 <script lang="ts">
+  import CaseStudyMeta from "$lib/components/content/CaseStudyMeta.svelte";
   import Heading from "$lib/components/content/Heading.svelte";
   import Paragraph from "$lib/components/content/Paragraph.svelte";
   import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
 
   import { staticUrl } from "$lib/helpers";
-  import type { Page, User, ContentDocument } from "$lib/types";
+  import type { ContentDocument, CompletePage } from "$lib/types";
 
-  export let page: Page & { authors: User[] };
+  export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
 
@@ -34,20 +35,31 @@
     <h1>{page.title}</h1>
   </div>
 
-  <div class="meta">
-    <div class="authors">
-      {#each page.authors as author}
-        <div>{author.name}</div>
-      {/each}
+  {#if page.chapter }
+
+    <div class="meta">
+      <div class="authors">
+        {#each page.chapter.authors as author}
+          <div>{author.name}</div>
+        {/each}
+      </div>
+      <div class="summary">{page.chapter.summary}</div>
     </div>
-    <div class="summary">{page.summary}</div>
-  </div>
+
+  {:else if page.caseStudy}
+
+    <CaseStudyMeta caseStudy={page.caseStudy} />
+
+    <div class="milestones">
+      Placeholder
+    </div>
+
+  {/if}
+
   <div class="content">
     <div class="menu-column">
       <div class="menu">
-        <StickyMenu
-          menuOptions = {headings}
-        />
+        <StickyMenu menuOptions={headings} />
       </div>
     </div>
     <div class="body-column">

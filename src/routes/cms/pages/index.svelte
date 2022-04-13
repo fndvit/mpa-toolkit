@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { page } from "$app/stores";
   import type { Page } from "$lib/types";
 
   export let pages: Page[];
@@ -20,7 +19,7 @@
     {/each}
   </div>
 
-  <a href="/cms/pages/new">New Page</a>
+  <a href="/cms/pages/new">New page</a>
 </div>
 
 <style>

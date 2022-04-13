@@ -3,7 +3,8 @@
   import { feature } from "topojson";
   import worlddata from "./110m.json";
 
-  export let highlight: {lat: number, lon: number};
+  export let lat: number;
+  export let long: number;
   export let width = 500;
 
   const latitudeOffset = 5;
@@ -11,19 +12,19 @@
   const rollOffset = 0;
 
   const projection = d3.geoOrthographic()
-    .rotate([-highlight.lon + longitudeOffset, -highlight.lat + latitudeOffset, rollOffset])
+    .rotate([-long + longitudeOffset, -lat + latitudeOffset, rollOffset])
     .scale(width / 2)
     .translate([width / 2, width / 2]);
 
   const path = d3.geoPath().projection(projection);
 
   const circleGenerator = d3.geoCircle()
-    .center([highlight.lon, highlight.lat])
+    .center([long, lat])
     .radius(2);
   const circlePath = path(circleGenerator());
 
   const externalCircleGenerator = d3.geoCircle()
-    .center([highlight.lon, highlight.lat])
+    .center([long, lat])
     .radius(4);
   const externalCirclePath = path(externalCircleGenerator());
 

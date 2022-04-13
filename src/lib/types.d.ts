@@ -1,4 +1,4 @@
-import type { Page, User, Role } from '@prisma/client';
+import type { Page, User, Role, CaseStudy } from '@prisma/client';
 export type * from '@prisma/client';
 
 export interface Locals {

@@ -1,0 +1,116 @@
+<script lang="ts">
+  import type { CaseStudy } from "$lib/types";
+  import GlobeViz from "../GlobeViz.svelte";
+
+  export let caseStudy: CaseStudy;
+
+  const { name, established, size, governance,
+    staff, budget, budgetLevel, lat, long } = caseStudy;
+
+</script>
+
+<div class="meta-container">
+
+  <div class="meta-content">
+
+    <div class="meta-grid meta-grid-1">
+
+      <h4>Name</h4>
+      <div>{name}</div>
+
+      <h4>Established in</h4>
+      <div>{established}</div>
+
+      <h4>Size</h4>
+      <div>{size} km²</div>
+
+      <div class="globe-cell">
+        <GlobeViz width={245} {lat} {long} />
+      </div>
+
+    </div>
+
+    <div class="meta-grid meta-grid-2">
+
+      <h4>Governance</h4>
+      <div>{governance}</div>
+
+      <h4>Staff</h4>
+      <div>{staff}</div>
+
+      <h4>Budget</h4>
+      <div>{budget}</div>
+
+      <h4>Budget level</h4>
+      <div>{budgetLevel}</div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<style lang="scss">
+
+  .meta-container {
+    background: #311E5D;
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .meta-content {
+    width: 1300px;
+    margin: auto;
+    padding: 35px 0;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-auto-flow: column;
+    column-gap: 1.5rem;
+
+    &.meta-grid-1 {
+      grid-template-columns: 325px 225px 425px 325px;
+      margin-bottom: 40px;
+      min-height: 110px;
+    }
+
+    &.meta-grid-2 {
+      grid-template-columns: 325px 325px 325px 325px;
+    }
+
+  }
+
+  .meta-grid > div {
+    font-family: 'Bitter';
+    color: white;
+  }
+
+  .meta-grid-1 > div {
+    font-size: 28px;
+    line-height: 42px;
+  }
+
+  .meta-grid-2 > div {
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .meta-grid > h4 {
+    font-family: 'Montserrat';
+    font-weight: bold;
+    color: #F1C0B5;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+  }
+
+  .globe-cell {
+    position: relative;
+    > :global(.globe) {
+      position: absolute;
+      transform: translateY(-55%);
+    }
+  }
+
+</style>

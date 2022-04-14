@@ -7,6 +7,7 @@ import { gapCursor } from "prosemirror-gapcursor";
 import { richTextKeyMapPlugin } from "./keymap";
 import { Plugin } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
+import { placeholderPlugin } from "./placeholder";
 
 export { dropCursor, gapCursor, richTextKeyMapPlugin };
 
@@ -36,5 +37,6 @@ export const richTextPlugins = [
   dropCursor(),
   gapCursor(),
   richTextKeyMapPlugin,
-  selectedDecoration
+  selectedDecoration,
+  placeholderPlugin
 ];

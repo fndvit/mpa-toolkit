@@ -11,6 +11,7 @@
 <script lang="ts">
   import CaseStudyMeta from "$lib/components/content/CaseStudyMeta.svelte";
   import Heading from "$lib/components/content/Heading.svelte";
+  import Image from "$lib/components/content/Image.svelte";
   import Paragraph from "$lib/components/content/Paragraph.svelte";
   import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
@@ -25,8 +26,9 @@
   const components = {
     'heading': Heading,
     'paragraph': Paragraph,
-    'cards' : TextSlider
-  }
+    'cards' : TextSlider,
+    'image': Image
+  };
 </script>
 
 <div>

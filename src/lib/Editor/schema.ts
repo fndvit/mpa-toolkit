@@ -1,3 +1,4 @@
+import { staticUrl } from '$lib/helpers';
 import { Schema as ProsemirrorSchema } from 'prosemirror-model';
 
 export const schema = new ProsemirrorSchema({
@@ -83,13 +84,12 @@ export const schema = new ProsemirrorSchema({
     // `alt`, and `href` attributes. The latter two default to the empty
     // string.
     image: {
-      inline: true,
       attrs: {
         src: {},
         alt: { default: null },
         title: { default: null }
       },
-      group: 'inline',
+      group: 'block',
       draggable: true,
       parseDOM: [
         {
@@ -105,7 +105,7 @@ export const schema = new ProsemirrorSchema({
       ],
       toDOM(node) {
         const { src, alt, title } = node.attrs;
-        return ['img', { src, alt, title }];
+        return ['img', { src: staticUrl(src), alt, title }];
       }
     },
 

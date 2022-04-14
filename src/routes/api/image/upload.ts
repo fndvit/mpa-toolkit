@@ -13,6 +13,5 @@ export const put = authMiddleware(
         'path': imgPath
       }
     };
-
   }
 );

@@ -22,6 +22,7 @@
   export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
+  export let readTime: number;
 
   const components = {
     'heading': Heading,
@@ -45,6 +46,7 @@
           <div>{author.name}</div>
         {/each}
       </div>
+      <div class="readtime">{readTime} mins</div>
       <div class="summary">{page.chapter.summary}</div>
     </div>
 

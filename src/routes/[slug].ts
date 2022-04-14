@@ -4,6 +4,7 @@ import { prisma } from "$lib/prisma";
 import { Node } from "prosemirror-model";
 import type { RequestHandler } from "@sveltejs/kit";
 import type { ContentDocument } from "$lib/types";
+import { calcReadTime } from "$lib/readtime";
 
 export const get: RequestHandler = async ({ params }) => {
   const slug = params['slug'];
@@ -23,12 +24,13 @@ export const get: RequestHandler = async ({ params }) => {
   }
 
   const contentNode = Node.fromJSON(schema, page.content as any);
+
   const headings = [...Array(contentNode.childCount).keys()]
-  .map(i => contentNode.child(i))
-  .filter(node => node.type.name === 'heading')
-  .map(node => ({
-    text: node.textContent,
-  }));
+    .map(i => contentNode.child(i))
+    .filter(node => node.type.name === 'heading')
+    .map(node => ({
+      text: node.textContent,
+    }));
 
   const document = page.content as ContentDocument;
 
@@ -36,7 +38,8 @@ export const get: RequestHandler = async ({ params }) => {
     body: {
       page,
       document,
-      headings
+      headings,
+      readTime: calcReadTime(contentNode),
     }
   };
 };

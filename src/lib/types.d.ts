@@ -40,6 +40,15 @@ export type CardsBlock = {
   content: CardBlock[];
 };
 
+export type ImageBlock = {
+  type: 'image';
+  attrs: {
+    src: string;
+    alt?: string;
+    title?: string;
+  };
+}
+
 // *******************
 //  NESTED COMPONENTS
 // *******************

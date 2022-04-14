@@ -2,7 +2,7 @@
   import ProsemirrorEditor from '$lib/Editor/ProsemirrorEditor.svelte';
   import { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
-  import { onMount } from 'svelte';
+  import { onMount, setContext } from 'svelte';
   import EditorMenu from './EditorMenu.svelte';
   import { corePlugins, richTextPlugins } from './plugins';
   import { schema } from './schema';
@@ -30,6 +30,8 @@
     return editorState.doc.toJSON();
   }
 
+  $: setContext('editorView', view);
+
   onMount(() => focusEditor());
 </script>
 
@@ -38,7 +40,7 @@
 </svelte:head>
 
 {#if view}
-  <EditorMenu {editorState} dispatchTransaction={view.dispatch} on:change={handleChange} />
+  <EditorMenu {editorState} on:change={handleChange} />
 {/if}
 
 <div class="prosemirror-container">

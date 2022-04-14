@@ -8,6 +8,7 @@
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
+  import { uploadImage } from '$lib/api';
 
   export let users: UserInfo[];
   export let page: CompletePage;
@@ -120,19 +121,10 @@
 
 
   const onImageChange: svelte.JSX.EventHandler<FormDataEvent, HTMLInputElement> = async (e) => {
-    const file = e.currentTarget.files[0];
-    const formData = new FormData();
-    formData.append('image', file);
     uploadingImage = true;
-    imgPath = '';
-    const response = await fetch('/api/image/upload', {
-      method: 'PUT',
-      body: formData,
-    });
-    const body = await response.json();
-    imgPath = body.path;
+    imgPath = await uploadImage(e.currentTarget.files[0]);
     uploadingImage = false;
-  }
+  };
 
   const onChangeSlug: svelte.JSX.ChangeEventHandler<HTMLInputElement> = e => {
     autoPopulateSlug = e.currentTarget.value.length === 0;

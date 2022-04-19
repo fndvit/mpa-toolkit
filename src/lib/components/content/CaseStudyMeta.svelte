@@ -53,7 +53,7 @@
 <style lang="scss">
 
   .meta-container {
-    background: #311E5D;
+    background: #13487C;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
   }
 
@@ -99,7 +99,7 @@
   .meta-grid > h4 {
     font-family: 'Montserrat';
     font-weight: bold;
-    color: #F1C0B5;
+    color: #F9F9F9;
     font-size: 16px;
     line-height: 24px;
     margin: 0;

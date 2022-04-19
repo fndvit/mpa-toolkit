@@ -15,6 +15,7 @@
   import Paragraph from "$lib/components/content/Paragraph.svelte";
   import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
+  import MadLib from "$lib/components/MadLib.svelte";
 
   import { staticUrl } from "$lib/helpers";
   import type { ContentDocument, CompletePage } from "$lib/types";
@@ -30,6 +31,9 @@
     'cards' : TextSlider,
     'image': Image
   };
+
+  console.log(document.content);
+
 </script>
 
 <div>
@@ -41,23 +45,19 @@
   {#if page.chapter }
 
     <div class="meta">
-      <div class="authors">
-        {#each page.chapter.authors as author}
-          <div>{author.name}</div>
-        {/each}
+      <div class="first-line">
+        <div class="authors">
+          {#each page.chapter.authors as author}
+            <div>{author.name}</div>
+          {/each}
+        </div>
+        <div class="readtime">{readTime} min read</div>
       </div>
-      <div class="readtime">{readTime} mins</div>
       <div class="summary">{page.chapter.summary}</div>
     </div>
 
   {:else if page.caseStudy}
-
     <CaseStudyMeta caseStudy={page.caseStudy} />
-
-    <div class="milestones">
-      Placeholder
-    </div>
-
   {/if}
 
   <div class="content">
@@ -70,6 +70,11 @@
       {#each document.content as block}
         {#if components[block.type]}
           <svelte:component this={components[block.type]} {block} />
+          {#if block.type === 'paragraph'}
+            <div class="mad-lib">
+              <MadLib/>
+            </div>
+          {/if}
         {:else}
           {@debug block}
           <div class="unknown-block">
@@ -82,6 +87,24 @@
 </div>
 
 <style lang="scss">
+
+  .first-line {
+    display: flex;
+    margin-bottom: 2rem;
+  }
+
+  .body-column {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .mad-lib {
+    padding-left: 30px;
+    position: absolute;
+    right: 0px;
+    left: 0px;
+  }
 
   .splash {
     min-height: 60vh;
@@ -107,13 +130,16 @@
   }
 
   .authors {
-    margin-bottom: 2rem;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 10px;
   }
 
   .summary {
     font-family: var(--font-serif);
-    font-size: 1.8rem;
-    line-height: 1.5;
+    font-size: 28px;
+    line-height: 42px;
     max-width: 800px;
   }
 

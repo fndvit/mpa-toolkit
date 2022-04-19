@@ -11,7 +11,7 @@
   export let backgroundColor: string = '#fbe26b';
   export let textColor: string = '#202020';
   export let currentPageIndex: number = 0;
-  export let contentPadding = `30px`;
+  export let font: string = 'type_1';
 
 
   let splide: Splide;
@@ -117,8 +117,7 @@
   }
   .slide {
     overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
-      sans-serif;
+    font-family: 'Montserrat';
     top: 0;
     padding: 15px var(--contentPadding);
   }

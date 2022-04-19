@@ -32,7 +32,7 @@
     'image': Image
   };
 
-  console.log(document.content);
+  console.log(document);
 
 </script>
 

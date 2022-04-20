@@ -29,7 +29,6 @@
 <style>
 
 .mad-lib {
-  margin-left: 300px;
   position: relative;
   line-height: 40px;
   color: #6C767D;

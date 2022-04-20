@@ -19,20 +19,28 @@
 
   import { staticUrl } from "$lib/helpers";
   import type { ContentDocument, CompletePage } from "$lib/types";
+  import { beforeUpdate, onMount } from "svelte";
 
   export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
   export let readTime: number;
 
+  beforeUpdate(() => {
+    addMadLib();
+	});
+
+  const addMadLib = () => {
+    document.content.splice(4, 0, {type: 'madlib'});
+  }
+
   const components = {
     'heading': Heading,
     'paragraph': Paragraph,
     'cards' : TextSlider,
-    'image': Image
+    'image': Image,
+    'madlib': MadLib
   };
-
-  console.log(document);
 
 </script>
 
@@ -69,11 +77,12 @@
     <div class="body-column">
       {#each document.content as block}
         {#if components[block.type]}
-          <svelte:component this={components[block.type]} {block} />
-          {#if block.type === 'paragraph'}
-            <div class="mad-lib">
-              <MadLib/>
+          {#if block.type === 'madlib'}
+            <div class="madlib">
+              <svelte:component this={components[block.type]} {block} />
             </div>
+          {:else}
+            <svelte:component this={components[block.type]} {block} />
           {/if}
         {:else}
           {@debug block}
@@ -99,11 +108,8 @@
     line-height: 32px;
   }
 
-  .mad-lib {
-    padding-left: 30px;
-    position: absolute;
-    right: 0px;
-    left: 0px;
+  .madlib {
+    margin-left: -25px;
   }
 
   .splash {
@@ -125,7 +131,7 @@
 
   .meta {
     background: #096EAE;
-    color: white;
+    color: #F9F9F9;
     padding: 2rem 6rem;
   }
 

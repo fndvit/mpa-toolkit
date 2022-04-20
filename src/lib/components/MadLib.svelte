@@ -42,6 +42,7 @@
   font-weight: 400;
   font-size: 20px;
   font-weight: normal;
+  margin-left: -25px;
 }
 
 .title-text {

@@ -77,13 +77,7 @@
     <div class="body-column">
       {#each document.content as block}
         {#if components[block.type]}
-          {#if block.type === 'madlib'}
-            <div class="madlib">
-              <svelte:component this={components[block.type]} {block} />
-            </div>
-          {:else}
-            <svelte:component this={components[block.type]} {block} />
-          {/if}
+          <svelte:component this={components[block.type]} {block} />
         {:else}
           {@debug block}
           <div class="unknown-block">
@@ -106,10 +100,6 @@
     font-family: var(--font-serif);
     font-size: 18px;
     line-height: 32px;
-  }
-
-  .madlib {
-    margin-left: -25px;
   }
 
   .splash {

@@ -19,7 +19,7 @@
 
   import { staticUrl } from "$lib/helpers";
   import type { ContentDocument, CompletePage } from "$lib/types";
-  import { beforeUpdate, onMount } from "svelte";
+  import { beforeUpdate } from "svelte";
 
   export let page: CompletePage;
   export let document: ContentDocument;
@@ -27,10 +27,10 @@
   export let readTime: number;
 
   beforeUpdate(() => {
-    addMadLib();
+    addNonCmsComponents();
 	});
 
-  const addMadLib = () => {
+  const addNonCmsComponents = () => {
     document.content.splice(4, 0, {type: 'madlib'});
   }
 
@@ -111,6 +111,7 @@
     h1 {
       max-width: 800px;
       color: white;
+      text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.45);
     }
   }
 

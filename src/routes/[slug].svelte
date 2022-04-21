@@ -62,6 +62,9 @@
         <div class="readtime">{readTime} min read</div>
       </div>
       <div class="summary">{page.chapter.summary}</div>
+      {#if page.chapter.keyTakeaways}
+        <div class="keyTakeaways">{page.chapter.keyTakeaways}</div>
+      {/if}
     </div>
 
   {:else if page.caseStudy}

@@ -43,59 +43,6 @@
     'madlib': MadLib
   };
 
-  let keyTakeawayBlock: CardsBlock = {
-    type: 'cards',
-    content: [
-      {
-        type: 'card',
-        content: [
-          {
-            type: 'cardheading',
-            content: [
-              {
-                text: 'Key takeaways',
-                type: 'text'
-              }
-            ]
-          },
-          {
-            type: 'cardbody',
-            content: [
-              {
-                text: 'At its core, the blue economy refers to ocean-based sustainable economic development that is also socially equitable. Although the term is used in various ways, the wider consensus is that economic value and human well-being are derived from healthy ocean ecosystems. Although the term is used in various ways, the wider consensus is that economic value and human well-being are derived from healthy ocean ecosystems. Although the term is used in various ways, the wider consensus is that economic value and human well-being are derived from healthy ocean ecosystems. ',
-                type: 'text'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        type: 'card',
-        content: [
-          {
-            type: 'cardheading',
-            content: [
-              {
-                text: 'Key takeaways',
-                type: 'text'
-              }
-            ]
-          },
-          {
-            type: 'cardbody',
-            content: [
-              {
-                text: 'The wider consensus is that economic value and human well-being are derived from healthy ocean ecosystems. ',
-                type: 'text'
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-
-
 </script>
 
 <div>
@@ -118,7 +65,7 @@
       <div class="summary">{page.chapter.summary}</div>
       {#if page.chapter.keyTakeaways}
         <div class="key-takeaways">
-          <TextSlider block={keyTakeawayBlock}/>
+          <TextSlider block={page.chapter.keyTakeaways}/>
         </div>
       {/if}
     </div>

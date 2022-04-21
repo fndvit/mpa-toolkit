@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, Page, UserInfo } from '$lib/types';
+  import type { CardBlock, CardsBlock, CompletePage, Page, UserInfo } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
@@ -33,7 +33,7 @@
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
   let keyTakeaways: keyTakeaway[] = [];
-  let currentTakeawayText: string = "";
+  let currentTakeawayText: string = '';
 
   let editor: Editor;
   let uploadingImage = false;
@@ -79,10 +79,34 @@
         ? {
           authors: authors?.map(a => a.value),
           summary,
-          keyTakeaways: JSON.stringify(keyTakeaways)
+          keyTakeaways: JSON.stringify(createKeyTakeaways(keyTakeaways))
         }
         : undefined
     };
+  }
+
+  function createKeyTakeaways(keyTakeaways: keyTakeaway[]): CardsBlock {
+    let block: CardsBlock = {
+      type: 'cards',
+      content: []
+    }
+    keyTakeaways.forEach(k => {
+      let card: CardBlock = {
+        type: 'card',
+        content: [
+          {
+            type: 'cardheading',
+            content: [{ text: 'Key takeaways', type: 'text'}]
+          },
+          {
+            type: 'cardbody',
+            content: [{ text: k.text, type: 'text'}]
+          }
+        ]
+      }
+      block.content.push(card);
+    });
+    return block;
   }
 
   async function savePost() {

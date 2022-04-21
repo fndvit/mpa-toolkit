@@ -16,9 +16,10 @@
   import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
+  import ExpandButton from "$lib/components/ExpandButton.svelte";
 
   import { staticUrl } from "$lib/helpers";
-  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
+  import type { ContentDocument, CompletePage } from "$lib/types";
   import { beforeUpdate } from "svelte";
 
   export let page: CompletePage;
@@ -27,11 +28,13 @@
   export let readTime: number;
 
   beforeUpdate(() => {
-    addNonCmsComponents();
+    preprocessContent();
 	});
 
-  const addNonCmsComponents = () => {
-    //When "Expand text" button is integrated in the CMS, the MadLib will appear there
+  const preprocessContent = () => {
+    //Add "Expand text buttons"
+    //Add MadLib
+    //Add "You may also like carousel"
     document.content.splice(4, 0, {type: 'madlib'});
   }
 
@@ -40,7 +43,8 @@
     'paragraph': Paragraph,
     'cards' : TextSlider,
     'image': Image,
-    'madlib': MadLib
+    'madlib': MadLib,
+    'expand' : ExpandButton
   };
 
 </script>

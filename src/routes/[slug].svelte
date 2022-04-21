@@ -18,7 +18,7 @@
   import MadLib from "$lib/components/MadLib.svelte";
 
   import { staticUrl } from "$lib/helpers";
-  import type { ContentDocument, CompletePage } from "$lib/types";
+  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
   import { beforeUpdate } from "svelte";
 
   export let page: CompletePage;
@@ -31,6 +31,7 @@
 	});
 
   const addNonCmsComponents = () => {
+    //When "Expand text" button is integrated in the CMS, the MadLib will appear there
     document.content.splice(4, 0, {type: 'madlib'});
   }
 
@@ -41,6 +42,59 @@
     'image': Image,
     'madlib': MadLib
   };
+
+  let keyTakeawayBlock: CardsBlock = {
+    type: 'cards',
+    content: [
+      {
+        type: 'card',
+        content: [
+          {
+            type: 'cardheading',
+            content: [
+              {
+                text: 'Key takeaways',
+                type: 'text'
+              }
+            ]
+          },
+          {
+            type: 'cardbody',
+            content: [
+              {
+                text: 'At its core, the blue economy refers to ocean-based sustainable economic development that is also socially equitable. Although the term is used in various ways, the wider consensus is that economic value and human well-being are derived from healthy ocean ecosystems. Although the term is used in various ways, the wider consensus is that economic value and human well-being are derived from healthy ocean ecosystems. Although the term is used in various ways, the wider consensus is that economic value and human well-being are derived from healthy ocean ecosystems. ',
+                type: 'text'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        type: 'card',
+        content: [
+          {
+            type: 'cardheading',
+            content: [
+              {
+                text: 'Key takeaways',
+                type: 'text'
+              }
+            ]
+          },
+          {
+            type: 'cardbody',
+            content: [
+              {
+                text: 'The wider consensus is that economic value and human well-being are derived from healthy ocean ecosystems. ',
+                type: 'text'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+
 
 </script>
 
@@ -63,7 +117,9 @@
       </div>
       <div class="summary">{page.chapter.summary}</div>
       {#if page.chapter.keyTakeaways}
-        <div class="keyTakeaways">{page.chapter.keyTakeaways}</div>
+        <div class="key-takeaways">
+          <TextSlider block={keyTakeawayBlock}/>
+        </div>
       {/if}
     </div>
 
@@ -93,6 +149,12 @@
 </div>
 
 <style lang="scss">
+
+  .key-takeaways{
+    max-width: 850px;
+    margin-bottom: 25px;
+    margin-left: -30px;
+  }
 
   .first-line {
     display: flex;
@@ -141,6 +203,7 @@
     font-size: 28px;
     line-height: 42px;
     max-width: 800px;
+    margin-bottom: 40px;
   }
 
   .content {

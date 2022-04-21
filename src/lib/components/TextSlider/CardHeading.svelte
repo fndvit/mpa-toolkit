@@ -11,7 +11,7 @@
 <style>
   .heading {
     margin-top: 5px;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 700;
   }
 </style>

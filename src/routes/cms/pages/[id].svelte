@@ -9,10 +9,14 @@
   import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
   import { uploadImage } from '$lib/api';
-import { stringify } from 'ajv';
 
   export let users: UserInfo[];
   export let page: CompletePage;
+
+  interface keyTakeaway {
+    id: number,
+    text: string
+  }
 
   const MAX_LENGTH = 140;
 
@@ -28,8 +32,8 @@ import { stringify } from 'ajv';
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
-  let keyTakeaways: string[] = [];
-  let takeawayName: string = "";
+  let keyTakeaways: keyTakeaway[] = [];
+  let currentTakeawayText: string = "";
 
   let editor: Editor;
   let uploadingImage = false;
@@ -142,17 +146,17 @@ import { stringify } from 'ajv';
   }
 
   const addKeyTakeaway = () => {
-    if (takeawayName.length > 0){
-      keyTakeaways.push(takeawayName);
+    if (currentTakeawayText.length > 0){
+      const newTakeaway = {id: keyTakeaways.length, text: currentTakeawayText};
+      keyTakeaways.push(newTakeaway);
       keyTakeaways = keyTakeaways;
-      takeawayName = "";
+      currentTakeawayText = "";
     }
   };
 
-  const removeKeyTakeaway = takeaway => {
-    keyTakeaways = keyTakeaways.filter(i => i !== takeaway);
+  const removeKeyTakeaway = (takeawayID: number) => {
+    keyTakeaways = keyTakeaways.filter(i => i.id !== takeawayID);
   };
-
 
 </script>
 
@@ -240,15 +244,15 @@ import { stringify } from 'ajv';
 
       <label for="keytakeaway">Add key takeaway</label>
       <div>
-        <textarea type="text" id="takeawayName" bind:value={takeawayName} disabled={!editable}/>
+        <textarea type="text" id="takeawayName" bind:value={currentTakeawayText} disabled={!editable}/>
         <button on:click={() => addKeyTakeaway()}>Save takeaway</button>
       </div>
 
       <div class="list">
         {#each keyTakeaways as k}
           <div class = "list-item">
-            {k}
-            <button on:click={() => removeKeyTakeaway(k)}>&times;</button>
+            {k.text}
+            <button on:click={() => removeKeyTakeaway(k.id)}>&times;</button>
           </div>
         {/each}
       </div>
@@ -286,7 +290,8 @@ import { stringify } from 'ajv';
       padding: 0;
       margin: 0;
       color: #dc4f21;
-      font-size: 18px;
+      font-size: 23px;
+      font-weight: bold;
       cursor: pointer;
     }
   }

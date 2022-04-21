@@ -29,13 +29,43 @@
 
   beforeUpdate(() => {
     preprocessContent();
-	});
+  });
+
+  let componentsVisibility = [];
 
   const preprocessContent = () => {
     //Add "Expand text buttons"
+    addExpandSectionButtons();
     //Add MadLib
-    //Add "You may also like carousel"
-    document.content.splice(4, 0, {type: 'madlib'});
+    //document.content.splice(4, 0, {type: 'madlib'});
+    //Add "You may also like" carousel
+    console.log(document.content);
+    console.log(componentsVisibility);
+  }
+
+  const addExpandSectionButtons = () => {
+    for (let i = 0; i < document.content.length; i++) {
+      if (document.content[i].type === 'heading'){
+        componentsVisibility[i] = {type: document.content[i].type, visible: true};
+        let x = i + 1;
+        let numParagraphs = 0;
+        while (document.content[x].type !== 'heading' && numParagraphs < 2) {
+          if (document.content[x].type === 'paragraph'){
+            numParagraphs++;
+          }
+          componentsVisibility[x] = {type: document.content[x].type, visible: true};
+          x++;
+        }
+        if (numParagraphs >= 2){
+          document.content.splice(x, 0, {type: 'expand', content: {section: "blue economy"}});
+          componentsVisibility[x] = {type: document.content[x].type, visible: true};
+        }
+        i = x;
+      }
+      else {
+        componentsVisibility[i] = {type: document.content[i].type, visible: false};
+      }
+    }
   }
 
   const components = {
@@ -85,7 +115,7 @@
       </div>
     </div>
     <div class="body-column">
-      {#each document.content as block}
+      {#each document.content as block, i}
         {#if components[block.type]}
           <svelte:component this={components[block.type]} {block} />
         {:else}

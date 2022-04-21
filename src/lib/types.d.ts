@@ -53,6 +53,11 @@ export type ImageBlock = {
 //  NESTED COMPONENTS
 // *******************
 
+export type ExpandSectionBlock = {
+  type: 'expand',
+  content: {section: string}
+}
+
 export type MadLibBlock = {
   type: 'madlib';
 }
@@ -84,7 +89,7 @@ export type TextBlock = {
 
 export type InlineBlock = TextBlock;
 
-export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock | MadLibBlock;
+export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock | MadLibBlock | ExpandSectionBlock;
 
 export type ContentDocument = {
   type: 'doc';

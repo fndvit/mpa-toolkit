@@ -32,7 +32,7 @@
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
-  let keyTakeaways: keyTakeaway[] = [];
+  let keyTakeaways: keyTakeaway[] = page?.chapter?.keyTakeaways;
   let currentTakeawayText: string = '';
 
   let editor: Editor;

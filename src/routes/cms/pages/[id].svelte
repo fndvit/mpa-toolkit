@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CardBlock, CardsBlock, CompletePage, Page, UserInfo } from '$lib/types';
+  import type { CardBlock, CardsBlock, CompletePage, UserInfo } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
@@ -32,7 +32,7 @@
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
-  let keyTakeaways: keyTakeaway[] = page?.chapter?.keyTakeaways;
+  let keyTakeaways: keyTakeaway[] = [];
   let currentTakeawayText: string = '';
 
   let editor: Editor;

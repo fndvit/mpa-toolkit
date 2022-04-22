@@ -11,17 +11,20 @@
 <script lang="ts">
   import Heading from "$lib/components/content/Heading.svelte";
   import Paragraph from "$lib/components/content/Paragraph.svelte";
-import LifeCycle from "$lib/components/svelte_components/LifeCycle/LifeCycle.svelte";
   import StickyMenu from "$lib/components/svelte_components/StickyMenu/StickyMenu.svelte";
   import TextSlider from "$lib/components/svelte_components/TextSlider/TextSlider.svelte";
+  import LifeCycle from "$lib/components/svelte_components/LifeCycle/LifeCycle.svelte";
 
   import { staticUrl } from "$lib/helpers";
-  import type { Page, User, Tag, ContentDocument } from "$lib/types";
+  import type { Page, User, Tag, ContentDocument, TagOnPages } from "$lib/types";
 
 
-  export let page: Page & { authors: User[], tags: Tag[]};
+  export let page: Page & { authors: User[], tags: TagOnPages[]};
   export let document: ContentDocument;
   export let headings: { text: string }[];
+  export let tags: Tag[];
+
+  let pageTags: (Tag & {category: string})[] = page && page.tags.map(t => ({...tags.find(tag => tag.id === t.tagId), category: t.categoryId}));
 
   const components = {
     'heading': Heading,
@@ -65,7 +68,7 @@ import LifeCycle from "$lib/components/svelte_components/LifeCycle/LifeCycle.sve
       {/each}
     </div>
     <div class="lifecycle-column">
-
+      <LifeCycle tags={pageTags}/>
     </div>
   </div>
 </div>

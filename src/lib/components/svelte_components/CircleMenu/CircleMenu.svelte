@@ -25,16 +25,17 @@
   }
 
   export interface MenuElement {
+    id: number;
     percentatge: number;
     group: number;
-    type: string;
+    type?: string;
     color: string;
   }
 </script>
 <script lang='ts'>
   import CircularSegment from './CircularSegment.svelte';
   import menuConfig from './circlemenuconfig.json';
-  import menuData from './testingData.json';
+  import menuData from './lifeCycleConfig.json';
   import type { Segment } from './CircularSegment.svelte';
   import { Thickness } from './CircularSegment.svelte';
 
@@ -79,6 +80,10 @@
   }
 
   let menuSegments = calcSegments();
+
+  $: if(data) {
+    menuSegments = calcSegments();
+  }
 </script>
 
 

@@ -18,6 +18,7 @@ export const requestToPrismaParams = async (request: Request) => {
   const image = formData.get("image") as string;
   const contentStr = formData.get("content") as string;
   const content = JSON.parse(contentStr);
+  const pageId = formData.get('page') as string;
 
   return {
     title, slug, summary, content,
@@ -27,21 +28,18 @@ export const requestToPrismaParams = async (request: Request) => {
         id: parseInt(id)
       }))
     },
-    tags:{
-      create: [
-        {
-          category: {
-            connect: {
-              id: 1,
-            }
-          },
-          tag: {
-            connect: {
-              id: 2,
-            },
-          },
-        },
-      ]
+    tags: {
+      deleteMany: {
+        OR: [
+          { pageId: { equals: parseInt(pageId) } },
+        ]
+      },
+      createMany: {
+        data: tags.split(",").map(tag => ({
+          tagId: parseInt(tag.split(':')[0]),
+          categoryId: parseInt(tag.split(':')[1])
+        }))
+      },
     }
   };
 };

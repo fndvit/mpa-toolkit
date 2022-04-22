@@ -11,6 +11,7 @@ export const get: RequestHandler = async ({ params }) => {
     where: { slug },
     include: { authors: true, tags: true }
   });
+  const tags = await prisma.tag.findMany();
   if (!page) {
     return error404('Page not found');
   }
@@ -29,7 +30,8 @@ export const get: RequestHandler = async ({ params }) => {
     body: {
       page,
       document,
-      headings
+      headings,
+      tags
     }
   };
 };

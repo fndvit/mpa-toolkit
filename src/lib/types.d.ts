@@ -28,6 +28,12 @@ export interface Category {
   category: string;
 }
 
+export interface TagOnPages {
+  pageId: string;
+  tagId: string;
+  categoryId: string;
+}
+
 // **********************
 //  TOP LEVEL COMPONENTS
 // **********************

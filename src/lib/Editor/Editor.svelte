@@ -1,4 +1,5 @@
 <script lang="ts">
+  import LifeCycle, { LifeCycleTags } from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
   import ProsemirrorEditor from '$lib/Editor/ProsemirrorEditor.svelte';
   import { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
@@ -11,6 +12,7 @@
   let view: EditorView;
 
   export let initialDoc: {[key: string]: any} = null;
+  export let lifeCycleData: {options: LifeCycleTags, selected: LifeCycleTags};
 
   let editorState = EditorState.create({
     schema,
@@ -31,6 +33,7 @@
   }
 
   onMount(() => focusEditor());
+
 </script>
 
 <svelte:head>
@@ -40,12 +43,25 @@
 {#if view}
   <EditorMenu {editorState} dispatchTransaction={view.dispatch} on:change={handleChange} />
 {/if}
-
-<div class="prosemirror-container">
-  <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view bind:focus={focusEditor} />
+<div class="content">
+  <div class="prosemirror-container">
+    <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view bind:focus={focusEditor} />
+  </div>
+  <div class="life-cycle">
+    <LifeCycle tagsOptions={lifeCycleData.options} tagsSelected={lifeCycleData.selected} editable={true}/>
+  </div>
 </div>
 
+
 <style lang="scss">
+  .life-cycle{
+    margin-top: 32px;
+  }
+  .content {
+    display: grid;
+    grid-template-columns: 70% auto;
+    column-gap: 1rem;
+  }
   .prosemirror-container {
     width: 40rem;
     margin: 0 auto;

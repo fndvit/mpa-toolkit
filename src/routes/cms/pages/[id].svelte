@@ -10,6 +10,7 @@
   import DeleteModal from "$lib/components/DeleteModal.svelte";
   import LifeCycle, { LifeCycleTags, TagEnum, TagCategory } from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
 
+
   // export let pageId: number;
   export let users: UserInfo[];
   export let page: Page & { authors: UserInfo[], tags: TagInfo[] };
@@ -28,8 +29,9 @@
   let saving = false;
   let deleting = false;
   let autoPopulateSlug = !slug;
-  let tagsOptions: LifeCycleTags =  <LifeCycleTags>{};;
+  let tagsOptions: LifeCycleTags =  <LifeCycleTags>{};
   let tagsSelected: LifeCycleTags = <LifeCycleTags>{};
+
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -41,19 +43,20 @@
     preselected: authors && authors.some(a => a.value === u.id),
   }));
 
-  const testOptions:Option[] = tags.map(t => ({
-    value: t.id,
-    label: t.value,
-    [t.id]: t.typeId,
-    preselected: (pageTags && pageTags.find(pt => t.id === pt.value))? true: false,
-  }));
-
   const selectTagsOptions = (tagType: TagEnum, category?: TagCategory) => tags.filter(t => t.typeId === tagType).map(t => ({
     value: t.id,
     label: t.value,
     [t.id]: t.typeId,
     preselected: (pageTags && pageTags.find(pt => t.id === pt.value && (category === pt.category || category === undefined)))? true: false,
   }));
+
+  const getTagOptions = (tags: LifeCycleTags) => {
+    const goodforTags = tags.goodfor.map(a => a.value + ':' + TagCategory.Primary);
+    const whatsaboutTags = tags.whatsabout.map(a => a.value + ':' + TagCategory.Primary);
+    const whereinPrimaryTags = tags.wherein.primary.map(a => a.value + ':' + TagCategory.Primary);
+    const whereinSecondaryTags = tags.wherein.secondary.map(a => a.value + ':' + TagCategory.Secondary);
+    return goodforTags.concat(whatsaboutTags).concat(whereinPrimaryTags).concat(whereinSecondaryTags);
+  }
 
   tagsOptions = {
       wherein: {
@@ -72,10 +75,14 @@
       goodfor: [],
   };
 
+  let lifeCycleData = {
+    options: tagsOptions,
+    selected: tagsSelected,
+  }
 
   function getFormData() {
     const authorIds = authors.map(a => a.value as number);
-    const tagsIds = pageTags.map(a => a.value  as number);
+    const tagsIds = getTagOptions(tagsSelected);
     const formData = new FormData();
     formData.append('title', title);
     formData.append('slug', slug);
@@ -84,13 +91,14 @@
     formData.append('authors', authorIds.join(','));
     formData.append('tags', tagsIds.join(','));
     formData.append('content', JSON.stringify(editor.getDocumentJson()));
+    formData.append('page', page.id + '');
+
     return formData;
   }
 
   async function savePost() {
     saving = true;
     const formData = getFormData();
-
     const response = await (
       newPage
       ? fetch('/api/pages/create', { method: 'PUT', body: formData })
@@ -150,7 +158,6 @@
 </script>
 
 <div class="meta">
-  <LifeCycle tagsOptions={tagsOptions} tagsSelected={tagsSelected} editable={true}/>
   <h1>{#if newPage}New Page{:else}Edit Page{/if}</h1>
 
   <div class="fields">
@@ -201,7 +208,7 @@
 
 
 <div class="editor-container">
-  <Editor bind:this={editor} initialDoc={content} />
+  <Editor bind:this={editor} initialDoc={content} lifeCycleData={lifeCycleData}/>
 </div>
 
 

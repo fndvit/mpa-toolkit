@@ -55,7 +55,11 @@ export type ImageBlock = {
 
 export type ExpandSectionBlock = {
   type: 'expand',
-  content: {section: string}
+  content: {
+    ID: number,
+    section: string,
+    interaction: (ExpandButtonID: number, show: boolean) => void
+  }
 }
 
 export type MadLibBlock = {

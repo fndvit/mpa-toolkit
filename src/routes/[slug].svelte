@@ -17,9 +17,8 @@
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import ExpandButton from "$lib/components/ExpandButton.svelte";
-
   import { staticUrl } from "$lib/helpers";
-  import type { ContentDocument, CompletePage, HeadingBlock } from "$lib/types";
+  import type { ContentDocument, CompletePage, ExpandSectionBlock } from "$lib/types";
   import { onMount } from "svelte";
 
   export let page: CompletePage;
@@ -38,15 +37,18 @@
 
   let componentsVisibility = [];
   for (let i = 0; i < document.content.length; i++) {
-    let v = {type: '', visible: true};
-    componentsVisibility[i] = v;
+    let pageContent = {type: '', visible: true};
+    componentsVisibility[i] = pageContent;
   }
 
   const preprocessContent = () => {
-
     addExpandButtons();
     console.log(document.content);
     console.log(componentsVisibility);
+  }
+
+  const expandButtonClicked = (buttonID: number, show: boolean) => {
+    console.log(buttonID, show);
   }
 
   const addExpandButtons = () => {
@@ -54,7 +56,15 @@
     for (let y = sections.length - 1; y >= 0; y--) {
       let buttonPos = isExpandable(sections[y]);
       if (buttonPos !== -1){
-        document.content.splice(buttonPos, 0, {type: 'expand', content: {section: "blue economy"}});
+        let expBut: ExpandSectionBlock = {
+          type: 'expand',
+          content: {
+            ID: buttonPos,
+            section: "blue economy",
+            interaction: expandButtonClicked
+          }
+        };
+        document.content.splice(buttonPos, 0, expBut);
         componentsVisibility.splice(buttonPos, 0, {type: 'expand', visible: true});
         let z = buttonPos+1;
         let foundHeader = false;
@@ -71,40 +81,6 @@
     }
   }
 
-
-
-  /*const addExpandSectionButtons = () => {
-    componentsVisibility = [];
-    let madLibAdded = false;
-    for (let i = 0; i < document.content.length; i++) {
-      if (document.content[i].type === 'heading'){
-        componentsVisibility[i] = {type: document.content[i].type, visible: true};
-        let x = i + 1;
-        let numParagraphs = 0;
-        while (document.content[x].type !== 'heading' && numParagraphs < 2) {
-          if (document.content[x].type === 'paragraph'){
-            numParagraphs++;
-          }
-          componentsVisibility[x] = {type: document.content[x].type, visible: true};
-          x++;
-        }
-        if (numParagraphs >= 2){
-          document.content.splice(x, 0, {type: 'expand', content: {section: "blue economy"}});
-          componentsVisibility[x] = {type: document.content[x].type, visible: true};
-          if (!madLibAdded){
-            x++;
-            document.content.splice(x, 0, {type: 'madlib'});
-            componentsVisibility[x] = {type: document.content[x].type, visible: true};
-            madLibAdded = true;
-          }
-        }
-        i = x;
-      }
-      else {
-        componentsVisibility[i] = {type: document.content[i].type, visible: false};
-      }
-    }
-  }*/
 
   function getDocumentSections(): Section[] {
     let sections: Section[] = [];
@@ -148,12 +124,6 @@
       return -1;
     }
   }
-
-
-  const addExpandSectionButtons2 = () => {
-
-  }
-
 
   const components = {
     'heading': Heading,

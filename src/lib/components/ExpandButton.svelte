@@ -1,20 +1,23 @@
 <script lang="ts">
-
-  export let section: string = "[redacted]";
-
-  const defaultText = `Learn about the <b>` + section + `</b>`;
+  import type { ExpandSectionBlock } from "$lib/types";
+  export let block: ExpandSectionBlock;
+  let defaultText: string, text: string, ID: number;
+  $: ID = block.content.ID;
+  $: defaultText = `Learn about the <b>` + block.content.section + `</b>`;
+  $: text = defaultText;
   const expandedText = 'Read less';
-
-  let text = defaultText;
   let arrowD = 1;
 
-
-  const click = () => { text = text === defaultText ? expandedText : defaultText; arrowD *= -1; };
+  const interact = () => {
+    block.content.interaction(ID, text === defaultText);
+    text = text === defaultText ? expandedText : defaultText;
+    arrowD *= -1;
+  };
 
 </script>
 
 <div class="external-container">
-  <div class="internal-container" on:click={click}>
+  <div class="internal-container" on:click={interact}>
     <svg width="13" height="8" viewBox="0 0 13 8" fill="none" transform="scale(1, {arrowD})" class="arrow">
       <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
     </svg>

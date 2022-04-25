@@ -26,102 +26,78 @@
   export let headings: { text: string }[];
   export let readTime: number;
 
-  interface Section {
-    beginIndex: number,
-    endIndex: number
-  }
-
   onMount(() => {
     preprocessContent();
   });
 
   let componentsVisibility = [];
-  for (let i = 0; i < document.content.length; i++) {
+  for (let v = 0; v < document.content.length; v++) {
     let pageContent = {type: '', visible: true};
-    componentsVisibility[i] = pageContent;
+    componentsVisibility[v] = pageContent;
   }
 
   const preprocessContent = () => {
-    addExpandButtons();
+    test();
     console.log(document.content);
     console.log(componentsVisibility);
   }
 
-  const expandButtonClicked = (buttonID: number, show: boolean) => {
-    console.log(buttonID, show);
-  }
-
-  const addExpandButtons = () => {
-    let sections:Section[] = getDocumentSections();
-    for (let y = sections.length - 1; y >= 0; y--) {
-      let buttonPos = isExpandable(sections[y]);
-      if (buttonPos !== -1){
-        let expBut: ExpandSectionBlock = {
-          type: 'expand',
-          content: {
-            ID: buttonPos,
-            section: "blue economy",
-            interaction: expandButtonClicked
-          }
-        };
-        document.content.splice(buttonPos, 0, expBut);
-        componentsVisibility.splice(buttonPos, 0, {type: 'expand', visible: true});
-        let z = buttonPos+1;
-        let foundHeader = false;
-        while(z < document.content.length && !foundHeader){
-          if (document.content[z].type === 'heading'){
-            foundHeader = true;
-          }
-          else {
-            componentsVisibility[z] = false;
-            z++;
-          }
-        }
-      }
+  const test2 = (affectedPositions: number[], show: boolean) => {
+    for (let p = 0; p < affectedPositions.length; p++) {
+      componentsVisibility[affectedPositions[p]].visible = show;
     }
   }
 
-
-  function getDocumentSections(): Section[] {
-    let sections: Section[] = [];
+  const test = () => {
+    let numReadMoreButtons = 0;
     for (let i = 0; i < document.content.length; i++) {
       if (document.content[i].type === 'heading'){
-        let x = i+1;
-        let foundHeader = false;
-        let beginSectionPos = i;
-        let endSectionPos = document.content.length-1;
-        while (x < document.content.length && !foundHeader){
-          if (document.content[x].type === 'heading') {
-            endSectionPos = x-1;
-            foundHeader = true;
+        let foundNextHeading = false;
+        let x = i + 1;
+        let lastPositionOfSection = x;
+        let hiddenComponents: number[] = [];
+        let numParagraphs = 0;
+        let readMoreButtonAdded = false;
+
+        while (!foundNextHeading && x < document.content.length){
+          if (document.content[x].type === 'heading'){
+            foundNextHeading = true;
+          }
+          else if (readMoreButtonAdded) {
+            hiddenComponents.push(x);
+            lastPositionOfSection = x;
+          }
+          if (document.content[x].type === 'paragraph'){
+            numParagraphs++;
+            if (numParagraphs === 2){
+              readMoreButtonAdded = true;
+            }
           }
           x++;
         }
-        let newSection: Section = {beginIndex: beginSectionPos, endIndex: endSectionPos};
-        sections.push(newSection);
-      }
-    }
-    return sections;
-  }
 
-  function isExpandable(section: Section): number {
-    let i = section.beginIndex;
-    let numParagraphs = 0;
-    let lastVisibleParagraphIndex = 0;
-    while (i <= section.endIndex){
-      if (document.content[i].type === 'paragraph'){
-        numParagraphs++;
-        if (numParagraphs === 2){
-          lastVisibleParagraphIndex = i;
+        if (numParagraphs > 2){
+          let newExpandButton: ExpandSectionBlock = {
+            type: 'expand',
+            content: {
+              affected: hiddenComponents,
+              section: "blue economy",
+              interaction: test2
+            }
+          };
+          document.content.splice(lastPositionOfSection + 1, 0, newExpandButton);
+          componentsVisibility.splice(lastPositionOfSection + 1, 0, {type: 'expand', visible: true});
+          for (let p = 0; p < hiddenComponents.length; p++) {
+            componentsVisibility[hiddenComponents[p]].visible = false;
+          }
+          numReadMoreButtons++;
+
+          if (numReadMoreButtons === 1){
+            document.content.splice(lastPositionOfSection + 2, 0, {type: 'madlib'});
+            componentsVisibility.splice(lastPositionOfSection + 2, 0, {type: 'madlib', visible: true});
+          }
         }
       }
-      i++;
-    }
-    if (numParagraphs > 2){
-      return lastVisibleParagraphIndex + 1;
-    }
-    else{
-      return -1;
     }
   }
 

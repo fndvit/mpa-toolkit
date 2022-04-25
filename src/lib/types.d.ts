@@ -56,9 +56,9 @@ export type ImageBlock = {
 export type ExpandSectionBlock = {
   type: 'expand',
   content: {
-    ID: number,
+    affected: number[],
     section: string,
-    interaction: (ExpandButtonID: number, show: boolean) => void
+    interaction: (affectedPositions: number[], show: boolean) => void
   }
 }
 

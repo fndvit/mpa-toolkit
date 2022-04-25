@@ -1,15 +1,15 @@
 <script lang="ts">
   import type { ExpandSectionBlock } from "$lib/types";
   export let block: ExpandSectionBlock;
-  let defaultText: string, text: string, ID: number;
-  $: ID = block.content.ID;
+  let defaultText: string, text: string;
+
   $: defaultText = `Learn about the <b>` + block.content.section + `</b>`;
   $: text = defaultText;
   const expandedText = 'Read less';
   let arrowD = 1;
 
   const interact = () => {
-    block.content.interaction(ID, text === defaultText);
+    block.content.interaction(block.content.affected, text === defaultText);
     text = text === defaultText ? expandedText : defaultText;
     arrowD *= -1;
   };

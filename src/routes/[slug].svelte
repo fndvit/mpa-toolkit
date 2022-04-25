@@ -37,18 +37,18 @@
   }
 
   const preprocessContent = () => {
-    test();
+    addNonCMSComponents();
     console.log(document.content);
     console.log(componentsVisibility);
   }
 
-  const test2 = (affectedPositions: number[], show: boolean) => {
+  const readMoreToggle = (affectedPositions: number[], show: boolean) => {
     for (let p = 0; p < affectedPositions.length; p++) {
       componentsVisibility[affectedPositions[p]].visible = show;
     }
   }
 
-  const test = () => {
+  const addNonCMSComponents = () => {
     let numReadMoreButtons = 0;
     for (let i = 0; i < document.content.length; i++) {
       if (document.content[i].type === 'heading'){
@@ -82,7 +82,7 @@
             content: {
               affected: hiddenComponents,
               section: "blue economy",
-              interaction: test2
+              interaction: readMoreToggle
             }
           };
           document.content.splice(lastPositionOfSection + 1, 0, newExpandButton);

@@ -53,6 +53,7 @@
   font-size: 20px;
   font-weight: normal;
   margin-left: -25px;
+  width: calc(100vw - 368px);
 }
 
 .title-text {
@@ -95,6 +96,7 @@
   padding-left: 0.7rem;
   transform: rotate(-90deg) scale(1.35) translateX(-0.25rem);
   overflow: hidden;
+  outline: none;
 }
 
 </style>

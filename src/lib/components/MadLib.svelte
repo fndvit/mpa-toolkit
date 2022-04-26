@@ -1,6 +1,6 @@
 <script lang="ts">
   import MadLibSelector from "./MadLibSelector.svelte";
-  export let userPersona: string[];
+  let userPersona: string[];
 
   const typeUserList = ['an MPA planner', 'an MPA manager', 'a community organizer', 'an LMMA practitioner'];
   const objectiveList = ['answers', 'examples', 'case studies', 'tools'];

@@ -26,8 +26,6 @@
   export let headings: { text: string }[];
   export let readTime: number;
 
-  const keyTakeaways = JSON.parse(page.chapter.keyTakeaways);
-
   const sections = createSections(document);
 
   const components = {
@@ -37,6 +35,23 @@
     'image': Image,
     'madlib': MadLib,
     'expand' : ExpandButton
+  };
+
+  const keyTakeawaysBlock: CardsBlock = {
+    type: 'cards',
+    content: page.chapter.keyTakeaways.map(k => ({
+      type: 'card',
+      content: [
+        {
+          type: 'cardheading',
+          content: [{ text: 'Key takeaways', type: 'text'}]
+        },
+        {
+          type: 'cardbody',
+          content: [{ text: k, type: 'text'}]
+        }
+      ]
+    }))
   };
 
 </script>
@@ -61,7 +76,7 @@
       <div class="summary">{page.chapter.summary}</div>
       {#if page.chapter.keyTakeaways}
         <div class="key-takeaways">
-          <TextSlider block={keyTakeaways}/>
+          <TextSlider block={keyTakeawaysBlock}/>
         </div>
       {/if}
     </div>

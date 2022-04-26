@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
-  import { onMount } from 'svelte';
   import '@splidejs/splide/dist/css/splide.min.css';
   import CarouselDots from './CarouselDots.svelte';
   import CardHeading from './CardHeading.svelte';

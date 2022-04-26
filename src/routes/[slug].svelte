@@ -191,6 +191,7 @@
     align-items: flex-end;
     padding: 6rem;
     padding-bottom: 3rem;
+    padding-left: 350px;
     h1 {
       max-width: 800px;
       color: white;

@@ -66,15 +66,17 @@
 <style lang="scss">
 
   .milestones-grid {
-    padding-left: 100px;
+    margin-left: 345px;
+    max-width: 1300px;
   }
 
   .milestones-title {
     font-size: 20px;
     font-weight: bold;
     color: #FFFFFF;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 25px;
+    margin-bottom: 35px;
+    margin-left: 345px;
   }
 
   .svg-line {
@@ -100,7 +102,7 @@
 
   .meta-content {
     width: 1300px;
-    margin: auto;
+    margin-left: 350px;
     padding: 35px 0;
   }
 

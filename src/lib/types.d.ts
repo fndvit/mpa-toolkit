@@ -1,4 +1,4 @@
-import type { Page, User, Role, CaseStudy } from '@prisma/client';
+import type { Page, User, Role, CaseStudy, Chapter } from '@prisma/client';
 export type * from '@prisma/client';
 
 export interface Locals {
@@ -86,3 +86,9 @@ export type ContentDocument = {
   type: 'doc';
   content: ContentBlock[];
 }
+
+export type Section = {
+  id: string;
+  topic: string;
+  blocks: ContentBlock[];
+};

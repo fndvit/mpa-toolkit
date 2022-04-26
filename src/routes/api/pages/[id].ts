@@ -14,6 +14,7 @@ export type PageRequest = {
   chapter?: {
     summary: string;
     authors: number[];
+    keyTakeaways: string[];
   }
 }
 
@@ -41,6 +42,7 @@ export const patch = authMiddleware(
         chapter: chapter && {
           update: {
             summary: { set: chapter.summary },
+            keyTakeaways: { set: chapter.keyTakeaways },
             authors: {
               set: chapter.authors.map(author => ({
                 id: author

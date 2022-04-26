@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, Page, UserInfo } from '$lib/types';
+  import type { CompletePage, UserInfo } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
@@ -26,6 +26,9 @@
   let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
+
+  let keyTakeaways: string[] = page?.chapter?.keyTakeaways;
+  let currentTakeawayText: string = '';
 
   let editor: Editor;
   let uploadingImage = false;
@@ -69,7 +72,8 @@
       chapter: pageType === "Chapter"
         ? {
           authors: authors?.map(a => a.value),
-          summary
+          summary,
+          keyTakeaways
         }
         : undefined
     };
@@ -114,7 +118,7 @@
 
   $: selectedTypeFieldsComplete = pageType === "Case Study"
     ? name && established && size && governance && staff && budget && budgetLevel && lat && long
-    : summary && authors?.length;
+    : summary && authors?.length && keyTakeaways.length;
 
   $: editable = !saving && !deleting;
   $: saveable = !saving && !deleting && sharedFieldsComplete && selectedTypeFieldsComplete;
@@ -134,6 +138,18 @@
     const validChars = /[a-zA-Z0-9-]/;
     if (!validChars.exec(e.data)) e.preventDefault();
   }
+
+  const onClickSaveTakeaway = () => {
+    if (currentTakeawayText.length > 0){
+      keyTakeaways = [...keyTakeaways, currentTakeawayText];
+      currentTakeawayText = "";
+    }
+  };
+
+  const onClickDeleteTakeaway = (index: number) => {
+    keyTakeaways.splice(index, 1);
+    keyTakeaways = keyTakeaways;
+  };
 
 </script>
 
@@ -219,6 +235,21 @@
       </label>
       <MultiSelect bind:selected={authors} options={authorOptions} disabled={!editable} />
 
+      <label for="keytakeaway">Add key takeaway</label>
+      <div>
+        <textarea type="text" id="takeawayName" bind:value={currentTakeawayText} disabled={!editable}/>
+        <button on:click={onClickSaveTakeaway}>Save takeaway</button>
+      </div>
+
+      <div class="list">
+        {#each keyTakeaways as k, i}
+          <div class = "list-item">
+            {k}
+            <button on:click={() => onClickDeleteTakeaway(i)}>&times;</button>
+          </div>
+        {/each}
+      </div>
+
     {/if}
 
   </div>
@@ -240,6 +271,30 @@
 </div>
 
 <style lang="scss">
+
+  .list {
+    display: inline-block !important;
+    width: 100rem;
+
+    button {
+      float: right;
+      border: none;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      color: #dc4f21;
+      font-size: 23px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+
+  .list-item {
+    list-style: none;
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
   .meta {
     padding: 0 20px 20px;
   }

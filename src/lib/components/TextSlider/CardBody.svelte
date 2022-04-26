@@ -30,11 +30,12 @@
 <style>
   .content {
     margin-top: 25px;
-    font-size: 18px;
+    font-size: 22px;
     overflow: auto;
     min-height: 50px;
     max-height: 170px;
     visibility: visible;
+    font-family: var(--font-serif);
   }
   .content:hover {
     visibility: visible;

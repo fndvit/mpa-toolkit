@@ -26,6 +26,7 @@ export const put = authMiddleware(
         chapter: chapter && {
           create: {
             summary: chapter.summary,
+            keyTakeaways: chapter.keyTakeaways,
             authors: {
               connect: chapter.authors.map(author => ({
                 id: author

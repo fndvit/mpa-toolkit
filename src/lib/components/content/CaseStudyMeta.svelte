@@ -50,16 +50,7 @@
 
 </div>
 
-<div class="meta-milestones">
- Milestones
-</div>
-
 <style lang="scss">
-
-  .meta-milestones {
-    background: #04558E;
-    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
-  }
 
   .meta-container {
     background: #13487C;

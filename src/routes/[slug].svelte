@@ -26,7 +26,7 @@
   export let headings: { text: string }[];
   export let readTime: number;
 
-  const keyTakeaways = page.chapter ? JSON.parse(page.chapter.keyTakeaways) : null;
+  const keyTakeaways = JSON.parse(page.chapter.keyTakeaways);
 
   onMount(() => {
     preprocessContent();

@@ -73,7 +73,7 @@
         ? {
           authors: authors?.map(a => a.value),
           summary,
-          keyTakeaways: keyTakeaways
+          keyTakeaways
         }
         : undefined
     };
@@ -146,7 +146,10 @@
     }
   };
 
-  const onClickDeleteTakeaway = (index: number) => keyTakeaways = keyTakeaways.filter((_, i) => i !== index);
+  const onClickDeleteTakeaway = (index: number) => {
+    keyTakeaways.splice(index, 1);
+    keyTakeaways = keyTakeaways;
+  };
 
 </script>
 

@@ -53,19 +53,6 @@ export type ImageBlock = {
 //  NESTED COMPONENTS
 // *******************
 
-export type ExpandSectionBlock = {
-  type: 'expand',
-  content: {
-    affected: number[],
-    section: string,
-    interaction: (affectedPositions: number[], show: boolean) => void
-  }
-}
-
-export type MadLibBlock = {
-  type: 'madlib';
-}
-
 export type CardBlock = {
   type: 'card';
   content: [CardHeadingBlock, CardBodyBlock];
@@ -93,7 +80,7 @@ export type TextBlock = {
 
 export type InlineBlock = TextBlock;
 
-export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock | MadLibBlock | ExpandSectionBlock;
+export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock;
 
 export type ContentDocument = {
   type: 'doc';

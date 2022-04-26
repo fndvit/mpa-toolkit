@@ -16,7 +16,6 @@
   import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
-  import ExpandButton from "$lib/components/ExpandButton.svelte";
   import { createSections, staticUrl } from "$lib/helpers";
   import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
   import Section from "$lib/components/content/Section.svelte";
@@ -33,8 +32,6 @@
     'paragraph': Paragraph,
     'cards' : TextSlider,
     'image': Image,
-    'madlib': MadLib,
-    'expand' : ExpandButton
   };
 
   const keyTakeawaysBlock: CardsBlock = {
@@ -74,7 +71,7 @@
         <div class="readtime">{readTime} min read</div>
       </div>
       <div class="summary">{page.chapter.summary}</div>
-      {#if page.chapter.keyTakeaways}
+      {#if page.chapter.keyTakeaways.length > 0}
         <div class="key-takeaways">
           <TextSlider block={keyTakeawaysBlock}/>
         </div>

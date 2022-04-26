@@ -42,7 +42,7 @@ export const patch = authMiddleware(
         chapter: chapter && {
           update: {
             summary: { set: chapter.summary },
-            keyTakeaways: {set: JSON.parse(chapter.keyTakeaways)},
+            keyTakeaways: { set: chapter.keyTakeaways },
             authors: {
               set: chapter.authors.map(author => ({
                 id: author

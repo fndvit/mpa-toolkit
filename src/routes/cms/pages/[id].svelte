@@ -31,6 +31,8 @@
   let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
+  let legacyTakeaways: string = page?.chapter?.keyTakeaways;
+  let testing = page?.chapter?.keyTakeaways as Prisma.JsonObject;
 
   let keyTakeaways: keyTakeaway[] = [];
   let currentTakeawayText: string = '';
@@ -169,9 +171,9 @@
     if (!validChars.exec(e.data)) e.preventDefault();
   }
 
-  const addKeyTakeaway = () => {
-    if (currentTakeawayText.length > 0){
-      const newTakeaway = {id: keyTakeaways.length, text: currentTakeawayText};
+  const addKeyTakeaway = (text: string) => {
+    if (text.length > 0){
+      const newTakeaway = {id: keyTakeaways.length, text: text};
       keyTakeaways.push(newTakeaway);
       keyTakeaways = keyTakeaways;
       currentTakeawayText = "";
@@ -181,6 +183,18 @@
   const removeKeyTakeaway = (takeawayID: number) => {
     keyTakeaways = keyTakeaways.filter(i => i.id !== takeawayID);
   };
+
+  if (!newPage) {
+    const keyTakeawaysObj = JSON.parse(JSON.stringify(legacyTakeaways));
+    console.log(testing);
+    console.log(summary);
+    console.log(keyTakeawaysObj);
+    if (keyTakeawaysObj){
+      keyTakeawaysObj.content.forEach(card => {
+      addKeyTakeaway(card.content[1].content[0].text);
+    });
+    }
+  }
 
 </script>
 
@@ -269,7 +283,7 @@
       <label for="keytakeaway">Add key takeaway</label>
       <div>
         <textarea type="text" id="takeawayName" bind:value={currentTakeawayText} disabled={!editable}/>
-        <button on:click={() => addKeyTakeaway()}>Save takeaway</button>
+        <button on:click={() => addKeyTakeaway(currentTakeawayText)}>Save takeaway</button>
       </div>
 
       <div class="list">

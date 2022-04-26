@@ -44,7 +44,7 @@ model CaseStudy {
 model Chapter {
   summary   String
   authors   User[]
-  keyTakeaways Json?
+  keyTakeaways String?
   page      Page   @relation(fields: [pageId], references: [id])
   pageId    Int    @id
 }

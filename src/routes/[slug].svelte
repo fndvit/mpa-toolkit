@@ -26,6 +26,8 @@
   export let headings: { text: string }[];
   export let readTime: number;
 
+  const keyTakeaways = JSON.parse(page.chapter.keyTakeaways);
+
   onMount(() => {
     preprocessContent();
   });
@@ -132,7 +134,7 @@
       <div class="summary">{page.chapter.summary}</div>
       {#if page.chapter.keyTakeaways}
         <div class="key-takeaways">
-          <TextSlider block={page.chapter.keyTakeaways}/>
+          <TextSlider block={keyTakeaways}/>
         </div>
       {/if}
     </div>

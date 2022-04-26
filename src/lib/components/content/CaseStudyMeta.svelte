@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { CaseStudy } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
+  import Milestone from "../Milestone.svelte";
 
   export let caseStudy: CaseStudy;
 
@@ -51,10 +52,41 @@
 </div>
 
 <div class="meta-milestones">
- Milestones
+  <div class="milestones-title">Milestones</div>
+
+  <svg class="svg">
+    <line class="svg-line" x1="0" y1="50%" x2="100%" y2="50%"/>
+  </svg>
+
+  <div class="milestones-grid">
+    <Milestone/>
+  </div>
 </div>
 
 <style lang="scss">
+
+  .milestones-grid {
+    padding-left: 100px;
+  }
+
+  .milestones-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #FFFFFF;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .svg-line {
+    stroke:#FBE26B;
+    stroke-width:3;
+  }
+
+  .svg {
+    height:5px;
+    width:100%;
+    margin-top: 15px;
+  }
 
   .meta-milestones {
     background: #04558E;

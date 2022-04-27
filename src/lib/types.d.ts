@@ -40,7 +40,7 @@ export type CompletePage = Page & {
   chapter: Chapter & {
     authors: User[];
   };
-  tags: TagOnPages;
+  tags: TagInfo[];
 }
 
 // **********************

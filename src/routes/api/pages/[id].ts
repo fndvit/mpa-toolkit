@@ -9,7 +9,7 @@ export type PageRequest = {
   slug: string;
   content: string;
   img: string;
-  tags: string;
+  tags: string[];
   caseStudy?: Omit<CaseStudy, 'pageId'>;
   chapter?: {
     summary: string;
@@ -27,18 +27,31 @@ export const patch = authMiddleware(
     validate('page', body);
 
     const { title, slug, content, img, caseStudy, chapter, tags } = body;
-
+    console.log('ALX');
+    console.log(tags);
     const page = await prisma.page.update({
       where: { id: parseInt(params.id) },
       data: {
-        title, slug, content, img, tags,
+        title, slug, content, img,
 
         caseStudy: caseStudy && {
           update: {
             ...caseStudy
           }
         },
-
+        tags: {
+          deleteMany: {
+            OR: [
+              { pageId: { equals: parseInt(params.id) } },
+            ]
+          },
+          createMany: {
+            data: tags.map(tag => ({
+              tagId: parseInt(tag.split(':')[0]),
+              categoryId: parseInt(tag.split(':')[1])
+            }))
+          },
+        },
         chapter: chapter && {
           update: {
             summary: { set: chapter.summary },
@@ -48,7 +61,6 @@ export const patch = authMiddleware(
                 id: author
               }))
             },
-            tags: tags,
           }
         },
 

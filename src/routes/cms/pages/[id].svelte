@@ -10,9 +10,11 @@
   import DeleteModal from "$lib/components/DeleteModal.svelte";
   import LifeCycle, { LifeCycleTags, TagEnum, TagCategory } from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
   import { uploadImage } from '$lib/api';
+import TagContainer from '$lib/components/svelte_components/Tags/TagContainer.svelte';
 
   export let users: UserInfo[];
   export let page: CompletePage;
+  export let tags: Tag[];
 
   const MAX_LENGTH = 140;
 
@@ -27,7 +29,7 @@
   let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
-  let pageTags: (Option & { category: number })[] = page?.tags.map(t => ({label: t.tag.value, value: t.tag.id, typeId: t.tag.typeId, category: t.category.id}));
+  let pageTags: (Option & { category: number })[] = page ? page.tags.map(t => ({label: t.tag.value, value: t.tag.id, typeId: t.tag.typeId, category: t.category.id})) : [];
 
   let keyTakeaways: string[] = page?.chapter?.keyTakeaways;
   let currentTakeawayText: string = '';
@@ -61,11 +63,10 @@
     preselected: authors && authors.some(a => a.value === u.id),
   }));
 
-  const selectTagsOptions = (tagType: TagEnum, category?: TagCategory) => page.tags.filter(t => t.typeId === tagType).map(t => ({
+  const selectTagsOptions = (tagType: TagEnum, category?: TagCategory) => tags.filter(t => t.typeId === tagType).map(t => ({
     value: t.id,
     label: t.value,
     [t.id]: t.typeId,
-    preselected: (pageTags && pageTags.find(pt => t.id === pt.value && (category === pt.category || category === undefined)))? true: false,
   }));
 
   const getTagOptions = (tags: LifeCycleTags) => {
@@ -86,11 +87,11 @@
   };
   tagsSelected = {
       wherein: {
-        primary: [],
-        secondary: [],
+        primary: tagsOptions.wherein.primary.filter(t => pageTags.find(pt => pt.value === t.value && pt.category === TagCategory.Primary)),
+        secondary: tagsOptions.wherein.secondary.filter(t => pageTags.find(pt => pt.value === t.value && pt.category === TagCategory.Secondary)),
       },
-      whatsabout: [],
-      goodfor: [],
+      whatsabout: tagsOptions.whatsabout.filter(t => pageTags.find(pt => pt.value === t.value)),
+      goodfor: tagsOptions.goodfor.filter(t => pageTags.find(pt => pt.value === t.value)),
   };
 
   let lifeCycleData = {
@@ -102,6 +103,7 @@
     return {
       title,
       slug,
+      tags: getTagOptions(tagsSelected),
       img: imgPath,
       content: editor.getDocumentJson(),
       caseStudy: pageType === "Case Study"

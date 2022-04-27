@@ -1,4 +1,5 @@
-export type { Page , User, Role } from '@prisma/client';
+import type { Page, User, Role, CaseStudy, Chapter } from '@prisma/client';
+export type * from '@prisma/client';
 
 export interface Locals {
 	userid: string;
@@ -34,6 +35,14 @@ export interface TagOnPages {
   categoryId: string;
 }
 
+export type CompletePage = Page & {
+  caseStudy: CaseStudy;
+  chapter: Chapter & {
+    authors: User[];
+  };
+  tags: TagOnPages;
+}
+
 // **********************
 //  TOP LEVEL COMPONENTS
 // **********************
@@ -48,13 +57,22 @@ export type HeadingBlock = {
 
 export type ParagraphBlock = {
   type: 'paragraph';
-  content: InlineBlock[];
+  content?: InlineBlock[];
 }
 
 export type CardsBlock = {
   type: 'cards';
   content: CardBlock[];
 };
+
+export type ImageBlock = {
+  type: 'image';
+  attrs: {
+    src: string;
+    alt?: string;
+    title?: string;
+  };
+}
 
 // *******************
 //  NESTED COMPONENTS
@@ -93,3 +111,9 @@ export type ContentDocument = {
   type: 'doc';
   content: ContentBlock[];
 }
+
+export type Section = {
+  id: string;
+  topic: string;
+  blocks: ContentBlock[];
+};

@@ -1,9 +1,15 @@
+import type { RequestHandler } from "@sveltejs/kit";
 import { JWT, SvelteKitAuth } from "sk-auth";
 import { GoogleOAuth2Provider } from "sk-auth/providers";
 import { prisma } from '$lib/prisma';
 import { logger } from "./log";
-import type { RequestHandler } from "@sveltejs/kit";
-import { Role } from "@prisma/client";
+import env from "./env";
+
+// weird import workaround here because of how prisma's
+// generated files interact with svelte-kit prod builds
+import PrismaClient from "@prisma/client";
+import type { Role as _Role } from "@prisma/client";
+const Role = PrismaClient.Role;
 
 const log = logger.child({module: 'auth'});
 
@@ -32,9 +38,13 @@ const getOrCreateUser = async (profile: GoogleProfile) => {
     return user;
   }
 
-  const firstUser = (await prisma.user.count()) === 0;
+  const realUser = await prisma.user.findFirst({
+    where: { NOT: { googleId: null }}
+  });
 
-  log.info(firstUser
+  const isFirstUser = realUser === null;
+
+  log.info(isFirstUser
     ? 'First user, creating admin...'
     : 'User not found, creating...'
   );
@@ -44,17 +54,18 @@ const getOrCreateUser = async (profile: GoogleProfile) => {
       googleId: profile.sub,
       name: profile.name,
       email: profile.email,
-      role: firstUser ? Role.ADMIN : Role.USER
+      role: isFirstUser ? Role.ADMIN : Role.USER
     }
   });
 };
 
 export const auth = new SvelteKitAuth({
-  protocol: 'http',
+  protocol: env.protocol,
+  host: env.host,
   providers: [
     new GoogleOAuth2Provider({
-      clientId: process.env['GOOGLE_OAUTH_CLIENT_ID'],
-      clientSecret: process.env['GOOGLE_OAUTH_CLIENT_SECRET'],
+      clientId: env.googleOAuthClientId,
+      clientSecret: env.googleOAuthClientSecret,
       profile(profile) {
         return { ...profile, provider: "google" };
       }
@@ -76,10 +87,10 @@ export const auth = new SvelteKitAuth({
       return token;
     },
   },
-  jwtSecret: process.env['JWT_SECRET_KEY'],
+  jwtSecret: env.jwtSecret,
 });
 
-function roleCheck(userRole: Role, requiredRole: Role) {
+function roleCheck(userRole: _Role, requiredRole: _Role) {
   const ROLE_VALUES = {
     USER: 0,
     CONTENT_MANAGER: 1,
@@ -88,7 +99,7 @@ function roleCheck(userRole: Role, requiredRole: Role) {
   return ROLE_VALUES[userRole] >= ROLE_VALUES[requiredRole];
 }
 
-async function isAuthorized(token: JWT, requiredRole: Role) {
+async function isAuthorized(token: JWT, requiredRole: _Role) {
   const user = await prisma.user.findUnique({
     where: { id: token.user.id }
   });
@@ -98,7 +109,7 @@ async function isAuthorized(token: JWT, requiredRole: Role) {
   return roleCheck(user.role, requiredRole);
 }
 
-export function authMiddleware(opts: { role: Role, redirect?: string }, handler: RequestHandler): RequestHandler {
+export function authMiddleware(opts: { role: _Role, redirect?: string }, handler: RequestHandler): RequestHandler {
   return async event => {
     const token = await auth.getToken(event.request.headers);
     if (token) {

@@ -1,59 +1,57 @@
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
+import { validate } from "$lib/schema/validation";
+import type { CaseStudy, TagOnPages } from '$lib/types';
 
-export const requestToPrismaParams = async (request: Request) => {
-  const formData = await request.formData();
+export type PageRequest = {
 
-  const REQUIRED = ['title', 'slug', 'summary', 'authors', 'image', 'content', 'tags'];
-  const missingFields = REQUIRED.filter(key => !formData.has(key));
-  if (missingFields.length > 0) {
-    throw new Error(`Missing required fields: ${missingFields.join(',')}`);
+  title: string;
+  slug: string;
+  content: string;
+  img: string;
+  tags: string;
+  caseStudy?: Omit<CaseStudy, 'pageId'>;
+  chapter?: {
+    summary: string;
+    authors: number[];
+    keyTakeaways: string[];
   }
-
-  const title = formData.get("title") as string;
-  const slug = formData.get("slug") as string;
-  const summary = formData.get("summary") as string;
-  const authors = formData.get("authors") as string;
-  const tags = formData.get("tags") as string;
-  const image = formData.get("image") as string;
-  const contentStr = formData.get("content") as string;
-  const content = JSON.parse(contentStr);
-  const pageId = formData.get('page') as string;
-
-  return {
-    title, slug, summary, content,
-    img: image,
-    authors: {
-      connect: authors.split(",").map(id => ({
-        id: parseInt(id)
-      }))
-    },
-    tags: {
-      deleteMany: {
-        OR: [
-          { pageId: { equals: parseInt(pageId) } },
-        ]
-      },
-      createMany: {
-        data: tags.split(",").map(tag => ({
-          tagId: parseInt(tag.split(':')[0]),
-          categoryId: parseInt(tag.split(':')[1])
-        }))
-      },
-    }
-  };
-};
+}
 
 export const patch = authMiddleware(
   { role:'CONTENT_MANAGER' },
   async ({ request, params }) => {
 
-    const prismaParams = await requestToPrismaParams(request);
+    const body = await request.json() as PageRequest;
+
+    validate('page', body);
+
+    const { title, slug, content, img, caseStudy, chapter, tags } = body;
 
     const page = await prisma.page.update({
       where: { id: parseInt(params.id) },
       data: {
-        ... prismaParams,
+        title, slug, content, img, tags,
+
+        caseStudy: caseStudy && {
+          update: {
+            ...caseStudy
+          }
+        },
+
+        chapter: chapter && {
+          update: {
+            summary: { set: chapter.summary },
+            keyTakeaways: { set: chapter.keyTakeaways },
+            authors: {
+              set: chapter.authors.map(author => ({
+                id: author
+              }))
+            },
+            tags: tags,
+          }
+        },
+
         editedAt: new Date()
       }
     });

@@ -1,4 +1,4 @@
-import type { EditorState, Transaction } from "prosemirror-state"
+import type { EditorState, Transaction } from "prosemirror-state";
 import { schema } from "./schema";
 
 export function addCard(state: EditorState, dispatch: (tr: Transaction) => void) {

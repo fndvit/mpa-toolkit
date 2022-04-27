@@ -34,7 +34,7 @@
 
 {#if active && progress}
   <div class="progress-container" style="background-color: {color}80;">
-    <div class="progress-bar" style="background-color: {color}; display: block" on:click bind:this={progressBar} />
+    <div class="progress-bar" style="background-color: {color}; display: block;" on:click bind:this={progressBar} />
   </div>
 {:else}
   <div class="dot" class:active style="background-color: {color};" on:click />
@@ -45,7 +45,7 @@
     --dot-size: 10px;
     border-radius: 50%;
     display: inline-block;
-    opacity: 0.5;
+    opacity: 0.25;
     transition: opacity 100ms ease, height 100ms ease, width 100ms ease;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -58,6 +58,7 @@
     width: 8px;
     height: 10px;
     cursor: pointer;
+    opacity: 0.75;
   }
   .progress-container {
     display: inline-block;
@@ -65,9 +66,10 @@
     height: 10px;
     border-radius: 10px;
     cursor: pointer;
+    opacity: 0.7;
   }
   .dot:hover {
-    opacity: 0.9;
+    opacity: 0.7;
   }
   .active {
     opacity: 0.7;

@@ -1,18 +1,21 @@
 <script lang="ts">
   import { setBlockType } from 'prosemirror-commands';
   import type { NodeType } from 'prosemirror-model';
-  import type { EditorState, Transaction } from 'prosemirror-state';
+  import type { EditorState } from 'prosemirror-state';
+  import type { EditorView } from 'prosemirror-view';
+  import { getContext } from 'svelte';
   import MenuButton from './MenuButton.svelte';
 
   export let editorState: EditorState;
-  export let dispatchTransaction: (tr: Transaction) => void;
   export let nodeType: NodeType;
   export let attrs: {} = null;
   export let icon: string = null;
   export let text: string = null;
 
+  const view = getContext('editorView') as EditorView;
+
   const run = setBlockType(nodeType, attrs);
-  const onClick = () => run(editorState, dispatchTransaction);
+  const onClick = () => run(editorState, view.dispatch);
 
   const isActive = (state: EditorState) => {
     const node = editorState.selection.$head.node();

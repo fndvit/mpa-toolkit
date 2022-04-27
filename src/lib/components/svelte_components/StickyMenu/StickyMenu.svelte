@@ -52,6 +52,7 @@
 
 <style>
   .mainnav {
+    margin-top: -31px;
     width: 215px;
     z-index: 10;
     background: #f9f9f9;

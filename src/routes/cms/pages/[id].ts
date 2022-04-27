@@ -16,7 +16,15 @@ export const get = authMiddleware(
     const pageId = parseInt(id);
     const page = !isNaN(pageId) && await prisma.page.findUnique({
       where: { id: pageId },
-      include: { authors: true, tags: {include: { category: true, tag: true}} }
+      include: {
+        caseStudy: true,
+        chapter: {
+          include: {
+            authors: true
+          }
+        },
+        tags: {include: { category: true, tag: true}}
+      }
     });
 
     return page

@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 datasource db {
@@ -22,7 +23,30 @@ model User {
   name      String?
   googleId  String? @unique
   role      Role    @default(USER)
-  pages     Page[]
+  chapter   Chapter[]
+}
+
+model CaseStudy {
+  name        String @unique
+  established Int
+  size        Float
+  governance  String
+  staff       String
+  budget      String
+  budgetLevel String
+  lat         Float
+  long        Float
+  milestones  Json
+  page        Page   @relation(fields: [pageId], references: [id])
+  pageId      Int    @id
+}
+
+model Chapter {
+  summary      String
+  authors      User[]
+  keyTakeaways String[]
+  page         Page     @relation(fields: [pageId], references: [id])
+  pageId       Int      @id
 }
 
 model Page {
@@ -33,10 +57,10 @@ model Page {
   editedAt  DateTime @default(now())
   title     String
   img       String
-  summary   String
   content   Json
-  authors   User[]
   tags      TagsOnPages[]
+  caseStudy CaseStudy?
+  chapter   Chapter?
 }
 
 model Tag {

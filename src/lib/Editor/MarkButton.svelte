@@ -1,21 +1,23 @@
 <script lang="ts">
   import { toggleMark } from 'prosemirror-commands';
   import type { MarkType } from 'prosemirror-model';
-  import type { EditorState, Transaction } from 'prosemirror-state';
+  import type { EditorState } from 'prosemirror-state';
+  import type { EditorView } from 'prosemirror-view';
+  import { getContext } from 'svelte';
   import MenuButton from './MenuButton.svelte';
 
   export let editorState: EditorState;
-  export let dispatchTransaction: (tr: Transaction) => void;
   export let markType: MarkType;
   export let icon: string = null;
   export let text: string = null;
 
   const toggle = toggleMark(markType, { title: 'Bold' });
 
-  function onClick() {
-    toggle(editorState, dispatchTransaction);
-  }
+  const view = getContext('editorView') as EditorView;
 
+  function onClick() {
+    toggle(editorState, view.dispatch);
+  }
 
   function markActive(state: EditorState, type) {
     let {from, to, empty} = state.selection

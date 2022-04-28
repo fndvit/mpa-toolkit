@@ -2,7 +2,7 @@
   import '@splidejs/splide/dist/css/splide.min.css';
   import {Splide, SplideSlide} from "@splidejs/svelte-splide";
   import type { Options } from '@splidejs/splide';
-  import type { CaseStudy } from "$lib/types";
+  import type { CaseStudy, MilestoneBlock } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
   import Milestone from "../Milestone.svelte";
 
@@ -19,6 +19,29 @@
     pagination: false,
     arrows: false
   }
+
+  let m1: MilestoneBlock = {year: "1997", content: [
+    {type: "text", text: "Toledo Institute for Development and Environment (TIDE) registered"},
+    {type: "text", text: "TIDE established TIDE Tours as its initial business venture"},
+    {type: "text", text: "Port Honduras Marine Reserve established as IUCN Category IV, which includes protected areas that protect particular species or habitats"},
+    {type: "text", text: "A memorandum of understanding for co-management of the MPA signed between the Fisheries Department and TIDE"}
+  ]};
+
+  let m2: MilestoneBlock = {year: "1999", content: [
+    {type: "text", text: "TIDE established TIDE Tours as its initial business venture"},
+    {type: "text", text: "Port Honduras Marine Reserve established as IUCN Category IV, which includes protected areas that protect particular species or habitats"},
+    {type: "text", text: "A memorandum of understanding for co-management of the MPA signed between the Fisheries Department and TIDE"}
+  ]};
+
+  let m3: MilestoneBlock = {year: "2001", content: [
+    {type: "text", text: "TIDE established TIDE Tours as its initial business venture"},
+    {type: "text", text: "A memorandum of understanding for co-management of the MPA signed between the Fisheries Department and TIDE"}
+  ]};
+
+  let m4: MilestoneBlock = {year: "2008", content: [
+    {type: "text", text: "A memorandum of understanding for co-management of the MPA signed between the Fisheries Department and TIDE"}
+  ]};
+
 
 </script>
 
@@ -73,25 +96,25 @@
   <div class="milestones-slider">
     <Splide {options}>
       <SplideSlide>
-        <Milestone/>
+        <Milestone milestones={m1}/>
       </SplideSlide>
       <SplideSlide>
-        <Milestone/>
+        <Milestone milestones={m2}/>
       </SplideSlide>
       <SplideSlide>
-        <Milestone/>
+        <Milestone milestones={m3}/>
       </SplideSlide>
       <SplideSlide>
-        <Milestone/>
+        <Milestone milestones={m4}/>
       </SplideSlide>
       <SplideSlide>
-        <Milestone/>
+        <Milestone milestones={m2}/>
       </SplideSlide>
       <SplideSlide>
-        <Milestone/>
+        <Milestone milestones={m1}/>
       </SplideSlide>
-            <SplideSlide>
-        <Milestone/>
+      <SplideSlide>
+        <Milestone milestones={m4}/>
       </SplideSlide>
     </Splide>
   </div>

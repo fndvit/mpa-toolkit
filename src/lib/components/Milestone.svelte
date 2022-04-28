@@ -1,14 +1,13 @@
 <script lang="ts">
-  let milestone_1 = {text: 'Toledo Institute for Development and Environment (TIDE) registered', contracted: true };
-  let milestone_2 = {text: 'TIDE established TIDE Tours as its initial business venture', contracted: true };
-  let milestone_3 = {text: 'Port Honduras Marine Reserve established as IUCN Category IV, which includes protected areas that protect particular species or habitats', contracted: true };
-  let milestone_4 = {text: 'A memorandum of understanding for co-management of the MPA signed between the Fisheries Department and TIDE', contracted: true };
+  import type { MilestoneBlock } from "$lib/types";
 
-  let milestonesArray = [milestone_1, milestone_2, milestone_3, milestone_4];
+  export let milestones: MilestoneBlock = {year: "2000", content: [{type: "text", text: "Toledo Institute for Development and Environment (TIDE) registered"}, {type: "text", text: "Toledo Institute for Development and Environment (TIDE) registered"}]};
   let containerHeight: number;
   let milestoneHeight: number[] = [];
-  milestonesArray = [milestone_1];
-  const simpleMilestone = milestonesArray.length <= 1;
+  const simple = milestones.content.length <= 1;
+
+  let contracted: boolean[] = [];
+  for (let m = 0; m < milestones.content.length; m++) {contracted.push(true);}
 
 </script>
 
@@ -20,18 +19,18 @@
     <circle cx="7.5" cy="7.5" r="5" stroke="#FBE26B" stroke-width="3" fill="#096EAE" />
   </svg>
 
-  {#if simpleMilestone}
+  {#if simple}
     <div class="milestone-text simple">
-      {milestone_1.text}
+      {milestones.content[0].text}
     </div>
   {:else}
     <div class="main-thread-line" style="height: {containerHeight - milestoneHeight.at(-1) - 39}px;"/>
 
     <br><br><br>
 
-    {#each milestonesArray as m, i}
+    {#each milestones.content as m, i}
 
-      <div class='milestone-container' on:click={() => m.contracted = !m.contracted} bind:clientHeight={milestoneHeight[i]}>
+      <div class='milestone-container' on:click={() => contracted[i] = !contracted[i]} bind:clientHeight={milestoneHeight[i]}>
 
         <div class="sub-thread-line">
           <svg width="10" height="4" viewBox="0 0 10 4" fill="none">
@@ -40,10 +39,10 @@
         </div>
 
         <svg class="milestone-circle" height="15" width="15">
-          <circle cx="7.5" cy="7.5" r="5" stroke="#FBE26B" stroke-width="3" fill={m.contracted ? "#096EAE" : "#FBE26B"}/>
+          <circle cx="7.5" cy="7.5" r="5" stroke="#FBE26B" stroke-width="3" fill={contracted[i] ? "#096EAE" : "#FBE26B"}/>
         </svg>
 
-        <div class={m.contracted ? 'milestone-text contracted' : 'milestone-text expanded'}>
+        <div class={contracted[i] ? 'milestone-text contracted' : 'milestone-text expanded'}>
           {m.text}
         </div>
 
@@ -87,7 +86,6 @@
   }
 
   .expanded {
-    font-weight: bold;
     padding-left: 30px;
   }
 

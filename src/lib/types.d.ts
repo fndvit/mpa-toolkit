@@ -99,3 +99,8 @@ export type ContentDocument = {
   type: 'doc';
   content: ContentBlock[];
 }
+
+export type MilestoneBlock = {
+  year: string;
+  content: TextBlock[];
+}

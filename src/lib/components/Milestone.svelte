@@ -13,7 +13,7 @@
 
 <div class="container" bind:clientHeight={containerHeight}>
 
-  <div class="year">1997</div>
+  <div class="year">{milestones.year}</div>
 
   <svg height="15" width="15">
     <circle cx="7.5" cy="7.5" r="5" stroke="#FBE26B" stroke-width="3" fill="#096EAE" />

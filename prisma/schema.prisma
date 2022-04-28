@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
@@ -10,6 +7,9 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
+// model Tag {
 
 enum Role {
   USER
@@ -66,21 +66,19 @@ model Page {
 model Tag {
   id        Int       @id @default(autoincrement())
   value     String
-  type      TagType?  @relation(fields: [typeId], references: [id])
-  typeId    Int?
+  type      TagType
   pages     TagsOnPages[]
 }
 
-model TagType {
-  id        Int       @id @default(autoincrement())
-  type      String
-  tags      Tag[]
+enum TagType {
+  WHEREIN
+  WHATSABOUT
+  GOODFOR
 }
 
-model TagCategory {
-  id          Int       @id @default(autoincrement())
-  category    String
-  tags        TagsOnPages[]
+enum TagCategory {
+  PRIMARY
+  SECONDARY
 }
 
 model TagsOnPages {
@@ -88,8 +86,7 @@ model TagsOnPages {
   pageId      Int // relation scalar field (used in the `@relation` attribute above)
   tag         Tag @relation(fields: [tagId], references: [id])
   tagId       Int // relation scalar field (used in the `@relation` attribute above)
-  category    TagCategory?  @relation(fields: [categoryId], references: [id])
-  categoryId  Int?
+  category    TagCategory
 
   @@id([tagId, pageId])
 }

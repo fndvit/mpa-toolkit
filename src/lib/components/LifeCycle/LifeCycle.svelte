@@ -1,12 +1,4 @@
 <script context='module' lang='ts'>
-  export enum TagEnum {
-    Wherein = 1, Whatsabout = 2, Goodfor = 3
-  }
-
-  export enum TagCategory {
-    Primary = 1, Secondary = 2
-  }
-
   export interface LifeCycleTags {
     wherein: {
       primary: Option[];
@@ -17,6 +9,7 @@
   }
 </script>
 <script lang='ts'>
+  import { TagCategory, TagType } from "@prisma/client";
   import CircleMenu from '../CircleMenu/CircleMenu.svelte';
   import menuConfigFile from '../CircleMenu/circlemenuconfig.json';
   import menuDataFile from '../CircleMenu/lifeCycleConfig.json';
@@ -38,20 +31,20 @@
   let goodforTags: TagParameters[] = [];
   let whatsaboutTags: TagParameters[] = [];
 
-  const parseTags = (tagType : TagEnum) : TagParameters[] => {
+  const parseTags = (tagType : TagType) : TagParameters[] => {
       let tempTags: (Tag & {category: string})[]
-      tempTags = tags.filter(t => t.typeId === tagType);
+      tempTags = tags.filter(t => t.type === tagType);
 
       return tempTags.map(t => ({
         tag: t.value,
-        alt: (parseInt(t.category) === TagCategory.Secondary ? 'fading' : 'default'),
+        alt: (t.category === TagCategory['SECONDARY'] ? 'fading' : 'default'),
       }))
   };
 
   if(!editable){
-    whereinTags = parseTags(TagEnum.Wherein);
-    goodforTags= parseTags(TagEnum.Goodfor);
-    whatsaboutTags = parseTags(TagEnum.Whatsabout);
+    whereinTags = parseTags(TagType['WHEREIN']);
+    goodforTags= parseTags(TagType['GOODFOR']);
+    whatsaboutTags = parseTags(TagType['WHATSABOUT']);
   }
 
   const maxWhereinOptions = 7;
@@ -59,10 +52,10 @@
 
   $: {
     if(editable){
-      tags = getTagsFromMultiSelect(tagsSelected.goodfor ? tagsSelected.goodfor : [], TagEnum.Goodfor, TagCategory.Primary);
-      tags = tags.concat(getTagsFromMultiSelect(tagsSelected.whatsabout ? tagsSelected.whatsabout : [], TagEnum.Whatsabout, TagCategory.Primary));
-      tags = tags.concat(getTagsFromMultiSelect(tagsSelected.wherein ? tagsSelected.wherein.primary : [], TagEnum.Wherein, TagCategory.Primary));
-      tags = tags.concat(getTagsFromMultiSelect(tagsSelected.wherein ? tagsSelected.wherein.secondary : [], TagEnum.Wherein, TagCategory.Secondary));
+      tags = getTagsFromMultiSelect(tagsSelected.goodfor ? tagsSelected.goodfor : [], TagType['GOODFOR'], TagCategory['PRIMARY']);
+      tags = tags.concat(getTagsFromMultiSelect(tagsSelected.whatsabout ? tagsSelected.whatsabout : [], TagType['WHATSABOUT'], TagCategory['PRIMARY']));
+      tags = tags.concat(getTagsFromMultiSelect(tagsSelected.wherein ? tagsSelected.wherein.primary : [], TagType['WHEREIN'], TagCategory['PRIMARY']));
+      tags = tags.concat(getTagsFromMultiSelect(tagsSelected.wherein ? tagsSelected.wherein.secondary : [], TagType['WHEREIN'], TagCategory['SECONDARY']));
       menuData =  generateCircleMenuData();
     }
   }
@@ -76,17 +69,17 @@
         id: option.id,
         percentatge: option.percentatge,
         group: option.group,
-        type:  parseInt(type) === TagCategory.Primary? 'main' : parseInt(type) === TagCategory.Secondary? 'secondary' : 'unselected',
-        color: parseInt(type) === TagCategory.Primary ? "#fbe26b" : "#fbe26b80"
+        type:  type === TagCategory['PRIMARY'] ? 'main' : type === TagCategory['SECONDARY'] ? 'secondary' : 'unselected',
+        color: type === TagCategory['PRIMARY'] ? "#fbe26b" : "#fbe26b80"
       }
     })
   }
 
-  const getTagsFromMultiSelect = (tags: Option[], type: TagEnum, categoryId: TagCategory) => tags.map(t => ({
+  const getTagsFromMultiSelect = (tags: Option[], type: TagType, category: TagCategory) => tags.map(t => ({
       id: t.value + '',
       value: t.label + '',
-      typeId: type,
-      category: categoryId + ''
+      type: type,
+      category: category,
     }))
 
   menuData =  generateCircleMenuData();

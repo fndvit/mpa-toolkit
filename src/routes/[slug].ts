@@ -17,10 +17,13 @@ export const get: RequestHandler = async ({ params }) => {
           authors: true
         }
       },
-      tags: true,
+      tags: {
+        include: {
+          tag: true,
+        }
+      },
     }
   });
-  const tags = await prisma.tag.findMany();
   if (!page) {
     return error404('Page not found');
   }
@@ -41,7 +44,6 @@ export const get: RequestHandler = async ({ params }) => {
       page,
       document,
       headings,
-      tags,
       readTime: calcReadTime(contentNode),
     }
   };

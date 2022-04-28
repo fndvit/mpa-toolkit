@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LifeCycle, { LifeCycleTags } from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
+  import LifeCycle, { LifeCycleTags } from '$lib/components/LifeCycle/LifeCycle.svelte';
   import ProsemirrorEditor from '$lib/Editor/ProsemirrorEditor.svelte';
   import { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';

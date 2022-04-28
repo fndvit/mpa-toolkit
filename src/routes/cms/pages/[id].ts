@@ -23,7 +23,7 @@ export const get = authMiddleware(
             authors: true
           }
         },
-        tags: {include: { category: true, tag: true}}
+        tags: {include: {tag: true}}
       }
     });
 

@@ -1,7 +1,7 @@
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
 import { validate } from "$lib/schema/validation";
-import type { CaseStudy, TagOnPages } from '$lib/types';
+import type { CaseStudy, TagCategory, TagOnPages } from '$lib/types';
 
 export type PageRequest = {
 
@@ -27,8 +27,7 @@ export const patch = authMiddleware(
     validate('page', body);
 
     const { title, slug, content, img, caseStudy, chapter, tags } = body;
-    console.log('ALX');
-    console.log(tags);
+
     const page = await prisma.page.update({
       where: { id: parseInt(params.id) },
       data: {
@@ -48,7 +47,7 @@ export const patch = authMiddleware(
           createMany: {
             data: tags.map(tag => ({
               tagId: parseInt(tag.split(':')[0]),
-              categoryId: parseInt(tag.split(':')[1])
+              category: tag.split(':')[1] as TagCategory
             }))
           },
         },

@@ -1,4 +1,4 @@
-import type { Page, User, Role, CaseStudy, Chapter } from '@prisma/client';
+import type { Page, User, Role, CaseStudy, Chapter, TagType, TagCategory } from '@prisma/client';
 export type * from '@prisma/client';
 
 export interface Locals {
@@ -14,19 +14,14 @@ export interface UserInfo {
 export interface Tag {
   id: string;
   value: string;
-  typeId: number;
+  type: TagType;
 }
 
 export interface TagInfo {
-  category: Category;
+  category: TagCategory;
+  pageId: string;
+  tagId: string;
   tag: Tag;
-  typeId: number;
-  alt: string;
-}
-
-export interface Category {
-  id: number;
-  category: string;
 }
 
 export interface TagOnPages {

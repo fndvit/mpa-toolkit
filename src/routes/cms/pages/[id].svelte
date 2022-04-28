@@ -3,14 +3,14 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, TagInfo, UserInfo, Tag } from '$lib/types';
+  import type { CompletePage, Tag, UserInfo } from '$lib/types';
+  import { Prisma, TagCategory, TagType } from "@prisma/client"
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
-  import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
-  import LifeCycle, { LifeCycleTags, TagEnum, TagCategory } from '$lib/components/svelte_components/LifeCycle/LifeCycle.svelte';
+  import type { LifeCycleTags } from '$lib/components/LifeCycle/LifeCycle.svelte';
   import { uploadImage } from '$lib/api';
-import TagContainer from '$lib/components/svelte_components/Tags/TagContainer.svelte';
+
 
   export let users: UserInfo[];
   export let page: CompletePage;
@@ -29,7 +29,8 @@ import TagContainer from '$lib/components/svelte_components/Tags/TagContainer.sv
   let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
-  let pageTags: (Option & { category: number })[] = page ? page.tags.map(t => ({label: t.tag.value, value: t.tag.id, typeId: t.tag.typeId, category: t.category.id})) : [];
+
+  let pageTags: (Option & { category: TagCategory })[] = page ? page.tags.map(t => ({label: t.tag.value, value: t.tag.id, type: t.tag.type, category: t.category})) : [];
 
   let keyTakeaways: string[] = page?.chapter?.keyTakeaways;
   let currentTakeawayText: string = '';
@@ -63,32 +64,32 @@ import TagContainer from '$lib/components/svelte_components/Tags/TagContainer.sv
     preselected: authors && authors.some(a => a.value === u.id),
   }));
 
-  const selectTagsOptions = (tagType: TagEnum, category?: TagCategory) => tags.filter(t => t.typeId === tagType).map(t => ({
+  const selectTagsOptions = (tagType: TagType) => tags.filter(t => t.type === tagType).map(t => ({
     value: t.id,
     label: t.value,
-    [t.id]: t.typeId,
+    [t.id]: t.type,
   }));
 
   const getTagOptions = (tags: LifeCycleTags) => {
-    const goodforTags = tags.goodfor.map(a => a.value + ':' + TagCategory.Primary);
-    const whatsaboutTags = tags.whatsabout.map(a => a.value + ':' + TagCategory.Primary);
-    const whereinPrimaryTags = tags.wherein.primary.map(a => a.value + ':' + TagCategory.Primary);
-    const whereinSecondaryTags = tags.wherein.secondary.map(a => a.value + ':' + TagCategory.Secondary);
+    const goodforTags = tags.goodfor.map(a => a.value + ':' + TagCategory['PRIMARY']);
+    const whatsaboutTags = tags.whatsabout.map(a => a.value + ':' + TagCategory['PRIMARY']);
+    const whereinPrimaryTags = tags.wherein.primary.map(a => a.value + ':' + TagCategory['PRIMARY']);
+    const whereinSecondaryTags = tags.wherein.secondary.map(a => a.value + ':' + TagCategory['SECONDARY']);
     return goodforTags.concat(whatsaboutTags).concat(whereinPrimaryTags).concat(whereinSecondaryTags);
   }
 
   tagsOptions = {
       wherein: {
-        primary: selectTagsOptions(TagEnum.Wherein, TagCategory.Primary),
-        secondary: selectTagsOptions(TagEnum.Wherein, TagCategory.Secondary),
+        primary: selectTagsOptions(TagType['WHEREIN']),
+        secondary: selectTagsOptions(TagType['WHEREIN']),
       },
-      whatsabout: selectTagsOptions(TagEnum.Whatsabout),
-      goodfor: selectTagsOptions(TagEnum.Goodfor),
+      whatsabout: selectTagsOptions(TagType['WHATSABOUT']),
+      goodfor: selectTagsOptions(TagType['GOODFOR']),
   };
   tagsSelected = {
       wherein: {
-        primary: tagsOptions.wherein.primary.filter(t => pageTags.find(pt => pt.value === t.value && pt.category === TagCategory.Primary)),
-        secondary: tagsOptions.wherein.secondary.filter(t => pageTags.find(pt => pt.value === t.value && pt.category === TagCategory.Secondary)),
+        primary: tagsOptions.wherein.primary.filter(t => pageTags.find(pt => pt.value === t.value && pt.category === TagCategory['PRIMARY'])),
+        secondary: tagsOptions.wherein.secondary.filter(t => pageTags.find(pt => pt.value === t.value && pt.category === TagCategory['SECONDARY'])),
       },
       whatsabout: tagsOptions.whatsabout.filter(t => pageTags.find(pt => pt.value === t.value)),
       goodfor: tagsOptions.goodfor.filter(t => pageTags.find(pt => pt.value === t.value)),

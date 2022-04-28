@@ -46,6 +46,7 @@
 
   let width : number = config.width || 400;
   let height : number = config.height || 400;
+  let menuSegments;
 
   //is this done before on the cms? is Always the same options?
   let calcSegments = () => {
@@ -79,11 +80,8 @@
       currentPageIndex = index;
   }
 
-  let menuSegments = calcSegments();
+  $: if(data) menuSegments = calcSegments();
 
-  $: if(data) {
-    menuSegments = calcSegments();
-  }
 </script>
 
 

@@ -13,22 +13,21 @@
   import Heading from "$lib/components/content/Heading.svelte";
   import Image from "$lib/components/content/Image.svelte";
   import Paragraph from "$lib/components/content/Paragraph.svelte";
-  import StickyMenu from "$lib/components/svelte_components/StickyMenu/StickyMenu.svelte";
-  import TextSlider from "$lib/components/svelte_components/TextSlider/TextSlider.svelte";
-  import LifeCycle from "$lib/components/svelte_components/LifeCycle/LifeCycle.svelte";
+  import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
+  import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
+  import LifeCycle from "$lib/components/LifeCycle/LifeCycle.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import { createSections, staticUrl } from "$lib/helpers";
   import Section from "$lib/components/content/Section.svelte";
-  import type { ContentDocument, CompletePage, CardsBlock, Tag } from "$lib/types";
+  import type { ContentDocument, CompletePage, CardsBlock, Tag, TagCategory } from "$lib/types";
 
 
   export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
-  export let tags: Tag[];
   export let readTime: number;
 
-  let pageTags: (Tag & {category: string})[] = page && page.tags.map(t => ({...tags.find(tag => tag.id === t.tagId), category: t.categoryId}));
+  let pageTags: (Tag & {category: TagCategory})[] = page ? page.tags.map(t => ({value: t.tag.value, id: t.tag.id, type: t.tag.type, category: t.category})) : [];
 
   const sections = createSections(document);
 

@@ -1,5 +1,4 @@
 <script lang="ts">
-
   let milestone_1 = {text: 'Toledo Institute for Development and Environment (TIDE) registered', contracted: true };
   let milestone_2 = {text: 'TIDE established TIDE Tours as its initial business venture', contracted: true };
   let milestone_3 = {text: 'Port Honduras Marine Reserve established as IUCN Category IV, which includes protected areas that protect particular species or habitats', contracted: true };
@@ -27,7 +26,7 @@
     <br><br><br>
 
     {#each milestonesArray as m, i}
-      <div class='milestone-container' bind:clientHeight={milestoneHeight[i]} on:click={() => m.contracted = !m.contracted}>
+      <div class='milestone-container' bind:clientHeight={milestoneHeight[i]} on:mouseenter={() => m.contracted = false} on:mouseleave={() => m.contracted = true}>
         <div class="mini-dashed-line"/>
         <svg class="milestone-circle" height="15" width="15">
           <circle cx="7.5" cy="7.5" r="5" stroke="#FBE26B" stroke-width="3" fill="#096EAE" />
@@ -38,9 +37,6 @@
       </div>
     {/each}
   {/if}
-
-
-
 </div>
 
 <style>
@@ -48,6 +44,7 @@
   .milestone-container {
     margin-bottom: 40px;
     cursor: pointer;
+    width: 200px;
   }
 
   .milestone-circle {
@@ -55,7 +52,7 @@
   }
 
   .milestone-text {
-    width: 200px;
+    max-width: 200px;
     font-size: 16px;
     color: #F9F9F9;
   }
@@ -79,8 +76,8 @@
   }
 
   .container {
-    transform: translateY(-39px);
     width: 200px;
+    margin-right: 25px;
   }
 
   .year {

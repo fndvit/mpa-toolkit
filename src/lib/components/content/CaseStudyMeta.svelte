@@ -1,4 +1,7 @@
 <script lang="ts">
+  import '@splidejs/splide/dist/css/splide.min.css';
+  import {Splide, SplideSlide} from "@splidejs/svelte-splide";
+  import type { Options } from '@splidejs/splide';
   import type { CaseStudy } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
   import Milestone from "../Milestone.svelte";
@@ -7,6 +10,15 @@
 
   const { name, established, size, governance,
     staff, budget, budgetLevel, lat, long } = caseStudy;
+
+  const options: Options = {
+    type: 'slide',
+    perMove: 1,
+    gap: '25px',
+    autoWidth:true,
+    pagination: false,
+    arrows: false
+  }
 
 </script>
 
@@ -58,16 +70,40 @@
     <line class="svg-line" x1="0" y1="50%" x2="100%" y2="50%"/>
   </svg>
 
-  <div class="milestones-grid">
-    <Milestone/>
+  <div class="milestones-slider">
+    <Splide {options}>
+      <SplideSlide>
+        <Milestone/>
+      </SplideSlide>
+      <SplideSlide>
+        <Milestone/>
+      </SplideSlide>
+      <SplideSlide>
+        <Milestone/>
+      </SplideSlide>
+      <SplideSlide>
+        <Milestone/>
+      </SplideSlide>
+      <SplideSlide>
+        <Milestone/>
+      </SplideSlide>
+      <SplideSlide>
+        <Milestone/>
+      </SplideSlide>
+            <SplideSlide>
+        <Milestone/>
+      </SplideSlide>
+    </Splide>
   </div>
+
 </div>
 
 <style lang="scss">
 
-  .milestones-grid {
+  .milestones-slider {
+    transform: translateY(-39px);
     margin-left: 345px;
-    max-width: 1300px;
+    margin-right: 250px;
   }
 
   .milestones-title {

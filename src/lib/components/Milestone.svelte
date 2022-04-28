@@ -43,7 +43,7 @@
         </svg>
 
         <div class={contracted[i] ? 'milestone-text contracted' : 'milestone-text expanded'}>
-          {m.text}
+          <span>{m.text}</span>
         </div>
 
       </div>
@@ -89,11 +89,17 @@
     padding-left: 30px;
   }
 
+  span{
+    font-weight: 500;
+    color: #F9F9F9;
+  }
+
   .contracted {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     padding-left: 30px;
+    color: #FBE26B;
   }
 
   .container {

@@ -116,6 +116,15 @@
       <SplideSlide>
         <Milestone milestones={m4}/>
       </SplideSlide>
+      <SplideSlide>
+        <Milestone milestones={m1}/>
+      </SplideSlide>
+      <SplideSlide>
+        <Milestone milestones={m2}/>
+      </SplideSlide>
+      <SplideSlide>
+        <Milestone milestones={m3}/>
+      </SplideSlide>
     </Splide>
   </div>
 

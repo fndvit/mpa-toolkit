@@ -76,7 +76,7 @@
   }
 
   .milestone-circle {
-    transform: translate(20px, -6px);
+    transform: translate(17px, -6px);
   }
 
   .milestone-text {
@@ -86,7 +86,7 @@
   }
 
   .expanded {
-    padding-left: 30px;
+    padding-left: 22px;
   }
 
   span{
@@ -98,7 +98,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    padding-left: 30px;
+    padding-left: 22px;
     color: #FBE26B;
   }
 

@@ -134,7 +134,7 @@
 
   .milestones-slider {
     transform: translateY(-39px);
-    margin-left: 345px;
+    margin-left: 124px;
     margin-right: 250px;
   }
 
@@ -144,7 +144,7 @@
     color: #FFFFFF;
     padding-top: 25px;
     margin-bottom: 35px;
-    margin-left: 345px;
+    margin-left: 124px;
   }
 
   .svg-line {
@@ -170,7 +170,7 @@
 
   .meta-content {
     width: 1300px;
-    margin-left: 350px;
+    margin-left: 124px;
     padding: 35px 0;
   }
 

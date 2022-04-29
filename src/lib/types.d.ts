@@ -94,6 +94,6 @@ export type Section = {
 };
 
 export type MilestoneBlock = {
-  year: string;
+  year: number;
   content: TextBlock[];
 }

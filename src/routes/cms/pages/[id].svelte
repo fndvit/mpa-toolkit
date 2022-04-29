@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, UserInfo } from '$lib/types';
+  import type { CompletePage, UserInfo, MilestoneBlock } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
@@ -26,8 +26,9 @@
   let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
+  console.log(content);
 
-  let keyTakeaways: string[] = page?.chapter?.keyTakeaways;
+  let keyTakeaways: string[] = page?.chapter? page.chapter.keyTakeaways : [];
   let currentTakeawayText: string = '';
 
   let editor: Editor;
@@ -45,6 +46,11 @@
   let budgetLevel: string;
   let lat: number;
   let long: number;
+
+  let milestones:  {[key: string]: any} = page?.caseStudy?
+    page.caseStudy.milestones as Prisma.JsonArray : {type: 'milestones', content: []}
+  let milestoneYear: number;
+  let milestoneText: string;
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -151,6 +157,29 @@
     keyTakeaways = keyTakeaways;
   };
 
+  const onClickSaveMilestone = () => {
+    const existing = milestones.content.findIndex((m) => m.year === milestoneYear);
+    if (existing != -1){
+      milestones.content[existing].content.push({type: 'text', text: milestoneText});
+    }
+    else {
+      milestones.content.push({year: milestoneYear, content: [
+        {type: 'text', text: milestoneText}
+      ]});
+    }
+    milestoneYear = null;
+    milestoneText = '';
+    milestones = milestones;
+  }
+
+  const onClickDeleteMilestone = (yearIndex: number, milestoneIndex: number) => {
+    milestones.content[yearIndex].content.splice(milestoneIndex, 1);
+    if (!milestones.content[yearIndex].content.length) {
+      milestones.content.splice(yearIndex, 1);
+    }
+    milestones = milestones;
+  }
+
 </script>
 
 <div class="meta">
@@ -226,6 +255,26 @@
       <input type="number" id="altitude" bind:value={long} disabled={!editable} placeholder="e.g. -74.0059"/>
 
 
+      <label for="milestones">Add milestone</label>
+      <div>
+        <input type="number" id="milestoneYear" bind:value={milestoneYear} disabled={!editable} placeholder="Year" class="year-selector"/>
+        <textarea type="text" id="milestones" bind:value={milestoneText} rows="4" maxlength={MAX_LENGTH} disabled={!editable} class="milestone-area"/>
+        <button disabled={!milestoneYear || !milestoneText} on:click={onClickSaveMilestone}>Save milestone</button>
+      </div>
+
+      <div class="list">
+        {#each milestones.content as m, i}
+        {m.year}
+          {#each m.content as x, y}
+            <div class="list-item">
+              {x.text}
+              <button on:click={() => onClickDeleteMilestone(i, y)}>&times;</button>
+            </div>
+          {/each}
+        {/each}
+      </div>
+
+
     {:else}
       <label for="summary">Summary</label>
       <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
@@ -238,7 +287,7 @@
       <label for="keytakeaway">Add key takeaway</label>
       <div>
         <textarea type="text" id="takeawayName" bind:value={currentTakeawayText} disabled={!editable}/>
-        <button on:click={onClickSaveTakeaway}>Save takeaway</button>
+        <button disabled={!currentTakeawayText} on:click={onClickSaveTakeaway}>Save takeaway</button>
       </div>
 
       <div class="list">
@@ -249,7 +298,6 @@
           </div>
         {/each}
       </div>
-
     {/if}
 
   </div>
@@ -271,6 +319,17 @@
 </div>
 
 <style lang="scss">
+
+
+
+  .milestone-area {
+
+    width: 100rem;
+  }
+
+  .year-selector {
+    width: 100px;
+  }
 
   .list {
     display: inline-block !important;

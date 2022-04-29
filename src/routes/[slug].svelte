@@ -151,7 +151,7 @@
   .meta {
     background: #096EAE;
     color: #F9F9F9;
-    padding: 2rem 6rem;
+    padding: 2rem 124px;
   }
 
   .authors {

@@ -42,11 +42,11 @@ model CaseStudy {
 }
 
 model Chapter {
-  summary   String
-  authors   User[]
-  keyTakeaways String?
-  page      Page   @relation(fields: [pageId], references: [id])
-  pageId    Int    @id
+  summary      String
+  authors      User[]
+  keyTakeaways String[]
+  page         Page     @relation(fields: [pageId], references: [id])
+  pageId       Int      @id
 }
 
 model Page {

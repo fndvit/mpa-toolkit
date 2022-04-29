@@ -16,100 +16,39 @@
   import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
-  import ExpandButton from "$lib/components/ExpandButton.svelte";
-  import { staticUrl } from "$lib/helpers";
-  import type { ContentDocument, CompletePage, ExpandSectionBlock } from "$lib/types";
-  import { onMount } from "svelte";
+  import { createSections, staticUrl } from "$lib/helpers";
+  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
+  import Section from "$lib/components/content/Section.svelte";
 
   export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
   export let readTime: number;
 
-  const keyTakeaways = page.chapter ? JSON.parse(page.chapter.keyTakeaways) : null;
-
-  onMount(() => {
-    preprocessContent();
-  });
-
-  let componentsVisibility = [];
-  for (let v = 0; v < document.content.length; v++) {
-    let pageContent = {type: '', visible: true};
-    componentsVisibility[v] = pageContent;
-  }
-
-  const preprocessContent = () => {
-    addNonCMSComponents();
-    console.log(document.content);
-    console.log(componentsVisibility);
-  }
-
-  const readMoreToggle = (affectedPositions: number[], show: boolean) => {
-    for (let p = 0; p < affectedPositions.length; p++) {
-      componentsVisibility[affectedPositions[p]].visible = show;
-    }
-  }
-
-  const addNonCMSComponents = () => {
-    let numReadMoreButtons = 0;
-    for (let i = 0; i < document.content.length; i++) {
-      if (document.content[i].type === 'heading'){
-        let foundNextHeading = false;
-        let x = i + 1;
-        let lastPositionOfSection = x;
-        let hiddenComponents: number[] = [];
-        let numParagraphs = 0;
-        let readMoreButtonAdded = false;
-
-        while (!foundNextHeading && x < document.content.length){
-          if (document.content[x].type === 'heading'){
-            foundNextHeading = true;
-          }
-          else if (readMoreButtonAdded) {
-            hiddenComponents.push(x);
-            lastPositionOfSection = x;
-          }
-          if (document.content[x].type === 'paragraph'){
-            numParagraphs++;
-            if (numParagraphs === 2){
-              readMoreButtonAdded = true;
-            }
-          }
-          x++;
-        }
-
-        if (numParagraphs > 2){
-          let newExpandButton: ExpandSectionBlock = {
-            type: 'expand',
-            content: {
-              affected: hiddenComponents,
-              section: "blue economy",
-              interaction: readMoreToggle
-            }
-          };
-          document.content.splice(lastPositionOfSection + 1, 0, newExpandButton);
-          componentsVisibility.splice(lastPositionOfSection + 1, 0, {type: 'expand', visible: true});
-          for (let p = 0; p < hiddenComponents.length; p++) {
-            componentsVisibility[hiddenComponents[p]].visible = false;
-          }
-          numReadMoreButtons++;
-
-          if (numReadMoreButtons === 1){
-            document.content.splice(lastPositionOfSection + 2, 0, {type: 'madlib'});
-            componentsVisibility.splice(lastPositionOfSection + 2, 0, {type: 'madlib', visible: true});
-          }
-        }
-      }
-    }
-  }
+  const sections = createSections(document);
 
   const components = {
     'heading': Heading,
     'paragraph': Paragraph,
     'cards' : TextSlider,
     'image': Image,
-    'madlib': MadLib,
-    'expand' : ExpandButton
+  };
+
+  const keyTakeawaysBlock: CardsBlock = {
+    type: 'cards',
+    content: page.chapter.keyTakeaways.map(k => ({
+      type: 'card',
+      content: [
+        {
+          type: 'cardheading',
+          content: [{ text: 'Key takeaways', type: 'text'}]
+        },
+        {
+          type: 'cardbody',
+          content: [{ text: k, type: 'text'}]
+        }
+      ]
+    }))
   };
 
 </script>
@@ -132,9 +71,9 @@
         <div class="readtime">{readTime} min read</div>
       </div>
       <div class="summary">{page.chapter.summary}</div>
-      {#if page.chapter.keyTakeaways}
+      {#if page.chapter.keyTakeaways.length > 0}
         <div class="key-takeaways">
-          <TextSlider block={keyTakeaways}/>
+          <TextSlider block={keyTakeawaysBlock}/>
         </div>
       {/if}
     </div>
@@ -150,16 +89,21 @@
       </div>
     </div>
     <div class="body-column">
-      {#each document.content as block, i}
-        {#if components[block.type]}
-          {#if componentsVisibility[i].visible}
-            <svelte:component this={components[block.type]} {block} />
-          {/if}
-        {:else}
-          {@debug block}
-          <div class="unknown-block">
-            Unknown block type: {block.type}
-          </div>
+      {#each sections as section, i}
+        <Section {section}>
+          {#each section.blocks as block}
+            {#if components[block.type]}
+              <svelte:component this={components[block.type]} {block} />
+            {:else}
+              {@debug block}
+              <div class="unknown-block">
+                Unknown block type: {block.type}
+              </div>
+            {/if}
+          {/each}
+        </Section>
+        {#if sections.length > 1 && i === 0}
+          <MadLib />
         {/if}
       {/each}
     </div>

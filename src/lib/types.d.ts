@@ -1,4 +1,4 @@
-import type { Page, User, Role, CaseStudy } from '@prisma/client';
+import type { Page, User, Role, CaseStudy, Chapter } from '@prisma/client';
 export type * from '@prisma/client';
 
 export interface Locals {
@@ -53,19 +53,6 @@ export type ImageBlock = {
 //  NESTED COMPONENTS
 // *******************
 
-export type ExpandSectionBlock = {
-  type: 'expand',
-  content: {
-    affected: number[],
-    section: string,
-    interaction: (affectedPositions: number[], show: boolean) => void
-  }
-}
-
-export type MadLibBlock = {
-  type: 'madlib';
-}
-
 export type CardBlock = {
   type: 'card';
   content: [CardHeadingBlock, CardBodyBlock];
@@ -93,14 +80,15 @@ export type TextBlock = {
 
 export type InlineBlock = TextBlock;
 
-export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock | MadLibBlock | ExpandSectionBlock;
+export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock;
 
 export type ContentDocument = {
   type: 'doc';
   content: ContentBlock[];
 }
 
-export type MilestoneBlock = {
-  year: string;
-  content: TextBlock[];
-}
+export type Section = {
+  id: string;
+  topic: string;
+  blocks: ContentBlock[];
+};

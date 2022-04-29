@@ -1,54 +1,58 @@
 <script lang="ts">
   import { scale } from 'svelte/transition';
 
-  export let options:string[];
+  export let options: string[];
   export let selected = options[0];
 
   let currentIndex = 0;
   let listboxVisible = false;
 
-  const openListbox = () => { listboxVisible = true; }
-
-  const closeListbox = () => { listboxVisible = false; }
-
-  const chooseOption = (index:number) => {currentIndex = index; selected = options[currentIndex]; listboxVisible = false;}
+  const chooseOption = (index: number) => {
+    currentIndex = index;
+    selected = options[currentIndex];
+    listboxVisible = false;
+  }
 
   const handleKeyDown = ({keyCode}) => {
-      if (listboxVisible){
-          if (keyCode === 38 && currentIndex > 0){
-              currentIndex--;
-              selected = options[currentIndex];
-          }
-          else if (keyCode === 40 && currentIndex < options.length-1){
-              currentIndex++;
-              selected = options[currentIndex];
-          }
+    if (listboxVisible){
+      if (keyCode === 38 && currentIndex > 0){
+        currentIndex--;
+        selected = options[currentIndex];
       }
+      else if (keyCode === 40 && currentIndex < options.length - 1){
+        currentIndex++;
+        selected = options[currentIndex];
+      }
+    }
   }
 </script>
 
 <svelte:window on:keydown={handleKeyDown} />
 
 <div class="area" >
-    <button class="selector-area" on:click={listboxVisible ? closeListbox : openListbox} on:blur={closeListbox}>
-        <div class="arrow">
-            <svg class="svg" width="13" height="8" viewBox="0 0 13 8" fill="none">
-                <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
-            </svg>
-        </div>
-        {selected}
-    </button>
+  <button
+    class="selector-area"
+    on:click={() => listboxVisible = !listboxVisible}
+    on:blur={() => listboxVisible = false}
+  >
+    <div class="arrow">
+      <svg class="svg" width="13" height="8" viewBox="0 0 13 8" fill="none">
+        <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
+      </svg>
+    </div>
+    {selected}
+  </button>
 
-    {#if listboxVisible}
-        <ul class="listbox" transition:scale>
-            {#each options as opt, i}
-                <li class={options[currentIndex] === opt ? "option-selected" : "option"}
-                    on:focus={() => chooseOption(i)} tabindex="-1">
-                    {opt}
-                </li>
-            {/each}
-        </ul>
-    {/if}
+  {#if listboxVisible}
+    <ul class="listbox" transition:scale>
+      {#each options as opt, i}
+        <li class={options[currentIndex] === opt ? "option-selected" : "option"}
+          on:focus={() => chooseOption(i)} tabindex="-1">
+          {opt}
+        </li>
+      {/each}
+    </ul>
+  {/if}
 </div>
 
 

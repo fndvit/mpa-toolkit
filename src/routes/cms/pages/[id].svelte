@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CardBlock, CardsBlock, CompletePage, UserInfo } from '$lib/types';
+  import type { CompletePage, UserInfo } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
@@ -12,11 +12,6 @@
 
   export let users: UserInfo[];
   export let page: CompletePage;
-
-  interface keyTakeaway {
-    id: number,
-    text: string
-  }
 
   const MAX_LENGTH = 140;
 
@@ -31,10 +26,8 @@
   let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
-  let legacyTakeaways: string = page?.chapter?.keyTakeaways;
-  let testing = page?.chapter?.keyTakeaways as Prisma.JsonObject;
 
-  let keyTakeaways: keyTakeaway[] = [];
+  let keyTakeaways: string[] = page?.chapter?.keyTakeaways;
   let currentTakeawayText: string = '';
 
   let editor: Editor;
@@ -52,7 +45,6 @@
   let budgetLevel: string;
   let lat: number;
   let long: number;
-
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -81,34 +73,10 @@
         ? {
           authors: authors?.map(a => a.value),
           summary,
-          keyTakeaways: JSON.stringify(createKeyTakeaways(keyTakeaways))
+          keyTakeaways
         }
         : undefined
     };
-  }
-
-  function createKeyTakeaways(keyTakeaways: keyTakeaway[]): CardsBlock {
-    let block: CardsBlock = {
-      type: 'cards',
-      content: []
-    }
-    keyTakeaways.forEach(k => {
-      let card: CardBlock = {
-        type: 'card',
-        content: [
-          {
-            type: 'cardheading',
-            content: [{ text: 'Key takeaways', type: 'text'}]
-          },
-          {
-            type: 'cardbody',
-            content: [{ text: k.text, type: 'text'}]
-          }
-        ]
-      }
-      block.content.push(card);
-    });
-    return block;
   }
 
   async function savePost() {
@@ -171,30 +139,17 @@
     if (!validChars.exec(e.data)) e.preventDefault();
   }
 
-  const addKeyTakeaway = (text: string) => {
-    if (text.length > 0){
-      const newTakeaway = {id: keyTakeaways.length, text: text};
-      keyTakeaways.push(newTakeaway);
-      keyTakeaways = keyTakeaways;
+  const onClickSaveTakeaway = () => {
+    if (currentTakeawayText.length > 0){
+      keyTakeaways = [...keyTakeaways, currentTakeawayText];
       currentTakeawayText = "";
     }
   };
 
-  const removeKeyTakeaway = (takeawayID: number) => {
-    keyTakeaways = keyTakeaways.filter(i => i.id !== takeawayID);
+  const onClickDeleteTakeaway = (index: number) => {
+    keyTakeaways.splice(index, 1);
+    keyTakeaways = keyTakeaways;
   };
-
-  if (!newPage) {
-    const keyTakeawaysObj = JSON.parse(JSON.stringify(legacyTakeaways));
-    console.log(testing);
-    console.log(summary);
-    console.log(keyTakeawaysObj);
-    if (keyTakeawaysObj){
-      keyTakeawaysObj.content.forEach(card => {
-      addKeyTakeaway(card.content[1].content[0].text);
-    });
-    }
-  }
 
 </script>
 
@@ -283,14 +238,14 @@
       <label for="keytakeaway">Add key takeaway</label>
       <div>
         <textarea type="text" id="takeawayName" bind:value={currentTakeawayText} disabled={!editable}/>
-        <button on:click={() => addKeyTakeaway(currentTakeawayText)}>Save takeaway</button>
+        <button on:click={onClickSaveTakeaway}>Save takeaway</button>
       </div>
 
       <div class="list">
-        {#each keyTakeaways as k}
+        {#each keyTakeaways as k, i}
           <div class = "list-item">
-            {k.text}
-            <button on:click={() => removeKeyTakeaway(k.id)}>&times;</button>
+            {k}
+            <button on:click={() => onClickDeleteTakeaway(i)}>&times;</button>
           </div>
         {/each}
       </div>

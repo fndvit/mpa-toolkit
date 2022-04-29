@@ -14,7 +14,7 @@ export type PageRequest = {
   chapter?: {
     summary: string;
     authors: number[];
-    keyTakeaways: string;
+    keyTakeaways: string[];
   }
 }
 

@@ -92,3 +92,8 @@ export type Section = {
   topic: string;
   blocks: ContentBlock[];
 };
+
+export type MilestoneBlock = {
+  year: string;
+  content: TextBlock[];
+}

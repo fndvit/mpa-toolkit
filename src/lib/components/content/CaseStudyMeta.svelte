@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Options } from '@splidejs/splide';
-  import type { CaseStudy, MilestoneBlock } from "$lib/types";
+  import type { CaseStudy } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
   import MilestonesMeta from './MilestonesMeta.svelte';
   import type { Prisma } from "@prisma/client";

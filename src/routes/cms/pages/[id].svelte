@@ -156,9 +156,9 @@
   };
 
   const onClickSaveMilestone = () => {
-    const existing = milestones.content.findIndex((m) => m.year === milestoneYear);
-    if (existing != -1){
-      milestones.content[existing].content.push({type: 'text', text: milestoneText});
+    const yearAlreadyExists = milestones.content.findIndex((m) => m.year === milestoneYear);
+    if (yearAlreadyExists != -1){
+      milestones.content[yearAlreadyExists].content.push({type: 'text', text: milestoneText});
     }
     else {
       milestones.content.push({year: milestoneYear, content: [

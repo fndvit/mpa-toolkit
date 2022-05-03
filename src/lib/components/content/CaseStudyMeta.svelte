@@ -1,15 +1,16 @@
 <script lang="ts">
-  import '@splidejs/splide/dist/css/splide.min.css';
-  import {Splide, SplideSlide} from "@splidejs/svelte-splide";
   import type { Options } from '@splidejs/splide';
   import type { CaseStudy, MilestoneBlock } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
-  import Milestone from "../Milestone.svelte";
+  import MilestonesMeta from './MilestonesMeta.svelte';
+  import type { Prisma } from "@prisma/client";
 
   export let caseStudy: CaseStudy;
 
   const { name, established, size, governance,
     staff, budget, budgetLevel, lat, long } = caseStudy;
+
+  let milestones: {[key: string]: any} = caseStudy.milestones as Prisma.JsonObject;
 
   const options: Options = {
     type: 'slide',
@@ -19,29 +20,6 @@
     pagination: false,
     arrows: false
   }
-
-  let m1: MilestoneBlock = {year: "1997", content: [
-    {type: "text", text: "Toledo Institute for Development and Environment (TIDE) registered"},
-    {type: "text", text: "TIDE established TIDE Tours as its initial business venture"},
-    {type: "text", text: "Port Honduras Marine Reserve established as IUCN Category IV, which includes protected areas that protect particular species or habitats"},
-    {type: "text", text: "A memorandum of understanding for co-management of the MPA signed between the Fisheries Department and TIDE"}
-  ]};
-
-  let m2: MilestoneBlock = {year: "1999", content: [
-    {type: "text", text: "TIDE established TIDE Tours as its initial business venture"},
-    {type: "text", text: "Port Honduras Marine Reserve established as IUCN Category IV, which includes protected areas that protect particular species or habitats"},
-    {type: "text", text: "A memorandum of understanding for co-management of the MPA signed between the Fisheries Department and TIDE"}
-  ]};
-
-  let m3: MilestoneBlock = {year: "2001", content: [
-    {type: "text", text: "TIDE established TIDE Tours as its initial business venture"},
-    {type: "text", text: "A memorandum of understanding for co-management of the MPA signed between the Fisheries Department and TIDE"}
-  ]};
-
-  let m4: MilestoneBlock = {year: "2008", content: [
-    {type: "text", text: "A memorandum of understanding for co-management of the MPA signed between the Fisheries Department and TIDE"}
-  ]};
-
 
 </script>
 
@@ -86,82 +64,10 @@
 
 </div>
 
-<div class="meta-milestones">
-  <div class="milestones-title">Milestones</div>
+<MilestonesMeta {milestones}></MilestonesMeta>
 
-  <svg class="svg">
-    <line class="svg-line" x1="0" y1="50%" x2="100%" y2="50%"/>
-  </svg>
-
-  <div class="milestones-slider">
-    <Splide {options}>
-      <SplideSlide>
-        <Milestone milestones={m1}/>
-      </SplideSlide>
-      <SplideSlide>
-        <Milestone milestones={m2}/>
-      </SplideSlide>
-      <SplideSlide>
-        <Milestone milestones={m3}/>
-      </SplideSlide>
-      <SplideSlide>
-        <Milestone milestones={m4}/>
-      </SplideSlide>
-      <SplideSlide>
-        <Milestone milestones={m2}/>
-      </SplideSlide>
-      <SplideSlide>
-        <Milestone milestones={m1}/>
-      </SplideSlide>
-      <SplideSlide>
-        <Milestone milestones={m4}/>
-      </SplideSlide>
-      <SplideSlide>
-        <Milestone milestones={m1}/>
-      </SplideSlide>
-      <SplideSlide>
-        <Milestone milestones={m2}/>
-      </SplideSlide>
-      <SplideSlide>
-        <Milestone milestones={m3}/>
-      </SplideSlide>
-    </Splide>
-  </div>
-
-</div>
 
 <style lang="scss">
-
-  .milestones-slider {
-    transform: translateY(-39px);
-    margin-left: 124px;
-    margin-right: 250px;
-  }
-
-  .milestones-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #FFFFFF;
-    padding-top: 25px;
-    margin-bottom: 35px;
-    margin-left: 124px;
-  }
-
-  .svg-line {
-    stroke:#FBE26B;
-    stroke-width:3;
-  }
-
-  .svg {
-    height:5px;
-    width:100%;
-    margin-top: 15px;
-  }
-
-  .meta-milestones {
-    background: #04558E;
-    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
-  }
 
   .meta-container {
     background: #13487C;

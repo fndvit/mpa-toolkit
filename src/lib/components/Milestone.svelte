@@ -1,57 +1,60 @@
 <script lang="ts">
-  import type { MilestoneBlock } from "$lib/types";
+  export let milestone:  {[key: string]: any};
+  const simple = milestone.content.length <= 1;
 
-  export let milestones: MilestoneBlock = {year: "2000", content: [{type: "text", text: "Toledo Institute for Development and Environment (TIDE) registered"}, {type: "text", text: "Toledo Institute for Development and Environment (TIDE) registered"}]};
   let containerHeight: number;
   let milestoneHeight: number[] = [];
-  const simple = milestones.content.length <= 1;
 
-  let contracted: boolean[] = [];
-  for (let m = 0; m < milestones.content.length; m++) {contracted.push(true);}
-
+  let contracted = new Array(milestone.content.length).fill(true);
 </script>
 
 <div class="container" bind:clientHeight={containerHeight}>
 
-  <div class="year">{milestones.year}</div>
+  <div class="year">{milestone.year}</div>
 
   <svg height="15" width="15">
     <circle cx="7.5" cy="7.5" r="5" stroke="#FBE26B" stroke-width="3" fill="#096EAE" />
   </svg>
 
   {#if simple}
+
     <div class="milestone-text simple">
-      {milestones.content[0].text}
+      {milestone.content[0].text}
     </div>
+
   {:else}
+
     <div class="main-thread-line" style="height: {containerHeight - milestoneHeight.at(-1) - 39}px;"/>
 
-    <br><br><br>
+    <div class="milestones-block">
 
-    {#each milestones.content as m, i}
-
-      <div class='milestone-container' on:click={() => contracted[i] = !contracted[i]} bind:clientHeight={milestoneHeight[i]}>
-
-        <div class="sub-thread-line">
-          <svg width="10" height="4" viewBox="0 0 10 4" fill="none">
-            <path class="horizontal-path" d="M1.22933 0.955129V0.955129C2.81493 2.54068 5.01818 3.34773 7.25278 3.1615L9.729 2.95514"/>
+      {#each milestone.content as m, i}
+        <div class='milestone-container' on:click={() => contracted[i] = !contracted[i]} bind:clientHeight={milestoneHeight[i]}>
+          <div class="sub-thread-line">
+            <svg width="10" height="4" viewBox="0 0 10 4" fill="none">
+              <path class="horizontal-path" d="M1.22933 0.955129V0.955129C2.81493 2.54068 5.01818 3.34773 7.25278 3.1615L9.729 2.95514"/>
+            </svg>
+          </div>
+          <svg class="milestone-circle" height="15" width="15">
+            <circle cx="7.5" cy="7.5" r="5" stroke="#FBE26B" stroke-width="3" fill={contracted[i] ? "#096EAE" : "#FBE26B"}/>
           </svg>
+          <div class={contracted[i] ? 'milestone-text contracted' : 'milestone-text expanded'}>
+            <span>{m.text}</span>
+          </div>
+
         </div>
+      {/each}
 
-        <svg class="milestone-circle" height="15" width="15">
-          <circle cx="7.5" cy="7.5" r="5" stroke="#FBE26B" stroke-width="3" fill={contracted[i] ? "#096EAE" : "#FBE26B"}/>
-        </svg>
+    </div>
 
-        <div class={contracted[i] ? 'milestone-text contracted' : 'milestone-text expanded'}>
-          <span>{m.text}</span>
-        </div>
-
-      </div>
-    {/each}
   {/if}
 </div>
 
 <style>
+
+  .milestones-block {
+    margin-top: 25px;
+  }
 
   .simple {
     padding-top: 8px;

@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, UserInfo, MilestoneBlock } from '$lib/types';
+  import type { CompletePage, UserInfo } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import type { Prisma } from "@prisma/client";
@@ -26,7 +26,6 @@
   let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
-  console.log(content);
 
   let keyTakeaways: string[] = page?.chapter? page.chapter.keyTakeaways : [];
   let currentTakeawayText: string = '';
@@ -37,18 +36,18 @@
   let deleting = false;
   let autoPopulateSlug = !slug;
 
-  let name: string;
-  let established: number;
-  let size: string;
-  let governance: string;
-  let staff: string;
-  let budget: string;
-  let budgetLevel: string;
-  let lat: number;
-  let long: number;
+  let name: string = page?.caseStudy?.name;
+  let established: number = page?.caseStudy?.established;
+  let size: number = page?.caseStudy?.size;
+  let governance: string = page?.caseStudy?.governance;
+  let staff: string = page?.caseStudy?.staff;
+  let budget: string = page?.caseStudy?.budget;
+  let budgetLevel: string = page?.caseStudy?.budgetLevel;
+  let lat: number = page?.caseStudy?.lat;
+  let long: number = page?.caseStudy?.long;
 
   let milestones:  {[key: string]: any} = page?.caseStudy?
-    page.caseStudy.milestones as Prisma.JsonArray : {type: 'milestones', content: []}
+    page.caseStudy.milestones as Prisma.JsonObject : {type: 'milestones', content: []}
   let milestoneYear: number;
   let milestoneText: string;
 
@@ -71,8 +70,7 @@
       caseStudy: pageType === "Case Study"
         ? {
           name, established, size, governance,
-          staff, budget, budgetLevel, lat, long,
-          milestones: {}
+          staff, budget, budgetLevel, lat, long, milestones
         }
         : undefined,
       chapter: pageType === "Chapter"
@@ -167,7 +165,6 @@
         {type: 'text', text: milestoneText}
       ]});
     }
-    milestoneYear = null;
     milestoneText = '';
     milestones = milestones;
   }

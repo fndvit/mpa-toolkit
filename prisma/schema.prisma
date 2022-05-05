@@ -68,12 +68,14 @@ model Tag {
   value     String
   type      TagType
   pages     TagsOnPages[]
+
+  @@unique([value, type])
 }
 
 enum TagType {
-  WHEREIN
-  WHATSABOUT
-  GOODFOR
+  STAGE
+  TOPIC
+  USER
 }
 
 enum TagCategory {
@@ -82,11 +84,12 @@ enum TagCategory {
 }
 
 model TagsOnPages {
-  page        Page     @relation(fields: [pageId], references: [id])
-  pageId      Int // relation scalar field (used in the `@relation` attribute above)
-  tag         Tag @relation(fields: [tagId], references: [id])
-  tagId       Int // relation scalar field (used in the `@relation` attribute above)
-  category    TagCategory
+  page        Page        @relation(fields: [pageId], references: [id])
+  tag         Tag         @relation(fields: [tagId], references: [id])
+  category    TagCategory @default(PRIMARY)
+  
+  pageId      Int 
+  tagId       Int
 
   @@id([tagId, pageId])
 }

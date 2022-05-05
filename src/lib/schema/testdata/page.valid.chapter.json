@@ -1,0 +1,22 @@
+{
+  "title": "What should MPA managers know",
+  "slug": "blue-economy",
+  "tags": [
+    {
+      "tag": { "id": 1 },
+      "category": "PRIMARY"
+    }
+  ],
+  "img": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
+  "content": {
+    "type": "doc",
+    "content": []
+  },
+  "chapter": {
+    "authors": [13],
+    "summary": "The blue economy",
+    "keyTakeaways": [
+      "asdf"
+    ]
+  }
+}

@@ -15,10 +15,11 @@
   import Paragraph from "$lib/components/content/Paragraph.svelte";
   import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
+  import LifeCycle from "$lib/components/LifeCycle/LifeCycle.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import { createSections, staticUrl } from "$lib/helpers";
-  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
   import Section from "$lib/components/content/Section.svelte";
+  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
 
   export let page: CompletePage;
   export let document: ContentDocument;
@@ -107,6 +108,9 @@
         {/if}
       {/each}
     </div>
+    <div class="lifecycle-column">
+      <LifeCycle tags={page.tags}/>
+    </div>
   </div>
 </div>
 
@@ -171,7 +175,7 @@
   .content {
     padding: 2rem 6rem;
     display: grid;
-    grid-template-columns: 15rem 40rem;
+    grid-template-columns: 15rem 40rem auto;
     column-gap: 1rem;
     :global(h1) {
       font-size: 2.5rem;

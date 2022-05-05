@@ -1,4 +1,4 @@
-import type { Page, User, Role, CaseStudy, Chapter } from '@prisma/client';
+import type { Tag, Page, User, CaseStudy, Chapter, TagCategory } from '@prisma/client';
 export type * from '@prisma/client';
 
 export interface Locals {
@@ -11,11 +11,17 @@ export interface UserInfo {
   name: string;
 }
 
+export interface PageTag {
+  tag: Tag;
+  category: TagCategory
+}
+
 export type CompletePage = Page & {
   caseStudy: CaseStudy;
   chapter: Chapter & {
     authors: User[];
   };
+  tags: PageTag[];
 }
 
 // **********************

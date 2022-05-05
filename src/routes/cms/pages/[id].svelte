@@ -1,17 +1,20 @@
 <script lang="ts">
+  import LifeCycle from '$lib/components/LifeCycle/LifeCycle.svelte';
   import { openModal } from 'svelte-modals'
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, UserInfo } from '$lib/types';
+  import type { CompletePage, PageTag, Tag, UserInfo } from '$lib/types';
+  import type { Prisma } from "@prisma/client"
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
-  import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
   import { uploadImage } from '$lib/api';
 
+
   export let users: UserInfo[];
   export let page: CompletePage;
+  export let allTags: Tag[];
 
   const MAX_LENGTH = 140;
 
@@ -27,7 +30,9 @@
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
-  let keyTakeaways: string[] = page?.chapter?.keyTakeaways;
+  let tags: PageTag[] = page?.tags || [];
+
+  let keyTakeaways: string[] = page?.chapter?.keyTakeaways || [];
   let currentTakeawayText: string = '';
 
   let editor: Editor;
@@ -35,6 +40,7 @@
   let saving = false;
   let deleting = false;
   let autoPopulateSlug = !slug;
+
 
   let name: string;
   let established: number;
@@ -60,6 +66,7 @@
     return {
       title,
       slug,
+      tags,
       img: imgPath,
       content: editor.getDocumentJson(),
       caseStudy: pageType === "Case Study"
@@ -73,7 +80,7 @@
         ? {
           authors: authors?.map(a => a.value),
           summary,
-          keyTakeaways
+          keyTakeaways,
         }
         : undefined
     };
@@ -118,7 +125,7 @@
 
   $: selectedTypeFieldsComplete = pageType === "Case Study"
     ? name && established && size && governance && staff && budget && budgetLevel && lat && long
-    : summary && authors?.length && keyTakeaways.length;
+    : summary && authors?.length && keyTakeaways?.length;
 
   $: editable = !saving && !deleting;
   $: saveable = !saving && !deleting && sharedFieldsComplete && selectedTypeFieldsComplete;
@@ -267,8 +274,15 @@
 
 
 <div class="editor-container">
+
+  <div class="life-cycle">
+    <LifeCycle {allTags} bind:tags editable/>
+  </div>
+
   <Editor bind:this={editor} initialDoc={content} />
 </div>
+
+
 
 <style lang="scss">
 
@@ -359,6 +373,13 @@
     :global(.prosemirror-container) {
       flex: 1;
     }
+  }
+
+  .life-cycle {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    margin-top: 60px;
   }
 
   .radiogroup {

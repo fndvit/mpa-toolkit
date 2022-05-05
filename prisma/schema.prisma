@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
@@ -10,6 +7,9 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
+// model Tag {
 
 enum Role {
   USER
@@ -58,7 +58,38 @@ model Page {
   title     String
   img       String
   content   Json
-
+  tags      TagsOnPages[]
   caseStudy CaseStudy?
   chapter   Chapter?
+}
+
+model Tag {
+  id        Int       @id @default(autoincrement())
+  value     String
+  type      TagType
+  pages     TagsOnPages[]
+
+  @@unique([value, type])
+}
+
+enum TagType {
+  STAGE
+  TOPIC
+  USER
+}
+
+enum TagCategory {
+  PRIMARY
+  SECONDARY
+}
+
+model TagsOnPages {
+  page        Page        @relation(fields: [pageId], references: [id])
+  tag         Tag         @relation(fields: [tagId], references: [id])
+  category    TagCategory @default(PRIMARY)
+  
+  pageId      Int 
+  tagId       Int
+
+  @@id([tagId, pageId])
 }

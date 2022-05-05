@@ -16,7 +16,12 @@ export const get: RequestHandler = async ({ params }) => {
         include: {
           authors: true
         }
-      }
+      },
+      tags: {
+        include: {
+          tag: true,
+        }
+      },
     }
   });
   if (!page) {

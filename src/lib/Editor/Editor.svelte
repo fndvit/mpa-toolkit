@@ -33,6 +33,7 @@
   $: setContext('editorView', view);
 
   onMount(() => focusEditor());
+
 </script>
 
 <svelte:head>
@@ -42,12 +43,19 @@
 {#if view}
   <EditorMenu {editorState} on:change={handleChange} />
 {/if}
-
-<div class="prosemirror-container">
-  <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view bind:focus={focusEditor} />
+<div class="content">
+  <div class="prosemirror-container">
+    <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view bind:focus={focusEditor} />
+  </div>
 </div>
 
+
 <style lang="scss">
+  .content {
+    display: grid;
+    grid-template-columns: 70% auto;
+    column-gap: 1rem;
+  }
   .prosemirror-container {
     width: 40rem;
     margin: 0 auto;

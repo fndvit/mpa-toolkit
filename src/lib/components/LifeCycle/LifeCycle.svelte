@@ -1,178 +1,160 @@
-<script context='module' lang='ts'>
-  export interface LifeCycleTags {
-    wherein: {
-      primary: Option[];
-      secondary: Option[];
-    }
-    whatsabout: Option[];
-    goodfor: Option[];
-  }
-</script>
 <script lang='ts'>
-  import { TagCategory, TagType } from "@prisma/client";
-  import CircleMenu from '../CircleMenu/CircleMenu.svelte';
-  import menuConfigFile from '../CircleMenu/circlemenuconfig.json';
-  import menuDataFile from '../CircleMenu/lifeCycleConfig.json';
-  import type {CircleMenuConfig, MenuElement} from '../CircleMenu/CircleMenu.svelte';
-  import MultiSelect, { Option } from 'svelte-multiselect';
+  import type { PageTag } from '$lib/types';
+  import { groupBy } from '$lib/helpers';
   import type { Tag } from '$lib/types';
+  import MultiSelect, { Option } from 'svelte-multiselect';
+  import CircleMenu from '../CircleMenu/CircleMenu.svelte';
+  import lifeCycleConfig from '../CircleMenu/lifeCycleConfig.json';
   import TagContainer from  '../Tags/TagContainer.svelte';
-  import type { TagParameters } from '../Tags/TagContainer.svelte';
 
-
-  export let circleMenuConfig: CircleMenuConfig = menuConfigFile;
-  export let menuData: MenuElement[]= menuDataFile;
-  export let tagsOptions: LifeCycleTags = <LifeCycleTags>{};
-  export let tagsSelected: LifeCycleTags = <LifeCycleTags>{};
-  export let tags: (Tag & { category: string})[] = [];
+  export let allTags: Tag[] = null;
+  export let tags: PageTag[]; // binding (updated as tags are changed)
   export let editable: boolean = false;
 
-  let whereinTags: TagParameters[] = [];
-  let goodforTags: TagParameters[] = [];
-  let whatsaboutTags: TagParameters[] = [];
+  const MAX_PRIMARY_TAGS = 2;
+  const MAX_SECONDARY_TAGS = 7;
 
-  const parseTags = (tagType : TagType) : TagParameters[] => {
-      let tempTags: (Tag & {category: string})[]
-      tempTags = tags.filter(t => t.type === tagType);
+  type PageTagOption = PageTag & Option;
 
-      return tempTags.map(t => ({
-        tag: t.value,
-        alt: (t.category === TagCategory['SECONDARY'] ? 'fading' : 'default'),
-      }))
-  };
+  // used internally to bind to multiselect & keep track of selected tags
+  const selectedTagOptions = editable && groupBy(
+    tags.map<PageTagOption>(t => ({value: t.tag.id, label: t.tag.value, tag: t.tag, category: t.category})),
+    t => t.tag.type === 'STAGE' ? t.category : t.tag.type
+  );
 
-  if(!editable){
-    whereinTags = parseTags(TagType['WHEREIN']);
-    goodforTags= parseTags(TagType['GOODFOR']);
-    whatsaboutTags = parseTags(TagType['WHATSABOUT']);
+  const allPageTagOptions = editable && allTags.map<PageTagOption>(
+    tag => ({ value: tag.id, label: tag.value, tag, category: 'PRIMARY' })
+  );
+  const groupedOptions = editable && groupBy(allPageTagOptions, ({tag}) => tag.type);
+
+  $: selectedStageTagIds = new Set(
+    [...tags.filter(({tag}) => tag.type === 'STAGE').map(({tag}) => tag.id)]
+  );
+
+  $: availableStageOptions = editable && groupedOptions.STAGE
+    .filter(({tag}) => !selectedStageTagIds.has(tag.id));
+
+  $: if (editable) {
+    tags = Object.values(selectedTagOptions).flat().map(o =>
+      ({ tag: o.tag, category: o.category })
+    );
   }
 
-  const maxWhereinOptions = 7;
-  const maxWhereinPrimarySelectedOption = 2;
+  $: renderTags = !editable && groupBy(tags, t => t.tag.type);
 
-  $: {
-    if(editable){
-      tags = getTagsFromMultiSelect(tagsSelected.goodfor ? tagsSelected.goodfor : [], TagType['GOODFOR'], TagCategory['PRIMARY']);
-      tags = tags.concat(getTagsFromMultiSelect(tagsSelected.whatsabout ? tagsSelected.whatsabout : [], TagType['WHATSABOUT'], TagCategory['PRIMARY']));
-      tags = tags.concat(getTagsFromMultiSelect(tagsSelected.wherein ? tagsSelected.wherein.primary : [], TagType['WHEREIN'], TagCategory['PRIMARY']));
-      tags = tags.concat(getTagsFromMultiSelect(tagsSelected.wherein ? tagsSelected.wherein.secondary : [], TagType['WHEREIN'], TagCategory['SECONDARY']));
-      menuData =  generateCircleMenuData();
+  $: menuData = lifeCycleConfig.map(({id, percentage}) => {
+    const primary = selectedStageTagIds.has(id);
+    const secondary = selectedStageTagIds.has(id);
+
+    return {
+      id,
+      percentage,
+      group: 1,
+      type:  primary ? 'main' : secondary ? 'secondary' : 'unselected',
+      color: primary ? "#fbe26b" : "#fbe26b80"
     }
-  }
+  });
 
-  const generateCircleMenuData = () => {
-    return menuData.map((option, i) => {
-      const tag = tags.find(t => parseInt(t.id) === option.id);
-      const type = tag ? tag.category : '0';
-
-      return {
-        id: option.id,
-        percentatge: option.percentatge,
-        group: option.group,
-        type:  type === TagCategory['PRIMARY'] ? 'main' : type === TagCategory['SECONDARY'] ? 'secondary' : 'unselected',
-        color: type === TagCategory['PRIMARY'] ? "#fbe26b" : "#fbe26b80"
-      }
-    })
-  }
-
-  const getTagsFromMultiSelect = (tags: Option[], type: TagType, category: TagCategory) => tags.map(t => ({
-      id: t.value + '',
-      value: t.label + '',
-      type: type,
-      category: category,
-    }))
-
-  menuData =  generateCircleMenuData();
 </script>
+
 <div class='container'>
   <h5 class='title'>Where in the MPA lifecycle?</h5>
   <div class="circleMenuSection">
       <div class="circleMenu">
-          <CircleMenu
-              config={circleMenuConfig}
-              data={menuData}
-          ></CircleMenu>
+          <CircleMenu data={menuData} />
       </div>
-      <div class="tagContainer">
+      <div class="tag-container">
         {#if editable}
-        <div class="subtitle">Primary Tags</div>
-        <MultiSelect bind:selected={tagsSelected.wherein.primary} options={tagsOptions.wherein.primary.filter((pt) => !tagsSelected.wherein.secondary.find((st) => st.label === pt.label))} disabled={false} maxSelect={maxWhereinPrimarySelectedOption}/>
-        <div class="subtitle">Secondary Tags</div>
-        <MultiSelect bind:selected={tagsSelected.wherein.secondary} options={tagsOptions.wherein.secondary.filter((st) => !tagsSelected.wherein.primary.find((pt) => pt.label === st.label))} disabled={false} maxSelect={maxWhereinOptions}/>
+          <div class="subtitle">Primary Tags</div>
+          <MultiSelect
+            bind:selected={selectedTagOptions.PRIMARY}
+            options={availableStageOptions}
+            maxSelect={MAX_PRIMARY_TAGS}
+          />
+          <div class="subtitle">Secondary Tags</div>
+          <MultiSelect
+            bind:selected={selectedTagOptions.SECONDARY}
+            options={availableStageOptions.map(o => ({...o, category: 'SECONDARY'}))}
+            maxSelect={MAX_SECONDARY_TAGS}
+          />
         {:else}
-        <TagContainer tags={whereinTags} />
+          <TagContainer tags={renderTags.STAGE} />
         {/if}
       </div>
   </div>
   <h5 class='title'>What&apos;s this about</h5>
-  <div class="tagContainer">
+  <div class="tag-container">
     {#if editable}
-    <MultiSelect bind:selected={tagsSelected.whatsabout} options={tagsOptions.whatsabout} disabled={false} />
+      <MultiSelect bind:selected={selectedTagOptions.TOPIC} options={groupedOptions.TOPIC} />
     {:else}
-    <TagContainer tags={whatsaboutTags} />
+      <TagContainer tags={renderTags.TOPIC} />
     {/if}
   </div>
   <h5 class='title'>Good for ...</h5>
-  <div class="tagContainer">
+  <div class="tag-container">
     {#if editable}
-    <MultiSelect bind:selected={tagsSelected.goodfor} options={tagsOptions.goodfor} disabled={false} />
+      <MultiSelect bind:selected={selectedTagOptions.USER} options={groupedOptions.USER} />
     {:else}
-    <TagContainer tags={goodforTags} />
+      <TagContainer tags={renderTags.USER} />
     {/if}
   </div>
 
 </div>
 
 <style>
-  .container{
-      width: 294px;
-      height: auto;
-      background: #66CFD6;
-      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
-      border-radius: 20px;
-      padding-bottom: 20px;
+  .container {
+    width: 294px;
+    height: auto;
+    background: #66CFD6;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding-bottom: 20px;
   }
-  .circleMenu{
-      margin: 0 auto !important;
-      width: fit-content;
+  .circleMenu {
+    margin: 0 auto !important;
+    width: fit-content;
   }
-  .title{
-      width: 145px;
-      font-family: 'Montserrat';
-      font-style: normal;
-      font-weight: bold;
-      font-size: 16px;
-      line-height: 20px;
-      color: #000000;
-      padding-left: 20px;
-      padding-top: 20px;
-      padding-bottom: 0px;
-      margin-bottom: 10px;
-      margin-top: 0px;
+  .title {
+    width: 145px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
+    margin-top: 0px;
   }
-  .tagContainer{
-      margin-left: 20px;
-      margin-right: 20px;
+  .tag-container {
+    margin-left: 20px;
+    margin-right: 20px;
   }
   @media (max-width: 900px) {
-      .container{
-          width: 372px;
-          height: 372px;
-      }
-      .title{
-          width: auto;
-          font-size: 10px;
-      }
-      .circleMenu{
-          margin: 0 !important;
-          width: fit-content;
-      }
-      .circleMenuSection{
-          display: grid;
-          grid-template-columns: auto auto;
-      }
-      .circleMenuSection .tagContainer{
-          text-align: center;
-      }
+    .container {
+      width: 372px;
+      height: 372px;
+    }
+    .title {
+      width: auto;
+      font-size: 10px;
+    }
+    .circleMenu {
+      margin: 0 !important;
+      width: fit-content;
+    }
+    .circleMenuSection {
+      display: grid;
+      grid-template-columns: auto auto;
+    }
+    .circleMenuSection .tag-container {
+      text-align: center;
+    }
+  }
+
+  :global(.multiselect .selected) {
+    font-size: 10px;
   }
 </style>

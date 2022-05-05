@@ -1,7 +1,7 @@
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
 import { validate } from "$lib/schema/validation";
-import type { CaseStudy, TagCategory, TagOnPages } from '$lib/types';
+import type { CaseStudy, TagCategory } from '$lib/types';
 
 export type PageRequest = {
 
@@ -9,7 +9,10 @@ export type PageRequest = {
   slug: string;
   content: string;
   img: string;
-  tags: string[];
+  tags: {
+    tag: { id: number };
+    category: TagCategory
+  }[];
   caseStudy?: Omit<CaseStudy, 'pageId'>;
   chapter?: {
     summary: string;
@@ -45,9 +48,9 @@ export const patch = authMiddleware(
             ]
           },
           createMany: {
-            data: tags.map(tag => ({
-              tagId: parseInt(tag.split(':')[0]),
-              category: tag.split(':')[1] as TagCategory
+            data: tags.map(({tag, category}) => ({
+              tagId: tag.id,
+              category
             }))
           },
         },

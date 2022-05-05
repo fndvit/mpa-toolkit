@@ -8,9 +8,9 @@ export const get = authMiddleware(
   async ({ params }) => {
   const { id } = params;
   const users = await prisma.user.findMany();
-  const tags = await prisma.tag.findMany();
+  const allTags = await prisma.tag.findMany();
   if (id === 'new') {
-    return { body: { users, tags } };
+    return { body: { users, allTags } };
   }
   else {
     const pageId = parseInt(id);
@@ -28,7 +28,7 @@ export const get = authMiddleware(
     });
 
     return page
-      ? { body: { users, page, tags } }
+      ? { body: { users, page, allTags } }
       : error404('Page not found');
   }
 });

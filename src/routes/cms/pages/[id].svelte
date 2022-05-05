@@ -1,20 +1,20 @@
 <script lang="ts">
+  import LifeCycle from '$lib/components/LifeCycle/LifeCycle.svelte';
   import { openModal } from 'svelte-modals'
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, Tag, UserInfo } from '$lib/types';
-  import { Prisma, TagCategory, TagType } from "@prisma/client"
+  import type { CompletePage, PageTag, Tag, UserInfo } from '$lib/types';
+  import type { Prisma } from "@prisma/client"
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
-  import type { LifeCycleTags } from '$lib/components/LifeCycle/LifeCycle.svelte';
   import { uploadImage } from '$lib/api';
 
 
   export let users: UserInfo[];
   export let page: CompletePage;
-  export let tags: Tag[];
+  export let allTags: Tag[];
 
   const MAX_LENGTH = 140;
 
@@ -30,9 +30,9 @@
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
-  let pageTags: (Option & { category: TagCategory })[] = page ? page.tags.map(t => ({label: t.tag.value, value: t.tag.id, type: t.tag.type, category: t.category})) : [];
+  let tags: PageTag[] = page?.tags || [];
 
-  let keyTakeaways: string[] = page?.chapter?.keyTakeaways;
+  let keyTakeaways: string[] = page?.chapter?.keyTakeaways || [];
   let currentTakeawayText: string = '';
 
   let editor: Editor;
@@ -40,8 +40,6 @@
   let saving = false;
   let deleting = false;
   let autoPopulateSlug = !slug;
-  let tagsOptions: LifeCycleTags =  <LifeCycleTags>{};
-  let tagsSelected: LifeCycleTags = <LifeCycleTags>{};
 
 
   let name: string;
@@ -64,47 +62,11 @@
     preselected: authors && authors.some(a => a.value === u.id),
   }));
 
-  const selectTagsOptions = (tagType: TagType) => tags.filter(t => t.type === tagType).map(t => ({
-    value: t.id,
-    label: t.value,
-    [t.id]: t.type,
-  }));
-
-  const getTagOptions = (tags: LifeCycleTags) => {
-    const goodforTags = tags.goodfor.map(a => a.value + ':' + TagCategory['PRIMARY']);
-    const whatsaboutTags = tags.whatsabout.map(a => a.value + ':' + TagCategory['PRIMARY']);
-    const whereinPrimaryTags = tags.wherein.primary.map(a => a.value + ':' + TagCategory['PRIMARY']);
-    const whereinSecondaryTags = tags.wherein.secondary.map(a => a.value + ':' + TagCategory['SECONDARY']);
-    return goodforTags.concat(whatsaboutTags).concat(whereinPrimaryTags).concat(whereinSecondaryTags);
-  }
-
-  tagsOptions = {
-      wherein: {
-        primary: selectTagsOptions(TagType['WHEREIN']),
-        secondary: selectTagsOptions(TagType['WHEREIN']),
-      },
-      whatsabout: selectTagsOptions(TagType['WHATSABOUT']),
-      goodfor: selectTagsOptions(TagType['GOODFOR']),
-  };
-  tagsSelected = {
-      wherein: {
-        primary: tagsOptions.wherein.primary.filter(t => pageTags.find(pt => pt.value === t.value && pt.category === TagCategory['PRIMARY'])),
-        secondary: tagsOptions.wherein.secondary.filter(t => pageTags.find(pt => pt.value === t.value && pt.category === TagCategory['SECONDARY'])),
-      },
-      whatsabout: tagsOptions.whatsabout.filter(t => pageTags.find(pt => pt.value === t.value)),
-      goodfor: tagsOptions.goodfor.filter(t => pageTags.find(pt => pt.value === t.value)),
-  };
-
-  let lifeCycleData = {
-    options: tagsOptions,
-    selected: tagsSelected,
-  }
-
   function getFormData() {
     return {
       title,
       slug,
-      tags: getTagOptions(tagsSelected),
+      tags,
       img: imgPath,
       content: editor.getDocumentJson(),
       caseStudy: pageType === "Case Study"
@@ -119,7 +81,6 @@
           authors: authors?.map(a => a.value),
           summary,
           keyTakeaways,
-          tags: getTagOptions(tagsSelected),
         }
         : undefined
     };
@@ -164,7 +125,7 @@
 
   $: selectedTypeFieldsComplete = pageType === "Case Study"
     ? name && established && size && governance && staff && budget && budgetLevel && lat && long
-    : summary && authors?.length && keyTakeaways.length;
+    : summary && authors?.length && keyTakeaways?.length;
 
   $: editable = !saving && !deleting;
   $: saveable = !saving && !deleting && sharedFieldsComplete && selectedTypeFieldsComplete;
@@ -313,11 +274,13 @@
 
 
 <div class="editor-container">
-  <Editor bind:this={editor} initialDoc={content} lifeCycleData={lifeCycleData}/>
+
+  <div class="life-cycle">
+    <LifeCycle {allTags} bind:tags editable/>
+  </div>
+
+  <Editor bind:this={editor} initialDoc={content} />
 </div>
-
-
-
 
 
 
@@ -410,6 +373,13 @@
     :global(.prosemirror-container) {
       flex: 1;
     }
+  }
+
+  .life-cycle {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    margin-top: 60px;
   }
 
   .radiogroup {

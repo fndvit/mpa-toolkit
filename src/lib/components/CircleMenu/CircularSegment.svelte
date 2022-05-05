@@ -29,8 +29,6 @@
   export let selectedStyle: string = Thickness.Unselected;
   export let onClickFn = () => {};
 
-
-
   let describeArc = (segmentConfig: Segment, currentThickness: number) => {
     let thickness = currentThickness; // Need a way to work with enums
     let startAngle = segmentConfig.startAngle + segmentConfig.gap / 2;

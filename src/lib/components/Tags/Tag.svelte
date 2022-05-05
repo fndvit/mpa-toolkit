@@ -1,30 +1,16 @@
 <script lang="ts">
-  import type { TagParameters } from './TagContainer.svelte';
+  import type { PageTag } from "$lib/types";
 
-  export let data: TagParameters;
-  export let onClickFn = () => {};
+  export let tag: PageTag;
 
-  let style: string;
-  let calcStyle = () => {
-    if (data.alt === 'grey') {
-      style = 'tag-area alternative';
-    } else if (data.alt === 'fading') {
-      style = 'tag-area fading';
-    } else {
-      style = 'tag-area';
-    }
-  };
-  $: if (data.alt) calcStyle();
+  $: fade = tag.category == 'SECONDARY';
+
 </script>
 
-
-<div class={style} on:click={onClickFn} tabindex="0">{data.tag}</div>
+<div class="tag-area" class:fade tabindex="0">{tag.tag.value}</div>
 
 <style>
-  .alternative {
-    background: #dadce0 !important;
-  }
-  .fading {
+  .fade {
     background: rgba(251, 226, 107, 0.6) !important;
   }
   .tag-area {

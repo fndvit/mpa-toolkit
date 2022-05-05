@@ -1,16 +1,14 @@
-<script context='module' lang='ts'>
-  export interface TagParameters {tag: string, alt: string};
-</script>
 <script lang="ts">
+  import type { PageTag } from "$lib/types";
   import Tag from "./Tag.svelte";
 
-  export let tags: TagParameters[];
+  export let tags: PageTag[];
   export let width:number = 200;
 </script>
 
 <div class="tag-container" style="max-width:{width}px">
-  {#each tags as t}
-         <Tag data={t}/>
+  {#each tags as tag}
+    <Tag {tag}/>
   {/each}
 </div>
 

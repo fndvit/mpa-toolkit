@@ -19,15 +19,12 @@
   import MadLib from "$lib/components/MadLib.svelte";
   import { createSections, staticUrl } from "$lib/helpers";
   import Section from "$lib/components/content/Section.svelte";
-  import type { ContentDocument, CompletePage, CardsBlock, Tag, TagCategory } from "$lib/types";
-
+  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
 
   export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
   export let readTime: number;
-
-  let pageTags: (Tag & {category: TagCategory})[] = page ? page.tags.map(t => ({value: t.tag.value, id: t.tag.id, type: t.tag.type, category: t.category})) : [];
 
   const sections = createSections(document);
 
@@ -112,7 +109,7 @@
       {/each}
     </div>
     <div class="lifecycle-column">
-      <LifeCycle tags={pageTags}/>
+      <LifeCycle tags={page.tags}/>
     </div>
   </div>
 </div>

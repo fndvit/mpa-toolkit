@@ -13,6 +13,12 @@ export function createSections(document: ContentDocument) {
         topic: 'lorem ipsum',
         blocks: [block]
       });
+    } else if(acc.length === 0) {
+      acc.push({
+        id: '',
+        topic: 'lorem ipsum',
+        blocks: [block]
+      });
     } else {
       // add to current section
       acc[acc.length - 1].blocks.push(block);

@@ -1,0 +1,33 @@
+{
+  "name": "@mpa-toolkit/adapter",
+  "version": "0.0.1",
+  "main": "build/adapter.js",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prebuild": "yarn clean",
+    "build": "tsc && yarn copyjs",
+    "clean": "rimraf build",
+    "copyjs": "cp -R lambda build/lambda",
+    "postinstsall": "yarn build"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.93",
+    "@types/fs-extra": "^9.0.13",
+    "rimraf": "^3.0.2",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-apigatewayv2-alpha": "^2.16.0-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.17.0-alpha.0",
+    "@aws-sdk/client-s3": "^3.53.1",
+    "@sveltejs/kit": "next",
+    "aws-cdk-lib": "^2.16.0",
+    "constructs": "^10.0.87",
+    "dotenv": "^16.0.0",
+    "esbuild": "^0.14.28",
+    "fs-extra": "^10.0.1"
+  }
+}

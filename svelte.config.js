@@ -1,4 +1,4 @@
-import adapter from './adapter/build/adapter.js';
+import adapter from '@mpa-toolkit/adapter';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */

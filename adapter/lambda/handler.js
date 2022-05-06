@@ -1,5 +1,4 @@
 import './shims.js';
-import { prisma } from '$lib/prisma'; // instantiate db connection
 import { Server } from '../server/index.js';
 import { manifest } from '../server/manifest.js';
 

@@ -63,13 +63,37 @@ export const patch = authMiddleware(
 export const del = authMiddleware(
   { role:'CONTENT_MANAGER' },
   async ({ params }) => {
-    const page = await prisma.page.delete({
-      where: { id: parseInt(params.id) }
+    const pageId = parseInt(params.id);
+
+    const page = await prisma.page.findFirst({
+      where: {id: pageId},
+      include: {
+        chapter: true,
+        caseStudy: true
+      }
     });
 
+    const cascade = prisma.page.update({
+      where: { id: pageId },
+      data: {
+        chapter: page.chapter ? { delete: true } : undefined,
+        caseStudy: page.caseStudy ? { delete: true } : undefined,
+        tags: {
+          deleteMany: {
+            OR: [
+              { pageId: { equals: parseInt(params.id) } },
+            ]
+          }
+        }
+      }
+    });
+
+    const deletePage = prisma.page.delete({ where: { id: pageId } });
+
+    await prisma.$transaction([cascade, deletePage]);
+
     return {
-      status: 200,
-      body: page
+      status: 200
     };
   }
 );

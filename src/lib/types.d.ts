@@ -6,7 +6,7 @@ export interface Locals {
 }
 
 export interface UserInfo {
-  id: string;
+  id: number;
   email: string;
   name: string;
 }
@@ -37,7 +37,7 @@ export type PageRequest = {
 
   title: string;
   slug: string;
-  content: string;
+  content: object;
   img: string;
   tags: {
     tag: { id: number };

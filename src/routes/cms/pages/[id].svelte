@@ -9,7 +9,7 @@
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
-  import { uploadImage } from '$lib/api';
+  import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
 
 
   export let users: UserInfo[];
@@ -26,7 +26,7 @@
   let title: string = page?.title;
   let slug: string = page?.slug;
   let summary: string = page?.chapter?.summary;
-  let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
+  let authors = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
@@ -71,9 +71,10 @@
       content: editor.getDocumentJson(),
       caseStudy: pageType === "Case Study"
         ? {
-          name, established, size, governance,
+          name, established, governance,
           staff, budget, budgetLevel, lat, long,
-          milestones: {}
+          milestones: {},
+          size: parseFloat(size)
         }
         : undefined,
       chapter: pageType === "Chapter"
@@ -91,34 +92,23 @@
     const formData = getFormData();
     const body = JSON.stringify(formData);
 
-    const response = await (
-      newPage
-        ? fetch('/api/pages/create', { method: 'PUT', body })
-        : fetch(`/api/pages/${page.id}`, { method: 'PATCH', body })
-    );
-
-    saving = false;
-
-    if (response.ok) {
-      if (newPage) {
-        const json = await response.json();
-        goto(`/cms/pages/${json.id}`);
-      }
+    if (newPage) {
+      const {id} = await createPage(formData);
+      window.location.href = `/cms/pages/${id}`;
     } else {
-      console.error(response);
+      await updatePage(page.id, formData);
     }
+    saving = false;
   }
 
-  async function deletePage() {
+  async function onDeleteModalYes() {
     deleting = true;
-    await fetch(`/api/pages/${page.id}`, {
-      method: 'DELETE',
-    });
+    await deletePage(page.id);
     goto('/cms/pages');
   }
 
   async function onClickDelete() {
-    openModal(DeleteModal, { onYes: deletePage })
+    openModal(DeleteModal, { onYes: onDeleteModalYes })
   }
 
   $: sharedFieldsComplete = title && slug && imgPath;

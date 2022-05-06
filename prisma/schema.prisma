@@ -89,7 +89,7 @@ model TagsOnPages {
   tag         Tag         @relation(fields: [tagId], references: [id])
   category    TagCategory @default(PRIMARY)
   
-  pageId      Int 
+  pageId      Int
   tagId       Int
 
   @@id([tagId, pageId])

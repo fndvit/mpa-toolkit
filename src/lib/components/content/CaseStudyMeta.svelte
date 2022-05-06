@@ -64,7 +64,10 @@
 
 </div>
 
-<MilestonesMeta {milestones}></MilestonesMeta>
+{#if milestones.content.length}
+  <MilestonesMeta {milestones}/>
+{/if}
+
 
 
 <style lang="scss">

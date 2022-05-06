@@ -1,0 +1,12 @@
+[
+  {
+    "role": "USR"
+  },
+  {
+    "img": 5
+  },
+  {
+    "role": "USER",
+    "extra": "error"
+  }
+]

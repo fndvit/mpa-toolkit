@@ -1,10 +1,12 @@
 import Ajv from "ajv";
 import type { AnyValidateFunction } from "ajv/dist/core";
 import * as schemaPage from "./page.json";
+import * as schemaUser from "./user.json";
 
 export const ajv = new Ajv();
 
 ajv.addSchema(schemaPage);
+ajv.addSchema(schemaUser);
 
 interface Validate {
   (schema: string, data: any): void;

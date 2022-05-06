@@ -2,6 +2,11 @@
   import { Modals, closeModal } from 'svelte-modals';
 </script>
 
+
+<svelte:head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</svelte:head>
+
 <slot/>
 
 <Modals>
@@ -21,4 +26,5 @@
     left: 0;
     background: rgba(0,0,0,0.50)
   }
+
 </style>

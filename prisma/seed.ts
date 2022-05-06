@@ -27,6 +27,14 @@ async function main() {
     }
   });
 
+  await prisma.tag.createMany({
+    data: [
+      ...tagsJson.stage.map((value, i) => ({id: i, value, type: Prisma.TagType.STAGE})),
+      ...tagsJson.topic.map(value => ({value, type: Prisma.TagType.TOPIC})),
+      ...tagsJson.user.map(value => ({value, type: Prisma.TagType.USER})),
+    ]
+  });
+
   await prisma.page.create({
     data: {
       slug: "blue-economy",
@@ -34,25 +42,23 @@ async function main() {
       draft: false,
       img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
       content: contentJson,
+      tags: {
+        createMany: {
+          data: [
+            { tagId: 1, category: 'PRIMARY' },
+            { tagId: 2, category: 'PRIMARY' },
+            { tagId: 3, category: 'SECONDARY' },
+            { tagId: 4, category: 'SECONDARY' },
+          ]
+        }
+      },
       chapter: {
         create: {
           summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
-          authors: {
-            connect: [{
-              id: user.id
-            }]
-          }
+          authors: { connect: [{ id: user.id }] }
         }
       }
     }
-  });
-
-  await prisma.tag.createMany({
-    data: [
-      ...tagsJson.stage.map((value, i) => ({id: i, value, type: Prisma.TagType.STAGE})),
-      ...tagsJson.topic.map(value => ({value, type: Prisma.TagType.TOPIC})),
-      ...tagsJson.user.map(value => ({value, type: Prisma.TagType.USER})),
-    ]
   });
 }
 

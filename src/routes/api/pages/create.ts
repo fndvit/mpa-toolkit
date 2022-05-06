@@ -1,7 +1,7 @@
+import type { PageRequest } from "$lib/types";
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
 import { validate } from "$lib/schema/validation";
-import type { PageRequest } from "./[id]";
 
 export const put = authMiddleware(
   { role:'CONTENT_MANAGER' },

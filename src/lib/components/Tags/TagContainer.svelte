@@ -2,7 +2,7 @@
   import type { PageTag } from "$lib/types";
   import Tag from "./Tag.svelte";
 
-  export let tags: PageTag[];
+  export let tags: PageTag[] = [];
   export let width:number = 200;
 </script>
 

@@ -71,7 +71,6 @@
 
 <style lang="scss">
 
-
   :global(button:disabled){
     display: none;
   }
@@ -83,10 +82,6 @@
   :global(.splide__arrow--next){
     transform: translateX(4rem);
   }
-
-  .next { right: 3rem; }
-
-  .prev { left: 3rem; }
 
   .milestones-slider {
     transform: translateY(-39px);

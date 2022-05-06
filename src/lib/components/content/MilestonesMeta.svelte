@@ -6,13 +6,44 @@
 
   export let milestones: {[key: string]: any};
 
+  let splide: Splide;
+
   const options: Options = {
-    type: 'slide',
     perMove: 1,
     gap: '25px',
-    autoWidth:true,
     pagination: false,
-    arrows: false
+    perPage: 6,
+    arrows: true,
+    breakpoints: {
+      1600: {
+        perPage: 5,
+      },
+      1400: {
+        perPage: 4,
+      },
+      1200: {
+        perPage: 3,
+      },
+      1000: {
+        perPage: 2,
+      },
+      800: {
+        perPage: 1,
+      }
+    }
+  }
+
+  const onClickNextSwipe = () => {
+    splide.go('>');
+  }
+
+  const onClickPrevSwipe = () => {
+    splide.go('<');
+  }
+
+  const handleMove = (newIndex: number) => {
+    console.log(newIndex);
+    console.log(splide);
   }
 
 </script>
@@ -26,7 +57,7 @@
   </svg>
 
   <div class="milestones-slider">
-    <Splide {options}>
+    <Splide {options} bind:this={splide} on:move={(e) => handleMove(e.detail.index)}>
       {#each milestones.content as m}
         <SplideSlide>
           <Milestone milestone={m}/>
@@ -39,6 +70,23 @@
 
 
 <style lang="scss">
+
+
+  :global(button:disabled){
+    display: none;
+  }
+
+  :global(.splide__arrow--prev){
+    transform: translateX(-4rem);
+  }
+
+  :global(.splide__arrow--next){
+    transform: translateX(4rem);
+  }
+
+  .next { right: 3rem; }
+
+  .prev { left: 3rem; }
 
   .milestones-slider {
     transform: translateY(-39px);
@@ -69,6 +117,7 @@
   .meta-milestones {
     background: #04558E;
     box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
+    position: relative;
   }
 
 </style>

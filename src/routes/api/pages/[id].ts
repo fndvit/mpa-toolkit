@@ -1,25 +1,7 @@
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
 import { validate } from "$lib/schema/validation";
-import type { CaseStudy, TagCategory } from '$lib/types';
-
-export type PageRequest = {
-
-  title: string;
-  slug: string;
-  content: string;
-  img: string;
-  tags: {
-    tag: { id: number };
-    category: TagCategory
-  }[];
-  caseStudy?: Omit<CaseStudy, 'pageId'>;
-  chapter?: {
-    summary: string;
-    authors: number[];
-    keyTakeaways: string[];
-  }
-}
+import type { PageRequest } from "$lib/types";
 
 export const patch = authMiddleware(
   { role:'CONTENT_MANAGER' },

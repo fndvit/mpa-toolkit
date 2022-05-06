@@ -1,4 +1,4 @@
-import type { Tag, Page, User, CaseStudy, Chapter, TagCategory } from '@prisma/client';
+import type { Tag, Page, User, CaseStudy, Chapter, TagCategory, Role } from '@prisma/client';
 export type * from '@prisma/client';
 
 export interface Locals {
@@ -22,6 +22,33 @@ export type CompletePage = Page & {
     authors: User[];
   };
   tags: PageTag[];
+}
+
+// *******************
+// API REQUEST BODIES
+// *******************
+
+export type UserRequest = {
+  role?: Role;
+  img?: string;
+}
+
+export type PageRequest = {
+
+  title: string;
+  slug: string;
+  content: string;
+  img: string;
+  tags: {
+    tag: { id: number };
+    category: TagCategory
+  }[];
+  caseStudy?: Omit<CaseStudy, 'pageId'>;
+  chapter?: {
+    summary: string;
+    authors: number[];
+    keyTakeaways: string[];
+  }
 }
 
 // **********************

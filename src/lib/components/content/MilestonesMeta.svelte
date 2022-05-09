@@ -33,19 +33,6 @@
     }
   }
 
-  const onClickNextSwipe = () => {
-    splide.go('>');
-  }
-
-  const onClickPrevSwipe = () => {
-    splide.go('<');
-  }
-
-  const handleMove = (newIndex: number) => {
-    console.log(newIndex);
-    console.log(splide);
-  }
-
 </script>
 
 
@@ -57,7 +44,7 @@
   </svg>
 
   <div class="milestones-slider">
-    <Splide {options} bind:this={splide} on:move={(e) => handleMove(e.detail.index)}>
+    <Splide {options} bind:this={splide}>
       {#each milestones.content as m}
         <SplideSlide>
           <Milestone milestone={m}/>
@@ -76,11 +63,22 @@
   }
 
   :global(.splide__arrow--prev){
-    transform: translateX(-4rem);
+    transform: translateX(-5rem);
+  }
+
+  :global(.splide__arrow svg) {
+    fill: #2A2A2A;
+  }
+
+  :global(.splide__arrow) {
+    background-color: #F9F9F9;
+    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+    width: 48px;
+    height: 48px;
   }
 
   :global(.splide__arrow--next){
-    transform: translateX(4rem);
+    transform: translateX(5rem);
   }
 
   .milestones-slider {

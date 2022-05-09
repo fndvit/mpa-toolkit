@@ -25,8 +25,6 @@
   export let headings: { text: string }[];
   export let readTime: number;
 
-  console.log(page);
-
   const sections = createSections(document);
 
   const components = {

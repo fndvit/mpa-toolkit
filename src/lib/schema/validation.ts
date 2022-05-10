@@ -1,9 +1,12 @@
+import { logger } from "../log";
 import Ajv from "ajv";
 import type { AnyValidateFunction } from "ajv/dist/core";
 import * as schemaPage from "./page.json";
 import * as schemaUser from "./user.json";
 
 export const ajv = new Ajv();
+
+const log = logger.child({scope: 'validate'});
 
 ajv.addSchema(schemaPage);
 ajv.addSchema(schemaUser);
@@ -18,6 +21,7 @@ export const validate: Validate = (schema: string, data: unknown) => {
   const valid = _validate(data);
   if (!valid) {
     validate.errors = _validate.errors;
+    log.error(_validate.errors);
     throw new Error(_validate.errors.map(e => e.message).join(', '));
   }
 };

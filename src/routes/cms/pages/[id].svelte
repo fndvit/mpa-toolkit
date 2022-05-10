@@ -42,15 +42,20 @@
   let autoPopulateSlug = !slug;
 
 
-  let name: string;
-  let established: number;
-  let size: string;
-  let governance: string;
-  let staff: string;
-  let budget: string;
-  let budgetLevel: string;
-  let lat: number;
-  let long: number;
+  let name: string = page?.caseStudy?.name;
+  let established: number = page?.caseStudy?.established;
+  let size: number = page?.caseStudy?.size;
+  let governance: string = page?.caseStudy?.governance;
+  let staff: string = page?.caseStudy?.staff;
+  let budget: string = page?.caseStudy?.budget;
+  let budgetLevel: string = page?.caseStudy?.budgetLevel;
+  let lat: number = page?.caseStudy?.lat;
+  let long: number = page?.caseStudy?.long;
+
+  let milestones:  {[key: string]: any} = page?.caseStudy?
+    page.caseStudy.milestones as Prisma.JsonObject : {type: 'milestones', content: []}
+  let milestoneYear: number;
+  let milestoneText: string;
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -71,10 +76,9 @@
       content: editor.getDocumentJson(),
       caseStudy: pageType === "Case Study"
         ? {
-          name, established, governance,
+          name, established, governance, size,
           staff, budget, budgetLevel, lat, long,
-          milestones: {},
-          size: parseFloat(size)
+          milestones: {}
         }
         : undefined,
       chapter: pageType === "Chapter"
@@ -147,6 +151,28 @@
     keyTakeaways.splice(index, 1);
     keyTakeaways = keyTakeaways;
   };
+
+  const onClickSaveMilestone = () => {
+    const yearAlreadyExists = milestones.content.findIndex((m) => m.year === milestoneYear);
+    if (yearAlreadyExists != -1){
+      milestones.content[yearAlreadyExists].content.push({type: 'text', text: milestoneText});
+    }
+    else {
+      milestones.content.push({year: milestoneYear, content: [
+        {type: 'text', text: milestoneText}
+      ]});
+    }
+    milestoneText = '';
+    milestones = milestones;
+  }
+
+  const onClickDeleteMilestone = (yearIndex: number, milestoneIndex: number) => {
+    milestones.content[yearIndex].content.splice(milestoneIndex, 1);
+    if (!milestones.content[yearIndex].content.length) {
+      milestones.content.splice(yearIndex, 1);
+    }
+    milestones = milestones;
+  }
 
 </script>
 
@@ -222,6 +248,24 @@
       <label for="altitude">Altitude coordinate</label>
       <input type="number" id="altitude" bind:value={long} disabled={!editable} placeholder="e.g. -74.0059"/>
 
+      <label for="milestones">Add milestone</label>
+      <div>
+        <input type="number" id="milestoneYear" bind:value={milestoneYear} disabled={!editable} placeholder="Year" class="year-selector"/>
+        <textarea type="text" id="milestones" bind:value={milestoneText} rows="4" maxlength={MAX_LENGTH} disabled={!editable} class="milestone-area"/>
+        <button disabled={!milestoneYear || !milestoneText} on:click={onClickSaveMilestone}>Save milestone</button>
+      </div>
+
+      <div class="list">
+        {#each milestones.content as m, i}
+        {m.year}
+          {#each m.content as x, y}
+            <div class="list-item">
+              {x.text}
+              <button on:click={() => onClickDeleteMilestone(i, y)}>&times;</button>
+            </div>
+          {/each}
+        {/each}
+      </div>
 
     {:else}
       <label for="summary">Summary</label>
@@ -275,6 +319,14 @@
 
 
 <style lang="scss">
+
+  .milestone-area {
+      width: 100rem;
+    }
+
+  .year-selector {
+    width: 100px;
+  }
 
   .list {
     display: inline-block !important;

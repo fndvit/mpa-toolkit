@@ -29,7 +29,6 @@
   "$defs": {
 
     "tag": {
-      "$id": "page/tag",
       "type": "object",
       "properties": {
         "tag": {
@@ -44,26 +43,37 @@
       "required": [ "tag" ]
     },
 
+    "milestones": {
+      "type": "object",
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+
     "caseStudy": {
-      "$id": "page/caseStudy",
       "type": "object",
       "properties": {
         "name": { "type": "string" },
         "established": { "type": "integer" },
         "size": { "type": "number" },
         "governance": { "type": "string" },
+        "staff": { "type": "string" },
         "budget": { "type": "string" },
         "budgetLevel": { "type": "string" },
         "lat": { "type": "number" },
         "long": { "type": "number" },
-        "milestones": { "type": "object" }
+        "milestones": { "$ref": "#/$defs/milestones" }
       },
       "additionalProperties": false,
-      "minProperties": 9
+      "minProperties": 10
     },
 
     "chapter": {
-      "$id": "page/chapter",
       "type": "object",
       "properties": {
         "summary": { "type": "string" },
@@ -73,6 +83,5 @@
       "additionalProperties": false,
       "minProperties": 3
     }
-
   }
 }

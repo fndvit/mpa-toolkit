@@ -38,7 +38,7 @@
 
   const keyTakeawaysBlock: CardsBlock = {
     type: 'cards',
-    content: page.chapter.keyTakeaways.map(k => ({
+    content: page?.chapter?.keyTakeaways.map(k => ({
       type: 'card',
       content: [
         {
@@ -165,6 +165,7 @@
     align-items: flex-end;
     padding: 6rem;
     padding-bottom: 3rem;
+    padding-left: 124px;
     h1 {
       max-width: 800px;
       color: white;
@@ -180,7 +181,7 @@
   .meta {
     background: #096EAE;
     color: #F9F9F9;
-    padding: 2rem 6rem;
+    padding: 2rem 124px;
   }
 
 

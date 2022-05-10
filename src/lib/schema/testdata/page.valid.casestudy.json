@@ -12,10 +12,14 @@
     "established": 2022,
     "size": 1129301,
     "governance": "test",
+    "staff": "test",
     "budget": "1000000",
     "budgetLevel": "test",
     "lat": 32.234,
     "long": 32.342,
-    "milestones": {}
+    "milestones": {
+      "2020": [ "a", "b" ],
+      "2022": [ "c" ]
+    }
   }
 }

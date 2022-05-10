@@ -1,16 +1,17 @@
 <script lang="ts">
   import LifeCycle from '$lib/components/LifeCycle/LifeCycle.svelte';
+  import MilestonesEditor from '$lib/components/cms/MilestonesEditor.svelte';
+  import KeyTakeawaysEditor from '$lib/components/cms/KeyTakeawaysEditor.svelte';
   import { openModal } from 'svelte-modals'
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, PageTag, Tag, UserInfo } from '$lib/types';
+  import type { CompletePage, Milestones, PageTag, Tag, UserInfo } from '$lib/types';
   import type { Prisma } from "@prisma/client"
-  import MultiSelect, { Option } from 'svelte-multiselect';
+  import MultiSelect from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
   import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
-
 
   export let users: UserInfo[];
   export let page: CompletePage;
@@ -33,7 +34,6 @@
   let tags: PageTag[] = page?.tags || [];
 
   let keyTakeaways: string[] = page?.chapter?.keyTakeaways || [];
-  let currentTakeawayText: string = '';
 
   let editor: Editor;
   let uploadingImage = false;
@@ -41,16 +41,17 @@
   let deleting = false;
   let autoPopulateSlug = !slug;
 
+  let name: string = page?.caseStudy?.name;
+  let established: number = page?.caseStudy?.established;
+  let size: number = page?.caseStudy?.size;
+  let governance: string = page?.caseStudy?.governance;
+  let staff: string = page?.caseStudy?.staff;
+  let budget: string = page?.caseStudy?.budget;
+  let budgetLevel: string = page?.caseStudy?.budgetLevel;
+  let lat: number = page?.caseStudy?.lat;
+  let long: number = page?.caseStudy?.long;
 
-  let name: string;
-  let established: number;
-  let size: string;
-  let governance: string;
-  let staff: string;
-  let budget: string;
-  let budgetLevel: string;
-  let lat: number;
-  let long: number;
+  let milestones = (page?.caseStudy?.milestones || {}) as Milestones;
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -71,10 +72,9 @@
       content: editor.getDocumentJson(),
       caseStudy: pageType === "Case Study"
         ? {
-          name, established, governance,
+          name, established, governance, size,
           staff, budget, budgetLevel, lat, long,
-          milestones: {},
-          size: parseFloat(size)
+          milestones
         }
         : undefined,
       chapter: pageType === "Chapter"
@@ -135,18 +135,6 @@
     const validChars = /[a-zA-Z0-9-]/;
     if (!validChars.exec(e.data)) e.preventDefault();
   }
-
-  const onClickSaveTakeaway = () => {
-    if (currentTakeawayText.length > 0){
-      keyTakeaways = [...keyTakeaways, currentTakeawayText];
-      currentTakeawayText = "";
-    }
-  };
-
-  const onClickDeleteTakeaway = (index: number) => {
-    keyTakeaways.splice(index, 1);
-    keyTakeaways = keyTakeaways;
-  };
 
 </script>
 
@@ -222,8 +210,10 @@
       <label for="altitude">Altitude coordinate</label>
       <input type="number" id="altitude" bind:value={long} disabled={!editable} placeholder="e.g. -74.0059"/>
 
+      <MilestonesEditor bind:milestones editable/>
 
     {:else}
+
       <label for="summary">Summary</label>
       <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
 
@@ -232,25 +222,11 @@
       </label>
       <MultiSelect bind:selected={authors} options={authorOptions} disabled={!editable} />
 
-      <label for="keytakeaway">Add key takeaway</label>
-      <div>
-        <textarea type="text" id="takeawayName" bind:value={currentTakeawayText} disabled={!editable}/>
-        <button on:click={onClickSaveTakeaway}>Save takeaway</button>
-      </div>
-
-      <div class="list">
-        {#each keyTakeaways as k, i}
-          <div class = "list-item">
-            {k}
-            <button on:click={() => onClickDeleteTakeaway(i)}>&times;</button>
-          </div>
-        {/each}
-      </div>
+      <KeyTakeawaysEditor bind:keyTakeaways editable/>
 
     {/if}
 
   </div>
-
 
   <div class="controls">
     <button class="save" on:click={savePost} disabled={!saveable}>Save</button>
@@ -276,32 +252,10 @@
 
 <style lang="scss">
 
-  .list {
-    display: inline-block !important;
-    width: 100rem;
-
-    button {
-      float: right;
-      border: none;
-      background: transparent;
-      padding: 0;
-      margin: 0;
-      color: #dc4f21;
-      font-size: 23px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  }
-
-  .list-item {
-    list-style: none;
-    padding: 6px 10px;
-    border-bottom: 1px solid #ddd;
-  }
-
   .meta {
     padding: 0 20px 20px;
   }
+
   label {
     display: block;
   }

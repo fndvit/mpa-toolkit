@@ -1,11 +1,25 @@
 <script lang="ts">
-  import type { CaseStudy } from "$lib/types";
+  import type { Options } from '@splidejs/splide';
+  import type { CaseStudy, Milestones } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
+  import MilestonesMeta from './MilestonesMeta.svelte';
 
-  export let caseStudy: CaseStudy;
+  export let caseStudy: Omit<CaseStudy, 'pageId'>;
 
   const { name, established, size, governance,
     staff, budget, budgetLevel, lat, long } = caseStudy;
+
+  let milestones = caseStudy.milestones as Milestones;
+
+
+  const options: Options = {
+    type: 'slide',
+    perMove: 1,
+    gap: '25px',
+    autoWidth:true,
+    pagination: false,
+    arrows: false
+  }
 
 </script>
 
@@ -50,6 +64,12 @@
 
 </div>
 
+{#if Object.keys(milestones).length}
+  <MilestonesMeta {milestones}/>
+{/if}
+
+
+
 <style lang="scss">
 
   .meta-container {
@@ -59,7 +79,7 @@
 
   .meta-content {
     width: 1300px;
-    margin: auto;
+    margin-left: 124px;
     padding: 35px 0;
   }
 

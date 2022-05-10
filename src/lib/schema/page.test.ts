@@ -1,16 +1,25 @@
 import { beforeAll, describe, expect, test } from "vitest";
-import { validate } from "./validation";
+import { ajv, validate } from "./validation";
 import pageValidChapter from './testdata/page.valid.chapter.json';
 import pageValidCaseStudy from './testdata/page.valid.casestudy.json';
 import pageInvalidTags from './testdata/page.invalid.tags.json';
 import pageInvalidCaseStudies from './testdata/page.invalid.casestudies.json';
 import pageInvalidChapters from './testdata/page.invalid.chapters.json';
 import pageInvalid from './testdata/page.invalid.json';
+import pageInvalidMilestones from './testdata/page.invalid.milestones.json';
 
 describe("Page", () => {
 
   beforeAll(() => {
     validate.errors = undefined;
+  });
+
+  test("schemas exist", () => {
+    expect(ajv.getSchema('page')).toBeTruthy();
+    expect(ajv.getSchema('page#/$defs/chapter')).toBeTruthy();
+    expect(ajv.getSchema('page#/$defs/caseStudy')).toBeTruthy();
+    expect(ajv.getSchema('page#/$defs/tag')).toBeTruthy();
+    expect(ajv.getSchema('page#/$defs/milestones')).toBeTruthy();
   });
 
   test("valid chapter", () => {
@@ -28,7 +37,7 @@ describe("Page", () => {
   test("invalid tags", () => {
     pageInvalidTags.forEach(tag => {
       validate.errors = undefined;
-      expect(() => validate("page/tag", tag)).toThrowError();
+      expect(() => validate("page#/$defs/tag", tag)).toThrowError();
       expect(validate.errors.length).greaterThanOrEqual(1);
     });
   });
@@ -36,7 +45,7 @@ describe("Page", () => {
   test("invalid case studies", () => {
     pageInvalidCaseStudies.forEach(casestudy => {
       validate.errors = undefined;
-      expect(() => validate("page/caseStudy", casestudy)).toThrowError();
+      expect(() => validate("page#/$defs/caseStudy", casestudy)).toThrowError();
       expect(validate.errors.length).greaterThanOrEqual(1);
     });
   });
@@ -44,7 +53,7 @@ describe("Page", () => {
   test("invalid chapters", () => {
     pageInvalidChapters.forEach(chapter => {
       validate.errors = undefined;
-      expect(() => validate("page/chapter", chapter)).toThrowError();
+      expect(() => validate("page#/$defs/chapter", chapter)).toThrowError();
       expect(validate.errors.length).greaterThanOrEqual(1);
     });
   });
@@ -54,6 +63,14 @@ describe("Page", () => {
       validate.errors = undefined;
       expect(() => validate("page", page)).toThrowError();
       expect(validate.errors.length).greaterThanOrEqual(1);
+    });
+  });
+
+  test("invalid milestones", () => {
+    pageInvalidMilestones.forEach(milestones => {
+      validate.errors = undefined;
+      expect(() => validate("page#/$defs/milestones", milestones)).toThrowError();
+      expect(validate.errors?.length).greaterThanOrEqual(1);
     });
   });
 

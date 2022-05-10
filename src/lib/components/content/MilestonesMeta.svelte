@@ -3,8 +3,9 @@
   import {Splide, SplideSlide} from "@splidejs/svelte-splide";
   import type { Options } from '@splidejs/splide';
   import Milestone from "../Milestone.svelte";
+  import type { Milestones } from '$lib/types';
 
-  export let milestones: {[key: string]: any};
+  export let milestones: Milestones;
 
   const options: Options = {
     perMove: 1,
@@ -43,9 +44,9 @@
 
   <div class="milestones-slider">
     <Splide {options}>
-      {#each milestones.content as m}
+      {#each Object.keys(milestones).sort() as year, i}
         <SplideSlide>
-          <Milestone milestone={m}/>
+          <Milestone {year} content={milestones[year]} />
         </SplideSlide>
       {/each}
     </Splide>

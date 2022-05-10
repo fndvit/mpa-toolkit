@@ -6,7 +6,7 @@
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, PageTag, Tag, UserInfo } from '$lib/types';
+  import type { CompletePage, Milestones, PageTag, Tag, UserInfo } from '$lib/types';
   import type { Prisma } from "@prisma/client"
   import MultiSelect from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
@@ -51,8 +51,7 @@
   let lat: number = page?.caseStudy?.lat;
   let long: number = page?.caseStudy?.long;
 
-  let milestones:  {[key: string]: any} = page?.caseStudy?
-    page.caseStudy.milestones as Prisma.JsonObject : {type: 'milestones', content: []}
+  let milestones = (page?.caseStudy?.milestones || {}) as Milestones;
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -75,7 +74,7 @@
         ? {
           name, established, governance, size,
           staff, budget, budgetLevel, lat, long,
-          milestones: {}
+          milestones
         }
         : undefined,
       chapter: pageType === "Chapter"

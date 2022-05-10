@@ -24,6 +24,10 @@ export type CompletePage = Page & {
   tags: PageTag[];
 }
 
+export type Milestones = {
+  [year: string]: string[];
+}
+
 // *******************
 // API REQUEST BODIES
 // *******************

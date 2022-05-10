@@ -1,16 +1,16 @@
 <script lang="ts">
   import type { Options } from '@splidejs/splide';
-  import type { CaseStudy } from "$lib/types";
+  import type { CaseStudy, Milestones } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
   import MilestonesMeta from './MilestonesMeta.svelte';
-  import type { Prisma } from "@prisma/client";
 
-  export let caseStudy: CaseStudy;
+  export let caseStudy: Omit<CaseStudy, 'pageId'>;
 
   const { name, established, size, governance,
     staff, budget, budgetLevel, lat, long } = caseStudy;
 
-  let milestones: {[key: string]: any} = caseStudy.milestones as Prisma.JsonObject;
+  let milestones = caseStudy.milestones as Milestones;
+
 
   const options: Options = {
     type: 'slide',
@@ -64,7 +64,7 @@
 
 </div>
 
-{#if milestones.content.length}
+{#if Object.keys(milestones).length}
   <MilestonesMeta {milestones}/>
 {/if}
 

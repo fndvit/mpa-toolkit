@@ -1,14 +1,15 @@
 <script lang="ts">
-  export let milestone:  {[key: string]: any};
-  const simple = milestone.content.length <= 1;
+  export let year: string;
+  export let content: string[];
+  const simple = content.length <= 1;
 
-  let contracted = new Array(milestone.content.length).fill(true);
+  let contracted = new Array<boolean>(content.length).fill(true);
 
 </script>
 
 <div class="container">
 
-  <div class="year">{milestone.year}</div>
+  <div class="year">{year}</div>
 
   <svg class="main-circle" height="15" width="15">
     <circle cx="7.5" cy="7.5" r="5" />
@@ -17,14 +18,14 @@
   {#if simple}
 
     <div class="milestone-text simple">
-      {milestone.content[0].text}
+      {content[0]}
     </div>
 
   {:else}
 
     <div class="milestones-block">
 
-      {#each milestone.content as m, i}
+      {#each content as text, i}
         <div class='milestone-container' on:click={() => contracted[i] = !contracted[i]} style="--row: {i+1};">
 
           <svg class="sub-thread-line" width="10" height="4" viewBox="0 0 10 4">
@@ -46,13 +47,13 @@
           {/if}
 
           <div class="milestone-text" class:contracted={contracted[i]}>
-            <span>{m.text}</span>
+            <span>{text}</span>
           </div>
 
         </div>
       {/each}
 
-      <div class="main-line" style="--num-milestones: {milestone.content.length - 1}" />
+      <div class="main-line" style="--num-milestones: {content.length - 1}" />
     </div>
   {/if}
 </div>

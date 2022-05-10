@@ -1,32 +1,29 @@
 <script lang="ts">
-  export let milestones: {[key: string]: any};
+  import type { Milestones } from "$lib/types";
+
+  export let milestones: Milestones;
   export let editable: boolean;
 
   let milestoneYear: number;
   let milestoneText: string;
 
   const onClickSaveMilestone = () => {
-    const yearAlreadyExists = milestones.content.findIndex((m) => m.year === milestoneYear);
-    if (yearAlreadyExists !== -1){
-      milestones.content[yearAlreadyExists]
-        .content.push({type: 'text', text: milestoneText});
-    }
-    else {
-      milestones.content.push({year: milestoneYear, content: [
-        {type: 'text', text: milestoneText}
-      ]});
-    }
+    const _yearStr = milestoneYear.toString();
+    milestones = { ...milestones, [_yearStr]: milestones[_yearStr] || [] };
+    milestones[_yearStr].push(milestoneText);
     milestoneText = '';
     milestones = milestones;
   }
 
-  const onClickDeleteMilestone = (yearIndex: number, milestoneIndex: number) => {
-    milestones.content[yearIndex].content.splice(milestoneIndex, 1);
-    if (!milestones.content[yearIndex].content.length) {
-      milestones.content.splice(yearIndex, 1);
+  const onClickDeleteMilestone = (year: string, milestoneIndex: number) => {
+    milestones[year].splice(milestoneIndex, 1);
+    if (milestones[year].length === 0) {
+      delete milestones[year];
     }
     milestones = milestones;
   }
+
+  $: orderedYears = Object.keys(milestones).sort();
 
 </script>
 
@@ -42,14 +39,14 @@
     </div>
 
     <div class="list">
-      {#each milestones.content as m, i}
+      {#each orderedYears as year}
         <ul>
-          {m.year}
-          {#each m.content as x, y}
+          {year}
+          {#each milestones[year] as str, i}
           <li>
             <div class="list-item">
-              {x.text}
-              <button on:click={() => onClickDeleteMilestone(i, y)}>&times;</button>
+              {str}
+              <button on:click={() => onClickDeleteMilestone(year, i)}>&times;</button>
             </div>
           </li>
           {/each}

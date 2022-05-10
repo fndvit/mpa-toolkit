@@ -52,6 +52,7 @@
         "established": { "type": "integer" },
         "size": { "type": "number" },
         "governance": { "type": "string" },
+        "staff": { "type": "string" },
         "budget": { "type": "string" },
         "budgetLevel": { "type": "string" },
         "lat": { "type": "number" },
@@ -59,7 +60,7 @@
         "milestones": { "type": "object" }
       },
       "additionalProperties": false,
-      "minProperties": 9
+      "minProperties": 10
     },
 
     "chapter": {

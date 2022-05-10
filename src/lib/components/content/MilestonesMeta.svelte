@@ -6,8 +6,6 @@
 
   export let milestones: {[key: string]: any};
 
-  let splide: Splide;
-
   const options: Options = {
     perMove: 1,
     gap: '25px',
@@ -44,7 +42,7 @@
   </svg>
 
   <div class="milestones-slider">
-    <Splide {options} bind:this={splide}>
+    <Splide {options}>
       {#each milestones.content as m}
         <SplideSlide>
           <Milestone milestone={m}/>
@@ -66,6 +64,10 @@
     transform: translateX(-5rem);
   }
 
+  :global(.splide__arrow--next){
+    transform: translateX(5rem);
+  }
+
   :global(.splide__arrow svg) {
     fill: #2A2A2A;
   }
@@ -75,10 +77,6 @@
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     width: 48px;
     height: 48px;
-  }
-
-  :global(.splide__arrow--next){
-    transform: translateX(5rem);
   }
 
   .milestones-slider {

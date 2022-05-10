@@ -4,8 +4,8 @@
 
   let containerHeight: number;
   let milestoneHeight: number[] = [];
-
   let contracted = new Array(milestone.content.length).fill(true);
+
 </script>
 
 <div class="container" bind:clientHeight={containerHeight}>
@@ -36,7 +36,7 @@
             </svg>
           </div>
           {#if contracted[i]}
-            <svg class="milestone-circle-2" width="17" height="17" viewBox="0 0 17 17" fill="none">
+            <svg class="expandable-circle" width="17" height="17" viewBox="0 0 17 17" fill="none">
               <circle cx="8.5" cy="8.5" r="5" fill="#096EAE" stroke="#FBE26B" stroke-width="3"/>
               <line x1="14" y1="0.5" x2="17" y2="0.5" stroke="#FBE26B"/>
               <line x1="16.5" y1="3" x2="16.5" y2="1" stroke="#FBE26B"/>
@@ -93,7 +93,7 @@
     transform: translate(17px, -6px);
   }
 
-  .milestone-circle-2 {
+  .expandable-circle {
     transform: translate(16px, -7px);
   }
 

@@ -317,10 +317,7 @@
 
 <style lang="scss">
 
-
-
   .milestone-area {
-
     width: 100rem;
   }
 
@@ -354,6 +351,7 @@
   .meta {
     padding: 0 20px 20px;
   }
+
   label {
     display: block;
   }

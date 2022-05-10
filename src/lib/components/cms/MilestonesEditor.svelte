@@ -65,6 +65,11 @@
 
 <style lang="scss">
 
+  button:disabled {
+    opacity: 0.65;
+    display: block;
+  }
+
   .container {
     margin-left: 150px;
   }

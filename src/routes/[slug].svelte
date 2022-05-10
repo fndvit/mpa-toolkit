@@ -17,7 +17,7 @@
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import { createSections, staticUrl } from "$lib/helpers";
-  import type { ContentDocument, CompletePage, CardsBlock, MilestoneBlock } from "$lib/types";
+  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
   import Section from "$lib/components/content/Section.svelte";
 
   export let page: CompletePage;

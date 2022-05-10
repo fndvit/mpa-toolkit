@@ -85,11 +85,11 @@
   .sub-thread-line {
     position: absolute;
     margin-left: 7px;
-
     path {
       stroke-dasharray: 3;
       stroke: #FBE26B;
       stroke-width: 1.5px;
+      fill: none;
     }
   }
 
@@ -138,6 +138,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       padding-left: 22px;
+      padding-top: 0px;
       color: #FBE26B;
     }
 

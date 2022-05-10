@@ -23,8 +23,6 @@
     milestones = milestones;
   }
 
-  $: orderedYears = Object.keys(milestones).sort();
-
 </script>
 
 <div>
@@ -39,7 +37,7 @@
     </div>
 
     <div class="list">
-      {#each orderedYears as year}
+      {#each Object.keys(milestones).sort() as year}
         <ul>
           {year}
           {#each milestones[year] as str, i}

@@ -8,7 +8,7 @@
   import Spinner from "$lib/components/Spinner.svelte";
   import type { CompletePage, PageTag, Tag, UserInfo } from '$lib/types';
   import type { Prisma } from "@prisma/client"
-  import MultiSelect, { Option } from 'svelte-multiselect';
+  import MultiSelect from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
   import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';

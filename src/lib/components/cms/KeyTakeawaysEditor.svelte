@@ -1,6 +1,6 @@
 <script lang="ts">
   export let keyTakeaways: string[] = [];
-  export let editable: boolean;
+  export let disabled = false;
   let currentTakeawayText: string = '';
 
   const onClickSaveTakeaway = () => {
@@ -23,7 +23,7 @@
   <div class="title">Key takeaways</div>
 
   <div class="container">
-    <textarea type="text" bind:value={currentTakeawayText} disabled={!editable} class="takeaway-area"/>
+    <textarea type="text" bind:value={currentTakeawayText} {disabled} class="takeaway-area"/>
     <button disabled={!currentTakeawayText} on:click={onClickSaveTakeaway}>Save takeaway</button>
     <div class="list">
       {#each keyTakeaways as k, i}

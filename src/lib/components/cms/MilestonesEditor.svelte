@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Milestones } from "$lib/types";
 
-  export let milestones: Milestones;
-  export let editable: boolean;
+  export let milestones: Milestones = {};
+  export let disabled: boolean = false;
 
   let milestoneYear: number;
   let milestoneText: string;
@@ -31,8 +31,8 @@
 
   <div class="container">
     <div class="edit-area">
-      <input type="number" bind:value={milestoneYear} disabled={!editable} placeholder="Year" class="year-selector"/>
-      <textarea type="text" bind:value={milestoneText} rows="4" disabled={!editable} placeholder="Milestone text" class="milestone-area"/>
+      <input type="number" bind:value={milestoneYear} {disabled} placeholder="Year" class="year-selector"/>
+      <textarea type="text" bind:value={milestoneText} rows="4" {disabled} placeholder="Milestone text" class="milestone-area"/>
       <button disabled={!milestoneYear || !milestoneText} on:click={onClickSaveMilestone}>Save milestone</button>
     </div>
 

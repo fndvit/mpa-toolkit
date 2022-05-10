@@ -1,5 +1,6 @@
 <script lang="ts">
   import LifeCycle from '$lib/components/LifeCycle/LifeCycle.svelte';
+  import MilestonesEditor from '$lib/components/cms/MilestonesEditor.svelte';
   import { openModal } from 'svelte-modals'
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
@@ -40,7 +41,6 @@
   let saving = false;
   let deleting = false;
   let autoPopulateSlug = !slug;
-
 
   let name: string = page?.caseStudy?.name;
   let established: number = page?.caseStudy?.established;
@@ -152,28 +152,6 @@
     keyTakeaways = keyTakeaways;
   };
 
-  const onClickSaveMilestone = () => {
-    const yearAlreadyExists = milestones.content.findIndex((m) => m.year === milestoneYear);
-    if (yearAlreadyExists != -1){
-      milestones.content[yearAlreadyExists].content.push({type: 'text', text: milestoneText});
-    }
-    else {
-      milestones.content.push({year: milestoneYear, content: [
-        {type: 'text', text: milestoneText}
-      ]});
-    }
-    milestoneText = '';
-    milestones = milestones;
-  }
-
-  const onClickDeleteMilestone = (yearIndex: number, milestoneIndex: number) => {
-    milestones.content[yearIndex].content.splice(milestoneIndex, 1);
-    if (!milestones.content[yearIndex].content.length) {
-      milestones.content.splice(yearIndex, 1);
-    }
-    milestones = milestones;
-  }
-
 </script>
 
 <div class="meta">
@@ -248,26 +226,10 @@
       <label for="altitude">Altitude coordinate</label>
       <input type="number" id="altitude" bind:value={long} disabled={!editable} placeholder="e.g. -74.0059"/>
 
-      <label for="milestones">Add milestone</label>
-      <div>
-        <input type="number" id="milestoneYear" bind:value={milestoneYear} disabled={!editable} placeholder="Year" class="year-selector"/>
-        <textarea type="text" id="milestones" bind:value={milestoneText} rows="4" maxlength={MAX_LENGTH} disabled={!editable} class="milestone-area"/>
-        <button disabled={!milestoneYear || !milestoneText} on:click={onClickSaveMilestone}>Save milestone</button>
-      </div>
-
-      <div class="list">
-        {#each milestones.content as m, i}
-        {m.year}
-          {#each m.content as x, y}
-            <div class="list-item">
-              {x.text}
-              <button on:click={() => onClickDeleteMilestone(i, y)}>&times;</button>
-            </div>
-          {/each}
-        {/each}
-      </div>
+      <MilestonesEditor bind:milestones editable/>
 
     {:else}
+
       <label for="summary">Summary</label>
       <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
 
@@ -319,14 +281,6 @@
 
 
 <style lang="scss">
-
-  .milestone-area {
-      width: 100rem;
-    }
-
-  .year-selector {
-    width: 100px;
-  }
 
   .list {
     display: inline-block !important;

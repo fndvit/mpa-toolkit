@@ -18,6 +18,7 @@ interface Validate {
 
 export const validate: Validate = (schema: string, data: unknown) => {
   const _validate = ajv.getSchema(schema);
+  if (!_validate) throw new Error(`Schema not found: ${schema}`);
   const valid = _validate(data);
   if (!valid) {
     validate.errors = _validate.errors;

@@ -17,6 +17,9 @@
     "budgetLevel": "test",
     "lat": 32.234,
     "long": 32.342,
-    "milestones": {}
+    "milestones": {
+      "2020": [ "a", "b" ],
+      "2022": [ "c" ]
+    }
   }
 }

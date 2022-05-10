@@ -1,48 +1,78 @@
 {
-    "type": "object",
-    "properties": {
-  
-      "title": { "type": "string" },
-      "slug": { "type": "string" },
-      "content": { "type": "object" },
-      "img": { "type": "string" },
-  
-      "caseStudy": {
-        "type": "object",
-        "properties": {
-          "name": { "type": "string" },
-          "established": { "type": "integer" },
-          "size": { "type": "number" },
-          "governance": { "type": "string" },
-          "budget": { "type": "string" },
-          "budgetLevel": { "type": "string" },
-          "lat": { "type": "number" },
-          "long": { "type": "number" },
-          "milestones": { "type": "object" }
-        }
-      },
-  
-      "chapter": {
-        "type": "object",
-        "properties": {
-          "summary": { "type": "string" },
-          "authors": {
-            "type": "array",
-            "items": { "type": "integer" }
-          }
-        }
-      }
-  
+  "$id": "page",
+
+  "type": "object",
+  "properties": {
+
+    "title": { "type": "string" },
+    "slug": { "type": "string" },
+    "content": { "type": "object" },
+    "img": { "type": "string" },
+    "tags": { "type": "array", "items": { "$ref": "#/$defs/tag" } },
+    "caseStudy": { "$ref": "#/$defs/caseStudy" },
+    "chapter": { "$ref": "#/$defs/chapter" }
+
+  },
+  "additionalProperties": false,
+  "required": ["title", "slug", "content", "img", "tags"],
+  "oneOf": [
+    {
+      "required": ["caseStudy"],
+      "not": { "required": ["chapter"] }
     },
-    "required": ["title", "slug", "content", "img"],
-    "oneOf": [
-      {
-        "required": ["caseStudy"],
-        "not": { "required": ["chapter"] }
+    {
+      "required": ["chapter"],
+      "not": { "required": ["caseStudy"] }
+    }
+  ],
+
+  "$defs": {
+
+    "tag": {
+      "$id": "page/tag",
+      "type": "object",
+      "properties": {
+        "tag": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "integer" }
+          },
+          "required": [ "id" ]
+        },
+        "category": { "type": "string", "enum": [ "PRIMARY", "SECONDARY" ] }
       },
-      {
-        "required": ["chapter"],
-        "not": { "required": ["caseStudy"] }
-      }
-    ]
+      "required": [ "tag" ]
+    },
+
+    "caseStudy": {
+      "$id": "page/caseStudy",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "established": { "type": "integer" },
+        "size": { "type": "number" },
+        "governance": { "type": "string" },
+        "budget": { "type": "string" },
+        "budgetLevel": { "type": "string" },
+        "lat": { "type": "number" },
+        "long": { "type": "number" },
+        "milestones": { "type": "object" }
+      },
+      "additionalProperties": false,
+      "minProperties": 9
+    },
+
+    "chapter": {
+      "$id": "page/chapter",
+      "type": "object",
+      "properties": {
+        "summary": { "type": "string" },
+        "authors": { "type": "array", "items": { "type": "integer" } },
+        "keyTakeaways": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false,
+      "minProperties": 3
+    }
+
   }
+}

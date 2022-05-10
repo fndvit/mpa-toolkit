@@ -33,21 +33,25 @@
   $: setContext('editorView', view);
 
   onMount(() => focusEditor());
-</script>
 
-<svelte:head>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-</svelte:head>
+</script>
 
 {#if view}
   <EditorMenu {editorState} on:change={handleChange} />
 {/if}
-
-<div class="prosemirror-container">
-  <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view bind:focus={focusEditor} />
+<div class="content">
+  <div class="prosemirror-container">
+    <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view bind:focus={focusEditor} />
+  </div>
 </div>
 
+
 <style lang="scss">
+  .content {
+    display: grid;
+    grid-template-columns: 70% auto;
+    column-gap: 1rem;
+  }
   .prosemirror-container {
     width: 40rem;
     margin: 0 auto;
@@ -95,28 +99,4 @@
     }
   }
 
-  :global(.material-icons) {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px; /* Preferred icon size */
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-
-    /* Support for IE. */
-    font-feature-settings: 'liga';
-  }
 </style>

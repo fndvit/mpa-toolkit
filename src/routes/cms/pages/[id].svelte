@@ -1,17 +1,20 @@
 <script lang="ts">
+  import LifeCycle from '$lib/components/LifeCycle/LifeCycle.svelte';
   import { openModal } from 'svelte-modals'
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
   import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, UserInfo } from '$lib/types';
+  import type { CompletePage, PageTag, Tag, UserInfo } from '$lib/types';
+  import type { Prisma } from "@prisma/client"
   import MultiSelect, { Option } from 'svelte-multiselect';
   import { staticUrl } from "$lib/helpers";
-  import type { Prisma } from "@prisma/client";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
-  import { uploadImage } from '$lib/api';
+  import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
+
 
   export let users: UserInfo[];
   export let page: CompletePage;
+  export let allTags: Tag[];
 
   const MAX_LENGTH = 140;
 
@@ -23,11 +26,13 @@
   let title: string = page?.title;
   let slug: string = page?.slug;
   let summary: string = page?.chapter?.summary;
-  let authors: Option[] = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
+  let authors = page?.chapter?.authors?.map(author => ({label: author.name, value: author.id}));
   let imgPath: string = page?.img;
   let content: {[key: string]: any} = page?.content as Prisma.JsonObject;
 
-  let keyTakeaways: string[] = page?.chapter? page.chapter.keyTakeaways : [];
+  let tags: PageTag[] = page?.tags || [];
+
+  let keyTakeaways: string[] = page?.chapter?.keyTakeaways || [];
   let currentTakeawayText: string = '';
 
   let editor: Editor;
@@ -36,20 +41,16 @@
   let deleting = false;
   let autoPopulateSlug = !slug;
 
-  let name: string = page?.caseStudy?.name;
-  let established: number = page?.caseStudy?.established;
-  let size: number = page?.caseStudy?.size;
-  let governance: string = page?.caseStudy?.governance;
-  let staff: string = page?.caseStudy?.staff;
-  let budget: string = page?.caseStudy?.budget;
-  let budgetLevel: string = page?.caseStudy?.budgetLevel;
-  let lat: number = page?.caseStudy?.lat;
-  let long: number = page?.caseStudy?.long;
 
-  let milestones:  {[key: string]: any} = page?.caseStudy?
-    page.caseStudy.milestones as Prisma.JsonObject : {type: 'milestones', content: []}
-  let milestoneYear: number;
-  let milestoneText: string;
+  let name: string;
+  let established: number;
+  let size: string;
+  let governance: string;
+  let staff: string;
+  let budget: string;
+  let budgetLevel: string;
+  let lat: number;
+  let long: number;
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -65,19 +66,22 @@
     return {
       title,
       slug,
+      tags,
       img: imgPath,
       content: editor.getDocumentJson(),
       caseStudy: pageType === "Case Study"
         ? {
-          name, established, size, governance,
-          staff, budget, budgetLevel, lat, long, milestones
+          name, established, governance,
+          staff, budget, budgetLevel, lat, long,
+          milestones: {},
+          size: parseFloat(size)
         }
         : undefined,
       chapter: pageType === "Chapter"
         ? {
           authors: authors?.map(a => a.value),
           summary,
-          keyTakeaways
+          keyTakeaways,
         }
         : undefined
     };
@@ -88,41 +92,30 @@
     const formData = getFormData();
     const body = JSON.stringify(formData);
 
-    const response = await (
-      newPage
-        ? fetch('/api/pages/create', { method: 'PUT', body })
-        : fetch(`/api/pages/${page.id}`, { method: 'PATCH', body })
-    );
-
-    saving = false;
-
-    if (response.ok) {
-      if (newPage) {
-        const json = await response.json();
-        goto(`/cms/pages/${json.id}`);
-      }
+    if (newPage) {
+      const {id} = await createPage(formData);
+      window.location.href = `/cms/pages/${id}`;
     } else {
-      console.error(response);
+      await updatePage(page.id, formData);
     }
+    saving = false;
   }
 
-  async function deletePage() {
+  async function onDeleteModalYes() {
     deleting = true;
-    await fetch(`/api/pages/${page.id}`, {
-      method: 'DELETE',
-    });
+    await deletePage(page.id);
     goto('/cms/pages');
   }
 
   async function onClickDelete() {
-    openModal(DeleteModal, { onYes: deletePage })
+    openModal(DeleteModal, { onYes: onDeleteModalYes })
   }
 
   $: sharedFieldsComplete = title && slug && imgPath;
 
   $: selectedTypeFieldsComplete = pageType === "Case Study"
     ? name && established && size && governance && staff && budget && budgetLevel && lat && long
-    : summary && authors?.length && keyTakeaways.length;
+    : summary && authors?.length && keyTakeaways?.length;
 
   $: editable = !saving && !deleting;
   $: saveable = !saving && !deleting && sharedFieldsComplete && selectedTypeFieldsComplete;
@@ -154,28 +147,6 @@
     keyTakeaways.splice(index, 1);
     keyTakeaways = keyTakeaways;
   };
-
-  const onClickSaveMilestone = () => {
-    const yearAlreadyExists = milestones.content.findIndex((m) => m.year === milestoneYear);
-    if (yearAlreadyExists != -1){
-      milestones.content[yearAlreadyExists].content.push({type: 'text', text: milestoneText});
-    }
-    else {
-      milestones.content.push({year: milestoneYear, content: [
-        {type: 'text', text: milestoneText}
-      ]});
-    }
-    milestoneText = '';
-    milestones = milestones;
-  }
-
-  const onClickDeleteMilestone = (yearIndex: number, milestoneIndex: number) => {
-    milestones.content[yearIndex].content.splice(milestoneIndex, 1);
-    if (!milestones.content[yearIndex].content.length) {
-      milestones.content.splice(yearIndex, 1);
-    }
-    milestones = milestones;
-  }
 
 </script>
 
@@ -252,26 +223,6 @@
       <input type="number" id="altitude" bind:value={long} disabled={!editable} placeholder="e.g. -74.0059"/>
 
 
-      <label for="milestones">Add milestone</label>
-      <div>
-        <input type="number" id="milestoneYear" bind:value={milestoneYear} disabled={!editable} placeholder="Year" class="year-selector"/>
-        <textarea type="text" id="milestones" bind:value={milestoneText} rows="4" maxlength={MAX_LENGTH} disabled={!editable} class="milestone-area"/>
-        <button disabled={!milestoneYear || !milestoneText} on:click={onClickSaveMilestone}>Save milestone</button>
-      </div>
-
-      <div class="list">
-        {#each milestones.content as m, i}
-        {m.year}
-          {#each m.content as x, y}
-            <div class="list-item">
-              {x.text}
-              <button on:click={() => onClickDeleteMilestone(i, y)}>&times;</button>
-            </div>
-          {/each}
-        {/each}
-      </div>
-
-
     {:else}
       <label for="summary">Summary</label>
       <textarea type="text" id="summary" bind:value={summary} rows=5 disabled={!editable} />
@@ -284,7 +235,7 @@
       <label for="keytakeaway">Add key takeaway</label>
       <div>
         <textarea type="text" id="takeawayName" bind:value={currentTakeawayText} disabled={!editable}/>
-        <button disabled={!currentTakeawayText} on:click={onClickSaveTakeaway}>Save takeaway</button>
+        <button on:click={onClickSaveTakeaway}>Save takeaway</button>
       </div>
 
       <div class="list">
@@ -295,6 +246,7 @@
           </div>
         {/each}
       </div>
+
     {/if}
 
   </div>
@@ -312,18 +264,17 @@
 
 
 <div class="editor-container">
+
+  <div class="life-cycle">
+    <LifeCycle {allTags} bind:tags editable/>
+  </div>
+
   <Editor bind:this={editor} initialDoc={content} />
 </div>
 
+
+
 <style lang="scss">
-
-  .milestone-area {
-    width: 100rem;
-  }
-
-  .year-selector {
-    width: 100px;
-  }
 
   .list {
     display: inline-block !important;
@@ -351,7 +302,6 @@
   .meta {
     padding: 0 20px 20px;
   }
-
   label {
     display: block;
   }
@@ -413,6 +363,13 @@
     :global(.prosemirror-container) {
       flex: 1;
     }
+  }
+
+  .life-cycle {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    margin-top: 60px;
   }
 
   .radiogroup {

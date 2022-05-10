@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { session } from "$app/stores";
+  import EditableUserImage from "$lib/components/cms/EditableUserImage.svelte";
   import type { User, Role } from "$lib/types";
 
   export let users: User[];
 
-  async function onChangeRole(user: User, role: Role) {
+  async function onChangeRole(user: User, role: string) {
     try {
       await fetch(`/api/users/${user.id}/role`, {
         method: "POST",
@@ -15,29 +17,51 @@
     }
   }
 
+  const roles: Role[] = ["ADMIN", "CONTENT_MANAGER", "USER"];
+
 </script>
 
-<div>
+<div class="container">
   <h1>Users</h1>
   <div class="users">
     {#each users as user}
+      <div>
+        <EditableUserImage bind:user={user} />
+      </div>
       <div>{user.name}</div>
       <div>{user.email}</div>
       <div>
-        <select value={user.role} on:change={evt => onChangeRole(user, evt.currentTarget.value)}>
-        <option value="ADMIN">ADMIN</option>
-          <option value="CONTENT_MANAGER">CONTENT_MANAGER</option>
-          <option value="USER">USER</option>
-        </select>
+        {#if $session.user.email === user.email}
+          {user.role}
+        {:else}
+          <select value={user.role} on:change={evt => onChangeRole(user, evt.currentTarget.value)}>
+            {#each roles as role}
+              <option value="{role}">{role}</option>
+            {/each}
+          </select>
+        {/if}
       </div>
     {/each}
   </div>
 </div>
 
-<style>
+<style lang="scss">
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
   .users {
     display: grid;
     font-size: 20px;
-    grid-template-columns: 200px 250px 1fr;
+    grid-template-columns: 100px 1fr 1fr 1fr;
+    column-gap: 30px;
+    row-gap: 30px;
+    > * {
+      display: flex;
+      align-items: center;
+    }
   }
+
 </style>

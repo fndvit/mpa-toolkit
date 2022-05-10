@@ -1,7 +1,7 @@
+import type { PageRequest } from "$lib/types";
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
 import { validate } from "$lib/schema/validation";
-import type { PageRequest } from "./[id]";
 
 export const put = authMiddleware(
   { role:'CONTENT_MANAGER' },
@@ -11,11 +11,20 @@ export const put = authMiddleware(
 
     validate('page', body);
 
-    const { title, slug, content, img, caseStudy, chapter } = body;
+    const { title, slug, content, img, caseStudy, chapter, tags } = body;
 
     const page = await prisma.page.create({
       data: {
         title, slug, content, img,
+
+        tags: {
+          createMany: {
+            data: tags.map(({tag, category}) => ({
+              tagId: tag.id,
+              category
+            }))
+          },
+        },
 
         caseStudy: caseStudy && {
           create: {

@@ -1,22 +1,7 @@
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
 import { validate } from "$lib/schema/validation";
-import type { CaseStudy } from '$lib/types';
-
-export type PageRequest = {
-
-  title: string;
-  slug: string;
-  content: string;
-  img: string;
-
-  caseStudy?: Omit<CaseStudy, 'pageId'>;
-  chapter?: {
-    summary: string;
-    authors: number[];
-    keyTakeaways: string[];
-  }
-}
+import type { PageRequest } from "$lib/types";
 
 export const patch = authMiddleware(
   { role:'CONTENT_MANAGER' },
@@ -26,7 +11,7 @@ export const patch = authMiddleware(
 
     validate('page', body);
 
-    const { title, slug, content, img, caseStudy, chapter } = body;
+    const { title, slug, content, img, caseStudy, chapter, tags } = body;
 
     const page = await prisma.page.update({
       where: { id: parseInt(params.id) },
@@ -38,7 +23,19 @@ export const patch = authMiddleware(
             ...caseStudy
           }
         },
-
+        tags: {
+          deleteMany: {
+            OR: [
+              { pageId: { equals: parseInt(params.id) } },
+            ]
+          },
+          createMany: {
+            data: tags.map(({tag, category}) => ({
+              tagId: tag.id,
+              category
+            }))
+          },
+        },
         chapter: chapter && {
           update: {
             summary: { set: chapter.summary },
@@ -47,7 +44,7 @@ export const patch = authMiddleware(
               set: chapter.authors.map(author => ({
                 id: author
               }))
-            }
+            },
           }
         },
 
@@ -66,13 +63,37 @@ export const patch = authMiddleware(
 export const del = authMiddleware(
   { role:'CONTENT_MANAGER' },
   async ({ params }) => {
-    const page = await prisma.page.delete({
-      where: { id: parseInt(params.id) }
+    const pageId = parseInt(params.id);
+
+    const page = await prisma.page.findFirst({
+      where: {id: pageId},
+      include: {
+        chapter: true,
+        caseStudy: true
+      }
     });
 
+    const cascade = prisma.page.update({
+      where: { id: pageId },
+      data: {
+        chapter: page.chapter ? { delete: true } : undefined,
+        caseStudy: page.caseStudy ? { delete: true } : undefined,
+        tags: {
+          deleteMany: {
+            OR: [
+              { pageId: { equals: parseInt(params.id) } },
+            ]
+          }
+        }
+      }
+    });
+
+    const deletePage = prisma.page.delete({ where: { id: pageId } });
+
+    await prisma.$transaction([cascade, deletePage]);
+
     return {
-      status: 200,
-      body: page
+      status: 200
     };
   }
 );

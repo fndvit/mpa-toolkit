@@ -15,10 +15,12 @@
   import Paragraph from "$lib/components/content/Paragraph.svelte";
   import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
+  import LifeCycle from "$lib/components/LifeCycle/LifeCycle.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import { createSections, staticUrl } from "$lib/helpers";
-  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
   import Section from "$lib/components/content/Section.svelte";
+  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
+  import UserImage from "$lib/components/content/UserImage.svelte";
 
   export let page: CompletePage;
   export let document: ContentDocument;
@@ -62,14 +64,25 @@
   {#if page.chapter }
 
     <div class="meta">
+
       <div class="first-line">
-        <div class="authors">
+
+        <div class="author-images">
+          {#each page.chapter.authors as user}
+            <UserImage {user} />
+          {/each}
+        </div>
+
+        <div class="author-names">
           {#each page.chapter.authors as author}
             <div>{author.name}</div>
           {/each}
         </div>
+
         <div class="readtime">{readTime} min read</div>
+
       </div>
+
       <div class="summary">{page.chapter.summary}</div>
       {#if page.chapter.keyTakeaways.length > 0}
         <div class="key-takeaways">
@@ -107,6 +120,9 @@
         {/if}
       {/each}
     </div>
+    <div class="lifecycle-column">
+      <LifeCycle tags={page.tags}/>
+    </div>
   </div>
 </div>
 
@@ -120,8 +136,22 @@
 
   .first-line {
     display: flex;
+    align-items: center;
     margin-bottom: 2rem;
+    column-gap: 10px;
   }
+
+  .author-images {
+    margin-right: 15px;
+  }
+
+  .author-names {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
 
   .body-column {
     font-family: var(--font-serif);
@@ -154,12 +184,6 @@
     padding: 2rem 124px;
   }
 
-  .authors {
-    display: inline-block;
-    font-weight: bold;
-    font-size: 16px;
-    margin-right: 10px;
-  }
 
   .summary {
     font-family: var(--font-serif);
@@ -172,7 +196,7 @@
   .content {
     padding: 2rem 6rem;
     display: grid;
-    grid-template-columns: 15rem 40rem;
+    grid-template-columns: 15rem 40rem auto;
     column-gap: 1rem;
     :global(h1) {
       font-size: 2.5rem;

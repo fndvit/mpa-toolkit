@@ -6,7 +6,16 @@ export const get = authMiddleware(
   async () => {
   return {
     body: {
-      users: await prisma.user.findMany()
+      users: await prisma.user.findMany({
+        orderBy: [
+          {
+            role: 'desc'
+          },
+          {
+            id: 'asc'
+          }
+        ]
+      })
     }
   };
 });

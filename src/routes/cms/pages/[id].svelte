@@ -1,6 +1,7 @@
 <script lang="ts">
   import LifeCycle from '$lib/components/LifeCycle/LifeCycle.svelte';
   import MilestonesEditor from '$lib/components/cms/MilestonesEditor.svelte';
+  import KeyTakeawaysEditor from '$lib/components/cms/KeyTakeawaysEditor.svelte';
   import { openModal } from 'svelte-modals'
   import { goto } from "$app/navigation";
   import Editor from "$lib/Editor/Editor.svelte";
@@ -11,7 +12,6 @@
   import { staticUrl } from "$lib/helpers";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
   import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
-
 
   export let users: UserInfo[];
   export let page: CompletePage;
@@ -34,7 +34,6 @@
   let tags: PageTag[] = page?.tags || [];
 
   let keyTakeaways: string[] = page?.chapter?.keyTakeaways || [];
-  let currentTakeawayText: string = '';
 
   let editor: Editor;
   let uploadingImage = false;
@@ -54,8 +53,6 @@
 
   let milestones:  {[key: string]: any} = page?.caseStudy?
     page.caseStudy.milestones as Prisma.JsonObject : {type: 'milestones', content: []}
-  let milestoneYear: number;
-  let milestoneText: string;
 
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
@@ -139,18 +136,6 @@
     const validChars = /[a-zA-Z0-9-]/;
     if (!validChars.exec(e.data)) e.preventDefault();
   }
-
-  const onClickSaveTakeaway = () => {
-    if (currentTakeawayText.length > 0){
-      keyTakeaways = [...keyTakeaways, currentTakeawayText];
-      currentTakeawayText = "";
-    }
-  };
-
-  const onClickDeleteTakeaway = (index: number) => {
-    keyTakeaways.splice(index, 1);
-    keyTakeaways = keyTakeaways;
-  };
 
 </script>
 
@@ -238,25 +223,11 @@
       </label>
       <MultiSelect bind:selected={authors} options={authorOptions} disabled={!editable} />
 
-      <label for="keytakeaway">Add key takeaway</label>
-      <div>
-        <textarea type="text" id="takeawayName" bind:value={currentTakeawayText} disabled={!editable}/>
-        <button on:click={onClickSaveTakeaway}>Save takeaway</button>
-      </div>
-
-      <div class="list">
-        {#each keyTakeaways as k, i}
-          <div class = "list-item">
-            {k}
-            <button on:click={() => onClickDeleteTakeaway(i)}>&times;</button>
-          </div>
-        {/each}
-      </div>
+      <KeyTakeawaysEditor bind:keyTakeaways editable/>
 
     {/if}
 
   </div>
-
 
   <div class="controls">
     <button class="save" on:click={savePost} disabled={!saveable}>Save</button>
@@ -282,32 +253,10 @@
 
 <style lang="scss">
 
-  .list {
-    display: inline-block !important;
-    width: 100rem;
-
-    button {
-      float: right;
-      border: none;
-      background: transparent;
-      padding: 0;
-      margin: 0;
-      color: #dc4f21;
-      font-size: 23px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  }
-
-  .list-item {
-    list-style: none;
-    padding: 6px 10px;
-    border-bottom: 1px solid #ddd;
-  }
-
   .meta {
     padding: 0 20px 20px;
   }
+
   label {
     display: block;
   }

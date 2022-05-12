@@ -9,7 +9,6 @@
     "import": "./dist/adapter.js"
   },
   "scripts": {
-    "prebuild": "yarn clean",
     "build": "tsup",
     "clean": "rimraf build",
     "install": "yarn build"

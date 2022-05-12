@@ -1,15 +1,15 @@
 {
   "name": "@mpa-toolkit/adapter",
   "version": "0.0.1",
-  "main": "build/adapter.js",
+  "main": "dist/adapter.js",
   "license": "MIT",
   "private": true,
   "type": "module",
+  "exports": {
+    "import": "./dist/adapter.js"
+  },
   "scripts": {
-    "prebuild": "yarn clean",
-    "build": "tsc && yarn copyjs",
-    "clean": "rimraf build",
-    "copyjs": "cp -R lambda build/lambda",
+    "build": "tsup",
     "install": "yarn build"
   },
   "dependencies": {
@@ -23,8 +23,6 @@
     "dotenv": "^16.0.0",
     "esbuild": "^0.14.28",
     "fs-extra": "^10.0.1",
-    "rimraf": "^3.0.2",
-    "tslib": "^2.3.1",
-    "typescript": "^4.4.3"
+    "tsup": "^5.12.7"
   }
 }

@@ -16,7 +16,7 @@
     {tag: {id: 7, value: 'All biomes', type: 'USER'}, category: 'PRIMARY'}
   ];
 
-  const OnClickCard = () => {if (parameters.active) alert("CARD CLICKED")};
+  const OnClickCard = () => {active ?  alert("CARD CLICKED") : {}};
 
   const cardStyleDict = {
     'chapter': '#096EAE',
@@ -28,7 +28,7 @@
 <div class="container" class:enabled={active} style="--color: {cardStyleDict[type]}" tabindex="0">
   <img class="image" src={parameters.previewImage} alt="preview">
   <div class="preview-content">
-    <div class="circle-button" tabindex="0" on:click={OnClickCard}>
+    <div class="circle-button" class:enabled={active} tabindex="0" on:click={OnClickCard}>
       <svg class="arrow-svg" viewBox="0 0 12 20">
         <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
       </svg>
@@ -67,7 +67,11 @@
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     margin-right: 1.5rem;
     margin-top: 0.25rem;
-    cursor: pointer;
+
+    &.enabled {
+      cursor: pointer;
+    }
+
   }
 
   .tags-title {

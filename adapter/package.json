@@ -9,9 +9,7 @@
     "import": "./dist/adapter.js"
   },
   "scripts": {
-    "prebuild": "yarn clean",
     "build": "tsup",
-    "clean": "rimraf dist",
     "install": "yarn build"
   },
   "dependencies": {
@@ -25,7 +23,6 @@
     "dotenv": "^16.0.0",
     "esbuild": "^0.14.28",
     "fs-extra": "^10.0.1",
-    "rimraf": "^3.0.2",
     "tsup": "^5.12.7"
   }
 }

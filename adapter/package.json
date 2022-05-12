@@ -11,7 +11,7 @@
   "scripts": {
     "prebuild": "yarn clean",
     "build": "tsup",
-    "clean": "rimraf build",
+    "clean": "rimraf dist",
     "install": "yarn build"
   },
   "dependencies": {

@@ -121,8 +121,8 @@
     font-weight: 300;
     color: #2A2A2A;
     max-width: 600px;
-    padding-left: 100px;
-    padding-top: 25px;
+    margin-left: 124px;
+    margin-top: 25px;
   }
 
   .carousel-container {

@@ -109,6 +109,24 @@
 
 <style>
 
+  :global(.splide__arrow--prev){
+    transform: translate(5rem, -27px);
+  }
+
+  :global(.splide__arrow--next){
+    transform: translate(-5rem, -27px);
+  }
+
+  :global(.splide__arrow svg) {
+    fill: #2A2A2A;
+  }
+
+  :global(.splide__arrow) {
+    background-color: #F9F9F9;
+    height: 48px;
+    width: 48px;
+  }
+
   :global(.sc-carousel-dots__container){
     padding: 10px 0px !important;
     margin-top: 15px;

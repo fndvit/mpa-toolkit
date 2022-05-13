@@ -1,4 +1,6 @@
 <script context="module" lang='ts'>
+  import type { CircleMenuThickness } from "./CircleMenu.svelte";
+
   export interface Segment {
     startAngle: number;
     endAngle: number;
@@ -6,7 +8,8 @@
     x: number;
     y: number;
     gap: number;
-    thickness: string;
+    thickness: CircleMenuThickness;
+    type: string;
     color: {
       background: {
         selected: string;
@@ -79,10 +82,10 @@
   };
 
   let states = {
-    main: describeArc(segmentConfig, 30),
-    secondary: describeArc(segmentConfig, 20),
-    unselected: describeArc(segmentConfig, 15),
-    hover: describeArc(segmentConfig, 35),
+    main: describeArc(segmentConfig, segmentConfig.thickness.main),
+    secondary: describeArc(segmentConfig, segmentConfig.thickness.secondary),
+    unselected: describeArc(segmentConfig, segmentConfig.thickness.unselected),
+    hover: describeArc(segmentConfig, segmentConfig.thickness.hover),
   }
 
   let currentState: string = states[Thickness.Unselected];
@@ -97,7 +100,7 @@
 </script>
 
 <path
-  class="pointer shadow"
+  class="pointer"
   class:transparency={segmentConfig.transparency}
   fill={currentColor}
   stroke={segmentConfig.color.border}
@@ -115,9 +118,6 @@
 <style>
   .pointer {
     cursor: pointer;
-  }
-  .shadow {
-    filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
   }
   .transparency {
     opacity: 0.7;

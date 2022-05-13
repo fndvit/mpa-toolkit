@@ -26,7 +26,7 @@
   import type { Segment } from './CircularSegment.svelte';
   import { Thickness } from './CircularSegment.svelte';
 
-  export let config = menuConfig;
+  export let config = menuConfig.standardView;
   export let data : MenuElement[];
   export let currentPageIndex : number = config.initialIndex || 0;
 
@@ -42,16 +42,17 @@
         startAngle: currentAngle,
         endAngle: currentAngle + (360 * element.percentage) / 100,
         radius: config.radius,
-        thickness: element.type,
+        thickness: config.thickness,
         x: config.x,
         y: config.y,
         gap: config.gap,
+        type: element.type,
         color: {
           background: {
             selected: element.color,
             unselected: config.color.unselected,
           },
-          border: 'black'
+          border: config.color.border
         },
         transparency: false,
       }
@@ -75,7 +76,7 @@
     {#if config}
       <CircularSegment
         segmentConfig = {segment}
-        selectedStyle = {data[currentPageIndex].group === data[i].group? (segment.thickness): Thickness.Unselected}
+        selectedStyle = {data[currentPageIndex].group === data[i].group? (segment.type): Thickness.Unselected}
         onClickFn = {() => {handleSegmentClick(i)}}
         animationDuration = {config.animationDuration}
       />

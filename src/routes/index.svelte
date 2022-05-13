@@ -15,7 +15,7 @@
   <title>Home</title>
 </svelte:head>
 
-<div>
+<div class="container">
   <img class="unep-logo" src="/unep.svg" alt="unep-logo" />
   <a class="cms" href="/cms" rel="external">Access CMS</a>
   <div class="top-searchbar">
@@ -96,6 +96,10 @@
   .unep-logo {
     position: absolute;
     margin: 2rem;
+  }
+
+  .container {
+    background: #F9F9F9;
   }
 
 </style>

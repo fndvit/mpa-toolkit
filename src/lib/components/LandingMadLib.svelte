@@ -1,6 +1,6 @@
 <script lang="ts">
   import MadLibSelector from "./MadLibSelector.svelte";
-  const madlibImage = 'src/lib/components/images/madlib_background.png';
+  const madlibImage = '/static/madlib_background.png';
 
   const typeUserList = ['an MPA planner', 'an MPA manager', 'a community organizer', 'an LMMA practitioner'];
   const objectiveList = ['answers', 'examples', 'case studies', 'tools'];

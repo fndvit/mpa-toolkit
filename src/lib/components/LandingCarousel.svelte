@@ -8,31 +8,31 @@
   export let type: 'chapter'|'case study';
 
   let p0 = {
-    previewImage: 'src/lib/components/images/chapter-preview-image.png',
+    previewImage: '/static/chapter-preview-image.png',
     category: 'Sustainable financing',
     title: '0-What should MPA managers know about the blue economy and business planning?'
   };
 
   let p1 = {
-    previewImage: 'src/lib/components/images/chapter-preview-image.png',
+    previewImage: '/static/chapter-preview-image.png',
     category: 'Sustainable financing',
     title: '1-What should MPA managers know about the blue economy and business planning?'
   };
 
   let p2 = {
-    previewImage: 'src/lib/components/images/chapter-preview-image.png',
+    previewImage: '/static/chapter-preview-image.png',
     category: 'Sustainable financing',
     title: '2-What should MPA managers know about the blue economy and business planning?'
   };
 
   let p3 = {
-    previewImage: 'src/lib/components/images/chapter-preview-image.png',
+    previewImage: '/static/chapter-preview-image.png',
     category: 'Sustainable financing',
     title: '3-What should MPA managers know about the blue economy and business planning?'
   };
 
   let p4 = {
-    previewImage: 'src/lib/components/images/chapter-preview-image.png',
+    previewImage: '/static/chapter-preview-image.png',
     category: 'Sustainable financing',
     title: '4-What should MPA managers know about the blue economy and business planning?'
   };

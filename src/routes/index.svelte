@@ -5,11 +5,11 @@
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import LandingMadLib from "$lib/components/LandingMadLib.svelte";
   import TopSearchBar from "$lib/components/TopSearchBar.svelte";
-  import IAFDC_Logo from "/src/lib/components/images/IAFDC_Logo.svg";
-  import TNC_Logo from "/src/lib/components/images/TNC_Logo.svg";
-  import UoQ_Logo from "/src/lib/components/images/UoQ_Logo.svg";
-  import WWF_Logo from "/src/lib/components/images/WWF_Logo.svg"
-  const backgroundImage = 'src/lib/components/images/LandingSplashImage.png';
+  import IAFDC_Logo from "/static/IAFDC_Logo.svg";
+  import TNC_Logo from "/static/TNC_Logo.svg";
+  import UoQ_Logo from "/static/UoQ_Logo.svg";
+  import WWF_Logo from "/static/WWF_Logo.svg"
+  const backgroundImage = '/static/LandingSplashImage.png';
 </script>
 
 <svelte:head>

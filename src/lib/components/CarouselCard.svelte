@@ -69,6 +69,10 @@
     }
   }
 
+  .circle-button:hover{
+    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.35);
+  }
+
   .tags-title {
     margin-top: 2rem;
     margin-bottom: 0.75rem;

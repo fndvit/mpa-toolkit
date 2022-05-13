@@ -1,4 +1,5 @@
 <script context="module" lang='ts'>
+  import type { Type } from './CircularSegment.svelte';
   export interface CircleMenuColors {
     unselected: string;
     border: string;
@@ -15,7 +16,7 @@
     id: number;
     percentage: number;
     group: number;
-    type?: string;
+    type?: Type;
     color: string;
   }
 
@@ -24,7 +25,6 @@
   import CircularSegment from './CircularSegment.svelte';
   import menuConfig from './circlemenuconfig.json';
   import type { Segment } from './CircularSegment.svelte';
-  import { Thickness } from './CircularSegment.svelte';
 
   export let config = menuConfig.standardView;
   export let data : MenuElement[];
@@ -34,15 +34,16 @@
   let height: number = config.height || 400;
 
   //is this done before on the cms? is Always the same options?
-  const calcSegments = () => {
-    let menuSegments: Segment[] = [];
+  const calcSegments = (): Segment[] => {
     let currentAngle = 0;
-    data.forEach(element => {
-      let segment: Segment =  {
-        startAngle: currentAngle,
-        endAngle: currentAngle + (360 * element.percentage) / 100,
-        radius: config.radius,
+    return data.map(element => {
+      const startAngle = currentAngle;
+      const endAngle = currentAngle = startAngle + (360 * element.percentage) / 100;
+      return {
+        startAngle,
+        endAngle,
         thickness: config.thickness,
+        radius: config.radius,
         x: config.x,
         y: config.y,
         gap: config.gap,
@@ -56,29 +57,21 @@
         },
         transparency: false,
       }
-      currentAngle = segment.endAngle;
-      menuSegments.push(segment);
     });
-    return menuSegments
-  }
-
-  let handleSegmentClick = (index : number) => {
-    currentPageIndex = index;
   }
 
   $: menuSegments = data && calcSegments();
 
 </script>
 
-
 <svg style="width: {width}; height: {height};">
   {#each menuSegments as segment, i}
     {#if config}
       <CircularSegment
-        segmentConfig = {segment}
-        selectedStyle = {data[currentPageIndex].group === data[i].group? (segment.type): Thickness.Unselected}
-        onClickFn = {() => {handleSegmentClick(i)}}
-        animationDuration = {config.animationDuration}
+        segmentConfig={segment}
+        selectedStyle={data[currentPageIndex].group === data[i].group ? segment.type : 'unselected'}
+        on:click={() => currentPageIndex = i}
+        animationDuration={config.animationDuration}
       />
     {/if}
   {/each}

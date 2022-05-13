@@ -36,8 +36,8 @@
     on:blur={() => listboxVisible = false}
   >
     <div class="arrow">
-      <svg class="svg" width="13" height="8" viewBox="0 0 13 8" fill="none">
-        <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
+      <svg class="svg" viewBox="0 0 13 8" class:landing={type === 'landing'}>
+        <path class="path" class:landing={type === 'landing'} d="M0.630249 1L6.36134 6.5L12.0924 1" />
       </svg>
     </div>
     {selected}
@@ -46,7 +46,7 @@
   {#if listboxVisible}
     <ul class="listbox" class:landing={type === 'landing'} transition:scale>
       {#each options as opt, i}
-        <li class={options[currentIndex] === opt ? "option-selected" : "option"}
+        <li class="option" class:selected={options[currentIndex] === opt} class:landing={type === 'landing'}
           on:focus={() => chooseOption(i)} tabindex="-1">
           {opt}
         </li>
@@ -66,27 +66,22 @@
   .option {
     display: block;
     background-color: #F9F9F9;
-    color: black;
     border: none;
     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
     cursor: pointer;
     font-family: 'Montserrat';
-    font-size: 20px;
     font-weight: normal;
-  }
 
-  .option-selected {
-    display: block;
-    background-color: #F9F9F9;
-    color: black;
-    border: none;
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-    cursor: pointer;
-    font-family: 'Montserrat';
-    font-size: 20px;
-    font-weight: normal;
-    filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.15));
-    border-radius: 10px;
+    &.selected {
+      filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.15));
+      border-radius: 10px;
+    }
+
+    &.landing {
+      line-height: 40px;
+      font-weight: bold;
+      color: #2A2A2A;
+    }
   }
 
   .option:hover{
@@ -106,7 +101,6 @@
     cursor: pointer;
     filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.15));
     font-family: 'Montserrat';
-    font-size: 20px;
     font-weight: normal;
 
     &.landing {
@@ -114,7 +108,7 @@
       line-height: 40px;
       color: #FFFFFF;
       font-weight: 600;
-      background: rgba(249, 249, 249, 0.06);
+      background: rgba(249, 249, 249, 0.08);
       background-blend-mode: soft-light;
       box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.4);
       border-radius: 30px;
@@ -140,20 +134,42 @@
     color: black;
     border: none;
     z-index: 1000;
+    font-size: 20px;
 
     &.landing {
       border-radius: 30px;
+      font-size: 27px;
     }
   }
 
   .arrow {
     display: inline-block;
-    vertical-align: top;
   }
 
   .svg {
     vertical-align: middle;
     transform: translateY(-0.1rem);
+    width: 13px;
+    height: 8px;
+    fill: none;
+
+    &.landing {
+      transform: scale(1.35);
+      width: 15px;
+      height: 10px;
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+  }
+
+  .path {
+    stroke: #2A2A2A;
+    stroke-width: 1.5;
+
+    &.landing {
+      stroke: #FFFFFF;
+      stroke-width: 1.5;
+    }
   }
 
 </style>

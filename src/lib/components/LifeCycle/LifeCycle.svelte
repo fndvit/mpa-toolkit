@@ -19,7 +19,7 @@
 
   // used internally to bind to multiselect & keep track of selected tags
   const selectedTagOptions = groupBy(
-    tags.map<PageTagOption>(t => {console.log(t); return ({value: t.tag.id, label: t.tag.value, tag: t.tag, category: t.category})}),
+    tags.map<PageTagOption>(t => ({value: t.tag.id, label: t.tag.value, tag: t.tag, category: t.category})),
     t => t.tag.type === 'STAGE' ? t.category : t.tag.type
   );
 

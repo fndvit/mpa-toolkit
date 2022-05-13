@@ -3,7 +3,7 @@
   import { groupBy } from '$lib/helpers';
   import type { Tag } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
-  import CircleMenu from '../CircleMenu/CircleMenu.svelte';
+  import CircleMenu, { MenuElement } from '../CircleMenu/CircleMenu.svelte';
   import lifeCycleConfig from '../CircleMenu/lifeCycleConfig.json';
   import TagContainer from  '../Tags/TagContainer.svelte';
 
@@ -17,7 +17,7 @@
   type PageTagOption = PageTag & Option;
 
   // used internally to bind to multiselect & keep track of selected tags
-  const selectedTagOptions = editable && groupBy(
+  const selectedTagOptions = groupBy(
     tags.map<PageTagOption>(t => ({value: t.tag.id, label: t.tag.value, tag: t.tag, category: t.category})),
     t => t.tag.type === 'STAGE' ? t.category : t.tag.type
   );
@@ -42,9 +42,10 @@
 
   $: renderTags = !editable && groupBy(tags, t => t.tag.type);
 
-  $: menuData = lifeCycleConfig.map(({id, percentage}) => {
-    const primary = selectedStageTagIds.has(id);
-    const secondary = selectedStageTagIds.has(id);
+  $: menuData = lifeCycleConfig.map<MenuElement>(({id, percentage}) => {
+    const category = tags.find(({tag}) => tag.id === id)?.category;
+    const primary = category === 'PRIMARY';
+    const secondary = category === 'SECONDARY';
 
     return {
       id,

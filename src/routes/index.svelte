@@ -3,12 +3,13 @@
 
 <script lang="ts">
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
+  import LandingMadLib from "$lib/components/LandingMadLib.svelte";
   import TopSearchBar from "$lib/components/TopSearchBar.svelte";
   import IAFDC_Logo from "/src/lib/components/images/IAFDC_Logo.svg";
   import TNC_Logo from "/src/lib/components/images/TNC_Logo.svg";
   import UoQ_Logo from "/src/lib/components/images/UoQ_Logo.svg";
   import WWF_Logo from "/src/lib/components/images/WWF_Logo.svg"
-  const backgroundImage = 'src/lib/components/images/LandingBackground.png';
+  const backgroundImage = 'src/lib/components/images/LandingSplashImage.png';
 </script>
 
 <svelte:head>
@@ -34,6 +35,7 @@
   </div>
 
   <LandingCarousel type={'chapter'}/>
+  <LandingMadLib/>
   <LandingCarousel type={'case study'}/>
 </div>
 

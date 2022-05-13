@@ -1,6 +1,7 @@
 <script lang="ts">
   import { scale } from 'svelte/transition';
 
+  export let type: 'landing'|'inline' = 'inline';
   export let options: string[];
   export let selected = options[0];
 
@@ -30,8 +31,7 @@
 <svelte:window on:keydown={handleKeyDown} />
 
 <div class="area" >
-  <button
-    class="selector-area"
+  <button class="selector-area" class:landing={type === 'landing'}
     on:click={() => listboxVisible = !listboxVisible}
     on:blur={() => listboxVisible = false}
   >
@@ -44,7 +44,7 @@
   </button>
 
   {#if listboxVisible}
-    <ul class="listbox" transition:scale>
+    <ul class="listbox" class:landing={type === 'landing'} transition:scale>
       {#each options as opt, i}
         <li class={options[currentIndex] === opt ? "option-selected" : "option"}
           on:focus={() => chooseOption(i)} tabindex="-1">
@@ -56,7 +56,7 @@
 </div>
 
 
-<style>
+<style lang="scss">
 
   .area {
     display: inline-block;
@@ -108,10 +108,25 @@
     font-family: 'Montserrat';
     font-size: 20px;
     font-weight: normal;
+
+    &.landing {
+      font-size: 32px;
+      line-height: 40px;
+      color: #FFFFFF;
+      font-weight: 600;
+      background: rgba(249, 249, 249, 0.06);
+      background-blend-mode: soft-light;
+      box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.4);
+      border-radius: 30px;
+    }
   }
 
   .selector-area:focus {
     outline: 0.1rem solid black;
+
+    &.landing {
+      outline: 0.1rem solid white;
+    }
   }
 
   .listbox {
@@ -125,6 +140,10 @@
     color: black;
     border: none;
     z-index: 1000;
+
+    &.landing {
+      border-radius: 30px;
+    }
   }
 
   .arrow {

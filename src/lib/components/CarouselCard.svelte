@@ -42,6 +42,7 @@
     width: 12px;
     height: 20px;
     fill: none;
+    transform: translateX(2px);
   }
 
   .arrow-path {
@@ -66,7 +67,6 @@
     &.enabled {
       cursor: pointer;
     }
-
   }
 
   .tags-title {
@@ -74,7 +74,7 @@
     margin-bottom: 0.75rem;
     font-weight: 700;
     font-size: 16px;
-}
+  }
 
   .title {
     font-weight: 275;

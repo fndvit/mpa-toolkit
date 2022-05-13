@@ -18,14 +18,9 @@
 
   const OnClickCard = () => {active ?  alert("CARD CLICKED") : {}};
 
-  const cardStyleDict = {
-    'chapter': '#096EAE',
-    'case study': '#13487C'
-  };
-
 </script>
 
-<div class="container" class:enabled={active} style="--color: {cardStyleDict[type]}" tabindex="0">
+<div class="container" class:enabled={active} class:case-study={type === 'case study'} tabindex="0">
   <img class="image" src={parameters.previewImage} alt="preview">
   <div class="preview-content">
     <div class="circle-button" class:enabled={active} tabindex="0" on:click={OnClickCard}>
@@ -119,11 +114,15 @@
     border-radius: 40px;
     border: none;
     margin-bottom: 25px;
-    background: var(--color);
+    background: #096EAE;
     opacity: 50%;
 
     &.enabled {
       opacity: 100%;
+    }
+
+    &.case-study {
+      background: #13487C;
     }
 
   }

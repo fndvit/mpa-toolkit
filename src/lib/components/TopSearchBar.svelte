@@ -51,9 +51,9 @@
 
   .search-icon {
     stroke-width: 1.5;
-    width:24px;
-    height:24px;
-    fill:none;
+    width: 24px;
+    height: 24px;
+    fill: none;
     margin: auto;
     margin-left: 5px;
     cursor: pointer;

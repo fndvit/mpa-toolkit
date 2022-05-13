@@ -4,6 +4,10 @@
 <script lang="ts">
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import TopSearchBar from "$lib/components/TopSearchBar.svelte";
+  import IAFDC_Logo from "/src/lib/components/images/IAFDC_Logo.svg";
+  import TNC_Logo from "/src/lib/components/images/TNC_Logo.svg";
+  import UoQ_Logo from "/src/lib/components/images/UoQ_Logo.svg";
+  import WWF_Logo from "/src/lib/components/images/WWF_Logo.svg"
   const backgroundImage = 'src/lib/components/images/LandingBackground.png';
 </script>
 
@@ -20,6 +24,13 @@
   <div class="splash" style="background-image: url({backgroundImage})">
     <h1>Here it is.<br><b>Your MPA toolkit.</b></h1>
     <h4>A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
+    <p>In partnership with</p>
+    <div class="partners-grid">
+      <img src={IAFDC_Logo} alt="Italian Agency for Development Cooperation logo">
+      <img src={UoQ_Logo} alt="University of Queensland logo">
+      <img src={TNC_Logo} alt="The Nature Conservancy logo">
+      <img src={WWF_Logo} alt="World Wildlife Fund logo">
+    </div>
   </div>
 
   <LandingCarousel type={'chapter'}/>
@@ -28,6 +39,13 @@
 
 
 <style lang="scss">
+
+  .partners-grid {
+    display: grid;
+    grid-template-columns: 108px 185px 168px 50px;
+    align-items: center;
+    gap: 45px;
+  }
 
   .top-searchbar {
     position: absolute;
@@ -50,22 +68,27 @@
     padding-left: 124px;
     background-size: cover;
     background-position: bottom;
-    background-image: url(--background-image);
 
     h1 {
       font-weight: 200;
       font-size: 120px;
       color: #FFFFFF;
       line-height: 1.15;
-      margin-bottom: 0px;
+      margin-bottom: 15px;
     }
 
     h4 {
-      margin-top: 20px;
+      margin-top: 25px;
+      margin-bottom: 80px;
       color: #FFFFFF;
       font-size: 36px;
       max-width: 800px;
       font-weight: 200;
+    }
+
+    p {
+      font-weight: bold;
+      color: black;
     }
 
   }

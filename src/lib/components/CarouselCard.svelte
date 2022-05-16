@@ -2,12 +2,8 @@
   import TagContainer from "./Tags/TagContainer.svelte";
   import type { PageTag } from "$lib/types";
 
-  let tags: PageTag[] = [];
-  export let parameters;
-  export let type: 'chapter' | 'case study';
-  export let active: boolean;
-
-  tags = [{tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
+  const exampleTags: PageTag[] = [
+    {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 3, value: 'Blue growth', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 4, value: 'Ocean conservation', type: 'USER'}, category: 'PRIMARY'},
@@ -15,6 +11,11 @@
     {tag: {id: 6, value: 'Nature-based solutions', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 7, value: 'All biomes', type: 'USER'}, category: 'PRIMARY'}
   ];
+
+  export let tags: PageTag[] = exampleTags;
+  export let parameters;
+  export let type: 'chapter' | 'case study';
+  export let active: boolean;
 
   const OnClickCard = () => {active ?  alert("CARD CLICKED") : {}};
 

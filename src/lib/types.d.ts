@@ -17,7 +17,7 @@ export type PageTag = {
 }
 
 export type CaseStudy = Omit<_CaseStudy, 'milestones'> & {
-  milestones: Milestones;
+  milestones: MilestonesData;
 }
 
 export type CompletePage = Page & {
@@ -28,7 +28,7 @@ export type CompletePage = Page & {
   tags: PageTag[];
 }
 
-export type Milestones = {
+export type MilestonesData = {
   [year: string]: string[];
 }
 

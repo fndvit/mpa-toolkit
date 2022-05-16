@@ -190,7 +190,7 @@
       <label for="altitude">Altitude coordinate</label>
       <input type="number" id="altitude" bind:value={caseStudy.long} {disabled} placeholder="e.g. -74.0059"/>
 
-      <MilestonesEditor bind:milestones={caseStudy.milestones} {disabled}/>
+      <MilestonesEditor bind:milestones={caseStudy.milestones} />
 
     {:else}
 
@@ -221,7 +221,7 @@
       <TimedMessage bind:showMessage={showSaveStatusText} />
       <LoadingButton on:click={onClickSave} loading={saving} disabled={!saveable}>Save</LoadingButton>
       {#if !newPage}
-        <Button style='secondary' on:click={onClickDelete}>Delete</Button>
+        <Button on:click={onClickDelete}>Delete</Button>
       {/if}
     </div>
   </Editor>
@@ -260,6 +260,10 @@
     :global(.message) {
       margin-right: 10px;
       color: #666;
+    }
+    :global(.button:last-of-type) {
+      --bg-color: #e37777;
+      --border-color: #cb6666;
     }
   }
 

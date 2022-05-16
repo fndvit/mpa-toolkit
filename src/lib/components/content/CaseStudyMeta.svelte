@@ -1,15 +1,15 @@
 <script lang="ts">
   import type { Options } from '@splidejs/splide';
-  import type { CaseStudy, Milestones } from "$lib/types";
+  import type { CaseStudy, MilestonesData } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
-  import MilestonesMeta from './MilestonesMeta.svelte';
+  import Milestones from './Milestones.svelte';
 
   export let caseStudy: Omit<CaseStudy, 'pageId'>;
 
   const { name, established, size, governance,
     staff, budget, budgetLevel, lat, long } = caseStudy;
 
-  let milestones = caseStudy.milestones as Milestones;
+  let milestones = caseStudy.milestones as MilestonesData;
 
 
   const options: Options = {
@@ -62,10 +62,11 @@
 
   </div>
 
+
 </div>
 
 {#if Object.keys(milestones).length}
-  <MilestonesMeta {milestones}/>
+  <Milestones {milestones} />
 {/if}
 
 
@@ -73,7 +74,7 @@
 <style lang="scss">
 
   .meta-container {
-    background: #13487C;
+    background-color: #13487C;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
   }
 

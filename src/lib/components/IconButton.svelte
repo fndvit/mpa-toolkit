@@ -7,6 +7,7 @@
 
 <button
   class:material-icons={icon}
+  class="icon-button"
   on:click
   on:mousedown={(e) => e.preventDefault()}
   {disabled}
@@ -17,30 +18,29 @@
 </button>
 
 <style lang="scss">
-  button {
+  .icon-button {
     --bg-color: transparent;
     --color: #333;
     --hover-border-color: #f1f1f1;
     --hover-bg: var(--bg-color);
     --size: 2rem;
+    --font-size: 0.75rem;
 
     display: flex;
     align-items: center;
     justify-content: center;
     width: var(--size);
     height: var(--size);
-    cursor: pointer;
     background: var(--bg-color);
     text-align: center;
     color: var(--color);
     border: 1px solid transparent;
     box-sizing: border-box;;
     border-radius: 3px;
-    font-size: 0.75rem;
 
 
     &.material-icons {
-      font-size: 1rem;
+      font-size: var(--font-size);
     }
 
     &.active {
@@ -48,12 +48,15 @@
       border: 1px solid #ccc;
     }
 
-    &:hover {
-      filter: brightness(95%);
-      &:not(.active) {
-        background: var(--hover-bg);
-        border: 1px solid var(--hover-border-color);
+    &:not(:disabled) {
+      cursor: pointer;
+      &:hover {
+        &:not(.active) {
+          background: var(--hover-bg);
+          border: 1px solid var(--hover-border-color);
+        }
       }
+
     }
   }
 

@@ -1,15 +1,73 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
+  import MilestoneTextEditor from "./content/MilestoneTextEditor.svelte";
+  import IconButton from "./IconButton.svelte";
+
   export let year: string;
   export let content: string[];
-  const simple = content.length <= 1;
+  export let editor = false;
 
-  let contracted = new Array<boolean>(content.length).fill(true);
+  const dispatch = createEventDispatcher<{saveYear: string, delete: null}>();
 
+  let contracted = new Array<boolean>(content.length).fill(!editor);
+  let editIndex: number;
+  let editYear: string = editor && year === '' ? '' : undefined;
+
+  function onClickAdd() {
+    content.push('');
+    content = content;
+    editIndex = content.length - 1;
+  }
+
+  function onClickMilestone(i: number) {
+    if (editor) {
+      editIndex = editor && i;
+    } else {
+      contracted[i] = !contracted[i];
+    }
+  }
+
+  const onClickSaveYear: svelte.JSX.MouseEventHandler<HTMLButtonElement> = e => {
+    e.stopPropagation();
+    dispatch('saveYear', editYear);
+    editYear = undefined;
+  }
+
+  function onSaveText(i: number, text: string) {
+    content[i] = text;
+    editIndex = null;
+  }
+
+  function onDeleteMilestone(i: number) {
+    content.splice(i, 1);
+    editIndex = undefined;
+    content = content;
+  }
+
+  function onClickDeleteYear() {
+    dispatch('delete');
+  }
+
+  $: simple = content.length <= 1;
 </script>
 
 <div class="container">
 
-  <div class="year">{year}</div>
+  <div class="year">
+    {#if editYear === undefined}
+      <span on:click={() => editYear = year}>{year}</span>
+    {:else}
+      <input type="number" bind:value={editYear} />
+      <IconButton icon='done' on:click={onClickSaveYear} disabled={!editYear} />
+      {#if year}
+        <IconButton icon='close' on:click={() => editYear = undefined} disabled={!editYear} />
+      {/if}
+    {/if}
+    {#if editor}
+      <IconButton icon="delete" on:click={onClickDeleteYear} />
+    {/if}
+
+  </div>
 
   <svg class="main-circle" height="15" width="15">
     <circle cx="7.5" cy="7.5" r="5" />
@@ -17,8 +75,16 @@
 
   {#if simple}
 
-    <div class="milestone-text simple">
-      {content[0]}
+    <div class="milestone-text simple" on:click={() => onClickMilestone(0)}>
+      {#if editIndex === 0}
+        <MilestoneTextEditor
+          text={content[0]}
+          on:save={({detail}) => onSaveText(0, detail)}
+          on:cancel={() => editIndex = undefined}
+        />
+      {:else}
+        <span>{content[0]}</span>
+      {/if}
     </div>
 
   {:else}
@@ -26,7 +92,7 @@
     <div class="milestones-block">
 
       {#each content as text, i}
-        <div class='milestone-container' on:click={() => contracted[i] = !contracted[i]} style="--row: {i+1};">
+        <div class='milestone-container' on:click={() => onClickMilestone(i)} style="--row: {i+1};">
 
           <svg class="sub-thread-line" width="10" height="4" viewBox="0 0 10 4">
             <path d="M1.22933 0.955129V0.955129C2.81493 2.54068 5.01818 3.34773 7.25278 3.1615L9.729 2.95514"/>
@@ -47,13 +113,29 @@
           {/if}
 
           <div class="milestone-text" class:contracted={contracted[i]}>
-            <span>{text}</span>
+            {#if editIndex === i}
+              <MilestoneTextEditor
+                text={content[i]}
+                on:save={({detail}) => onSaveText(i, detail)}
+                on:cancel={() => editIndex = undefined}
+                on:delete={() => onDeleteMilestone(i)}
+              />
+            {:else}
+              <span>{text}</span>
+            {/if}
           </div>
 
         </div>
       {/each}
 
       <div class="main-line" style="--num-milestones: {content.length - 1}" />
+    </div>
+
+  {/if}
+
+  {#if editor}
+    <div class="add-button">
+      <IconButton on:click={onClickAdd} icon="add" />
     </div>
   {/if}
 </div>
@@ -123,11 +205,15 @@
   }
 
   .milestone-text {
-    max-width: 200px;
     font-size: 16px;
     color: #F9F9F9;
     padding-top: 1.5px;
     padding-left: 22px;
+
+    > span {
+      display: block;
+      max-width: 200px;
+    }
 
     &.simple {
       padding-top: 28px;
@@ -150,16 +236,50 @@
     color: #F9F9F9;
   }
 
-  .container {
-    width: 200px;
-    margin-right: 25px;
-  }
 
   .year {
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
     font-size: 12px;
     color: #F9F9F9;
-    padding-bottom: 10px;
+    height: 25px;
     padding-left: 4px;
+    > :global(button) {
+      --color: white;
+      --size: 1.2rem;
+    }
+    span {
+      display: block;
+    }
+    input {
+      width: 60px;
+    }
+  }
+
+  .container {
+    :global(.icon-button) {
+      --color: white;
+      --size: 1.4rem;
+      --bg-color: #00000022;
+      --hover-border-color: #00000033;
+      --hover-bg: #ffffff55;
+    }
+    :global(.icon-button:disabled) {
+      --bg-color: #77777755;
+      --color: #ffffff55
+    }
+  }
+
+  .add-button {
+    max-width: 200px;
+    margin-top: 10px;
+
+    :global(.icon-button) {
+      margin: auto;
+      --size: 2rem;
+      --font-size: 1.4rem;
+    }
   }
 
 </style>

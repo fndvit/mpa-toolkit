@@ -1,4 +1,7 @@
 <script context="module" lang='ts'>
+
+  export type Thickness = 'main' | 'secondary' | 'hover' | 'unselected';
+
   export interface Segment {
     startAngle: number;
     endAngle: number;
@@ -6,7 +9,7 @@
     x: number;
     y: number;
     gap: number;
-    thickness: string;
+    thickness: Thickness;
     color: {
       background: {
         selected: string;
@@ -16,30 +19,25 @@
     }
     transparency: boolean;
   }
-  export enum Thickness {
-    Main = 'main',
-    Secondary = 'secondary',
-    Unselected = 'unselected',
-    Hover = 'hover'
-  }
 </script>
 <script lang="ts">
   export let segmentConfig: Segment;
   export let animationDuration: number = 0.3;
-  export let selectedStyle: string = Thickness.Unselected;
-  export let onClickFn = () => {};
+  export let selectedStyle: Thickness = 'unselected';
 
-  let describeArc = (segmentConfig: Segment, currentThickness: number) => {
-    let thickness = currentThickness; // Need a way to work with enums
-    let startAngle = segmentConfig.startAngle + segmentConfig.gap / 2;
-    let endAngle = segmentConfig.endAngle - segmentConfig.gap / 2;
+  let hovered = false;
 
-    let innerStart = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius, endAngle);
-    let innerEnd = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius, startAngle);
-    let outerStart = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius + thickness, endAngle);
-    let outerEnd = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius + thickness, startAngle);
-    let largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
-    let d = [
+  const describeArc = (segmentConfig: Segment, currentThickness: number) => {
+    const thickness = currentThickness; // Need a way to work with enums
+    const startAngle = segmentConfig.startAngle + segmentConfig.gap / 2;
+    const endAngle = segmentConfig.endAngle - segmentConfig.gap / 2;
+
+    const innerStart = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius, endAngle);
+    const innerEnd = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius, startAngle);
+    const outerStart = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius + thickness, endAngle);
+    const outerEnd = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius + thickness, startAngle);
+    const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+    return [
       'M',
       outerStart.x,
       outerStart.y,
@@ -67,32 +65,27 @@
       outerStart.y,
       'Z'
     ].join(' ');
-    return d;
   };
 
-  let polarToCartesian = (centerX: number, centerY: number, radius: number, angleInDegrees: number) => {
-    let angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+  const polarToCartesian = (centerX: number, centerY: number, radius: number, angleInDegrees: number) => {
+    const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
     return {
       x: centerX + radius * Math.cos(angleInRadians),
       y: centerY + radius * Math.sin(angleInRadians)
     };
   };
 
-  let states = {
+  const states: {[key in Thickness]: string} = {
     main: describeArc(segmentConfig, 30),
     secondary: describeArc(segmentConfig, 20),
     unselected: describeArc(segmentConfig, 15),
     hover: describeArc(segmentConfig, 35),
   }
 
-  let currentState: string = states[Thickness.Unselected];
-  let currentColor: string = segmentConfig.color.background.unselected;
-
-  $: {
-    currentState =  states[selectedStyle];
-    if(selectedStyle === 'unselected')currentColor = segmentConfig.color.background.unselected;
-    else currentColor = segmentConfig.color.background.selected;
-  }
+  $: currentState =  states[hovered ? 'hover' : selectedStyle];
+  $: currentColor = selectedStyle === 'unselected'
+      ? segmentConfig.color.background.unselected
+      : segmentConfig.color.background.selected;
 
 </script>
 
@@ -102,13 +95,9 @@
   fill={currentColor}
   stroke={segmentConfig.color.border}
   d={currentState}
-  on:click={onClickFn}
-  on:mouseenter={() => {
-    currentState = states[Thickness.Hover];
-  }}
-  on:mouseleave={() => {
-    currentState = states[selectedStyle];
-  }}
+  on:click
+  on:mouseenter={() => hovered = true}
+  on:mouseleave={() => hovered = false}
   style="transition: all {animationDuration}s;"
 />
 

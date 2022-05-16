@@ -7,9 +7,7 @@
 </script>
 
 <div class="container">
-
   <p>A partnership between</p>
-
   <div class="partners-grid">
     <img src={Unep_Logo} alt="United Nations Environmetal Programme">
     <img src={IAFDC_Logo} width={87} alt="Italian Agency for Development Cooperation logo">
@@ -17,7 +15,6 @@
     <img src={TNC_Logo} alt="The Nature Conservancy logo">
     <img src={WWF_Logo} alt="World Wildlife Fund logo">
   </div>
-
   <div class="links">
     <div>
       <a href="/cms" rel="external"><b>Contact us</b></a>

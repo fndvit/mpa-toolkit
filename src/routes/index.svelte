@@ -5,10 +5,12 @@
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import LandingMadLib from "$lib/components/LandingMadLib.svelte";
   import TopSearchBar from "$lib/components/TopSearchBar.svelte";
+  import InlineSearchBar from "$lib/components/InlineSearchBar.svelte";
+  import Footer from "$lib/components/Footer.svelte";
   import IAFDC_Logo from "/static/IAFDC_Logo.svg";
   import TNC_Logo from "/static/TNC_Logo.svg";
   import UoQ_Logo from "/static/UoQ_Logo.svg";
-  import WWF_Logo from "/static/WWF_Logo.svg"
+  import WWF_Logo from "/static/WWF_Logo.svg";
   const backgroundImage = '/static/LandingSplashImage.png';
 </script>
 
@@ -17,7 +19,7 @@
 </svelte:head>
 
 <div class="container">
-  <img class="unep-logo" src="/unep.svg" alt="unep-logo" />
+  <img class="unep-logo" src="/static/unep.svg" alt="unep-logo" />
   <a class="cms" href="/cms" rel="external">Access CMS</a>
   <div class="top-searchbar">
     <TopSearchBar/>
@@ -35,12 +37,24 @@
   </div>
 
   <LandingCarousel type={'chapter'}/>
+  <div class="inline-searchbar">
+    <InlineSearchBar/>
+  </div>
   <LandingMadLib/>
   <LandingCarousel type={'case study'}/>
+  <Footer/>
 </div>
 
 
 <style lang="scss">
+
+  .inline-searchbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
 
   .partners-grid {
     display: grid;

@@ -80,6 +80,7 @@
 
   .button {
     transform: translateX(-21.6px);
+    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     display: inline-block;
     position: relative;
     border-radius: 24px;
@@ -103,6 +104,10 @@
       margin: 0px;
       color: #2A2A2A;
     }
+  }
+
+  .button:hover {
+    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.35);
   }
 
   .svg-arrow {

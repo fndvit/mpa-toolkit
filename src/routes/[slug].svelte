@@ -19,13 +19,41 @@
   import MadLib from "$lib/components/MadLib.svelte";
   import { createSections, staticUrl } from "$lib/helpers";
   import Section from "$lib/components/content/Section.svelte";
-  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
+  import type { ContentDocument, CompletePage, CardsBlock, TagsOnPages, Tag, PageTag } from "$lib/types";
   import UserImage from "$lib/components/content/UserImage.svelte";
+  import TinyCarousel from "$lib/components/TinyCarousel/TinyCarousel.svelte";
 
   export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
   export let readTime: number;
+  export let recommendedPages: (CompletePage & {tags: PageTag[]})[];
+  const MOBILE_VIEW_START_WIDTH = 1120;
+
+  let alsoLikePages = recommendedPages.map(p => ({
+    previewImage: p.img,
+    title: p.title,
+    slug: p.slug,
+    tags: p.tags
+  }))
+
+  alsoLikePages = alsoLikePages.sort((a,b) => {
+    let aTags = 0;
+    a.tags.forEach(tag => {
+      if(page.tags.find(ct => ct.tag.id === tag.tag.id)) aTags += 1;
+    });
+    let bTags = 0;
+    b.tags.forEach(tag => {
+      if(page.tags.find(ct => ct.tag.id === tag.tag.id)) aTags += 1;
+    });
+    if(aTags > bTags) return -1;
+    else if (aTags < bTags) return 1;
+    else return 0;
+  }).slice(0, 8).map(p => {
+    let ret = {...p};
+    ret.tags = ret.tags.filter(t => t.tag.type === 'STAGE');
+    return ret;
+  });
 
   const sections = createSections(document);
 
@@ -117,6 +145,9 @@
         </Section>
         {#if sections.length > 1 && i === 0}
           <MadLib />
+        {/if}
+        {#if sections.length > 1 && i === 2}
+          <TinyCarousel slides={alsoLikePages} title={'<b>You may also like</b>'}/>
         {/if}
       {/each}
     </div>

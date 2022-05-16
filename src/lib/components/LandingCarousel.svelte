@@ -49,7 +49,7 @@
     perMove: 1,
     gap: '100px',
     autoWidth: true,
-    width: '100vw',
+    width: '100%',
     focus: 'center',
     slideFocus: true,
     pagination: false,

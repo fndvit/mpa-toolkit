@@ -1,18 +1,16 @@
 <script lang="ts">
-
-  const defaultText = `Try asking us anything`;
   let search: string;
-  const searchButtonClicked = () => {}
+  const submit = () => {search ? alert(search) : alert("invalid search")};
 
 </script>
 
 <div class="container">
-  <input class="text" bind:value={search}/>
+  <input class="input-text" bind:value={search} spellcheck="false"/>
   {#if !search}
     <div class="placeholder">Try <b>asking us</b> anything</div>
   {/if}
 
-  <div class="search-icon" on:click={searchButtonClicked}>
+  <div class="search-icon" on:click={submit}>
     <svg class="search-icon" viewBox="0 0 24 24">
       <path class="search-path" d="M15.5 15.5L19 19" />
       <path class="search-path" d="M5 11C5 14.3137 7.68629 17 11 17C12.6597 17 14.1621 16.3261 15.2483 15.237C16.3308 14.1517 17 12.654 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11Z"/>
@@ -63,16 +61,13 @@
     stroke-width: 2.25;
   }
 
-  .text {
+  .input-text {
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     color: #FFFFFF;
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0px;
     display: inline-block;
     background: none;
     border: none;

@@ -12,6 +12,9 @@
   import DeleteModal from "$lib/components/DeleteModal.svelte";
   import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
   import AuthorsEditor from '$lib/components/cms/AuthorsEditor.svelte';
+  import LoadingButton from '$lib/components/LoadingButton.svelte';
+  import Button from '$lib/components/Button.svelte';
+  import TimedMessage from '$lib/components/TimedMessage.svelte';
 
   export let users: UserInfo[];
   export let page: CompletePage;
@@ -38,6 +41,8 @@
   let deleting = false;
   let autoPopulateSlug = !slug;
 
+  let showSaveStatusText: TimedMessage['$$prop_def']['showMessage'];
+
   $: if (autoPopulateSlug) {
     slug = (title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
   }
@@ -56,8 +61,9 @@
     };
   }
 
-  async function savePost() {
+  async function onClickSave() {
     saving = true;
+    showSaveStatusText('Saving...');
     const formData = getFormData();
     const body = JSON.stringify(formData);
 
@@ -66,6 +72,7 @@
       window.location.href = `/cms/pages/${id}`;
     } else {
       await updatePage(page.id, formData);
+      showSaveStatusText('Saved');
     }
     saving = false;
   }
@@ -200,15 +207,6 @@
     {/if}
 
   </div>
-
-  <div class="controls">
-    <button class="save" on:click={savePost} disabled={!saveable}>Save</button>
-    {#if saving}<Spinner />{/if}
-    {#if !newPage}
-      <div class="spacer"></div>
-      <button class="delete" on:click={onClickDelete}>Delete</button>
-    {/if}
-  </div>
 </div>
 
 
@@ -218,7 +216,15 @@
     <LifeCycle {allTags} bind:tags editable/>
   </div>
 
-  <Editor bind:this={editor} initialDoc={content} />
+  <Editor bind:this={editor} initialDoc={content}>
+    <div slot="menu-extra" class="page-controls">
+      <TimedMessage bind:showMessage={showSaveStatusText} />
+      <LoadingButton on:click={onClickSave} loading={saving} disabled={!saveable}>Save</LoadingButton>
+      {#if !newPage}
+        <Button style='secondary' on:click={onClickDelete}>Delete</Button>
+      {/if}
+    </div>
+  </Editor>
 </div>
 
 
@@ -247,12 +253,14 @@
     text-transform: lowercase;
   }
 
-  .controls {
-    margin-top: 20px;
-    margin-left: 100px;
+  .page-controls {
     display: flex;
     column-gap: 10px;
     align-items: center;
+    :global(.message) {
+      margin-right: 10px;
+      color: #666;
+    }
   }
 
   .controls button {

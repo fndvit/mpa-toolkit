@@ -37,7 +37,9 @@
 </script>
 
 {#if view}
-  <EditorMenu {editorState} on:change={handleChange} />
+  <EditorMenu {editorState} on:change={handleChange}>
+    <slot name="menu-extra" slot="extra-controls" />
+  </EditorMenu>
 {/if}
 <div class="content">
   <div class="prosemirror-container">

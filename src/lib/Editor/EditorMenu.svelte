@@ -33,6 +33,10 @@
   <MenuButton on:click={() => addCard(editorState, view.dispatch)} icon="library_add" />
   <MenuSeperator />
   <UploadButton />
+
+  <div class="right-section">
+    <slot name="extra-controls"/>
+  </div>
 </div>
 
 <style>
@@ -47,6 +51,12 @@
     border-bottom: 1px solid #ccc;
     background: #f7f7f7;
     box-sizing: border-box;
+  }
 
+  .right-section {
+    flex: 1;
+    display: flex;
+    justify-content: end;
+    column-gap: 0.4rem;
   }
 </style>

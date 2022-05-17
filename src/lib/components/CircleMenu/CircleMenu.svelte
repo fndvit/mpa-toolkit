@@ -1,5 +1,5 @@
 <script context="module" lang='ts'>
-  import type { Type } from './CircularSegment.svelte';
+  import type { SegmentType } from './CircularSegment.svelte';
   export interface CircleMenuColors {
     unselected: string;
     border: string;
@@ -16,7 +16,7 @@
     id: number;
     percentage: number;
     group: number;
-    type?: Type;
+    type?: SegmentType;
     color: string;
   }
 

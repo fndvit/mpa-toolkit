@@ -28,32 +28,6 @@
   export let headings: { text: string }[];
   export let readTime: number;
   export let recommendedPages: (CompletePage & {tags: PageTag[]})[];
-  const MOBILE_VIEW_START_WIDTH = 1120;
-
-  let alsoLikePages = recommendedPages.map(p => ({
-    previewImage: p.img,
-    title: p.title,
-    slug: p.slug,
-    tags: p.tags
-  }))
-
-  alsoLikePages = alsoLikePages.sort((a,b) => {
-    let aTags = 0;
-    a.tags.forEach(tag => {
-      if(page.tags.find(ct => ct.tag.id === tag.tag.id)) aTags += 1;
-    });
-    let bTags = 0;
-    b.tags.forEach(tag => {
-      if(page.tags.find(ct => ct.tag.id === tag.tag.id)) aTags += 1;
-    });
-    if(aTags > bTags) return -1;
-    else if (aTags < bTags) return 1;
-    else return 0;
-  }).slice(0, 8).map(p => {
-    let ret = {...p};
-    ret.tags = ret.tags.filter(t => t.tag.type === 'STAGE');
-    return ret;
-  });
 
   const sections = createSections(document);
 
@@ -146,8 +120,8 @@
         {#if sections.length > 1 && i === 0}
           <MadLib />
         {/if}
-        {#if sections.length > 1 && i === 2}
-          <TinyCarousel slides={alsoLikePages} title={'<b>You may also like</b>'}/>
+        {#if sections.length > 1 && i === 2 && recommendedPages.length > 0}
+          <TinyCarousel slides={recommendedPages} title={'You may also like'}/>
         {/if}
       {/each}
     </div>

@@ -25,32 +25,8 @@ export const get: RequestHandler = async ({ params }) => {
     }
   });
 
-  const recommendedPages = await prisma.page.findMany({
-    where: {
-        tags: {
+  const recommendedPages = await getRecommendedPages(page);
 
-          some: {
-
-            OR:page.tags.map(t => ({
-              tagId: t.tagId
-            }))
-          },
-        },
-        NOT: {
-          id: page.id
-        }
-    },
-    select: {
-      tags: {
-        include : {
-          tag: true
-        },
-      },
-      img: true,
-      title: true,
-      slug: true,
-    }
-  });
   if (!page) {
     return error404('Page not found');
   }
@@ -76,3 +52,37 @@ export const get: RequestHandler = async ({ params }) => {
     }
   };
 };
+
+let getRecommendedPages = async (page) => {
+  return await prisma.page.findMany({
+    where: {
+        tags: {
+
+          some: {
+
+            OR:page.tags.map(t => ({
+              tagId: t.tagId
+            }))
+          },
+        },
+        NOT: {
+          id: page.id
+        }
+    },
+    orderBy:{
+      tags: {
+        _count: 'asc'
+      }
+    },
+    select: {
+      tags: {
+        include : {
+          tag: true
+        },
+      },
+      img: true,
+      title: true,
+      slug: true,
+    }
+  });
+}

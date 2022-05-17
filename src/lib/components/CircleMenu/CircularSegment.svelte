@@ -1,6 +1,6 @@
 <script context="module" lang='ts'>
   import type { CircleMenuThickness } from "./CircleMenu.svelte";
-  export type Type = 'main' | 'secondary' | 'hover' | 'unselected';
+  export type SegmentType = 'main' | 'secondary' | 'hover' | 'unselected';
 
   export interface Segment {
     startAngle: number;
@@ -10,7 +10,7 @@
     y: number;
     gap: number;
     thickness: CircleMenuThickness;
-    type: Type;
+    type: SegmentType;
     color: {
       background: {
         selected: string;
@@ -24,7 +24,7 @@
 <script lang="ts">
   export let segmentConfig: Segment;
   export let animationDuration: number = 0.3;
-  export let selectedStyle: Type = 'unselected';
+  export let selectedStyle: SegmentType = 'unselected';
 
   let hovered = false;
 
@@ -76,7 +76,7 @@
     };
   };
 
-  const states: {[key in Type]: string} = {
+  const states: {[key in SegmentType]: string} = {
     main: describeArc(segmentConfig, segmentConfig.thickness.main),
     secondary: describeArc(segmentConfig, segmentConfig.thickness.secondary),
     unselected: describeArc(segmentConfig, segmentConfig.thickness.unselected),

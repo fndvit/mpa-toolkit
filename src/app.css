@@ -98,3 +98,7 @@ button:focus:not(:focus-visible) {
 		font-size: 4rem;
 	}
 }
+
+.vanish{
+	display: none;
+}

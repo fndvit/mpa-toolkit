@@ -1,20 +1,12 @@
-<script context="module" lang="ts">
-  export interface TinyCardParams {
-    previewImage: string;
-    title: string;
-    slug: string;
-    tags: PageTag[];
-  }
-</script>
-
 <script lang="ts">
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import TinyPreviewCard from './TinyPreviewCard.svelte';
   import { onMount } from 'svelte';
-  export let slides: TinyCardParams[] = [];
+  export let slides: (CompletePage & {tags: PageTag[]})[];
   export let title: string;
   import type { Options } from '@splidejs/splide';
-  import type { PageTag } from '$lib/types';
+  import type { CompletePage, PageTag } from '$lib/types';
+  import '@splidejs/splide/dist/css/splide.min.css';
   let currentSlideIndex: number = 0;
   let prevArrow: HTMLElement;
   let nextArrow: HTMLElement;
@@ -24,7 +16,7 @@
     type: 'slide',
     rewind: false,
     perPage: perPage,
-    perMove: 1,
+    perMove: 2,
     gap: gap,
     classes: {
       pagination: 'vanish'
@@ -55,11 +47,11 @@
 
 <div class="container">
   <div class="content">
-    <p class="title">{@html title}</p>
+    <p class="title"><b>{title}</b></p>
     <Splide {options} bind:this={splide} on:move={handleMove}>
       {#each slides as slide, i}
         <SplideSlide>
-          <TinyPreviewCard previewImage={slide.previewImage} title={slide.title} tags={slide.tags} onClickFn={() => {document.location.href = '/' + slide.slug;}}/>
+          <TinyPreviewCard previewImage={slide.img} title={slide.title} tags={slide.tags} slug={slide.slug}/>
         </SplideSlide>
       {/each}
     </Splide>
@@ -68,7 +60,6 @@
 </div>
 
 <style type="text/postcss">
-  @import 'https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css';
   .container {
     grid-column-start: 2;
     grid-column-end: span col4-start;

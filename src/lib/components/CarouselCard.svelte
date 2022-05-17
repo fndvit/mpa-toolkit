@@ -13,7 +13,7 @@
   ];
 
   export let tags: PageTag[] = exampleTags;
-  export let parameters;
+  export let parameters: {previewImage: string, category: string, title: string};
   export let type: 'chapter' | 'case study';
   export let active: boolean;
 

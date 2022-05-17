@@ -2,15 +2,15 @@
   import TagContainer from "../Tags/TagContainer.svelte";
   import { staticUrl } from "$lib/helpers/content";
   import type { PageTag } from "$lib/types";
-  
+
   export let tags: PageTag[];
   export let title: string;
-  export let previewImage: string;
+  export let img: string;
   export let slug: string;
 </script>
 
 <div class="container" tabindex="0">
-  <img class='img' src={staticUrl(previewImage)} alt="interesting-chapters" width="292" height="156" href={"/" + slug}/>
+  <img class='img' src={staticUrl(img)} alt="interesting-chapters" width="292" height="156" href={"/" + slug}/>
   <a class="preview-title" href={"/" + slug} >{title}</a>
   <TagContainer {tags} width={285}/>
 </div>

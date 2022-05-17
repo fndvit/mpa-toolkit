@@ -1,6 +1,6 @@
 <script lang="ts">
   import TagContainer from "../Tags/TagContainer.svelte";
-  import { staticUrl } from "$lib/helpers";
+  import { staticUrl } from "$lib/helpers/content";
   import type { PageTag, TagType } from "$lib/types";
 
   export let tags: PageTag[];

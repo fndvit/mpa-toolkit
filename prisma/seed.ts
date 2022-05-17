@@ -141,7 +141,7 @@ function getRandomTagsForContent(allTags: Tag[]) {
     ...getXRandItems(tags.STAGE, NUM_TAGS.primary + NUM_TAGS.secondary)
       .map((t, i) => ({
         tagId: t.id,
-        category: i < NUM_TAGS.secondary ? 'PRIMARY' : 'SECONDARY'
+        category: i < NUM_TAGS.primary ? 'PRIMARY' : 'SECONDARY'
       })),
     ...getXRandItems(tags.TOPIC, NUM_TAGS.topic).map(t => ({tagId: t.id})),
     ...getXRandItems(tags.USER, NUM_TAGS.user).map(t => ({tagId: t.id})),

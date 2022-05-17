@@ -10,48 +10,43 @@
 </script>
 
 <div class="container" tabindex="0">
-  <img class='img' src={staticUrl(img)} alt="interesting-chapters" width="292" height="156" href={"/" + slug}/>
-  <a class="preview-title" href={"/" + slug} >{title}</a>
-  <TagContainer {tags} width={285}/>
+  <a href={"/" + slug}>
+    <img src={staticUrl(img)} alt="interesting-chapters" href={"/" + slug}/>
+    <div class="title">{title}</div>
+  </a>
+  <TagContainer {tags}/>
 </div>
 
-<style>
+<style lang="scss">
   .container {
-    display: inline-block;
-    max-width: 285px;
-    cursor: pointer;
+    width: 292px;
   }
-  .preview-title {
-    margin-top: 0.25rem;
+
+  img {
+    width: 100%;
+    margin-bottom: 10px;
+    a:hover & {
+      filter: brightness(105%);
+    }
+  }
+
+  .title {
     font-family: 'Montserrat';
     font-size: 20px;
     font-weight: 300;
-    line-height: 24.38px;
-    max-width: 285px;
-    margin-bottom: 0.5rem;
+    line-height: 25px;
     padding-left: 0.15rem;
-    width: fit-content;
+    margin-bottom: 0.5rem;
+    color: black;
   }
-  .preview-title:hover {
-    cursor: pointer;
-    color: rgb(43, 43, 43);
-    transition: all 0.3s;
-  }
-  .img{
-    max-width: 285px;
-  }
-  .img:hover{
-    cursor: pointer;
-    transform: scale(1.05);
-    transition: all 0.5s;
-  }
+
   @media (max-width: 1320px) {
     .container {
       max-width: 210px;
     }
-    .img{
-      max-width: 210px;
-      max-height: 140px;
+    .title {
+      font-size: 18px;
+      line-height: 22px;
     }
   }
 </style>

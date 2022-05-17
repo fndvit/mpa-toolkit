@@ -10,9 +10,9 @@
   const options = SplideOptions({
     type: 'slide',
     rewind: false,
-    perPage: 3,
     perMove: 2,
-    gap: 0,
+    gap: 10,
+    autoWidth: true,
     pagination: false,
     padding: { right: '13%' }
   });

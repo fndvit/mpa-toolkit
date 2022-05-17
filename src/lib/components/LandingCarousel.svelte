@@ -7,6 +7,7 @@
 
   export let type: 'chapter'|'case study';
 
+  //Dummy summary cards
   let p0 = {
     previewImage: '/static/chapter-preview-image.png',
     category: 'Sustainable financing',

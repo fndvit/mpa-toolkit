@@ -1,50 +1,38 @@
 <script context="module" lang='ts'>
-  import type { CircleMenuThickness } from "./CircleMenu.svelte";
-  export type SegmentType = 'main' | 'secondary' | 'hover' | 'unselected';
+  import type { CircleConfig, SegmentType } from "./CircleMenu.svelte";
 
   export interface Segment {
     startAngle: number;
     endAngle: number;
-    radius: number;
-    x: number;
-    y: number;
-    gap: number;
-    thickness: CircleMenuThickness;
     type: SegmentType;
-    color: {
-      background: {
-        selected: string;
-        unselected: string;
-      }
-      border: string;
-    }
-    transparency: boolean;
   }
+
 </script>
 <script lang="ts">
-  export let segmentConfig: Segment;
-  export let animationDuration: number = 0.3;
-  export let selectedStyle: SegmentType = 'unselected';
+  import { getContext } from "svelte";
 
-  let hovered = false;
+  export let data: Segment;
 
-  const describeArc = (segmentConfig: Segment, currentThickness: number) => {
-    const thickness = currentThickness; // Need a way to work with enums
-    const startAngle = segmentConfig.startAngle + segmentConfig.gap / 2;
-    const endAngle = segmentConfig.endAngle - segmentConfig.gap / 2;
+  const circleConfig = getContext<CircleConfig>('circleConfig');
 
-    const innerStart = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius, endAngle);
-    const innerEnd = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius, startAngle);
-    const outerStart = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius + thickness, endAngle);
-    const outerEnd = polarToCartesian(segmentConfig.x, segmentConfig.y, segmentConfig.radius + thickness, startAngle);
+  const describeArc = (segment: Segment, type: keyof CircleConfig['thicknesses']) => {
+    const thickness = circleConfig.thicknesses[type];
+    const startAngle = segment.startAngle + circleConfig.gap / 2;
+    const endAngle = segment.endAngle - circleConfig.gap / 2;
+    const center = circleConfig.size / 2;
+
+    const innerStart = polarToCartesian(center, center, circleConfig.radius, endAngle);
+    const innerEnd = polarToCartesian(center, center, circleConfig.radius, startAngle);
+    const outerStart = polarToCartesian(center, center, circleConfig.radius + thickness, endAngle);
+    const outerEnd = polarToCartesian(center, center, circleConfig.radius + thickness, startAngle);
     const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
     return [
       'M',
       outerStart.x,
       outerStart.y,
       'A',
-      segmentConfig.radius + thickness,
-      segmentConfig.radius + thickness,
+      circleConfig.radius + thickness,
+      circleConfig.radius + thickness,
       0,
       largeArcFlag,
       0,
@@ -54,8 +42,8 @@
       innerEnd.x,
       innerEnd.y,
       'A',
-      segmentConfig.radius,
-      segmentConfig.radius,
+      circleConfig.radius,
+      circleConfig.radius,
       0,
       largeArcFlag,
       1,
@@ -76,37 +64,31 @@
     };
   };
 
-  const states: {[key in SegmentType]: string} = {
-    main: describeArc(segmentConfig, segmentConfig.thickness.main),
-    secondary: describeArc(segmentConfig, segmentConfig.thickness.secondary),
-    unselected: describeArc(segmentConfig, segmentConfig.thickness.unselected),
-    hover: describeArc(segmentConfig, segmentConfig.thickness.hover),
-  }
+  let hovered = false;
 
-  $: currentState =  states[hovered ? 'hover' : selectedStyle];
-  $: currentColor = selectedStyle === 'unselected'
-      ? segmentConfig.color.background.unselected
-      : segmentConfig.color.background.selected;
+  $: arc = describeArc(data, data.type);
+  $: hoverArc = describeArc(data, 'hover');
 
 </script>
 
 <path
-  class="pointer"
-  class:transparency={segmentConfig.transparency}
-  fill={currentColor}
-  stroke={segmentConfig.color.border}
-  d={currentState}
+  class="segment segment__{data.type}"
+  d={hovered ? hoverArc : arc}
   on:click
   on:mouseenter={() => hovered = true}
   on:mouseleave={() => hovered = false}
-  style="transition: all {animationDuration}s;"
 />
 
 <style>
-  .pointer {
+  .segment {
     cursor: pointer;
   }
-  .transparency {
-    opacity: 0.7;
+
+  .segment__main { fill: #fbe26b; }
+  .segment__secondary { fill: #fbe26b80; }
+  .segment__unselected { fill: #FFFFFF80; }
+
+  path {
+    transition: all 0.3s;
   }
 </style>

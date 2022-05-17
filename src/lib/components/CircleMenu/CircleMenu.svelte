@@ -1,84 +1,50 @@
 <script context="module" lang='ts'>
-  import type { SegmentType } from './CircularSegment.svelte';
-  export interface CircleMenuColors {
-    unselected: string;
-    border: string;
-  }
-
-  export interface CircleMenuThickness {
-    main : number,
-    unselected : number,
-    secondary : number,
-    hover: number
-  }
+  export type SegmentType = 'main' | 'secondary' | 'unselected';
 
   export interface MenuElement {
-    id: number;
     percentage: number;
-    group: number;
-    type?: SegmentType;
-    color: string;
+    type: SegmentType;
   }
+
+  const defaultConfig = {
+    radius: 80,
+    size: 300,
+    gap: 2,
+    thicknesses: {
+      unselected: 18,
+      main: 40,
+      secondary: 25,
+      hover: 45
+    } as {[key in SegmentType | 'hover']: number},
+  };
+
+  export type CircleConfig = typeof defaultConfig;
 
 </script>
 <script lang='ts'>
-  import CircularSegment from './CircularSegment.svelte';
-  import menuConfig from './circlemenuconfig.json';
-  import type { Segment } from './CircularSegment.svelte';
+  import { setContext } from 'svelte';
+  import CircularSegment, { type Segment } from './CircularSegment.svelte';
 
-  export let config = menuConfig.standardView;
-  export let data : MenuElement[];
-  export let currentPageIndex : number = config.initialIndex || 0;
+  export let data: MenuElement[];
+  export let config = defaultConfig;
 
-  let width: number = config.width || 400;
-  let height: number = config.height || 400;
+  setContext('circleConfig', config);
 
-  //is this done before on the cms? is Always the same options?
-  const calcSegments = (): Segment[] => {
+  const calcSegments = (menuElements: MenuElement[]) => {
     let currentAngle = 0;
-    return data.map(element => {
+    return menuElements.map<Segment>(({percentage, type}) => {
       const startAngle = currentAngle;
-      const endAngle = currentAngle = startAngle + (360 * element.percentage) / 100;
-      return {
-        startAngle,
-        endAngle,
-        thickness: config.thickness,
-        radius: config.radius,
-        x: config.x,
-        y: config.y,
-        gap: config.gap,
-        type: element.type,
-        color: {
-          background: {
-            selected: element.color,
-            unselected: config.color.unselected,
-          },
-          border: config.color.border
-        },
-        transparency: false,
-      }
+      const endAngle = currentAngle = startAngle + (360 * percentage) / 100;
+      return { startAngle, endAngle, type };
     });
   }
 
-  $: menuSegments = data && calcSegments();
+  $: menuSegments = calcSegments(data);
 
 </script>
 
-<svg style="width: {width}; height: {height};">
-  {#each menuSegments as segment, i}
-    {#if config}
-      <CircularSegment
-        segmentConfig={segment}
-        selectedStyle={data[currentPageIndex].group === data[i].group ? segment.type : 'unselected'}
-        on:click={() => currentPageIndex = i}
-        animationDuration={config.animationDuration}
-      />
-    {/if}
+<svg viewBox="0 0 {config.size} {config.size}">
+  {#each menuSegments as segment}
+    <CircularSegment data={segment} />
   {/each}
 </svg>
-
-<style>
-  svg{
-    transition: width 1s, height 1s;
-  }
-</style>

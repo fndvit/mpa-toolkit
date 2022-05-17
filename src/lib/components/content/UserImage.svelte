@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { User } from "$lib/types";
-  import { staticUrl } from "$lib/helpers";
+  import { staticUrl } from "$lib/helpers/content";
 
   export let user: User;
 

@@ -7,7 +7,7 @@
 
 </script>
 
-<div class="tag-area" class:fade tabindex="0">{tag.tag.value}</div>
+<div class="tag-area" class:fade tabindex="0">{tag.tag.value? tag.tag.value : tag.tag}</div>
 
 <style>
   .fade {

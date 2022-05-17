@@ -1,4 +1,4 @@
-import { staticUrl } from '$lib/helpers';
+import { staticUrl } from '$lib/helpers/content';
 import { Schema as ProsemirrorSchema } from 'prosemirror-model';
 
 export const schema = new ProsemirrorSchema({

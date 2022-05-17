@@ -1,7 +1,11 @@
 {
   "ts-node": {
     "compilerOptions": {
-      "module": "esnext",
+      "module": "commonjs"
+    },
+    "moduleTypes": {
+      "./prisma/**/*": "cjs",
+      "./src/**/*": "cjs",
     }
   },
 	"compilerOptions": {

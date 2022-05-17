@@ -82,4 +82,4 @@ const getRecommendedPages = async (page: Page & {tags: TagsOnPages[]}) => {
       slug: true,
     }
   });
-}
+};

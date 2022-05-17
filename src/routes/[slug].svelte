@@ -19,15 +19,15 @@
   import MadLib from "$lib/components/MadLib.svelte";
   import { createSections, staticUrl } from "$lib/helpers/content";
   import Section from "$lib/components/content/Section.svelte";
-  import type { ContentDocument, CompletePage, CardsBlock, TagsOnPages, Tag, PageTag } from "$lib/types";
+  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
   import UserImage from "$lib/components/content/UserImage.svelte";
-  import TinyCarousel from "$lib/components/TinyCarousel/TinyCarousel.svelte";
+  import TinyCarousel, { type ContentCard } from "$lib/components/TinyCarousel/TinyCarousel.svelte";
 
   export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
   export let readTime: number;
-  export let recommendedPages: (CompletePage & {tags: PageTag[]})[];
+  export let recommendedPages: ContentCard[];
 
   const sections = createSections(document);
 

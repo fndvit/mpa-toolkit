@@ -1,10 +1,14 @@
-<script lang="ts">
-  import type { CompletePage, PageTag } from '$lib/types';
-  import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+<script lang="ts" context="module">
   import TinyPreviewCard from './TinyPreviewCard.svelte';
+
+  export type ContentCard = TinyPreviewCard['$$prop_def'];
+
+</script>
+<script lang="ts">
+  import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import { SplideOptions } from '$lib/helpers/splide';
 
-  export let slides: (CompletePage & {tags: PageTag[]})[];
+  export let slides: ContentCard[];
   export let title: string;
 
   const options = SplideOptions({

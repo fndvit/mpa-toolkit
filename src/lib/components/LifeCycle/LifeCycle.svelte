@@ -1,6 +1,6 @@
 <script lang='ts'>
   import type { PageTag } from '$lib/types';
-  import { groupBy } from '$lib/helpers';
+  import { groupBy } from '$lib/helpers/utils';
   import type { Tag } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import CircleMenu, { MenuElement } from '../CircleMenu/CircleMenu.svelte';

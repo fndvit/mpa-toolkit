@@ -17,7 +17,7 @@
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
   import LifeCycle from "$lib/components/LifeCycle/LifeCycle.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
-  import { createSections, staticUrl } from "$lib/helpers";
+  import { createSections, staticUrl } from "$lib/helpers/content";
   import Section from "$lib/components/content/Section.svelte";
   import type { ContentDocument, CompletePage, CardsBlock, TagsOnPages, Tag, PageTag } from "$lib/types";
   import UserImage from "$lib/components/content/UserImage.svelte";

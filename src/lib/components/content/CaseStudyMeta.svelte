@@ -11,16 +11,6 @@
 
   let milestones = caseStudy.milestones as Milestones;
 
-
-  const options: Options = {
-    type: 'slide',
-    perMove: 1,
-    gap: '25px',
-    autoWidth:true,
-    pagination: false,
-    arrows: false
-  }
-
 </script>
 
 <div class="meta-container">

@@ -7,11 +7,24 @@
   import TopSearchBar from "$lib/components/TopSearchBar.svelte";
   import InlineSearchBar from "$lib/components/InlineSearchBar.svelte";
   import Footer from "$lib/components/Footer.svelte";
+  import TagContainer from "$lib/components/Tags/TagContainer.svelte";
+  import type { PageTag } from "$lib/types";
   import IAFDC_Logo from "/static/IAFDC_Logo.svg";
   import TNC_Logo from "/static/TNC_Logo.svg";
   import UoQ_Logo from "/static/UoQ_Logo.svg";
   import WWF_Logo from "/static/WWF_Logo.svg";
   const backgroundImage = '/static/LandingSplashImage.png';
+
+  const exampleTags: PageTag[] = [
+    {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
+    {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
+    {tag: {id: 3, value: 'Blue growth', type: 'USER'}, category: 'PRIMARY'},
+    {tag: {id: 4, value: 'Ocean conservation', type: 'USER'}, category: 'PRIMARY'},
+    {tag: {id: 5, value: 'Sustainable development', type: 'USER'}, category: 'PRIMARY'},
+    {tag: {id: 6, value: 'Nature-based solutions', type: 'USER'}, category: 'PRIMARY'},
+    {tag: {id: 7, value: 'All biomes', type: 'USER'}, category: 'PRIMARY'}
+  ];
+
 </script>
 
 <svelte:head>
@@ -38,6 +51,9 @@
   <LandingCarousel type={'chapter'}/>
   <div class="inline-searchbar">
     <InlineSearchBar/>
+    <div class="tag-container">
+      <TagContainer tags={exampleTags} width={700}/>
+    </div>
   </div>
   <LandingMadLib/>
   <LandingCarousel type={'case study'}/>
@@ -46,6 +62,11 @@
 
 
 <style lang="scss">
+
+  .tag-container {
+    margin-top: 15px;
+    transform: translateX(-20px);
+  }
 
   .inline-searchbar {
     display: flex;

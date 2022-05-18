@@ -1,18 +1,4 @@
 <script lang="ts">
-  import TagContainer from "./Tags/TagContainer.svelte";
-  import type { PageTag } from "$lib/types";
-
-  const exampleTags: PageTag[] = [
-    {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 3, value: 'Blue growth', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 4, value: 'Ocean conservation', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 5, value: 'Sustainable development', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 6, value: 'Nature-based solutions', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 7, value: 'All biomes', type: 'USER'}, category: 'PRIMARY'}
-  ];
-
-  export let tags: PageTag[] = exampleTags;
 
   let search: string;
   const submit = () => {search ? alert(search) : alert("invalid search")};
@@ -20,33 +6,21 @@
 </script>
 
 
-<div>
-  <div class="searchbar">
-    <input class="input-text" bind:value={search} spellcheck="false"/>
-    {#if !search}
-      <div class="placeholder">Or, looking for <b>something else?</b></div>
-    {/if}
-
-    <div class="search-icon" on:click={submit}>
-      <svg class="search-icon" viewBox="0 0 24 24">
-        <path class="search-path" d="M15.5 15.5L19 19" />
-        <path class="search-path" d="M5 11C5 14.3137 7.68629 17 11 17C12.6597 17 14.1621 16.3261 15.2483 15.237C16.3308 14.1517 17 12.654 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11Z"/>
-      </svg>
-    </div>
+<div class="searchbar">
+  <input class="input-text" bind:value={search} spellcheck="false"/>
+  {#if !search}
+    <div class="placeholder">Or, looking for <b>something else?</b></div>
+  {/if}
+  <div class="search-icon" on:click={submit}>
+    <svg class="search-icon" viewBox="0 0 24 24">
+      <path class="search-path" d="M15.5 15.5L19 19" />
+      <path class="search-path" d="M5 11C5 14.3137 7.68629 17 11 17C12.6597 17 14.1621 16.3261 15.2483 15.237C16.3308 14.1517 17 12.654 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11Z"/>
+    </svg>
   </div>
-
-  <div class="tag-container">
-    <TagContainer {tags} width={700}/>
-  </div>
-
 </div>
 
 
 <style lang="scss">
-
-  .tag-container {
-    margin: 15px 13px;
-  }
 
   .search-path {
     stroke:black;

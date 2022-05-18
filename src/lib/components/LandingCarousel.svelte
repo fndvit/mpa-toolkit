@@ -65,16 +65,17 @@
 
   const handlePaginationEvent = (newIndex: number) => {
     splide.go(newIndex);
-  }
-  const titleText = type === 'chapter' ?
-    `Get the <b>answers</b> to all your questions`
-    : `Explore what <b>others have done</b>`;
+  };
 
 </script>
 
 <div class="container">
   <div class="title-container">
-    {@html titleText}
+    {#if type === 'chapter'}
+      Get the <b>answers</b> to all your questions
+    {:else}
+      Explore what <b>others have done</b>
+    {/if}
       <CarouselDots
         currentPageIndex={currentCard}
         pagesCount={parameters.length}

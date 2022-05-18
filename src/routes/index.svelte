@@ -54,11 +54,9 @@
   <LandingCarousel type={'chapter'}/>
   <div class="inline-searchbar">
     <Searchbar type={'inline'}/>
-    <div class="tag-container">
-      <TagContainer tags={exampleTags} width={700}/>
-    </div>
+    <TagContainer tags={exampleTags}/>
   </div>
-  <MadLib type={'landing'}/>
+  <MadLib type='landing'/>
   <LandingCarousel type={'case study'}/>
   <Footer/>
 </div>
@@ -66,17 +64,13 @@
 
 <style lang="scss">
 
-  .tag-container {
-    margin-top: 15px;
-    transform: translateX(-20px);
-  }
 
   .inline-searchbar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    width: 766px;
+    margin: 50px auto;
+    :global(.tag-container) {
+      margin: 15px 13px 0;
+    }
   }
 
   .partners-grid {

@@ -1,9 +1,8 @@
 <script lang="ts">
-  import '@splidejs/splide/dist/css/splide.min.css';
   import {Splide, SplideSlide} from "@splidejs/svelte-splide";
   import CarouselDots from './TextSlider/CarouselDots.svelte';
   import CarouselCard from './CarouselCard.svelte';
-  import type { Options } from '@splidejs/splide';
+  import { SplideOptions } from '$lib/helpers/splide';
 
   export let type: 'chapter'|'case study';
 
@@ -48,7 +47,7 @@
   let currentCard = 0;
   let splide: Splide;
 
-  const options: Options = {
+  const options = SplideOptions({
     type: 'loop',
     perMove: 1,
     gap: '100px',
@@ -61,7 +60,7 @@
     updateOnMove: true,
     lazyLoad: true,
     keyboard: true
-  }
+  })
 
   const handlePaginationEvent = (newIndex: number) => {
     splide.go(newIndex);
@@ -98,41 +97,42 @@
   </div>
 </div>
 
-<style>
+<style lang="scss">
 
-  :global(.splide__arrow--prev){
-    transform: translate(5rem, -27px);
-  }
+  .container {
 
+    :global(.splide__arrow--prev){
+      left: 2rem;
+    }
 
-  :global(.splide__arrow--next){
-    transform: translate(-5rem, -27px);
-  }
+    :global(.splide__arrow--next){
+      right: 2rem;
+    }
 
-  :global(.splide__arrow svg) {
-    fill: #2A2A2A;
-  }
+    :global(.splide__arrow) {
+      background-color: #F9F9F9;
+      opacity: 0.5;
+    }
 
-  :global(.splide__arrow) {
-    background-color: #F9F9F9;
-    height: 48px;
-    width: 48px;
-  }
+    :global(.splide__arrow:hover) {
+      opacity: 0.8;
+    }
 
-  :global(.sc-carousel-dots__container){
-    padding: 10px 0px !important;
-    margin-top: 15px;
-    margin-bottom: 60px;
-  }
+    :global(.sc-carousel-dots__container){
+      padding: 10px 0px !important;
+      margin-top: 15px;
+      margin-bottom: 60px;
+    }
 
-  :global(.splide__slide){
-    opacity: 50%;
-    pointer-events: none;
-  }
+    :global(.splide__slide){
+      opacity: 50%;
+      pointer-events: none;
+    }
 
-  :global(.splide__slide.is-active) {
-    opacity: 100%;
-    pointer-events: all;
+    :global(.splide__slide.is-active) {
+      opacity: 100%;
+      pointer-events: all;
+    }
   }
 
   .title-container {

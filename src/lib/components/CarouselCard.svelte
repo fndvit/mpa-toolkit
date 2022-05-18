@@ -29,7 +29,7 @@
     <div class="category">{parameters.category}</div>
     <div class="title">{@html parameters.title}</div>
     <div class="tags-title">What's this about?</div>
-    <TagContainer {tags} width={600}/>
+    <TagContainer {tags}/>
   </div>
 </div>
 
@@ -116,6 +116,10 @@
 
     &.case-study {
       background: #13487C;
+    }
+
+    :global(.tag-container) {
+      max-width: 600px;
     }
 
   }

@@ -2,7 +2,7 @@
   import MadLibSelector from "./MadLibSelector.svelte";
   const madlibImage = '/static/madlib_background.png';
 
-  export let type:'inline'|'landing' = 'inline';
+  export let type: 'inline' | 'landing' = 'inline';
 
   const typeUserList = ['an MPA planner', 'an MPA manager', 'a community organizer', 'an LMMA practitioner'];
   const objectiveList = ['answers', 'examples', 'case studies', 'tools'];

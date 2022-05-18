@@ -52,7 +52,6 @@
     padding: 5px 25px;
     overflow: hidden;
     display: flex;
-    width: 766px;
     justify-content: space-between;
 
     &.top {

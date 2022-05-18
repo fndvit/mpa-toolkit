@@ -13,19 +13,16 @@
     listboxVisible = false;
   }
 
-  const handleKeyDown = (event) => {
-
-    const key = event.key;
-    if (key !== 'Tab' && key !== 'Enter') {
-      event.preventDefault();
-    }
+  const handleKeyDown: svelte.JSX.KeyboardEventHandler<Window> = e => {
 
     if (listboxVisible){
-      if (key === 'ArrowUp' && currentIndex > 0){
+      if (e.key === 'ArrowUp' && currentIndex > 0){
         currentIndex--;
+        e.preventDefault();
       }
-      else if (key === 'ArrowDown' && currentIndex < options.length - 1){
+      else if (e.key === 'ArrowDown' && currentIndex < options.length - 1){
         currentIndex++;
+        e.preventDefault();
       }
     }
   }
@@ -34,7 +31,7 @@
 
 </script>
 
-<svelte:window on:keydown={(event) => handleKeyDown(event)} />
+<svelte:window on:keydown={handleKeyDown} />
 
 <div class="area" class:landing={type === 'landing'}>
   <button class="selector-area"

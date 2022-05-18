@@ -2,17 +2,19 @@
 </script>
 
 <script lang="ts">
+  import type { PageTag } from "$lib/types";
+
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import LandingMadLib from "$lib/components/LandingMadLib.svelte";
-  import TopSearchBar from "$lib/components/TopSearchBar.svelte";
-  import InlineSearchBar from "$lib/components/InlineSearchBar.svelte";
+  import Searchbar from "$lib/components/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import TagContainer from "$lib/components/Tags/TagContainer.svelte";
-  import type { PageTag } from "$lib/types";
+
   import IAFDC_Logo from "/static/IAFDC_Logo.svg";
   import TNC_Logo from "/static/TNC_Logo.svg";
   import UoQ_Logo from "/static/UoQ_Logo.svg";
   import WWF_Logo from "/static/WWF_Logo.svg";
+
   const backgroundImage = '/static/LandingSplashImage.png';
 
   const exampleTags: PageTag[] = [
@@ -34,7 +36,7 @@
 <div class="container">
   <img class="unep-logo" src="/static/unep.svg" alt="unep-logo" />
   <div class="top-searchbar">
-    <TopSearchBar/>
+    <Searchbar type={'top'}/>
   </div>
   <div class="splash" style="background-image: url({backgroundImage})">
     <h1>Here it is.<br><b>Your MPA toolkit.</b></h1>
@@ -50,7 +52,7 @@
 
   <LandingCarousel type={'chapter'}/>
   <div class="inline-searchbar">
-    <InlineSearchBar/>
+    <Searchbar type={'inline'}/>
     <div class="tag-container">
       <TagContainer tags={exampleTags} width={700}/>
     </div>

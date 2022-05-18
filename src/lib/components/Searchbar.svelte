@@ -1,4 +1,5 @@
 <script lang="ts">
+  export let type: 'inline'|'collection'|'top';
 
   let search: string;
   const submit = () => {search ? alert(search) : alert("invalid search")};
@@ -6,11 +7,16 @@
 </script>
 
 
-<div class="searchbar">
+<div class="searchbar" class:top={type==='top'} class:collection={type==='collection'}>
   <input class="input-text" bind:value={search} spellcheck="false"/>
   {#if !search}
-    <div class="placeholder">Or, looking for <b>something else?</b></div>
+    {#if type === 'top'}
+      <div class="placeholder">Try <b>asking us</b> anything</div>
+    {:else}
+      <div class="placeholder">Or, looking for <b>something else?</b></div>
+    {/if}
   {/if}
+
   <div class="search-icon" on:click={submit}>
     <svg class="search-icon" viewBox="0 0 24 24">
       <path class="search-path" d="M15.5 15.5L19 19" />
@@ -27,6 +33,14 @@
     stroke-width: inherit;
     stroke-linecap:round;
     stroke-linejoin:round;
+
+    .top & {
+      stroke:#FFFFFF;
+    }
+
+    .collection & {
+      stroke:#FFFFFF;
+    }
   }
 
   .searchbar {
@@ -40,6 +54,11 @@
     display: flex;
     width: 766px;
     justify-content: space-between;
+
+    &.top {
+      width: 290px;
+      padding: 0px 25px;
+    }
   }
 
   .placeholder {
@@ -47,6 +66,15 @@
     position: absolute;
     transform: translateY(10px);
     pointer-events: none;
+
+    .top & {
+      color:#FFFFFF;
+    }
+
+    .collection & {
+      color:#FFFFFF;
+    }
+
   }
 
   .search-icon {
@@ -54,9 +82,9 @@
     width: 24px;
     height: 24px;
     fill: none;
-    cursor: pointer;
     float: right;
     transform: translateY(3.5px);
+    cursor: pointer;
   }
 
   .search-icon :hover {
@@ -73,6 +101,15 @@
     outline: none;
     margin-bottom: 0px;
     width: 100rem;
+
+    .top & {
+      color:#FFFFFF;
+    }
+
+    .collection & {
+      color:#FFFFFF;
+    }
+
   }
 
 </style>

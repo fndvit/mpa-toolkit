@@ -24,11 +24,12 @@ export const get: RequestHandler<{slug: string}> = async ({ params: { slug } }) 
     }
   });
 
-  const recommendedPages = await getRecommendedPages(page);
-
   if (!page) {
     return error404('Page not found');
   }
+
+
+  const recommendedPages = await getRecommendedPages(page);
 
   const contentNode = Node.fromJSON(schema, page.content as any);
 

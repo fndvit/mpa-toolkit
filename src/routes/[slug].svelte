@@ -17,15 +17,17 @@
   import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
   import LifeCycle from "$lib/components/LifeCycle/LifeCycle.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
-  import { createSections, staticUrl } from "$lib/helpers";
+  import { createSections, staticUrl } from "$lib/helpers/content";
   import Section from "$lib/components/content/Section.svelte";
   import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
   import UserImage from "$lib/components/content/UserImage.svelte";
+  import TinyCarousel, { type ContentCard } from "$lib/components/TinyCarousel/TinyCarousel.svelte";
 
   export let page: CompletePage;
   export let document: ContentDocument;
   export let headings: { text: string }[];
   export let readTime: number;
+  export let recommendedPages: ContentCard[];
 
   const sections = createSections(document);
 
@@ -117,6 +119,9 @@
         </Section>
         {#if sections.length > 1 && i === 0}
           <MadLib />
+        {/if}
+        {#if sections.length > 1 && i === 2 && recommendedPages.length > 0}
+          <TinyCarousel slides={recommendedPages} title={'You may also like'}/>
         {/if}
       {/each}
     </div>

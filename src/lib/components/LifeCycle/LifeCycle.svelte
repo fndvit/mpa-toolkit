@@ -1,15 +1,16 @@
 <script lang='ts'>
   import type { PageTag } from '$lib/types';
-  import { groupBy } from '$lib/helpers';
+  import { groupBy } from '$lib/helpers/utils';
   import type { Tag } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
-  import CircleMenu, { MenuElement } from '../CircleMenu/CircleMenu.svelte';
-  import lifeCycleConfig from '../CircleMenu/lifeCycleConfig.json';
+  import CircleMenu, { type MenuElement } from '../CircleMenu/CircleMenu.svelte';
   import TagContainer from  '../Tags/TagContainer.svelte';
 
   export let allTags: Tag[] = null;
   export let tags: PageTag[]; // binding (updated as tags are changed)
   export let editable: boolean = false;
+
+  const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30];
 
   const MAX_PRIMARY_TAGS = 2;
   const MAX_SECONDARY_TAGS = 7;
@@ -42,17 +43,11 @@
 
   $: renderTags = !editable && groupBy(tags, t => t.tag.type);
 
-  $: menuData = lifeCycleConfig.map<MenuElement>(({id, percentage}) => {
-    const category = tags.find(({tag}) => tag.id === id)?.category;
-    const primary = category === 'PRIMARY';
-    const secondary = category === 'SECONDARY';
-
+  $: menuData = LIFECYCLE_CONFIG.map<MenuElement>((percentage, i) => {
+    const category = tags.find(({tag}) => tag.id === i)?.category;
     return {
-      id,
       percentage,
-      group: 1,
-      type:  primary ? 'main' : secondary ? 'secondary' : 'unselected',
-      color: primary ? "#fbe26b" : "#fbe26b80"
+      type: category === 'PRIMARY' ? 'main' : category === 'SECONDARY' ? 'secondary' : 'unselected'
     }
   });
 
@@ -60,8 +55,8 @@
 
 <div class='container'>
   <h5 class='title'>Where in the MPA lifecycle?</h5>
-  <div class="circleMenuSection">
-      <div class="circleMenu">
+  <div class="circle-menu-section">
+      <div class="circle-menu">
           <CircleMenu data={menuData} />
       </div>
       <div class="tag-container">
@@ -83,26 +78,28 @@
         {/if}
       </div>
   </div>
-  <h5 class='title'>What&apos;s this about</h5>
-  <div class="tag-container">
-    {#if editable}
-      <MultiSelect bind:selected={selectedTagOptions.TOPIC} options={groupedOptions.TOPIC} />
-    {:else}
-      <TagContainer tags={renderTags.TOPIC} />
-    {/if}
-  </div>
-  <h5 class='title'>Good for ...</h5>
-  <div class="tag-container">
-    {#if editable}
-      <MultiSelect bind:selected={selectedTagOptions.USER} options={groupedOptions.USER} />
-    {:else}
-      <TagContainer tags={renderTags.USER} />
-    {/if}
+  <div class="bottom-section">
+    <h5 class='title'>What&apos;s this about</h5>
+    <div class="tag-container">
+      {#if editable}
+        <MultiSelect bind:selected={selectedTagOptions.TOPIC} options={groupedOptions.TOPIC} />
+      {:else}
+        <TagContainer tags={renderTags.TOPIC} />
+      {/if}
+    </div>
+    <h5 class='title'>Good for ...</h5>
+    <div class="tag-container">
+      {#if editable}
+        <MultiSelect bind:selected={selectedTagOptions.USER} options={groupedOptions.USER} />
+      {:else}
+        <TagContainer tags={renderTags.USER} />
+      {/if}
+    </div>
   </div>
 
 </div>
 
-<style>
+<style lang="scss">
   .container {
     width: 294px;
     height: auto;
@@ -110,10 +107,6 @@
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     padding-bottom: 20px;
-  }
-  .circleMenu {
-    margin: 0 auto !important;
-    width: fit-content;
   }
   .title {
     width: 145px;
@@ -136,22 +129,33 @@
   @media (max-width: 900px) {
     .container {
       width: 372px;
-      height: 372px;
     }
     .title {
       width: auto;
       font-size: 10px;
     }
-    .circleMenu {
-      margin: 0 !important;
-      width: fit-content;
+    .circle-menu {
+      :global(svg) {
+        width: 100%;
+      }
     }
-    .circleMenuSection {
+    .circle-menu-section {
       display: grid;
-      grid-template-columns: auto auto;
+      grid-template-columns: 1fr 1fr;
     }
-    .circleMenuSection .tag-container {
+    .circle-menu-section .tag-container {
       text-align: center;
+    }
+    .bottom-section {
+      :global(.tag-container) {
+        white-space: nowrap;
+        overflow-x: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      :global(.tag-container::-webkit-scrollbar) {
+        display: none;
+      }
     }
   }
 

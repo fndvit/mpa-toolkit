@@ -8,7 +8,7 @@
   import Spinner from "$lib/components/Spinner.svelte";
   import type { CompletePage, PageTag, Tag, UserInfo } from '$lib/types';
   import type { Prisma } from "@prisma/client"
-  import { staticUrl } from "$lib/helpers";
+  import { staticUrl } from "$lib/helpers/content";
   import DeleteModal from "$lib/components/DeleteModal.svelte";
   import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
   import AuthorsEditor from '$lib/components/cms/AuthorsEditor.svelte';

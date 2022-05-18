@@ -30,23 +30,23 @@
 
 <svelte:window on:keydown={handleKeyDown} />
 
-<div class="area" >
-  <button class="selector-area" class:landing={type === 'landing'}
+<div class="area" class:landing={type === 'landing'}>
+  <button class="selector-area"
     on:click={() => listboxVisible = !listboxVisible}
     on:blur={() => listboxVisible = false}
   >
     <div class="arrow">
-      <svg class="svg" viewBox="0 0 13 8" class:landing={type === 'landing'}>
-        <path class="path" class:landing={type === 'landing'} d="M0.630249 1L6.36134 6.5L12.0924 1" />
+      <svg class="svg" viewBox="0 0 13 8">
+        <path class="path" d="M0.630249 1L6.36134 6.5L12.0924 1" />
       </svg>
     </div>
     {selected}
   </button>
 
   {#if listboxVisible}
-    <ul class="listbox" class:landing={type === 'landing'} transition:scale>
+    <ul class="listbox" transition:scale>
       {#each options as opt, i}
-        <li class="option" class:selected={options[currentIndex] === opt} class:landing={type === 'landing'}
+        <li class="option" class:selected={options[currentIndex] === opt}
           on:focus={() => chooseOption(i)} tabindex="-1">
           {opt}
         </li>
@@ -77,7 +77,7 @@
       border-radius: 10px;
     }
 
-    &.landing {
+    .landing & {
       line-height: 40px;
       font-weight: bold;
       color: #2A2A2A;
@@ -103,7 +103,7 @@
     font-family: 'Montserrat';
     font-weight: normal;
 
-    &.landing {
+    .landing & {
       font-size: 32px;
       line-height: 40px;
       color: #FFFFFF;
@@ -118,7 +118,7 @@
   .selector-area:focus {
     outline: 0.1rem solid black;
 
-    &.landing {
+    .landing & {
       outline: 0.1rem solid white;
     }
   }
@@ -136,7 +136,7 @@
     z-index: 1000;
     font-size: 20px;
 
-    &.landing {
+    .landing & {
       border-radius: 30px;
       font-size: 27px;
     }
@@ -153,7 +153,7 @@
     height: 8px;
     fill: none;
 
-    &.landing {
+    .landing & {
       transform: scale(1.35);
       width: 15px;
       height: 10px;
@@ -166,7 +166,7 @@
     stroke: #2A2A2A;
     stroke-width: 1.5;
 
-    &.landing {
+    .landing & {
       stroke: #FFFFFF;
       stroke-width: 1.5;
     }

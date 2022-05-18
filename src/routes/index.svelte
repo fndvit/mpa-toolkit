@@ -20,7 +20,6 @@
 
 <div class="container">
   <img class="unep-logo" src="/static/unep.svg" alt="unep-logo" />
-  <a class="cms" href="/cms" rel="external">Access CMS</a>
   <div class="top-searchbar">
     <TopSearchBar/>
   </div>
@@ -67,14 +66,6 @@
     position: absolute;
     margin: 2rem;
     right: 0px;
-  }
-
-  .cms {
-    color: #F9F9F9;
-    font-weight: bold;
-    position: absolute;
-    left: 50%;
-    margin: 2rem;
   }
 
   .splash {

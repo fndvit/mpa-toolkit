@@ -21,21 +21,30 @@
 
 </script>
 
-<div class="container" style="background-image: url({madlibImage})" >
+<div class="container" style="--background-image: url({madlibImage})" >
   <div class="mad-lib">
     <h2>Find information relevant to you.</h2>
+
+
+
       <p>
         I am <MadLibSelector type={'landing'} options={typeUserList} bind:selected={typeUser}/> and want help<br>
         finding <MadLibSelector type={'landing'} options={objectiveList} bind:selected={objective}/>
         to <MadLibSelector type={'landing'} options={objectiveVerbList} bind:selected={objectiveVerb}/>
         decisions<br> <MadLibSelector type={'landing'} options={actionSubjectList} bind:selected={actionSubject}/>
       </p>
+
+
+
       <div class="button" tabindex="0" on:click={submit}>
         <p>Start your tour</p>
           <svg class="svg-arrow" viewBox="0 0 13 22">
             <path d="M1.44165 20.5881L10.4526 11.0587L1.44165 1.52931" stroke="#2A2A2A" stroke-width="2.4"/>
           </svg>
       </div>
+
+
+
   </div>
 </div>
 
@@ -43,23 +52,22 @@
 
   .container {
     margin-top: 35px;
+    padding-top: 0.5rem;
     background: #096EAE;
     position: relative;
-    height: 650px;
+    height: 600px;
     padding: 6rem;
-    padding-bottom: 3rem;
+    padding-bottom: 5rem;
     padding-left: 124px;
     background-size: cover;
     background-position: bottom;
+    line-height: 40px;
+    font-weight: 300;
+    font-size: 32px;
+    background-image: var(--background-image);
   }
 
   .mad-lib {
-    line-height: 40px;
-    padding-top: 0.5rem;
-    padding-bottom: 2rem;
-    font-weight: 300;
-    font-size: 32px;
-    height: 750px;
 
     h2 {
       font-size: 48px;

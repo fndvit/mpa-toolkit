@@ -1,5 +1,6 @@
 <script lang="ts">
   import MadLibSelector from "./MadLibSelector.svelte";
+  const madlibImage = '/static/madlib_background.png';
 
   export let type:'inline'|'landing' = 'inline';
 
@@ -13,29 +14,44 @@
   let objectiveVerb: string;
   let actionSubject: string;
 
+  $: userPersona = [typeUser, objective, objectiveVerb, actionSubject];
+
   const submit = () => {
     alert("USER PERSONA: \n1: " + userPersona[0] + "\n2: "
     + userPersona[1] + "\n3: " + userPersona[2] + "\n4: " + userPersona[3]);
   }
 
-  $: userPersona = [typeUser, objective, objectiveVerb, actionSubject];
-
 </script>
 
-<div class="container" class:landing={type==='landing'}>
-  <h5>Is this not for you?</h5>
+<div class="container" class:landing={type==='landing'} style="--background-image: url({madlibImage})">
 
-  <p>I am <MadLibSelector options={typeUserList} bind:selected={typeUser}/> and want
-    <br> <MadLibSelector options={objectiveList} bind:selected={objective}/> to
-    <MadLibSelector options={objectiveVerbList} bind:selected={objectiveVerb}/>
-    decisions <br> <MadLibSelector options={actionSubjectList} bind:selected={actionSubject}/></p>
+  {#if type==='landing'}
+    <h2>Find information relevant to you.</h2>
+  {:else}
+    <h5>Is this not for you?</h5>
+  {/if}
 
-  <div class="find-button" tabindex="0" on:click={submit}>
-    Let's find what you need
-    <svg class="svg-arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
-      <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
-    </svg>
+  <p>I am <MadLibSelector {type} options={typeUserList} bind:selected={typeUser}/> and want help
+    <br> finding <MadLibSelector {type} options={objectiveList} bind:selected={objective}/> to
+    <MadLibSelector {type} options={objectiveVerbList} bind:selected={objectiveVerb}/> decisions
+    <br><MadLibSelector {type} options={actionSubjectList} bind:selected={actionSubject}/>
+  </p>
+
+  {#if type==='inline'}
+    <div class="button" tabindex="0" on:click={submit}>
+      Let's find what you need
+      <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
+        <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
+      </svg>
+    </div>
+  {:else}
+  <div class="button" tabindex="0" on:click={submit}>
+    <p>Start your tour</p>
+      <svg class="arrow" viewBox="0 0 13 22">
+        <path d="M1.44165 20.5881L10.4526 11.0587L1.44165 1.52931" stroke="#2A2A2A" stroke-width="2.4"/>
+      </svg>
   </div>
+  {/if}
 
 </div>
 
@@ -67,9 +83,46 @@
       font-size: 16px;
       margin: 5px 0px 0px 0px;
     }
+
+    h2 {
+      font-size: 48px;
+      line-height: 58.5px;
+      margin-top: 6rem;
+      max-width: 620px;
+      color: #FFFFFF;
+      font-weight: 300;
+    }
+
+    &.landing {
+      width: auto;
+      border-radius: 0px;
+      margin-top: 35px;
+      padding-top: 0.5rem;
+      background: #096EAE;
+      position: relative;
+      height: 600px;
+      padding: 6rem;
+      padding-bottom: 5rem;
+      padding-left: 124px;
+      background-size: cover;
+      background-position: bottom;
+      line-height: 40px;
+      font-weight: 300;
+      font-size: 32px;
+      background-image: var(--background-image);
+      transform: translateX(0px);
+
+      p {
+        margin-top: 0.5rem;
+        color: white;
+        line-height: 40px;
+        font-weight: 400;
+        font-size: 32px;
+      }
+    }
   }
 
-  .find-button {
+  .button {
     display: inline-block;
     cursor: pointer;
     font-weight: 700;
@@ -82,23 +135,59 @@
     bottom: 0;
     align-content: center;
     background: #FBE26B;
-    color: black;
+    color: #2A2A2A;
     padding: 0rem 0.2rem 0rem 1.25rem;
     border-radius: 20px 0px 0px 0px;
     filter: drop-shadow(0px -2px 8px rgba(0, 0, 0, 0.1));
+
+    .landing & {
+      transform: translateX(-21.6px);
+      box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+      position: relative;
+      border-radius: 24px;
+      padding: 0.3rem 1.5rem 0.3rem 1.35rem;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      line-height: 40px;
+      margin: 0px;
+
+      p {
+        display: inline-block;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 0px;
+        color: #2A2A2A;
+      }
+
+      :hover {
+        filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.25));
+      }
+    }
   }
 
-  .find-button:hover {
+  .button:hover {
     filter: drop-shadow(0px -3px 12px rgba(0, 0, 0, 0.15));
   }
 
-  .svg-arrow {
+  .arrow {
     position: relative;
     vertical-align: middle;
     padding-left: 0.7rem;
     transform: rotate(-90deg) scale(1.35) translateX(-0.25rem);
     overflow: hidden;
     outline: none;
+
+    .landing & {
+      display: inline-block;
+      position: relative;
+      padding-left: 1rem;
+      vertical-align: middle;
+      transform: translateY(-0.15rem);
+      width: 13px;
+      height: 22px;
+      fill: none;
+    }
   }
 
 </style>

@@ -6,6 +6,7 @@
 
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import LandingMadLib from "$lib/components/LandingMadLib.svelte";
+  import MadLib from "$lib/components/MadLib.svelte";
   import Searchbar from "$lib/components/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import TagContainer from "$lib/components/Tags/TagContainer.svelte";
@@ -57,7 +58,7 @@
       <TagContainer tags={exampleTags} width={700}/>
     </div>
   </div>
-  <LandingMadLib/>
+  <MadLib type={'landing'}/>
   <LandingCarousel type={'case study'}/>
   <Footer/>
 </div>

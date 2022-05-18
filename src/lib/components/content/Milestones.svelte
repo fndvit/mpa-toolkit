@@ -1,6 +1,5 @@
 <script lang="ts">
-  import '@splidejs/splide/dist/css/splide.min.css';
-  import {Splide, SplideSlide} from "@splidejs/svelte-splide";
+  import { Splide, SplideSlide } from "@splidejs/svelte-splide";
   import Milestone from "../Milestone.svelte";
   import type { MilestonesData } from '$lib/types';
   import Button from '../Button.svelte';

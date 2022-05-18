@@ -85,7 +85,10 @@
       />
   </div>
   <div class="carousel-container">
-    <Splide {options} bind:this={splide}>
+    <Splide
+    {options} bind:this={splide}
+    on:mounted={ (e) => currentCard = e.detail.splide.index}
+    on:move={(e) => currentCard = e.detail.index}>
       {#each parameters as p}
         <SplideSlide>
           <CarouselCard {type} parameters={p}/>

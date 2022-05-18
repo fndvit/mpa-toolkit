@@ -54,7 +54,6 @@
   }
 
   .mad-lib {
-    position: relative;
     line-height: 40px;
     padding-top: 0.5rem;
     padding-bottom: 2rem;

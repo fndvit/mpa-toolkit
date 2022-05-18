@@ -59,6 +59,10 @@
       width: 290px;
       padding: 0px 25px;
     }
+
+    &.collection {
+      background: rgba(9, 110, 174, 0.5);
+    }
   }
 
   .placeholder {

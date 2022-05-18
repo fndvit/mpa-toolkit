@@ -13,22 +13,19 @@
   ];
 
   export let tags: PageTag[] = exampleTags;
-  export let parameters: {previewImage: string, category: string, title: string};
+  export let parameters: {previewImage: string, category: string, title: string, slug: string};
   export let type: 'chapter' | 'case study';
-  export let active: boolean;
-
-  const OnClickCard = () => {active ?  alert("CARD CLICKED") : {}};
 
 </script>
 
-<div class="container" class:enabled={active} class:case-study={type === 'case study'} tabindex="0">
+<div class="container" class:case-study={type === 'case study'} tabindex="0">
   <img class="image" src={parameters.previewImage} alt="preview">
   <div class="preview-content">
-    <div class="circle-button" class:enabled={active} tabindex="0" on:click={OnClickCard}>
+    <a href="/{parameters.slug}" class="circle-button" tabindex="0">
       <svg class="arrow-svg" viewBox="0 0 12 20">
         <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
       </svg>
-    </div>
+    </a>
     <div class="category">{parameters.category}</div>
     <div class="title">{@html parameters.title}</div>
     <div class="tags-title">What's this about?</div>
@@ -64,10 +61,6 @@
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     margin-right: 1.5rem;
     margin-top: 0.25rem;
-
-    &.enabled {
-      cursor: pointer;
-    }
   }
 
   .circle-button:hover{
@@ -120,11 +113,6 @@
     border: none;
     margin-bottom: 25px;
     background: #096EAE;
-    opacity: 50%;
-
-    &.enabled {
-      opacity: 100%;
-    }
 
     &.case-study {
       background: #13487C;

@@ -10,25 +10,31 @@
 
   const chooseOption = (index: number) => {
     currentIndex = index;
-    selected = options[currentIndex];
     listboxVisible = false;
   }
 
-  const handleKeyDown = ({keyCode}) => {
+  const handleKeyDown = (event) => {
+
+    const key = event.key;
+    if (key !== 'Tab' && key !== 'Enter') {
+      event.preventDefault();
+    }
+
     if (listboxVisible){
-      if (keyCode === 38 && currentIndex > 0){
+      if (key === 'ArrowUp' && currentIndex > 0){
         currentIndex--;
-        selected = options[currentIndex];
       }
-      else if (keyCode === 40 && currentIndex < options.length - 1){
+      else if (key === 'ArrowDown' && currentIndex < options.length - 1){
         currentIndex++;
-        selected = options[currentIndex];
       }
     }
   }
+
+  $: selected = options[currentIndex];
+
 </script>
 
-<svelte:window on:keydown={handleKeyDown} />
+<svelte:window on:keydown={(event) => handleKeyDown(event)} />
 
 <div class="area" class:landing={type === 'landing'}>
   <button class="selector-area"

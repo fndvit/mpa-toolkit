@@ -5,7 +5,6 @@
   import type { PageTag } from "$lib/types";
 
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
-  import LandingMadLib from "$lib/components/LandingMadLib.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import Searchbar from "$lib/components/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";

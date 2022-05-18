@@ -3,7 +3,7 @@
   import MenuSpy from './menuspy';
   import type { MenuSpyParams } from './menuspy';
   import * as animateScroll from 'svelte-scrollto';
-  import { parseTextToID } from '$lib/helpers';
+  import { parseTextToID } from '$lib/helpers/utils';
 
   export let menuOptions: { text: string }[] = [];
 

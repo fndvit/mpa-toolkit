@@ -1,8 +1,7 @@
-import type { ContentDocument, Section } from "./types";
+import type { ContentDocument, Section } from "../types";
+import { parseTextToID } from "./utils";
 
 export const staticUrl = (path: string) => `${import.meta.env.VITE_UPLOAD_BASE_URL}${path}`;
-
-export const parseTextToID = (text: string) => text.replace(/\s|\./g, '');
 
 export function createSections(document: ContentDocument) {
   return document.content.reduce<Section[]>((acc, block) => {
@@ -25,15 +24,4 @@ export function createSections(document: ContentDocument) {
     }
     return acc;
   }, []);
-}
-
-export function groupBy<T, K extends string, U = null>
-  (arr: T[], keyFn: (i: T) => K, mapFn?: (i: T) => U) {
-
-  return arr.reduce<{[KV in K]?: (U extends null ? T : U)[] }>((acc, item) => {
-    const key = keyFn(item);
-    acc[key] = acc[key] || [];
-    acc[key].push(!mapFn ? item as any: mapFn(item));
-    return acc;
-  }, {});
 }

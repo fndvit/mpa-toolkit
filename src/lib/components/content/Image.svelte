@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { staticUrl } from "$lib/helpers";
+  import { staticUrl } from "$lib/helpers/content";
   import type { ImageBlock } from "$lib/types";
 
   export let block: ImageBlock;

@@ -1,36 +1,25 @@
 <script lang="ts">
-  import '@splidejs/splide/dist/css/splide.min.css';
-  import {Splide, SplideSlide} from "@splidejs/svelte-splide";
-  import type { Options } from '@splidejs/splide';
+  import { Splide, SplideSlide } from "@splidejs/svelte-splide";
   import Milestone from "../Milestone.svelte";
   import type { Milestones } from '$lib/types';
+  import { SplideOptions } from "$lib/helpers/splide";
 
   export let milestones: Milestones;
 
-  const options: Options = {
+  const options = SplideOptions({
     perMove: 1,
     gap: '25px',
     pagination: false,
     perPage: 6,
     arrows: true,
     breakpoints: {
-      1600: {
-        perPage: 5,
-      },
-      1400: {
-        perPage: 4,
-      },
-      1200: {
-        perPage: 3,
-      },
-      1000: {
-        perPage: 2,
-      },
-      800: {
-        perPage: 1,
-      }
+      1600: { perPage: 5 },
+      1400: { perPage: 4 },
+      1200: { perPage: 3 },
+      1000: { perPage: 2 },
+      800:  { perPage: 1 }
     }
-  }
+  });
 
 </script>
 
@@ -57,28 +46,20 @@
 
 <style lang="scss">
 
-  :global(button:disabled){
-    display: none;
+  .meta-milestones {
+    :global(.splide__arrow:disabled){
+      display: none;
+    }
+
+    :global(.splide__arrow--prev){
+      transform: translateX(-5rem) scale(0.8);
+    }
+
+    :global(.splide__arrow--next){
+      transform: translateX(5rem) scale(0.8);
+    }
   }
 
-  :global(.splide__arrow--prev){
-    transform: translateX(-5rem);
-  }
-
-  :global(.splide__arrow--next){
-    transform: translateX(5rem);
-  }
-
-  :global(.splide__arrow svg) {
-    fill: #2A2A2A;
-  }
-
-  :global(.splide__arrow) {
-    background-color: #F9F9F9;
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
-    width: 48px;
-    height: 48px;
-  }
 
   .milestones-slider {
     transform: translateY(-39px);

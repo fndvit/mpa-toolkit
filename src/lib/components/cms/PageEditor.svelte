@@ -12,7 +12,7 @@
   import TimedMessage from '$lib/components/TimedMessage.svelte';
   import CaseStudyMeta from '$lib/components/content/CaseStudyMeta.svelte';
   import cloneDeep from 'clone-deep'
-  import { compareDeep, Unpacked } from '$lib/helpers/utils';
+  import { compareDeep, slugify, Unpacked } from '$lib/helpers/utils';
   import ChapterMeta from '$lib/components/content/ChapterMeta.svelte';
   import MenuButton from '$lib/Editor/MenuButton.svelte';
   import Splash from '$lib/components/content/Splash.svelte';
@@ -106,7 +106,7 @@
   $: dirty && showSaveStatusText && showSaveStatusText(null);
 
   $: if (autoPopulateSlug) {
-    _page.slug = (_page.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
+    _page.slug = slugify(_page.title);
   }
 
   $: sharedFieldsComplete = _page.title && _page.slug;

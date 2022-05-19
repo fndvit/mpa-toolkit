@@ -22,7 +22,7 @@ export type CaseStudy = Omit<_CaseStudy, 'milestones'> & {
 }
 
 export type CompletePage = Omit<Page, 'content'> & {
-  content: object;
+  content: ContentDocument;
 } & {
   caseStudy: CaseStudy;
   chapter: Chapter & {
@@ -133,6 +133,7 @@ export type ContentDocument = {
 
 export type Section = {
   id: string;
+  title: string;
   topic: string;
   blocks: ContentBlock[];
 };

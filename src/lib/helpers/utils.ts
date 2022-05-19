@@ -1,6 +1,3 @@
-
-export const parseTextToID = (text: string) => text.replace(/\s|\./g, '');
-
 export function groupBy<T, K extends string, U = null>
 (arr: T[], keyFn: (i: T) => K, mapFn?: (i: T) => U) {
 
@@ -28,4 +25,8 @@ export function compareDeep(a: any, b: any) {
     for (const p in b) if (!(p in a)) return false;
   }
   return true;
+}
+
+export function slugify(text: string, maxLen = 40) {
+  return (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, maxLen);
 }

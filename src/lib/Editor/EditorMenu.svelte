@@ -29,8 +29,8 @@
   <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{level: 2}} text="H2" />
   <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />
   <MenuSeperator />
-  <MenuButton on:click={insertCards} icon="article" />
-  <MenuButton on:click={() => addCard(editorState, view.dispatch)} icon="library_add" />
+  <MenuButton on:click={insertCards} icon="article" title="Add cards" />
+  <MenuButton on:click={() => addCard(editorState, view.dispatch)} icon="library_add" title="Add card" />
   <MenuSeperator />
   <UploadButton />
 

@@ -7,7 +7,7 @@
 </script>
 
 <div class="milestone-editor">
-  <Milestones bind:milestones editor />
+  <Milestones bind:milestones editable />
 </div>
 
 <style lang="scss">

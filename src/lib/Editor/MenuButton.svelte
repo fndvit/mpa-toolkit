@@ -3,10 +3,12 @@
   export let disabled: boolean = false;
   export let icon: string = null;
   export let text: string = null;
+  export let title: string = null;
 </script>
 
 <button
   class:material-icons={icon}
+  data-title={title}
   on:click
   on:mousedown={(e) => e.preventDefault()}
   {disabled}
@@ -24,6 +26,7 @@
     --hover-bg: var(--bg-color);
     --size: 2rem;
 
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,11 +51,32 @@
       border: 1px solid #ccc;
     }
 
+    &[data-title]::before {
+      content: attr(data-title);
+      font-family: 'Montserrat';
+      z-index: 100000;
+      position: absolute;
+      font-size: 14px;
+      top: calc(100% + 5px);
+      padding: 5px 6px;
+      color: #333;
+      background: #ffffffee;
+      border: 1px solid #00000011;
+      border-radius: 5px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
     &:hover {
       filter: brightness(95%);
       &:not(.active) {
         background: var(--hover-bg);
         border: 1px solid var(--hover-border-color);
+      }
+      &[data-title]::before {
+        opacity: 1;
+        transition: opacity 0.2s ease 0.5s;
       }
     }
   }

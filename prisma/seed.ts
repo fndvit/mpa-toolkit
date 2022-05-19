@@ -81,6 +81,11 @@ async function main() {
       },
       chapter: {
         create: {
+          keyTakeaways: [
+            summaryLorem.generateSentences(2),
+            summaryLorem.generateSentences(2),
+            summaryLorem.generateSentences(2),
+          ],
           summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
           authors: { connect: [{ id: userIds[0] }] }
         }

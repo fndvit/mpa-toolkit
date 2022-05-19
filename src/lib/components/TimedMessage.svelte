@@ -10,7 +10,7 @@
       timeout = null;
     }
 
-    timeout = window.setTimeout(() => message = timeout = null, durationMs);
+    timeout = _message && window.setTimeout(() => message = timeout = null, durationMs);
     message = _message;
   }
 

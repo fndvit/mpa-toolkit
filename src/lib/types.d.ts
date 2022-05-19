@@ -9,6 +9,7 @@ export interface UserInfo {
   id: number;
   email: string;
   name: string;
+  img: string;
 }
 
 export type PageTag = {
@@ -20,7 +21,9 @@ export type CaseStudy = Omit<_CaseStudy, 'milestones'> & {
   milestones: MilestonesData;
 }
 
-export type CompletePage = Page & {
+export type CompletePage = Omit<Page, 'content'> & {
+  content: object;
+} & {
   caseStudy: CaseStudy;
   chapter: Chapter & {
     authors: User[];
@@ -42,13 +45,13 @@ export type UserRequest = {
 }
 
 export type PageRequest = {
-
   title: string;
+  draft: boolean;
   slug: string;
   content: object;
   img: string;
   tags: {
-    tag: { id: number };
+    id: number,
     category: TagCategory
   }[];
   caseStudy?: Omit<CaseStudy, 'pageId'>;

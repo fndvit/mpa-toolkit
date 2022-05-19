@@ -10,11 +10,12 @@
     "img": { "type": "string" },
     "tags": { "type": "array", "items": { "$ref": "#/$defs/tag" } },
     "caseStudy": { "$ref": "#/$defs/caseStudy" },
-    "chapter": { "$ref": "#/$defs/chapter" }
+    "chapter": { "$ref": "#/$defs/chapter" },
+    "draft": { "type": "boolean" }
 
   },
   "additionalProperties": false,
-  "required": ["title", "slug", "content", "img", "tags"],
+  "required": ["title", "slug", "content", "img", "tags", "draft"],
   "oneOf": [
     {
       "required": ["caseStudy"],
@@ -31,16 +32,11 @@
     "tag": {
       "type": "object",
       "properties": {
-        "tag": {
-          "type": "object",
-          "properties": {
-            "id": { "type": "integer" }
-          },
-          "required": [ "id" ]
-        },
+        "id": { "type": "integer" },
         "category": { "type": "string", "enum": [ "PRIMARY", "SECONDARY" ] }
       },
-      "required": [ "tag" ]
+      "minProperties": 2,
+      "additionalProperties": false
     },
 
     "milestones": {
@@ -59,14 +55,14 @@
       "type": "object",
       "properties": {
         "name": { "type": "string" },
-        "established": { "type": "integer" },
-        "size": { "type": "number" },
+        "established": { "type": ["integer", "null"] },
+        "size": { "type": ["number", "null"] },
         "governance": { "type": "string" },
         "staff": { "type": "string" },
         "budget": { "type": "string" },
         "budgetLevel": { "type": "string" },
-        "lat": { "type": "number" },
-        "long": { "type": "number" },
+        "lat": { "type": ["number", "null"] },
+        "long": { "type": ["number", "null"] },
         "milestones": { "$ref": "#/$defs/milestones" }
       },
       "additionalProperties": false,

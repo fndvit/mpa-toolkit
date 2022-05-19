@@ -22,5 +22,12 @@
     "tag": {
     },
     "category": "SECONDARY"
+  },
+  {
+    "id": "str",
+    "category": "SECONDARY"
+  },
+  {
+    "id": 5
   }
 ]

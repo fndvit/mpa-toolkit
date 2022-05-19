@@ -3,6 +3,7 @@
   import IconButton from "../IconButton.svelte";
 
   export let text: string;
+  export let deletable = false;
 
   let editText = text;
 
@@ -32,7 +33,9 @@
   {#if text !== ''}
     <IconButton icon='close' on:click={handlers.cancel} />
   {/if}
-  <IconButton icon='delete' on:click={handlers.delete} />
+  {#if deletable}
+    <IconButton icon='delete' on:click={handlers.delete} />
+  {/if}
 </div>
 
 <style lang="scss">

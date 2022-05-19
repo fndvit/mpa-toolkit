@@ -1,6 +1,6 @@
 <script lang="ts">
   import {Splide, SplideSlide} from "@splidejs/svelte-splide";
-  import CarouselDots from './TextSlider/CarouselDots.svelte';
+  import CarouselDots from './Cards/CarouselDots.svelte';
   import CarouselCard from './CarouselCard.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
 
@@ -79,7 +79,6 @@
         currentPageIndex={currentCard}
         pagesCount={parameters.length}
         progress={true}
-        color='#2A2A2A'
         handleDotClick={handlePaginationEvent}
       />
   </div>

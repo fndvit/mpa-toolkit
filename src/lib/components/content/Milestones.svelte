@@ -2,11 +2,11 @@
   import { Splide, SplideSlide } from "@splidejs/svelte-splide";
   import Milestone from "../Milestone.svelte";
   import type { MilestonesData } from '$lib/types';
-  import Button from '../Button.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
+  import IconButton from "../IconButton.svelte";
 
   export let milestones: MilestonesData;
-  export let editor = false;
+  export let editable = false;
 
   const options = SplideOptions({
     perMove: 1,
@@ -26,7 +26,7 @@
   let splide: Splide;
 
   function onClickAddYear() {
-    milestones[''] = ['new milestone'];
+    milestones[''] = [''];
     window.setTimeout(() => splide.go(0));
   }
 
@@ -51,8 +51,8 @@
 
     <div class="milestones-title">
       Milestones
-      {#if editor}
-        <Button on:click={onClickAddYear}>Add year</Button>
+      {#if editable}
+        <IconButton on:click={onClickAddYear} icon="add" text="Add year" />
       {/if}
     </div>
 
@@ -65,7 +65,7 @@
         <SplideSlide>
           <Milestone
             {year}
-            {editor}
+            editor={editable}
             bind:content={milestones[year]}
             on:saveYear={({detail}) => onSaveYear(year, detail)}
             on:delete={() => onDeleteYear(year)}
@@ -105,17 +105,19 @@
   }
 
   .milestones-title {
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
     font-size: 20px;
     font-weight: bold;
     color: #FFFFFF;
     padding-top: 25px;
     padding-bottom: 15px;
-    :global(.button) {
-      display: inline-block;
-      margin-left: 10px;
-      --height: 1.6rem;
-      font-size: 0.9rem;
-      padding: 0 10px;
+    :global(.icon-button) {
+      --color: #ffffffee;
+      --hover-border: 1px solid transparent;
+      --hover-bg: #00000011;
+      --size: 1.5rem;
     }
   }
 

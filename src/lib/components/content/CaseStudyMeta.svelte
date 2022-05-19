@@ -1,15 +1,26 @@
 <script lang="ts">
-  import type { Options } from '@splidejs/splide';
-  import type { CaseStudy, MilestonesData } from "$lib/types";
+  import type { CaseStudy } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
   import Milestones from './Milestones.svelte';
+  import EditableContent from '../EditableContent.svelte';
+  import IconButton from "../IconButton.svelte";
 
   export let caseStudy: Omit<CaseStudy, 'pageId'>;
+  export let editable = false;
 
-  const { name, established, size, governance,
-    staff, budget, budgetLevel, lat, long } = caseStudy;
+  const { lat, long } = caseStudy;
 
-  let milestones = caseStudy.milestones as MilestonesData;
+  const placeholders = {
+    name: "Project name",
+    established: 2000,
+    size: 1234,
+    governance: "Adipisicing minim eiusmod eu officia voluptate incididunt officia sit nostrud cupidatat.",
+    staff: "12 workers",
+    budget: "US$552,479 as direct costs of the protected area, plus part of the support services and enterprise development costs of the co-managing NGO",
+    budgetLevel: "Above basic, but less than optimal",
+  }
+
+  $: hasMilestones = !!Object.keys(caseStudy.milestones).length;
 
 </script>
 
@@ -20,13 +31,13 @@
     <div class="meta-grid meta-grid-1">
 
       <h4>Name</h4>
-      <div>{name}</div>
+      <EditableContent bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
 
       <h4>Established in</h4>
-      <div>{established}</div>
+      <EditableContent bind:value={caseStudy.established} type="number" {editable} placeholder={placeholders.established} />
 
       <h4>Size</h4>
-      <div>{size} km²</div>
+      <EditableContent bind:value={caseStudy.size} {editable} placeholder={placeholders.size} type="number" unitSuffix="km²"/>
 
       <div class="globe-cell">
         <GlobeViz width={245} {lat} {long} />
@@ -37,33 +48,52 @@
     <div class="meta-grid meta-grid-2">
 
       <h4>Governance</h4>
-      <div>{governance}</div>
+      <EditableContent bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
 
       <h4>Staff</h4>
-      <div>{staff}</div>
+      <EditableContent bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
 
       <h4>Budget</h4>
-      <div>{budget}</div>
+      <EditableContent bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
 
       <h4>Budget level</h4>
-      <div>{budgetLevel}</div>
+      <EditableContent bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
 
     </div>
 
   </div>
 
-
+  {#if editable && !hasMilestones}
+    <div class="add-milestones-button">
+      <IconButton icon="add" on:click={() => caseStudy.milestones = {'': ['']}} text="Add milestones" />
+    </div>
+  {/if}
 </div>
 
-{#if Object.keys(milestones).length}
-  <Milestones {milestones} />
+{#if hasMilestones}
+  <Milestones bind:milestones={caseStudy.milestones} {editable} />
 {/if}
-
-
 
 <style lang="scss">
 
+  .add-milestones-button {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 5px;
+    z-index: 1;
+    --color: #ffffffee;
+    --hover-border: 1px solid transparent;
+    --hover-bg: #00000011;
+    // --size: 1.5rem;
+    :global(.icon-button) {
+      margin: auto;
+    }
+  }
+
   .meta-container {
+    position: relative;
     background-color: #13487C;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
   }
@@ -92,17 +122,21 @@
 
   }
 
-  .meta-grid > div {
+  .meta-grid :global(.editable-content) {
     font-family: 'Bitter';
     color: white;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    height: fit-content;
   }
 
-  .meta-grid-1 > div {
+  .meta-grid-1 :global(.editable-content) {
     font-size: 28px;
     line-height: 42px;
   }
 
-  .meta-grid-2 > div {
+  .meta-grid-2 :global(.editable-content) {
     font-size: 18px;
     line-height: 32px;
   }

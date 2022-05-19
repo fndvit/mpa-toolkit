@@ -132,6 +132,7 @@ export const schema = new ProsemirrorSchema({
 
     cardbody: {
       content: 'text*',
+      marks: '',
       group: 'block',
       parseDOM: [{ tag: 'p' }],
       toDOM() {

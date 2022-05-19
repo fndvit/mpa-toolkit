@@ -13,34 +13,44 @@
   {disabled}
   class:active
   data-icon={icon}
->
-  {icon || text}
-</button>
+  data-text={text}
+/>
 
 <style lang="scss">
   .icon-button {
-    --bg-color: transparent;
-    --color: #333;
-    --hover-border-color: #f1f1f1;
-    --hover-bg: var(--bg-color);
-    --size: 2rem;
-    --font-size: 0.75rem;
-
     display: flex;
     align-items: center;
     justify-content: center;
-    width: var(--size);
-    height: var(--size);
-    background: var(--bg-color);
+    column-gap: 5px;
+    background: var(--bg-color, transparent);
     text-align: center;
-    color: var(--color);
+    color: var(--color, #333);
     border: 1px solid transparent;
-    box-sizing: border-box;;
+    box-sizing: border-box;
+    padding: 0;
     border-radius: 3px;
 
+    &[data-text] {
+      padding: 0 10px 0 0;
+    }
 
-    &.material-icons {
-      font-size: var(--font-size);
+    &[data-icon]::before {
+      content: attr(data-icon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Material Icons';
+      font-size: var(--icon-size, 1rem);
+      width: var(--size, 2rem);
+      height: var(--size, 2rem);
+      background-color: #33333355;
+      border-radius: 3px;
+    }
+
+    &[data-text]::after {
+      content: attr(data-text);
+      font-family: 'Montserrat';
+      font-size: var(--font-size, 0.8rem);
     }
 
     &.active {
@@ -52,8 +62,8 @@
       cursor: pointer;
       &:hover {
         &:not(.active) {
-          background: var(--hover-bg);
-          border: 1px solid var(--hover-border-color);
+          background: var(--hover-bg, transparent);
+          border: var(--hover-border, 1px solid transparent);
         }
       }
 

@@ -1,28 +1,56 @@
 <script lang="ts">
-  import MultiSelect, { Option } from "svelte-multiselect";
+  import MultiSelect from "svelte-multiselect";
   import type { UserInfo } from '$lib/types';
 
-  export let authors: Pick<UserInfo, 'id' | 'name'>[] = [];
-  export let allAuthors: UserInfo[];
+  type Author = Pick<UserInfo, 'id' | 'name' | 'img'>;
+
+  export let authors: Author[] = [];
+  export let allAuthors: Author[];
   export let disabled = false;
 
-  type AuthorOption = Option & {
-    id: number;
-    value: number;
-    label: string;
-  };
-
-  let authorOptions = authors.map<AuthorOption>(author => ({id: author.id, label: author.name, value: author.id}));
-
-  const allAuthorOptions = allAuthors.map<AuthorOption>(u => ({
-    id: u.id,
+  const allAuthorOptions = allAuthors.map(u => ({
     value: u.id,
     label: u.name,
-    preselected: authorOptions && authorOptions.some(a => a.value === u.id),
+    user: u,
   }));
 
-  $: authors = authorOptions.map(a => ({ id: a.value, name: a.label }));
-
+  let authorIds = new Set(authors.map(author => author.id));
+  let authorOptions = allAuthorOptions.filter(o => authorIds.has(o.user.id));
+  $: authors = authorOptions.map(a => a.user);
 </script>
 
-<MultiSelect bind:selected={authorOptions} options={allAuthorOptions} {disabled} />
+<div class="author-editor">
+  <MultiSelect placeholder="Add an author" bind:selected={authorOptions} options={allAuthorOptions} {disabled} />
+</div>
+
+<style lang="scss">
+  .author-editor {
+    --sms-selected-bg: transparent;
+    --sms-border: none;
+    --sms-selected-li-padding: 0;
+    :global(.multiselect > svg) {
+      display: none;
+    }
+    :global(button.remove-all) {
+      display: none;
+    }
+    :global(div.multiselect > ul.selected > li:nth-last-child(3)::after) {
+      content: 'and';
+      margin-left: 8px;
+      display: block;
+    }
+    :global(div.multiselect > ul.selected > li > input:after) {
+      content: 'asdf';
+      display: block;
+      height: 10px;
+    }
+    :global(div.multiselect > ul.selected > li button) {
+      opacity: 0.4;
+    }
+    :global(div.multiselect > ul.selected > li) {
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+</style>

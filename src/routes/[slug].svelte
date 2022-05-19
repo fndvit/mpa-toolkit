@@ -12,16 +12,17 @@
   import CaseStudyMeta from "$lib/components/content/CaseStudyMeta.svelte";
   import Heading from "$lib/components/content/Heading.svelte";
   import Image from "$lib/components/content/Image.svelte";
+  import Splash from "$lib/components/content/Splash.svelte";
   import Paragraph from "$lib/components/content/Paragraph.svelte";
   import StickyMenu from "$lib/components/StickyMenu/StickyMenu.svelte";
-  import TextSlider from "$lib/components/TextSlider/TextSlider.svelte";
+  import TextSlider from "$lib/components/content/TextSlider.svelte";
   import LifeCycle from "$lib/components/LifeCycle/LifeCycle.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
-  import { createSections, staticUrl } from "$lib/helpers/content";
+  import { createSections } from "$lib/helpers/content";
   import Section from "$lib/components/content/Section.svelte";
-  import type { ContentDocument, CompletePage, CardsBlock } from "$lib/types";
-  import UserImage from "$lib/components/content/UserImage.svelte";
+  import type { ContentDocument, CompletePage } from "$lib/types";
   import TinyCarousel, { type ContentCard } from "$lib/components/TinyCarousel/TinyCarousel.svelte";
+  import ChapterMeta from "$lib/components/content/ChapterMeta.svelte";
 
   export let page: CompletePage;
   export let document: ContentDocument;
@@ -38,61 +39,13 @@
     'image': Image,
   };
 
-  const keyTakeawaysBlock: CardsBlock = {
-    type: 'cards',
-    content: page?.chapter?.keyTakeaways.map(k => ({
-      type: 'card',
-      content: [
-        {
-          type: 'cardheading',
-          content: [{ text: 'Key takeaways', type: 'text'}]
-        },
-        {
-          type: 'cardbody',
-          content: [{ text: k, type: 'text'}]
-        }
-      ]
-    }))
-  };
-
 </script>
 
 <div>
-  <img class="unep-logo" src="/unep.svg" alt="unep-logo" />
-  <div class="splash" style="background-image: url({staticUrl(page.img)});">
-    <h1>{page.title}</h1>
-  </div>
 
+  <Splash title={page.title} img={page.img} />
   {#if page.chapter }
-
-    <div class="meta">
-
-      <div class="first-line">
-
-        <div class="author-images">
-          {#each page.chapter.authors as user}
-            <UserImage {user} />
-          {/each}
-        </div>
-
-        <div class="author-names">
-          {#each page.chapter.authors as author}
-            <div>{author.name}</div>
-          {/each}
-        </div>
-
-        <div class="readtime">{readTime} min read</div>
-
-      </div>
-
-      <div class="summary">{page.chapter.summary}</div>
-      {#if page.chapter.keyTakeaways.length > 0}
-        <div class="key-takeaways">
-          <TextSlider block={keyTakeawaysBlock}/>
-        </div>
-      {/if}
-    </div>
-
+    <ChapterMeta chapter={page.chapter} {readTime} />
   {:else if page.caseStudy}
     <CaseStudyMeta caseStudy={page.caseStudy} />
   {/if}
@@ -133,69 +86,11 @@
 
 <style lang="scss">
 
-  .key-takeaways{
-    max-width: 850px;
-    margin-bottom: 25px;
-    margin-left: -30px;
-  }
-
-  .first-line {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-    column-gap: 10px;
-  }
-
-  .author-images {
-    margin-right: 15px;
-  }
-
-  .author-names {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    font-size: 16px;
-  }
-
 
   .body-column {
     font-family: var(--font-serif);
     font-size: 18px;
     line-height: 32px;
-  }
-
-  .splash {
-    min-height: 60vh;
-    display: flex;
-    align-items: flex-end;
-    padding: 6rem;
-    padding-bottom: 3rem;
-    padding-left: 124px;
-    h1 {
-      max-width: 800px;
-      color: white;
-      text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.45);
-    }
-  }
-
-  .unep-logo {
-    position: absolute;
-    margin: 2rem;
-  }
-
-  .meta {
-    background: #096EAE;
-    color: #F9F9F9;
-    padding: 2rem 124px;
-  }
-
-
-  .summary {
-    font-family: var(--font-serif);
-    font-size: 28px;
-    line-height: 42px;
-    max-width: 800px;
-    margin-bottom: 40px;
   }
 
   .content {

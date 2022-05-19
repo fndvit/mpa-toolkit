@@ -1,10 +1,15 @@
 {
   "title": "What should MPA managers know",
   "slug": "blue-economy",
+  "draft": false,
   "tags": [
     {
-      "tag": { "id": 1 },
+      "id": 1,
       "category": "PRIMARY"
+    },
+    {
+      "id": 2,
+      "category": "SECONDARY"
     }
   ],
   "img": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",

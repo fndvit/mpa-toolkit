@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import MilestoneTextEditor from "./content/MilestoneTextEditor.svelte";
   import IconButton from "./IconButton.svelte";
+  import TextInputEditor from "./TextInputEditor.svelte";
 
   export let year: string;
   export let content: string[];
@@ -9,9 +10,13 @@
 
   const dispatch = createEventDispatcher<{saveYear: string, delete: null}>();
 
+  function getFirstEmptyIdx() {
+    const emptyIdx = content.indexOf('');
+    return emptyIdx !== -1 && emptyIdx;
+  }
+
   let contracted = new Array<boolean>(content.length).fill(!editor);
-  let editIndex: number;
-  let editYear: string = editor && year === '' ? '' : undefined;
+  let editIndex = getFirstEmptyIdx();
 
   function onClickAdd() {
     content.push('');
@@ -27,15 +32,13 @@
     }
   }
 
-  const onClickSaveYear: svelte.JSX.MouseEventHandler<HTMLButtonElement> = e => {
-    e.stopPropagation();
-    dispatch('saveYear', editYear);
-    editYear = undefined;
+  function saveYear(year: string) {
+    dispatch('saveYear', year);
   }
 
   function onSaveText(i: number, text: string) {
     content[i] = text;
-    editIndex = null;
+    editIndex = getFirstEmptyIdx();
   }
 
   function onDeleteMilestone(i: number) {
@@ -51,22 +54,17 @@
   $: simple = content.length <= 1;
 </script>
 
-<div class="container">
+<div class="container" class:simple>
 
   <div class="year">
-    {#if editYear === undefined}
-      <span on:click={() => editYear = year}>{year}</span>
-    {:else}
-      <input type="number" bind:value={editYear} />
-      <IconButton icon='done' on:click={onClickSaveYear} disabled={!editYear} />
-      {#if year}
-        <IconButton icon='close' on:click={() => editYear = undefined} disabled={!editYear} />
-      {/if}
-    {/if}
+    <TextInputEditor
+      type="number"
+      value={year}
+      on:save={({detail}) => saveYear(detail)}
+    />
     {#if editor}
       <IconButton icon="delete" on:click={onClickDeleteYear} />
     {/if}
-
   </div>
 
   <svg class="main-circle" height="15" width="15">
@@ -75,7 +73,7 @@
 
   {#if simple}
 
-    <div class="milestone-text simple" on:click={() => onClickMilestone(0)}>
+    <div class="milestone-text" on:click={() => onClickMilestone(0)}>
       {#if editIndex === 0}
         <MilestoneTextEditor
           text={content[0]}
@@ -119,6 +117,7 @@
                 on:save={({detail}) => onSaveText(i, detail)}
                 on:cancel={() => editIndex = undefined}
                 on:delete={() => onDeleteMilestone(i)}
+                deletable
               />
             {:else}
               <span>{text}</span>
@@ -215,7 +214,7 @@
       max-width: 200px;
     }
 
-    &.simple {
+    .simple & {
       padding-top: 28px;
       padding-left: 3px;
     }
@@ -249,11 +248,8 @@
       --color: white;
       --size: 1.2rem;
     }
-    span {
-      display: block;
-    }
-    input {
-      width: 60px;
+    :global(input) {
+      width: 40px;
     }
   }
 
@@ -261,9 +257,7 @@
     :global(.icon-button) {
       --color: white;
       --size: 1.4rem;
-      --bg-color: #00000022;
-      --hover-border-color: #00000033;
-      --hover-bg: #ffffff55;
+      --hover-bg: #00000022;
     }
     :global(.icon-button:disabled) {
       --bg-color: #77777755;
@@ -274,9 +268,13 @@
   .add-button {
     max-width: 200px;
     margin-top: 10px;
+    margin-left: 22px;
+
+    .simple & {
+      margin-left: 0;
+    }
 
     :global(.icon-button) {
-      margin: auto;
       --size: 2rem;
       --font-size: 1.4rem;
     }

@@ -2,23 +2,19 @@
   import type { PageTag } from "$lib/types";
 
   export let tag: PageTag;
+  export let color: string = '#fbe26b';
 
   $: fade = tag.category == 'SECONDARY';
-
 </script>
 
-<div class="tag-area" class:fade tabindex="0">{tag.tag.value? tag.tag.value : tag.tag}</div>
+<div class="tag-area" class:fade tabindex="0" style="background: {color + (fade ? '60' : '')};">{tag.tag.value? tag.tag.value : tag.tag}</div>
 
 <style>
-  .fade {
-    background: rgba(251, 226, 107, 0.6) !important;
-  }
   .tag-area {
     cursor: pointer;
     display: inline-block;
     font-size: 12px;
     font-family: 'Montserrat';
-    background: #fbe26b;
     font-weight: 400;
     line-height: 18px;
     text-align: center;

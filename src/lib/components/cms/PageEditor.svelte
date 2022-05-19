@@ -137,7 +137,7 @@
 </script>
 
 
-<div class="page-editor" class:preview>
+<div class="page-editor" class:preview class:is-new-page={isNewPage}>
   <div class="meta">
 
     <div class="top-controls">
@@ -269,7 +269,9 @@
     }
     .save-button :global(.button:not(:disabled)) {
       animation: 1s ease-in 0s infinite alternate bgPulse;
-
+    }
+    .is-new-page & :global(.icon-button[data-icon="open_in_new"]) {
+      display: none;
     }
   }
 

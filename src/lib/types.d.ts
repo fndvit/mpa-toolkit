@@ -1,4 +1,5 @@
 import type { Tag, Page, CaseStudy as _CaseStudy, Chapter, TagCategory, Role } from '@prisma/client';
+export type * as SubTypes from './prisma/queries';
 export type * from '@prisma/client';
 
 export interface Locals {
@@ -24,8 +25,8 @@ export type CaseStudy = Omit<_CaseStudy, 'milestones'> & {
 export type CompletePage = Omit<Page, 'content'> & {
   content: ContentDocument;
 } & {
-  caseStudy: Omit<CaseStudy, 'pageId'>;
-  chapter: Omit<Chapter, 'pageId'> & {
+  caseStudy?: Omit<CaseStudy, 'pageId'>;
+  chapter?: Omit<Chapter, 'pageId'> & {
     authors: UserInfo[];
   };
   tags: PageTag[];
@@ -137,3 +138,7 @@ export type Section = {
   topic: string;
   blocks: ContentBlock[];
 };
+
+type UnwrapContent<T> = T extends { content: (infer U)[] } ? U | UnwrapContent<U> : T;
+
+export type Block = UnwrapContent<ContentDocument>;

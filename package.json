@@ -13,7 +13,7 @@
     "clean": "rimraf build cdk.out",
     "db:nuke": "npx prisma migrate reset --force && yarn db:seed",
     "db:migrate": "prisma migrate dev",
-    "db:seed": "ts-node --esm prisma/seed.ts",
+    "db:seed": "ts-node -r tsconfig-paths/register --esm prisma/seed.ts",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
@@ -50,6 +50,7 @@
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
     "ts-node": "^10.7.0",
+    "tsconfig-paths": "^4.0.0",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3",
     "vitest": "^0.10.2"

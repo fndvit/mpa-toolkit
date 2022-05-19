@@ -1,4 +1,4 @@
-import type { Tag } from '@prisma/client';
+import { Tag, TagCategory } from '@prisma/client';
 import { PrismaClient, Role, TagType } from '@prisma/client';
 import content from './data/content.json';
 import tags from './data/tags.json';
@@ -6,6 +6,8 @@ import milestones from './data/milestones.json';
 import { LoremIpsum } from "lorem-ipsum";
 import SeedRandom from 'seedrandom';
 import { groupBy } from '../src/lib/helpers/utils';
+import { createPage } from '../src/lib/prisma/wrappers';
+import type { ContentDocument, PageRequest } from '../src/lib/types';
 
 const seed = 'fixed';
 const NUM_RANDOM_CHAPTERS = 20;
@@ -70,53 +72,43 @@ async function main() {
 
   const allTags = await prisma.tag.findMany();
 
-  await prisma.page.create({
-    data: {
-      slug: "blue-economy",
-      title: "What should MPA managers know about the blue economy and business planning?",
-      draft: false,
-      img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
-      content,
-      tags: { createMany: { data: getRandomTagsForContent(allTags) }
-      },
-      chapter: {
-        create: {
-          keyTakeaways: [
-            summaryLorem.generateSentences(2),
-            summaryLorem.generateSentences(2),
-            summaryLorem.generateSentences(2),
-          ],
-          summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
-          authors: { connect: [{ id: userIds[0] }] }
-        }
-      }
+  await createPage({
+    slug: "blue-economy",
+    title: "What should MPA managers know about the blue economy and business planning?",
+    draft: false,
+    img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
+    content: content as any as ContentDocument,
+    tags: getRandomTagsForContent(allTags),
+    chapter: {
+      keyTakeaways: [
+        summaryLorem.generateSentences(2),
+        summaryLorem.generateSentences(2),
+        summaryLorem.generateSentences(2),
+      ],
+      summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
+      authors: [userIds[0]]
     }
   });
 
-  await prisma.page.create({
-    data: {
+  await createPage({
       slug: "raja-ampat-mpa-network-adaptation-strate",
       title: "Raja Ampat MPA Network – Adaptation strategies for a changing climate",
       draft: false,
       img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
-      content,
-      tags: { createMany: { data: getRandomTagsForContent(allTags) }
-      },
+      content: content as any as ContentDocument,
+      tags: getRandomTagsForContent(allTags),
       caseStudy: {
-        create: {
-          name: "Raja Ampat MPA Network",
-          established: 2008,
-          size: 20002,
-          governance: "Co-management with the regional public service agency",
-          staff: "56 workers",
-          budget: "Entrance fees (87–88%) + grants (11–12%):US$1,470,000. The pandemic caused a drastic reduction in 2020/2021.",
-          budgetLevel: "Between basic (IDR 13-14 billion ~ US$950,000) and optimal (IDR 30 billion ~ US$2.1 million)",
-          lat: -0.23333324,
-          long: 130.51666646,
-          milestones
-        }
+        name: "Raja Ampat MPA Network",
+        established: 2008,
+        size: 20002,
+        governance: "Co-management with the regional public service agency",
+        staff: "56 workers",
+        budget: "Entrance fees (87–88%) + grants (11–12%):US$1,470,000. The pandemic caused a drastic reduction in 2020/2021.",
+        budgetLevel: "Between basic (IDR 13-14 billion ~ US$950,000) and optimal (IDR 30 billion ~ US$2.1 million)",
+        lat: -0.23333324,
+        long: 130.51666646,
+        milestones
       }
-    }
   });
 
   for (let i = 0; i < NUM_RANDOM_CHAPTERS; i++) {
@@ -125,7 +117,7 @@ async function main() {
 
 }
 
-function getRandomTagsForContent(allTags: Tag[]) {
+function getRandomTagsForContent(allTags: Tag[]): PageRequest['tags'] {
   const NUM_TAGS = {
     primary: 2,
     secondary: 4,
@@ -133,17 +125,14 @@ function getRandomTagsForContent(allTags: Tag[]) {
     user: 3
   };
   const tags = groupBy(allTags, t => t.type);
-  // const stageTags = allTags.filter(t => t.type === TagType.STAGE);
-  // const topicTags = allTags.filter(t => t.type === TagType.TOPIC);
-  // const userTags = allTags.filter(t => t.type === TagType.USER);
   return [
     ...getXRandItems(tags.STAGE, NUM_TAGS.primary + NUM_TAGS.secondary)
       .map((t, i) => ({
-        tagId: t.id,
-        category: i < NUM_TAGS.primary ? 'PRIMARY' : 'SECONDARY'
+        id: t.id,
+        category: i < NUM_TAGS.primary ? TagCategory.PRIMARY : TagCategory.SECONDARY
       })),
-    ...getXRandItems(tags.TOPIC, NUM_TAGS.topic).map(t => ({tagId: t.id})),
-    ...getXRandItems(tags.USER, NUM_TAGS.user).map(t => ({tagId: t.id})),
+    ...getXRandItems(tags.TOPIC, NUM_TAGS.topic).map(t => ({id: t.id, category: TagCategory.PRIMARY})),
+    ...getXRandItems(tags.USER, NUM_TAGS.user).map(t => ({id: t.id, category: TagCategory.PRIMARY})),
   ];
 }
 
@@ -152,23 +141,16 @@ async function createRandomPage(userIds: number[], allTags: Tag[]) {
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
   const summary = summaryLorem.generateParagraphs(1);
 
-  await prisma.page.create({
-    data: {
-      slug, title,
-      draft: false,
-      img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
-      content,
-      tags: {
-        createMany: {
-          data: getRandomTagsForContent(allTags)
-        }
-      },
-      chapter: {
-        create: {
-          summary,
-          authors: { connect: [{ id: getRandItem(userIds) }] }
-        }
-      }
+  await createPage({
+    slug, title,
+    draft: false,
+    img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
+    content: content as any as ContentDocument,
+    tags: getRandomTagsForContent(allTags),
+    chapter: {
+      summary,
+      authors: getXRandItems(userIds, Math.ceil(Math.random() * 2)),
+      keyTakeaways: Array(Math.floor(Math.random() * 4)).fill(null).map(() => summaryLorem.generateSentences(2))
     }
   });
 }

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { PageTag } from "$lib/types";
+  import type { SubTypes } from "$lib/types";
   import Tag from "./Tag.svelte";
 
-  export let tags: PageTag[] = [];
+  export let tags: SubTypes.Tag[] = [];
   export let color: string = '#fbe26b';
 </script>
 

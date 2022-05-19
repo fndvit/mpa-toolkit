@@ -1,13 +1,21 @@
 <script lang="ts">
-  import type { PageTag } from "$lib/types";
+  import type { SubTypes } from "$lib/types";
 
-  export let tag: PageTag;
+  export let tag: SubTypes.Tag;
   export let color: string = '#fbe26b';
 
   $: fade = tag.category == 'SECONDARY';
 </script>
 
-<div class="tag-area" class:fade tabindex="0" style="background: {color + (fade ? '60' : '')};">{tag.tag.value? tag.tag.value : tag.tag}</div>
+<a
+  href={`/tag/${tag.tag.id}`}
+  class="tag-area"
+  class:fade
+  tabindex="0"
+  style="background: {color + (fade ? '60' : '')};"
+>
+  {tag.tag.value? tag.tag.value : tag.tag}
+</a>
 
 <style>
   .tag-area {

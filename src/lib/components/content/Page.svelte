@@ -7,7 +7,6 @@
   import PageContent from "./PageContent.svelte";
 
   export let page: CompletePage;
-  export let readTime: number;
   export let recommendedPages: ContentCard[];
 
 </script>
@@ -15,7 +14,7 @@
 <div>
   <Splash title={page.title} img={page.img} />
   {#if page.chapter }
-    <ChapterMeta chapter={page.chapter} {readTime} />
+    <ChapterMeta chapter={page.chapter} readTime={page.readTime} />
   {:else if page.caseStudy}
     <CaseStudyMeta caseStudy={page.caseStudy} />
   {/if}

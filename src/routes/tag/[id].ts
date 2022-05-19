@@ -1,39 +1,19 @@
+import type { RequestHandler } from "@sveltejs/kit";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import { schema } from "$lib/Editor/schema";
-import { Node } from "prosemirror-model";
-import { calcReadTime } from "$lib/readtime";
-import type { RequestHandler } from "@sveltejs/kit";
-
+import { pageForCollectionPage } from "$lib/prisma/queries";
 
 export const get: RequestHandler<{ id: string }> = async ({ params }) => {
   const id = parseInt(params.id);
+  if (isNaN(id)) return error404('Page not found');
 
-  let pages = !isNaN(id) && await prisma.page.findMany({
-    where:{
-      tags : {
-        some: {
-          tagId: id
-        }
-      }
+  const pages = await prisma.page.findMany({
+    where: {
+      tags : { some: { tagId: id } }
     },
-    include: {
-      caseStudy: true,
-      chapter: {
-        include: {
-          authors: true
-        }
-      },
-      tags: { include: { tag: true } }
-    }
+    ...pageForCollectionPage
   });
 
-  if(pages?.length > 0){
-    pages = pages.map(p => {
-      const contentNode = Node.fromJSON(schema, p.content as unknown);
-      return {...p, readTime: calcReadTime(contentNode)};
-    });
-  }
   return pages
     ? { body: { pages } }
     : error404('Page not found');

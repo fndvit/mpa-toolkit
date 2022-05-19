@@ -59,6 +59,7 @@ model Page {
   title     String
   img       String
   content   Json
+  readTime  Int
   tags      TagsOnPages[]
   caseStudy CaseStudy?
   chapter   Chapter?

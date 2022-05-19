@@ -34,6 +34,7 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): CompletePage {
     tags: [],
     editedAt: null,
     createdAt: null,
+    readTime: null,
     caseStudy: type !== 'caseStudy' ? undefined : {
       name: '',
       established: null,

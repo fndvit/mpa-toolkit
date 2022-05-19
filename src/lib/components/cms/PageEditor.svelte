@@ -122,6 +122,7 @@
 
   $: previewPage = preview && {
     ..._page,
+    readTime: null,
     tags: _page.tags.map<PageTag>(t => ({
       tag: tagLookup[t.id],
       category: t.category

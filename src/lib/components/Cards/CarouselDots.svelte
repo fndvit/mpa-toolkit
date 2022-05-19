@@ -4,7 +4,6 @@
   export let progress: boolean = false;
   export let pagesCount: number = 1;
   export let currentPageIndex: number = 0;
-  export let color: string = 'black';
   export let handleDotClick;
 </script>
 
@@ -14,7 +13,6 @@
       <Dot
         {progress}
         active={currentPageIndex === pageIndex}
-        {color}
         on:click={handleDotClick(pageIndex)}
         on:progressAnimationFinished={handleDotClick(pageIndex >= pagesCount - 1 ? 0 : pageIndex + 1)}
       />
@@ -24,6 +22,11 @@
 
 <style>
   .sc-carousel-dots__container {
+    --dot-size: 10px;
+    --dot-color: black;
+    --dot-bar-width: 200px;
+    --dot-fade: 0.25;
+    --dot-progress-duration: 10s;
     display: flex;
     align-items: center;
     padding: 10px 30px;

@@ -19,8 +19,8 @@ export const put = authMiddleware(
 
         tags: {
           createMany: {
-            data: tags.map(({tag, category}) => ({
-              tagId: tag.id,
+            data: tags.map(({id, category}) => ({
+              tagId: id,
               category
             }))
           },
@@ -36,11 +36,7 @@ export const put = authMiddleware(
           create: {
             summary: chapter.summary,
             keyTakeaways: chapter.keyTakeaways,
-            authors: {
-              connect: chapter.authors.map(author => ({
-                id: author
-              }))
-            }
+            authors: { connect: chapter.authors.map(id => ({id})) }
           }
         }
       }

@@ -1,4 +1,4 @@
-import type { ContentDocument, Section } from "../types";
+import type { CompletePage, ContentDocument, Section } from "../types";
 import { parseTextToID } from "./utils";
 
 export const staticUrl = (path: string) => `${import.meta.env.VITE_UPLOAD_BASE_URL}${path}`;
@@ -24,4 +24,39 @@ export function createSections(document: ContentDocument) {
     }
     return acc;
   }, []);
+}
+
+
+
+export function createEmptyPage(type: 'chapter' | 'caseStudy'): CompletePage {
+  return {
+    id: null,
+    title: '',
+    slug: '',
+    img: '',
+    content: null,
+    draft: true,
+    tags: [],
+    editedAt: null,
+    createdAt: null,
+    caseStudy: type !== 'caseStudy' ? undefined : {
+      pageId: null,
+      name: '',
+      established: null,
+      size: null,
+      governance: '',
+      staff: '',
+      budget: '',
+      budgetLevel: '',
+      lat: null,
+      long: null,
+      milestones: {}
+    },
+    chapter: type !== 'chapter' ? undefined : {
+      pageId: null,
+      summary: '',
+      keyTakeaways: [],
+      authors: []
+    },
+  };
 }

@@ -1,11 +1,16 @@
 <script lang="ts">
   import type { Page } from "$lib/types";
+  import Button from "$lib/components/Button.svelte";
 
   export let pages: Page[];
 </script>
 
 <div class="container">
-  <h1>Pages</h1>
+  <div class="title">
+    <h1>Pages</h1>
+    <Button href="/cms/pages/create/chapter">New Chapter</Button>
+    <Button href="/cms/pages/create/case-study">New Case study</Button>
+  </div>
 
   <div class="pages">
     {#each pages as page}
@@ -28,6 +33,12 @@
     width: 100%;
     padding: 20px;
     margin: 0px auto;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
   }
 
   .pages {

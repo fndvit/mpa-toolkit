@@ -28,15 +28,15 @@ model User {
 }
 
 model CaseStudy {
-  name        String @unique
-  established Int
-  size        Float
+  name        String
+  established Int?
+  size        Float?
   governance  String
   staff       String
   budget      String
   budgetLevel String
-  lat         Float
-  long        Float
+  lat         Float?
+  long        Float?
   milestones  Json
   page        Page   @relation(fields: [pageId], references: [id])
   pageId      Int    @id

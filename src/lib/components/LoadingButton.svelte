@@ -1,0 +1,39 @@
+<script lang="ts">
+  import Button from "./Button.svelte";
+  import Spinner from "./Spinner.svelte";
+
+  export let loading = false;
+  export let disabled = false;
+</script>
+
+<Button on:click disabled={loading || disabled}>
+  <div class="contents">
+    {#if loading}
+      <Spinner />
+    {/if}
+    <div class:hidden={loading}>
+      <slot/>
+    </div>
+  </div>
+</Button>
+
+<style lang="scss">
+
+  .contents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > :global(.spinner) {
+      position: absolute;
+      --size: calc(var(--height) - 6px);
+      --border-width: 2px;
+      --color: #333;
+    }
+  }
+
+  .hidden {
+    visibility: hidden;
+  }
+
+</style>

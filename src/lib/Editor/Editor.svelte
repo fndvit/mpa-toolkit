@@ -10,11 +10,11 @@
   let focusEditor: () => void;
   let view: EditorView;
 
-  export let initialDoc: {[key: string]: any} = null;
+  export let content: {[key: string]: any} = null;
 
   let editorState = EditorState.create({
     schema,
-    doc: initialDoc ? schema.nodeFromJSON(initialDoc) : undefined,
+    doc: content ? schema.nodeFromJSON(content) : undefined,
     // selection,
     plugins: [
       ...corePlugins,
@@ -23,12 +23,8 @@
     ]
   });
 
-  function handleChange(event) {
-  }
 
-  export function getDocumentJson() {
-    return editorState.doc.toJSON();
-  }
+  $: content = editorState.doc.toJSON();
 
   $: setContext('editorView', view);
 
@@ -37,11 +33,13 @@
 </script>
 
 {#if view}
-  <EditorMenu {editorState} on:change={handleChange} />
+  <EditorMenu {editorState}>
+    <slot name="menu-extra" slot="extra-controls" />
+  </EditorMenu>
 {/if}
 <div class="content">
   <div class="prosemirror-container">
-    <ProsemirrorEditor bind:editorState on:change={handleChange} bind:view bind:focus={focusEditor} />
+    <ProsemirrorEditor bind:editorState bind:view bind:focus={focusEditor} />
   </div>
 </div>
 

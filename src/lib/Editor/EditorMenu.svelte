@@ -29,10 +29,14 @@
   <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{level: 2}} text="H2" />
   <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />
   <MenuSeperator />
-  <MenuButton on:click={insertCards} icon="article" />
-  <MenuButton on:click={() => addCard(editorState, view.dispatch)} icon="library_add" />
+  <MenuButton on:click={insertCards} icon="article" title="Add cards" />
+  <MenuButton on:click={() => addCard(editorState, view.dispatch)} icon="library_add" title="Add card" />
   <MenuSeperator />
   <UploadButton />
+
+  <div class="right-section">
+    <slot name="extra-controls"/>
+  </div>
 </div>
 
 <style>
@@ -47,6 +51,12 @@
     border-bottom: 1px solid #ccc;
     background: #f7f7f7;
     box-sizing: border-box;
+  }
 
+  .right-section {
+    flex: 1;
+    display: flex;
+    justify-content: end;
+    column-gap: 0.4rem;
   }
 </style>

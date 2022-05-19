@@ -23,6 +23,7 @@ export const validate: Validate = (schema: string, data: unknown) => {
   if (!valid) {
     validate.errors = _validate.errors;
     log.error(_validate.errors);
+    log.error(JSON.stringify(data, null, 2));
     throw new Error(_validate.errors.map(e => e.message).join(', '));
   }
 };

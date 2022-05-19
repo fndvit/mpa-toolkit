@@ -117,9 +117,9 @@
     padding-top: 25px;
     padding-bottom: 15px;
     :global(.icon-button) {
-      --icon-color: #ffffffee;
-      --hover-bg: #00000011;
-      --size: 1.5rem;
+      --ib-color: #ffffffee;
+      --ib-hover-bg: #00000011;
+      --ib-size: 1.5rem;
     }
   }
 

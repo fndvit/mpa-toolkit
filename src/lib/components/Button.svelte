@@ -3,10 +3,11 @@
   export let cls: string = '';
   export let href: string = null;
   export let rel: string = undefined;
+  export let target: string = undefined;
 </script>
 
 {#if href}
-<a class="button {cls}" on:click {disabled} {href} {rel}>
+<a class="button {cls}" on:click {disabled} {href} {rel} {target}>
   <slot />
 </a>
 {:else}

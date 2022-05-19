@@ -11,12 +11,12 @@ export const patch = authMiddleware(
 
     validate('page', body);
 
-    const { title, slug, content, img, caseStudy, chapter, tags } = body;
+    const { title, slug, content, img, caseStudy, chapter, tags, draft } = body;
 
     const page = await prisma.page.update({
       where: { id: parseInt(params.id) },
       data: {
-        title, slug, content, img,
+        title, slug, content, img, draft,
 
         caseStudy: caseStudy && {
           update: {

@@ -9,7 +9,7 @@
   export let chapter: Omit<Chapter, 'pageId'> & { authors: Pick<User, 'id' | 'img' | 'name'>[] };
   export let allAuthors: UserInfo[] = [];
   export let editable = false;
-  export let readTime: number = null;
+  export let readTime: number = undefined;
 
   if (!chapter) {
     chapter = {
@@ -56,7 +56,7 @@
       </div>
     {/if}
 
-    {#if !editable}
+    {#if readTime !== undefined}
       <div class="readtime">{readTime} min read</div>
     {/if}
 

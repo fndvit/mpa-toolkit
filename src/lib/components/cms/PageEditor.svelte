@@ -12,15 +12,18 @@
   import TimedMessage from '$lib/components/TimedMessage.svelte';
   import CaseStudyMeta from '$lib/components/content/CaseStudyMeta.svelte';
   import cloneDeep from 'clone-deep'
-  import { compareDeep, Unpacked } from '$lib/helpers/utils';
+  import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
   import ChapterMeta from '$lib/components/content/ChapterMeta.svelte';
-  import MenuButton from '$lib/Editor/MenuButton.svelte';
   import Splash from '$lib/components/content/Splash.svelte';
   import IconButton from '$lib/components/IconButton.svelte';
+  import PageContent from '../content/PageContent.svelte';
 
   export let users: UserInfo[];
   export let allTags: Tag[];
   export let page: CompletePage;
+
+  const userLookup = createLookup(users, u => u.id.toString(), u => u);
+  const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
 
   const pageId = page.id;
 
@@ -29,18 +32,17 @@
   let pageType: "Case Study" | "Chapter" = page.caseStudy ? "Case Study" : "Chapter";
 
   const pageTagToRequestTag = (t: PageTag): Unpacked<PageRequest['tags']> => ({id: t.tag.id, category: t.category});
-  const chapterToRequest = ({pageId, authors, ...c}: CompletePage['chapter']): PageRequest['chapter'] => ({
-    ...c, authors: authors.map(a => a.id),
+  const chapterToRequest = (c: CompletePage['chapter']): PageRequest['chapter'] => ({
+    ...c, authors: c.authors.map(a => a.id),
   });
 
   const convertPageToPageRequest = (p: CompletePage): PageRequest => {
     const { id, editedAt, createdAt, ..._p} = cloneDeep(p);
-    const { pageId: _, ...caseStudy } = _p.caseStudy || {} as typeof p.caseStudy;
     return {
       ..._p,
       tags: _p.tags?.map(pageTagToRequestTag) || [],
       chapter: _p.chapter ? chapterToRequest(_p.chapter) : undefined,
-      caseStudy: _p.caseStudy ? caseStudy : undefined
+      caseStudy: _p.caseStudy ? _p.caseStudy : undefined
     };
   }
 
@@ -55,6 +57,7 @@
   let deleting = false;
   let autoPopulateSlug = !_page.slug;
   let imageInput: HTMLInputElement;
+  let preview = false;
 
   let showSaveStatusText: TimedMessage['$$prop_def']['showMessage'];
 
@@ -106,7 +109,7 @@
   $: dirty && showSaveStatusText && showSaveStatusText(null);
 
   $: if (autoPopulateSlug) {
-    _page.slug = (_page.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
+    _page.slug = slugify(_page.title);
   }
 
   $: sharedFieldsComplete = _page.title && _page.slug;
@@ -117,61 +120,94 @@
 
   $: _page.chapter = chapter ? chapterToRequest(chapter) : undefined;
 
+  $: previewPage = preview && {
+    ..._page,
+    tags: _page.tags.map<PageTag>(t => ({
+      tag: tagLookup[t.id],
+      category: t.category
+    })),
+    chapter: !_page.chapter ? undefined : {
+      ..._page.chapter,
+      authors: _page.chapter.authors.map<UserInfo>(a => userLookup[a.toString()]),
+    }
+  } as PageContent['$$prop_def']['page'];
+
+  $: href = `${_page.draft ? '/draft' : ''}/${savedPage.slug}`
+
 </script>
 
-<div class="meta">
 
-  <div class="top-controls">
-    <input class="image-input" bind:this={imageInput} type="file" on:change={onImageChange} accept=".jpg, .jpeg" {disabled} >
+<div class="page-editor" class:preview class:is-new-page={isNewPage}>
+  <div class="meta">
 
-    <input class="slug" type="text" id="slug" bind:value={_page.slug} {disabled}
-      on:beforeinput={onBeforeInputSlug}
-      on:change={onChangeSlug}
-    />
+    <div class="top-controls">
+      <input class="image-input" bind:this={imageInput} type="file" on:change={onImageChange} accept=".jpg, .jpeg" {disabled} >
 
-    <IconButton icon="image" {disabled} on:click={() => imageInput.click()} />
-    <div class="spinner" class:hidden={!uploadingImage}>
-      <Spinner />
-    </div>
+      <input class="slug" type="text" id="slug" bind:value={_page.slug} {disabled}
+        on:beforeinput={onBeforeInputSlug}
+        on:change={onChangeSlug}
+      />
 
-  </div>
-
-  <Splash bind:title={_page.title} img={_page.img} editable />
-  {#if pageType === "Case Study"}
-    <CaseStudyMeta bind:caseStudy={_page.caseStudy} editable />
-  {:else}
-    <ChapterMeta bind:chapter allAuthors={users} editable />
-  {/if}
-
-</div>
-
-<div class="editor-container">
-
-  <div class="life-cycle">
-    <LifeCycle {allTags} bind:tags editable/>
-  </div>
-
-  <Editor bind:content={_page.content}>
-    <div slot="menu-extra" class="page-controls">
-      {#if saving}Saving...{/if}
-      <TimedMessage bind:showMessage={showSaveStatusText} />
-      <a href="/{savedPage.slug}" rel="external">Preview</a>
-      <MenuButton active={!_page.draft} on:click={() => _page.draft = !_page.draft} icon="public" title="Public" />
-      <div class="save-button">
-        <LoadingButton on:click={onClickSave} loading={saving} disabled={!saveable}>
-          {dirty ? 'Save' : 'Saved'}
-        </LoadingButton>
+      <IconButton icon="image" {disabled} on:click={() => imageInput.click()} />
+      <div class="spinner" class:hidden={!uploadingImage}>
+        <Spinner />
       </div>
-      {#if !isNewPage}
-        <div class="delete-button">
-          <Button on:click={onClickDelete}>Delete</Button>
-        </div>
-      {/if}
+
     </div>
-  </Editor>
+
+    <Splash bind:title={_page.title} img={_page.img} editable={!preview} />
+    {#if pageType === "Case Study"}
+      <CaseStudyMeta bind:caseStudy={_page.caseStudy} editable={!preview} />
+    {:else}
+      <ChapterMeta bind:chapter allAuthors={users} editable={!preview} />
+    {/if}
+
+  </div>
+
+  <div class="editor-container">
+
+    <div class="life-cycle-editor">
+      <LifeCycle {allTags} bind:tags editable/>
+    </div>
+
+    <Editor bind:content={_page.content}>
+      <div slot="menu-extra" class="page-controls">
+        {#if saving}Saving...{/if}
+        <TimedMessage bind:showMessage={showSaveStatusText} />
+        <IconButton {href} rel="external" target="_blank" icon="open_in_new" title="Link" />
+        <div class="draft-button">
+          <IconButton on:click={() => _page.draft = !_page.draft}
+            icon={_page.draft ? 'article' : 'public'}
+            text={_page.draft ? 'Draft' : 'Live'}
+          />
+        </div>
+        <Button on:click={() => preview = !preview}>{preview ? 'Close preview' : 'Preview'}</Button>
+        <div class="save-button">
+          <LoadingButton on:click={onClickSave} loading={saving} disabled={!saveable}>
+            {dirty ? 'Save' : 'Saved'}
+          </LoadingButton>
+        </div>
+        {#if !isNewPage}
+          <div class="delete-button">
+            <Button on:click={onClickDelete}>Delete</Button>
+          </div>
+        {/if}
+      </div>
+    </Editor>
+
+    {#if preview}
+      <PageContent page={previewPage} />
+    {/if}
+  </div>
 </div>
 
 <style lang="scss">
+
+  .draft-button {
+    :global(.icon-button) {
+      column-gap: 0;
+    }
+  }
 
   .top-controls {
     position: absolute;
@@ -185,10 +221,9 @@
     align-items: center;
     :global(.icon-button) {
       --bg-color: #ffffff99;
-      --hover-border-color: transparent;
-      --hover-bg: #dddddd99;
-      --size: 2rem;
-      --font-size: 1rem;
+      --ib-hover-border-color: transparent;
+      --ib-hover-bg: #dddddd99;
+      --ib-font-size: 1rem;
     }
 
     .spinner {
@@ -220,7 +255,7 @@
     align-items: center;
     :global(.message) {
       margin-right: 10px;
-      color: #666;
+      color: #999;
     }
     .delete-button :global(.button) {
       --bg-color: #e37777;
@@ -234,7 +269,9 @@
     }
     .save-button :global(.button:not(:disabled)) {
       animation: 1s ease-in 0s infinite alternate bgPulse;
-
+    }
+    .is-new-page & :global(.icon-button[data-icon="open_in_new"]) {
+      display: none;
     }
   }
 
@@ -243,7 +280,7 @@
     scale: 0.5;
   }
 
-  .editor-container {
+  .page-editor {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -252,11 +289,46 @@
     }
   }
 
-  .life-cycle {
+  .life-cycle-editor {
     position: absolute;
     z-index: 1;
     right: 10px;
     margin-top: 60px;
+  }
+
+  .preview-bar {
+    display: none;
+    position: fixed;
+    justify-content: center;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    padding: 0.5rem;
+    column-gap: 0.4rem;
+    border-bottom: 1px solid #ccc;
+    background: #f7f7f7;
+    box-sizing: border-box;
+  }
+
+  .preview {
+
+    padding-top: 51px;
+
+    .preview-bar {
+      display: flex;
+    }
+
+    :global(.menu-bar) {
+      position: fixed;
+    }
+
+    .top-controls,
+    .life-cycle-editor,
+    :global(.editor-content),
+    :global(.menu-bar .left-section),
+    .draft-button {
+      display: none;
+    }
   }
 
 </style>

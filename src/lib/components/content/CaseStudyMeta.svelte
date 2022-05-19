@@ -79,9 +79,9 @@
   .add-milestones-button {
     margin-bottom: -20px;
     margin-top: 10px;
-    --icon-color: #ffffffee;
-    --hover-border: 1px solid transparent;
-    --hover-bg: #00000011;
+    --ib-color: #ffffffee;
+    --ib-hover-border: 1px solid transparent;
+    --ib-hover-bg: #00000011;
   }
 
   .meta-container {

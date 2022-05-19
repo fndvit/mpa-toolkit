@@ -54,6 +54,7 @@
   let saving = false;
   let deleting = false;
   let autoPopulateSlug = !_page.slug;
+  let imageInput: HTMLInputElement;
 
   let showSaveStatusText: TimedMessage['$$prop_def']['showMessage'];
 
@@ -115,8 +116,6 @@
   $: saveable = dirty && !saving && !deleting && sharedFieldsComplete;
 
   $: _page.chapter = chapter ? chapterToRequest(chapter) : undefined;
-
-  let imageInput: HTMLInputElement;
 
 </script>
 

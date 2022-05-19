@@ -39,11 +39,6 @@
       margin-left: 8px;
       display: block;
     }
-    :global(div.multiselect > ul.selected > li > input:after) {
-      content: 'asdf';
-      display: block;
-      height: 10px;
-    }
     :global(div.multiselect > ul.selected > li button) {
       opacity: 0.4;
     }

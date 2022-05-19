@@ -19,13 +19,7 @@
     }
   }
 
-  const emptyAuthors = [
-    {
-      id: 0,
-      name: 'Author',
-      img: ''
-    }
-  ]
+  const emptyAuthors = [{ id: 0, name: 'Author', img: '' }]
 
   function onClickAuthor(i: number) {
     chapter.authors = [...chapter.authors];

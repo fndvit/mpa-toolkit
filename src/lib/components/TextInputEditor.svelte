@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-import EditableContent from "./EditableContent.svelte";
+  import EditableContent from "./EditableContent.svelte";
   import IconButton from "./IconButton.svelte";
 
   export let value: string;

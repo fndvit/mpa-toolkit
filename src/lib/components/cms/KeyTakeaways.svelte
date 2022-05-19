@@ -1,7 +1,6 @@
 <script lang="ts">
-  import Button from "../Button.svelte";
   import Cards from "../Cards/Cards.svelte";
-import IconButton from "../IconButton.svelte";
+  import IconButton from "../IconButton.svelte";
 
   export let keyTakeaways: string[] = [];
   export let editable = false;

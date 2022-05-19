@@ -11,11 +11,11 @@ export const put = authMiddleware(
 
     validate('page', body);
 
-    const { title, slug, content, img, caseStudy, chapter, tags } = body;
+    const { title, slug, content, img, caseStudy, chapter, tags, draft } = body;
 
     const page = await prisma.page.create({
       data: {
-        title, slug, content, img,
+        title, slug, content, img, draft,
 
         tags: {
           createMany: {

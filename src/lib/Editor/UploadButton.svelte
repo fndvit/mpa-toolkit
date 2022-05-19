@@ -1,8 +1,8 @@
 <script lang="ts">
   import { uploadImage } from "$lib/api";
+  import IconButton from "$lib/components/IconButton.svelte";
   import type { EditorView } from "prosemirror-view";
   import { getContext } from "svelte";
-  import MenuButton from "./MenuButton.svelte";
   import { findPlaceholder, placeholderPlugin } from "./placeholder";
   import { schema } from "./schema";
 
@@ -48,7 +48,7 @@
 </script>
 
 
-<MenuButton on:click={onClick} icon="image" />
+<IconButton on:click={onClick} icon="image" />
 
 <input
   bind:this={inputEl}

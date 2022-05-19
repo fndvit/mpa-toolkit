@@ -1,10 +1,10 @@
 <script lang="ts">
+  import IconButton from '$lib/components/IconButton.svelte';
   import { toggleMark } from 'prosemirror-commands';
   import type { MarkType } from 'prosemirror-model';
   import type { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
-  import MenuButton from './MenuButton.svelte';
 
   export let editorState: EditorState;
   export let markType: MarkType;
@@ -29,4 +29,4 @@
 
 </script>
 
-<MenuButton on:click={onClick} {icon} {text} {active} />
+<IconButton on:click={onClick} {icon} {text} {active} />

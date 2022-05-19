@@ -178,8 +178,8 @@
     position: absolute;
     top: 30px;
     left: 12px;
-    --icon-hover-bg: #03395f;
-    --icon-bg: #034676;
+    --ib-hover-bg: #03395f;
+    --ib-icon-bg: #034676;
   }
 
   .milestone-circle {
@@ -250,9 +250,9 @@
   .container {
 
     :global(.icon-button) {
-      --icon-color: white;
-      --size: 1.4rem;
-      --icon-hover-bg: #00000055;
+      --ib-color: white;
+      --ib-size: 1.4rem;
+      --ib-hover-bg: #00000055;
     }
   }
 
@@ -266,9 +266,9 @@
     }
 
     :global(.icon-button) {
-      --icon-color: #ffffffee;
-      --hover-bg: #00000011;
-      --size: 1.5rem;
+      --ib-color: #ffffffee;
+      --ib-hover-bg: #00000011;
+      --ib-size: 1.5rem;
       opacity: 0.75;
     }
   }

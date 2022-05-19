@@ -14,7 +14,6 @@
     "draft": { "type": "boolean" }
 
   },
-  "additionalProperties": false,
   "required": ["title", "slug", "content", "img", "tags", "draft"],
   "oneOf": [
     {
@@ -35,8 +34,7 @@
         "id": { "type": "integer" },
         "category": { "type": "string", "enum": [ "PRIMARY", "SECONDARY" ] }
       },
-      "minProperties": 2,
-      "additionalProperties": false
+      "required": ["id", "category"]
     },
 
     "milestones": {
@@ -65,8 +63,10 @@
         "long": { "type": ["number", "null"] },
         "milestones": { "$ref": "#/$defs/milestones" }
       },
-      "additionalProperties": false,
-      "minProperties": 10
+      "required": [
+        "name", "established", "size", "governance", "staff",
+        "budget", "budgetLevel", "lat", "long", "milestones"
+      ]
     },
 
     "chapter": {
@@ -76,8 +76,7 @@
         "authors": { "type": "array", "items": { "type": "integer" } },
         "keyTakeaways": { "type": "array", "items": { "type": "string" } }
       },
-      "additionalProperties": false,
-      "minProperties": 3
+      "required": ["summary", "authors", "keyTakeaways"]
     }
   }
 }

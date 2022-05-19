@@ -35,7 +35,6 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): CompletePage {
     editedAt: null,
     createdAt: null,
     caseStudy: type !== 'caseStudy' ? undefined : {
-      pageId: null,
       name: '',
       established: null,
       size: null,
@@ -48,7 +47,6 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): CompletePage {
       milestones: {}
     },
     chapter: type !== 'chapter' ? undefined : {
-      pageId: null,
       summary: '',
       keyTakeaways: [],
       authors: []

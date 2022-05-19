@@ -94,9 +94,9 @@
     column-gap: 5px;
     justify-content: right;
     :global(.icon-button) {
-      --icon-bg: #00000022;
-      --hover-bg: #00000022;
-      --hover-border-color: #00000022;
+      --ib-icon-bg: #00000022;
+      --ib-hover-bg: #00000022;
+      --ib-hover-border-color: #00000022;
     }
   }
 

@@ -37,7 +37,7 @@
     <slot name="menu-extra" slot="extra-controls" />
   </EditorMenu>
 {/if}
-<div class="content">
+<div class="editor-content">
   <div class="prosemirror-container">
     <ProsemirrorEditor bind:editorState bind:view bind:focus={focusEditor} />
   </div>
@@ -45,7 +45,7 @@
 
 
 <style lang="scss">
-  .content {
+  .editor-content {
     display: grid;
     grid-template-columns: 70% auto;
     column-gap: 1rem;

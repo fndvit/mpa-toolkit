@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { CompletePage } from '$lib/types';
+  import type { SubTypes } from '$lib/types';
   import CollectionCard from './CollectionCard.svelte';
 
-  export let pages: (CompletePage & {readTime: number})[];
+  export let pages: SubTypes.CollectionCard[];
 </script>
 
 <div class="content">

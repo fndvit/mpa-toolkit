@@ -120,6 +120,7 @@
 
   $: _page.chapter = chapter ? chapterToRequest(chapter) : undefined;
 
+  let previewPage: PageContent['$$prop_def']['page'];
   $: previewPage = preview && {
     ..._page,
     readTime: null,
@@ -131,7 +132,7 @@
       ..._page.chapter,
       authors: _page.chapter.authors.map<UserInfo>(a => userLookup[a.toString()]),
     }
-  } as PageContent['$$prop_def']['page'];
+  };
 
   $: href = `${_page.draft ? '/draft' : ''}/${savedPage.slug}`
 

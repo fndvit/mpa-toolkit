@@ -1,9 +1,9 @@
 <script lang="ts">
+  import type { SubTypes } from '$lib/types';
   import { staticUrl } from '$lib/helpers/content';
   import TagContainer from '../Tags/TagContainer.svelte';
-  import type { CompletePage } from '$lib/types';
 
-  export let page: CompletePage & {readTime: number};
+  export let page: SubTypes.CollectionCard;
 
   const authors = page.chapter.authors.map(a => a.name);
 </script>

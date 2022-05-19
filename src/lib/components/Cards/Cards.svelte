@@ -94,7 +94,7 @@
     column-gap: 5px;
     justify-content: right;
     :global(.icon-button) {
-      --bg-color: #00000011;
+      --icon-bg: #00000022;
       --hover-bg: #00000022;
       --hover-border-color: #00000022;
     }
@@ -130,8 +130,10 @@
       position: static;
       background: transparent;
     }
+    :global(.splide__arrow:disabled) {
+      display: none;
+    }
   }
-
 
   .slide {
     overflow: hidden;

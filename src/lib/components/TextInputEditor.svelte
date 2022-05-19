@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+import EditableContent from "./EditableContent.svelte";
   import IconButton from "./IconButton.svelte";
 
   export let value: string;
@@ -40,17 +41,9 @@
 {#if !editable}
   <div>{value}</div>
 {:else}
-  {#if !editing}
-    <div on:click={handlers.edit}>{value}</div>
-  {:else}
-    {#if type === 'textarea'}
-      <textarea bind:value={editValue} rows="5" />
-    {:else}
-      <input class="hide-controls" use:typeAction bind:value={editValue} on:keydown={e => e.stopPropagation()} />
-    {/if}
+  <EditableContent bind:value={editValue} type='number' editable/>
+  {#if editValue !== value}
     <IconButton icon='done' on:click={handlers.save} disabled={!editValue} />
-    {#if value}
-      <IconButton icon='close' on:click={handlers.cancel} />
-    {/if}
+    <IconButton icon='close' on:click={() => editValue = value} />
   {/if}
 {/if}

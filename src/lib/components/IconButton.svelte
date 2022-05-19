@@ -22,9 +22,9 @@
     align-items: center;
     justify-content: center;
     column-gap: 5px;
-    background: var(--bg-color, transparent);
+    background: var(--icon-button-bg, transparent);
     text-align: center;
-    color: var(--color, #333);
+    color: var(--icon-color, #333);
     border: 1px solid transparent;
     box-sizing: border-box;
     padding: 0;
@@ -43,8 +43,11 @@
       font-size: var(--icon-size, 1rem);
       width: var(--size, 2rem);
       height: var(--size, 2rem);
-      background-color: #33333355;
+      background-color: var(--icon-bg, #33333355);
       border-radius: 3px;
+    }
+    &:hover[data-icon]::before {
+      background-color: var(--icon-hover-bg, #33333355);
     }
 
     &[data-text]::after {

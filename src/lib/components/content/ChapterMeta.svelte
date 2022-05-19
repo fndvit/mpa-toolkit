@@ -116,7 +116,6 @@
   }
 
   .author-editor {
-    // margin-left: 20px;
     :global(.options) {
       color: #333;
     }

@@ -17,7 +17,7 @@
 
   const resizeInput = () => {
     hiddenEl.textContent = el.value || placeholderStr || '';
-    numberInputWidth = Math.max(hiddenEl.getBoundingClientRect().width, 50);
+    numberInputWidth = hiddenEl.getBoundingClientRect().width;
   }
 
   if (editable && type === 'number') {
@@ -35,11 +35,11 @@
 
 </script>
 
-<div class:show-placeholder={showPlaceholder}>
+<div class="editable-content-container" class:show-placeholder={showPlaceholder} class:empty={!value}>
   {#if editable}
     {#if type === 'number'}
       <div class="editable-number">
-        <div class="editable-content" class:hidden={!!numberInputWidth} bind:this={hiddenEl}>{value || placeholderStr}</div>
+        <div class="editable-content editable-content--sizer" class:hidden={!!numberInputWidth} bind:this={hiddenEl}>{value || placeholderStr}</div>
         <input
           class="editable-content hide-controls"
           class:hidden={!numberInputWidth}
@@ -77,18 +77,24 @@
 
     .show-placeholder &,
     &::placeholder {
-      color: var(--placeholder-color, #ffffff66);
+      color: var(--placeholder-color, #ffffff44);
     }
 
     &[data-placeholder]::before {
       content: attr(data-placeholder);
-      color: var(--placeholder-color, #ffffff66);
+      color: var(--placeholder-color, #ffffff44);
       display: none;
       pointer-events: none;
       .show-placeholder & {
         display: block;
       }
     }
+  }
+
+  .editable-content[type="number"] {
+    color: inherit;
+    background-color: transparent;
+    border: none;
   }
   .editable-number {
     display: flex;
@@ -101,4 +107,14 @@
   .unit {
     margin-left: 6px;
   }
+  .editable-content--sizer {
+    min-width: 50px;
+  }
+
+  input.editable-content:hover,
+  .editable-content[contenteditable]:hover {
+    background: var(--ec-hover-bg, #ffffff08);
+    border-radius: 4px;
+  }
+
 </style>

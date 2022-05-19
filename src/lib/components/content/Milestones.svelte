@@ -65,7 +65,7 @@
         <SplideSlide>
           <Milestone
             {year}
-            editor={editable}
+            {editable}
             bind:content={milestones[year]}
             on:saveYear={({detail}) => onSaveYear(year, detail)}
             on:delete={() => onDeleteYear(year)}
@@ -102,6 +102,9 @@
     :global(.splide__arrow--next){
       transform: translateX(5rem) scale(0.8);
     }
+    &:not(:hover) .milestones-title :global(.icon-button) {
+      visibility: hidden;
+    }
   }
 
   .milestones-title {
@@ -114,8 +117,7 @@
     padding-top: 25px;
     padding-bottom: 15px;
     :global(.icon-button) {
-      --color: #ffffffee;
-      --hover-border: 1px solid transparent;
+      --icon-color: #ffffffee;
       --hover-bg: #00000011;
       --size: 1.5rem;
     }

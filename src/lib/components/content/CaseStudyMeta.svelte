@@ -61,13 +61,13 @@
 
     </div>
 
-  </div>
+    {#if editable && !hasMilestones}
+      <div class="add-milestones-button">
+        <IconButton icon="add" on:click={() => caseStudy.milestones = {'': ['']}} text="Add milestones" />
+      </div>
+    {/if}
 
-  {#if editable && !hasMilestones}
-    <div class="add-milestones-button">
-      <IconButton icon="add" on:click={() => caseStudy.milestones = {'': ['']}} text="Add milestones" />
-    </div>
-  {/if}
+  </div>
 </div>
 
 {#if hasMilestones}
@@ -77,19 +77,11 @@
 <style lang="scss">
 
   .add-milestones-button {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 5px;
-    z-index: 1;
-    --color: #ffffffee;
+    margin-bottom: -20px;
+    margin-top: 10px;
+    --icon-color: #ffffffee;
     --hover-border: 1px solid transparent;
     --hover-bg: #00000011;
-    // --size: 1.5rem;
-    :global(.icon-button) {
-      margin: auto;
-    }
   }
 
   .meta-container {
@@ -109,6 +101,7 @@
     grid-template-rows: auto auto;
     grid-auto-flow: column;
     column-gap: 1.5rem;
+    color: white;
 
     &.meta-grid-1 {
       grid-template-columns: 325px 225px 425px 325px;
@@ -124,7 +117,6 @@
 
   .meta-grid :global(.editable-content) {
     font-family: 'Bitter';
-    color: white;
     background: transparent;
     border: 0;
     padding: 0;

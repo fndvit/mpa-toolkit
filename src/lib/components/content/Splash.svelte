@@ -19,6 +19,7 @@
 
 <style lang="scss">
   .splash {
+    --ec-hover-bg: #ffffff22;
     min-height: 60vh;
     display: flex;
     align-items: flex-end;

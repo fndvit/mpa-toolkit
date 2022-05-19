@@ -77,18 +77,15 @@ async function main() {
       draft: false,
       img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
       content,
-      tags: {
-        createMany: {
-          data: [
-            { tagId: 1, category: 'PRIMARY' },
-            { tagId: 2, category: 'PRIMARY' },
-            { tagId: 3, category: 'SECONDARY' },
-            { tagId: 4, category: 'SECONDARY' },
-          ]
-        }
+      tags: { createMany: { data: getRandomTagsForContent(allTags) }
       },
       chapter: {
         create: {
+          keyTakeaways: [
+            summaryLorem.generateSentences(2),
+            summaryLorem.generateSentences(2),
+            summaryLorem.generateSentences(2),
+          ],
           summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
           authors: { connect: [{ id: userIds[0] }] }
         }
@@ -103,6 +100,8 @@ async function main() {
       draft: false,
       img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
       content,
+      tags: { createMany: { data: getRandomTagsForContent(allTags) }
+      },
       caseStudy: {
         create: {
           name: "Raja Ampat MPA Network",

@@ -1,4 +1,4 @@
-import type { Tag, Page, User, CaseStudy as _CaseStudy, Chapter, TagCategory, Role } from '@prisma/client';
+import type { Tag, Page, CaseStudy as _CaseStudy, Chapter, TagCategory, Role } from '@prisma/client';
 export type * from '@prisma/client';
 
 export interface Locals {
@@ -9,6 +9,7 @@ export interface UserInfo {
   id: number;
   email: string;
   name: string;
+  img: string;
 }
 
 export type PageTag = {
@@ -17,18 +18,20 @@ export type PageTag = {
 }
 
 export type CaseStudy = Omit<_CaseStudy, 'milestones'> & {
-  milestones: Milestones;
+  milestones: MilestonesData;
 }
 
-export type CompletePage = Page & {
-  caseStudy: CaseStudy;
-  chapter: Chapter & {
-    authors: User[];
+export type CompletePage = Omit<Page, 'content'> & {
+  content: ContentDocument;
+} & {
+  caseStudy: Omit<CaseStudy, 'pageId'>;
+  chapter: Omit<Chapter, 'pageId'> & {
+    authors: UserInfo[];
   };
   tags: PageTag[];
 }
 
-export type Milestones = {
+export type MilestonesData = {
   [year: string]: string[];
 }
 
@@ -42,13 +45,13 @@ export type UserRequest = {
 }
 
 export type PageRequest = {
-
   title: string;
+  draft: boolean;
   slug: string;
-  content: object;
+  content: ContentDocument;
   img: string;
   tags: {
-    tag: { id: number };
+    id: number,
     category: TagCategory
   }[];
   caseStudy?: Omit<CaseStudy, 'pageId'>;
@@ -130,6 +133,7 @@ export type ContentDocument = {
 
 export type Section = {
   id: string;
+  title: string;
   topic: string;
   blocks: ContentBlock[];
 };

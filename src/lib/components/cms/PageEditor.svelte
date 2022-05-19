@@ -1,0 +1,334 @@
+<script lang="ts">
+  import LifeCycle from '$lib/components/LifeCycle/LifeCycle.svelte';
+  import { openModal } from 'svelte-modals'
+  import { goto } from "$app/navigation";
+  import Editor from "$lib/Editor/Editor.svelte";
+  import Spinner from "$lib/components/Spinner.svelte";
+  import type { CompletePage, PageRequest, PageTag, Tag, UserInfo } from '$lib/types';
+  import DeleteModal from "$lib/components/DeleteModal.svelte";
+  import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
+  import LoadingButton from '$lib/components/LoadingButton.svelte';
+  import Button from '$lib/components/Button.svelte';
+  import TimedMessage from '$lib/components/TimedMessage.svelte';
+  import CaseStudyMeta from '$lib/components/content/CaseStudyMeta.svelte';
+  import cloneDeep from 'clone-deep'
+  import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
+  import ChapterMeta from '$lib/components/content/ChapterMeta.svelte';
+  import Splash from '$lib/components/content/Splash.svelte';
+  import IconButton from '$lib/components/IconButton.svelte';
+  import PageContent from '../content/PageContent.svelte';
+
+  export let users: UserInfo[];
+  export let allTags: Tag[];
+  export let page: CompletePage;
+
+  const userLookup = createLookup(users, u => u.id.toString(), u => u);
+  const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
+
+  const pageId = page.id;
+
+  const isNewPage = !page.id;
+
+  let pageType: "Case Study" | "Chapter" = page.caseStudy ? "Case Study" : "Chapter";
+
+  const pageTagToRequestTag = (t: PageTag): Unpacked<PageRequest['tags']> => ({id: t.tag.id, category: t.category});
+  const chapterToRequest = (c: CompletePage['chapter']): PageRequest['chapter'] => ({
+    ...c, authors: c.authors.map(a => a.id),
+  });
+
+  const convertPageToPageRequest = (p: CompletePage): PageRequest => {
+    const { id, editedAt, createdAt, ..._p} = cloneDeep(p);
+    return {
+      ..._p,
+      tags: _p.tags?.map(pageTagToRequestTag) || [],
+      chapter: _p.chapter ? chapterToRequest(_p.chapter) : undefined,
+      caseStudy: _p.caseStudy ? _p.caseStudy : undefined
+    };
+  }
+
+  const _page = convertPageToPageRequest(page);
+
+  let chapter = cloneDeep(page.chapter);
+  let tags: PageTag[] = page.tags || [];
+
+  let savedPage = cloneDeep(_page);
+  let uploadingImage = false;
+  let saving = false;
+  let deleting = false;
+  let autoPopulateSlug = !_page.slug;
+  let imageInput: HTMLInputElement;
+  let preview = false;
+
+  let showSaveStatusText: TimedMessage['$$prop_def']['showMessage'];
+
+  async function onClickSave() {
+    saving = true;
+
+    if (isNewPage) {
+      const {id} = await createPage(_page);
+      window.location.href = `/cms/pages/${id}`;
+    } else {
+      await updatePage(pageId, _page);
+    }
+    saving = false;
+    showSaveStatusText('Saved...')
+    savedPage = cloneDeep(_page);
+  }
+
+  async function onDeleteModalYes() {
+    deleting = true;
+    await deletePage(pageId);
+    goto('/cms/pages');
+  }
+
+  async function onClickDelete() {
+    openModal(DeleteModal, { onYes: onDeleteModalYes })
+  }
+
+  const onImageChange: svelte.JSX.EventHandler<FormDataEvent, HTMLInputElement> = async (e) => {
+    if (e.currentTarget.files.length) {
+      uploadingImage = true;
+      _page.img = await uploadImage(e.currentTarget.files[0]);
+      uploadingImage = false;
+    }
+  };
+
+  const onChangeSlug: svelte.JSX.ChangeEventHandler<HTMLInputElement> = e => {
+    autoPopulateSlug = e.currentTarget.value.length === 0;
+  };
+
+  const onBeforeInputSlug: svelte.JSX.EventHandler<InputEvent, HTMLInputElement> = e => {
+    const validChars = /[a-zA-Z0-9-]/;
+    if (!validChars.exec(e.data)) e.preventDefault();
+  }
+
+  $: _page.tags = tags.map(pageTagToRequestTag);
+
+  $: dirty = !compareDeep(_page, savedPage);
+
+  $: dirty && showSaveStatusText && showSaveStatusText(null);
+
+  $: if (autoPopulateSlug) {
+    _page.slug = slugify(_page.title);
+  }
+
+  $: sharedFieldsComplete = _page.title && _page.slug;
+
+  $: disabled = saving || deleting;
+
+  $: saveable = dirty && !saving && !deleting && sharedFieldsComplete;
+
+  $: _page.chapter = chapter ? chapterToRequest(chapter) : undefined;
+
+  $: previewPage = preview && {
+    ..._page,
+    tags: _page.tags.map<PageTag>(t => ({
+      tag: tagLookup[t.id],
+      category: t.category
+    })),
+    chapter: !_page.chapter ? undefined : {
+      ..._page.chapter,
+      authors: _page.chapter.authors.map<UserInfo>(a => userLookup[a.toString()]),
+    }
+  } as PageContent['$$prop_def']['page'];
+
+  $: href = `${_page.draft ? '/draft' : ''}/${savedPage.slug}`
+
+</script>
+
+
+<div class="page-editor" class:preview class:is-new-page={isNewPage}>
+  <div class="meta">
+
+    <div class="top-controls">
+      <input class="image-input" bind:this={imageInput} type="file" on:change={onImageChange} accept=".jpg, .jpeg" {disabled} >
+
+      <input class="slug" type="text" id="slug" bind:value={_page.slug} {disabled}
+        on:beforeinput={onBeforeInputSlug}
+        on:change={onChangeSlug}
+      />
+
+      <IconButton icon="image" {disabled} on:click={() => imageInput.click()} />
+      <div class="spinner" class:hidden={!uploadingImage}>
+        <Spinner />
+      </div>
+
+    </div>
+
+    <Splash bind:title={_page.title} img={_page.img} editable={!preview} />
+    {#if pageType === "Case Study"}
+      <CaseStudyMeta bind:caseStudy={_page.caseStudy} editable={!preview} />
+    {:else}
+      <ChapterMeta bind:chapter allAuthors={users} editable={!preview} />
+    {/if}
+
+  </div>
+
+  <div class="editor-container">
+
+    <div class="life-cycle-editor">
+      <LifeCycle {allTags} bind:tags editable/>
+    </div>
+
+    <Editor bind:content={_page.content}>
+      <div slot="menu-extra" class="page-controls">
+        {#if saving}Saving...{/if}
+        <TimedMessage bind:showMessage={showSaveStatusText} />
+        <IconButton {href} rel="external" target="_blank" icon="open_in_new" title="Link" />
+        <div class="draft-button">
+          <IconButton on:click={() => _page.draft = !_page.draft}
+            icon={_page.draft ? 'article' : 'public'}
+            text={_page.draft ? 'Draft' : 'Live'}
+          />
+        </div>
+        <Button on:click={() => preview = !preview}>{preview ? 'Close preview' : 'Preview'}</Button>
+        <div class="save-button">
+          <LoadingButton on:click={onClickSave} loading={saving} disabled={!saveable}>
+            {dirty ? 'Save' : 'Saved'}
+          </LoadingButton>
+        </div>
+        {#if !isNewPage}
+          <div class="delete-button">
+            <Button on:click={onClickDelete}>Delete</Button>
+          </div>
+        {/if}
+      </div>
+    </Editor>
+
+    {#if preview}
+      <PageContent page={previewPage} />
+    {/if}
+  </div>
+</div>
+
+<style lang="scss">
+
+  .draft-button {
+    :global(.icon-button) {
+      column-gap: 0;
+    }
+  }
+
+  .top-controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    margin: auto;
+    padding-top: 40px;
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    :global(.icon-button) {
+      --bg-color: #ffffff99;
+      --ib-hover-border-color: transparent;
+      --ib-hover-bg: #dddddd99;
+      --ib-font-size: 1rem;
+    }
+
+    .spinner {
+      display: flex;
+      align-items: center;
+      &.hidden {
+        visibility: hidden;
+      }
+    }
+  }
+
+  .slug {
+    text-transform: lowercase;
+    width: 400px;
+    background: #ffffff99;
+    border: 1px solid #00000055;
+    border-radius: 2px;
+    height: 32px;
+    box-sizing: border-box;
+  }
+
+  .image-input {
+    display: none;
+  }
+
+  .page-controls {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    :global(.message) {
+      margin-right: 10px;
+      color: #999;
+    }
+    .delete-button :global(.button) {
+      --bg-color: #e37777;
+      --border-color: #cb6666;
+    }
+    @keyframes bgPulse {
+      0% { border-color: #bbb;  }
+      100% { border-color: #999;
+        box-shadow: inset #a0b6e455 0 0 15px 0px, #c5cddf 0 0 2px 1px;
+      }
+    }
+    .save-button :global(.button:not(:disabled)) {
+      animation: 1s ease-in 0s infinite alternate bgPulse;
+    }
+    .is-new-page & :global(.icon-button[data-icon="open_in_new"]) {
+      display: none;
+    }
+  }
+
+  :global(.spinner) {
+    --color: black;
+    scale: 0.5;
+  }
+
+  .page-editor {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    :global(.prosemirror-container) {
+      flex: 1;
+    }
+  }
+
+  .life-cycle-editor {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    margin-top: 60px;
+  }
+
+  .preview-bar {
+    display: none;
+    position: fixed;
+    justify-content: center;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    padding: 0.5rem;
+    column-gap: 0.4rem;
+    border-bottom: 1px solid #ccc;
+    background: #f7f7f7;
+    box-sizing: border-box;
+  }
+
+  .preview {
+
+    padding-top: 51px;
+
+    .preview-bar {
+      display: flex;
+    }
+
+    :global(.menu-bar) {
+      position: fixed;
+    }
+
+    .top-controls,
+    .life-cycle-editor,
+    :global(.editor-content),
+    :global(.menu-bar .left-section),
+    .draft-button {
+      display: none;
+    }
+  }
+
+</style>

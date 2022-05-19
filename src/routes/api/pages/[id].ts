@@ -11,12 +11,12 @@ export const patch = authMiddleware(
 
     validate('page', body);
 
-    const { title, slug, content, img, caseStudy, chapter, tags } = body;
+    const { title, slug, content, img, caseStudy, chapter, tags, draft } = body;
 
     const page = await prisma.page.update({
       where: { id: parseInt(params.id) },
       data: {
-        title, slug, content, img,
+        title, slug, content, img, draft,
 
         caseStudy: caseStudy && {
           update: {
@@ -30,8 +30,8 @@ export const patch = authMiddleware(
             ]
           },
           createMany: {
-            data: tags.map(({tag, category}) => ({
-              tagId: tag.id,
+            data: tags.map(({id, category}) => ({
+              tagId: id,
               category
             }))
           },
@@ -40,11 +40,7 @@ export const patch = authMiddleware(
           update: {
             summary: { set: chapter.summary },
             keyTakeaways: { set: chapter.keyTakeaways },
-            authors: {
-              set: chapter.authors.map(author => ({
-                id: author
-              }))
-            },
+            authors: { set: chapter.authors.map(id => ({id})) },
           }
         },
 

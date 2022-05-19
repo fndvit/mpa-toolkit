@@ -3,9 +3,8 @@
   import MenuSpy from './menuspy';
   import type { MenuSpyParams } from './menuspy';
   import * as animateScroll from 'svelte-scrollto';
-  import { parseTextToID } from '$lib/helpers/utils';
 
-  export let menuOptions: { text: string }[] = [];
+  export let menuOptions: { id: string, title: string }[] = [];
 
   let nav: HTMLElement;
   let ms: MenuSpy;
@@ -18,33 +17,31 @@
     callback: null
   };
 
-  let scrollToFunction = (option: { text: string }, index: number) => {
+  let scrollToFunction = (id: string, index: number) => {
     animateScroll.scrollTo({
-      element: `#${parseTextToID(option.text)}`,
+      element: `#${id}`,
 
       onStart: () => {
         ms.activateItem(ms.scrollItems[index]);
         ms.dissableUpdate();
       },
-      onDone: () => {
-        ms.enableUpdate();
-      }
+      onDone: () => ms.enableUpdate()
     });
   };
 
-  onMount(() => {
-    ms = new MenuSpy(nav, msParams);
-  });
+  onMount(() => ms = new MenuSpy(nav, msParams));
+
 </script>
 
 <nav class="mainnav" bind:this={nav}>
-  {#each menuOptions as option, i}
+  {#each menuOptions as {id, title}, i}
     <div
-      class="menuoption {i === 0 ? 'active' : ''}"
-      on:click={() => scrollToFunction(option, i)}
+      class="menuoption"
+      class:active={i === 0}
+      on:click={() => scrollToFunction(id, i)}
     >
-      <div href="#{parseTextToID(option.text)}">
-        {option.text}
+      <div href="#{id}">
+        {title}
       </div>
     </div>
   {/each}

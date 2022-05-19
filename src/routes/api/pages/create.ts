@@ -11,16 +11,16 @@ export const put = authMiddleware(
 
     validate('page', body);
 
-    const { title, slug, content, img, caseStudy, chapter, tags } = body;
+    const { title, slug, content, img, caseStudy, chapter, tags, draft } = body;
 
     const page = await prisma.page.create({
       data: {
-        title, slug, content, img,
+        title, slug, content, img, draft,
 
         tags: {
           createMany: {
-            data: tags.map(({tag, category}) => ({
-              tagId: tag.id,
+            data: tags.map(({id, category}) => ({
+              tagId: id,
               category
             }))
           },
@@ -36,11 +36,7 @@ export const put = authMiddleware(
           create: {
             summary: chapter.summary,
             keyTakeaways: chapter.keyTakeaways,
-            authors: {
-              connect: chapter.authors.map(author => ({
-                id: author
-              }))
-            }
+            authors: { connect: chapter.authors.map(id => ({id})) }
           }
         }
       }

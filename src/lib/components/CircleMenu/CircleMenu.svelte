@@ -37,7 +37,7 @@
       const endAngle = currentAngle = startAngle + (360 * percentage) / 100;
       return { startAngle, endAngle, type };
     });
-  }
+  };
 
   $: menuSegments = calcSegments(data);
 

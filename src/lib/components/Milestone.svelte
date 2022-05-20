@@ -10,18 +10,11 @@
 
   const dispatch = createEventDispatcher<{saveYear: string, delete: null}>();
 
-  function getFirstEmptyIdx() {
-    const emptyIdx = content.indexOf('');
-    return emptyIdx !== -1 && emptyIdx;
-  }
-
   let contracted = new Array<boolean>(content.length).fill(!editable);
-  let editIndex = getFirstEmptyIdx();
 
   function onClickAdd() {
     content.push('');
     content = content;
-    editIndex = content.length - 1;
   }
 
   function onClickMilestone(i: number) {
@@ -34,14 +27,8 @@
     dispatch('saveYear', year);
   }
 
-  function onSaveText(i: number, text: string) {
-    content[i] = text;
-    editIndex = getFirstEmptyIdx();
-  }
-
   function onDeleteMilestone(i: number) {
     content.splice(i, 1);
-    editIndex = undefined;
     content = content;
   }
 
@@ -57,7 +44,6 @@
 
   <div class="year">
     <TextInputEditor
-      type="number"
       value={year}
       on:save={({detail}) => saveYear(detail)}
     />

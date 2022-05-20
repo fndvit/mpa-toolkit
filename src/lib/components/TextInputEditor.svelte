@@ -4,12 +4,10 @@
   import IconButton from "./IconButton.svelte";
 
   export let value: string;
-  export let type: 'text' | 'number' | 'textarea' = "text";
   export let editable = true;
 
   const dispatch = createEventDispatcher<{save: string, cancel: null}>();
 
-  let editing = value === '';
   let editValue = value;
 
   type ButtonHandlers = 'edit' | 'save' | 'cancel';
@@ -17,24 +15,17 @@
     save: e => {
       e.stopPropagation();
       value = editValue;
-      editing = false;
-      dispatch('save', value)
+      dispatch('save', value);
     },
     cancel: e => {
       e.stopPropagation();
-      editing = false;
       dispatch('cancel');
     },
     edit: e => {
       e.stopPropagation();
-      editing = true;
       editValue = value;
     }
   };
-
-  function typeAction(node: HTMLInputElement) {
-    node.type = type;
-  }
 
 </script>
 

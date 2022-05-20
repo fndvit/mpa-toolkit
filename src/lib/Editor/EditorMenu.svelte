@@ -17,7 +17,7 @@
   const insertCards = () => {
     const tr = editorState.tr.replaceSelectionWith(schema.nodes.cards.createAndFill());
     view.dispatch(tr);
-  }
+  };
 
 </script>
 

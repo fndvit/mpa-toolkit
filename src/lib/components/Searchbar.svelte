@@ -2,7 +2,7 @@
   export let type: 'inline'|'collection'|'top';
 
   let search: string;
-  const submit = () => {search ? alert(search) : alert("invalid search")};
+  const submit = () => {search ? alert(search) : alert("invalid search");};
 
 </script>
 

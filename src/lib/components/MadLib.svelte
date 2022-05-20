@@ -19,7 +19,7 @@
   const submit = () => {
     alert("USER PERSONA: \n1: " + userPersona[0] + "\n2: "
     + userPersona[1] + "\n3: " + userPersona[2] + "\n4: " + userPersona[3]);
-  }
+  };
 
 </script>
 

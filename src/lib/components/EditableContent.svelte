@@ -18,7 +18,7 @@
   const resizeInput = () => {
     hiddenEl.textContent = el.value || placeholderStr || '';
     numberInputWidth = hiddenEl.getBoundingClientRect().width;
-  }
+  };
 
   if (editable && type === 'number') {
     onMount(resizeInput);
@@ -29,7 +29,7 @@
       e.preventDefault();
       e.currentTarget.blur();
     }
-  }
+  };
 
   $: showPlaceholder = editable && placeholder && !value && !focused;
 

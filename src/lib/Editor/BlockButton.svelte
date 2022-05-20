@@ -8,7 +8,7 @@
 
   export let editorState: EditorState;
   export let nodeType: NodeType;
-  export let attrs: {} = null;
+  export let attrs: object = null;
   export let icon: string = null;
   export let text: string = null;
 
@@ -17,7 +17,7 @@
   const run = setBlockType(nodeType, attrs);
   const onClick = () => run(editorState, view.dispatch);
 
-  const isActive = (state: EditorState) => {
+  const isActive = (_: EditorState) => {
     const node = editorState.selection.$head.node();
     const sameNode = node.type === nodeType;
     if (!sameNode) return false;
@@ -25,7 +25,7 @@
       if (attrs[key] !== node.attrs[key]) return false;
     }
     return true;
-  }
+  };
 
   $: active = isActive(editorState);
 </script>

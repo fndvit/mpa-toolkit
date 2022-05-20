@@ -1,6 +1,6 @@
 <script lang="ts">
   export let disabled = false;
-  export let cls: string = '';
+  export let cls = '';
   export let href: string = null;
   export let rel: string = undefined;
   export let target: string = undefined;

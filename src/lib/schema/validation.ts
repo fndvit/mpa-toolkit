@@ -12,7 +12,7 @@ ajv.addSchema(schemaPage);
 ajv.addSchema(schemaUser);
 
 interface Validate {
-  (schema: string, data: any): void;
+  (schema: string, data: unknown): void;
   errors?: AnyValidateFunction<unknown>['errors'];
 }
 

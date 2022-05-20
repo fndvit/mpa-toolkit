@@ -1,6 +1,6 @@
 <script lang="ts">
-  export let active: boolean = false;
-  export let disabled: boolean = false;
+  export let active = false;
+  export let disabled = false;
   export let title: string = null;
   export let icon: string = null;
   export let text: string = null;
@@ -22,6 +22,7 @@
     class:active
     data-icon={icon}
     data-text={text}
+    data-title={title}
   > </a>
 {:else}
   <button
@@ -34,6 +35,7 @@
     class:active
     data-icon={icon}
     data-text={text}
+    data-title={title}
   />
 {/if}
 

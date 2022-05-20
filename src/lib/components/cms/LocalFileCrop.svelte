@@ -36,7 +36,7 @@
         imgEl.addEventListener('crop', () => cropData = cropper.getData());
       }
     });
-  }
+  };
 
   onDestroy(() => cropper.destroy());
 

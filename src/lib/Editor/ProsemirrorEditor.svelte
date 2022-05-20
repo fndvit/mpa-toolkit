@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { EditorView } from 'prosemirror-view';
   import type { EditorState } from 'prosemirror-state';
-  
+
   export let className = 'ui-editor';
-  export let editorState: EditorState;  
-  export let placeholder = '';  
+  export let editorState: EditorState;
+  export let placeholder = '';
   export let view: EditorView | null = null;
   export let editor: HTMLDivElement = null;
   export let editorViewProps = {};
-  
+
   export function focus() {
     view && view.focus();
   }
-  
+
   export function blur() {
     editor && editor.blur();
   }
@@ -81,7 +81,7 @@
   :global(.ProseMirror h1) {
     text-align: left;
   }
-  
+
   :global(.ProseMirror-hideselection *::selection) {
     background: transparent;
   }

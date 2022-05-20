@@ -10,39 +10,39 @@
 
   const view = getContext("editorView") as EditorView;
 
-  const onClick: svelte.JSX.MouseEventHandler<HTMLButtonElement> = e => {
+  const onClick: svelte.JSX.MouseEventHandler<HTMLButtonElement> = () => {
     inputEl.click();
   };
 
   async function startImageUpload(view: EditorView, file: File) {
     let id = {};
     let tr = view.state.tr;
-    if (!tr.selection.empty) tr.deleteSelection()
-    tr.setMeta(placeholderPlugin, {add: {id, pos: tr.selection.from}})
-    view.dispatch(tr)
+    if (!tr.selection.empty) tr.deleteSelection();
+    tr.setMeta(placeholderPlugin, {add: {id, pos: tr.selection.from}});
+    view.dispatch(tr);
 
     try {
       const url = await uploadImage(file);
-      let pos = findPlaceholder(view.state, id)
-      if (pos == null) return
+      let pos = findPlaceholder(view.state, id);
+      if (pos == null) return;
       view.dispatch(
         view.state.tr
           .replaceWith(pos, pos, schema.nodes.image.create({src: url}))
           .setMeta(placeholderPlugin, {remove: {id}})
-      )
+      );
     }
     catch (err) {
-      view.dispatch(tr.setMeta(placeholderPlugin, {remove: {id}}))
+      view.dispatch(tr.setMeta(placeholderPlugin, {remove: {id}}));
     }
   }
 
   const onChangeFile: svelte.JSX.ChangeEventHandler<HTMLInputElement> = e => {
     const { files } = e.currentTarget;
     if (view.state.selection.$from.parent.inlineContent && files.length) {
-      startImageUpload(view, files[0])
+      startImageUpload(view, files[0]);
 
     }
-  view.focus()
+  view.focus();
   };
 
 </script>

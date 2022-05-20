@@ -20,9 +20,9 @@
   }
 
   function markActive(state: EditorState, type) {
-    let {from, to, empty} = state.selection
-    if (empty) return type.isInSet(state.storedMarks || state.selection.$from.marks())
-    else return state.doc.rangeHasMark(from, to, type)
+    let {from, to, empty} = state.selection;
+    if (empty) return type.isInSet(state.storedMarks || state.selection.$from.marks());
+    else return state.doc.rangeHasMark(from, to, type);
   }
 
   $: active = markActive(editorState, markType);

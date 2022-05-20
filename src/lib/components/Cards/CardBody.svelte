@@ -18,7 +18,7 @@
     const isScrollable = () => node.scrollHeight > node.clientHeight;
     const isAtBottom = () => Math.round(node.clientHeight + node.scrollTop) >= node.scrollHeight;
     const updateGradient = () => showGradient = isScrollable() && !isAtBottom();
-    node.addEventListener('scroll', updateGradient)
+    node.addEventListener('scroll', updateGradient);
     window.setTimeout(() => updateGradient());
   }
 </script>

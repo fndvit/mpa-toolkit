@@ -12,7 +12,7 @@
 
   export let isOpen: boolean;
   export let file: File;
-  export let onCrop: (file: File) => any;
+  export let onCrop: (file: File) => void;
 
   let croppedImg: string;
   let croppedFile: File;

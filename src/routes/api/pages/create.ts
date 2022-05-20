@@ -1,7 +1,6 @@
 import type { PageRequest } from "$lib/types";
 import { authMiddleware } from "$lib/auth";
-import { prisma } from "$lib/prisma";
-import { validate } from "$lib/schema/validation";
+import { createPage } from "$lib/prisma/wrappers";
 
 export const put = authMiddleware(
   { role:'CONTENT_MANAGER' },
@@ -9,38 +8,7 @@ export const put = authMiddleware(
 
     const body = await request.json() as PageRequest;
 
-    validate('page', body);
-
-    const { title, slug, content, img, caseStudy, chapter, tags, draft } = body;
-
-    const page = await prisma.page.create({
-      data: {
-        title, slug, content, img, draft,
-
-        tags: {
-          createMany: {
-            data: tags.map(({id, category}) => ({
-              tagId: id,
-              category
-            }))
-          },
-        },
-
-        caseStudy: caseStudy && {
-          create: {
-            ...caseStudy
-          }
-        },
-
-        chapter: chapter && {
-          create: {
-            summary: chapter.summary,
-            keyTakeaways: chapter.keyTakeaways,
-            authors: { connect: chapter.authors.map(id => ({id})) }
-          }
-        }
-      }
-    });
+    const page = await createPage(body);
 
     return {
       status: 200,

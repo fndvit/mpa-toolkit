@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Page } from "$lib/types";
-  import Button from "$lib/components/Button.svelte";
+  import Button from "$lib/components/generic/Button.svelte";
 
   export let pages: Page[];
 </script>

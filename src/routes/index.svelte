@@ -2,13 +2,13 @@
 </script>
 
 <script lang="ts">
-  import type { PageTag } from "$lib/types";
 
+  import type { SubTypes } from "$lib/types";
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
-  import Searchbar from "$lib/components/Searchbar.svelte";
+  import Searchbar from "$lib/components/generic/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
-  import TagContainer from "$lib/components/Tags/TagContainer.svelte";
+  import TagContainer from "$lib/components/TagContainer.svelte";
 
   import IAFDC_Logo from "/static/IAFDC_Logo.svg";
   import TNC_Logo from "/static/TNC_Logo.svg";
@@ -17,7 +17,7 @@
 
   const backgroundImage = '/static/LandingSplashImage.png';
 
-  const exampleTags: PageTag[] = [
+  const exampleTags: SubTypes.PageTag[] = [
     {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 3, value: 'Blue growth', type: 'USER'}, category: 'PRIMARY'},

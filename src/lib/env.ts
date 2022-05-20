@@ -19,6 +19,7 @@ const REQUIRED_ENV: (keyof MpaEnv)[] = [
   'JWT_SECRET_KEY', 'AWS_S3_CONTENT_BUCKET'
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const processEnv: MpaEnv = process.env as any;
 
 const missing = REQUIRED_ENV.filter(env => !processEnv[env]);

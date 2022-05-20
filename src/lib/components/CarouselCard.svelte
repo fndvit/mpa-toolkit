@@ -1,8 +1,9 @@
 <script lang="ts">
-  import TagContainer from "./Tags/TagContainer.svelte";
-  import type { PageTag } from "$lib/types";
+import type { SubTypes } from "$lib/types";
 
-  const exampleTags: PageTag[] = [
+  import TagContainer from "$lib/components/TagContainer.svelte";
+
+  const exampleTags: SubTypes.PageTag[] = [
     {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 3, value: 'Blue growth', type: 'USER'}, category: 'PRIMARY'},
@@ -12,7 +13,7 @@
     {tag: {id: 7, value: 'All biomes', type: 'USER'}, category: 'PRIMARY'}
   ];
 
-  export let tags: PageTag[] = exampleTags;
+  export let tags: SubTypes.PageTag[] = exampleTags;
   export let parameters: {previewImage: string, category: string, title: string, slug: string};
   export let type: 'chapter' | 'case study';
 

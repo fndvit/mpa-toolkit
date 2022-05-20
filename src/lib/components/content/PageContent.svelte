@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { CompletePage } from "$lib/types";
-  import type { ContentCard } from "../TinyCarousel/TinyCarousel.svelte";
+  import type { SubTypes } from "$lib/types";
   import StickyMenu from "../StickyMenu/StickyMenu.svelte";
   import Section from "./Section.svelte";
   import { createSections } from "$lib/helpers/content";
@@ -8,12 +7,12 @@
   import Paragraph from "./Paragraph.svelte";
   import TextSlider from "./TextSlider.svelte";
   import MadLib from "../MadLib.svelte";
-  import TinyCarousel from "../TinyCarousel/TinyCarousel.svelte";
-  import LifeCycle from "../LifeCycle/LifeCycle.svelte";
+  import TinyCarousel from "$lib/components/TinyCarousel.svelte";
+  import LifeCycle from "$lib/components/LifeCycle.svelte";
   import Image from "./Image.svelte";
 
-  export let page: Omit<CompletePage, 'editedAt' | 'id' | 'createdAt'>;
-  export let recommendedPages: ContentCard[] = null;
+  export let page: SubTypes.Page;
+  export let recommendedPages: SubTypes.ContentCard[] = null;
 
   const sections = createSections(page.content);
 

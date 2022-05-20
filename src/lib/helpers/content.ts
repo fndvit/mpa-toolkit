@@ -1,4 +1,4 @@
-import type { CompletePage, ContentDocument, Section } from "../types";
+import type { ContentDocument, Section, SubTypes } from "../types";
 import { slugify } from "./utils";
 
 export const staticUrl = (path: string) => `${import.meta.env.VITE_UPLOAD_BASE_URL}${path}`;
@@ -23,7 +23,7 @@ export function createSections(document: ContentDocument) {
 }
 
 
-export function createEmptyPage(type: 'chapter' | 'caseStudy'): CompletePage {
+export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page {
   return {
     id: null,
     title: '',
@@ -32,8 +32,9 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): CompletePage {
     content: null,
     draft: true,
     tags: [],
-    editedAt: null,
-    createdAt: null,
+    // editedAt: null,
+    // createdAt: null,
+    readTime: null,
     caseStudy: type !== 'caseStudy' ? undefined : {
       name: '',
       established: null,

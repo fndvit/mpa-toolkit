@@ -60,7 +60,7 @@
     updateOnMove: true,
     lazyLoad: true,
     keyboard: true
-  })
+  });
 
   const handlePaginationEvent = (newIndex: number) => {
     splide.go(newIndex);

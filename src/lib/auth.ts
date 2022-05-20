@@ -72,7 +72,7 @@ export const auth = new SvelteKitAuth({
     })
   ],
   callbacks: {
-    redirect: url => {
+    redirect: () => {
       return '/cms';
     },
     async jwt(token, profile) {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Section } from "$lib/types";
-  import ExpandButton from "../ExpandButton.svelte";
+  import ExpandButton from "./ExpandButton.svelte";
 
   export let section: Section;
 

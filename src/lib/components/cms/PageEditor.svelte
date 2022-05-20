@@ -1,26 +1,26 @@
 <script lang="ts">
-  import LifeCycle from '$lib/components/LifeCycle/LifeCycle.svelte';
-  import { openModal } from 'svelte-modals'
+  import type { PageRequest, SubTypes, Tag, UserInfo } from '$lib/types';
+  import LifeCycle from '$lib/components/LifeCycle.svelte';
+  import { openModal } from 'svelte-modals';
   import { goto } from "$app/navigation";
-  import Editor from "$lib/Editor/Editor.svelte";
-  import Spinner from "$lib/components/Spinner.svelte";
-  import type { CompletePage, PageRequest, PageTag, Tag, UserInfo } from '$lib/types';
-  import DeleteModal from "$lib/components/DeleteModal.svelte";
+  import Editor from "$lib/components/cms/editor/Editor.svelte";
+  import Spinner from "$lib/components/generic/Spinner.svelte";
+  import DeleteModal from "$lib/components/cms/DeleteModal.svelte";
   import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
-  import LoadingButton from '$lib/components/LoadingButton.svelte';
-  import Button from '$lib/components/Button.svelte';
-  import TimedMessage from '$lib/components/TimedMessage.svelte';
-  import CaseStudyMeta from '$lib/components/content/CaseStudyMeta.svelte';
-  import cloneDeep from 'clone-deep'
+  import LoadingButton from '$lib/components/generic/LoadingButton.svelte';
+  import Button from '$lib/components/generic/Button.svelte';
+  import TimedMessage from '$lib/components/generic/TimedMessage.svelte';
+  import CaseStudyMeta from '$lib/components/head/CaseStudyMeta.svelte';
+  import ChapterMeta from '$lib/components/head/ChapterMeta.svelte';
+  import Splash from '$lib/components/head/Splash.svelte';
+  import cloneDeep from 'clone-deep';
   import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
-  import ChapterMeta from '$lib/components/content/ChapterMeta.svelte';
-  import Splash from '$lib/components/content/Splash.svelte';
-  import IconButton from '$lib/components/IconButton.svelte';
-  import PageContent from '../content/PageContent.svelte';
+  import IconButton from '$lib/components/generic/IconButton.svelte';
+  import PageContent from '$lib/components/content/PageContent.svelte';
 
   export let users: UserInfo[];
   export let allTags: Tag[];
-  export let page: CompletePage;
+  export let page: SubTypes.Page;
 
   const userLookup = createLookup(users, u => u.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
@@ -31,25 +31,25 @@
 
   let pageType: "Case Study" | "Chapter" = page.caseStudy ? "Case Study" : "Chapter";
 
-  const pageTagToRequestTag = (t: PageTag): Unpacked<PageRequest['tags']> => ({id: t.tag.id, category: t.category});
-  const chapterToRequest = (c: CompletePage['chapter']): PageRequest['chapter'] => ({
+  const pageTagToRequestTag = (t: SubTypes.PageTag): Unpacked<PageRequest['tags']> => ({id: t.tag.id, category: t.category});
+  const chapterToRequest = (c: SubTypes.ChapterMeta): PageRequest['chapter'] => ({
     ...c, authors: c.authors.map(a => a.id),
   });
 
-  const convertPageToPageRequest = (p: CompletePage): PageRequest => {
-    const { id, editedAt, createdAt, ..._p} = cloneDeep(p);
+  const convertPageToPageRequest = (p: SubTypes.Page): PageRequest => {
+    const _p = cloneDeep(p);
     return {
       ..._p,
       tags: _p.tags?.map(pageTagToRequestTag) || [],
       chapter: _p.chapter ? chapterToRequest(_p.chapter) : undefined,
       caseStudy: _p.caseStudy ? _p.caseStudy : undefined
     };
-  }
+  };
 
   const _page = convertPageToPageRequest(page);
 
   let chapter = cloneDeep(page.chapter);
-  let tags: PageTag[] = page.tags || [];
+  let tags: SubTypes.PageTag[] = page.tags || [];
 
   let savedPage = cloneDeep(_page);
   let uploadingImage = false;
@@ -71,7 +71,7 @@
       await updatePage(pageId, _page);
     }
     saving = false;
-    showSaveStatusText('Saved...')
+    showSaveStatusText('Saved...');
     savedPage = cloneDeep(_page);
   }
 
@@ -82,7 +82,7 @@
   }
 
   async function onClickDelete() {
-    openModal(DeleteModal, { onYes: onDeleteModalYes })
+    openModal(DeleteModal, { onYes: onDeleteModalYes });
   }
 
   const onImageChange: svelte.JSX.EventHandler<FormDataEvent, HTMLInputElement> = async (e) => {
@@ -100,7 +100,7 @@
   const onBeforeInputSlug: svelte.JSX.EventHandler<InputEvent, HTMLInputElement> = e => {
     const validChars = /[a-zA-Z0-9-]/;
     if (!validChars.exec(e.data)) e.preventDefault();
-  }
+  };
 
   $: _page.tags = tags.map(pageTagToRequestTag);
 
@@ -120,9 +120,12 @@
 
   $: _page.chapter = chapter ? chapterToRequest(chapter) : undefined;
 
+  let previewPage: SubTypes.Page;
   $: previewPage = preview && {
     ..._page,
-    tags: _page.tags.map<PageTag>(t => ({
+    id: null,
+    readTime: null,
+    tags: _page.tags.map<SubTypes.PageTag>(t => ({
       tag: tagLookup[t.id],
       category: t.category
     })),
@@ -130,9 +133,9 @@
       ..._page.chapter,
       authors: _page.chapter.authors.map<UserInfo>(a => userLookup[a.toString()]),
     }
-  } as PageContent['$$prop_def']['page'];
+  };
 
-  $: href = `${_page.draft ? '/draft' : ''}/${savedPage.slug}`
+  $: href = `${_page.draft ? '/draft' : ''}/${savedPage.slug}`;
 
 </script>
 
@@ -296,27 +299,9 @@
     margin-top: 60px;
   }
 
-  .preview-bar {
-    display: none;
-    position: fixed;
-    justify-content: center;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-    padding: 0.5rem;
-    column-gap: 0.4rem;
-    border-bottom: 1px solid #ccc;
-    background: #f7f7f7;
-    box-sizing: border-box;
-  }
-
   .preview {
 
     padding-top: 51px;
-
-    .preview-bar {
-      display: flex;
-    }
 
     :global(.menu-bar) {
       position: fixed;

@@ -4,7 +4,7 @@
   import CardHeading from './CardHeading.svelte';
   import CardBody from './CardBody.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
-  import IconButton from '../IconButton.svelte';
+  import IconButton from '$lib/components/generic/IconButton.svelte';
 
   interface Card {
     heading: string;
@@ -12,7 +12,7 @@
   }
 
   export let cards: Card[];
-  export let currentPageIndex: number = 0;
+  export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;
 
@@ -38,13 +38,13 @@
     cards.push({heading: 'Key takeaways', body: ''});
     cards = cards;
     window.setTimeout(() => splide.go(cards.length - 1));
-  }
+  };
 
   const onClickRemoveCard = () => {
     cards = cards.filter((_, i) => i !== currentPageIndex);
     const goTo = Math.max(0, Math.min(currentPageIndex, cards.length-1));
     splide.go(goTo);
-  }
+  };
 
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 </script>

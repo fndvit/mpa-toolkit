@@ -4,13 +4,13 @@ export function groupBy<T, K extends string, U = null>
 return arr.reduce<{[KV in K]?: (U extends null ? T : U)[] }>((acc, item) => {
   const key = keyFn(item);
   acc[key] = acc[key] || [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   acc[key].push(!mapFn ? item as any: mapFn(item));
   return acc;
 }, {});
 }
 
-export type Unpacked<T> = T extends (infer U)[] ? U : T;
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function compareDeep(a: any, b: any) {
   if (a === b) return true;
   if (!(a && typeof a == "object") ||
@@ -47,3 +47,10 @@ export function createLookup<T, Y>
 
   return lookup;
 }
+
+export type ExpandRecursively<T> = T extends object
+  ? T extends infer O ? { [K in keyof O]: ExpandRecursively<O[K]> } : never
+  : T;
+export type Unpacked<T> = T extends (infer U)[] ? U : T;
+export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
+export type Modify<T, R> = Expand<Omit<T, keyof R> & R>;

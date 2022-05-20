@@ -4,7 +4,7 @@ import type { AnyValidateFunction } from "ajv/dist/core";
 import * as schemaPage from "./page.json";
 import * as schemaUser from "./user.json";
 
-export const ajv = new Ajv();
+export const ajv = new Ajv({removeAdditional: true});
 
 const log = logger.child({scope: 'validate'});
 

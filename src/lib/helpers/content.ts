@@ -1,34 +1,29 @@
-import type { CompletePage, ContentDocument, Section } from "../types";
-import { parseTextToID } from "./utils";
+import type { ContentDocument, Section, SubTypes } from "../types";
+import { slugify } from "./utils";
 
 export const staticUrl = (path: string) => `${import.meta.env.VITE_UPLOAD_BASE_URL}${path}`;
 
 export function createSections(document: ContentDocument) {
-  return document.content.reduce<Section[]>((acc, block) => {
-    if (block.type === 'heading') {
-      // new section
-      acc.push({
-        id: parseTextToID(block.content[0].text),
-        topic: 'lorem ipsum',
-        blocks: [block]
-      });
-    } else if(acc.length === 0) {
-      acc.push({
-        id: '',
+  return document.content.reduce<Section[]>((sections, block, i) => {
+    const isHeading = block.type === 'heading';
+    if (isHeading || i === 0) {
+      sections.push({
+        id: isHeading
+          ? `h${sections.length}-${slugify(block.content[0].text)}`
+          : null,
+        title: isHeading ? block.content[0].text : null,
         topic: 'lorem ipsum',
         blocks: [block]
       });
     } else {
-      // add to current section
-      acc[acc.length - 1].blocks.push(block);
+      sections[sections.length - 1].blocks.push(block);
     }
-    return acc;
+    return sections;
   }, []);
 }
 
 
-
-export function createEmptyPage(type: 'chapter' | 'caseStudy'): CompletePage {
+export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page {
   return {
     id: null,
     title: '',
@@ -37,10 +32,10 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): CompletePage {
     content: null,
     draft: true,
     tags: [],
-    editedAt: null,
-    createdAt: null,
+    // editedAt: null,
+    // createdAt: null,
+    readTime: null,
     caseStudy: type !== 'caseStudy' ? undefined : {
-      pageId: null,
       name: '',
       established: null,
       size: null,
@@ -53,7 +48,6 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): CompletePage {
       milestones: {}
     },
     chapter: type !== 'chapter' ? undefined : {
-      pageId: null,
       summary: '',
       keyTakeaways: [],
       authors: []

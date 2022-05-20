@@ -1,32 +1,32 @@
-import type { Node } from "prosemirror-model";
-import type { Schema } from "./Editor/schema";
 import { logger } from "./log";
 
+import type { Block, ContentDocument } from "./types";
 const log = logger.child({module: 'readtime'});
 
-function calcBlockNodeReadTime(node: Node<Schema>): number {
-  const TEXT_NODES = ['paragraph', 'heading', 'blockquote', 'cards'];
-  const WORDS_PER_MINUTE = 265;
-  const SECS_PER_IMG = 12;
-
-  if (TEXT_NODES.indexOf(node.type.name) > -1) {
-    const wordCount = node.textContent.split(/\s+/).length;
-    return wordCount / WORDS_PER_MINUTE;
-  }
-  else if (node.type.name === 'image') {
-    return SECS_PER_IMG / 60;
-  }
-  else {
-    log.warn(`Unhandled node type: ${node.type.name}`);
-    return 0;
-  }
+export function calcReadTime(doc: ContentDocument): number {
+  const floatTime = doc.content.map(calcBlockReadTime).reduce((a, b) => a + b, 0);
+  return Math.ceil(floatTime);
 }
 
-export function calcReadTime(node: Node<Schema>) {
-  let mins = 0;
-  for (let i = 0; i < node.childCount; i++) {
-    const child = node.child(i);
-    mins += calcBlockNodeReadTime(child);
+export function calcBlockReadTime(block: Block): number {
+  const WORDS_PER_MINUTE = 265;
+  const CONSTANT_READ_TIMES_IN_S = {
+    image: 12,
   };
-  return Math.ceil(mins);
+
+  if (CONSTANT_READ_TIMES_IN_S[block.type]) {
+    return CONSTANT_READ_TIMES_IN_S[block.type] / 60;
+  }
+  else if ('text' in block) {
+    const wordCount = block.text.split(/\s+/).length;
+    return wordCount / WORDS_PER_MINUTE;
+  }
+  else if ('content' in block) {
+    return block.content
+      .map(calcBlockReadTime)
+      .reduce((a, b) => a + b, 0);
+  } else {
+    log.warn(`Unhandled node type: ${block.type}`);
+    return 0;
+  }
 }

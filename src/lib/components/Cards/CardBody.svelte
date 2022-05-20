@@ -1,5 +1,5 @@
 <script lang="ts">
-  import EditableContent from '../EditableContent.svelte';
+  import EditableContent from '$lib/components/generic/EditableContent.svelte';
 
   export let text: string;
   export let editable = false;
@@ -18,7 +18,7 @@
     const isScrollable = () => node.scrollHeight > node.clientHeight;
     const isAtBottom = () => Math.round(node.clientHeight + node.scrollTop) >= node.scrollHeight;
     const updateGradient = () => showGradient = isScrollable() && !isAtBottom();
-    node.addEventListener('scroll', updateGradient)
+    node.addEventListener('scroll', updateGradient);
     window.setTimeout(() => updateGradient());
   }
 </script>

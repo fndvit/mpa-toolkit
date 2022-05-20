@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Cards from "../Cards/Cards.svelte";
-  import IconButton from "../IconButton.svelte";
+  import Cards from "$lib/components/Cards/Cards.svelte";
+  import IconButton from "$lib/components/generic/IconButton.svelte";
 
   export let keyTakeaways: string[] = [];
   export let editable = false;
@@ -41,9 +41,9 @@
   }
   .add-key-takeaways {
     margin-bottom: -10px;
-    --icon-color: #ffffffee;
-    --hover-border: 1px solid transparent;
-    --hover-bg: #00000011;
+    --ib-color: #ffffffee;
+    --ib-hover-border: 1px solid transparent;
+    --ib-hover-bg: #00000011;
   }
 
 </style>

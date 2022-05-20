@@ -1,19 +1,16 @@
-
-export const parseTextToID = (text: string) => text.replace(/\s|\./g, '');
-
 export function groupBy<T, K extends string, U = null>
 (arr: T[], keyFn: (i: T) => K, mapFn?: (i: T) => U) {
 
 return arr.reduce<{[KV in K]?: (U extends null ? T : U)[] }>((acc, item) => {
   const key = keyFn(item);
   acc[key] = acc[key] || [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   acc[key].push(!mapFn ? item as any: mapFn(item));
   return acc;
 }, {});
 }
 
-export type Unpacked<T> = T extends (infer U)[] ? U : T;
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function compareDeep(a: any, b: any) {
   if (a === b) return true;
   if (!(a && typeof a == "object") ||
@@ -29,3 +26,31 @@ export function compareDeep(a: any, b: any) {
   }
   return true;
 }
+
+export function slugify(text: string, maxLen = 40) {
+  return (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, maxLen);
+}
+
+export function createLookup<T, Y>
+(
+  arr: T[],
+  keyFn: (d: T) => string,
+  valFn: (d: T) => Y
+): {[key: string]: Y} {
+
+  const lookup: {[key: string]: Y} = {};
+
+  arr.forEach(d => {
+    const key = keyFn(d);
+    lookup[key] = valFn(d);
+  });
+
+  return lookup;
+}
+
+export type ExpandRecursively<T> = T extends object
+  ? T extends infer O ? { [K in keyof O]: ExpandRecursively<O[K]> } : never
+  : T;
+export type Unpacked<T> = T extends (infer U)[] ? U : T;
+export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
+export type Modify<T, R> = Expand<Omit<T, keyof R> & R>;

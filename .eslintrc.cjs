@@ -19,6 +19,9 @@ module.exports = {
       }
     }
   ],
+  rules: {
+    "no-undef": "off"
+  },
   settings: {
     'svelte3/typescript': () => require('typescript')
   },

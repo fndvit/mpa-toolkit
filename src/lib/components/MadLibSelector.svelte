@@ -11,7 +11,7 @@
   const chooseOption = (index: number) => {
     currentIndex = index;
     listboxVisible = false;
-  }
+  };
 
   const handleKeyDown: svelte.JSX.KeyboardEventHandler<Window> = e => {
 
@@ -25,7 +25,7 @@
         e.preventDefault();
       }
     }
-  }
+  };
 
   $: selected = options[currentIndex];
 

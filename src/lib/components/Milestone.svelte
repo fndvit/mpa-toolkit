@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import EditableContent from "./EditableContent.svelte";
-  import IconButton from "./IconButton.svelte";
-  import TextInputEditor from "./TextInputEditor.svelte";
+  import EditableContent from "$lib/components/generic/EditableContent.svelte";
+  import IconButton from "$lib/components/generic/IconButton.svelte";
+  import TextInputEditor from "$lib/components/generic/TextInputEditor.svelte";
 
   export let year: string;
   export let content: string[];
@@ -10,18 +10,11 @@
 
   const dispatch = createEventDispatcher<{saveYear: string, delete: null}>();
 
-  function getFirstEmptyIdx() {
-    const emptyIdx = content.indexOf('');
-    return emptyIdx !== -1 && emptyIdx;
-  }
-
   let contracted = new Array<boolean>(content.length).fill(!editable);
-  let editIndex = getFirstEmptyIdx();
 
   function onClickAdd() {
     content.push('');
     content = content;
-    editIndex = content.length - 1;
   }
 
   function onClickMilestone(i: number) {
@@ -34,14 +27,8 @@
     dispatch('saveYear', year);
   }
 
-  function onSaveText(i: number, text: string) {
-    content[i] = text;
-    editIndex = getFirstEmptyIdx();
-  }
-
   function onDeleteMilestone(i: number) {
     content.splice(i, 1);
-    editIndex = undefined;
     content = content;
   }
 
@@ -57,7 +44,6 @@
 
   <div class="year">
     <TextInputEditor
-      type="number"
       value={year}
       on:save={({detail}) => saveYear(detail)}
     />
@@ -178,8 +164,8 @@
     position: absolute;
     top: 30px;
     left: 12px;
-    --icon-hover-bg: #03395f;
-    --icon-bg: #034676;
+    --ib-hover-bg: #03395f;
+    --ib-icon-bg: #034676;
   }
 
   .milestone-circle {
@@ -250,9 +236,9 @@
   .container {
 
     :global(.icon-button) {
-      --icon-color: white;
-      --size: 1.4rem;
-      --icon-hover-bg: #00000055;
+      --ib-color: white;
+      --ib-size: 1.4rem;
+      --ib-hover-bg: #00000055;
     }
   }
 
@@ -266,9 +252,9 @@
     }
 
     :global(.icon-button) {
-      --icon-color: #ffffffee;
-      --hover-bg: #00000011;
-      --size: 1.5rem;
+      --ib-color: #ffffffee;
+      --ib-hover-bg: #00000011;
+      --ib-size: 1.5rem;
       opacity: 0.75;
     }
   }

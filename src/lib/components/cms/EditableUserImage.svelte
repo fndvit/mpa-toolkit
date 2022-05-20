@@ -2,9 +2,9 @@
   import { updateUser, uploadImage } from "$lib/api";
   import type { User } from "$lib/types";
   import { openModal } from "svelte-modals";
-  import UserImage from "../content/UserImage.svelte";
-  import CropModal from "../CropModal.svelte";
-  import Spinner from "../Spinner.svelte";
+  import UserImage from "$lib/components/UserImage.svelte";
+  import CropModal from "$lib/components/cms/CropModal.svelte";
+  import Spinner from "$lib/components/generic/Spinner.svelte";
 
   export let user: User;
 

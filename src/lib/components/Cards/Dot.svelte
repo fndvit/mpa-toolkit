@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-  export let active: boolean = false;
-  export let progress: boolean = false;
+  export let active = false;
+  export let progress = false;
 
   const dispatch = createEventDispatcher<{progressAnimationFinished: null}>();
 

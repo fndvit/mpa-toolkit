@@ -150,4 +150,67 @@
     }
   }
 
+  //Responsive CSS
+
+  @media screen and (max-width: 768px) {
+
+    .meta-container {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .meta-grid > h4 {
+      margin-top: 20px;
+    }
+
+    .meta-content {
+      max-width: 100%;
+      margin-left:0px;
+      padding-top: 150px;
+    }
+
+    .meta-grid-1 :global(.editable-content) {
+      font-size: 22px;
+      line-height: 36px;
+    }
+
+    .meta-grid-2 :global(.editable-content) {
+      font-size: 16px;
+      line-height: 28px;
+      max-width: 37rem;
+    }
+
+    .meta-grid {
+      display: block;
+      color: white;
+      &.meta-grid-1 {
+        margin-bottom: 0px;
+        min-height: 110px;
+      }
+
+      &.meta-grid-2 {
+        margin-bottom: 0px;
+      }
+    }
+
+    .globe-cell {
+      position: absolute;
+      top: 0px;
+      left: 50%;
+      transform: translate(-50%, -100px);
+    > :global(.globe) {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+      }
+    }
+
+  }
+
+
+
+
+
+
+
 </style>

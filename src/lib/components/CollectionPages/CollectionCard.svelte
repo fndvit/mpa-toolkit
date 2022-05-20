@@ -5,11 +5,16 @@
 
   export let page: SubTypes.CollectionCard;
 
-  const authors = page.chapter.authors.map(a => a.name);
-  const authorsString = authors.length > 1 ? authors.slice(0, -1).join(',') + ' and ' + authors.slice(-1) : authors.toString();
+  const authors = page.chapter?.authors?.map(a => a.name);
+  const authorsString = authors && (
+    authors.length > 1
+      ? `${authors.slice(0, -1).join(',')} and ${authors.slice(-1)}`
+      : authors.toString()
+  );
+
 </script>
 
-<div class="container">
+<a class="container" href='/{page.slug}' rel="external">
   <div class="image">
     <img src={staticUrl(page.img)} alt="chapter" />
   </div>
@@ -19,19 +24,21 @@
       {page.title}
     </h1>
     <div class="bottom-section">
-      <div class="authors"><b>{authorsString}</b></div>
+      {#if authorsString}
+        <div class="authors">{authorsString}</div>
+      {/if}
       <div class="read-time">{page.readTime} min read</div>
     </div>
   </div>
   <div class="tags">
     <b>What's this about</b>
-    <TagContainer tags={page.tags} color='#DADCE0' />
+    <TagContainer tags={page.tags}/>
   </div>
-</div>
+</a>
 
 <style lang="scss">
   .container {
-    grid-template-columns: 12rem 40rem auto;
+    grid-template-columns: 12rem 1fr 20rem;
     column-gap: 1rem;
     display: grid;
     background: #f9f9f9;
@@ -40,19 +47,28 @@
     margin: 15px;
     padding-right: 10px;
     height: 200px;
-    :global(h1) {
-      font-size: 1.5rem;
-      margin: 0px;
+    &:hover {
+      text-decoration: none;
+      filter: brightness(105%);
     }
+  }
 
+  a.container {
+    color: black;
   }
-  image{
-    height: inherit;
-    overflow: hidden;
+
+  .title {
+    font-size: 1.5rem;
+    margin: 0px;
   }
+
+  .authors {
+    font-weight: 700;
+  }
+
   .image img {
     width:  12rem;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
     border-radius: 12px 0px 0px 12px;
   }
@@ -60,16 +76,29 @@
     padding: 15px;
   }
   .bottom-section {
+    display: flex;
+    column-gap: 15px;
     margin-top: 15px;
-    display: inline-flex;
-    color: #6C767D
+    color: #6C767D;
   }
-  .bottom-section .read-time {
-    margin-left: 10px;
-  }
-  .tags{
-    overflow: auto;
+  .tags {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    box-sizing: border-box;
     padding: 15px;
+    :global(.tag) {
+      --tag-bg: #DADCE0;
+    }
+    :global(.tag-container) {
+      overflow: scroll;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .container {
+      height: auto;
+    }
   }
 
 </style>

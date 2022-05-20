@@ -19,4 +19,8 @@
   .page-list {
     list-style-type: none;
   }
+
+  .content {
+    background: #ffffff;
+  }
 </style>

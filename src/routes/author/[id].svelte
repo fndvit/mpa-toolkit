@@ -5,13 +5,4 @@
   export let pages: SubTypes.CollectionCard[];
 </script>
 
-<div class="content">
-  <CollectionPages {pages}/>
-</div>
-
-
-<style>
-  .content{
-    background: #E5E5E5;
-  }
-</style>
+<CollectionPages {pages}/>

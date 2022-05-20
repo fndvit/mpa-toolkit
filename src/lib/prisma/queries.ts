@@ -1,6 +1,6 @@
 import type { Modify } from "$lib/helpers/utils";
 import type { ContentDocument, MilestonesData } from "$lib/types";
-import type { Prisma } from "@prisma/client";
+import { Prisma, TagType } from "@prisma/client";
 
 export const pageTag = {
   select: {
@@ -21,7 +21,10 @@ export const pageForCollectionPage = {
     slug: true,
     img: true,
     readTime: true,
-    tags: pageTag,
+    tags: {
+      ...pageTag,
+      where: { tag: { type: TagType.TOPIC } },
+    },
     chapter: {
       select: {
         authors: {

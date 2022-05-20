@@ -1,5 +1,6 @@
 <script lang="ts">
   import ProsemirrorEditor from '$lib/Editor/ProsemirrorEditor.svelte';
+  import type { ContentDocument } from '$lib/types';
   import { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { onMount, setContext } from 'svelte';
@@ -10,7 +11,7 @@
   let focusEditor: () => void;
   let view: EditorView;
 
-  export let content: {[key: string]: any} = null;
+  export let content: ContentDocument = null;
 
   let editorState = EditorState.create({
     schema,
@@ -24,7 +25,7 @@
   });
 
 
-  $: content = editorState.doc.toJSON();
+  $: content = editorState.doc.toJSON() as ContentDocument;
 
   $: setContext('editorView', view);
 

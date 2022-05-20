@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { CompletePage } from "$lib/types";
-  import type { ContentCard } from "../TinyCarousel/TinyCarousel.svelte";
+  import type { SubTypes } from "$lib/types";
   import StickyMenu from "../StickyMenu/StickyMenu.svelte";
   import Section from "./Section.svelte";
   import { createSections } from "$lib/helpers/content";
@@ -12,8 +11,8 @@
   import LifeCycle from "../LifeCycle/LifeCycle.svelte";
   import Image from "./Image.svelte";
 
-  export let page: Omit<CompletePage, 'editedAt' | 'id' | 'createdAt'>;
-  export let recommendedPages: ContentCard[] = null;
+  export let page: SubTypes.Page;
+  export let recommendedPages: SubTypes.ContentCard[] = null;
 
   const sections = createSections(page.content);
 

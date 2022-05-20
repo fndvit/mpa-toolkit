@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
 
-  export let tag: SubTypes.Tag;
-  export let color: string = '#fbe26b';
+  export let tag: SubTypes.PageTag;
+  export let color = '#fbe26b';
 
   $: fade = tag.category == 'SECONDARY';
 </script>

@@ -1,12 +1,10 @@
 <script lang="ts">
-  import type { CompletePage } from "$lib/types";
+  import type { SubTypes } from "$lib/types";
   import Page from "$lib/components/content/Page.svelte";
-  import type { ContentCard } from "$lib/components/TinyCarousel/TinyCarousel.svelte";
 
-  export let page: CompletePage;
-  export let readTime: number;
-  export let recommendedPages: ContentCard[];
+  export let page: SubTypes.Page;
+  export let recommendedPages: SubTypes.ContentCard[];
 
 </script>
 
-<Page {page} {recommendedPages} {readTime} />
+<Page {page} {recommendedPages} />

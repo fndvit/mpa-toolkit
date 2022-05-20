@@ -2,8 +2,8 @@
 </script>
 
 <script lang="ts">
-  import type { PageTag } from "$lib/types";
 
+  import type { SubTypes } from "$lib/types";
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import Searchbar from "$lib/components/Searchbar.svelte";
@@ -17,7 +17,7 @@
 
   const backgroundImage = '/static/LandingSplashImage.png';
 
-  const exampleTags: PageTag[] = [
+  const exampleTags: SubTypes.PageTag[] = [
     {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 3, value: 'Blue growth', type: 'USER'}, category: 'PRIMARY'},

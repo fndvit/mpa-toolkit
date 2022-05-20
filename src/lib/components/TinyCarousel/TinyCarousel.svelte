@@ -1,14 +1,10 @@
-<script lang="ts" context="module">
-  import TinyPreviewCard from './TinyPreviewCard.svelte';
-
-  export type ContentCard = TinyPreviewCard['$$prop_def'];
-
-</script>
 <script lang="ts">
+  import type { SubTypes } from '$lib/types';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import { SplideOptions } from '$lib/helpers/splide';
+  import TinyPreviewCard from './TinyPreviewCard.svelte';
 
-  export let slides: ContentCard[];
+  export let slides: SubTypes.ContentCard[];
   export let title: string;
 
   const options = SplideOptions({
@@ -29,7 +25,7 @@
     <Splide {options}>
       {#each slides as slide}
         <SplideSlide>
-          <TinyPreviewCard {...slide}/>
+          <TinyPreviewCard page={slide}/>
         </SplideSlide>
       {/each}
     </Splide>

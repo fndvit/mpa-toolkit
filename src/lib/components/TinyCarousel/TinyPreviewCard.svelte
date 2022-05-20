@@ -1,12 +1,11 @@
 <script lang="ts">
+  import type { SubTypes } from "$lib/types";
   import TagContainer from "../Tags/TagContainer.svelte";
   import { staticUrl } from "$lib/helpers/content";
-  import type { PageTag } from "$lib/types";
 
-  export let tags: PageTag[];
-  export let title: string;
-  export let img: string;
-  export let slug: string;
+  export let page: SubTypes.ContentCard;
+
+  const {slug, img, title, tags} = page;
 </script>
 
 <div class="container" tabindex="0">

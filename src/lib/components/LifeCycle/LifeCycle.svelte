@@ -1,21 +1,20 @@
 <script lang='ts'>
-  import type { PageTag } from '$lib/types';
+  import type { SubTypes, Tag } from '$lib/types';
   import { groupBy } from '$lib/helpers/utils';
-  import type { Tag } from '$lib/types';
   import MultiSelect, { Option } from 'svelte-multiselect';
   import CircleMenu, { type MenuElement } from '../CircleMenu/CircleMenu.svelte';
   import TagContainer from  '../Tags/TagContainer.svelte';
 
   export let allTags: Tag[] = null;
-  export let tags: PageTag[]; // binding (updated as tags are changed)
-  export let editable: boolean = false;
+  export let tags: SubTypes.PageTag[]; // binding (updated as tags are changed)
+  export let editable = false;
 
   const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30];
 
   const MAX_PRIMARY_TAGS = 2;
   const MAX_SECONDARY_TAGS = 7;
 
-  type PageTagOption = PageTag & Option;
+  type PageTagOption = SubTypes.PageTag & Option;
 
   // used internally to bind to multiselect & keep track of selected tags
   const selectedTagOptions = groupBy(
@@ -48,7 +47,7 @@
     return {
       percentage,
       type: category === 'PRIMARY' ? 'main' : category === 'SECONDARY' ? 'secondary' : 'unselected'
-    }
+    };
   });
 
 </script>

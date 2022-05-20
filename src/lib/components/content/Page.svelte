@@ -1,13 +1,12 @@
 <script lang="ts">
+  import type { SubTypes } from "$lib/types";
   import CaseStudyMeta from "$lib/components/content/CaseStudyMeta.svelte";
   import Splash from "$lib/components/content/Splash.svelte";
-  import type { CompletePage } from "$lib/types";
-  import type { ContentCard } from "$lib/components/TinyCarousel/TinyCarousel.svelte";
   import ChapterMeta from "$lib/components/content/ChapterMeta.svelte";
   import PageContent from "./PageContent.svelte";
 
-  export let page: CompletePage;
-  export let recommendedPages: ContentCard[];
+  export let page: SubTypes.Page;
+  export let recommendedPages: SubTypes.ContentCard[];
 
 </script>
 

@@ -1,3 +1,5 @@
+import type { Modify } from "$lib/helpers/utils";
+import type { ContentDocument, MilestonesData } from "$lib/types";
 import type { Prisma } from "@prisma/client";
 
 export const pageTag = {
@@ -5,7 +7,8 @@ export const pageTag = {
     tag: {
       select: {
         id: true,
-        value: true
+        value: true,
+        type: true,
       }
     },
     category: true
@@ -29,5 +32,65 @@ export const pageForCollectionPage = {
   }
 };
 
+export const chapterForPageMeta = {
+  select: {
+    keyTakeaways: true,
+    summary: true,
+    authors: {
+      select: {
+        id: true,
+        name: true,
+        img: true
+      }
+    }
+  }
+};
+
+export const caseStudyForPageMeta = {
+  select: {
+    name: true,
+    established: true,
+    size: true,
+    governance: true,
+    staff: true,
+    budget: true,
+    budgetLevel: true,
+    lat: true,
+    long: true,
+    milestones: true,
+  }
+};
+
+export const page = {
+  select: {
+    id: true,
+    slug: true,
+    draft: true,
+    title: true,
+    img: true,
+    content: true,
+    readTime: true,
+    tags: pageTag,
+    chapter: chapterForPageMeta,
+    caseStudy: caseStudyForPageMeta,
+  }
+};
+
+export const pageForContentCard = {
+  select: {
+    tags: pageTag,
+    title: true,
+    img: true,
+    slug: true
+  }
+};
+
+export type PageTag = Prisma.TagsOnPagesGetPayload<typeof pageTag>;
 export type CollectionCard = Prisma.PageGetPayload<typeof pageForCollectionPage>;
-export type Tag = Prisma.TagsOnPagesGetPayload<typeof pageTag>;
+export type ChapterMeta = Prisma.ChapterGetPayload<typeof chapterForPageMeta>;
+type _CaseStudyMeta = Prisma.CaseStudyGetPayload<typeof caseStudyForPageMeta>;
+export type CaseStudyMeta = Modify<_CaseStudyMeta, { milestones: MilestonesData }>
+export type Page = Modify<Prisma.PageGetPayload<typeof page>, {
+  caseStudy?: CaseStudyMeta, chapter?: ChapterMeta, content: ContentDocument
+}>;
+export type ContentCard = Prisma.PageGetPayload<typeof pageForContentCard>;

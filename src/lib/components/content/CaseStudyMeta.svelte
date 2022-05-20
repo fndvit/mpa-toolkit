@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { CaseStudy } from "$lib/types";
+  import type { SubTypes } from "$lib/types";
   import GlobeViz from "../GlobeViz.svelte";
   import Milestones from './Milestones.svelte';
   import EditableContent from '../EditableContent.svelte';
   import IconButton from "../IconButton.svelte";
 
-  export let caseStudy: Omit<CaseStudy, 'pageId'>;
+  export let caseStudy: SubTypes.CaseStudyMeta;
   export let editable = false;
 
   const { lat, long } = caseStudy;
@@ -18,7 +18,7 @@
     staff: "12 workers",
     budget: "US$552,479 as direct costs of the protected area, plus part of the support services and enterprise development costs of the co-managing NGO",
     budgetLevel: "Above basic, but less than optimal",
-  }
+  };
 
   $: hasMilestones = !!Object.keys(caseStudy.milestones).length;
 

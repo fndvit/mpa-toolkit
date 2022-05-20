@@ -1,12 +1,11 @@
-
 <script lang="ts">
-  import type { Chapter, User, UserInfo } from "$lib/types";
+  import type { SubTypes, UserInfo } from "$lib/types";
   import AuthorsEditor from "../cms/AuthorsEditor.svelte";
   import KeyTakeaways from "../cms/KeyTakeaways.svelte";
   import EditableContent from "../EditableContent.svelte";
   import UserImage from "./UserImage.svelte";
 
-  export let chapter: Omit<Chapter, 'pageId'> & { authors: Pick<User, 'id' | 'img' | 'name'>[] };
+  export let chapter: SubTypes.ChapterMeta;
   export let allAuthors: UserInfo[] = [];
   export let editable = false;
   export let readTime: number = undefined;
@@ -16,14 +15,14 @@
       authors: [],
       keyTakeaways: [],
       summary: ''
-    }
+    };
   }
 
-  const emptyAuthors = [{ id: 0, name: 'Author', img: '' }]
+  const emptyAuthors = [{ id: 0, name: 'Author', img: '' }];
 
   function onClickAuthor(i: number) {
     chapter.authors = [...chapter.authors];
-    chapter.authors.splice(i, 1)
+    chapter.authors.splice(i, 1);
   }
 
   $: displayAuthors = editable && !chapter.authors.length ? emptyAuthors : chapter.authors;

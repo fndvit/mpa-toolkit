@@ -149,6 +149,7 @@
       margin: 0px;
       padding: 0px 20px 30px 20px;
       max-width: 100%;
+      overflow-x: hidden;
     }
 
     .milestones-content {

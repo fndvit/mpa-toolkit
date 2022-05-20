@@ -18,8 +18,7 @@
       1600: { perPage: 5 },
       1400: { perPage: 4 },
       1200: { perPage: 3 },
-      1000: { perPage: 2 },
-      800:  { perPage: 1 }
+      1000: { perPage: 2 }
     }
   });
 
@@ -140,6 +139,25 @@
   .milestones-content {
     width: var(--width);
     margin: 0 var(--margin);
+  }
+
+
+  //Responsive CSS
+
+  @media screen and (max-width: 768px) {
+    .milestones {
+      margin: 0px;
+      padding: 0px 20px 30px 20px;
+      max-width: 100%;
+    }
+
+    .milestones-content {
+      margin: 0px;
+    }
+
+    :global(.splide__arrow){
+      display: none;
+    }
   }
 
 </style>

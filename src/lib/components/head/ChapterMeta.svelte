@@ -50,7 +50,7 @@
           {#if i > 0 && i === displayAuthors.length - 1}
             and
           {/if}
-          <div on:click={() => onClickAuthor(i)}>{author.name}</div>
+          <div on:click={() => editable && onClickAuthor(i)}>{author.name}</div>
         {/each}
       </div>
     {/if}

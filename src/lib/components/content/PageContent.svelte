@@ -7,8 +7,8 @@
   import Paragraph from "./Paragraph.svelte";
   import TextSlider from "./TextSlider.svelte";
   import MadLib from "../MadLib.svelte";
-  import TinyCarousel from "../TinyCarousel/TinyCarousel.svelte";
-  import LifeCycle from "../LifeCycle/LifeCycle.svelte";
+  import TinyCarousel from "$lib/components/TinyCarousel.svelte";
+  import LifeCycle from "$lib/components/LifeCycle.svelte";
   import Image from "./Image.svelte";
 
   export let page: SubTypes.Page;

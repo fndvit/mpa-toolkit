@@ -1,13 +1,13 @@
 <script lang="ts">
-  import IconButton from '$lib/components/IconButton.svelte';
+  import IconButton from '$lib/components/generic/IconButton.svelte';
   import type { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
   import BlockButton from './BlockButton.svelte';
-  import { addCard } from './cards';
+  import { addCard } from '$lib/editor/cards';
   import MarkButton from './MarkButton.svelte';
   import MenuSeperator from './MenuSeperator.svelte';
-  import { schema } from './schema';
+  import { schema } from '$lib/editor/schema';
   import UploadButton from './UploadButton.svelte';
 
   export let editorState: EditorState;

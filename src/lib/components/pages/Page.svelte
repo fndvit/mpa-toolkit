@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
-  import CaseStudyMeta from "$lib/components/content/CaseStudyMeta.svelte";
-  import Splash from "$lib/components/content/Splash.svelte";
-  import ChapterMeta from "$lib/components/content/ChapterMeta.svelte";
-  import PageContent from "./PageContent.svelte";
+  import CaseStudyMeta from "$lib/components/head/CaseStudyMeta.svelte";
+  import Splash from "$lib/components/head/Splash.svelte";
+  import ChapterMeta from "$lib/components/head/ChapterMeta.svelte";
+  import PageContent from "$lib/components/content/PageContent.svelte";
 
   export let page: SubTypes.Page;
   export let recommendedPages: SubTypes.ContentCard[];

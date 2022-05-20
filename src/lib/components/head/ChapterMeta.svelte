@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { SubTypes, UserInfo } from "$lib/types";
-  import AuthorsEditor from "../cms/AuthorsEditor.svelte";
-  import KeyTakeaways from "../cms/KeyTakeaways.svelte";
-  import EditableContent from "../EditableContent.svelte";
-  import UserImage from "./UserImage.svelte";
+  import AuthorsEditor from "$lib/components/cms/AuthorsEditor.svelte";
+  import KeyTakeaways from "$lib/components/cms/KeyTakeaways.svelte";
+  import EditableContent from "$lib/components/generic/EditableContent.svelte";
+  import UserImage from "$lib/components/UserImage.svelte";
 
   export let chapter: SubTypes.ChapterMeta;
   export let allAuthors: UserInfo[] = [];

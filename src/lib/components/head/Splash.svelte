@@ -1,6 +1,6 @@
 <script lang="ts">
   import { staticUrl } from "$lib/helpers/content";
-  import EditableContent from "../EditableContent.svelte";
+  import EditableContent from "$lib/components/generic/EditableContent.svelte";
 
   export let title: string;
   export let img: string;

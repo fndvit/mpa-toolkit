@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
-  import TagContainer from "../Tags/TagContainer.svelte";
+  import TagContainer from "$lib/components/TagContainer.svelte";
   import { staticUrl } from "$lib/helpers/content";
 
   export let page: SubTypes.ContentCard;

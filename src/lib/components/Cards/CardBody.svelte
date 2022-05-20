@@ -1,5 +1,5 @@
 <script lang="ts">
-  import EditableContent from '../EditableContent.svelte';
+  import EditableContent from '$lib/components/generic/EditableContent.svelte';
 
   export let text: string;
   export let editable = false;

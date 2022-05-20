@@ -1,12 +1,12 @@
 <script lang="ts">
-  import ProsemirrorEditor from '$lib/Editor/ProsemirrorEditor.svelte';
+  import ProsemirrorEditor from './ProsemirrorEditor.svelte';
   import type { ContentDocument } from '$lib/types';
   import { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { onMount, setContext } from 'svelte';
   import EditorMenu from './EditorMenu.svelte';
-  import { corePlugins, richTextPlugins } from './plugins';
-  import { schema } from './schema';
+  import { corePlugins, richTextPlugins } from '$lib/editor/plugins';
+  import { schema } from '$lib/editor/schema';
 
   let focusEditor: () => void;
   let view: EditorView;

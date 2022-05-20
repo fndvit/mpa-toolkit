@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
-  import Tag from "./Tag.svelte";
+  import Tag from "$lib/components/Tag.svelte";
 
   export let tags: SubTypes.PageTag[] = [];
 </script>

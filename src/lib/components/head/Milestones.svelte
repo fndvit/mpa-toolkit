@@ -1,9 +1,9 @@
 <script lang="ts">
   import { Splide, SplideSlide } from "@splidejs/svelte-splide";
-  import Milestone from "../Milestone.svelte";
+  import Milestone from "$lib/components/Milestone.svelte";
   import type { MilestonesData } from '$lib/types';
   import { SplideOptions } from '$lib/helpers/splide';
-  import IconButton from "../IconButton.svelte";
+  import IconButton from "$lib/components/generic/IconButton.svelte";
 
   export let milestones: MilestonesData;
   export let editable = false;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SubTypes } from '$lib/types';
-  import CollectionCard from './CollectionCard.svelte';
+  import CollectionCard from '$lib/components/CollectionCard.svelte';
 
   export let pages: SubTypes.CollectionCard[];
 </script>

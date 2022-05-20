@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import EditableContent from "./EditableContent.svelte";
-  import IconButton from "./IconButton.svelte";
-  import TextInputEditor from "./TextInputEditor.svelte";
+  import EditableContent from "$lib/components/generic/EditableContent.svelte";
+  import IconButton from "$lib/components/generic/IconButton.svelte";
+  import TextInputEditor from "$lib/components/generic/TextInputEditor.svelte";
 
   export let year: string;
   export let content: string[];

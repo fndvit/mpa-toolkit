@@ -2,8 +2,8 @@
   import type { SubTypes, Tag } from '$lib/types';
   import { groupBy } from '$lib/helpers/utils';
   import MultiSelect, { Option } from 'svelte-multiselect';
-  import CircleMenu, { type MenuElement } from '../CircleMenu/CircleMenu.svelte';
-  import TagContainer from  '../Tags/TagContainer.svelte';
+  import CircleMenu, { type MenuElement } from './CircleMenu.svelte';
+  import TagContainer from  './TagContainer.svelte';
 
   export let allTags: Tag[] = null;
   export let tags: SubTypes.PageTag[]; // binding (updated as tags are changed)

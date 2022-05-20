@@ -8,7 +8,7 @@
 
   import { fromImage } from 'imtool';
   import { closeModal } from 'svelte-modals';
-  import LocalFileCrop from './cms/LocalFileCrop.svelte';
+  import LocalFileCrop from './LocalFileCrop.svelte';
 
   export let isOpen: boolean;
   export let file: File;

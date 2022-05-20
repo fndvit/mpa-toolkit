@@ -1,5 +1,5 @@
 <script lang="ts">
-  import IconButton from '$lib/components/IconButton.svelte';
+  import IconButton from '$lib/components/generic/IconButton.svelte';
   import { toggleMark } from 'prosemirror-commands';
   import type { MarkType } from 'prosemirror-model';
   import type { EditorState } from 'prosemirror-state';

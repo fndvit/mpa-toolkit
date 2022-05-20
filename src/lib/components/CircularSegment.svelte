@@ -1,5 +1,5 @@
 <script context="module" lang='ts'>
-  import type { CircleConfig, SegmentType } from "./CircleMenu.svelte";
+  import type { CircleConfig, SegmentType } from "$lib/components/CircleMenu.svelte";
 
   export interface Segment {
     startAngle: number;

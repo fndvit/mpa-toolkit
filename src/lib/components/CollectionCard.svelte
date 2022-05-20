@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SubTypes } from '$lib/types';
   import { staticUrl } from '$lib/helpers/content';
-  import TagContainer from '../Tags/TagContainer.svelte';
+  import TagContainer from '$lib/components/TagContainer.svelte';
 
   export let page: SubTypes.CollectionCard;
 

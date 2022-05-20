@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
-  import GlobeViz from "../GlobeViz.svelte";
+  import EditableContent from '$lib/components/generic/EditableContent.svelte';
+  import IconButton from '$lib/components/generic/IconButton.svelte';
+  import GlobeViz from "./GlobeViz.svelte";
   import Milestones from './Milestones.svelte';
-  import EditableContent from '../EditableContent.svelte';
-  import IconButton from "../IconButton.svelte";
 
   export let caseStudy: SubTypes.CaseStudyMeta;
   export let editable = false;

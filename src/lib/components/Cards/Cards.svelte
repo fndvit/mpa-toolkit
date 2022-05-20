@@ -4,7 +4,7 @@
   import CardHeading from './CardHeading.svelte';
   import CardBody from './CardBody.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
-  import IconButton from '../IconButton.svelte';
+  import IconButton from '$lib/components/generic/IconButton.svelte';
 
   interface Card {
     heading: string;

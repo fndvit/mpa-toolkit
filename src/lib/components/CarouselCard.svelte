@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { SubTypes } from "$lib/types";
 
-  import TagContainer from "./Tags/TagContainer.svelte";
+  import TagContainer from "$lib/components/TagContainer.svelte";
 
   const exampleTags: SubTypes.PageTag[] = [
     {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},

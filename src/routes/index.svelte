@@ -6,9 +6,9 @@
   import type { SubTypes } from "$lib/types";
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
-  import Searchbar from "$lib/components/Searchbar.svelte";
+  import Searchbar from "$lib/components/generic/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
-  import TagContainer from "$lib/components/Tags/TagContainer.svelte";
+  import TagContainer from "$lib/components/TagContainer.svelte";
 
   import IAFDC_Logo from "/static/IAFDC_Logo.svg";
   import TNC_Logo from "/static/TNC_Logo.svg";

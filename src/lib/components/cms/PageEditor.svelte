@@ -1,21 +1,21 @@
 <script lang="ts">
-  import LifeCycle from '$lib/components/LifeCycle/LifeCycle.svelte';
+  import type { PageRequest, SubTypes, Tag, UserInfo } from '$lib/types';
+  import LifeCycle from '$lib/components/LifeCycle.svelte';
   import { openModal } from 'svelte-modals';
   import { goto } from "$app/navigation";
-  import Editor from "$lib/Editor/Editor.svelte";
-  import Spinner from "$lib/components/Spinner.svelte";
-  import type { PageRequest, SubTypes, Tag, UserInfo } from '$lib/types';
-  import DeleteModal from "$lib/components/DeleteModal.svelte";
+  import Editor from "$lib/components/cms/editor/Editor.svelte";
+  import Spinner from "$lib/components/generic/Spinner.svelte";
+  import DeleteModal from "$lib/components/cms/DeleteModal.svelte";
   import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
-  import LoadingButton from '$lib/components/LoadingButton.svelte';
-  import Button from '$lib/components/Button.svelte';
-  import TimedMessage from '$lib/components/TimedMessage.svelte';
-  import CaseStudyMeta from '$lib/components/content/CaseStudyMeta.svelte';
+  import LoadingButton from '$lib/components/generic/LoadingButton.svelte';
+  import Button from '$lib/components/generic/Button.svelte';
+  import TimedMessage from '$lib/components/generic/TimedMessage.svelte';
+  import CaseStudyMeta from '$lib/components/head/CaseStudyMeta.svelte';
+  import ChapterMeta from '$lib/components/head/ChapterMeta.svelte';
+  import Splash from '$lib/components/head/Splash.svelte';
   import cloneDeep from 'clone-deep';
   import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
-  import ChapterMeta from '$lib/components/content/ChapterMeta.svelte';
-  import Splash from '$lib/components/content/Splash.svelte';
-  import IconButton from '$lib/components/IconButton.svelte';
+  import IconButton from '$lib/components/generic/IconButton.svelte';
   import PageContent from '$lib/components/content/PageContent.svelte';
 
   export let users: UserInfo[];

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { uploadImage } from "$lib/api";
-  import IconButton from "$lib/components/IconButton.svelte";
+  import IconButton from "$lib/components/generic/IconButton.svelte";
   import type { EditorView } from "prosemirror-view";
   import { getContext } from "svelte";
-  import { findPlaceholder, placeholderPlugin } from "./placeholder";
-  import { schema } from "./schema";
+  import { findPlaceholder, placeholderPlugin } from "$lib/editor/placeholder";
+  import { schema } from "$lib/editor/schema";
 
   let inputEl: HTMLInputElement;
 

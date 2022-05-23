@@ -156,8 +156,18 @@
       margin: 0px;
     }
 
-    :global(.splide__arrow){
-      display: none;
+    :global(.splide__arrow--prev){
+      top: 0rem;
+      left: auto;
+      right: 45px;
+      transform: translateY(-50px) scale(0.65) !important;
+    }
+
+    :global(.splide__arrow--next){
+      top: 0rem;
+      left: auto;
+      right: 0rem;
+      transform: translateY(-50px) scale(0.65) !important;
     }
   }
 

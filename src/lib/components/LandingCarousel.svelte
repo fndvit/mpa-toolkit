@@ -3,40 +3,41 @@
   import CarouselDots from './Cards/CarouselDots.svelte';
   import CarouselCard from './CarouselCard.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
+  import previewImage from '$lib/assets/chapter-preview-image.png';
 
   export let type: 'chapter'|'case study';
 
   //Dummy summary cards
   let p0 = {
-    previewImage: '/static/chapter-preview-image.png',
+    previewImage,
     category: 'Sustainable financing',
     title: '0-What should MPA managers know about the blue economy and business planning?',
     slug: 'what-should-mpa-managers-0'
   };
 
   let p1 = {
-    previewImage: '/static/chapter-preview-image.png',
+    previewImage,
     category: 'Sustainable financing',
     title: '1-What should MPA managers know about the blue economy and business planning?',
     slug: 'what-should-mpa-managers-1'
   };
 
   let p2 = {
-    previewImage: '/static/chapter-preview-image.png',
+    previewImage,
     category: 'Sustainable financing',
     title: '2-What should MPA managers know about the blue economy and business planning?',
     slug: 'what-should-mpa-managers-2'
   };
 
   let p3 = {
-    previewImage: '/static/chapter-preview-image.png',
+    previewImage,
     category: 'Sustainable financing',
     title: '3-What should MPA managers know about the blue economy and business planning?',
     slug: 'what-should-mpa-managers-3'
   };
 
   let p4 = {
-    previewImage: '/static/chapter-preview-image.png',
+    previewImage,
     category: 'Sustainable financing',
     title: '4-What should MPA managers know about the blue economy and business planning?',
     slug: 'what-should-mpa-managers-4'

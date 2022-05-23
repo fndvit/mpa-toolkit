@@ -20,7 +20,7 @@
 
   export let users: UserInfo[];
   export let allTags: Tag[];
-  export let page: SubTypes.Page;
+  export let page: SubTypes.Page.Full;
 
   const userLookup = createLookup(users, u => u.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
@@ -32,11 +32,11 @@
   let pageType: "Case Study" | "Chapter" = page.caseStudy ? "Case Study" : "Chapter";
 
   const pageTagToRequestTag = (t: SubTypes.PageTag): Unpacked<PageRequest['tags']> => ({id: t.tag.id, category: t.category});
-  const chapterToRequest = (c: SubTypes.ChapterMeta): PageRequest['chapter'] => ({
+  const chapterToRequest = (c: SubTypes.Chapter.PageHead): PageRequest['chapter'] => ({
     ...c, authors: c.authors.map(a => a.id),
   });
 
-  const convertPageToPageRequest = (p: SubTypes.Page): PageRequest => {
+  const convertPageToPageRequest = (p: SubTypes.Page.Full): PageRequest => {
     const _p = cloneDeep(p);
     return {
       ..._p,
@@ -120,7 +120,7 @@
 
   $: _page.chapter = chapter ? chapterToRequest(chapter) : undefined;
 
-  let previewPage: SubTypes.Page;
+  let previewPage: SubTypes.Page.Full;
   $: previewPage = preview && {
     ..._page,
     id: null,

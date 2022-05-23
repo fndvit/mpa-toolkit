@@ -5,7 +5,7 @@
   import GlobeViz from "./GlobeViz.svelte";
   import Milestones from './Milestones.svelte';
 
-  export let caseStudy: SubTypes.CaseStudyMeta;
+  export let caseStudy: SubTypes.CaseStudy.PageHead;
   export let editable = false;
 
   const { lat, long } = caseStudy;

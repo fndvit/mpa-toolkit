@@ -2,7 +2,7 @@
   import type { SubTypes } from '$lib/types';
   import CollectionCard from '$lib/components/CollectionCard.svelte';
 
-  export let pages: SubTypes.CollectionCard[];
+  export let pages: SubTypes.Page.CollectionCard[];
 </script>
 
 <div class="content">

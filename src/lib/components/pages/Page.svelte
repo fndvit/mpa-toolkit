@@ -5,8 +5,8 @@
   import ChapterMeta from "$lib/components/head/ChapterMeta.svelte";
   import PageContent from "$lib/components/content/PageContent.svelte";
 
-  export let page: SubTypes.Page;
-  export let recommendedPages: SubTypes.ContentCard[];
+  export let page: SubTypes.Page.Full;
+  export let recommendedPages: SubTypes.Page.ContentCard[];
 
 </script>
 

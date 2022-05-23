@@ -3,7 +3,7 @@
   import { staticUrl } from '$lib/helpers/content';
   import TagContainer from '$lib/components/TagContainer.svelte';
 
-  export let page: SubTypes.CollectionCard;
+  export let page: SubTypes.Page.CollectionCard;
 
   const authors = page.chapter?.authors?.map(a => a.name);
   const authorsString = authors && (

@@ -1,26 +1,17 @@
 <script lang="ts">
   import type { SubTypes } from '$lib/types';
-  import CollectionCard from '$lib/components/CollectionCard.svelte';
+  import CollectionCards from '$lib/components/CollectionCards.svelte';
 
   export let pages: SubTypes.Page.CollectionCard[];
 </script>
 
 <div class="content">
-  <ul class="page-list">
-    {#each pages as page}
-      <li>
-        <CollectionCard {page} />
-      </li>
-    {/each}
-  </ul>
+  <CollectionCards {pages} />
 </div>
 
 <style lang="scss">
-  .page-list {
-    list-style-type: none;
-  }
-
   .content {
     background: #ffffff;
+    padding: 20px;
   }
 </style>

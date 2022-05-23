@@ -140,7 +140,7 @@ class AWSAdapterStack extends Stack {
         ),
       },
       bundling: {
-        inject: ["./adapter/lambda/shims.js"],
+        inject: ["./adapter/dist/lambda/shims.js"],
         commandHooks: {
           beforeInstall: (i, o) => [],
           beforeBundling: (i, o) => [],

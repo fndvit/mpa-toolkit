@@ -32,9 +32,9 @@
   {/if}
 
   <p>I am <MadLibSelector {type} options={typeUserList} bind:selected={typeUser}/> and want help
-    <br> finding <MadLibSelector {type} options={objectiveList} bind:selected={objective}/> to
+    finding <MadLibSelector {type} options={objectiveList} bind:selected={objective}/> to
     <MadLibSelector {type} options={objectiveVerbList} bind:selected={objectiveVerb}/> decisions
-    <br><MadLibSelector {type} options={actionSubjectList} bind:selected={actionSubject}/>
+    <MadLibSelector {type} options={actionSubjectList} bind:selected={actionSubject}/>
   </p>
 
   {#if type==='inline'}
@@ -75,6 +75,7 @@
       margin-top: 0.5rem;
       color: #6C767D;
       font-size: 20px;
+      max-width: 440px;
     }
 
     h5 {
@@ -118,6 +119,7 @@
         line-height: 40px;
         font-weight: 400;
         font-size: 32px;
+        max-width: 700px;
       }
     }
   }
@@ -197,6 +199,11 @@
       margin: 2rem 0px 2rem 0px;
       padding-bottom: 2rem;
       width: 100%;
+
+      p {
+        font-size: 16px;
+        max-width: 350px;
+      }
     }
 
   }

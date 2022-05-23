@@ -50,4 +50,12 @@
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.30);
   }
 
+  @media screen and (max-width: 768px) {
+
+    .expand-button {
+      width: auto;
+    }
+
+  }
+
 </style>

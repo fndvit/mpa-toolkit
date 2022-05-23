@@ -3,7 +3,7 @@ import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
 
 export const get = authMiddleware(
-  { role: 'CONTENT_MANAGER', redirect: '/cms' },
+  { role: 'CONTENT_MANAGER' },
   async ({ params }) => {
 
     const { id } = params;

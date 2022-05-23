@@ -147,7 +147,7 @@
   @media screen and (max-width: 768px) {
     .milestones {
       margin: 0px;
-      padding: 0px 20px 30px 20px;
+      padding: 0px 20px 220px 20px;
       max-width: 100%;
       overflow-x: hidden;
     }

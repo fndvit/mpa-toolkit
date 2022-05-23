@@ -147,24 +147,24 @@
       padding: 0px 20px 220px 20px;
       max-width: 100%;
       overflow-x: hidden;
+
+      :global(.splide__arrow--prev){
+        top: 0rem;
+        left: auto;
+        right: 45px;
+        transform: translateY(-50px) scale(0.65) !important;
+      }
+
+      :global(.splide__arrow--next){
+        top: 0rem;
+        left: auto;
+        right: 0rem;
+        transform: translateY(-50px) scale(0.65) !important;
+      }
     }
 
     .milestones-content {
       margin: 0px;
-    }
-
-    :global(.splide__arrow--prev){
-      top: 0rem;
-      left: auto;
-      right: 45px;
-      transform: translateY(-50px) scale(0.65) !important;
-    }
-
-    :global(.splide__arrow--next){
-      top: 0rem;
-      left: auto;
-      right: 0rem;
-      transform: translateY(-50px) scale(0.65) !important;
     }
   }
 

@@ -1,34 +1,27 @@
 <script lang="ts">
-  import type { Page } from "$lib/types";
-  import Button from "$lib/components/generic/Button.svelte";
+  import type { SubTypes } from "$lib/types";
+  import CollectionCards from "$lib/components/CollectionCards.svelte";
+  import IconButton from "$lib/components/generic/IconButton.svelte";
 
-  export let pages: Page[];
+  export let pages: SubTypes.Page.CollectionCard[];
 </script>
 
 <div class="container">
   <div class="title">
     <h1>Pages</h1>
-    <Button href="/cms/pages/create/chapter">New Chapter</Button>
-    <Button href="/cms/pages/create/case-study">New Case study</Button>
+    <IconButton href="/cms/pages/create/chapter" icon="add" text="New Chapter" />
+    <IconButton href="/cms/pages/create/case-study" icon="add" text="New Case study" />
   </div>
 
   <div class="pages">
-    {#each pages as page}
-      <div class="page">
-
-        <div>{page.title}</div>
-        <a href="/{page.slug}">View</a>
-        <a href="/cms/pages/{page.id}">Edit</a>
-
-      </div>
-    {/each}
+    <CollectionCards {pages} cms />
   </div>
 </div>
 
-<style>
+<style lang="scss">
   .container {
-    max-width: 1000px;
     width: 100%;
+    box-sizing: border-box;
     padding: 20px;
     margin: 0px auto;
   }
@@ -36,18 +29,11 @@
   .title {
     display: flex;
     align-items: center;
-    column-gap: 20px;
+    column-gap: 30px;
+    margin-bottom: 20px;
+    --ib-hover-border: 1px solid #ddd;
+    > h1 {
+      margin: 0 10px 15px 0;
+    }
   }
-
-  .pages {
-    display: grid;
-    grid-template-columns: 1fr 100px 100px;
-    row-gap: 30px;
-    margin-bottom: 50px;
-  }
-
-  .page {
-    display: contents;
-  }
-
 </style>

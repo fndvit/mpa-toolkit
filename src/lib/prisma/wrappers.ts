@@ -1,57 +1,26 @@
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import type { Page, PageRequest, TagsOnPages } from "$lib/types";
+import type { Page, PageRequest, SubTypes, TagsOnPages } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
+import { pageForContentCard, pageFull } from "./queries";
 
 export async function getPage(slug: string, draft = false) {
   return prisma.page.findFirst({
     where: { slug, draft },
-    include: {
-      caseStudy: true,
-      chapter: {
-        include: {
-          authors: true
-        }
-      },
-      tags: {
-        include: {
-          tag: true,
-        }
-      },
-    }
+    ...pageFull
   });
 }
 
-export async function getRecommendedPages (page: Page & {tags: TagsOnPages[]}) {
+export async function getRecommendedPages(page: Pick<SubTypes.Page.Full, 'id' | 'tags'>) {
   return await prisma.page.findMany({
     where: {
-        tags: {
-          some: {
-            OR:page.tags.map(t => ({
-              tagId: t.tagId
-            }))
-          },
-        },
-        NOT: {
-          id: page.id
-        }
+      draft: false,
+      tags: { some: { OR: page.tags.map(t => ({ tagId: t.tag.id })) } },
+      NOT: { id: page.id }
     },
-    orderBy:{
-      tags: {
-        _count: 'asc'
-      }
-    },
-    select: {
-      tags: {
-        include : {
-          tag: true
-        },
-      },
-      img: true,
-      title: true,
-      slug: true,
-    }
+    orderBy: { tags: { _count: 'asc' } },
+    ...pageForContentCard
   });
 };
 

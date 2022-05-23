@@ -68,6 +68,7 @@
   }
 
   .content {
+    position: relative;
     padding: 2rem 6rem;
     display: grid;
     grid-template-columns: 15rem 40rem auto;
@@ -87,6 +88,35 @@
   .menu {
     position: sticky;
     top: 10px;
+  }
+
+    //Responsive CSS
+
+  @media screen and (max-width: 768px) {
+    .content {
+      padding: 200px 20px 0px 20px;
+      display: block;
+      :global(h1) {
+        font-size: 32px;
+      }
+    }
+
+    .lifecycle-column {
+      position: absolute;
+      transform: translateY(-175px);
+      top: 0px;
+    }
+
+    .body-column {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      line-height: 28px;
+    }
+
+    .menu {
+      display: none; //temporal
+    }
+
   }
 
 </style>

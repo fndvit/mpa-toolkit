@@ -5,23 +5,23 @@ import tags from './data/tags.json';
 import milestones from './data/milestones.json';
 import { LoremIpsum } from "lorem-ipsum";
 import SeedRandom from 'seedrandom';
-import { prisma } from '../src/lib/prisma';
-import { groupBy } from '../src/lib/helpers/utils';
-import { createPage } from '../src/lib/prisma/wrappers';
-import type { ContentDocument, PageRequest } from '../src/lib/types';
+import { prisma } from '../../src/lib/prisma';
+import { groupBy } from '../../src/lib/helpers/utils';
+import { createPage } from '../../src/lib/prisma/wrappers';
+import type { ContentDocument, PageRequest } from '../../src/lib/types';
 
-const seed = 'fixed';
+const FIXED_SEED = 'fixed';
 const NUM_RANDOM_CHAPTERS = 20;
 
-const rand = SeedRandom(seed);
+const rand = SeedRandom(FIXED_SEED);
 
 const titleLorem = new LoremIpsum({
-  seed,
+  seed: FIXED_SEED,
   wordsPerSentence: { min: 10, max: 16 }
 });
 
 const summaryLorem = new LoremIpsum({
-  seed,
+  seed: FIXED_SEED,
   sentencesPerParagraph: { min: 2, max: 2},
   wordsPerSentence: { min: 10, max: 20 }
 });
@@ -39,9 +39,9 @@ function getXRandItems<T>(items: T[], x: number): T[] {
   return result;
 }
 
-async function main() {
+export async function seed(dev: boolean) {
 
-  console.log('Seeding...');
+  console.log(`Seeding ${dev ? 'dev' : 'prod'} data...`);
 
   await prisma.caseStudy.deleteMany();
   await prisma.chapter.deleteMany();
@@ -49,19 +49,6 @@ async function main() {
   await prisma.page.deleteMany();
   await prisma.user.deleteMany();
   await prisma.tag.deleteMany();
-
-  const names = [ "Emma Doyle", "Nicolas Smith", "Kirby Heath", "Todd Frey", "Del Robertson" ];
-
-  await prisma.user.createMany({
-    data: names.map((name, i) => ({
-      email: `user${i}@example.com`,
-      name,
-      role: Role.CONTENT_MANAGER
-    }))
-  });
-
-  const users = await prisma.user.findMany();
-  const userIds = users.map(user => user.id);
 
   await prisma.tag.createMany({
     data: [
@@ -71,49 +58,64 @@ async function main() {
     ]
   });
 
-  const allTags = await prisma.tag.findMany();
+  if (dev) {
+    const names = [ "Emma Doyle", "Nicolas Smith", "Kirby Heath", "Todd Frey", "Del Robertson" ];
 
-  await createPage({
-    slug: "blue-economy",
-    title: "What should MPA managers know about the blue economy and business planning?",
-    draft: false,
-    img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
-    content: content as any as ContentDocument,
-    tags: getRandomTagsForContent(allTags),
-    chapter: {
-      keyTakeaways: [
-        summaryLorem.generateSentences(2),
-        summaryLorem.generateSentences(2),
-        summaryLorem.generateSentences(2),
-      ],
-      summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
-      authors: [userIds[0]]
-    }
-  });
+    await prisma.user.createMany({
+      data: names.map((name, i) => ({
+        email: `user${i}@example.com`,
+        name,
+        role: Role.CONTENT_MANAGER
+      }))
+    });
 
-  await createPage({
-      slug: "raja-ampat-mpa-network-adaptation-strate",
-      title: "Raja Ampat MPA Network – Adaptation strategies for a changing climate",
+    const users = await prisma.user.findMany();
+    const userIds = users.map(user => user.id);
+
+    const allTags = await prisma.tag.findMany();
+
+    await createPage({
+      slug: "blue-economy",
+      title: "What should MPA managers know about the blue economy and business planning?",
       draft: false,
       img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
       content: content as any as ContentDocument,
       tags: getRandomTagsForContent(allTags),
-      caseStudy: {
-        name: "Raja Ampat MPA Network",
-        established: 2008,
-        size: 20002,
-        governance: "Co-management with the regional public service agency",
-        staff: "56 workers",
-        budget: "Entrance fees (87–88%) + grants (11–12%):US$1,470,000. The pandemic caused a drastic reduction in 2020/2021.",
-        budgetLevel: "Between basic (IDR 13-14 billion ~ US$950,000) and optimal (IDR 30 billion ~ US$2.1 million)",
-        lat: -0.23333324,
-        long: 130.51666646,
-        milestones
+      chapter: {
+        keyTakeaways: [
+          summaryLorem.generateSentences(2),
+          summaryLorem.generateSentences(2),
+          summaryLorem.generateSentences(2),
+        ],
+        summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
+        authors: [userIds[0]]
       }
-  });
+    });
 
-  for (let i = 0; i < NUM_RANDOM_CHAPTERS; i++) {
-    await createRandomPage(userIds, allTags);
+    await createPage({
+        slug: "raja-ampat-mpa-network-adaptation-strate",
+        title: "Raja Ampat MPA Network – Adaptation strategies for a changing climate",
+        draft: false,
+        img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
+        content: content as any as ContentDocument,
+        tags: getRandomTagsForContent(allTags),
+        caseStudy: {
+          name: "Raja Ampat MPA Network",
+          established: 2008,
+          size: 20002,
+          governance: "Co-management with the regional public service agency",
+          staff: "56 workers",
+          budget: "Entrance fees (87–88%) + grants (11–12%):US$1,470,000. The pandemic caused a drastic reduction in 2020/2021.",
+          budgetLevel: "Between basic (IDR 13-14 billion ~ US$950,000) and optimal (IDR 30 billion ~ US$2.1 million)",
+          lat: -0.23333324,
+          long: 130.51666646,
+          milestones
+        }
+    });
+
+    for (let i = 0; i < NUM_RANDOM_CHAPTERS; i++) {
+      await createRandomPage(userIds, allTags);
+    }
   }
 
   console.log('Finished');
@@ -157,9 +159,3 @@ async function createRandomPage(userIds: number[], allTags: Tag[]) {
     }
   });
 }
-
-main()
-  .catch((e) => console.error(e))
-  .finally(async () => {
-    await prisma.$disconnect();
-  });

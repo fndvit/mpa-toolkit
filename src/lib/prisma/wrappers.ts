@@ -1,6 +1,6 @@
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import type { Page, PageRequest, SubTypes, TagsOnPages } from "$lib/types";
+import type { PageRequest, SubTypes } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
 import { pageForContentCard, pageFull } from "./queries";

@@ -60,6 +60,7 @@ export const pageForContentCard = validate<Prisma.PageSelect>()({
 
 export const pageForCollectionCard = validate<Prisma.PageSelect>()({
   id: true,
+  draft: true,
   title: true,
   slug: true,
   img: true,

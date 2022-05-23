@@ -2,8 +2,11 @@
   import type { SubTypes } from "$lib/types";
   import CollectionCards from "$lib/components/CollectionCards.svelte";
   import IconButton from "$lib/components/generic/IconButton.svelte";
+  import { groupBy } from "$lib/helpers/utils";
 
   export let pages: SubTypes.Page.CollectionCard[];
+
+  const grouped = groupBy(pages, p => p.draft ? 'draft' : 'live');
 </script>
 
 <div class="container">
@@ -14,7 +17,20 @@
   </div>
 
   <div class="pages">
-    <CollectionCards {pages} cms />
+    <h3>Draft</h3>
+    {#if grouped.draft}
+      <CollectionCards pages={grouped.draft} cms />
+    {:else}
+      No draft pages
+    {/if}
+  </div>
+  <div class="pages">
+    <h3>Live</h3>
+    {#if grouped.live}
+      <CollectionCards pages={grouped.live} cms />
+      {:else}
+        No live pages
+    {/if}
   </div>
 </div>
 

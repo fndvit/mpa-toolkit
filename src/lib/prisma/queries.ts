@@ -82,16 +82,19 @@ export namespace Chapter {
 }
 
 export namespace Page {
+  export type Full = Modify<
+    Prisma.PageGetPayload<typeof pageFull>,
+    { caseStudy?: CaseStudy.PageHead, chapter?: Chapter.PageHead, content: ContentDocument}
+  >;
   export type CollectionCard = Prisma.PageGetPayload<typeof pageForCollectionPage>;
-  export type Full = Modify<Prisma.PageGetPayload<typeof pageFull>, {
-    caseStudy?: CaseStudy.PageHead, chapter?: Chapter.PageHead, content: ContentDocument
-  }>;
   export type ContentCard = Prisma.PageGetPayload<typeof pageForContentCard>;
 }
 
 export namespace CaseStudy {
-  type _CaseStudyHead = Prisma.CaseStudyGetPayload<typeof caseStudyForPageHead>;
-  export type PageHead = Modify<_CaseStudyHead, { milestones: MilestonesData }>
+  export type PageHead = Modify<
+    Prisma.CaseStudyGetPayload<typeof caseStudyForPageHead>,
+    { milestones: MilestonesData }
+  >
 }
 
 export type PageTag = Prisma.TagsOnPagesGetPayload<typeof pageTag>;

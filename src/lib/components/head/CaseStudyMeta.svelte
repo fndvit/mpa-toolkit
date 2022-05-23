@@ -150,8 +150,6 @@
     }
   }
 
-  //Responsive CSS
-
   @media screen and (max-width: 768px) {
 
     .meta-container {

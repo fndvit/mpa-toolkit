@@ -141,9 +141,6 @@
     margin: 0 var(--margin);
   }
 
-
-  //Responsive CSS
-
   @media screen and (max-width: 768px) {
     .milestones {
       margin: 0px;

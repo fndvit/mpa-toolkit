@@ -90,8 +90,6 @@
     top: 10px;
   }
 
-    //Responsive CSS
-
   @media screen and (max-width: 768px) {
     .content {
       padding: 200px 20px 0px 20px;

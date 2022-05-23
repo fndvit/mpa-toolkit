@@ -1,10 +1,11 @@
 import { Tag, TagCategory } from '@prisma/client';
-import { PrismaClient, Role, TagType } from '@prisma/client';
+import { Role, TagType } from '@prisma/client';
 import content from './data/content.json';
 import tags from './data/tags.json';
 import milestones from './data/milestones.json';
 import { LoremIpsum } from "lorem-ipsum";
 import SeedRandom from 'seedrandom';
+import { prisma } from '../src/lib/prisma';
 import { groupBy } from '../src/lib/helpers/utils';
 import { createPage } from '../src/lib/prisma/wrappers';
 import type { ContentDocument, PageRequest } from '../src/lib/types';
@@ -38,9 +39,9 @@ function getXRandItems<T>(items: T[], x: number): T[] {
   return result;
 }
 
-const prisma = new PrismaClient();
-
 async function main() {
+
+  console.log('Seeding...');
 
   await prisma.caseStudy.deleteMany();
   await prisma.chapter.deleteMany();
@@ -114,6 +115,8 @@ async function main() {
   for (let i = 0; i < NUM_RANDOM_CHAPTERS; i++) {
     await createRandomPage(userIds, allTags);
   }
+
+  console.log('Finished');
 
 }
 

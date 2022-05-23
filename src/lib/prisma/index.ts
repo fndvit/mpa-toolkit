@@ -1,10 +1,9 @@
 import env from "../env";
-import { PrismaClient } from "@prisma/client";
+import Prisma1, * as Prisma2 from "@prisma/client";
 
-export const prisma = new PrismaClient({
+const Prisma = Prisma1 || Prisma2;
+export const prisma = new Prisma.PrismaClient({
   datasources: {
-    db: {
-      url: env.databaseUrl
-    }
+    db: { url: env.databaseUrl }
   }
 });

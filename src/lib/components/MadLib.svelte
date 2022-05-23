@@ -190,4 +190,15 @@
     }
   }
 
+  @media screen and (max-width: 768px) {
+
+    .container {
+      border-radius: 0px 50px 0px 0px;
+      margin: 2rem 0px 2rem 0px;
+      padding-bottom: 2rem;
+      width: 100%;
+    }
+
+  }
+
 </style>

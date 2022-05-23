@@ -1,6 +1,7 @@
 <script lang="ts">
   import { staticUrl } from "$lib/helpers/content";
   import EditableContent from "$lib/components/generic/EditableContent.svelte";
+  import InlineSvg from "../generic/InlineSvg.svelte";
 
   export let title: string;
   export let img: string;
@@ -10,7 +11,9 @@
 
 </script>
 
-<img class="unep-logo" src="/static/unep.svg" alt="unep-logo" />
+<div class="unep-logo">
+  <InlineSvg svg="UNEP" />
+</div>
 <div class="splash" style="background-image: url({img ? staticUrl(img) : fallbackImg});">
   <h1>
     <EditableContent bind:value={title} {editable} placeholder="Page title" />
@@ -37,5 +40,7 @@
   .unep-logo {
     position: absolute;
     margin: 2rem;
+    width: 110px;
+    color: white;
   }
 </style>

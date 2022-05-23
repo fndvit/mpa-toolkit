@@ -1,7 +1,7 @@
 import type { RequestHandler } from "@sveltejs/kit";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import { pageForCollectionPage } from "$lib/prisma/queries";
+import { pageForCollectionCard } from "$lib/prisma/queries";
 
 export const get: RequestHandler<{ id: string }> = async ({ params }) => {
   const id = parseInt(params.id);
@@ -12,7 +12,7 @@ export const get: RequestHandler<{ id: string }> = async ({ params }) => {
       chapter: { authors: { some: { id: id } } },
       draft: false,
     },
-    ...pageForCollectionPage
+    ...pageForCollectionCard
   });
 
   return pages

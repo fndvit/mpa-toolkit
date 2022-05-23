@@ -1,6 +1,6 @@
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
-import { pageForCollectionPage } from "$lib/prisma/queries";
+import { pageForCollectionCard } from "$lib/prisma/queries";
 
 export const get = authMiddleware(
   { role: 'ADMIN' },
@@ -8,7 +8,7 @@ export const get = authMiddleware(
   return {
     body: {
       pages: await prisma.page.findMany({
-        ...pageForCollectionPage
+        ...pageForCollectionCard
       })
     }
   };

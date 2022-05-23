@@ -16,7 +16,7 @@ export const handler: Handler = async (event, _) => {
   let options: string[] = [];
 
   if (command === "seed") {
-    seed(event.seed === 'dev');
+    await seed(event.seed === 'dev');
   }
   else {
     if (command == "reset") {

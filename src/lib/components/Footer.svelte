@@ -3,7 +3,7 @@
   import TNC_Logo from "/static/footer/TNC_Logo.svg";
   import UoQ_Logo from "/static/footer/UoQ_Logo.svg";
   import WWF_Logo from "/static/footer/WWF_Logo.svg";
-  import IAFDC_Logo from "/static/footer/IAFDC_Logo.png";
+  import IAFDC_Logo from "/static/footer/IAFDC_Logo.svg";
 </script>
 
 <div class="container">

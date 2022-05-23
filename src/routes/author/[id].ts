@@ -9,7 +9,8 @@ export const get: RequestHandler<{ id: string }> = async ({ params }) => {
 
   const pages = await prisma.page.findMany({
     where: {
-      chapter: { authors: { some: { id: id } } }
+      chapter: { authors: { some: { id: id } } },
+      draft: false,
     },
     ...pageForCollectionPage
   });

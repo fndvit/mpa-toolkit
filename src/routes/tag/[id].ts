@@ -9,7 +9,8 @@ export const get: RequestHandler<{ id: string }> = async ({ params }) => {
 
   const pages = await prisma.page.findMany({
     where: {
-      tags : { some: { tagId: id } }
+      tags : { some: { tagId: id } },
+      draft: false,
     },
     ...pageForCollectionPage
   });

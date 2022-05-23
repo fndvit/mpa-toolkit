@@ -1,19 +1,11 @@
-<script context="module" lang="ts">
-</script>
-
 <script lang="ts">
-
   import type { SubTypes } from "$lib/types";
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import Searchbar from "$lib/components/generic/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import TagContainer from "$lib/components/TagContainer.svelte";
-
-  import IAFDC_Logo from "/static/IAFDC_Logo.svg";
-  import TNC_Logo from "/static/TNC_Logo.svg";
-  import UoQ_Logo from "/static/UoQ_Logo.svg";
-  import WWF_Logo from "/static/WWF_Logo.svg";
+  import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
 
   const backgroundImage = '/static/LandingSplashImage.png';
 
@@ -34,7 +26,9 @@
 </svelte:head>
 
 <div class="container">
-  <img class="unep-logo" src="/static/unep.svg" alt="unep-logo" />
+  <div class="unep-logo">
+    <InlineSvg svg="UNEP" />
+  </div>
   <div class="top-searchbar">
     <Searchbar type={'top'}/>
   </div>
@@ -43,10 +37,10 @@
     <h4>A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
     <p>In partnership with</p>
     <div class="partners-grid">
-      <img src={IAFDC_Logo} alt="Italian Agency for Development Cooperation logo">
-      <img src={UoQ_Logo} alt="University of Queensland logo">
-      <img src={TNC_Logo} alt="The Nature Conservancy logo">
-      <img src={WWF_Logo} alt="World Wildlife Fund logo">
+      <InlineSvg svg="IAFDC" />
+      <InlineSvg svg="UoQ" />
+      <InlineSvg svg="TNC" />
+      <InlineSvg svg="WWF" />
     </div>
   </div>
 
@@ -120,6 +114,8 @@
   .unep-logo {
     position: absolute;
     margin: 2rem;
+    color: white;
+    width: 110px;
   }
 
   .container {

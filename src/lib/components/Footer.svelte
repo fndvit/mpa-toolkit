@@ -1,19 +1,15 @@
 <script lang="ts">
-  import Unep_Logo from "/static/footer/unep_Logo.svg";
-  import TNC_Logo from "/static/footer/TNC_Logo.svg";
-  import UoQ_Logo from "/static/footer/UoQ_Logo.svg";
-  import WWF_Logo from "/static/footer/WWF_Logo.svg";
-  import IAFDC_Logo from "/static/footer/IAFDC_Logo.svg";
+  import InlineSvg from "./generic/InlineSvg.svelte";
 </script>
 
 <div class="container">
   <p>A partnership between</p>
   <div class="partners-grid">
-    <img src={Unep_Logo} alt="United Nations Environmetal Programme">
-    <img src={IAFDC_Logo} width={87} alt="Italian Agency for Development Cooperation logo">
-    <img src={UoQ_Logo} alt="University of Queensland logo">
-    <img src={TNC_Logo} alt="The Nature Conservancy logo">
-    <img src={WWF_Logo} alt="World Wildlife Fund logo">
+    <InlineSvg svg="UNEP" />
+    <InlineSvg svg="IAFDC" />
+    <InlineSvg svg="UoQ" />
+    <InlineSvg svg="TNC" />
+    <InlineSvg svg="WWF" />
   </div>
   <div class="links">
     <div>
@@ -46,6 +42,7 @@
     grid-template-columns: 126px 87px 148px 135px 39px;
     align-items: center;
     gap: 45px;
+    color: #6C767D;
   }
 
   .links {

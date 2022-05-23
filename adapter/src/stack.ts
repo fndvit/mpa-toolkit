@@ -120,6 +120,16 @@ class AWSAdapterStack extends Stack {
       'libquery_engine-rhel-openssl-1.0.x.so.node',
     ];
 
+    const fullEnvVars = {
+      ...env,
+      AWS_S3_CONTENT_BUCKET: contentBucket.bucketName,
+      DATABASE_URL: databaseUrl(
+        db.instanceEndpoint.hostname, DB_PORT,
+        credentials.username, credentials.password!.toString(),
+        'mpa'
+      ),
+    };
+
     const serverFn = new lambdanode.NodejsFunction(this, 'LambdaServerFunctionHandler', {
       entry: path.join(handlerPath, "index.js"),
       memorySize: 256,
@@ -130,15 +140,7 @@ class AWSAdapterStack extends Stack {
       },
       securityGroups: [lambdaSg],
       depsLockFilePath: path.join(projectRoot, "./yarn.lock"),
-      environment: {
-        ...env,
-        AWS_S3_CONTENT_BUCKET: contentBucket.bucketName,
-        DATABASE_URL: databaseUrl(
-          db.instanceEndpoint.hostname, DB_PORT,
-          credentials.username, credentials.password!.toString(),
-          'mpa'
-        ),
-      },
+      environment: fullEnvVars,
       bundling: {
         inject: ["./adapter/dist/lambda/shims.js"],
         commandHooks: {
@@ -164,13 +166,7 @@ class AWSAdapterStack extends Stack {
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_ISOLATED
       },
-      environment: {
-        DATABASE_URL: databaseUrl(
-          db.instanceEndpoint.hostname, DB_PORT,
-          credentials.username, credentials.password!.toString(),
-          'mpa'
-        ),
-      },
+      environment: fullEnvVars,
       securityGroups: [lambdaSg],
       depsLockFilePath: path.join(projectRoot, "./yarn.lock"),
       bundling: {

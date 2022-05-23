@@ -23,8 +23,6 @@
       </div>
     {/each}
   </div>
-
-  <a href="/cms/pages/new">New page</a>
 </div>
 
 <style>

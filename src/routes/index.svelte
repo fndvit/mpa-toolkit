@@ -7,8 +7,6 @@
   import TagContainer from "$lib/components/TagContainer.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
 
-  const backgroundImage = '/static/LandingSplashImage.png';
-
   const exampleTags: SubTypes.PageTag[] = [
     {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
     {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
@@ -32,7 +30,7 @@
   <div class="top-searchbar">
     <Searchbar type={'top'}/>
   </div>
-  <div class="splash" style="background-image: url({backgroundImage})">
+  <div class="splash" style="background-image: url(/static/LandingSplashImage.png)">
     <h1>Here it is.<br><b>Your MPA toolkit.</b></h1>
     <h4>A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
     <p>In partnership with</p>

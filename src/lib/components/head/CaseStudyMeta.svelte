@@ -40,7 +40,7 @@
       <EditableContent bind:value={caseStudy.size} {editable} placeholder={placeholders.size} type="number" unitSuffix="km²"/>
 
       <div class="globe-cell">
-        <GlobeViz width={245} {lat} {long} />
+        <GlobeViz {lat} {long} />
       </div>
 
     </div>

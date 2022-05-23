@@ -1,22 +1,27 @@
 <script lang="ts">
   import * as d3 from "d3-geo";
-  import { feature } from "topojson";
-  import worlddata from "./110m.json";
+  import { feature } from "topojson-client";
 
   export let lat: number;
   export let long: number;
-  export let width = 500;
 
-  const latitudeOffset = 5;
-  const longitudeOffset = -7.5;
-  const rollOffset = 0;
+  const SVG_SIZE = 500;
+  const LAT_OFFSET = 5;
+  const LON_OFFSET = -7.5;
+  const ROLL_OFFSET = 0;
+  let landPath: string;
 
   const projection = d3.geoOrthographic()
-    .rotate([-long + longitudeOffset, -lat + latitudeOffset, rollOffset])
-    .scale(width / 2)
-    .translate([width / 2, width / 2]);
+    .rotate([-long + LON_OFFSET, -lat + LAT_OFFSET, ROLL_OFFSET])
+    .scale(SVG_SIZE / 2)
+    .translate([SVG_SIZE / 2, SVG_SIZE / 2]);
 
   const path = d3.geoPath().projection(projection);
+
+  import('./110m.json').then(({ default: worlddata }) => {
+    const land = feature(worlddata as any, worlddata.objects.land as any);
+    landPath = path(land);
+  });
 
   const circleGenerator = d3.geoCircle()
     .center([long, lat])
@@ -32,21 +37,19 @@
     .step([10,10]);
   const graticulePath = path(graticuleGenerator());
 
-  const land = feature(worlddata, worlddata.objects.land);
-  const landPath = path(land);
-
 </script>
 
 
-<div class="globe">
-  <svg {width} height={width}>
-    <path d={graticulePath} class="graticules" />
-    <path d={landPath} class="land" />
-    <path d={circlePath} class="circle" />
-    <path d={externalCirclePath} class="external-circle" />
-  </svg>
+<div class="globe" >
+  {#if landPath}
+    <svg viewBox='0 0 {SVG_SIZE} {SVG_SIZE}'>
+      <path d={graticulePath} class="graticules" />
+      <path d={landPath} class="land" />
+      <path d={circlePath} class="circle" />
+      <path d={externalCirclePath} class="external-circle" />
+    </svg>
+  {/if}
 </div>
-
 
 <style>
 
@@ -67,15 +70,17 @@
     stroke: #3677a5;
   }
 
-  svg {
-    background: #04558E;
-    border-radius: 50%;
-  }
-
   .land {
     stroke-width: 0px;
     stroke: black;
     fill: #3677a5;
+  }
+
+  .globe {
+    background: #04558E;
+    border-radius: 50%;
+    width: var(--globe-size, 245px);
+    height: var(--globe-size, 245px);
   }
 
 </style>

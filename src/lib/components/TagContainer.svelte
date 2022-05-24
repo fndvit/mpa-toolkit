@@ -10,3 +10,16 @@
     <Tag {tag}/>
   {/each}
 </div>
+
+<style lang="scss">
+  .tag-container {
+    --tag-spacing: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: var(--tag-spacing);
+    row-gap: var(--tag-spacing);
+    > :global(*) {
+      flex: 0 0 auto;
+    }
+  }
+</style>

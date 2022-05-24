@@ -8,52 +8,46 @@
   export let page: SubTypes.Page.CollectionCard;
   export let cms = false;
 
-  $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
-
-  $: authors = page.chapter?.authors?.map(a => a.name);
-  $: authorsString = authors && (
-    authors.length > 1
-      ? `${authors.slice(0, -1).join(',')} and ${authors.slice(-1)}`
-      : authors.toString()
-  );
+  $: authors = page.chapter?.authors?.map((a) => a.name);
+  $: authorsString =
+    authors && (authors.length > 1 ? `${authors.slice(0, -1).join(',')} and ${authors.slice(-1)}` : authors.toString());
 
   $: href = cms ? `/cms/pages/${page.id}` : `/${page.slug}`;
-
+  $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
+  $: img = staticUrl(page.img, fallbackImg);
 </script>
 
-<a class="container" {href} rel="external" class:cms-card={cms}>
-  <div class="image">
-    <img src={staticUrl(page.img, fallbackImg)} alt="chapter" />
+<a class="collection-card" {href} rel="external" class:cms-card={cms}>
+  <div class="image" style="background-image: url({img});">
   </div>
-  <div class="text">
-    <b>{page.slug}</b>
+  <div class="content">
     <h1 class="title">
       {page.title}
     </h1>
-    <div class="bottom-section">
+    <div class="byline">
       {#if authorsString}
         <div class="authors">{authorsString}</div>
       {/if}
       <div class="read-time">{page.readTime} min read</div>
     </div>
-  </div>
-  <div class="tags">
-    <b>What's this about</b>
-    <TagContainer tags={page.tags}/>
+    <div class="tags">
+      <h3>What's this about</h3>
+      <TagContainer tags={page.tags} />
+    </div>
   </div>
 </a>
 
 <style lang="scss">
-  .container {
+  .collection-card {
     --cc-height: 200px;
-    grid-template-columns: 12rem 1fr 20rem;
-    column-gap: 1rem;
-    display: grid;
+    --tag-bg: #dadce0;
+    display: flex;
     background: #f9f9f9;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
-    padding-right: 10px;
     height: var(--cc-height);
+    margin: 0;
+
     &:hover {
       text-decoration: none;
       filter: brightness(105%);
@@ -64,8 +58,54 @@
     }
   }
 
-  a.container {
-    color: black;
+  a.collection-card {
+    color: inherit;
+  }
+
+  .content {
+    padding: 0.75rem 1rem 1rem 1.5rem;
+    flex: 1;
+    display: grid;
+    grid-template-areas:
+      "title  tags"
+      "byline tags";
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: 1fr auto;
+    column-gap: 1rem;
+  }
+
+  .title {
+    grid-area: title;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 800px;
+  }
+
+  .byline {
+    grid-area: byline;
+    display: flex;
+    align-items: end;
+    column-gap: 0.4rem;
+    color: #6C767D;
+    white-space: nowrap;
+  }
+
+  .tags {
+    grid-area: tags;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.6rem;
+    h3 {
+      margin: 0;
+      margin-top: 0.3rem;
+    }
+    > :global(.tag-container) {
+      overflow: scroll;
+    }
   }
 
   .title {
@@ -77,39 +117,50 @@
     font-weight: 700;
   }
 
-  .image img {
-    width:  12rem;
-    height: var(--cc-height);
+  .image {
+    flex: 0 0 12rem;
     object-fit: cover;
     border-radius: 12px 0px 0px 12px;
-  }
-  .text{
-    padding: 15px;
-  }
-  .bottom-section {
-    display: flex;
-    column-gap: 15px;
-    margin-top: 15px;
-    color: #6C767D;
-  }
-  .tags {
-    display: flex;
-    flex-direction: column;
-    height: var(--cc-height);
-    box-sizing: border-box;
-    padding: 15px;
-    :global(.tag) {
-      --tag-bg: #DADCE0;
-    }
-    :global(.tag-container) {
-      overflow: scroll;
-    }
+    background-size: cover;
+    background-position: center center;
   }
 
-  @media (max-width: 1200px) {
-    .container {
+  @media (max-width: 1024px) {
+
+    .collection-card {
       height: auto;
     }
-  }
 
+    .image {
+      flex-basis: 7rem;
+    }
+    .content {
+      padding: 0.5rem 0.75rem 1rem 1rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto auto;
+      grid-template-areas: "title" "byline" "tags";
+      row-gap: 1rem;
+    }
+    .title {
+      font-size: 1.25rem;
+      -webkit-line-clamp: 5;
+      line-clamp: 5;
+    }
+    .byline {
+      flex-direction: column;
+      align-items: initial;
+      row-gap: 0.4rem;
+    }
+    .tags {
+      overflow: hidden;
+      h3 {
+        display: none;
+      }
+      > :global(.tag-container) {
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+      }
+
+    }
+  }
 </style>

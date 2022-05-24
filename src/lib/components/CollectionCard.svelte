@@ -160,6 +160,7 @@
       }
       .text{
         position: relative;
+        margin-right: 10px;
       }
       .carousel-tags {
         display: block;

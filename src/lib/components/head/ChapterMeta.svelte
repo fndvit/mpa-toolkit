@@ -71,6 +71,13 @@
 
 <style lang="scss">
 
+  .meta {
+    --ui-color-placeholder: #ffffff55;
+    background: #096EAE;
+    color: #F9F9F9;
+    padding: 2rem 124px;
+  }
+
   .first-line {
     display: flex;
     align-items: center;
@@ -92,13 +99,6 @@
     font-size: 16px;
     column-gap: 5px;
   }
-
-  .meta {
-    background: #096EAE;
-    color: #F9F9F9;
-    padding: 2rem 124px;
-  }
-
 
   .summary {
     font-family: var(--font-serif);

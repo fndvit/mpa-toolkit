@@ -36,6 +36,7 @@
 <style lang="scss">
   .splash {
     --ec-hover-bg: #ffffff22;
+    --ui-color-placeholder: #ffffff55;
     min-height: 60vh;
     display: flex;
     align-items: flex-end;

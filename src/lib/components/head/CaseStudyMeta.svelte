@@ -77,18 +77,11 @@
 
 <style lang="scss">
 
-  .add-milestones-button {
-    margin-bottom: -20px;
-    margin-top: 10px;
-    --ib-color: #ffffffee;
-    --ib-hover-border: 1px solid transparent;
-    --ib-hover-bg: #00000011;
-  }
-
   .meta-container {
     position: relative;
     background-color: #13487C;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
+    --ui-color-placeholder: #ffffff55;
   }
 
   .meta-content {
@@ -149,6 +142,14 @@
       position: absolute;
       transform: translateY(-55%);
     }
+  }
+
+  .add-milestones-button {
+    margin-bottom: -20px;
+    margin-top: 10px;
+    --ib-color: #ffffffee;
+    --ib-hover-border: 1px solid transparent;
+    --ib-hover-bg: #00000011;
   }
 
 </style>

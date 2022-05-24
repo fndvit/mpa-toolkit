@@ -53,7 +53,7 @@
       border-radius: 5px;
     }
     :global(.editable-content) {
-      --ui-color-placeholder: #33333399;
+      --ui-color-placeholder: #00000044;
     }
   }
 

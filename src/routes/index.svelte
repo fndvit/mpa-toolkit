@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
+  import type { PageTag } from "$lib/prisma/queries";
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import Searchbar from "$lib/components/generic/Searchbar.svelte";
@@ -8,20 +9,16 @@
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
   import landingSplash from '$lib/assets/landing-splash.png';
 
-  const exampleTags: SubTypes.PageTag[] = [
-    {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 3, value: 'Blue growth', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 4, value: 'Ocean conservation', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 5, value: 'Sustainable development', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 6, value: 'Nature-based solutions', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 7, value: 'All biomes', type: 'USER'}, category: 'PRIMARY'}
-  ];
+  export let chapters: SubTypes.Page.ContentCard[] = [];
+  export let caseStudies: SubTypes.Page.ContentCard[] = [];
+  export let tags: SubTypes.Tag[] = [];
+
+  const tagsForContainer = tags.map<PageTag>(t => ({tag: t, category: 'PRIMARY'}));
 
 </script>
 
 <svelte:head>
-  <title>Home</title>
+  <title>MPA Toolkit</title>
 </svelte:head>
 
 <div class="container">
@@ -43,13 +40,14 @@
     </div>
   </div>
 
-  <LandingCarousel type={'chapter'}/>
+  <LandingCarousel pages={chapters} title="Get the <b>answers</b> to all your questions" />
+
   <div class="inline-searchbar">
     <Searchbar type={'inline'}/>
-    <TagContainer tags={exampleTags}/>
+    <TagContainer tags={tagsForContainer}/>
   </div>
   <MadLib type='landing'/>
-  <LandingCarousel type={'case study'}/>
+  <LandingCarousel pages={caseStudies} title="Explore what <b>others have done</b>" />
   <Footer/>
 </div>
 

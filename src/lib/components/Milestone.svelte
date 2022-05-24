@@ -1,12 +1,15 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import EditableContent from "$lib/components/generic/EditableContent.svelte";
   import IconButton from "$lib/components/generic/IconButton.svelte";
-  import TextInputEditor from "$lib/components/generic/TextInputEditor.svelte";
+  import EditableText from "./generic/EditableText.svelte";
 
   export let year: string;
   export let content: string[];
   export let editable = false;
+
+  let editYear = year;
+  let yearFocused = false;
+  let editableYear: EditableText;
 
   const dispatch = createEventDispatcher<{saveYear: string, delete: null}>();
 
@@ -23,10 +26,6 @@
     }
   }
 
-  function saveYear(year: string) {
-    dispatch('saveYear', year);
-  }
-
   function onDeleteMilestone(i: number) {
     content.splice(i, 1);
     content = content;
@@ -36,18 +35,31 @@
     dispatch('delete');
   }
 
+  const onClickSaveYear: svelte.JSX.MouseEventHandler<HTMLElement> = e => {
+    dispatch('saveYear', editYear);
+    year = editYear;
+    editableYear.blur();
+  };
+
+  const onClickCancelYear: svelte.JSX.MouseEventHandler<HTMLElement> = e => {
+    editYear = year;
+    editableYear.blur();
+  };
+
   $: simple = content.length <= 1;
 </script>
 
 <div class="container" class:simple>
 
-
   <div class="year">
-    <TextInputEditor
-      value={year}
-      on:save={({detail}) => saveYear(detail)}
-    />
+    <EditableText bind:this={editableYear} bind:value={editYear} {editable} placeholder="year" bind:focused={yearFocused}/>
     {#if editable}
+      {#if !year || yearFocused}
+        <IconButton icon='done' on:click={onClickSaveYear} disabled={!editYear} />
+        {#if year}
+          <IconButton icon='close' on:click={onClickCancelYear} disabled={!editYear} />
+        {/if}
+      {/if}
       <div class="delete-year-button">
         <IconButton icon="delete" on:click={onClickDeleteYear} />
       </div>
@@ -61,7 +73,7 @@
   {#if simple}
 
     <div class="milestone-text" on:click={() => onClickMilestone(0)}>
-      <EditableContent bind:value={content[0]}  {editable} />
+      <EditableText bind:value={content[0]}  {editable} />
     </div>
 
   {:else}
@@ -90,7 +102,7 @@
           {/if}
 
           <div class="milestone-text" class:contracted={contracted[i]}>
-            <EditableContent bind:value={content[i]}  {editable} />
+            <EditableText bind:value={content[i]}  {editable} />
           </div>
 
           {#if editable}
@@ -115,6 +127,21 @@
 </div>
 
 <style lang="scss">
+
+  .container {
+    --ms-width: 200px;
+
+    :global(.icon-button) {
+      --ib-color: white;
+      --ib-size: 1.4rem;
+      --ib-hover-bg: #00000055;
+    }
+
+    :global(.editable-content:empty) {
+      background: #ffffff33;
+      border-radius: 4px;
+    }
+  }
 
   .main-circle {
     position: absolute;
@@ -155,17 +182,8 @@
     grid-row: var(--row);
     padding: 40px 0 0;
     cursor: pointer;
-    width: 200px;
     position: relative;
-
-  }
-
-  .delete-milestone-button {
-    position: absolute;
-    top: 30px;
-    left: 12px;
-    --ib-hover-bg: #03395f;
-    --ib-icon-bg: #034676;
+    width: var(--ms-width);
   }
 
   .milestone-circle {
@@ -197,6 +215,7 @@
     .simple & {
       padding-top: 28px;
       padding-left: 3px;
+      width: var(--ms-width);
     }
 
     &.contracted {
@@ -219,6 +238,7 @@
     color: #F9F9F9;
     height: 25px;
     padding-left: 4px;
+    width: var(--ms-width);
     :global(input) {
       width: 40px;
     }
@@ -233,13 +253,10 @@
     }
   }
 
-  .container {
-
-    :global(.icon-button) {
-      --ib-color: white;
-      --ib-size: 1.4rem;
-      --ib-hover-bg: #00000055;
-    }
+  .delete-year-button {
+    flex: 1;
+    display: flex;
+    justify-content: right;
   }
 
   .add-button {
@@ -259,16 +276,20 @@
     }
   }
 
-  .container {
-    :global(.empty .editable-content) {
-      background: #ffffff33;
-      border-radius: 4px;
-    }
-  }
-
   :global(.splide__slide:hover) .container :global(.editable-content-container:not(.empty) [contenteditable]) {
     background: #ffffff10;
     border-radius: 4px;
+  }
+
+  .delete-milestone-button {
+    position: absolute;
+    top: 30px;
+    left: 12px;
+
+    :global(.icon-button) {
+      --ib-hover-bg: #03395f;
+      --ib-icon-bg: #034676;
+    }
   }
 
 </style>

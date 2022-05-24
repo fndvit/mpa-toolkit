@@ -59,7 +59,7 @@
       width: var(--ib-size, 2rem);
     }
 
-    &:hover {
+    &:not(:disabled):hover {
       text-decoration: none;
       &[data-icon]::before {
         background-color: var(--ib-hover-bg, #33333355);
@@ -106,6 +106,10 @@
           border: var(--ib-hover-border, 1px solid transparent);
         }
       }
+    }
+
+    &:disabled {
+      opacity: 0.5;
 
     }
   }

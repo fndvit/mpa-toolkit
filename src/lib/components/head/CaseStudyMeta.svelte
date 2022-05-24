@@ -1,9 +1,10 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
-  import EditableContent from '$lib/components/generic/EditableContent.svelte';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import GlobeViz from "./GlobeViz.svelte";
   import Milestones from './Milestones.svelte';
+  import EditableText from "../generic/EditableText.svelte";
+  import EditableNumber from "../generic/EditableNumber.svelte";
 
   export let caseStudy: SubTypes.CaseStudy.PageHead;
   export let editable = false;
@@ -31,13 +32,13 @@
     <div class="meta-grid meta-grid-1">
 
       <h4>Name</h4>
-      <EditableContent bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
+      <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
 
       <h4>Established in</h4>
-      <EditableContent bind:value={caseStudy.established} type="number" {editable} placeholder={placeholders.established} />
+      <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
 
       <h4>Size</h4>
-      <EditableContent bind:value={caseStudy.size} {editable} placeholder={placeholders.size} type="number" unitSuffix="km²"/>
+      <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
 
       <div class="globe-cell">
         <GlobeViz {lat} {long} />
@@ -48,16 +49,16 @@
     <div class="meta-grid meta-grid-2">
 
       <h4>Governance</h4>
-      <EditableContent bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
+      <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
 
       <h4>Staff</h4>
-      <EditableContent bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
+      <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
 
       <h4>Budget</h4>
-      <EditableContent bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
+      <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
 
       <h4>Budget level</h4>
-      <EditableContent bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
+      <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
 
     </div>
 
@@ -76,18 +77,11 @@
 
 <style lang="scss">
 
-  .add-milestones-button {
-    margin-bottom: -20px;
-    margin-top: 10px;
-    --ib-color: #ffffffee;
-    --ib-hover-border: 1px solid transparent;
-    --ib-hover-bg: #00000011;
-  }
-
   .meta-container {
     position: relative;
     background-color: #13487C;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
+    --ui-color-placeholder: #ffffff55;
   }
 
   .meta-content {
@@ -148,6 +142,14 @@
       position: absolute;
       transform: translateY(-55%);
     }
+  }
+
+  .add-milestones-button {
+    margin-bottom: -20px;
+    margin-top: 10px;
+    --ib-color: #ffffffee;
+    --ib-hover-border: 1px solid transparent;
+    --ib-hover-bg: #00000011;
   }
 
 </style>

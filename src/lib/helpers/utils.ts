@@ -48,6 +48,26 @@ export function createLookup<T, Y>
   return lookup;
 }
 
+export const textOnlyPaste = (el: HTMLElement) => {
+  el.addEventListener('paste', e => {
+    const { clipboardData } = e;
+    const paste = clipboardData.getData('text').replace(/\n/g, ' ');
+    document.execCommand("insertText", false, paste);
+    e.preventDefault();
+  });
+};
+
+export const addFocusClass = (node: HTMLElement, cb: (focused: boolean) => void = () => null) => {
+  node.addEventListener('focus', () => {
+    node.classList.add('focused');
+    cb(true);
+  });
+  node.addEventListener('blur', () => {
+    node.classList.remove('focused');
+    cb(false);
+  });
+};
+
 // ************************
 //     TypeScript util
 // ************************

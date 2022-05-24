@@ -1,5 +1,5 @@
 <script lang="ts">
-  import EditableContent from '$lib/components/generic/EditableContent.svelte';
+  import EditableText from '../generic/EditableText.svelte';
 
   export let text: string;
   export let editable = false;
@@ -31,7 +31,7 @@
   use:gradientAction
   on:scroll={showScroll}
 >
-  <EditableContent bind:value={text} {editable} placeholder='Key takeaway...' />
+  <EditableText bind:value={text} {editable} placeholder='Key takeaway...' />
 </div>
 
 <style lang="scss">
@@ -53,7 +53,7 @@
       border-radius: 5px;
     }
     :global(.editable-content) {
-      --placeholder-color: #33333399;
+      --ui-color-placeholder: #00000044;
     }
   }
 

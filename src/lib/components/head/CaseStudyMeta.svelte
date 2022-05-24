@@ -4,6 +4,7 @@
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import GlobeViz from "./GlobeViz.svelte";
   import Milestones from './Milestones.svelte';
+  import EditableNumber from "../generic/EditableNumber.svelte";
 
   export let caseStudy: SubTypes.CaseStudy.PageHead;
   export let editable = false;
@@ -34,10 +35,10 @@
       <EditableContent bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
 
       <h4>Established in</h4>
-      <EditableContent bind:value={caseStudy.established} type="number" {editable} placeholder={placeholders.established} />
+      <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
 
       <h4>Size</h4>
-      <EditableContent bind:value={caseStudy.size} {editable} placeholder={placeholders.size} type="number" unitSuffix="km²"/>
+      <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
 
       <div class="globe-cell">
         <GlobeViz {lat} {long} />

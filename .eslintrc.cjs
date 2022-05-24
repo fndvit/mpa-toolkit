@@ -20,7 +20,8 @@ module.exports = {
     }
   ],
   rules: {
-    "no-undef": "off"
+    "no-undef": "off",
+    "@typescript-eslint/no-namespace": "off"
   },
   settings: {
     'svelte3/typescript': () => require('typescript')

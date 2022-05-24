@@ -23,7 +23,7 @@ export function createSections(document: ContentDocument) {
 }
 
 
-export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page {
+export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page.Full {
   return {
     id: null,
     title: '',

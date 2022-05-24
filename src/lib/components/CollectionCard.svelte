@@ -3,7 +3,8 @@
   import { staticUrl } from '$lib/helpers/content';
   import TagContainer from '$lib/components/TagContainer.svelte';
 
-  export let page: SubTypes.CollectionCard;
+  export let page: SubTypes.Page.CollectionCard;
+  export let cms = false;
 
   const authors = page.chapter?.authors?.map(a => a.name);
   const authorsString = authors && (
@@ -12,9 +13,11 @@
       : authors.toString()
   );
 
+  const href = cms ? `/cms/pages/${page.id}` : `/${page.slug}`;
+
 </script>
 
-<a class="container" href='/{page.slug}' rel="external">
+<a class="container" {href} rel="external" class:cms-card={cms}>
   <div class="image">
     <img src={staticUrl(page.img)} alt="chapter" />
   </div>
@@ -38,18 +41,22 @@
 
 <style lang="scss">
   .container {
+    --cc-height: 200px;
     grid-template-columns: 12rem 1fr 20rem;
     column-gap: 1rem;
     display: grid;
     background: #f9f9f9;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
-    margin: 15px;
     padding-right: 10px;
-    height: 200px;
+    height: var(--cc-height);
     &:hover {
       text-decoration: none;
       filter: brightness(105%);
+    }
+
+    &.cms-card {
+      --cc-height: 160px;
     }
   }
 
@@ -68,7 +75,7 @@
 
   .image img {
     width:  12rem;
-    height: 100%;
+    height: var(--cc-height);
     object-fit: cover;
     border-radius: 12px 0px 0px 12px;
   }
@@ -84,7 +91,7 @@
   .tags {
     display: flex;
     flex-direction: column;
-    height: 200px;
+    height: var(--cc-height);
     box-sizing: border-box;
     padding: 15px;
     :global(.tag) {

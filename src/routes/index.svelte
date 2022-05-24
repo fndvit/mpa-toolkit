@@ -1,28 +1,24 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
+  import type { PageTag } from "$lib/prisma/queries";
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
   import MadLib from "$lib/components/MadLib.svelte";
   import Searchbar from "$lib/components/generic/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import TagContainer from "$lib/components/TagContainer.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
+  import landingSplash from '$lib/assets/landing-splash.jpg';
 
-  const backgroundImage = '/static/LandingSplashImage.png';
+  export let chapters: SubTypes.Page.ContentCard[] = [];
+  export let caseStudies: SubTypes.Page.ContentCard[] = [];
+  export let tags: SubTypes.Tag[] = [];
 
-  const exampleTags: SubTypes.PageTag[] = [
-    {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 3, value: 'Blue growth', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 4, value: 'Ocean conservation', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 5, value: 'Sustainable development', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 6, value: 'Nature-based solutions', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 7, value: 'All biomes', type: 'USER'}, category: 'PRIMARY'}
-  ];
+  const tagsForContainer = tags.map<PageTag>(t => ({tag: t, category: 'PRIMARY'}));
 
 </script>
 
 <svelte:head>
-  <title>Home</title>
+  <title>MPA Toolkit</title>
 </svelte:head>
 
 <div class="container">
@@ -32,7 +28,7 @@
   <div class="top-searchbar">
     <Searchbar type={'top'}/>
   </div>
-  <div class="splash" style="background-image: url({backgroundImage})">
+  <div class="splash" style="background-image: url({landingSplash})">
     <h1>Here it is.<br><b>Your MPA toolkit.</b></h1>
     <h4>A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
     <p>In partnership with</p>
@@ -44,13 +40,14 @@
     </div>
   </div>
 
-  <LandingCarousel type={'chapter'}/>
+  <LandingCarousel pages={chapters} title="Get the <b>answers</b> to all your questions" />
+
   <div class="inline-searchbar">
     <Searchbar type={'inline'}/>
-    <TagContainer tags={exampleTags}/>
+    <TagContainer tags={tagsForContainer}/>
   </div>
   <MadLib type='landing'/>
-  <LandingCarousel type={'case study'}/>
+  <LandingCarousel pages={caseStudies} title="Explore what <b>others have done</b>" />
   <Footer/>
 </div>
 

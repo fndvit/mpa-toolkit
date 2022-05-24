@@ -5,7 +5,7 @@
   import GlobeViz from "./GlobeViz.svelte";
   import Milestones from './Milestones.svelte';
 
-  export let caseStudy: SubTypes.CaseStudyMeta;
+  export let caseStudy: SubTypes.CaseStudy.PageHead;
   export let editable = false;
 
   const { lat, long } = caseStudy;
@@ -40,7 +40,7 @@
       <EditableContent bind:value={caseStudy.size} {editable} placeholder={placeholders.size} type="number" unitSuffix="km²"/>
 
       <div class="globe-cell">
-        <GlobeViz width={245} {lat} {long} />
+        <GlobeViz {lat} {long} />
       </div>
 
     </div>

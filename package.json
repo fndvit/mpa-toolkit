@@ -13,7 +13,7 @@
     "clean": "rimraf build cdk.out",
     "db:nuke": "npx prisma migrate reset --force && yarn db:seed",
     "db:migrate": "prisma migrate dev",
-    "db:seed": "ts-node -r tsconfig-paths/register --esm prisma/seed.ts",
+    "db:seed": "ts-node -r tsconfig-paths/register --esm prisma/seed",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
@@ -35,6 +35,7 @@
     "@types/prosemirror-model": "^1.16.0",
     "@types/prosemirror-view": "^1.23.1",
     "@types/seedrandom": "^3.0.2",
+    "@types/topojson-client": "^3.1.1",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "eslint": "^7.32.0",
@@ -86,7 +87,7 @@
     "svelte-modals": "^1.1.0",
     "svelte-multiselect": "^4.0.1",
     "svelte-scrollto": "^0.2.0",
-    "topojson": "^3.0.2",
+    "topojson-client": "^3.1.0",
     "uuid": "^8.3.2"
   }
 }

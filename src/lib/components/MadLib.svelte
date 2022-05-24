@@ -1,6 +1,6 @@
 <script lang="ts">
   import MadLibSelector from "$lib/components/MadLibSelector.svelte";
-  const madlibImage = '/static/madlib_background.png';
+  import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
 
   export let type: 'inline' | 'landing' = 'inline';
 
@@ -23,7 +23,7 @@
 
 </script>
 
-<div class="container" class:landing={type==='landing'} style="--background-image: url({madlibImage})">
+<div class="container" class:landing={type==='landing'} style="--background-image: url({landingMadlibBg})">
 
   {#if type==='landing'}
     <h2>Find information relevant to you.</h2>

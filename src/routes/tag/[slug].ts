@@ -13,7 +13,7 @@ async function getTagIdBySlug(slug: string) {
     select: { id: true, value: true }
   });
 
-  const tag = allTags.find(t=> slugify(t.value) === slug);
+  const tag = allTags.find(t => slugify(t.value) === slug);
 
   return tag?.id;
 }
@@ -26,7 +26,7 @@ export const get: RequestHandler<{ slug: string }> = async ({ params }) => {
 
   const id = !isNaN(slugId) ? slugId : await getTagIdBySlug(slug);
 
-  if (!id) return error404('Page not found');
+  if (id == null) return error404('Page not found');
 
   const tag = await prisma.tag.findUnique({
     where: { id },

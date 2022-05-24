@@ -30,10 +30,11 @@
     padding: 4px 12px;
     border-radius: 18px;
     overflow: hidden;
-    margin: 0.25rem 0.5rem 0.25rem 0rem;
+    margin: 0;
     color: black;
     position: relative;
     white-space: nowrap;
+    height: fit-content;
     &:before {
       content: '';
       position: absolute;

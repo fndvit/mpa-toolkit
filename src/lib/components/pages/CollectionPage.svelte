@@ -5,16 +5,36 @@
 
   export let pages: SubTypes.Page.CollectionCard[];
   export let title: string;
+  // export let d
 </script>
 
-<div class="content">
+<div class="collection-page">
   <CollectionPageHeader {title} />
-  <CollectionCards {pages} />
+  <div class="content">
+    <CollectionCards {pages} />
+  </div>
 </div>
 
 <style lang="scss">
+
+  .collection-page {
+    --page-padding: 90px;
+    --page-max-content-width: auto;
+  }
   .content {
     background: #ffffff;
-    padding-top: 20px;
+    padding: 30px var(--page-padding);
+    max-width: var(--page-max-content-width);
+    margin: auto;
+  }
+  @media (max-width: 1024px) {
+    .collection-page {
+      --page-padding: 40px;
+    }
+  }
+  @media (max-width: 768px) {
+    .collection-page {
+      --page-padding: 20px;
+    }
   }
 </style>

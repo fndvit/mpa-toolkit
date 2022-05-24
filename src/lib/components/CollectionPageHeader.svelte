@@ -11,7 +11,7 @@
     <InlineSvg svg="UNEP" />
   </div>
 
-  <div class="bottom-section">
+  <div class="content">
     <h2 class="text">{title}</h2>
     <div class="search-bar">
       <Searchbar type={'collection'} />
@@ -21,66 +21,56 @@
 
 <style lang="scss">
   .container {
-    height: 336px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    position: relative;
-    width: 100%;
+  }
+  .content {
+    height: 336px;
+    padding: 40px var(--page-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    align-content: end;
+    row-gap: 40px;
+    flex-wrap: wrap;
+    column-gap: 60px;
+    max-width: var(--page-max-content-width);
+    margin: auto;
   }
   .text {
-    position: absolute;
-    bottom: 32px;
     font-family: 'Montserrat';
-    font-style: normal;
     font-weight: 300;
-    font-size: 48px;
-    line-height: 59px;
+    font-size: 2.5rem;
+    line-height: 3rem;
     color: #ffffff;
-    margin: 0px 10px 0px 90px;
+    margin: 0;
   }
   .search-bar {
-    width: 50%;
-    position: absolute;
-    bottom: 32px;
-    right: 96px;
+    flex: 1;
+    min-width: 500px;
   }
   .unep-logo {
     position: absolute;
-    margin: 2rem;
+    top: 20px;
+    left: 20px;
     width: 110px;
     color: white;
   }
-  @media only screen and (max-width: 1450px) {
-    .search-bar {
-      width: 40%;
-      right: 86px;
-    }
-    .text{
-      font-size: 40px;
-      margin: 0px 10px 0px 80px;
-    }
-  }
-  @media only screen and (max-width: 1024px) {
-    .bottom-section{
-      position: absolute;
-      bottom: 57px;
-      width: 100%;
-      text-align: center;
-    }
-    .search-bar {
-      position: static;
-      width: 90%;
-      margin: 0 auto;
-    }
-    .text {
-      margin: 0px 10px 0px 10px;
-      position: static;
-      font-size: 32px;
-      margin-bottom: 30px;
-    }
-  }
-  @media only screen and (max-width: 768px) {
 
+  @media only screen and (max-width: 1024px) {
+    .text {
+      font-size: 2rem;
+    }
+
+    .container {
+      row-gap: 40px;
+      padding-bottom: 60px;
+    }
+
+    .search-bar {
+      width: 100%;
+      min-width: auto;
+    }
   }
 </style>

@@ -54,7 +54,6 @@
     font-size: inherit;
     color: inherit;
     background-color: transparent;
-    // border: none;
     padding: 0;
     line-height: inherit;
 
@@ -80,11 +79,5 @@
   .unit {
     margin-left: 6px;
   }
-
-  // input.editable-content:hover,
-  // .editable-content[contenteditable]:hover {
-  //   background: var(--ec-hover-bg, #ffffff08);
-  //   border-radius: 4px;
-  // }
 
 </style>

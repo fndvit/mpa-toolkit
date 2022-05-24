@@ -49,6 +49,7 @@
   .search-bar {
     flex: 1;
     min-width: 500px;
+    max-width: 700px;
   }
   .unep-logo {
     position: absolute;

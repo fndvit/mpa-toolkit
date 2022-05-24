@@ -2,8 +2,8 @@
   import type { SubTypes } from "$lib/types";
   import Page from "$lib/components/pages/Page.svelte";
 
-  export let page: SubTypes.Page;
-  export let recommendedPages: SubTypes.ContentCard[];
+  export let page: SubTypes.Page.Full;
+  export let recommendedPages: SubTypes.Page.ContentCard[];
 
 </script>
 

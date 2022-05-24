@@ -1,5 +1,5 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import { JWT, SvelteKitAuth } from "sk-auth";
+import { SvelteKitAuth } from "sk-auth";
 import { GoogleOAuth2Provider } from "sk-auth/providers";
 import { prisma } from '$lib/prisma';
 import { logger } from "./log";
@@ -99,41 +99,46 @@ function roleCheck(userRole: _Role, requiredRole: _Role) {
   return ROLE_VALUES[userRole] >= ROLE_VALUES[requiredRole];
 }
 
-async function isAuthorized(token: JWT, requiredRole: _Role) {
-  const user = await prisma.user.findUnique({
-    where: { id: token.user.id }
-  });
-  if (!user) {
-    return false;
-  }
-  return roleCheck(user.role, requiredRole);
-}
-
 export function authMiddleware(opts: { role: _Role, redirect?: string }, handler: RequestHandler): RequestHandler {
   return async event => {
+
     const token = await auth.getToken(event.request.headers);
-    if (token) {
-      if (await isAuthorized(token, opts.role)) {
-        return handler(event);
-      } else {
-        return {
-          status: 401,
-          body: { error: 'Not authorized' }
-        };
-      }
-    } else {
-      if (opts.redirect) {
-        return {
-          status: 302,
-          headers: { Location: opts.redirect },
-        };
-      }
-      else {
-        return {
-          status: 401,
-          body: { error: 'Not logged in' }
-        };
-      }
+    const isApi = event.url.pathname.startsWith('/api/');
+
+    if (!token?.user) { // not signed in
+      return isApi
+      ? { status: 401, body: { error: 'Unauthorized' } }
+      : { status: 302, headers: { 'Location': await auth.getRedirectUrl(opts.redirect || '/cms') } };
     }
+
+    const user = await prisma.user.findUnique({ where: { id: token.user.id } });
+
+    if (!user) { // invalid user so clear the token
+      const token = auth.setToken(event.request.headers, {});
+      const jwt = auth.signToken(token);
+      return isApi
+      ? {
+        status: 400,
+        headers: { "set-cookie": `svelteauthjwt=${jwt}; Path=/; HttpOnly` },
+        body: { error: 'Invalid user token' }
+      }
+      : {
+        status: 302,
+        headers: {
+          "set-cookie": `svelteauthjwt=${jwt}; Path=/; HttpOnly`,
+          "Location": '/api/auth/signin/google'
+        },
+      };
+    }
+    else if (!roleCheck(user.role, opts.role)) { // valid user but not authorized
+      return {
+        status: 401,
+        body: { error: 'Not authorized' }
+      };
+    }
+    else {
+      return handler(event);
+    }
+
   };
 }

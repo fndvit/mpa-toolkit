@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { User } from "$lib/types";
   import { staticUrl } from "$lib/helpers/content";
+  import userNoProfileImage from '$lib/assets/default-profile-img.png';
 
   export let user: Pick<User, 'img' | 'name'>;
 
-  $: src = user.img ? staticUrl(user.img) : '/static/missing-profile-photo.png';
+  $: src = user.img ? staticUrl(user.img) : userNoProfileImage;
 
 </script>
 

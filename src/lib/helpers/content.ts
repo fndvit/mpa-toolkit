@@ -1,7 +1,8 @@
 import type { ContentDocument, Section, SubTypes } from "../types";
 import { slugify } from "./utils";
 
-export const staticUrl = (path: string) => `${import.meta.env.VITE_UPLOAD_BASE_URL}${path}`;
+export const staticUrl = (path: string, fallback = '') =>
+  path ? `${import.meta.env.VITE_UPLOAD_BASE_URL}${path}` : fallback;
 
 export function createSections(document: ContentDocument) {
   return document.content.reduce<Section[]>((sections, block, i) => {
@@ -23,7 +24,7 @@ export function createSections(document: ContentDocument) {
 }
 
 
-export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page {
+export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page.Full {
   return {
     id: null,
     title: '',

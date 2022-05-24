@@ -1,38 +1,35 @@
 <script lang="ts">
-import type { SubTypes } from "$lib/types";
-
+  import type { SubTypes } from "$lib/types";
   import TagContainer from "$lib/components/TagContainer.svelte";
+  import { staticUrl } from "$lib/helpers/content";
+  import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
+  import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
 
-  const exampleTags: SubTypes.PageTag[] = [
-    {tag: {id: 1, value: 'Blue economy', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 2, value: 'MPAs', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 3, value: 'Blue growth', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 4, value: 'Ocean conservation', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 5, value: 'Sustainable development', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 6, value: 'Nature-based solutions', type: 'USER'}, category: 'PRIMARY'},
-    {tag: {id: 7, value: 'All biomes', type: 'USER'}, category: 'PRIMARY'}
-  ];
+  export let page: SubTypes.Page.ContentCard;
 
-  export let tags: SubTypes.PageTag[] = exampleTags;
-  export let parameters: {previewImage: string, category: string, title: string, slug: string};
-  export let type: 'chapter' | 'case study';
-
+  $: category = page.tags?.length > 0 && page.tags[0].tag.value;
+  $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 </script>
 
-<div class="container" class:case-study={type === 'case study'} tabindex="0">
-  <img class="image" src={parameters.previewImage} alt="preview">
+<a
+  class="container"
+  href="/{page.slug}"
+  class:case-study={!!page.caseStudy}
+  tabindex="0"
+>
+  <img class="image" src={staticUrl(page.img, fallbackImg)} alt="preview">
   <div class="preview-content">
-    <a href="/{parameters.slug}" class="circle-button" tabindex="0">
+    <div class="circle-button" tabindex="0">
       <svg class="arrow-svg" viewBox="0 0 12 20">
         <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
       </svg>
-    </a>
-    <div class="category">{parameters.category}</div>
-    <div class="title">{@html parameters.title}</div>
+    </div>
+    <div class="category">{category ?? ''}</div>
+    <div class="title">{@html page.title}</div>
     <div class="tags-title">What's this about?</div>
-    <TagContainer {tags}/>
+    <TagContainer tags={page.tags}/>
   </div>
-</div>
+</a>
 
 
 <style lang="scss">
@@ -105,6 +102,10 @@ import type { SubTypes } from "$lib/types";
     height: 344px;
   }
 
+  a.container {
+    text-decoration: none;
+  }
+
   .container {
     display: inline-block;
     width: 766px;
@@ -117,6 +118,10 @@ import type { SubTypes } from "$lib/types";
 
     &.case-study {
       background: #13487C;
+    }
+
+    &:hover {
+      filter: brightness(105%);
     }
 
     :global(.tag-container) {

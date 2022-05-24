@@ -2,21 +2,28 @@
   import type { SubTypes } from '$lib/types';
   import { staticUrl } from '$lib/helpers/content';
   import TagContainer from '$lib/components/TagContainer.svelte';
+  import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
+  import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
 
-  export let page: SubTypes.CollectionCard;
+  export let page: SubTypes.Page.CollectionCard;
+  export let cms = false;
 
-  const authors = page.chapter?.authors?.map(a => a.name);
-  const authorsString = authors && (
+  $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
+
+  $: authors = page.chapter?.authors?.map(a => a.name);
+  $: authorsString = authors && (
     authors.length > 1
       ? `${authors.slice(0, -1).join(',')} and ${authors.slice(-1)}`
       : authors.toString()
   );
 
+  $: href = cms ? `/cms/pages/${page.id}` : `/${page.slug}`;
+
 </script>
 
-<a class="container" href='/{page.slug}' rel="external">
+<a class="container" {href} rel="external" class:cms-card={cms}>
   <div class="image">
-    <img src={staticUrl(page.img)} alt="chapter" />
+    <img src={staticUrl(page.img, fallbackImg)} alt="chapter" />
   </div>
   <div class="text">
     <h1 class="title">
@@ -37,18 +44,22 @@
 
 <style lang="scss">
   .container {
+    --cc-height: 200px;
     grid-template-columns: 12rem 1fr 20rem;
     column-gap: 1rem;
     display: grid;
     background: #f9f9f9;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
-    margin: 15px;
     padding-right: 10px;
-    height: 200px;
+    height: var(--cc-height);
     &:hover {
       text-decoration: none;
       filter: brightness(105%);
+    }
+
+    &.cms-card {
+      --cc-height: 160px;
     }
   }
 
@@ -67,7 +78,7 @@
 
   .image img {
     width:  12rem;
-    height: 100%;
+    height: var(--cc-height);
     object-fit: cover;
     border-radius: 12px 0px 0px 12px;
   }
@@ -83,7 +94,7 @@
   .tags {
     display: flex;
     flex-direction: column;
-    height: 200px;
+    height: var(--cc-height);
     box-sizing: border-box;
     padding: 15px;
     :global(.tag) {

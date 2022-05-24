@@ -3,7 +3,7 @@
   import TagContainer from "$lib/components/TagContainer.svelte";
   import { staticUrl } from "$lib/helpers/content";
 
-  export let page: SubTypes.ContentCard;
+  export let page: SubTypes.Page.ContentCard;
 
   const {slug, img, title, tags} = page;
 </script>

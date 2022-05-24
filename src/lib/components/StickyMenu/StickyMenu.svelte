@@ -12,7 +12,7 @@
     menuItemSelector: '[href^="#"]',
     activeClass: 'active',
     threshold: 150,
-    enableLocationHash: true,
+    enableLocationHash: false,
     hashTimeout: 0,
     callback: null
   };

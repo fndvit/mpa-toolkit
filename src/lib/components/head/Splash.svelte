@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { staticUrl } from "$lib/helpers/content";
   import EditableContent from "$lib/components/generic/EditableContent.svelte";
+  import InlineSvg from "../generic/InlineSvg.svelte";
 
   export let title: string;
   export let img: string;
   export let editable = false;
 
-  const fallbackImg = '/static/chapter-preview-image.png';
-
 </script>
 
-<img class="unep-logo" src="/static/unep.svg" alt="unep-logo" />
-<div class="splash" style="background-image: url({img ? staticUrl(img) : fallbackImg});">
+<div class="unep-logo">
+  <InlineSvg svg="UNEP" />
+</div>
+<div class="splash" style="background-image: url({img});">
   <h1>
     <EditableContent bind:value={title} {editable} placeholder="Page title" />
   </h1>
@@ -26,6 +26,8 @@
     padding: 6rem;
     padding-bottom: 3rem;
     padding-left: 124px;
+    background-size: cover;
+    background-position: center center;
     h1 {
       max-width: 800px;
       width: 100%;
@@ -37,5 +39,7 @@
   .unep-logo {
     position: absolute;
     margin: 2rem;
+    width: 110px;
+    color: white;
   }
 </style>

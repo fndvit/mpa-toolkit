@@ -17,6 +17,7 @@
   const run = setBlockType(nodeType, attrs);
   const onClick = () => run(editorState, view.dispatch);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isActive = (_: EditorState) => {
     const node = editorState.selection.$head.node();
     const sameNode = node.type === nodeType;

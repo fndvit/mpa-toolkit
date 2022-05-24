@@ -2,6 +2,8 @@
   import InlineSvg from "./generic/InlineSvg.svelte";
   import Searchbar from './generic/Searchbar.svelte';
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
+
+  export let title: string;
 </script>
 
 <div class="container" style="background-image: url({landingMadlibBg})">
@@ -10,7 +12,7 @@
   </div>
 
   <div class="bottom-section">
-    <h2 class="text">Sustainable financing</h2>
+    <h2 class="text">{title}</h2>
     <div class="search-bar">
       <Searchbar type={'collection'} />
     </div>

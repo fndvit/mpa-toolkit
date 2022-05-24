@@ -4,10 +4,11 @@
   import CollectionPageHeader from '../CollectionPageHeader.svelte';
 
   export let pages: SubTypes.Page.CollectionCard[];
+  export let title: string;
 </script>
 
-<CollectionPageHeader/>
 <div class="content">
+  <CollectionPageHeader {title} />
   <CollectionCards {pages} />
 </div>
 

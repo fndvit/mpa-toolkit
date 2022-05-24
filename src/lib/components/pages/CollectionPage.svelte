@@ -14,6 +14,6 @@
 <style lang="scss">
   .content {
     background: #ffffff;
-    padding: 20px;
+    padding-top: 20px;
   }
 </style>

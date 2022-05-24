@@ -1,11 +1,13 @@
 <script lang="ts">
-  import Unep_Logo from '/static/unep.svg';
+  import InlineSvg from "./generic/InlineSvg.svelte";
   import Searchbar from './generic/Searchbar.svelte';
-  import BlockButton from './cms/editor/BlockButton.svelte';
+  import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
 </script>
 
-<div class="container">
-  <img class="img" src={Unep_Logo} alt="United Nations Environmetal Programme" />
+<div class="container" style="background-image: url({landingMadlibBg})">
+  <div class="unep-logo">
+    <InlineSvg svg="UNEP" />
+  </div>
 
   <div class="bottom-section">
     <h2 class="text">Sustainable financing</h2>
@@ -17,7 +19,6 @@
 
 <style lang="scss">
   .container {
-    background-image: url('/static/LandingSplashImage.png');
     height: 336px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -42,8 +43,11 @@
     bottom: 32px;
     right: 96px;
   }
-  .img {
-    margin: 20px;
+  .unep-logo {
+    position: absolute;
+    margin: 2rem;
+    width: 110px;
+    color: white;
   }
   @media only screen and (max-width: 1450px) {
     .search-bar {

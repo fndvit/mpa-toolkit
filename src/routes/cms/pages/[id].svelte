@@ -3,7 +3,7 @@
   import type { SubTypes, Tag, UserInfo } from "$lib/types";
 
   export let users: UserInfo[];
-  export let page: SubTypes.Page = {} as SubTypes.Page;
+  export let page: SubTypes.Page.Full = {} as SubTypes.Page.Full;
   export let allTags: Tag[];
 </script>
 

@@ -1,6 +1,8 @@
-import type { RequestHandler } from "@sveltejs/kit";
+import { authMiddleware } from "$lib/auth";
 import { getPageComponentProps } from "$lib/prisma/wrappers";
 
-export const get: RequestHandler<{slug: string}> = async ({ params: { slug } }) => {
+export const get = authMiddleware(
+  { role: 'CONTENT_MANAGER' },
+  async ({ params: { slug } }) => {
   return getPageComponentProps(slug, true);
-};
+});

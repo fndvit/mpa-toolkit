@@ -4,7 +4,7 @@
   import { SplideOptions } from '$lib/helpers/splide';
   import TinyPreviewCard from './TinyPreviewCard.svelte';
 
-  export let slides: SubTypes.ContentCard[];
+  export let slides: SubTypes.Page.ContentCard[];
   export let title: string;
 
   const options = SplideOptions({

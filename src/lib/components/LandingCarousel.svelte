@@ -1,48 +1,12 @@
 <script lang="ts">
+  import type { SubTypes } from "$lib/types";
   import {Splide, SplideSlide} from "@splidejs/svelte-splide";
   import CarouselDots from './Cards/CarouselDots.svelte';
   import CarouselCard from './CarouselCard.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
 
-  export let type: 'chapter'|'case study';
-
-  //Dummy summary cards
-  let p0 = {
-    previewImage: '/static/chapter-preview-image.png',
-    category: 'Sustainable financing',
-    title: '0-What should MPA managers know about the blue economy and business planning?',
-    slug: 'what-should-mpa-managers-0'
-  };
-
-  let p1 = {
-    previewImage: '/static/chapter-preview-image.png',
-    category: 'Sustainable financing',
-    title: '1-What should MPA managers know about the blue economy and business planning?',
-    slug: 'what-should-mpa-managers-1'
-  };
-
-  let p2 = {
-    previewImage: '/static/chapter-preview-image.png',
-    category: 'Sustainable financing',
-    title: '2-What should MPA managers know about the blue economy and business planning?',
-    slug: 'what-should-mpa-managers-2'
-  };
-
-  let p3 = {
-    previewImage: '/static/chapter-preview-image.png',
-    category: 'Sustainable financing',
-    title: '3-What should MPA managers know about the blue economy and business planning?',
-    slug: 'what-should-mpa-managers-3'
-  };
-
-  let p4 = {
-    previewImage: '/static/chapter-preview-image.png',
-    category: 'Sustainable financing',
-    title: '4-What should MPA managers know about the blue economy and business planning?',
-    slug: 'what-should-mpa-managers-4'
-  };
-
-  let parameters = [p0, p1, p2, p3, p4];
+  export let pages: SubTypes.Page.ContentCard[];
+  export let title: string;
 
   let currentCard = 0;
   let splide: Splide;
@@ -70,26 +34,22 @@
 
 <div class="container">
   <div class="title-container">
-    {#if type === 'chapter'}
-      Get the <b>answers</b> to all your questions
-    {:else}
-      Explore what <b>others have done</b>
-    {/if}
-      <CarouselDots
-        currentPageIndex={currentCard}
-        pagesCount={parameters.length}
-        progress={true}
-        handleDotClick={handlePaginationEvent}
-      />
+    {@html title}
+    <CarouselDots
+      currentPageIndex={currentCard}
+      pagesCount={pages.length}
+      progress={true}
+      handleDotClick={handlePaginationEvent}
+    />
   </div>
   <div class="carousel-container">
     <Splide
     {options} bind:this={splide}
     on:mounted={ (e) => currentCard = e.detail.splide.index}
     on:move={(e) => currentCard = e.detail.index}>
-      {#each parameters as p}
+      {#each pages as page}
         <SplideSlide>
-          <CarouselCard {type} parameters={p}/>
+          <CarouselCard {page}/>
         </SplideSlide>
       {/each}
     </Splide>

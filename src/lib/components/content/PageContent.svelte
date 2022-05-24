@@ -11,8 +11,8 @@
   import LifeCycle from "$lib/components/LifeCycle.svelte";
   import Image from "./Image.svelte";
 
-  export let page: SubTypes.Page;
-  export let recommendedPages: SubTypes.ContentCard[] = null;
+  export let page: SubTypes.Page.Full;
+  export let recommendedPages: SubTypes.Page.ContentCard[] = null;
 
   const sections = createSections(page.content);
 

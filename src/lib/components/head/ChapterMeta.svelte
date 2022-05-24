@@ -5,7 +5,7 @@
   import EditableContent from "$lib/components/generic/EditableContent.svelte";
   import UserImage from "$lib/components/UserImage.svelte";
 
-  export let chapter: SubTypes.ChapterMeta;
+  export let chapter: SubTypes.Chapter.PageHead;
   export let allAuthors: UserInfo[] = [];
   export let editable = false;
   export let readTime: number = undefined;

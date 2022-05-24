@@ -52,10 +52,15 @@ export const pageFull = validate<Prisma.PageSelect>()({
 });
 
 export const pageForContentCard = validate<Prisma.PageSelect>()({
-  tags: pageTag,
+  tags: {
+    ...pageTag,
+    where: { tag: { type: TagType.TOPIC } },
+  },
   title: true,
   img: true,
-  slug: true
+  slug: true,
+  chapter: { select: { pageId: true } },
+  caseStudy: { select: { pageId: true } },
 });
 
 export const pageForCollectionCard = validate<Prisma.PageSelect>()({
@@ -99,6 +104,8 @@ export namespace CaseStudy {
 }
 
 export type PageTag = Prisma.TagsOnPagesGetPayload<typeof pageTag>;
+
+export type Tag = Prisma.TagGetPayload<typeof tag>;
 
 // ***********************
 //   Typescript helpers

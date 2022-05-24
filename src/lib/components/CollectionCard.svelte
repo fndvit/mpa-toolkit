@@ -19,7 +19,6 @@
     <img src={staticUrl(page.img)} alt="chapter" />
   </div>
   <div class="text">
-    <b>{page.slug}</b>
     <h1 class="title">
       {page.title}
     </h1>
@@ -91,13 +90,19 @@
       --tag-bg: #DADCE0;
     }
     :global(.tag-container) {
-      overflow: scroll;
+      overflow: auto;
     }
   }
 
   @media (max-width: 1200px) {
     .container {
       height: auto;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .container {
+      grid-template-columns: 12rem 1fr 20rem;
     }
   }
 

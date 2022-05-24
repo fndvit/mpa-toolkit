@@ -11,11 +11,11 @@
   export let page: SubTypes.Page.Full;
   export let recommendedPages: SubTypes.Page.ContentCard[];
 
-  $: img = page.img ? staticUrl(page.img) : page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
+  $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 </script>
 
 <div>
-  <Splash title={page.title} {img} />
+  <Splash title={page.title} img={staticUrl(page.img, fallbackImg)} />
   {#if page.chapter }
     <ChapterMeta chapter={page.chapter} readTime={page.readTime} />
   {:else if page.caseStudy}

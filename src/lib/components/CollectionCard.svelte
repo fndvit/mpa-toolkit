@@ -2,24 +2,28 @@
   import type { SubTypes } from '$lib/types';
   import { staticUrl } from '$lib/helpers/content';
   import TagContainer from '$lib/components/TagContainer.svelte';
+  import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
+  import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
 
   export let page: SubTypes.Page.CollectionCard;
   export let cms = false;
 
-  const authors = page.chapter?.authors?.map(a => a.name);
-  const authorsString = authors && (
+  $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
+
+  $: authors = page.chapter?.authors?.map(a => a.name);
+  $: authorsString = authors && (
     authors.length > 1
       ? `${authors.slice(0, -1).join(',')} and ${authors.slice(-1)}`
       : authors.toString()
   );
 
-  const href = cms ? `/cms/pages/${page.id}` : `/${page.slug}`;
+  $: href = cms ? `/cms/pages/${page.id}` : `/${page.slug}`;
 
 </script>
 
 <a class="container" {href} rel="external" class:cms-card={cms}>
   <div class="image">
-    <img src={staticUrl(page.img)} alt="chapter" />
+    <img src={staticUrl(page.img, fallbackImg)} alt="chapter" />
   </div>
   <div class="text">
     <b>{page.slug}</b>

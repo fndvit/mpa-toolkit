@@ -1,7 +1,8 @@
 import type { ContentDocument, Section, SubTypes } from "../types";
 import { slugify } from "./utils";
 
-export const staticUrl = (path: string) => `${import.meta.env.VITE_UPLOAD_BASE_URL}${path}`;
+export const staticUrl = (path: string, fallback = '') =>
+  path ? `${import.meta.env.VITE_UPLOAD_BASE_URL}${path}` : fallback;
 
 export function createSections(document: ContentDocument) {
   return document.content.reduce<Section[]>((sections, block, i) => {

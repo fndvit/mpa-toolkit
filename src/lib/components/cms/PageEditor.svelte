@@ -28,8 +28,8 @@
   const userLookup = createLookup(users, u => u.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
 
+  const fallbackSplash = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
   const pageId = page.id;
-
   const isNewPage = !page.id;
 
   let pageType: "Case Study" | "Chapter" = page.caseStudy ? "Case Study" : "Chapter";
@@ -140,8 +140,6 @@
 
   $: href = `${_page.draft ? '/draft' : ''}/${savedPage.slug}`;
 
-  $: splashImg = _page.img ? staticUrl(_page.img) : _page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
-
 </script>
 
 
@@ -163,7 +161,7 @@
 
     </div>
 
-    <Splash bind:title={_page.title} img={splashImg} editable={!preview} />
+    <Splash bind:title={_page.title} img={staticUrl(_page.img, fallbackSplash)} editable={!preview} />
     {#if pageType === "Case Study"}
       <CaseStudyMeta bind:caseStudy={_page.caseStudy} editable={!preview} />
     {:else}

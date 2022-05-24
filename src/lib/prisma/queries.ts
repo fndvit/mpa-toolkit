@@ -114,5 +114,6 @@ export type Tag = Prisma.TagGetPayload<typeof tag>;
 type MapToSelect<T> = Expand<{select: T}>;
 
 function validate<V>(): <S>(q: Exact<S, V>) => ExpandRecursively<MapToSelect<S>> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return q => ({ select: q }) as any;
 }

@@ -19,6 +19,7 @@
   const path = d3.geoPath().projection(projection);
 
   import('./110m.json').then(({ default: worlddata }) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const land = feature(worlddata as any, worlddata.objects.land as any);
     landPath = path(land);
   });

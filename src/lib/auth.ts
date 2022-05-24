@@ -1,5 +1,5 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import { JWT, SvelteKitAuth } from "sk-auth";
+import { SvelteKitAuth } from "sk-auth";
 import { GoogleOAuth2Provider } from "sk-auth/providers";
 import { prisma } from '$lib/prisma';
 import { logger } from "./log";
@@ -97,16 +97,6 @@ function roleCheck(userRole: _Role, requiredRole: _Role) {
     ADMIN: 2,
   };
   return ROLE_VALUES[userRole] >= ROLE_VALUES[requiredRole];
-}
-
-async function isAuthorized(token: JWT, requiredRole: _Role) {
-  const user = await prisma.user.findUnique({
-    where: { id: token.user.id }
-  });
-  if (!user) {
-    return false;
-  }
-  return roleCheck(user.role, requiredRole);
 }
 
 export function authMiddleware(opts: { role: _Role, redirect?: string }, handler: RequestHandler): RequestHandler {

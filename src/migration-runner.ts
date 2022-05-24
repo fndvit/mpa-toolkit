@@ -6,7 +6,7 @@ import { seed } from "../prisma/seed/seed";
 // example cmd to invoke using aws cli:
 // aws lambda invoke --function-name AppStack-MigrationRunner07C61515-63HtCcSdD3K6 response.json
 
-export const handler: Handler = async (event, _) => {
+export const handler: Handler = async (event) => {
   // Available commands are:
   //   deploy: create new database if absent and apply all migrations to the existing database.
   //   reset: delete existing database, create new one, and apply all migrations. NOT for production environment.
@@ -28,11 +28,11 @@ export const handler: Handler = async (event, _) => {
     // As a workaround, we spawn migration script as a child process and wait for its completion.
     // Please also refer to the following GitHub issue: https://github.com/prisma/prisma/issues/4703
     try {
-      const exitCode = await new Promise((resolve, _) => {
+      const exitCode = await new Promise((resolve) => {
         execFile(
           path.resolve("./node_modules/prisma/build/index.js"),
           ["migrate", command].concat(options),
-          (error, stdout, stderr) => {
+          (error, stdout) => {
             console.log(stdout);
             if (error != null) {
               console.log(`prisma migrate ${command} exited with error ${error.message}`);

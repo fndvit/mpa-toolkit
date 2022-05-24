@@ -2,8 +2,8 @@
   import type { SubTypes, UserInfo } from "$lib/types";
   import AuthorsEditor from "$lib/components/cms/AuthorsEditor.svelte";
   import KeyTakeaways from "$lib/components/cms/KeyTakeaways.svelte";
-  import EditableContent from "$lib/components/generic/EditableContent.svelte";
   import UserImage from "$lib/components/UserImage.svelte";
+  import EditableText from "../generic/EditableText.svelte";
 
   export let chapter: SubTypes.Chapter.PageHead;
   export let allAuthors: UserInfo[] = [];
@@ -62,7 +62,7 @@
   </div>
 
   <div class="summary">
-    <EditableContent bind:value={chapter.summary} {editable} placeholder='Summary text...' />
+    <EditableText bind:value={chapter.summary} {editable} placeholder='Summary text...' />
   </div>
 
   <KeyTakeaways bind:keyTakeaways={chapter.keyTakeaways} {editable}/>

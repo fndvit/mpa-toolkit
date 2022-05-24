@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
-  import EditableContent from '$lib/components/generic/EditableContent.svelte';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import GlobeViz from "./GlobeViz.svelte";
   import Milestones from './Milestones.svelte';
+  import EditableText from "../generic/EditableText.svelte";
   import EditableNumber from "../generic/EditableNumber.svelte";
 
   export let caseStudy: SubTypes.CaseStudy.PageHead;
@@ -32,7 +32,7 @@
     <div class="meta-grid meta-grid-1">
 
       <h4>Name</h4>
-      <EditableContent bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
+      <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
 
       <h4>Established in</h4>
       <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
@@ -49,16 +49,16 @@
     <div class="meta-grid meta-grid-2">
 
       <h4>Governance</h4>
-      <EditableContent bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
+      <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
 
       <h4>Staff</h4>
-      <EditableContent bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
+      <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
 
       <h4>Budget</h4>
-      <EditableContent bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
+      <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
 
       <h4>Budget level</h4>
-      <EditableContent bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
+      <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
 
     </div>
 

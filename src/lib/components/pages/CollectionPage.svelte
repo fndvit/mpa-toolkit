@@ -19,7 +19,7 @@
 
   .collection-page {
     --page-padding: 90px;
-    --page-max-content-width: auto;
+    --page-max-content-width: 1450px;
   }
   .content {
     background: #ffffff;

@@ -1,8 +1,9 @@
 <script lang='ts'>
-  import type { SubTypes } from "$lib/types";
+  import type { SubTypes, UserInfo } from "$lib/types";
   import CollectionPage from "$lib/components/pages/CollectionPage.svelte";
 
   export let pages: SubTypes.Page.CollectionCard[];
+  export let author: UserInfo;
 </script>
 
-<CollectionPage {pages}/>
+<CollectionPage {pages} title={author.name}/>

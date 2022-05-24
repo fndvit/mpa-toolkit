@@ -63,8 +63,7 @@
   }
 
   .content {
-    margin: auto;
-    padding: 12px;
+    padding: 0.75rem 1rem 1rem 1.5rem;
     flex: 1;
     display: grid;
     grid-template-areas:
@@ -77,6 +76,13 @@
 
   .title {
     grid-area: title;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-width: 800px;
   }
 
   .byline {
@@ -85,6 +91,7 @@
     align-items: end;
     column-gap: 0.4rem;
     color: #6C767D;
+    white-space: nowrap;
   }
 
   .tags {
@@ -128,6 +135,7 @@
       flex-basis: 7rem;
     }
     .content {
+      padding: 0.5rem 0.75rem 1rem 1rem;
       grid-template-columns: 1fr;
       grid-template-rows: 1fr auto auto;
       grid-template-areas: "title" "byline" "tags";
@@ -135,6 +143,8 @@
     }
     .title {
       font-size: 1.25rem;
+      -webkit-line-clamp: 5;
+      line-clamp: 5;
     }
     .byline {
       flex-direction: column;

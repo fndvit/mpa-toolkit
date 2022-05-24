@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
+  import { slugify } from "$lib/helpers/utils";
 
   export let tag: SubTypes.PageTag;
 
@@ -7,7 +8,7 @@
 </script>
 
 <a
-  href={`/tag/${tag.tag.id}`}
+  href={`/tag/${slugify(tag.tag.value)}`}
   class="tag"
   class:secondary
   tabindex="0"

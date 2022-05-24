@@ -7,7 +7,7 @@
   import Footer from "$lib/components/Footer.svelte";
   import TagContainer from "$lib/components/TagContainer.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
-  import landingSplash from '$lib/assets/landing-splash.png';
+  import landingSplash from '$lib/assets/landing-splash.jpg';
 
   export let chapters: SubTypes.Page.ContentCard[] = [];
   export let caseStudies: SubTypes.Page.ContentCard[] = [];

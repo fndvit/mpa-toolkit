@@ -1,6 +1,6 @@
 <script lang="ts">
   import MadLibSelector from "$lib/components/MadLibSelector.svelte";
-  import landingMadlibBg from '$lib/assets/landing-madlib-bg.png';
+  import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
 
   export let type: 'inline' | 'landing' = 'inline';
 

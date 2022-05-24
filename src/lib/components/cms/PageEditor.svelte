@@ -17,6 +17,9 @@
   import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import PageContent from '$lib/components/content/PageContent.svelte';
+  import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
+  import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
+  import { staticUrl } from '$lib/helpers/content';
 
   export let users: UserInfo[];
   export let allTags: Tag[];
@@ -137,6 +140,8 @@
 
   $: href = `${_page.draft ? '/draft' : ''}/${savedPage.slug}`;
 
+  $: splashImg = _page.img ? staticUrl(_page.img) : _page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
+
 </script>
 
 
@@ -158,7 +163,7 @@
 
     </div>
 
-    <Splash bind:title={_page.title} img={_page.img} editable={!preview} />
+    <Splash bind:title={_page.title} img={splashImg} editable={!preview} />
     {#if pageType === "Case Study"}
       <CaseStudyMeta bind:caseStudy={_page.caseStudy} editable={!preview} />
     {:else}

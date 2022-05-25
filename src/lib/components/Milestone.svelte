@@ -80,7 +80,7 @@
 
     <div class="milestones-block">
 
-      {#each content as text, i}
+      {#each content as _, i}
         <div class='milestone-container' on:click={() => onClickMilestone(i)} style="--row: {i+1};">
 
           <svg class="sub-thread-line" width="10" height="4" viewBox="0 0 10 4">

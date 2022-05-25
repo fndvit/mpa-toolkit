@@ -1,10 +1,7 @@
 <script lang="ts">
   import landingLifecycle from '$lib/assets/landing-lifecycle.jpg';
   import Cards from './Cards/Cards.svelte';
-  import CircleMenu, { MenuElement, SegmentType } from './CircleMenu.svelte';
-
-  let currentPageIndex = 0;
-  let menuData;
+  import CircleMenu, { MenuElement } from './CircleMenu.svelte';
 
   const cardBlocks = [
     {
@@ -39,13 +36,14 @@
 
   const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30];
 
-  $: if(currentPageIndex >= 0)
-      menuData = LIFECYCLE_CONFIG.map<MenuElement>((percentage, i) => {
-        return {
-          percentage,
-          type: currentPageIndex === i ? 'main' : 'unselected'
-        };
-      });
+  let currentPageIndex = 0;
+
+  $: menuData = currentPageIndex >= 0 && LIFECYCLE_CONFIG
+    .map<MenuElement>((percentage, i) => ({
+      percentage
+      , type: currentPageIndex === i ? 'main' : 'unselected'
+    }));
+
 </script>
 
 <div class="container" style="background-image: url({landingLifecycle});">
@@ -53,11 +51,11 @@
     <h2>What's the <b>MPA management cycle</b></h2>
   </div>
   <div class="column2">
-    <Cards cards={cardBlocks} bind:currentPageIndex={currentPageIndex} />
+    <Cards cards={cardBlocks} bind:currentPageIndex />
   </div>
   <div class="column3">
     <div class="circle-menu">
-      <CircleMenu data={menuData} bind:currentPageIndex={currentPageIndex}/>
+      <CircleMenu data={menuData} bind:currentPageIndex/>
     </div>
   </div>
 </div>
@@ -70,8 +68,8 @@
     grid-template-rows: 30%;
     grid-template-columns: 50% 50%;
     grid-template-areas:
-    "title circlemenu"
-    "textslide circlemenu";
+      "title circlemenu"
+      "textslide circlemenu";
     display: grid;
     font-family: 'Montserrat';
     overflow: hidden;
@@ -97,19 +95,19 @@
       grid-area: circlemenu;
     }
 
-    .circle-menu{
+    .circle-menu {
       width: 800px;
       height: 800px;
     }
 
-    @media (max-width: 1575px){
-      .circle-menu{
+    @media (max-width: 1575px) {
+      .circle-menu {
         width: 700px;
         height: 700px;
       }
     }
   }
-  @media (max-width: 1280px){
+  @media (max-width: 1280px) {
     .container {
       width: 100%;
       height: auto;
@@ -117,18 +115,18 @@
       flex-flow: column;
       text-align: center;
 
-      .column1{
+      .column1 {
         order: 1;
         margin: auto;
       }
 
-      .column2{
+      .column2 {
         order: 3;
         margin: 0;
         padding: 20px;
       }
 
-      .column3{
+      .column3 {
         order: 2;
       }
 

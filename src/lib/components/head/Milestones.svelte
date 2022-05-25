@@ -30,10 +30,12 @@
   }
 
   function onSaveYear(oldYear: string, newYear: string) {
-    const existing = milestones[newYear] || [];
-    milestones[newYear] = [...existing, ...milestones[oldYear]];
-    delete milestones[oldYear];
-    milestones = milestones;
+    if (oldYear !== newYear) {
+      const existing = milestones[newYear] || [];
+      milestones[newYear] = [...existing, ...milestones[oldYear]];
+      delete milestones[oldYear];
+      milestones = milestones;
+    }
   }
 
   function onDeleteYear(year: string) {

@@ -80,7 +80,6 @@
     max-height: 120px;
     text-overflow: clip;
     word-wrap: break-word;
-    overflow: hidden;
   }
 
   .category {

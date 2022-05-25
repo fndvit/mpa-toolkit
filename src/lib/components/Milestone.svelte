@@ -35,13 +35,13 @@
     dispatch('delete');
   }
 
-  const onClickSaveYear: svelte.JSX.MouseEventHandler<HTMLElement> = e => {
+  const onClickSaveYear: svelte.JSX.MouseEventHandler<HTMLElement> = () => {
     dispatch('saveYear', editYear);
     year = editYear;
     editableYear.blur();
   };
 
-  const onClickCancelYear: svelte.JSX.MouseEventHandler<HTMLElement> = e => {
+  const onClickCancelYear: svelte.JSX.MouseEventHandler<HTMLElement> = () => {
     editYear = year;
     editableYear.blur();
   };

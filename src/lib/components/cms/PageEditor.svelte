@@ -17,9 +17,6 @@
   import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import PageContent from '$lib/components/content/PageContent.svelte';
-  import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
-  import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
-  import { staticUrl } from '$lib/helpers/content';
 
   export let users: UserInfo[];
   export let allTags: Tag[];
@@ -28,7 +25,6 @@
   const userLookup = createLookup(users, u => u.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
 
-  const fallbackSplash = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
   const pageId = page.id;
   const isNewPage = !page.id;
 

@@ -1,5 +1,5 @@
 import type { ContentDocument, MilestonesData } from "$lib/types";
-import type { ExpandRecursively, Exact, Modify } from "$lib/helpers/utils";
+import type { ExpandRecursively, Exact, Modify, Expand } from "$lib/helpers/utils";
 import { Prisma, TagType } from "@prisma/client";
 
 export const tag = validate<Prisma.TagSelect>()({

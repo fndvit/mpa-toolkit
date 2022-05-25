@@ -41,6 +41,8 @@
     </div>
   </div>
 
+  <MpaManagementLifecycle/>
+
   <LandingCarousel pages={chapters} title="Get the <b>answers</b> to all your questions" />
 
   <div class="inline-searchbar">
@@ -49,7 +51,6 @@
   </div>
   <MadLib type='landing'/>
   <LandingCarousel pages={caseStudies} title="Explore what <b>others have done</b>" />
-  <MpaManagementLifecycle/>
   <Footer/>
 </div>
 

@@ -8,6 +8,7 @@
   import TagContainer from "$lib/components/TagContainer.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
   import landingSplash from '$lib/assets/landing-splash.jpg';
+  import MpaManagementLifecycle from "$lib/components/MPAManagementLifecycle.svelte";
 
   export let chapters: SubTypes.Page.ContentCard[] = [];
   export let caseStudies: SubTypes.Page.ContentCard[] = [];
@@ -48,6 +49,7 @@
   </div>
   <MadLib type='landing'/>
   <LandingCarousel pages={caseStudies} title="Explore what <b>others have done</b>" />
+  <MpaManagementLifecycle/>
   <Footer/>
 </div>
 

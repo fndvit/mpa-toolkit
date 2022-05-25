@@ -12,7 +12,7 @@
   import TimedMessage from '$lib/components/generic/TimedMessage.svelte';
   import CaseStudyMeta from '$lib/components/head/CaseStudyMeta.svelte';
   import ChapterMeta from '$lib/components/head/ChapterMeta.svelte';
-  import Splash from '$lib/components/head/Splash.svelte';
+  import PageSplash from '$lib/components/head/PageSplash.svelte';
   import cloneDeep from 'clone-deep';
   import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
   import IconButton from '$lib/components/generic/IconButton.svelte';
@@ -49,7 +49,7 @@
     };
   };
 
-  const _page = convertPageToPageRequest(page);
+  let _page = convertPageToPageRequest(page);
 
   let chapter = cloneDeep(page.chapter);
   let tags: SubTypes.PageTag[] = page.tags || [];
@@ -161,7 +161,7 @@
 
     </div>
 
-    <Splash bind:title={_page.title} img={staticUrl(_page.img, fallbackSplash)} editable={!preview} />
+    <PageSplash bind:page={_page} editable={!preview} />
     {#if pageType === "Case Study"}
       <CaseStudyMeta bind:caseStudy={_page.caseStudy} editable={!preview} />
     {:else}

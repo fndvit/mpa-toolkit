@@ -28,7 +28,7 @@
       <div>
         <EditableUserImage bind:user={user} />
       </div>
-      <div>{user.name}</div>
+      <div data-id={user.id}>{user.name}</div>
       <div>{user.email}</div>
       <div>
         {#if $session.user.email === user.email}

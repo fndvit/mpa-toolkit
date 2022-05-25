@@ -26,9 +26,7 @@
     keyboard: true
   });
 
-  const handlePaginationEvent = (newIndex: number) => {
-    splide.go(newIndex);
-  };
+  $: if (currentCard >= 0 && splide) splide.go(currentCard);
 
 </script>
 
@@ -36,17 +34,16 @@
   <div class="title-container">
     {@html title}
     <CarouselDots
-      currentPageIndex={currentCard}
+      bind:currentPageIndex={currentCard}
       pagesCount={pages.length}
       progress={true}
-      handleDotClick={handlePaginationEvent}
     />
   </div>
   <div class="carousel-container">
-    <Splide
-    {options} bind:this={splide}
-    on:mounted={ (e) => currentCard = e.detail.splide.index}
-    on:move={(e) => currentCard = e.detail.index}>
+    <Splide {options} bind:this={splide}
+      on:mounted={ (e) => currentCard = e.detail.splide.index}
+      on:move={(e) => currentCard = e.detail.index}
+    >
       {#each pages as page}
         <SplideSlide>
           <CarouselCard {page}/>

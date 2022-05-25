@@ -26,14 +26,6 @@
     pagination: false
   });
 
-  const handleDotClick = (index) => {
-    splide.go(index);
-  };
-
-  const handleMove = (event) => {
-    currentPageIndex = event.detail.index;
-  };
-
   const onClickAddCard = () => {
     cards.push({heading: 'Key takeaways', body: ''});
     cards = cards;
@@ -50,7 +42,7 @@
 </script>
 
 <div class="container" class:has-fixed-title={fixedTitle}>
-  <Splide {options} bind:this={splide} on:move={handleMove} hasTrack={false}>
+  <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
         <CardHeading text={fixedTitle } />
@@ -75,10 +67,9 @@
     {#if editable || cards.length > 1}
       <div class="carousel-dots">
         <CarouselDots
-          {currentPageIndex}
+          bind:currentPageIndex
           pagesCount={cards.length}
           progress={!editable}
-          {handleDotClick}
         />
       </div>
     {/if}

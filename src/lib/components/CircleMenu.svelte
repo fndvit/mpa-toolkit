@@ -27,6 +27,7 @@
 
   export let data: MenuElement[];
   export let config = defaultConfig;
+  export let currentPageIndex = 0;
 
   setContext('circleConfig', config);
 
@@ -44,7 +45,7 @@
 </script>
 
 <svg viewBox="0 0 {config.size} {config.size}">
-  {#each menuSegments as segment}
-    <CircularSegment data={segment} />
+  {#each menuSegments as segment, i}
+    <CircularSegment data={segment} on:click={()=> currentPageIndex = i}/>
   {/each}
 </svg>

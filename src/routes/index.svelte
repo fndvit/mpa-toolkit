@@ -8,6 +8,7 @@
   import TagContainer from "$lib/components/TagContainer.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
   import landingSplash from '$lib/assets/landing-splash.jpg';
+  import MpaManagementLifecycle from "$lib/components/MPAManagementLifecycle.svelte";
 
   export let chapters: SubTypes.Page.ContentCard[] = [];
   export let caseStudies: SubTypes.Page.ContentCard[] = [];
@@ -39,6 +40,8 @@
       <InlineSvg svg="WWF" />
     </div>
   </div>
+
+  <MpaManagementLifecycle/>
 
   <LandingCarousel pages={chapters} title="Get the <b>answers</b> to all your questions" />
 

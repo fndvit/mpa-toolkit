@@ -75,6 +75,7 @@
     display: grid;
     font-family: 'Montserrat';
     overflow: hidden;
+
     h2 {
       font-size: 48px;
     }
@@ -84,6 +85,7 @@
       margin-left: 120px;
       grid-area: title;
     }
+
     .column2 {
       margin-top: 149px;
       margin-left: 120px;
@@ -106,15 +108,6 @@
         height: 700px;
       }
     }
-
-    @media (max-width: 1575px){
-      .circle-menu{
-        width: 700px;
-        height: 700px;
-      }
-    }
-
-
   }
   @media (max-width: 1280px){
     .container {
@@ -123,18 +116,22 @@
       display: flex;
       flex-flow: column;
       text-align: center;
+
       .column1{
         order: 1;
         margin: auto;
       }
+
       .column2{
         order: 3;
         margin: 0;
         padding: 20px;
       }
+
       .column3{
         order: 2;
       }
+
     }
 
   }

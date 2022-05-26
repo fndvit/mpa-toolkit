@@ -19,6 +19,7 @@
 <style lang="scss">
   .container {
     width: 292px;
+    --tag-bg: #dadce0;
   }
 
   img {

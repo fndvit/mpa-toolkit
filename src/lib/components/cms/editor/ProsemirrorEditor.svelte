@@ -1,11 +1,7 @@
 <script lang="ts">
-  import type { Node } from 'prosemirror-model';
   import type { EditorState } from 'prosemirror-state';
   import { EditorView } from 'prosemirror-view';
   import { onDestroy,onMount } from 'svelte';
-  import { createSvelteNodeView } from '$lib/editor/svelte-nodeview';
-  import CardsView from './CardsView.svelte';
-  import ImageView from './ImageView.svelte';
 
   export let className = 'ui-editor';
   export let editorState: EditorState;
@@ -133,8 +129,6 @@
     box-sizing: border-box;
     background-color: transparent;
     padding: 1em;
-    /* border: 1px solid #efefef;
-    border-radius: .5em; */
     background: white;
     display: inline-block;
     font: inherit;

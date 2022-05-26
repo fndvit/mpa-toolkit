@@ -20,7 +20,7 @@ declare module 'svelte-scrollto' {
 }
 
 type ObjectKeys<T> =
-  T extends object ? (keyof T)[] :
+  T extends object ? (keyof T & string)[] :
   T extends number ? [] :
   T extends Array<any> | string ? string[] :
   never;

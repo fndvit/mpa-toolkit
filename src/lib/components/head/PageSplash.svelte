@@ -8,7 +8,7 @@
   import EditableText from "../generic/EditableText.svelte";
 
   type PageForSplash = Modify<
-    Pick<SubTypes.Page.Full, 'title' | 'img' | 'chapter'>,
+    Pick<SubTypes.Page.Full, 'title' | 'img'>,
     { caseStudy?: {name: string} }
   >;
 

@@ -19,9 +19,9 @@
     toggle(editorState, view.dispatch);
   }
 
-  function markActive(state: EditorState, type) {
+  function markActive(state: EditorState, type: MarkType<any>) {
     let {from, to, empty} = state.selection;
-    if (empty) return type.isInSet(state.storedMarks || state.selection.$from.marks());
+    if (empty) return !!type.isInSet(state.storedMarks || state.selection.$from.marks());
     else return state.doc.rangeHasMark(from, to, type);
   }
 

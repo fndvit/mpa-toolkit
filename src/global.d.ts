@@ -14,3 +14,7 @@ declare namespace App {
     }
   }
 }
+
+declare module 'svelte-scrollto' {
+  export const scrollTo;
+}

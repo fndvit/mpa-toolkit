@@ -27,7 +27,7 @@
   });
 
   const onClickAddCard = () => {
-    cards.push({heading: 'Key takeaways', body: ''});
+    cards.push({heading: '', body: ''});
     cards = cards;
     window.setTimeout(() => splide.go(cards.length - 1));
   };
@@ -49,11 +49,11 @@
       </div>
     {/if}
     <SplideTrack>
-      {#each cards as card}
+      {#each cards as card, i}
         <SplideSlide>
           <div class="slide">
-            <CardHeading text={card.heading} />
-            <CardBody bind:text={card.body} {editable} />
+            <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
+            <CardBody bind:text={card.body} editable={editable && currentPageIndex === i} />
           </div>
         </SplideSlide>
       {/each}

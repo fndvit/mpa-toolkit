@@ -120,38 +120,14 @@ export const schema = new ProsemirrorSchema({
       }
     },
 
-    cardheading: {
-      content: 'inline*',
-      group: 'block',
-      defining: true,
-      parseDOM:  [{ tag: 'h3' }],
-      toDOM() {
-        return ['h3', 0];
-      }
-    },
-
-    cardbody: {
-      content: 'text*',
-      marks: '',
-      group: 'block',
-      parseDOM: [{ tag: 'p' }],
-      toDOM() {
-        return ['p', 0];
-      }
-    },
-
-    card: {
-      content: "cardheading cardbody",
-      toDOM: () => ["card", 0],
-      parseDOM: [{tag: "card"}]
-    },
-
     cards: {
-      content: "card+",
       group: 'block',
+      atom: false,
+      selectable: true,
       defining: true,
-      toDOM() { return ["cards", 0]; },
-      parseDOM: [{tag: "cards"}]
+      attrs: {
+        data: { default: [{ heading: '', body: ''}]}
+      }
     },
 
   },

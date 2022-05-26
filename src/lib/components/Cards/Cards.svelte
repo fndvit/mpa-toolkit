@@ -1,3 +1,10 @@
+<script lang="ts" context="module">
+  export type CardData = {
+    heading: string;
+    body: string;
+  }
+</script>
+
 <script lang="ts">
   import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
   import CarouselDots from './CarouselDots.svelte';
@@ -6,15 +13,12 @@
   import { SplideOptions } from '$lib/helpers/splide';
   import IconButton from '$lib/components/generic/IconButton.svelte';
 
-  interface Card {
-    heading: string;
-    body: string;
-  }
 
-  export let cards: Card[];
+  export let cards: CardData[];
   export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;
+  export let selected = false;
 
   let splide: Splide;
 
@@ -26,16 +30,8 @@
     pagination: false
   });
 
-  const handleDotClick = (index) => {
-    splide.go(index);
-  };
-
-  const handleMove = (event) => {
-    currentPageIndex = event.detail.index;
-  };
-
   const onClickAddCard = () => {
-    cards.push({heading: 'Key takeaways', body: ''});
+    cards.push({heading: '', body: ''});
     cards = cards;
     window.setTimeout(() => splide.go(cards.length - 1));
   };
@@ -49,19 +45,19 @@
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 </script>
 
-<div class="container" class:has-fixed-title={fixedTitle}>
-  <Splide {options} bind:this={splide} on:move={handleMove} hasTrack={false}>
+<div class="container" class:has-fixed-title={fixedTitle} class:selected>
+  <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
         <CardHeading text={fixedTitle } />
       </div>
     {/if}
     <SplideTrack>
-      {#each cards as card}
+      {#each cards as card, i}
         <SplideSlide>
           <div class="slide">
-            <CardHeading text={card.heading} />
-            <CardBody bind:text={card.body} {editable} />
+            <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
+            <CardBody bind:text={card.body} editable={editable && currentPageIndex === i} />
           </div>
         </SplideSlide>
       {/each}
@@ -75,10 +71,9 @@
     {#if editable || cards.length > 1}
       <div class="carousel-dots">
         <CarouselDots
-          {currentPageIndex}
+          bind:currentPageIndex
           pagesCount={cards.length}
           progress={!editable}
-          {handleDotClick}
         />
       </div>
     {/if}
@@ -86,27 +81,6 @@
 </div>
 
 <style type="scss">
-
-  .editor-buttons {
-    position: absolute;
-    right: 40px;
-    display: flex;
-    column-gap: 5px;
-    justify-content: right;
-    :global(.icon-button) {
-      --ib-icon-bg: #00000022;
-      --ib-hover-bg: #00000022;
-      --ib-hover-border-color: #00000022;
-    }
-  }
-
-  .carousel-dots {
-    padding-bottom: 20px;
-  }
-
-  .container :global(.splide__track) {
-    border-radius: 15px;
-  }
 
   .container {
     --content-padding: 30px;
@@ -133,6 +107,34 @@
     :global(.splide__arrow:disabled) {
       display: none;
     }
+
+    &.selected {
+      filter: brightness(98%);
+      box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.20);
+      border: 1px solid #33333322;
+      margin: -1px;
+    }
+  }
+
+  .editor-buttons {
+    position: absolute;
+    right: 40px;
+    display: flex;
+    column-gap: 5px;
+    justify-content: right;
+    :global(.icon-button) {
+      --ib-icon-bg: #00000022;
+      --ib-hover-bg: #00000022;
+      --ib-hover-border-color: #00000022;
+    }
+  }
+
+  .carousel-dots {
+    padding-bottom: 20px;
+  }
+
+  .container :global(.splide__track) {
+    border-radius: 15px;
   }
 
   .slide {

@@ -31,7 +31,7 @@
   use:gradientAction
   on:scroll={showScroll}
 >
-  <EditableText bind:value={text} {editable} placeholder='Key takeaway...' />
+  <EditableText bind:value={text} {editable} placeholder='Body text...' />
 </div>
 
 <style lang="scss">

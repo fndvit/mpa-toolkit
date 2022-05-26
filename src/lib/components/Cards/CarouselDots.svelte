@@ -4,17 +4,16 @@
   export let progress = false;
   export let pagesCount = 1;
   export let currentPageIndex = 0;
-  export let handleDotClick;
 </script>
 
 <div class="sc-carousel-dots__container">
-  {#each Array(pagesCount) as _, pageIndex (pageIndex)}
+  {#each Array(pagesCount) as _, i}
     <div class="sc-carousel-dots__dot-container">
       <Dot
         {progress}
-        active={currentPageIndex === pageIndex}
-        on:click={handleDotClick(pageIndex)}
-        on:progressAnimationFinished={handleDotClick(pageIndex >= pagesCount - 1 ? 0 : pageIndex + 1)}
+        on:click={() => currentPageIndex = i}
+        active={currentPageIndex === i}
+        on:progressAnimationFinished={() => currentPageIndex = i >= pagesCount - 1 ? 0 : i + 1}
       />
     </div>
   {/each}

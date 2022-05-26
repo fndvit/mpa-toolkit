@@ -35,13 +35,13 @@
     dispatch('delete');
   }
 
-  const onClickSaveYear: svelte.JSX.MouseEventHandler<HTMLElement> = e => {
+  const onClickSaveYear: svelte.JSX.MouseEventHandler<HTMLElement> = () => {
     dispatch('saveYear', editYear);
     year = editYear;
     editableYear.blur();
   };
 
-  const onClickCancelYear: svelte.JSX.MouseEventHandler<HTMLElement> = e => {
+  const onClickCancelYear: svelte.JSX.MouseEventHandler<HTMLElement> = () => {
     editYear = year;
     editableYear.blur();
   };
@@ -80,7 +80,7 @@
 
     <div class="milestones-block">
 
-      {#each content as text, i}
+      {#each content as _, i}
         <div class='milestone-container' on:click={() => onClickMilestone(i)} style="--row: {i+1};">
 
           <svg class="sub-thread-line" width="10" height="4" viewBox="0 0 10 4">

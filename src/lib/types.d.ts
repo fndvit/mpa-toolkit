@@ -1,4 +1,5 @@
 import type { TagCategory, Role } from '@prisma/client';
+import type { CardData } from './components/Cards/Cards.svelte';
 import type { CaseStudyMeta } from './prisma/queries';
 export type * as SubTypes from './prisma/queries';
 export type * from '@prisma/client';
@@ -64,7 +65,9 @@ export type ParagraphBlock = {
 
 export type CardsBlock = {
   type: 'cards';
-  content: CardBlock[];
+  attrs: {
+    data: CardData[];
+  }
 };
 
 export type ImageBlock = {
@@ -79,21 +82,6 @@ export type ImageBlock = {
 // *******************
 //  NESTED COMPONENTS
 // *******************
-
-export type CardBlock = {
-  type: 'card';
-  content: [CardHeadingBlock, CardBodyBlock];
-}
-
-export type CardHeadingBlock = {
-  type: 'cardheading';
-  content: InlineBlock[];
-}
-
-export type CardBodyBlock = {
-  type: 'cardbody';
-  content: InlineBlock[];
-}
 
 export type Mark = {
   type: 'strong' | 'em' | 'underline';

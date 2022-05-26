@@ -63,7 +63,7 @@
     </svg>
 
     <Splide {options} bind:this={splide}>
-      {#each Object.keys(milestones).sort() as year, i (year)}
+      {#each Object.keys(milestones).sort() as year (year)}
         <SplideSlide>
           <Milestone
             {year}

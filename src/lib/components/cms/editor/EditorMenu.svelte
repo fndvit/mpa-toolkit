@@ -29,7 +29,7 @@
     <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{level: 2}} text="H2" />
     <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />
     <MenuSeperator />
-    <IconButton on:click={insertCards} icon="article" title="Add cards" />
+    <IconButton on:click={insertCards} icon="library_books" title="Add cards" />
     <MenuSeperator />
     <UploadButton />
   </div>

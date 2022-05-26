@@ -11,7 +11,7 @@
     type: 'slide',
     rewind: false,
     perMove: 2,
-    gap: 10,
+    gap: 30,
     autoWidth: true,
     pagination: false,
     padding: { right: '13%' }

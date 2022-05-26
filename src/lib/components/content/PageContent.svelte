@@ -109,6 +109,10 @@
       font-family: var(--font-serif);
       font-size: 16px;
       line-height: 28px;
+
+      :global(img) {
+        max-width: 100%;
+      }
     }
 
     .menu {

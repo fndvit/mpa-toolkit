@@ -3,7 +3,9 @@
 </script>
 
 <div class="container">
+
   <p>A partnership between</p>
+
   <div class="partners-grid">
     <InlineSvg svg="UNEP" />
     <InlineSvg svg="IAFDC" />
@@ -11,11 +13,14 @@
     <InlineSvg svg="TNC" />
     <InlineSvg svg="WWF" />
   </div>
+
   <div class="links">
+
     <div>
       <a href="/cms" rel="external"><b>Contact us</b></a>
       <a href="/cms" rel="external"><b>Follow us</b></a>
     </div>
+
     <div>
       <a href="/cms" rel="external">Partners</a>
       <a href="/cms" rel="external">Team</a>
@@ -23,7 +28,9 @@
       <a href="/cms" rel="external">Terms of use</a>
       <a href="/cms" rel="external">Sitemap</a>
     </div>
+
   </div>
+
 </div>
 
 <style lang="scss">
@@ -57,4 +64,29 @@
       margin-right: 15px;
     }
   }
+
+  @media screen and (max-width: 768px) {
+
+    .container {
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 20px;
+
+      p {
+        font-size: 14px;
+      }
+    }
+
+    .partners-grid {
+      grid-template-columns: 30px 30px 30px 30px 30px;
+    }
+
+    .links {
+      a {
+        margin-right: 0.75rem;
+      }
+    }
+
+  }
+
 </style>

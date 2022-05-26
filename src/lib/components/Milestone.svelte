@@ -292,4 +292,13 @@
     }
   }
 
+  @media screen and (max-width: 768px) {
+    .milestone-text {
+      font-size: 12px;
+      line-height: 18px;
+      padding-right: 30px;
+      max-width: 125px;
+    }
+  }
+
 </style>

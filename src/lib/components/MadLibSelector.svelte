@@ -137,7 +137,7 @@
     color: black;
     border: none;
     z-index: 1000;
-    font-size: 20px;
+    font-size: inherit;
 
     .landing & {
       border-radius: 30px;

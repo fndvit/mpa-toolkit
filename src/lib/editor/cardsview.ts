@@ -9,8 +9,13 @@ export default class CardsView implements NodeView {
 
   dom: HTMLElement;
   component: SvelteComponent;
+  view: EditorView;
+  getPos: () => number;
+  unbind: () => void;
 
   constructor(node: Node, view: EditorView, getPos: () => number) {
+    this.view = view;
+    this.getPos = getPos;;
     this.dom = document.createElement('div');
 
     this.component = new Cards({
@@ -29,13 +34,15 @@ export default class CardsView implements NodeView {
     });
 
 
-    this.dom.addEventListener('click', () => {
-      // select this node in prosemirror view
+    const onClick = () => {
       const tr = view.state.tr.setSelection(
         new NodeSelection(view.state.doc.resolve(getPos()))
       );
       view.dispatch(tr);
-    });
+    };
+
+    this.dom.addEventListener('click', onClick);
+    this.unbind = () => this.dom.removeEventListener('click', onClick);
 
   }
 
@@ -58,6 +65,7 @@ export default class CardsView implements NodeView {
   }
 
   destroy() {
+    this.unbind();
     window.setTimeout(() => this.component.$destroy());
     this.dom.remove();
   }

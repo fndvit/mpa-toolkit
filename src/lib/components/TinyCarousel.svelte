@@ -14,7 +14,12 @@
     gap: 30,
     autoWidth: true,
     pagination: false,
-    padding: { right: '13%' }
+    padding: { right: '13%' },
+    breakpoints: {
+      1024: {
+        perMove: 1
+      }
+    }
   });
 
 </script>
@@ -83,14 +88,14 @@
       --margin-breakout: 0px;
       --page-left-margin: 0px;
       max-width: 100%;
+
+      :global(.splide__arrow) {
+        transform: scale(0.75);
+      }
     }
 
     .title {
       font-size: 14px;
-    }
-
-    :global(.splide__arrow) {
-      transform: scale(0.75);
     }
 
   }

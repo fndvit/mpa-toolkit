@@ -34,6 +34,7 @@
 </div>
 
 <style type="text/scss">
+
   .content {
     --margin-breakout: 25px;
     --page-left-margin: 368px;
@@ -48,7 +49,7 @@
     font-weight: 400;
     font-size: 20px;
     margin-left: calc(var(--margin-breakout) * -1);
-    width: calc(100vw - var(--page-left-margin) + var(--margin-breakout));
+    width: calc(99vw - var(--page-left-margin) + var(--margin-breakout));
 
     :global(.splide__arrow) {
       background: #ffffffdd;
@@ -59,10 +60,12 @@
     }
 
   }
+
   .title {
     font-family: 'Montserrat';
     font-weight: 700;
   }
+
   .opacity-div {
     height: 100%;
     width: 15%;
@@ -71,4 +74,25 @@
     top: 0;
     right: 0;
   }
+
+  @media screen and (max-width: 768px) {
+
+    .content {
+      margin: 0;
+      padding-left: 20px;
+      --margin-breakout: 0px;
+      --page-left-margin: 0px;
+      max-width: 100%;
+    }
+
+    .title {
+      font-size: 14px;
+    }
+
+    :global(.splide__arrow) {
+      transform: scale(0.75);
+    }
+
+  }
+
 </style>

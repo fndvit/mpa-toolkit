@@ -79,9 +79,11 @@
 
       h1 {
         font-size: 48px;
+        line-height: 65px;
+        margin-bottom: 0px;
       }
 
-      &.splash-cs h1{
+      &.splash-cs h1 {
         padding-bottom: 50px;
       }
     }

@@ -114,5 +114,32 @@
     }
   }
 
+  @media screen and (max-width: 768px) {
+
+    .meta {
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 200px;
+    }
+
+    .author-images {
+      max-width: 100%;
+    }
+
+    .first-line {
+      display: block;
+    }
+
+    .author-names {
+      margin-top: 20px;
+    }
+
+    .summary {
+      font-size: 18px;
+      line-height: 32px;
+    }
+
+  }
+
 
 </style>

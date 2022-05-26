@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  export interface CardData {
+  export type CardData = {
     heading: string;
     body: string;
   }

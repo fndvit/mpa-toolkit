@@ -123,7 +123,7 @@ export const schema = new ProsemirrorSchema({
     cards: {
       group: 'block',
       atom: false,
-      selectable: false,
+      selectable: true,
       defining: true,
       attrs: {
         data: { default: [{ heading: '', body: ''}]}

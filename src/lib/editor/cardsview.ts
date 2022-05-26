@@ -1,4 +1,5 @@
 import type { Node } from "prosemirror-model";
+import { NodeSelection } from "prosemirror-state";
 import type { NodeView, EditorView } from "prosemirror-view";
 import type { SvelteComponent } from "svelte";
 import { bind } from "svelte/internal";
@@ -11,6 +12,7 @@ export default class CardsView implements NodeView {
 
   constructor(node: Node, view: EditorView, getPos: () => number) {
     this.dom = document.createElement('div');
+
     this.component = new Cards({
       target: this.dom,
       props: {
@@ -25,6 +27,16 @@ export default class CardsView implements NodeView {
         : view.state.tr.delete(getPos(), getPos() + 1);
       view.dispatch(transaction);
     });
+
+
+    this.dom.addEventListener('click', () => {
+      // select this node in prosemirror view
+      const tr = view.state.tr.setSelection(
+        new NodeSelection(view.state.doc.resolve(getPos()))
+      );
+      view.dispatch(tr);
+    });
+
   }
 
   ignoreMutation() { return true; }
@@ -33,12 +45,16 @@ export default class CardsView implements NodeView {
     return true;
   }
 
+  _setSelected(selected: boolean) {
+    this.component.$set({ selected });
+  }
+
   selectNode() {
-    return false;
+    this._setSelected(true);
   }
 
   deselectNode() {
-    return false;
+    this._setSelected(false);
   }
 
   destroy() {

@@ -18,6 +18,7 @@
   export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;
+  export let selected = false;
 
   let splide: Splide;
 
@@ -44,7 +45,7 @@
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 </script>
 
-<div class="container" class:has-fixed-title={fixedTitle}>
+<div class="container" class:has-fixed-title={fixedTitle} class:selected>
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
@@ -81,27 +82,6 @@
 
 <style type="scss">
 
-  .editor-buttons {
-    position: absolute;
-    right: 40px;
-    display: flex;
-    column-gap: 5px;
-    justify-content: right;
-    :global(.icon-button) {
-      --ib-icon-bg: #00000022;
-      --ib-hover-bg: #00000022;
-      --ib-hover-border-color: #00000022;
-    }
-  }
-
-  .carousel-dots {
-    padding-bottom: 20px;
-  }
-
-  .container :global(.splide__track) {
-    border-radius: 15px;
-  }
-
   .container {
     --content-padding: 30px;
     --content-top-padding: 30px;
@@ -127,6 +107,34 @@
     :global(.splide__arrow:disabled) {
       display: none;
     }
+
+    &.selected {
+      filter: brightness(98%);
+      box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.20);
+      border: 1px solid #33333322;
+      margin: -1px;
+    }
+  }
+
+  .editor-buttons {
+    position: absolute;
+    right: 40px;
+    display: flex;
+    column-gap: 5px;
+    justify-content: right;
+    :global(.icon-button) {
+      --ib-icon-bg: #00000022;
+      --ib-hover-bg: #00000022;
+      --ib-hover-border-color: #00000022;
+    }
+  }
+
+  .carousel-dots {
+    padding-bottom: 20px;
+  }
+
+  .container :global(.splide__track) {
+    border-radius: 15px;
   }
 
   .slide {

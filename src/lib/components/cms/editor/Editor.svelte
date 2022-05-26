@@ -7,6 +7,9 @@
   import EditorMenu from './EditorMenu.svelte';
   import { corePlugins, richTextPlugins } from '$lib/editor/plugins';
   import { schema } from '$lib/editor/schema';
+  import { sveltePlugin } from '$lib/editor/svelte-plugin';
+  import CardsView from './CardsView.svelte';
+  import ImageView from './ImageView.svelte';
 
   let focusEditor: () => void;
   let view: EditorView;
@@ -19,8 +22,13 @@
     // selection,
     plugins: [
       ...corePlugins,
-      ...richTextPlugins
-      // ...plugins
+      ...richTextPlugins,
+      sveltePlugin({
+        nodes: {
+          cards: CardsView,
+          image: ImageView
+        }
+      })
     ]
   });
 

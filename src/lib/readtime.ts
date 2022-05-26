@@ -32,7 +32,7 @@ export function calcBlockReadTime(block: Block): number {
       .map(calcBlockReadTime)
       .reduce((a, b) => a + b, 0);
   } else if (block.type === 'cards') {
-    const allCardText = block.attrs.data
+    const allCardText = block.attrs.cards
       .map(({heading, body}) => `${heading} ${body}`)
       .join(' ');
     return calcStrReadTime(allCardText);

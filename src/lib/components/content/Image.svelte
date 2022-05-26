@@ -6,4 +6,19 @@
 
 </script>
 
-<img src={staticUrl(block.attrs.src)} alt={block.attrs.alt} />
+<div class="image image-{block.attrs.style || 'regular'}">
+  <img src={staticUrl(block.attrs.src)} alt={block.attrs.alt} />
+</div>
+
+<style>
+
+  .image-full {
+    margin-left: calc(-1 * var(--img-full-breakout-l, 200px));
+    margin-right: calc(-1 * var(--img-full-breakout-r, 200px));
+  }
+
+  .image img {
+    width: 100%;
+  }
+
+</style>

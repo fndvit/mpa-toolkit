@@ -66,7 +66,7 @@ export type ParagraphBlock = {
 export type CardsBlock = {
   type: 'cards';
   attrs: {
-    data: CardData[];
+    cards: CardData[];
   }
 };
 
@@ -76,6 +76,7 @@ export type ImageBlock = {
     src: string;
     alt?: string;
     title?: string;
+    style: 'regular' | 'full';
   };
 }
 

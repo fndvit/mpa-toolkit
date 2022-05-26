@@ -116,7 +116,7 @@
     }
 
     .menu {
-      display: none; //temporal
+      display: none; //temporary
     }
 
   }

@@ -4,6 +4,7 @@
   import PageSplash from "$lib/components/head/PageSplash.svelte";
   import ChapterMeta from "$lib/components/head/ChapterMeta.svelte";
   import PageContent from "$lib/components/content/PageContent.svelte";
+  import Footer from "$lib/components/Footer.svelte";
 
   export let page: SubTypes.Page.Full;
   export let recommendedPages: SubTypes.Page.ContentCard[];
@@ -19,6 +20,7 @@
   {/if}
 
   <PageContent {page} {recommendedPages} />
+  <Footer/>
 </div>
 
 <style lang="scss">

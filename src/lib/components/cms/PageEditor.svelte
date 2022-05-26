@@ -13,7 +13,7 @@
   import CaseStudyMeta from '$lib/components/head/CaseStudyMeta.svelte';
   import ChapterMeta from '$lib/components/head/ChapterMeta.svelte';
   import PageSplash from '$lib/components/head/PageSplash.svelte';
-  import cloneDeep from 'clone-deep';
+  import clone from 'clone';
   import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import PageContent from '$lib/components/content/PageContent.svelte';
@@ -36,7 +36,7 @@
   });
 
   const convertPageToPageRequest = (p: SubTypes.Page.Full): PageRequest => {
-    const _p = cloneDeep(p);
+    const _p = clone(p);
     return {
       ..._p,
       tags: _p.tags?.map(pageTagToRequestTag) || [],
@@ -47,10 +47,10 @@
 
   let _page = convertPageToPageRequest(page);
 
-  let chapter = cloneDeep(page.chapter);
+  let chapter = clone(page.chapter);
   let tags: SubTypes.PageTag[] = page.tags || [];
 
-  let savedPage = cloneDeep(_page);
+  let savedPage = clone(_page);
   let uploadingImage = false;
   let saving = false;
   let deleting = false;
@@ -71,7 +71,7 @@
     }
     saving = false;
     showSaveStatusText('Saved...');
-    savedPage = cloneDeep(_page);
+    savedPage = clone(_page);
   }
 
   async function onDeleteModalYes() {

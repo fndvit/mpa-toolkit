@@ -1,3 +1,10 @@
+<script lang="ts" context="module">
+  export interface CardData {
+    heading: string;
+    body: string;
+  }
+</script>
+
 <script lang="ts">
   import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
   import CarouselDots from './CarouselDots.svelte';
@@ -6,12 +13,8 @@
   import { SplideOptions } from '$lib/helpers/splide';
   import IconButton from '$lib/components/generic/IconButton.svelte';
 
-  interface Card {
-    heading: string;
-    body: string;
-  }
 
-  export let cards: Card[];
+  export let cards: CardData[];
   export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;

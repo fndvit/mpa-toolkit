@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
-  import { EditorView } from 'prosemirror-view';
+  import type { Node } from 'prosemirror-model';
   import type { EditorState } from 'prosemirror-state';
+  import CardsView from '$lib/editor/cardsview';
+  import { EditorView } from 'prosemirror-view';
+  import { onDestroy,onMount } from 'svelte';
 
   export let className = 'ui-editor';
   export let editorState: EditorState;
@@ -35,8 +37,13 @@
         ...editorViewProps,
         state: editorState,
         dispatchTransaction: (transaction) => {
-          editorState = view.state.apply(transaction);
-          view.updateState(editorState);
+          if (view) {
+            editorState = view.state.apply(transaction);
+            view.updateState(editorState);
+          }
+        },
+        nodeViews: {
+          cards: (node: Node, view: EditorView, getPos: () => number) => new CardsView(node, view, getPos)
         }
       }
     );

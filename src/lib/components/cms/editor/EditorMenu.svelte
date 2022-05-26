@@ -4,7 +4,6 @@
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
   import BlockButton from './BlockButton.svelte';
-  import { addCard } from '$lib/editor/cards';
   import MarkButton from './MarkButton.svelte';
   import MenuSeperator from './MenuSeperator.svelte';
   import { schema } from '$lib/editor/schema';
@@ -31,7 +30,6 @@
     <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />
     <MenuSeperator />
     <IconButton on:click={insertCards} icon="article" title="Add cards" />
-    <IconButton on:click={() => addCard(editorState, view.dispatch)} icon="library_add" title="Add card" />
     <MenuSeperator />
     <UploadButton />
   </div>

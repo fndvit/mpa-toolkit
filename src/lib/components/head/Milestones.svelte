@@ -163,6 +163,12 @@
         right: 0rem;
         transform: translateY(-50px) scale(0.65) !important;
       }
+
+      :global(.splide__arrow:disabled){
+        display:flex;
+        pointer-events: none;
+        opacity: 0.3;
+      }
     }
 
     .milestones-content {

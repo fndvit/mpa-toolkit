@@ -119,7 +119,6 @@
     .meta {
       padding-left: 20px;
       padding-right: 20px;
-      padding-bottom: 200px;
     }
 
     .author-images {

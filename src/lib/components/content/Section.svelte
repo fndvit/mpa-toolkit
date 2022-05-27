@@ -8,7 +8,7 @@
   const numParagraphs = section.blocks.filter(b => b.type === 'paragraph').length;
 </script>
 
-<section id={section.id} class:collapsed={!expanded}>
+<section class="content-section" id={section.id} class:collapsed={!expanded}>
   <slot/>
   {#if numParagraphs > 2}
     <ExpandButton topic={section.topic} {expanded} on:click={() => expanded = !expanded} />

@@ -25,7 +25,7 @@
 
 </script>
 
-<div class="meta-container">
+<div class="meta-container" class:has-milestones={hasMilestones}>
 
   <div class="meta-content">
 
@@ -69,11 +69,15 @@
     {/if}
 
   </div>
+
+  <div class="milestones-container">
+    {#if hasMilestones}
+      <Milestones bind:milestones={caseStudy.milestones} {editable} />
+    {/if}
+  </div>
+
 </div>
 
-{#if hasMilestones}
-  <Milestones bind:milestones={caseStudy.milestones} {editable} />
-{/if}
 
 <style lang="scss">
 
@@ -87,7 +91,7 @@
   .meta-content {
     width: 1300px;
     margin-left: 124px;
-    padding: 35px 0;
+    padding: 35px 20px;
   }
 
   .meta-grid {
@@ -155,8 +159,8 @@
   @media screen and (max-width: 768px) {
 
     .meta-container {
-      padding-left: 20px;
-      padding-right: 20px;
+      // padding-left: 20px;
+      // padding-right: 20px;
     }
 
     .meta-grid > h4 {

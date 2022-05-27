@@ -123,7 +123,7 @@
 
   @media screen and (max-width: 1150px) {
     .page-content {
-      grid-template-columns: 250px minmax(auto, 600px) auto;
+      grid-template-columns: 250px minmax(500px, 600px) 20px;
     }
     .body-column {
       :global(.tiny-carousel) {
@@ -138,7 +138,7 @@
       }
     }
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 840px) {
     .page-content {
       display: block;
     }
@@ -150,7 +150,10 @@
     .body-column {
       font-size: 16px;
       line-height: 28px;
-      padding: 0 20px;
+      > :global(.content-section) {
+        max-width: 480px;
+        margin: auto;
+      }
 
       :global(img) {
         max-width: 100%;

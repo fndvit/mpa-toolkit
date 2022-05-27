@@ -9,7 +9,7 @@
   export let tags: SubTypes.PageTag[]; // binding (updated as tags are changed)
   export let editable = false;
 
-  const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30];
+  const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30]; // index matches tag id
 
   const MAX_PRIMARY_TAGS = 2;
   const MAX_SECONDARY_TAGS = 7;

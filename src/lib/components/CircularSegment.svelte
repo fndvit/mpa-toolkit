@@ -2,6 +2,7 @@
   import type { CircleConfig, SegmentType } from "$lib/components/CircleMenu.svelte";
 
   export interface Segment {
+    tagId: number;
     startAngle: number;
     endAngle: number;
     type: SegmentType;

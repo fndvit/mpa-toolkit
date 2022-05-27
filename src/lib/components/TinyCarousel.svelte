@@ -24,25 +24,23 @@
 
 </script>
 
-<div class="container">
-  <div class="content">
-    <p class="title">{title}</p>
-    <Splide {options}>
-      {#each slides as slide}
-        <SplideSlide>
-          <TinyPreviewCard page={slide}/>
-        </SplideSlide>
-      {/each}
-    </Splide>
-    <div class="opacity-div" />
-  </div>
+<div class="tiny-carousel">
+  <p class="title">{title}</p>
+  <Splide {options}>
+    {#each slides as slide}
+      <SplideSlide>
+        <TinyPreviewCard page={slide}/>
+      </SplideSlide>
+    {/each}
+  </Splide>
+  <div class="opacity-div" />
 </div>
 
 <style type="text/scss">
 
-  .content {
     --margin-breakout: 25px;
     --page-left-margin: 368px;
+  .tiny-carousel {
     position: relative;
     line-height: 40px;
     color: #6C767D;
@@ -82,7 +80,7 @@
 
   @media screen and (max-width: 768px) {
 
-    .content {
+    .tiny-carousel {
       margin: 0;
       padding-left: 20px;
       --margin-breakout: 0px;

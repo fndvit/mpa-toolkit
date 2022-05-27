@@ -65,28 +65,4 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
-
-    .container {
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-top: 20px;
-
-      p {
-        font-size: 14px;
-      }
-    }
-
-    .partners-grid {
-      grid-template-columns: 30px 30px 30px 30px 30px;
-    }
-
-    .links {
-      a {
-        margin-right: 0.75rem;
-      }
-    }
-
-  }
-
 </style>

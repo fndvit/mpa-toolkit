@@ -52,7 +52,7 @@
 
 </script>
 
-<div class='container'>
+<div class='lifecycle'>
   <h5 class='title'>Where in the MPA lifecycle?</h5>
   <div class="circle-menu-section">
       <div class="circle-menu">
@@ -99,7 +99,7 @@
 </div>
 
 <style lang="scss">
-  .container {
+  .lifecycle {
     width: 294px;
     height: auto;
     background: #66CFD6;
@@ -126,7 +126,7 @@
     margin-right: 20px;
   }
   @media (max-width: 900px) {
-    .container {
+    .lifecycle {
       width: 372px;
     }
     .title {

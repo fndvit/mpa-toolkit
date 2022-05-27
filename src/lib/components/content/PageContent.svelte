@@ -73,9 +73,6 @@
     display: grid;
     grid-template-columns: 15rem 40rem auto;
     column-gap: 1rem;
-    :global(h1) {
-      font-size: 2.5rem;
-    }
   }
 
   .unknown-block {
@@ -94,9 +91,6 @@
     .content {
       padding: 200px 20px 0px 20px;
       display: block;
-      :global(h1) {
-        font-size: 32px;
-      }
     }
 
     .lifecycle-column {

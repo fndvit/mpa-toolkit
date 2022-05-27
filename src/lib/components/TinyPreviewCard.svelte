@@ -19,6 +19,7 @@
 <style lang="scss">
   .container {
     width: 292px;
+    --tag-bg: #dadce0;
   }
 
   img {
@@ -35,7 +36,7 @@
     font-weight: 300;
     line-height: 25px;
     padding-left: 0.15rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     color: black;
   }
 
@@ -48,4 +49,11 @@
       line-height: 22px;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .title {
+      font-size: 16px;
+    }
+  }
+
 </style>

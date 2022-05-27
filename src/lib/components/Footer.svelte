@@ -2,8 +2,10 @@
   import InlineSvg from "./generic/InlineSvg.svelte";
 </script>
 
-<div class="container">
+<div class="footer">
+
   <p>A partnership between</p>
+
   <div class="partners-grid">
     <InlineSvg svg="UNEP" />
     <InlineSvg svg="IAFDC" />
@@ -11,11 +13,14 @@
     <InlineSvg svg="TNC" />
     <InlineSvg svg="WWF" />
   </div>
+
   <div class="links">
+
     <div>
       <a href="/cms" rel="external"><b>Contact us</b></a>
       <a href="/cms" rel="external"><b>Follow us</b></a>
     </div>
+
     <div>
       <a href="/cms" rel="external">Partners</a>
       <a href="/cms" rel="external">Team</a>
@@ -23,14 +28,17 @@
       <a href="/cms" rel="external">Terms of use</a>
       <a href="/cms" rel="external">Sitemap</a>
     </div>
+
   </div>
+
 </div>
 
 <style lang="scss">
 
-  .container {
+  .footer {
     padding-left: 124px;
     background: #F9F9F9;
+    overflow: hidden; // TODO: remove this
 
     p {
       font-weight: bold;
@@ -57,4 +65,5 @@
       margin-right: 15px;
     }
   }
+
 </style>

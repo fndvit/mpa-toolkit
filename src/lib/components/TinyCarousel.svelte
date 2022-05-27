@@ -11,32 +11,34 @@
     type: 'slide',
     rewind: false,
     perMove: 2,
-    gap: 10,
+    gap: 30,
     autoWidth: true,
     pagination: false,
-    padding: { right: '13%' }
+    padding: { right: '13%' },
+    breakpoints: {
+      1024: {
+        perMove: 1
+      }
+    }
   });
 
 </script>
 
-<div class="container">
-  <div class="content">
-    <p class="title">{title}</p>
-    <Splide {options}>
-      {#each slides as slide}
-        <SplideSlide>
-          <TinyPreviewCard page={slide}/>
-        </SplideSlide>
-      {/each}
-    </Splide>
-    <div class="opacity-div" />
-  </div>
+<div class="tiny-carousel">
+  <p class="title">{title}</p>
+  <Splide {options}>
+    {#each slides as slide}
+      <SplideSlide>
+        <TinyPreviewCard page={slide}/>
+      </SplideSlide>
+    {/each}
+  </Splide>
+  <div class="opacity-div" />
 </div>
 
 <style type="text/scss">
-  .content {
-    --margin-breakout: 25px;
-    --page-left-margin: 368px;
+
+  .tiny-carousel {
     position: relative;
     line-height: 40px;
     color: #6C767D;
@@ -47,8 +49,6 @@
     font-family: 'Montserrat';
     font-weight: 400;
     font-size: 20px;
-    margin-left: calc(var(--margin-breakout) * -1);
-    width: calc(100vw - var(--page-left-margin) + var(--margin-breakout));
 
     :global(.splide__arrow) {
       background: #ffffffdd;
@@ -59,10 +59,12 @@
     }
 
   }
+
   .title {
     font-family: 'Montserrat';
     font-weight: 700;
   }
+
   .opacity-div {
     height: 100%;
     width: 15%;
@@ -71,4 +73,19 @@
     top: 0;
     right: 0;
   }
+
+  @media screen and (max-width: 768px) {
+
+    .tiny-carousel {
+      :global(.splide__arrow) {
+        transform: scale(0.75);
+      }
+    }
+
+    .title {
+      font-size: 14px;
+    }
+
+  }
+
 </style>

@@ -46,4 +46,13 @@
     --ib-hover-bg: #00000011;
   }
 
+  @media screen and (max-width: 768px) {
+
+    .key-takeaways {
+      max-width: 100%;
+      margin-left: 0px;
+    }
+
+  }
+
 </style>

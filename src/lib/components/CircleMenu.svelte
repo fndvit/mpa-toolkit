@@ -8,7 +8,7 @@
 
   const defaultConfig = {
     radius: 80,
-    size: 300,
+    size: 270,
     gap: 2,
     thicknesses: {
       unselected: 18,

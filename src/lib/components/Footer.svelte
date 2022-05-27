@@ -2,7 +2,7 @@
   import InlineSvg from "./generic/InlineSvg.svelte";
 </script>
 
-<div class="container">
+<div class="footer">
 
   <p>A partnership between</p>
 
@@ -35,9 +35,10 @@
 
 <style lang="scss">
 
-  .container {
+  .footer {
     padding-left: 124px;
     background: #F9F9F9;
+    overflow: hidden; // TODO: remove this
 
     p {
       font-weight: bold;

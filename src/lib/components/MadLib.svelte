@@ -23,7 +23,7 @@
 
 </script>
 
-<div class="container" class:landing={type==='landing'} style="--background-image: url({landingMadlibBg})">
+<div class="madlib" class:landing={type==='landing'} style="--background-image: url({landingMadlibBg})">
 
   {#if type==='landing'}
     <h2>Find information relevant to you.</h2>
@@ -57,7 +57,7 @@
 
 <style lang="scss">
 
-  .container {
+  .madlib {
     position: relative;
     line-height: 40px;
     color: #6C767D;
@@ -68,8 +68,6 @@
     padding-bottom: 0.5rem;
     padding-left: 1.5rem;
     font-family: 'Montserrat';
-    transform: translateX(-25px);
-    width: calc(100vw - 368px);
 
     p {
       margin-top: 0.5rem;
@@ -194,11 +192,9 @@
 
   @media screen and (max-width: 768px) {
 
-    .container {
+    .madlib {
       border-radius: 0px 50px 0px 0px;
-      margin: 2rem 0px 2rem 0px;
       padding-bottom: 2rem;
-      width: 100%;
 
       p {
         font-size: 16px;

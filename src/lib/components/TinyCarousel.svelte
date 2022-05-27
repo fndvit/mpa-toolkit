@@ -38,8 +38,6 @@
 
 <style type="text/scss">
 
-    --margin-breakout: 25px;
-    --page-left-margin: 368px;
   .tiny-carousel {
     position: relative;
     line-height: 40px;
@@ -51,8 +49,6 @@
     font-family: 'Montserrat';
     font-weight: 400;
     font-size: 20px;
-    margin-left: calc(var(--margin-breakout) * -1);
-    width: calc(99vw - var(--page-left-margin) + var(--margin-breakout));
 
     :global(.splide__arrow) {
       background: #ffffffdd;
@@ -81,12 +77,6 @@
   @media screen and (max-width: 768px) {
 
     .tiny-carousel {
-      margin: 0;
-      padding-left: 20px;
-      --margin-breakout: 0px;
-      --page-left-margin: 0px;
-      max-width: 100%;
-
       :global(.splide__arrow) {
         transform: scale(0.75);
       }

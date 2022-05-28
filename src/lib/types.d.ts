@@ -53,7 +53,8 @@ export type PageRequest = {
 export type HeadingBlock = {
   type: 'heading';
   attrs: {
-    level: number;
+    level: 1 | 2 | 3 | 4 | 5 | 6;
+    showmore: string;
   };
   content: InlineBlock[];
 }
@@ -66,7 +67,7 @@ export type ParagraphBlock = {
 export type CardsBlock = {
   type: 'cards';
   attrs: {
-    data: CardData[];
+    cards: CardData[];
   }
 };
 
@@ -76,6 +77,7 @@ export type ImageBlock = {
     src: string;
     alt?: string;
     title?: string;
+    style: 'regular' | 'full';
   };
 }
 

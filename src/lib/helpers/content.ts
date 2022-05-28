@@ -13,7 +13,7 @@ export function createSections(document: ContentDocument) {
           ? `h${sections.length}-${slugify(block.content[0].text)}`
           : null,
         title: isHeading ? block.content[0].text : null,
-        topic: 'lorem ipsum',
+        topic: isHeading ? block.attrs.showmore : null,
         blocks: [block]
       });
     } else {

@@ -1,5 +1,40 @@
-import { staticUrl } from '$lib/helpers/content';
 import { Schema as ProsemirrorSchema } from 'prosemirror-model';
+import { svelteSchemaNode } from './svelte-plugin';
+
+
+export const simpleSchema = new ProsemirrorSchema({
+  nodes: {
+    doc: {
+      content: 'span'
+    },
+
+    span: {
+      content: 'inline*',
+      parseDOM: [{ tag: 'span' }],
+      toDOM() {
+        return ['span', 0];
+      }
+    },
+
+    // :: NodeSpec The text node.
+    text: {
+      group: 'inline'
+    },
+  },
+
+  marks: {
+    strong: {
+      parseDOM: [
+        { tag: 'strong' }
+      ],
+      toDOM() {
+        return ['strong', 0];
+      }
+    },
+  }
+});
+
+
 
 export const schema = new ProsemirrorSchema({
   nodes: {
@@ -43,10 +78,12 @@ export const schema = new ProsemirrorSchema({
     // should hold the number 1 to 6. Parsed and serialized as `<h1>` to
     // `<h6>` elements.
     heading: {
-      attrs: { level: { default: 1 } },
-      content: 'inline*',
+      attrs: { level: { default: 1 }, showmore: {default: ''} },
+      content: 'text*',
       group: 'block',
       defining: true,
+      marks: '',
+
       parseDOM: [
         { tag: 'h1', attrs: { level: 1 } },
         { tag: 'h2', attrs: { level: 2 } },
@@ -80,35 +117,6 @@ export const schema = new ProsemirrorSchema({
       group: 'inline'
     },
 
-    // :: NodeSpec An inline image (`<img>`) node. Supports `src`,
-    // `alt`, and `href` attributes. The latter two default to the empty
-    // string.
-    image: {
-      attrs: {
-        src: {},
-        alt: { default: null },
-        title: { default: null }
-      },
-      group: 'block',
-      draggable: true,
-      parseDOM: [
-        {
-          tag: 'img[src]',
-          getAttrs(dom: Element) {
-            return {
-              src: dom.getAttribute('src'),
-              title: dom.getAttribute('title'),
-              alt: dom.getAttribute('alt')
-            };
-          }
-        }
-      ],
-      toDOM(node) {
-        const { src, alt, title } = node.attrs;
-        return ['img', { src: staticUrl(src), alt, title }];
-      }
-    },
-
     // :: NodeSpec A hard line break, represented in the DOM as `<br>`.
     hard_break: {
       inline: true,
@@ -120,14 +128,14 @@ export const schema = new ProsemirrorSchema({
       }
     },
 
-    cards: {
+    image: {
+      ...svelteSchemaNode('img', { src: null, alt: '', style: 'regular' }),
       group: 'block',
-      atom: false,
-      selectable: true,
-      defining: true,
-      attrs: {
-        data: { default: [{ heading: '', body: ''}]}
-      }
+    },
+
+    cards: {
+      ...svelteSchemaNode('cards', { cards: [{ heading: '', body: ''}] } ),
+      group: 'block',
     },
 
   },

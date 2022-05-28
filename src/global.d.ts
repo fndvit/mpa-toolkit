@@ -18,3 +18,7 @@ declare namespace App {
 declare module 'svelte-scrollto' {
   export const scrollTo;
 }
+
+interface ObjectConstructor {
+  fromEntries<T extends [unknown, unknown][]>(o: T): T extends [infer K, infer V][] ? Record<K, V> : never
+}

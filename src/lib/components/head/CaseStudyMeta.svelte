@@ -158,11 +158,6 @@
 
   @media screen and (max-width: 768px) {
 
-    .meta-container {
-      // padding-left: 20px;
-      // padding-right: 20px;
-    }
-
     .meta-grid > h4 {
       margin-top: 20px;
     }

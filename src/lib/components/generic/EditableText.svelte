@@ -33,9 +33,15 @@
 
 <style lang="scss">
   .editable-text {
-    caret-color: white;
+    caret-color: var(--caret-color, white);
     color: inherit;
     background-color: inherit;
+
+
+    &:focus {
+      outline: none;
+      background-color: var(--ui-color-focus);
+    }
 
     &[data-placeholder] {
       &:before {

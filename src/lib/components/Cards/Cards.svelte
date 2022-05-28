@@ -45,7 +45,7 @@
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 </script>
 
-<div class="container" class:has-fixed-title={fixedTitle} class:selected>
+<div class="cards" class:has-fixed-title={fixedTitle} class:selected>
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
@@ -82,10 +82,11 @@
 
 <style type="scss">
 
-  .container {
+  .cards {
     --content-padding: 30px;
     --content-top-padding: 30px;
     --scrollbar-width: 10px;
+    --caret-color: #333;
     border-radius: 15px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
 
@@ -107,13 +108,6 @@
     :global(.splide__arrow:disabled) {
       display: none;
     }
-
-    &.selected {
-      filter: brightness(98%);
-      box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.20);
-      border: 1px solid #33333322;
-      margin: -1px;
-    }
   }
 
   .editor-buttons {
@@ -133,7 +127,7 @@
     padding-bottom: 20px;
   }
 
-  .container :global(.splide__track) {
+  .cards :global(.splide__track) {
     border-radius: 15px;
   }
 

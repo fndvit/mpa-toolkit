@@ -6,6 +6,8 @@
   import { findPlaceholder, placeholderPlugin } from "$lib/editor/placeholder";
   import { schema } from "$lib/editor/schema";
 
+  export let title: string;
+
   let inputEl: HTMLInputElement;
 
   const view = getContext("editorView") as EditorView;
@@ -48,7 +50,7 @@
 </script>
 
 
-<IconButton on:click={onClick} icon="image" />
+<IconButton on:click={onClick} icon="image" {title} />
 
 <input
   bind:this={inputEl}

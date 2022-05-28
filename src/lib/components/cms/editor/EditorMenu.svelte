@@ -31,7 +31,7 @@
     <MenuSeperator />
     <IconButton on:click={insertCards} icon="library_books" title="Add cards" />
     <MenuSeperator />
-    <UploadButton />
+    <UploadButton title="Add image" />
   </div>
 
   <div class="right-section">

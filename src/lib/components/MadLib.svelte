@@ -190,6 +190,23 @@
     }
   }
 
+  @media(max-width: 1024px) {
+
+    .madlib.landing {
+      width: auto;
+      height: auto;
+      background-position: left;
+
+      padding: 3rem;
+
+      .button {
+        margin: 2rem 1.5rem;
+      }
+
+    }
+
+  }
+
   @media screen and (max-width: 768px) {
 
     .madlib {
@@ -207,5 +224,52 @@
     }
 
   }
+
+
+  @media(max-width: 650px) {
+
+    .madlib.landing {
+
+      h2 {
+        margin-top: 2rem;
+      }
+
+      .button {
+        margin-left: 1rem;
+      }
+    }
+
+}
+
+@media(max-width: 425px) {
+
+
+  .madlib.landing {
+    padding: 3rem;
+    background-position: left;
+    
+
+    h2 {
+      margin: 1rem 0rem;
+      font-size: 2rem;
+      
+    }
+    p {
+      font-size: 1.25rem;
+    }
+
+    .button {
+      margin-left: 1rem;
+
+      p{
+        font-size: 1rem;
+      }
+    }
+  }
+
+  
+
+
+}
 
 </style>

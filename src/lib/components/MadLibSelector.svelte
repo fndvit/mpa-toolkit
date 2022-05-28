@@ -175,4 +175,16 @@
     }
   }
 
+  @media(max-width: 425px) {
+
+    .selector-area {
+
+      .landing & {
+        font-size: 1rem;
+      }
+        
+    }
+
+  }
+
 </style>

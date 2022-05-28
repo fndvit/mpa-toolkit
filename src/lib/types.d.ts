@@ -53,7 +53,8 @@ export type PageRequest = {
 export type HeadingBlock = {
   type: 'heading';
   attrs: {
-    level: number;
+    level: 1 | 2 | 3 | 4 | 5 | 6;
+    showmore: string;
   };
   content: InlineBlock[];
 }

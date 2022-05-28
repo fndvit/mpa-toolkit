@@ -107,7 +107,9 @@
       }
     }
   }
+
   @media (max-width: 1280px) {
+
     .container {
       width: 100%;
       height: auto;
@@ -133,6 +135,35 @@
     }
 
   }
+
+  @media(max-width: 625px) {
+
+    .container {
+
+      .circle-menu {
+        width: 500px;
+        height: 500px;
+      }
+
+    }
+
+  }
+
+  @media(max-width: 425px) {
+
+    .container {
+
+      .circle-menu {
+        width: 300px;
+        height: 300px;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+    }
+
+}
 
 
 </style>

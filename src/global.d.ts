@@ -20,5 +20,5 @@ declare module 'svelte-scrollto' {
 }
 
 interface ObjectConstructor {
-  fromEntries<T extends [any, any][]>(o: T): T extends [infer K, infer V][] ? Record<K, V> : never
+  fromEntries<T extends [unknown, unknown][]>(o: T): T extends [infer K, infer V][] ? Record<K, V> : never
 }

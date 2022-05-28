@@ -6,21 +6,21 @@ import './svelte-nodeview.css';
 import clone from "clone";
 
 
-function supressMissingPropWarnings(props: { [key: string]: any }, fn: () => void) {
+function supressMissingPropWarnings(props: { [key: string]: unknown }, fn: () => void) {
   const re = new RegExp(`was created with unknown prop '(${Object.keys(props).join('|')})'`);
   const _warn = console.warn;
-  console.warn = (message?: any, ...optionalParams: any[]) =>
+  console.warn = (message?: unknown, ...optionalParams: unknown[]) =>
     !(typeof message === 'string' && re.test(message))
     &&  _warn(message, ...optionalParams);
   fn();
   console.warn = _warn;
 }
 
-interface IComponentOptions<Props extends Record<string, any> = Record<string, any>> {
+interface IComponentOptions<Props extends Record<string, unknown> = Record<string, unknown>> {
   target: Element | ShadowRoot;
   anchor?: Element;
   props?: Props;
-  context?: Map<any, any>;
+  context?: Map<unknown, unknown>;
   hydrate?: boolean;
   intro?: boolean;
   $$inline?: boolean;
@@ -32,7 +32,7 @@ export interface SvelteNodeViewControls {
   update: (cb: (editorState: EditorState, node?: Node, getPos?: () => number) => Transaction) => void;
 }
 
-type Attrs = Record<string, any>;
+type Attrs = Record<string, unknown>;
 
 type RequiredProps = {
   attrs: Attrs;

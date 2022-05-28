@@ -28,7 +28,6 @@ export const emptyPlugin = new Plugin<DecorationSet<Schema>>({
 export const plugins = (schema: Schema): Plugin[] => {
   return [
     history(),
-    // keymap({"Mod-z": undo, "Mod-y": redo, "Mod-Shift-z": redo}),
     keymap(baseKeymap),
     dropCursor(),
     gapCursor(),

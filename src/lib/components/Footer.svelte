@@ -66,4 +66,49 @@
     }
   }
 
+  @media(max-width: 1024px) {
+
+    .partners-grid {
+
+      grid-template-columns: 0.25fr 0.25fr 0.25fr;
+      grid-template-rows: auto;
+      margin-top: 3rem;
+
+    }
+
+    .links {
+
+      width: 100%;
+      a {
+        font-size: 1.25rem;
+      }
+
+    }
+  }
+
+  @media(max-width: 768px) {
+
+    .footer {
+      padding-left: 3rem;
+    }
+
+    .links {
+      a {
+        font-size: 1rem;
+      }
+    }
+
+  }
+
+  @media(max-width: 425px) {
+
+
+    .links {
+      a {
+        font-size: 0.75rem;
+      }
+    }
+
+  }
+
 </style>

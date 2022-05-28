@@ -57,7 +57,6 @@
 
 <style lang="scss">
 
-
   .inline-searchbar {
     width: 766px;
     margin: 50px auto;
@@ -121,5 +120,116 @@
   .container {
     background: #F9F9F9;
   }
+
+ 
+
+  @media (max-width: 1024px) {
+
+    .splash {
+      padding-left: 3rem;
+      background-position: left;
+
+      h1 {
+        font-size: 4rem;
+        padding-bottom: 4rem;
+        padding-top: 4rem;
+      }
+
+      h4 {
+        padding-bottom: 3rem;
+      }
+  
+    }
+
+    .unep-logo {
+      margin-left: 3rem;
+    }
+
+    .inline-searchbar {
+      width: auto;
+      padding: 3rem;
+
+      > :global(.tag-container) {
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+      }
+
+    }
+
+    .top-searchbar {
+
+      :global(.placeholder) {
+        display: none;
+      }
+
+      :global(.input-text) {
+        max-width: 50px;
+      }
+    }
+
+  }
+
+  @media(max-width: 700px) {
+
+    .partners-grid {
+      grid-template-columns: 150px 100px;
+    }
+
+    .inline-searchbar {
+      margin: 0rem;
+    }
+
+  }
+
+  @media(max-width: 425px) {
+
+    .splash {
+
+      padding-left: 2rem;
+
+      h1 {
+        font-size: 2rem;
+        padding: 1rem 0rem;
+      }
+
+      h4 {
+        margin-bottom: 1rem;
+        padding: 1rem 0rem;
+        font-size: 1.25rem;
+      }
+  
+    }
+
+    .partners-grid {
+      grid-template-columns: 100px 70px;
+    }
+
+    .top-searchbar {
+
+      margin: 2rem 1rem;
+
+      :global(.input-text) {
+        max-width: 10px;
+        padding: 7px
+      }
+
+      :global(.search-icon) {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .inline-searchbar {
+      padding: 1rem;
+    }
+
+    .unep-logo {
+      width: 80px;
+      margin-left: 2rem;
+    }
+
+  }
+
+
 
 </style>

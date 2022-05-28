@@ -57,7 +57,7 @@
 
   .hv-controls {
     position: absolute;
-    height: 1.2em;
+    margin-top: 0.15em;
     left: -40px;
     top: 0;
     bottom: 0;

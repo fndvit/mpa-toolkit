@@ -15,7 +15,7 @@
 
   const toggleStyle = () => {
     attrs.style = attrs.style === 'regular' ? 'full' : 'regular';
-  }
+  };
 
 </script>
 

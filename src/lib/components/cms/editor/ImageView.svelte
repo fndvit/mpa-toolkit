@@ -8,11 +8,6 @@
   export var controls: SvelteNodeViewControls;
   export var selected = false;
 
-  const styles: [ImageBlock['attrs']['style'], string][] = [
-    ['regular', 'Regular'],
-    ['full', 'Wide'],
-  ];
-
   const toggleStyle = () => {
     attrs.style = attrs.style === 'regular' ? 'full' : 'regular';
   };
@@ -76,21 +71,6 @@
     }
     display: flex;
     column-gap: 5px;
-    button {
-      cursor: pointer;
-      padding: 2px 5px;
-      border: 1px solid #999;
-      color: #222;
-      border-radius: 2px;
-      &:hover {
-        filter: brightness(95%);
-      }
-    }
-    button.active {
-      border: 1px solid black;
-      font-weight: 500;
-      color: black;
-    }
     input {
       flex: 1;
     }

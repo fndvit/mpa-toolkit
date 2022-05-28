@@ -1,10 +1,7 @@
 import type { Node } from "prosemirror-model";
 import type { NodeView, EditorView } from "prosemirror-view";
 import type { SvelteComponent } from "svelte";
-import { EditorState, NodeSelection, Transaction } from "prosemirror-state";
-import './svelte-nodeview.css';
-import clone from "clone";
-
+import type { EditorState, Transaction } from "prosemirror-state";
 
 function supressMissingPropWarnings(props: { [key: string]: unknown }, fn: () => void) {
   const re = new RegExp(`was created with unknown prop '(${Object.keys(props).join('|')})'`);
@@ -28,7 +25,6 @@ interface IComponentOptions<Props extends Record<string, unknown> = Record<strin
 
 export interface SvelteNodeViewControls {
   delete: () => void;
-  select: () => void;
   update: (cb: (editorState: EditorState, node?: Node, getPos?: () => number) => Transaction) => void;
 }
 
@@ -71,7 +67,7 @@ export default class SvelteNodeView implements NodeView {
     const target = document.createElement('div');
 
     const props = {
-      attrs: clone(node.attrs),
+      attrs: node.attrs,
       contentDOM:  (node: HTMLElement) => {
         this.contentDOM = node;
       },
@@ -79,7 +75,6 @@ export default class SvelteNodeView implements NodeView {
       view,
       controls: {
         delete: () => this.deleteNode(),
-        select: () => this.selectNode(),
         update: (cb) => {
           const tr = cb(this.view.state, node, getPos);
           this.view.dispatch(tr);
@@ -109,13 +104,6 @@ export default class SvelteNodeView implements NodeView {
   deleteNode() {
     const transaction = this.view.state.tr.delete(this.getPos(), this.getPos() + 1);
     this.view.dispatch(transaction);
-  }
-
-  selectNode() {
-    const tr = this.view.state.tr.setSelection(
-      new NodeSelection(this.view.state.doc.resolve(this.getPos()))
-    );
-    this.view.dispatch(tr);
   }
 
   ignoreMutation(m: MutationRecord & { target: { pmViewDesc?: NodeView } }) {

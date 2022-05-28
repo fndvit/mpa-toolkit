@@ -260,6 +260,7 @@
 
     .button {
       margin-left: 1rem;
+      width: max-content;
 
       p{
         font-size: 1rem;

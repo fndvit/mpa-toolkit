@@ -1,6 +1,41 @@
 import { Schema as ProsemirrorSchema } from 'prosemirror-model';
 import { svelteSchemaNode } from './svelte-plugin';
 
+
+export const simpleSchema = new ProsemirrorSchema({
+  nodes: {
+    doc: {
+      content: 'span'
+    },
+
+    span: {
+      content: 'inline*',
+      parseDOM: [{ tag: 'span' }],
+      toDOM() {
+        return ['span', 0];
+      }
+    },
+
+    // :: NodeSpec The text node.
+    text: {
+      group: 'inline'
+    },
+  },
+
+  marks: {
+    strong: {
+      parseDOM: [
+        { tag: 'strong' }
+      ],
+      toDOM() {
+        return ['strong', 0];
+      }
+    },
+  }
+});
+
+
+
 export const schema = new ProsemirrorSchema({
   nodes: {
     // :: NodeSpec The top level document node.
@@ -43,10 +78,12 @@ export const schema = new ProsemirrorSchema({
     // should hold the number 1 to 6. Parsed and serialized as `<h1>` to
     // `<h6>` elements.
     heading: {
-      attrs: { level: { default: 1 } },
-      content: 'inline*',
+      attrs: { level: { default: 1 }, showmore: {default: ''} },
+      content: 'text*',
       group: 'block',
       defining: true,
+      marks: '',
+
       parseDOM: [
         { tag: 'h1', attrs: { level: 1 } },
         { tag: 'h2', attrs: { level: 2 } },

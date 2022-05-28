@@ -18,8 +18,7 @@
       1600: { perPage: 5 },
       1400: { perPage: 4 },
       1200: { perPage: 3 },
-      1000: { perPage: 2 },
-      800:  { perPage: 1 }
+      1000: { perPage: 2 }
     }
   });
 
@@ -142,6 +141,39 @@
   .milestones-content {
     width: var(--width);
     margin: 0 var(--margin);
+  }
+
+  @media screen and (max-width: 768px) {
+    .milestones {
+      margin: 0px;
+      padding: 0 20px;
+      max-width: 100%;
+      overflow-x: hidden;
+
+      :global(.splide__arrow--prev){
+        top: 0rem;
+        left: auto;
+        right: 45px;
+        transform: translateY(-50px) scale(0.65) !important;
+      }
+
+      :global(.splide__arrow--next){
+        top: 0rem;
+        left: auto;
+        right: 0rem;
+        transform: translateY(-50px) scale(0.65) !important;
+      }
+
+      :global(.splide__arrow:disabled){
+        display:flex;
+        pointer-events: none;
+        opacity: 0.3;
+      }
+    }
+
+    .milestones-content {
+      margin: 0px;
+    }
   }
 
 </style>

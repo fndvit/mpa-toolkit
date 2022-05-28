@@ -34,6 +34,7 @@
 </div>
 
 <style lang="scss">
+
   .splash {
     --ec-hover-bg: #ffffff22;
     --ui-color-placeholder: #ffffff55;
@@ -45,6 +46,7 @@
     padding-left: 124px;
     background-size: cover;
     background-position: center center;
+
     h1 {
       max-width: 800px;
       width: 100%;
@@ -54,6 +56,7 @@
         display: inline;
       }
     }
+
 
     &.splash-cs h1 > :global(*:first-child) {
       font-weight: 700;
@@ -67,4 +70,24 @@
     width: 110px;
     color: white;
   }
+
+  @media screen and (max-width: 768px) {
+
+    .splash {
+      padding-left: 20px;
+      padding-right: 20px;
+
+      h1 {
+        font-size: 48px;
+        line-height: 65px;
+        margin-bottom: 0px;
+      }
+
+      &.splash-cs h1 {
+        padding-bottom: 50px;
+      }
+    }
+  }
+
+
 </style>

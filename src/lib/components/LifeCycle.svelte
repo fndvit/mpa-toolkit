@@ -9,7 +9,7 @@
   export let tags: SubTypes.PageTag[]; // binding (updated as tags are changed)
   export let editable = false;
 
-  const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30];
+  const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30]; // index matches tag id
 
   const MAX_PRIMARY_TAGS = 2;
   const MAX_SECONDARY_TAGS = 7;
@@ -52,7 +52,7 @@
 
 </script>
 
-<div class='container'>
+<div class='lifecycle'>
   <h5 class='title'>Where in the MPA lifecycle?</h5>
   <div class="circle-menu-section">
       <div class="circle-menu">
@@ -99,51 +99,44 @@
 </div>
 
 <style lang="scss">
-  .container {
-    width: 294px;
-    height: auto;
+  .lifecycle {
     background: #66CFD6;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
   }
   .title {
-    width: 145px;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 20px;
     color: #000000;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 0px;
-    margin-bottom: 10px;
-    margin-top: 0px;
-  }
-  .tag-container {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-  @media (max-width: 900px) {
-    .container {
-      width: 372px;
+    margin: 15px 0 10px;
+    .lifecycle > &:first-child {
+      margin-top: 0;
     }
-    .title {
-      width: auto;
-      font-size: 10px;
-    }
+  }
+
+  .circle-menu-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
     .circle-menu {
+      flex: 0.8 0.2 120px;
       :global(svg) {
         width: 100%;
       }
     }
-    .circle-menu-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .tag-container {
+      flex: 1 1 70%;
     }
-    .circle-menu-section .tag-container {
-      text-align: center;
+  }
+  @media (max-width: 900px) {
+    .title {
+      width: auto;
     }
     .bottom-section {
       :global(.tag-container) {

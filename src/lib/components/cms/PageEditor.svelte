@@ -296,6 +296,7 @@
     z-index: 1;
     right: 10px;
     margin-top: 60px;
+    max-width: 350px;
   }
 
   .preview {

@@ -49,4 +49,11 @@
     margin-bottom: 2rem;
   }
 
+
+  @media screen and (max-width: 768px) {
+    .expand-button {
+      width: auto;
+    }
+  }
+
 </style>

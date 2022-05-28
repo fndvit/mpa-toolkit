@@ -8,7 +8,7 @@
 
   const defaultConfig = {
     radius: 80,
-    size: 300,
+    size: 270,
     gap: 2,
     thicknesses: {
       unselected: 18,
@@ -33,10 +33,10 @@
 
   const calcSegments = (menuElements: MenuElement[]) => {
     let currentAngle = 0;
-    return menuElements.map<Segment>(({percentage, type}) => {
+    return menuElements.map<Segment>(({percentage, type}, i) => {
       const startAngle = currentAngle;
       const endAngle = currentAngle = startAngle + (360 * percentage) / 100;
-      return { startAngle, endAngle, type };
+      return { startAngle, endAngle, type, tagId: i};
     });
   };
 

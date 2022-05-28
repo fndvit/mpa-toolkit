@@ -5,28 +5,29 @@
   import type { EditorView } from 'prosemirror-view';
   import { onMount, setContext } from 'svelte';
   import EditorMenu from './EditorMenu.svelte';
-  import { corePlugins, richTextPlugins } from '$lib/editor/plugins';
+  import { plugins } from '$lib/editor/plugins';
   import { schema } from '$lib/editor/schema';
   import { sveltePlugin } from '$lib/editor/svelte-plugin';
   import CardsView from './CardsView.svelte';
   import ImageView from './ImageView.svelte';
+  import HeadingView from './HeadingView.svelte';
 
   let focusEditor: () => void;
   let view: EditorView;
+
 
   export let content: ContentDocument = null;
 
   let editorState = EditorState.create({
     schema,
     doc: content ? schema.nodeFromJSON(content) : undefined,
-    // selection,
     plugins: [
-      ...corePlugins,
-      ...richTextPlugins,
+      ...plugins(schema),
       sveltePlugin({
         nodes: {
           cards: CardsView,
-          image: ImageView
+          image: ImageView,
+          heading: HeadingView,
         }
       })
     ]

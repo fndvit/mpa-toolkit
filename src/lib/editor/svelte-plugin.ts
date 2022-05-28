@@ -30,8 +30,6 @@ export const sveltePlugin = (options: PluginOptions) => {
 
 export function svelteSchemaNode(tag: string, defaultData: Record<string, unknown>): NodeSpec {
   return {
-    atom: false,
-    selectable: true,
     defining: true,
     draggable: true,
     attrs: mapValues(defaultData, v => ({ default:  v })),

@@ -2,15 +2,30 @@
   import Cards from "$lib/components/Cards/Cards.svelte";
   import type { CardData } from "$lib/components/Cards/Cards.svelte";
   import type { SvelteNodeViewControls } from "$lib/editor/svelte-nodeview";
+  import clone from "clone";
 
   export let attrs: {cards: CardData[]};
   export let controls: SvelteNodeViewControls;
+  export let rootDOM: (node: HTMLElement) => void;
 
-  $: if(attrs.cards.length === 0) controls.delete();
+  let lastCards = clone(attrs.cards);
+
+  $: {
+    if(attrs.cards.length === 0) {
+      if (lastCards.length > 0) {
+        attrs.cards = lastCards;
+      }
+      controls.delete();
+    } else {
+      lastCards = clone(attrs.cards);
+    }
+  }
 
 </script>
 
-<Cards bind:cards={attrs.cards} editable />
+<div use:rootDOM contenteditable="false">
+  <Cards bind:cards={attrs.cards} editable />
+</div>
 
 <style>
   :global(.svelte-node-view--cards.ProseMirror-selectednode .cards) {

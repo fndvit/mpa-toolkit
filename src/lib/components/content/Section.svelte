@@ -11,7 +11,7 @@
 <section id={section.id} class:collapsed={!expanded}>
   <slot/>
   {#if numParagraphs > 2}
-    <ExpandButton topic={section.topic} {expanded} on:click={() => expanded = !expanded} />
+    <ExpandButton content={section.topic} {expanded} on:click={() => expanded = !expanded} />
   {/if}
 </section>
 

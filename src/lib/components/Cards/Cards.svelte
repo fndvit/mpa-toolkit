@@ -86,6 +86,7 @@
     --content-padding: 30px;
     --content-top-padding: 30px;
     --scrollbar-width: 10px;
+    --caret-color: #333;
     border-radius: 15px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
 

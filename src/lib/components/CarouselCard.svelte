@@ -7,8 +7,8 @@
 
   export let page: SubTypes.Page.ContentCard;
 
-  $: category = page.tags?.length > 0 && page.tags[0].tag.value;
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
+
 </script>
 
 <a
@@ -24,10 +24,13 @@
         <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
       </svg>
     </div>
-    <div class="category">{category ?? ''}</div>
-    <div class="title">{@html page.title}</div>
-    <div class="tags-title">What's this about?</div>
-    <TagContainer tags={page.tags}/>
+    <div class="content">
+      <div class="title">{@html page.title}</div>
+      <div class="tags-title">What's this about?</div>
+      <div class="tags no-drag hide-scrollbar">
+        <TagContainer tags={page.tags}/>
+      </div>
+    </div>
   </div>
 </a>
 
@@ -76,18 +79,10 @@
     font-weight: 275;
     font-size: 32px;
     max-width: 570px;
-    margin-top: 0px;
-    max-height: 120px;
+    margin-top: 3rem;
+    max-height: 150px;
     text-overflow: clip;
     word-wrap: break-word;
-  }
-
-  .category {
-    font-weight: 700;
-    font-size: 20px;
-    max-width: 720px;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
   }
 
   .preview-content {
@@ -123,8 +118,69 @@
       filter: brightness(105%);
     }
 
-    :global(.tag-container) {
+    .tags {
       max-width: 600px;
+    }
+
+  }
+
+  @media(max-width: 1024px) {
+
+    .image {
+      max-width: 450px;
+      height: 369px;
+    }
+
+    .container {
+      height: 725px;
+      max-width: 450px;
+    }
+
+    .circle-button, .tags-title {
+      display: none;
+    }
+
+    .preview-content {
+      padding: 0rem 1.5rem;
+    }
+
+    .title {
+      font-size: 1.75rem;
+    }
+
+    .tags {
+      margin-top: 2rem;
+      overflow-x: scroll;
+      > :global(.tag-container) {
+        flex-wrap: nowrap;
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      .title {
+        max-height: fit-content !important;
+      }
+    }
+
+  }
+
+  @media(max-width: 425px) {
+
+    .image {
+      max-width: 291px;
+      height: 241px;
+    }
+
+    .container {
+      height: 471px;
+      max-width: 291px;
+    }
+
+    .title {
+      font-size: 1rem;
+      margin-top: 1rem;
     }
 
   }

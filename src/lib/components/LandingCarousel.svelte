@@ -23,7 +23,8 @@
     arrows: true,
     updateOnMove: true,
     lazyLoad: true,
-    keyboard: true
+    keyboard: true,
+    noDrag: '.no-drag, .no-drag *'
   });
 
   $: if (currentCard >= 0 && splide) splide.go(currentCard);
@@ -105,5 +106,52 @@
     display: flex;
     position: relative;
   }
+
+  @media(max-width: 1024px) {
+
+    .title-container {
+      max-width: auto;
+      margin-left: 3rem;
+    }
+
+    .container {
+      :global(.splide__arrow) {
+        display: none;
+      }
+    }
+  }
+
+  @media(max-width: 570px) {
+
+    .title-container {
+      font-size: 2rem;
+      margin: 1rem;
+    }
+
+    .container {
+
+      :global(.sc-carousel-dots__container) {
+        margin: 1rem;
+        --dot-bar-width: 150px;
+      }
+
+
+    }
+    
+  }
+
+  @media(max-width: 425px) {
+
+    .container {
+
+      :global(.sc-carousel-dots__container) {
+          margin: 1rem;
+          --dot-bar-width: 80px;
+          --dot-size: 5px;
+        }
+    }
+
+  }
+ 
 
 </style>

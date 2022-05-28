@@ -12,7 +12,7 @@
   export let square = false;
 </script>
 
-<div class="icon-button-container tooltip-hover-el">
+<div class="icon-button-container tooltip-hover-el" data-id={icon} >
   {#if title}
     <Tooltip text={title} />
   {/if}
@@ -88,8 +88,8 @@
     }
 
     &.active {
-      background: #eee;
-      border: 1px solid #ccc;
+      background: var(--ib-active-bg);
+      border: var(--ib-active-border);
     }
 
     &:not(:disabled) {
@@ -102,7 +102,6 @@
           color: var(--ib-hover-color, var(--ib-color));
           background: var(--ib-hover-bg, var(--ib-bg));
           border: var(--ib-hover-border, 1px solid transparent);
-
 
           &[data-icon]::before {
             background-color: var(--ib-hover-icon-bg, var(--ib-icon-bg));

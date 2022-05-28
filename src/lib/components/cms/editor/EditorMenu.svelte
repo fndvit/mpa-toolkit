@@ -45,6 +45,8 @@
     --color: #333;
     --ib-hover-border: 1px solid #ddd;
     --ib-hover-bg: transparent;
+    --ib-active-bg: white;
+    --ib-active-border: 1px solid #ccc;
 
     position: sticky;
     display: flex;

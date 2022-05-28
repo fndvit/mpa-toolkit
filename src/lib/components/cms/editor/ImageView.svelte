@@ -1,8 +1,11 @@
 <script lang="ts">
+  import IconButton from "$lib/components/generic/IconButton.svelte";
+  import type { SvelteNodeViewControls } from "$lib/editor/svelte-nodeview";
   import { staticUrl } from "$lib/helpers/content";
   import type { ImageBlock } from "$lib/types";
 
   export var attrs: ImageBlock['attrs'];
+  export var controls: SvelteNodeViewControls;
   export var selected = false;
 
   const styles: [ImageBlock['attrs']['style'], string][] = [
@@ -10,14 +13,17 @@
     ['full', 'Wide'],
   ];
 
+  const toggleStyle = () => {
+    attrs.style = attrs.style === 'regular' ? 'full' : 'regular';
+  }
+
 </script>
 
 <div class="imageview imageview-{attrs.style}" class:selected>
   <div class="image-controls">
-    {#each styles as [style, label]}
-      <button class:active={attrs.style === style} on:click={() => attrs.style = style}>{label}</button>
-    {/each}
     <input bind:value={attrs.alt} placeholder="alt text..."/>
+    <IconButton icon="aspect_ratio" title="Wide" active={attrs.style === 'full'} on:click={toggleStyle} />
+    <IconButton on:click={controls.delete} icon="delete" />
   </div>
   <img src={staticUrl(attrs.src)} alt={attrs.alt} title={attrs.title} />
 </div>
@@ -50,6 +56,13 @@
   }
 
   .image-controls {
+    --ib-icon-bg: #ffffff77;
+    --ib-hover-icon-bg: #ffffffcc;
+
+    .imageview-full & :global([data-id="aspect_ratio"]) {
+      --ib-active-bg: white;
+    }
+
     padding: 5px;
     font-size: 16px;
     position: absolute;
@@ -57,7 +70,7 @@
     right: 0;
     width: 100%;
     box-sizing: border-box;
-    justify-content: center;;
+    justify-content: center;
     .imageview:not(:hover) & {
       display: none;
     }

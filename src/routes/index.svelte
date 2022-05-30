@@ -129,8 +129,6 @@
     }
 
     .splash {
-      // padding-left: 3rem;
-
       background-position: left;
 
       h1 {
@@ -225,17 +223,11 @@
       }
     }
 
-    .inline-searchbar {
-      // padding: 1rem;
-    }
-
     .unep-logo {
       width: 80px;
       margin-left: 2rem;
     }
 
   }
-
-
 
 </style>

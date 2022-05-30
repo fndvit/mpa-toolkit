@@ -29,7 +29,6 @@
 
   .content-madlib {
     position: relative;
-    // line-height: 40px;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;
     color: #6C767D;

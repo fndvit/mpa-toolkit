@@ -166,7 +166,7 @@
       }
     }
 
-    .container {
+    .cards {
 
       :global(.splide__arrows) {
         width: 70px;

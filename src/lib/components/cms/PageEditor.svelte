@@ -176,9 +176,9 @@
       <div slot="menu-extra" class="page-controls">
         {#if saving}Saving...{/if}
         <TimedMessage bind:showMessage={showSaveStatusText} />
-        <IconButton {href} rel="external" target="_blank" icon="open_in_new" title="Link" />
+        <IconButton {href} rel="external" target="_blank" icon="open_in_new" title="Open link in new page" />
         <div class="draft-button">
-          <IconButton on:click={() => _page.draft = !_page.draft}
+          <IconButton on:click={() => _page.draft = !_page.draft} title={_page.draft ? "Click to publish" : "Click to make draft"}
             icon={_page.draft ? 'article' : 'public'}
             text={_page.draft ? 'Draft' : 'Live'}
           />

@@ -1,7 +1,5 @@
 <script lang="ts">
-  import type { Node } from 'prosemirror-model';
   import type { EditorState } from 'prosemirror-state';
-  import CardsView from '$lib/editor/cardsview';
   import { EditorView } from 'prosemirror-view';
   import { onDestroy,onMount } from 'svelte';
 
@@ -42,9 +40,6 @@
             view.updateState(editorState);
           }
         },
-        nodeViews: {
-          cards: (node: Node, view: EditorView, getPos: () => number) => new CardsView(node, view, getPos)
-        }
       }
     );
   });
@@ -134,8 +129,6 @@
     box-sizing: border-box;
     background-color: transparent;
     padding: 1em;
-    /* border: 1px solid #efefef;
-    border-radius: .5em; */
     background: white;
     display: inline-block;
     font: inherit;

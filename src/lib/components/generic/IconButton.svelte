@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Tooltip from "./Tooltip.svelte";
+
   export let active = false;
   export let disabled = false;
   export let title: string = null;
@@ -10,36 +12,31 @@
   export let square = false;
 </script>
 
-{#if href}
-  <a
-    class:material-icons={icon}
-    class="icon-button"
-    class:square
-    {href} {rel} {target}
-    on:click
-    on:mousedown={(e) => e.preventDefault()}
-    {disabled}
-    class:active
-    data-icon={icon}
-    data-text={text}
-    data-title={title}
-  > </a>
-{:else}
-  <button
-    class:material-icons={icon}
-    class="icon-button"
-    class:square
-    on:click
-    on:mousedown={(e) => e.preventDefault()}
-    {disabled}
-    class:active
-    data-icon={icon}
-    data-text={text}
-    data-title={title}
+<div class="icon-button-container tooltip-hover-el" data-id={icon} >
+  {#if title}
+    <Tooltip text={title} />
+  {/if}
+  <svelte:element this={href ? 'a' : 'button'}
+      class:material-icons={icon}
+      class="icon-button"
+      class:square
+      {href} {rel} {target}
+      on:click
+      on:mousedown={(e) => e.preventDefault()}
+      {disabled}
+      class:active
+      data-icon={icon}
+      data-text={text}
+      data-title={title}
   />
-{/if}
+</div>
 
 <style lang="scss">
+
+
+  .icon-button-container {
+    position: relative;
+  }
   .icon-button {
     display: flex;
     align-items: center;
@@ -61,9 +58,6 @@
 
     &:not(:disabled):hover {
       text-decoration: none;
-      &[data-icon]::before {
-        background-color: var(--ib-hover-bg, #33333355);
-      }
     }
 
     &[data-icon][data-text] {
@@ -94,16 +88,24 @@
     }
 
     &.active {
-      background: #eee;
-      border: 1px solid #ccc;
+      background: var(--ib-active-bg);
+      border: var(--ib-active-border);
     }
 
     &:not(:disabled) {
       cursor: pointer;
       &:hover {
         &:not(.active) {
-          background: var(--ib-hover-bg, transparent);
+          &[data-icon]::before {
+            filter: var(--ib-hover-filter);
+          }
+          color: var(--ib-hover-color, var(--ib-color));
+          background: var(--ib-hover-bg, var(--ib-bg));
           border: var(--ib-hover-border, 1px solid transparent);
+
+          &[data-icon]::before {
+            background-color: var(--ib-hover-icon-bg, var(--ib-icon-bg));
+          }
         }
       }
     }

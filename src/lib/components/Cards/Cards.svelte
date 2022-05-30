@@ -182,13 +182,12 @@
       :global(.splide__arrow) {
         width: 30px;
         height: 30px;
-        
+
       }
 
-      :global(.sc-carousel-dots__container) {
-          --dot-bar-width: 150px;
-          --dot-size: 5px;
-        }
+      :global(.carousel-dots) {
+        --dot-size: 7px;
+      }
     }
 
    }

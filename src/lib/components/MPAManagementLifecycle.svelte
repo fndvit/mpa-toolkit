@@ -46,7 +46,7 @@
 
 </script>
 
-<div class="container" style="background-image: url({landingLifecycle});">
+<div class="landing-lifecycle" style="background-image: url({landingLifecycle});">
   <div class="column1">
     <h2>What's the <b>MPA management cycle</b></h2>
   </div>
@@ -61,7 +61,7 @@
 </div>
 
 <style lang="scss">
-  .container {
+  .landing-lifecycle {
     width: 100%;
     height: 800px;
     background-size: cover;
@@ -73,6 +73,8 @@
     display: grid;
     font-family: 'Montserrat';
     overflow: hidden;
+    padding: 0 var(--page-padding);
+    box-sizing: border-box;
 
     h2 {
       font-size: 48px;
@@ -80,13 +82,11 @@
 
     .column1 {
       margin-top: 149px;
-      margin-left: 120px;
       grid-area: title;
     }
 
     .column2 {
       margin-top: 149px;
-      margin-left: 120px;
       grid-area: textslide;
     }
 
@@ -110,12 +110,11 @@
 
   @media (max-width: 1280px) {
 
-    .container {
+    .landing-lifecycle {
       width: 100%;
       height: auto;
       display: flex;
       flex-flow: column;
-      text-align: center;
 
       .column1 {
         order: 1;
@@ -125,7 +124,7 @@
       .column2 {
         order: 3;
         margin: 0;
-        padding: 20px;
+        padding-bottom: 20px;
       }
 
       .column3 {
@@ -138,7 +137,7 @@
 
   @media(max-width: 625px) {
 
-    .container {
+    .landing-lifecycle {
 
       .circle-menu {
         width: 500px;
@@ -151,7 +150,7 @@
 
   @media(max-width: 425px) {
 
-    .container {
+    .landing-lifecycle {
 
       .circle-menu {
         width: 300px;

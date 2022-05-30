@@ -36,9 +36,8 @@
 <style lang="scss">
 
   .footer {
-    padding-left: 124px;
+    padding: 0 var(--page-padding);
     background: #F9F9F9;
-    overflow: hidden; // TODO: remove this
 
     p {
       font-weight: bold;
@@ -87,10 +86,6 @@
   }
 
   @media(max-width: 768px) {
-
-    .footer {
-      padding-left: 3rem;
-    }
 
     .links {
       a {

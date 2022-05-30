@@ -6,36 +6,26 @@
   export let currentPageIndex = 0;
 </script>
 
-<div class="sc-carousel-dots__container">
+<div class="carousel-dots">
   {#each Array(pagesCount) as _, i}
-    <div class="sc-carousel-dots__dot-container">
-      <Dot
-        {progress}
-        on:click={() => currentPageIndex = i}
-        active={currentPageIndex === i}
-        on:progressAnimationFinished={() => currentPageIndex = i >= pagesCount - 1 ? 0 : i + 1}
-      />
-    </div>
+    <Dot
+      {progress}
+      on:click={() => currentPageIndex = i}
+      active={currentPageIndex === i}
+      on:progressAnimationFinished={() => currentPageIndex = i >= pagesCount - 1 ? 0 : i + 1}
+    />
   {/each}
 </div>
 
-<style>
-  .sc-carousel-dots__container {
+<style lang="scss">
+  .carousel-dots {
     --dot-size: 10px;
     --dot-color: black;
-    --dot-bar-width: 200px;
     --dot-fade: 0.25;
     --dot-progress-duration: 10s;
     display: flex;
     align-items: center;
     padding: 10px 30px;
-  }
-  .sc-carousel-dots__dot-container {
-    height: calc(var(--dot-size) + 14px);
-    width: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 5px;
+    column-gap: 4px;
   }
 </style>

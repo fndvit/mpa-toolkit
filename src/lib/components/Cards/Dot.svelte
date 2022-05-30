@@ -19,12 +19,11 @@
     position: relative;
     border-radius: var(--dot-size);
     overflow: hidden;
-    display: inline-block;
-    transition: opacity 100ms ease, height 100ms ease, width 100ms ease;
+    transition: opacity 100ms ease, height 100ms ease, flex 100ms ease;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    flex: 0 0 var(--dot-size);
     height: var(--dot-size);
-    width: var(--dot-size);
 
     &.active:not(.progress) {
       height: calc(var(--dot-size) + 2px);
@@ -33,12 +32,12 @@
 
     @keyframes dot-progressbar-animation {
       from { width: 0; }
-      to { width: var(--dot-bar-width); }
+      to { width: 100%; }
     }
 
 
     &.progress.active {
-      width: var(--dot-bar-width);
+      flex: 0 1 200px;
       cursor: default;
       .dot-progressbar {
         animation: var(--dot-progress-duration) dot-progressbar-animation 0s linear;

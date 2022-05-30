@@ -1,7 +1,6 @@
 <script lang="ts">
   import { scale } from 'svelte/transition';
 
-  export let type: 'landing'|'inline' = 'inline';
   export let options: string[];
   export let selected = options[0];
 
@@ -33,16 +32,16 @@
 
 <svelte:window on:keydown={handleKeyDown} />
 
-<div class="area" class:landing={type === 'landing'}>
+<div id="test1" class="madlib-selector">
   <button class="selector-area"
     on:click={() => listboxVisible = !listboxVisible}
     on:blur={() => listboxVisible = false}
   >
-    <div class="arrow">
-      <svg class="svg" viewBox="0 0 13 8">
-        <path class="path" d="M0.630249 1L6.36134 6.5L12.0924 1" />
-      </svg>
-    </div>
+
+    <svg class="arrow" viewBox="0 0 13 8">
+      <path d="M0.630249 1L6.36134 6.5L12.0924 1" />
+    </svg>
+
     {selected}
   </button>
 
@@ -61,76 +60,56 @@
 
 <style lang="scss">
 
-  .area {
+  .madlib-selector {
     display: inline-block;
+    border-radius: 20px;
     line-height: 100%;
+    box-shadow: var(--madlib-selector-box-shadow, 0px 1px 8px 0px rgba(0, 0, 0, 0.2));
+    font-weight: 600;
   }
 
   .option {
     display: block;
-    background-color: #F9F9F9;
     border: none;
     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
     cursor: pointer;
     font-family: 'Montserrat';
-    font-weight: normal;
-
-    &.selected {
-      filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.15));
-      border-radius: 10px;
-    }
-
-    .landing & {
-      line-height: 40px;
-      font-weight: bold;
-      color: #2A2A2A;
-    }
-  }
-
-  .option:hover{
-    filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.15));
     border-radius: 10px;
+    position: relative;
+
+    &.selected,
+    &:hover {
+      box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2);
+      background-color: inherit;
+    }
+
+    &:hover {
+      position: relative;
+      z-index: 1;
+    }
+
   }
 
   .selector-area {
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 20px;
-    background-color: #F9F9F9;
-    color: black;
     border: none;
     padding: 0.25rem 0.7rem 0.25rem 0.7rem;
-    margin-bottom: 0.4rem;
+    border-radius: inherit;
     cursor: pointer;
-    filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.15));
-    font-family: 'Montserrat';
-    font-weight: normal;
+    background-blend-mode: soft-light;
+    background: rgba(249, 249, 249, 0.08);
+    color: inherit;
 
-    .landing & {
-      font-size: 32px;
-      line-height: 40px;
-      color: #FFFFFF;
-      font-weight: 600;
-      background: rgba(249, 249, 249, 0.08);
-      background-blend-mode: soft-light;
-      box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.4);
-      border-radius: 30px;
+    &:focus {
+      outline: 0.1rem solid;
     }
-  }
 
-  .selector-area:focus {
-    outline: 0.1rem solid black;
-
-    .landing & {
-      outline: 0.1rem solid white;
-    }
   }
 
   .listbox {
     margin-top: 0.5rem;
     position: absolute;
     display: block;
-    filter: drop-shadow(0px 1px 6px rgba(0, 0, 0, 0.15));
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2);
     padding: 0.35rem 0.7rem 0.35rem 0.7rem;
     border-radius: 20px;
     background-color: #F9F9F9;
@@ -138,53 +117,14 @@
     border: none;
     z-index: 1000;
     font-size: inherit;
-
-    .landing & {
-      border-radius: 30px;
-      font-size: 27px;
-    }
   }
 
   .arrow {
-    display: inline-block;
-  }
-
-  .svg {
-    vertical-align: middle;
     transform: translateY(-0.1rem);
-    width: 13px;
-    height: 8px;
+    width: 0.6em;
     fill: none;
-
-    .landing & {
-      transform: scale(1.35);
-      width: 15px;
-      height: 10px;
-      margin-left: 3px;
-      margin-right: 3px;
-    }
-  }
-
-  .path {
-    stroke: #2A2A2A;
+    stroke: currentColor;
     stroke-width: 1.5;
-
-    .landing & {
-      stroke: #FFFFFF;
-      stroke-width: 1.5;
-    }
-  }
-
-  @media(max-width: 425px) {
-
-    .selector-area {
-
-      .landing & {
-        font-size: 1rem;
-      }
-        
-    }
-
   }
 
 </style>

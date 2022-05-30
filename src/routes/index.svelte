@@ -2,13 +2,13 @@
   import type { SubTypes } from "$lib/types";
   import type { PageTag } from "$lib/prisma/queries";
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
-  import MadLib from "$lib/components/MadLib.svelte";
   import Searchbar from "$lib/components/generic/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import TagContainer from "$lib/components/TagContainer.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
   import landingSplash from '$lib/assets/landing-splash.jpg';
   import MpaManagementLifecycle from "$lib/components/MPAManagementLifecycle.svelte";
+  import LandingMadlib from "$lib/components/Madlib/LandingMadLib.svelte";
 
   export let chapters: SubTypes.Page.ContentCard[] = [];
   export let caseStudies: SubTypes.Page.ContentCard[] = [];
@@ -22,7 +22,7 @@
   <title>MPA Toolkit</title>
 </svelte:head>
 
-<div class="container">
+<div class="landing-page">
   <div class="unep-logo">
     <InlineSvg svg="UNEP" />
   </div>
@@ -49,13 +49,18 @@
     <Searchbar type={'inline'}/>
     <TagContainer tags={tagsForContainer}/>
   </div>
-  <MadLib type='landing'/>
+  <LandingMadlib />
   <LandingCarousel pages={caseStudies} title="Explore what <b>others have done</b>" />
   <Footer/>
 </div>
 
 
 <style lang="scss">
+
+  .landing-page {
+    background: #F9F9F9;
+    --page-padding: 6rem;
+  }
 
   .inline-searchbar {
     width: 766px;
@@ -80,9 +85,7 @@
 
   .splash {
     min-height: 60vh;
-    padding: 6rem;
-    padding-bottom: 3rem;
-    padding-left: 124px;
+    padding: 6rem var(--page-padding) 3rem;
     background-size: cover;
     background-position: bottom;
 
@@ -117,16 +120,17 @@
     width: 110px;
   }
 
-  .container {
-    background: #F9F9F9;
-  }
 
- 
 
   @media (max-width: 1024px) {
 
+    .landing-page {
+      --page-padding: 3rem;
+    }
+
     .splash {
-      padding-left: 3rem;
+      // padding-left: 3rem;
+
       background-position: left;
 
       h1 {
@@ -138,7 +142,7 @@
       h4 {
         padding-bottom: 3rem;
       }
-  
+
     }
 
     .unep-logo {
@@ -147,7 +151,7 @@
 
     .inline-searchbar {
       width: auto;
-      padding: 3rem;
+      // padding: 3rem;
 
       > :global(.tag-container) {
         flex-wrap: nowrap;
@@ -183,9 +187,11 @@
 
   @media(max-width: 425px) {
 
-    .splash {
 
-      padding-left: 2rem;
+    .landing-page {
+      --page-padding: 1.5rem;
+    }
+    .splash {
 
       h1 {
         font-size: 2rem;
@@ -197,7 +203,7 @@
         padding: 1rem 0rem;
         font-size: 1.25rem;
       }
-  
+
     }
 
     .partners-grid {
@@ -220,7 +226,7 @@
     }
 
     .inline-searchbar {
-      padding: 1rem;
+      // padding: 1rem;
     }
 
     .unep-logo {

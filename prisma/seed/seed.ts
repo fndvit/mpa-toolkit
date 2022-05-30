@@ -126,7 +126,7 @@ function getRandomTagsForContent(allTags: Tag[]): PageRequest['tags'] {
   const NUM_TAGS = {
     primary: 2,
     secondary: 4,
-    topic: 3,
+    topic: 6,
     user: 3
   };
   const tags = groupBy(allTags, t => t.type);

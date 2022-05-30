@@ -149,4 +149,41 @@
       position: absolute;
     }
   }
+
+  @media(max-width: 425px) {
+
+    .slide {
+      padding: 1rem;
+
+      :global(.heading) {
+        font-size: 1rem;
+        text-align: left;
+      }
+
+      :global(.content) {
+        font-size: 1rem;
+        text-align: left;
+      }
+    }
+
+    .cards {
+
+      :global(.splide__arrows) {
+        width: 70px;
+        top: 30px;
+        right: 10px;
+      }
+      :global(.splide__arrow) {
+        width: 30px;
+        height: 30px;
+
+      }
+
+      :global(.carousel-dots) {
+        --dot-size: 7px;
+      }
+    }
+
+   }
+
 </style>

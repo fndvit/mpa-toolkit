@@ -57,10 +57,6 @@
     }
   }
 
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
   .gradient::before {
     content: '';
     position: absolute;

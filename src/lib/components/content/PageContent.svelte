@@ -6,7 +6,7 @@
   import Heading from "./Heading.svelte";
   import Paragraph from "./Paragraph.svelte";
   import TextSlider from "./TextSlider.svelte";
-  import MadLib from "../MadLib.svelte";
+  import ContentMadLib from "../Madlib/ContentMadLib.svelte";
   import TinyCarousel from "$lib/components/TinyCarousel.svelte";
   import LifeCycle from "$lib/components/LifeCycle.svelte";
   import Image from "./Image.svelte";
@@ -51,7 +51,7 @@
       {#if sections.length > 1 }
         {#if i === 0}
           <div class="madlib-container">
-            <MadLib />
+            <ContentMadLib />
           </div>
         {:else if i === 2 && recommendedPages?.length > 0}
           <div class="tiny-carousel-container">
@@ -113,17 +113,20 @@
     }
   }
 
+  .tiny-carousel-container {
+    overflow: hidden;
+  }
+
   .madlib-container,
   .tiny-carousel-container {
       margin-left: -25px;
       margin-right: -20px;
-      grid-column: body / span 2;
-      overflow: hidden;
+      grid-column: body / right-margin;
   }
 
   @media screen and (max-width: 1150px) {
     .page-content {
-      grid-template-columns: 250px minmax(500px, 600px) 20px;
+      grid-template-columns: 250px minmax(500px, 600px) minmax(20px, auto);
     }
     .body-column {
       :global(.tiny-carousel) {
@@ -144,7 +147,8 @@
     }
 
     .madlib-container {
-      margin-top: 1rem
+      margin-top: 1rem;
+      margin-right: 0;
     }
 
     .body-column {

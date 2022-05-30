@@ -151,7 +151,7 @@
 
     .inline-searchbar {
       width: auto;
-      // padding: 3rem;
+      padding: 0 var(--page-padding);
 
       > :global(.tag-container) {
         flex-wrap: nowrap;

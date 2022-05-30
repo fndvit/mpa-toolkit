@@ -34,7 +34,7 @@
     border-radius: 40px 0px 0px 40px;
     color: #6C767D;
     background: #F9F9F9;
-    padding: 0.75rem 1.5rem 1.5rem;
+    padding: 0.75rem 1.5rem 2rem;
     font-family: 'Montserrat';
 
     font-size: 1.25rem;
@@ -45,6 +45,10 @@
       font-weight: 700;
       font-size: 16px;
       margin: 5px 0px 0px 0px;
+    }
+
+    :global(.madlib) {
+      max-width: 600px;
     }
 
     :global(.madlib-selector) {

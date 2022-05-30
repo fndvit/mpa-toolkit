@@ -78,6 +78,8 @@
   on:click
   on:mouseenter={() => hovered = true}
   on:mouseleave={() => hovered = false}
+  on:mouseenter
+  on:mouseleave
 />
 
 <style>

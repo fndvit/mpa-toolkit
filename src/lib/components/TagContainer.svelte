@@ -3,11 +3,16 @@
   import Tag from "$lib/components/Tag.svelte";
 
   export let tags: SubTypes.PageTag[] = [];
+  export let currentTagHovered = -1;
 </script>
 
 <div class="tag-container">
   {#each tags as tag}
-    <Tag {tag}/>
+    <Tag
+      {tag}
+      on:mouseenter={() => currentTagHovered = tag.tag.id}
+      on:mouseleave={() => currentTagHovered = -1}
+    />
   {/each}
 </div>
 

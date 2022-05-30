@@ -13,6 +13,8 @@
   class:secondary
   tabindex="0"
   style=""
+  on:mouseenter
+  on:mouseleave
 >
   <span>
     {tag.tag.value? tag.tag.value : tag.tag}

@@ -4,12 +4,34 @@
   import MultiSelect, { Option } from 'svelte-multiselect';
   import CircleMenu, { type MenuElement } from './CircleMenu.svelte';
   import TagContainer from  './TagContainer.svelte';
+  import IconButton from './generic/IconButton.svelte';
+  import textFit from 'textfit';
+  import { afterUpdate } from 'svelte';
+  import { fade } from 'svelte/transition';
+
 
   export let allTags: Tag[] = null;
   export let tags: SubTypes.PageTag[]; // binding (updated as tags are changed)
   export let editable = false;
 
+  let currentTagHovered: number = -1;
+  let infoTextElement: HTMLElement;
+
+  const fitTextOptions = {
+    alignVert: true,
+    alignHoriz: true,
+    multiLine: true
+  };
   const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30]; // index matches tag id
+  const LIFECYCLE_TEXT = [
+    'Although there is no single recipe, there ways to optimize the <b>design</b> of your MPA based on your specific needs.',
+    '<b>Where does this fit in the MPA management lifecycle?</b>',
+    '<b>Where does this fit in the MPA management lifecycle?</b>',
+    '<b>Where does this fit in the MPA management lifecycle?</b>',
+    '<b>Where does this fit in the MPA management lifecycle?</b>',
+    '<b>Where does this fit in the MPA management lifecycle?</b>',
+    '<b>Where does this fit in the MPA management lifecycle?</b>',
+  ]; // index matches tag id
 
   const MAX_PRIMARY_TAGS = 2;
   const MAX_SECONDARY_TAGS = 7;
@@ -50,14 +72,24 @@
     };
   });
 
+
+  afterUpdate(() => {
+	  if(infoTextElement) textFit(infoTextElement, fitTextOptions)
+  });
 </script>
 
 <div class='lifecycle'>
   <h5 class='title'>Where in the MPA lifecycle?</h5>
   <div class="circle-menu-section">
       <div class="circle-menu">
-          <CircleMenu data={menuData} />
+          {#if currentTagHovered != -1}
+            <div class="info-text" bind:this={infoTextElement}>
+              {@html LIFECYCLE_TEXT[currentTagHovered]}
+            </div>
+          {/if}
+          <CircleMenu data={menuData} bind:currentSegmentHovered={currentTagHovered}/>
       </div>
+
       <div class="tag-container">
         {#if editable}
           <div class="subtitle">Primary Tags</div>
@@ -73,7 +105,7 @@
             maxSelect={MAX_SECONDARY_TAGS}
           />
         {:else}
-          <TagContainer tags={renderTags.STAGE} />
+          <TagContainer tags={renderTags.STAGE} bind:currentTagHovered={currentTagHovered}/>
         {/if}
       </div>
   </div>
@@ -91,7 +123,7 @@
       {#if editable}
         <MultiSelect bind:selected={selectedTagOptions.USER} options={groupedOptions.USER} />
       {:else}
-        <TagContainer tags={renderTags.USER} />
+        <TagContainer tags={renderTags.USER}/>
       {/if}
     </div>
   </div>
@@ -124,14 +156,34 @@
     align-items: center;
     justify-content: center;
     column-gap: 10px;
+
+    .tag-container {
+      flex: 1 1 70%;
+    }
+
     .circle-menu {
       flex: 0.8 0.2 120px;
+      position: relative;
+      z-index: 1;
+
       :global(svg) {
         width: 100%;
       }
-    }
-    .tag-container {
-      flex: 1 1 70%;
+
+      .info-text{
+        width: 130px;
+        height: 130px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        animation: fadeIn ease-in-out 0.5s;
+        -webkit-animation: fadeIn ease-in-out 0.5s;
+        -moz-animation: fadeIn ease-in-out 0.5s;
+        z-index: -1;
+      }
     }
   }
   @media (max-width: 900px) {
@@ -153,5 +205,14 @@
 
   :global(.multiselect .selected) {
     font-size: 10px;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
   }
 </style>

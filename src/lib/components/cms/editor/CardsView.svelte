@@ -1,7 +1,7 @@
 <script lang="ts">
   import Cards from "$lib/components/Cards/Cards.svelte";
   import type { CardData } from "$lib/components/Cards/Cards.svelte";
-  import type { SvelteNodeViewControls } from "$lib/editor/svelte-nodeview";
+  import type { SvelteNodeViewControls } from "prosemirror-svelte-nodeview";
   import clone from "clone";
 
   export let attrs: {cards: CardData[]};

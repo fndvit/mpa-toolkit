@@ -36,9 +36,8 @@
 <style lang="scss">
 
   .footer {
-    padding-left: 124px;
+    padding: 0 var(--page-padding);
     background: #F9F9F9;
-    overflow: hidden; // TODO: remove this
 
     p {
       font-weight: bold;
@@ -64,6 +63,47 @@
       font-size: 12px;
       margin-right: 15px;
     }
+  }
+
+  @media(max-width: 1024px) {
+
+    .partners-grid {
+
+      grid-template-columns: 0.25fr 0.25fr 0.25fr;
+      grid-template-rows: auto;
+      margin-top: 3rem;
+
+    }
+
+    .links {
+
+      width: 100%;
+      a {
+        font-size: 1.25rem;
+      }
+
+    }
+  }
+
+  @media(max-width: 768px) {
+
+    .links {
+      a {
+        font-size: 1rem;
+      }
+    }
+
+  }
+
+  @media(max-width: 425px) {
+
+
+    .links {
+      a {
+        font-size: 0.75rem;
+      }
+    }
+
   }
 
 </style>

@@ -23,20 +23,29 @@
     arrows: true,
     updateOnMove: true,
     lazyLoad: true,
-    keyboard: true
+    keyboard: true,
+    noDrag: '.no-drag, .no-drag *',
+    breakpoints: {
+      1024: {
+        gap: '40px',
+      },
+      550: {
+        gap: '20px',
+      },
+    }
   });
 
   $: if (currentCard >= 0 && splide) splide.go(currentCard);
 
 </script>
 
-<div class="container">
+<div class="landing-carousel">
   <div class="title-container">
     {@html title}
     <CarouselDots
       bind:currentPageIndex={currentCard}
       pagesCount={pages.length}
-      progress={true}
+      progress
     />
   </div>
   <div class="carousel-container">
@@ -55,7 +64,7 @@
 
 <style lang="scss">
 
-  .container {
+  .landing-carousel {
 
     :global(.splide__arrow--prev){
       left: 2rem;
@@ -74,7 +83,7 @@
       opacity: 0.8;
     }
 
-    :global(.sc-carousel-dots__container){
+    :global(.carousel-dots){
       padding: 10px 0px !important;
       margin-top: 15px;
       margin-bottom: 60px;
@@ -83,6 +92,7 @@
     :global(.splide__slide){
       opacity: 50%;
       pointer-events: none;
+      margin-bottom: 25px; // spacing for box shadow
     }
 
     :global(.splide__slide.is-active) {
@@ -93,17 +103,48 @@
 
   .title-container {
     font-size: 48px;
-    line-height: 58.51px;
     font-weight: 300;
     color: #2A2A2A;
     max-width: 600px;
-    margin-left: 124px;
-    margin-top: 25px;
+    padding: 25px var(--page-padding) 0;
   }
 
   .carousel-container {
     display: flex;
     position: relative;
   }
+
+  @media(max-width: 1024px) {
+
+    .title-container {
+      max-width: auto;
+    }
+
+    .landing-carousel {
+      :global(.splide__arrow) {
+        display: none;
+      }
+    }
+  }
+
+  @media(max-width: 570px) {
+
+    .title-container {
+      font-size: 2rem;
+    }
+
+  }
+
+  @media(max-width: 425px) {
+
+    .landing-carousel {
+
+      :global(.carousel-dots) {
+          --dot-size: 7px;
+        }
+    }
+
+  }
+
 
 </style>

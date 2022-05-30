@@ -88,4 +88,13 @@
 
   }
 
+
+  @media screen and (max-width: 840px) {
+
+    .tiny-carousel {
+      border-radius: 0;
+    }
+  }
+
+
 </style>

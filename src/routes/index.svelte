@@ -2,13 +2,13 @@
   import type { SubTypes } from "$lib/types";
   import type { PageTag } from "$lib/prisma/queries";
   import LandingCarousel from "$lib/components/LandingCarousel.svelte";
-  import MadLib from "$lib/components/MadLib.svelte";
   import Searchbar from "$lib/components/generic/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import TagContainer from "$lib/components/TagContainer.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
   import landingSplash from '$lib/assets/landing-splash.jpg';
   import MpaManagementLifecycle from "$lib/components/MPAManagementLifecycle.svelte";
+  import LandingMadlib from "$lib/components/Madlib/LandingMadLib.svelte";
 
   export let chapters: SubTypes.Page.ContentCard[] = [];
   export let caseStudies: SubTypes.Page.ContentCard[] = [];
@@ -22,7 +22,7 @@
   <title>MPA Toolkit</title>
 </svelte:head>
 
-<div class="container">
+<div class="landing-page">
   <div class="unep-logo">
     <InlineSvg svg="UNEP" />
   </div>
@@ -49,7 +49,7 @@
     <Searchbar type={'inline'}/>
     <TagContainer tags={tagsForContainer}/>
   </div>
-  <MadLib type='landing'/>
+  <LandingMadlib />
   <LandingCarousel pages={caseStudies} title="Explore what <b>others have done</b>" />
   <Footer/>
 </div>
@@ -57,6 +57,10 @@
 
 <style lang="scss">
 
+  .landing-page {
+    background: #F9F9F9;
+    --page-padding: 6rem;
+  }
 
   .inline-searchbar {
     width: 766px;
@@ -81,9 +85,7 @@
 
   .splash {
     min-height: 60vh;
-    padding: 6rem;
-    padding-bottom: 3rem;
-    padding-left: 124px;
+    padding: 6rem var(--page-padding) 3rem;
     background-size: cover;
     background-position: bottom;
 
@@ -118,8 +120,114 @@
     width: 110px;
   }
 
-  .container {
-    background: #F9F9F9;
+
+
+  @media (max-width: 1024px) {
+
+    .landing-page {
+      --page-padding: 3rem;
+    }
+
+    .splash {
+      background-position: left;
+
+      h1 {
+        font-size: 4rem;
+        padding-bottom: 4rem;
+        padding-top: 4rem;
+      }
+
+      h4 {
+        padding-bottom: 3rem;
+      }
+
+    }
+
+    .unep-logo {
+      margin-left: 3rem;
+    }
+
+    .inline-searchbar {
+      width: auto;
+      padding: 0 var(--page-padding);
+
+      > :global(.tag-container) {
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+      }
+
+    }
+
+    .top-searchbar {
+
+      :global(.placeholder) {
+        display: none;
+      }
+
+      :global(.input-text) {
+        max-width: 50px;
+      }
+    }
+
+  }
+
+  @media(max-width: 700px) {
+
+    .partners-grid {
+      grid-template-columns: 150px 100px;
+    }
+
+    .inline-searchbar {
+      margin: 0rem;
+    }
+
+  }
+
+  @media(max-width: 425px) {
+
+
+    .landing-page {
+      --page-padding: 1.5rem;
+    }
+    .splash {
+
+      h1 {
+        font-size: 2rem;
+        padding: 1rem 0rem;
+      }
+
+      h4 {
+        margin-bottom: 1rem;
+        padding: 1rem 0rem;
+        font-size: 1.25rem;
+      }
+
+    }
+
+    .partners-grid {
+      grid-template-columns: 100px 70px;
+    }
+
+    .top-searchbar {
+
+      margin: 2rem 1rem;
+
+      :global(.input-text) {
+        max-width: 10px;
+        padding: 7px
+      }
+
+      :global(.search-icon) {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .unep-logo {
+      width: 80px;
+      margin-left: 2rem;
+    }
+
   }
 
 </style>

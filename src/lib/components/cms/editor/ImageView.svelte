@@ -1,6 +1,6 @@
 <script lang="ts">
   import IconButton from "$lib/components/generic/IconButton.svelte";
-  import type { SvelteNodeViewControls } from "$lib/editor/svelte-nodeview";
+  import type { SvelteNodeViewControls } from "prosemirror-svelte-nodeview";
   import { staticUrl } from "$lib/helpers/content";
   import type { ImageBlock } from "$lib/types";
 
@@ -14,7 +14,7 @@
 
 </script>
 
-<div class="imageview imageview-{attrs.style}" class:selected>
+<div class="imageview imageview-{attrs.style}" class:selected contenteditable="false">
   <div class="image-controls">
     <input bind:value={attrs.alt} placeholder="alt text..."/>
     <IconButton icon="aspect_ratio" title="Wide" active={attrs.style === 'full'} on:click={toggleStyle} />

@@ -115,4 +115,30 @@
 
   }
 
+  @media(max-width: 1024px) {
+
+    .searchbar.top {
+      padding: 5px 25px;
+      width: fit-content;
+    }
+
+    .search-icon {
+      display: flex;
+    }
+
+  }
+
+  @media(max-width: 414px) {
+
+    .searchbar.top {
+      padding: 0px 15px;
+      width: fit-content;
+    }
+
+    .placeholder {
+      display: none;
+    }
+
+  }
+
 </style>

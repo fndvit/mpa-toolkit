@@ -3,18 +3,17 @@
   import type { ContentDocument } from '$lib/types';
   import { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
+  import { svelteNodeViewPlugin } from 'prosemirror-svelte-nodeview';
   import { onMount, setContext } from 'svelte';
   import EditorMenu from './EditorMenu.svelte';
   import { plugins } from '$lib/editor/plugins';
   import { schema } from '$lib/editor/schema';
-  import { sveltePlugin } from '$lib/editor/svelte-plugin';
   import CardsView from './CardsView.svelte';
   import ImageView from './ImageView.svelte';
   import HeadingView from './HeadingView.svelte';
 
   let focusEditor: () => void;
   let view: EditorView;
-
 
   export let content: ContentDocument = null;
 
@@ -23,7 +22,7 @@
     doc: content ? schema.nodeFromJSON(content) : undefined,
     plugins: [
       ...plugins(schema),
-      sveltePlugin({
+      svelteNodeViewPlugin({
         nodes: {
           cards: CardsView,
           image: ImageView,

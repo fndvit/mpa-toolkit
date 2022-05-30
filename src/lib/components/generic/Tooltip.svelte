@@ -4,13 +4,11 @@
 
 <div class="tooltip" data-text={text} />
 
-
 <style lang="scss">
 
   .tooltip {
     --arrow-size: 8px;
     --ib-tooltip-bg: #fafafa;
-    --ib-tooltip-border: #49499276;
     position: absolute;
     top: calc(100% + var(--arrow-size));
     left: 50%;
@@ -24,9 +22,7 @@
     color: black;
     text-align: center;
 
-
-    &:before,
-    &:after {
+    &:before {
       content: attr(data-text);
       display: block;
       width: max-content;
@@ -34,19 +30,6 @@
       padding: calc(6px + var(--arrow-size)) 8px 6px;
       background: var(--ib-tooltip-bg);
       transform: translateX(-50%);
-      clip-path: polygon(
-        1px calc(var(--arrow-size) + 1px),
-        calc(50% - var(--arrow-size) + 0.41px) calc(var(--arrow-size) + 1px),
-        50% 1.41px,
-        calc(50% + var(--arrow-size) - 0.41px) calc(var(--arrow-size) + 1px),
-        calc(100% - 1px) calc(var(--arrow-size) + 1px),
-        calc(100% - 1px) calc(100% - 1px),
-        1px calc(100% - 1px)
-      );
-    }
-    &:before {
-      position: absolute;
-      background: var(--ib-tooltip-border);
       clip-path: polygon(
         0 var(--arrow-size),
         calc(50% - var(--arrow-size)) var(--arrow-size),
@@ -57,6 +40,7 @@
         0 100%
       );
     }
+
     transition: all 100ms 0.2s;
     opacity: 1;
     transform: translateY(0);

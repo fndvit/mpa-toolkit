@@ -58,14 +58,24 @@ export const textOnlyPaste = (el: HTMLElement) => {
 };
 
 export const addFocusClass = (node: HTMLElement, cb: (focused: boolean) => void = () => null) => {
-  node.addEventListener('focus', () => {
+  const focus = () => {
     node.classList.add('focused');
     cb(true);
-  });
-  node.addEventListener('blur', () => {
+  };
+  const blur = () => {
     node.classList.remove('focused');
     cb(false);
-  });
+  };
+
+  node.addEventListener('focus', focus);
+  node.addEventListener('blur', focus);
+
+  return {
+    destroy() {
+      node.removeEventListener('focus', focus);
+      node.removeEventListener('blur', blur);
+    }
+  };
 };
 
 export function clickOutside(node: HTMLElement, fn: () => void) {

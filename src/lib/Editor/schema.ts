@@ -1,82 +1,51 @@
 import { Schema as ProsemirrorSchema } from 'prosemirror-model';
-import { svelteSchemaNode } from './svelte-plugin';
-
+import { svelteSchemaNode } from 'prosemirror-svelte-nodeview';
 
 export const simpleSchema = new ProsemirrorSchema({
   nodes: {
-    doc: {
-      content: 'span'
-    },
-
+    doc: { content: 'span' },
     span: {
       content: 'inline*',
       parseDOM: [{ tag: 'span' }],
-      toDOM() {
-        return ['span', 0];
-      }
+      toDOM: () => ['span', 0]
     },
-
-    // :: NodeSpec The text node.
-    text: {
-      group: 'inline'
-    },
+    text: { group: 'inline' },
   },
-
   marks: {
     strong: {
-      parseDOM: [
-        { tag: 'strong' }
-      ],
-      toDOM() {
-        return ['strong', 0];
-      }
+      parseDOM: [ { tag: 'strong' } ],
+      toDOM: () => ['strong', 0]
     },
   }
 });
 
-
-
 export const schema = new ProsemirrorSchema({
   nodes: {
-    // :: NodeSpec The top level document node.
     doc: {
       content: 'block+'
     },
 
-    // :: NodeSpec A plain paragraph textblock. Represented in the DOM
-    // as a `<p>` element.
     paragraph: {
       content: 'inline*',
       group: 'block',
       parseDOM: [{ tag: 'p' }],
-      toDOM() {
-        return ['p', 0];
-      }
+      toDOM: () => ['p', 0]
     },
 
-    // :: NodeSpec A blockquote (`<blockquote>`) wrapping one or more blocks.
     blockquote: {
       content: 'block+',
       group: 'block',
       defining: true,
       parseDOM: [{ tag: 'blockquote' }],
-      toDOM() {
-        return ['blockquote', 0];
-      }
+      toDOM: () => ['blockquote', 0]
     },
 
-    // :: NodeSpec A horizontal rule (`<hr>`).
     horizontal_rule: {
       group: 'block',
       parseDOM: [{ tag: 'hr' }],
-      toDOM() {
-        return ['hr'];
-      }
+      toDOM: () => ['hr']
     },
 
-    // :: NodeSpec A heading textblock, with a `level` attribute that
-    // should hold the number 1 to 6. Parsed and serialized as `<h1>` to
-    // `<h6>` elements.
     heading: {
       attrs: { level: { default: 1 }, showmore: {default: ''} },
       content: 'text*',
@@ -97,9 +66,6 @@ export const schema = new ProsemirrorSchema({
       }
     },
 
-    // :: NodeSpec A code listing. Disallows marks or non-text inline
-    // nodes by default. Represented as a `<pre>` element with a
-    // `<code>` element inside of it.
     code_block: {
       content: 'text*',
       marks: '',
@@ -107,25 +73,17 @@ export const schema = new ProsemirrorSchema({
       code: true,
       defining: true,
       parseDOM: [{ tag: 'pre', preserveWhitespace: 'full' }],
-      toDOM() {
-        return ['pre', ['code', 0]];
-      }
+      toDOM: () => ['pre', ['code', 0]]
     },
 
-    // :: NodeSpec The text node.
-    text: {
-      group: 'inline'
-    },
+    text: { group: 'inline' },
 
-    // :: NodeSpec A hard line break, represented in the DOM as `<br>`.
     hard_break: {
       inline: true,
       group: 'inline',
       selectable: false,
       parseDOM: [{ tag: 'br' }],
-      toDOM() {
-        return ['br'];
-      }
+      toDOM: () => ['br']
     },
 
     image: {
@@ -140,9 +98,6 @@ export const schema = new ProsemirrorSchema({
 
   },
   marks: {
-    // :: MarkSpec A link. Has `href` and `title` attributes. `title`
-    // defaults to the empty string. Rendered and parsed as an `<a>`
-    // element.
     link: {
       attrs: {
         href: {},
@@ -152,8 +107,10 @@ export const schema = new ProsemirrorSchema({
       parseDOM: [
         {
           tag: 'a[href]',
-          getAttrs(dom: Element) {
-            return { href: dom.getAttribute('href'), title: dom.getAttribute('title') };
+          getAttrs(dom: Element | string) {
+            if (dom instanceof Element) {
+              return { href: dom.getAttribute('href'), title: dom.getAttribute('title') };
+            } else throw new Error('DOM element expected');
           }
         }
       ],
@@ -163,17 +120,11 @@ export const schema = new ProsemirrorSchema({
       }
     },
 
-    // :: MarkSpec An emphasis mark. Rendered as an `<em>` element.
-    // Has parse rules that also match `<i>` and `font-style: italic`.
     em: {
       parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
-      toDOM() {
-        return ['em', 0];
-      }
+      toDOM: () => ['em', 0]
     },
 
-    // :: MarkSpec A strong mark. Rendered as `<strong>`, parse rules
-    // also match `<b>` and `font-weight: bold`.
     strong: {
       parseDOM: [
         { tag: 'strong' },
@@ -183,17 +134,12 @@ export const schema = new ProsemirrorSchema({
         // { tag: 'b', getAttrs: (node) => node.style.fontWeight != 'normal' && null },
         // { style: 'font-weight', getAttrs: (value) => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null }
       ],
-      toDOM() {
-        return ['strong', 0];
-      }
+      toDOM: () => ['strong', 0]
     },
 
-    // :: MarkSpec Code font mark. Represented as a `<code>` element.
     code: {
       parseDOM: [{ tag: 'code' }],
-      toDOM() {
-        return ['code', 0];
-      }
+      toDOM: () => ['code', 0]
     }
   }
  });

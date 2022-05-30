@@ -1,12 +1,11 @@
 <script lang="ts">
-  import type { EditorView } from "prosemirror-view";
   import ExpandButtonEditor from "$lib/components/content/ExpandButtonEditor.svelte";
   import IconButton from "$lib/components/generic/IconButton.svelte";
   import type { HeadingBlock } from "$lib/types";
+  import { clickOutside } from "$lib/helpers/utils";
 
   export var attrs: HeadingBlock['attrs'];
   export var contentDOM: (node: HTMLElement) => void;
-  export var rootDOM: (node: HTMLElement) => void;
 
   $: if (attrs.level < 1 || attrs.level > 6) throw new Error('Section level must be between 1 and 6');
 
@@ -14,45 +13,28 @@
 
   let expanded = false;
 
-  const onClickButton = (e: Event) => {
-    e.stopPropagation();
-    expanded = !expanded;
-  };
-
-  let innerView: EditorView;
-
-  const _contentDOM = document.createElement('div');
-  _contentDOM.classList.add('content-dom');
-  contentDOM(_contentDOM);
-
-  const appendContentDOM = (node: HTMLElement) => { node.appendChild(_contentDOM); };
-
   $: sectionTextIsEmpty = attrs.showmore.length === 0;
   $: buttonTooltip = sectionTextIsEmpty && !expanded && "Click to fill the expand button text for this section";
 </script>
 
-<svelte:window on:click={() => expanded = false} />
-
-<div class="hv" use:rootDOM class:no-show-more={sectionTextIsEmpty}>
-  <svelte:element this={tag} >
-    <div class="hv-controls" class:expanded contenteditable="false" on:click={e => e.stopPropagation()}>
-      <IconButton icon="info" on:click={onClickButton} title={buttonTooltip} />
+<div class="hv" class:no-show-more={sectionTextIsEmpty}>
+  <svelte:element this={tag}>
+    <div class="hv-controls"
+      class:expanded contenteditable="false"
+      use:clickOutside={() => expanded = false}
+    >
+      <IconButton icon="info" on:click={() => expanded = !expanded} title={buttonTooltip} />
       <div>
-        <ExpandButtonEditor bind:view={innerView} bind:content={attrs.showmore} on:complete={() => expanded = false}/>
+        <ExpandButtonEditor bind:content={attrs.showmore} on:complete={() => expanded = false}/>
       </div>
     </div>
-    <div class="content-dom" use:appendContentDOM contenteditable='true' />
+    <div use:contentDOM />
   </svelte:element>
 </div>
 
 <style lang="scss">
   .hv {
     position: relative;
-  }
-
-  .content-dom,
-  .content-dom :global(*) {
-    font-size: inherit !important;
   }
 
   .hv-controls {
@@ -92,10 +74,6 @@
     :global(.expand-button > button) {
       margin-bottom: 0;
     }
-  }
-
-  .hv [contenteditable='true'] {
-    outline: none;
   }
 
 </style>

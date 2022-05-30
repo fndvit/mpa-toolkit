@@ -54,7 +54,7 @@
           }
         },
         handleDOMEvents: {
-          keydown: (_, e) => e.key === 'Enter' && dispatch('complete')
+          keydown: (_, e: KeyboardEvent) => e.key === 'Enter' && dispatch('complete')
         },
       }
     );

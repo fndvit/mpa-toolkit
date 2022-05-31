@@ -6,7 +6,7 @@
   import Heading from "./Heading.svelte";
   import Paragraph from "./Paragraph.svelte";
   import TextSlider from "./TextSlider.svelte";
-  import ContentMadLib from "../Madlib/ContentMadLib.svelte";
+  import ContentMadLib from "$lib/components/Madlib/ContentMadLib.svelte";
   import TinyCarousel from "$lib/components/TinyCarousel.svelte";
   import LifeCycle from "$lib/components/LifeCycle.svelte";
   import Image from "./Image.svelte";

@@ -5,11 +5,10 @@
   import Milestones from './Milestones.svelte';
   import EditableText from "../generic/EditableText.svelte";
   import EditableNumber from "../generic/EditableNumber.svelte";
+  import GlobeVizEditor from "./GlobeVizEditor.svelte";
 
   export let caseStudy: SubTypes.CaseStudy.PageHead;
   export let editable = false;
-
-  const { lat, long } = caseStudy;
 
   const placeholders = {
     name: "Project name",
@@ -41,7 +40,11 @@
       <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
 
       <div class="globe-cell">
-        <GlobeViz {lat} {long} />
+        {#if editable}
+          <GlobeVizEditor bind:lat={caseStudy.lat} bind:long={caseStudy.long} />
+        {:else}
+          <GlobeViz lat={caseStudy.lat} long={caseStudy.long} />
+        {/if}
       </div>
 
     </div>
@@ -82,8 +85,9 @@
 <style lang="scss">
 
   .meta-container {
+    --bg-color: #13487C;
     position: relative;
-    background-color: #13487C;
+    background-color: var(--bg-color);
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
     --ui-color-placeholder: #ffffff55;
   }
@@ -142,7 +146,7 @@
 
   .globe-cell {
     position: relative;
-    > :global(.globe) {
+    > :global(*) {
       position: absolute;
       transform: translateY(-55%);
     }

@@ -5,7 +5,6 @@
 
   export let pages: SubTypes.Page.CollectionCard[];
   export let title: string;
-  // export let d
 </script>
 
 <div class="collection-page">

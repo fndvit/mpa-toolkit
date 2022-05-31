@@ -1,3 +1,5 @@
+import { writable } from "svelte/store";
+
 export function groupBy<T, K extends string, U = null>
 (arr: T[], keyFn: (i: T) => K, mapFn?: (i: T) => U) {
 
@@ -93,6 +95,24 @@ export function clickOutside(node: HTMLElement, fn: () => void) {
     },
   };
 }
+
+export const timedBoolean = () => {
+  let timeout: number;
+  const value = writable(false);
+  const obj = {
+    value,
+    start: (ms: number) => {
+      value.set(true);
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(() => value.set(false), ms);
+    },
+    stop: () => {
+      value.set(false);
+      window.clearTimeout(timeout);
+    }
+  };
+  return obj;
+};
 
 // ************************
 //     TypeScript util

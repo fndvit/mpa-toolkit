@@ -4,10 +4,9 @@
   import MultiSelect, { Option } from 'svelte-multiselect';
   import CircleMenu, { type MenuElement } from './CircleMenu.svelte';
   import TagContainer from  './TagContainer.svelte';
-  import IconButton from './generic/IconButton.svelte';
   import textFit from 'textfit';
   import { afterUpdate } from 'svelte';
-  import { fade } from 'svelte/transition';
+  import HelpPopup from './HelpPopup.svelte';
 
 
   export let allTags: Tag[] = null;
@@ -17,6 +16,7 @@
   let currentTagHovered: number = -1;
   let infoTextElement: HTMLElement;
 
+  const helpText = '<b>What is the MPA lifecycle</b>'
   const fitTextOptions = {
     alignVert: true,
     alignHoriz: true,
@@ -79,7 +79,21 @@
 </script>
 
 <div class='lifecycle'>
-  <h5 class='title'>Where in the MPA lifecycle?</h5>
+  <div class='top-section'>
+    <h5 class='title'>Where in the MPA lifecycle?</h5>
+    <HelpPopup text={helpText}>
+      <div slot="info">
+        <h5>What is the MPA lifecycle?</h5>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida laoreet leo scelerisque aliquet mattis malesuada turpis volutpat. Ultrices lectus suspendisse sed pharetra. Proin elementum lacus volutpat felis, nulla convallis aenean faucibus. Ante nisi, volutpat pretium diam porta eget. Egestas tempor, risus tortor malesuada. Mus et cras risus dictum. Quisque sollicitudin nisi, feugiat aenean.
+        </p>
+        <a>
+          <b>More about this framework</b>
+        </a>
+      </div>
+      <div slot="icon" class="help-button">?</div>
+    </HelpPopup>
+  </div>
   <div class="circle-menu-section">
       <div class="circle-menu">
           {#if currentTagHovered != -1}
@@ -131,6 +145,32 @@
 </div>
 
 <style lang="scss">
+  .top-section{
+    display: flex;
+    justify-content: space-between;
+    :global(){
+      --width: 300px;
+      --max-width: 400px;
+      --bottom: -310px;
+      --left: -120px;
+    }
+  }
+  .help-button{
+    margin: 15px 0 10px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0,3s;
+  }
+  .help-button:hover{
+    box-shadow: 0px 0px 10px #000000;
+  }
   .lifecycle {
     background: #66CFD6;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);

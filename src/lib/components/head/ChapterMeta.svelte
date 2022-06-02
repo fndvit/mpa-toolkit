@@ -75,7 +75,8 @@
     --ui-color-placeholder: #ffffff55;
     background: #096EAE;
     color: #F9F9F9;
-    padding: 2rem 124px;
+    --page-padding: 6rem;
+    padding: 2rem var(--page-padding) 3rem;
   }
 
   .first-line {
@@ -117,8 +118,9 @@
   @media screen and (max-width: 768px) {
 
     .meta {
-      padding-left: 20px;
-      padding-right: 20px;
+      //padding-left: 20px;
+     // padding-right: 20px;
+     --page-padding: 2rem;
     }
 
     .author-images {
@@ -134,8 +136,9 @@
     }
 
     .summary {
-      font-size: 18px;
+      font-size: 1.125rem;
       line-height: 32px;
+      margin-bottom: 1.125rem;
     }
 
   }

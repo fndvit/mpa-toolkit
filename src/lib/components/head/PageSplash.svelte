@@ -41,9 +41,11 @@
     min-height: 60vh;
     display: flex;
     align-items: flex-end;
-    padding: 6rem;
-    padding-bottom: 3rem;
-    padding-left: 124px;
+    
+    --page-padding: 6rem;
+    padding: 6rem var(--page-padding) 3rem;
+    //padding-bottom: 3rem;
+    //padding-left: 124px;
     background-size: cover;
     background-position: center center;
 
@@ -74,18 +76,32 @@
   @media screen and (max-width: 768px) {
 
     .splash {
-      padding-left: 20px;
-      padding-right: 20px;
+      --page-padding: 3rem;
+      padding: 6rem var(--page-padding) 4rem;
 
       h1 {
-        font-size: 48px;
+        font-size: 4rem;
         line-height: 65px;
         margin-bottom: 0px;
       }
 
+
       &.splash-cs h1 {
         padding-bottom: 50px;
       }
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+
+    .splash {
+      --page-padding: 2rem;
+      padding: 17rem var(--page-padding) 3rem;
+
+      h1 {
+        font-size: 3rem;
+      }
+
     }
   }
 

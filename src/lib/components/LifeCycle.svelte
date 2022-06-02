@@ -186,9 +186,9 @@
         width: 100%;
       }
 
-      .info-text{
-        width: 130px;
-        height: 130px;
+      .info-text {
+        width: 50%;
+        height: 50%;
         position: absolute;
         top: 0;
         bottom: 0;

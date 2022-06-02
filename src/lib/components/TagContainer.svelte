@@ -11,7 +11,7 @@
     <Tag
       {tag}
       on:mouseenter={() => currentTagHovered = tag.tag.id}
-      on:mouseleave={() => currentTagHovered = -1}
+      on:mouseleave={() => currentTagHovered = null}
     />
   {/each}
 </div>

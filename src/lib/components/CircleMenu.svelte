@@ -28,7 +28,7 @@
   export let data: MenuElement[];
   export let config = defaultConfig;
   export let currentPageIndex = 0;
-  export let currentSegmentHovered = -1;
+  export let currentSegmentHovered: number = null;
 
   setContext('circleConfig', config);
 
@@ -51,7 +51,7 @@
       data={segment}
       on:click={()=> currentPageIndex = i}
       on:mouseenter={() => currentSegmentHovered = i}
-      on:mouseleave={() => currentSegmentHovered = -1}
+      on:mouseleave={() => currentSegmentHovered = null}
     />
   {/each}
 </svg>

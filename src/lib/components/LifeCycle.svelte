@@ -13,10 +13,10 @@
   export let tags: SubTypes.PageTag[]; // binding (updated as tags are changed)
   export let editable = false;
 
-  let currentTagHovered: number = -1;
+  let currentTagHovered: number;
   let infoTextElement: HTMLElement;
 
-  const helpText = '<b>What is the MPA lifecycle</b>'
+  const helpText = '<b>What is the MPA lifecycle</b>';
   const fitTextOptions = {
     alignVert: true,
     alignHoriz: true,
@@ -91,7 +91,7 @@
   </div>
   <div class="circle-menu-section">
       <div class="circle-menu">
-          {#if currentTagHovered != -1}
+          {#if currentTagHovered != null}
             <div class="info-text" bind:this={infoTextElement}>
               {@html LIFECYCLE_TEXT[currentTagHovered]}
             </div>
@@ -114,7 +114,7 @@
             maxSelect={MAX_SECONDARY_TAGS}
           />
         {:else}
-          <TagContainer tags={renderTags.STAGE} bind:currentTagHovered={currentTagHovered}/>
+          <TagContainer tags={renderTags.STAGE} bind:currentTagHovered/>
         {/if}
       </div>
   </div>

@@ -27,8 +27,8 @@
 
   export let data: MenuElement[];
   export let config = defaultConfig;
-  export let currentPageIndex: number = 0;
-  export let currentSegmentHovered: number = -1;
+  export let currentPageIndex = 0;
+  export let currentSegmentHovered = -1;
 
   setContext('circleConfig', config);
 

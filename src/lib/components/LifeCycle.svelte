@@ -82,13 +82,13 @@
   <div class='top-section'>
     <h5 class='title'>Where in the MPA lifecycle?</h5>
     <HelpPopup text={helpText}>
-      <div slot="info">
-        <h5>What is the MPA lifecycle?</h5>
+      <div slot="info" class="info">
+        <h3>What is the MPA lifecycle?</h3>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida laoreet leo scelerisque aliquet mattis malesuada turpis volutpat. Ultrices lectus suspendisse sed pharetra. Proin elementum lacus volutpat felis, nulla convallis aenean faucibus. Ante nisi, volutpat pretium diam porta eget. Egestas tempor, risus tortor malesuada. Mus et cras risus dictum. Quisque sollicitudin nisi, feugiat aenean.
         </p>
-        <a>
-          <b>More about this framework</b>
+        <a href="/">
+          <h5>More about this framework</h5>
         </a>
       </div>
       <div slot="icon" class="help-button">?</div>
@@ -150,9 +150,28 @@
     justify-content: space-between;
     :global(){
       --width: 300px;
-      --max-width: 400px;
-      --bottom: -310px;
-      --left: -120px;
+      --max-width: 300px;
+      --bottom: -375px;
+      --left: -277px;
+    }
+  }
+  .info{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    text-align: left;
+    padding: 15px;
+
+    a{
+      align-self: end;
+    }
+
+    h5{
+      margin: 0;
+    }
+
+    h3{
+      margin-bottom: 0;
     }
   }
   .help-button{

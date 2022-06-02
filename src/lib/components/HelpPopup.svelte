@@ -7,6 +7,7 @@
     <slot name="icon"/>
   </div>
   <div class="popup-body">
+    <div class="arrow"/>
     <slot name="info"/>
   </div>
 </div>
@@ -20,6 +21,7 @@
     --max-width: 250px;
     --bottom: 100%;
     --left: 50%;
+    --color: #000;
   }
 	.container {
     position: relative;
@@ -27,12 +29,11 @@
     display: block;
   }
 
-  .popup-body {
+  .popup-body,
+  .arrow {
     display: hidden;
     opacity: 0;
-    pointer-events: none;
-    transition: .2s ease-out;
-    transform: translate(-50%, 5px);
+    transition: .4s ease-out;
   }
 
   .popup-body {
@@ -46,21 +47,31 @@
     max-width: var(--max-width);
     border-radius: 15px;
     background-color: var(--bg-color);
-    color: #000;
+    color: var(--color);
     text-align: center;
     font-size: 14px;
     line-height: 1.2;
-    transition: 0.5s ease-out
+    pointer-events: none;
   }
 
+  .arrow{
+    position: absolute;
+    top: -7px;
+    right: 17px;
+    width: 0;
+    border-bottom: 5px solid var(--bg-color);
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    transform: scale(2);
+  }
   .icon:hover ~ .popup-body{
       visibility: visible !important;
       opacity: 1;
-      transform: translate(-50%, 0)
   }
-  .popup-body:hover {
+  .popup-body:hover,
+  .arrow {
     visibility: visible !important;
     opacity: 1;
-    transform: translate(-50%, 0)
+    pointer-events: all;
    }
 </style>

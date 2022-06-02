@@ -7,7 +7,7 @@
 </script>
 
 
-<div class="searchbar" class:top={type==='top'} class:collection={type==='collection'}>
+<div class="searchbar" class:top={type==='top'} class:inline={type==='inline'} class:collection={type==='collection'}>
   <input class="input-text" bind:value={search} spellcheck="false"/>
   {#if !search}
     {#if type === 'top'}
@@ -135,8 +135,24 @@
       width: fit-content;
     }
 
+    .searchbar {
+      border-radius: 70px;
+    }
+
     .placeholder {
-      display: none;
+      .top & {
+        display: none;
+      }
+
+      .inline & {
+        font-size: 14px;
+        transform: translateY(12px);
+      }
+
+      .collection & {
+        font-size: 14px;
+        transform: translateY(12px);
+      }
     }
 
   }

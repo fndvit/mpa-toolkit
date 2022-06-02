@@ -6,7 +6,6 @@
   export let placeholder: string = null;
   export let focused: boolean = undefined;
 
-
   let el: HTMLElement;
   const handleContentEditableKeyPress: svelte.JSX.KeyboardEventHandler<HTMLDivElement> = e => {
     if (e.key === 'Enter') {
@@ -24,6 +23,8 @@
     bind:this={el}
     use:addFocusClass={f => focused = f}
     use:textOnlyPaste
+    on:keypress
+    on:keydown
     on:keypress={handleContentEditableKeyPress}
     contenteditable data-placeholder={placeholder}
     bind:textContent={value} />

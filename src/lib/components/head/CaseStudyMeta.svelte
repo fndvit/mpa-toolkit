@@ -167,20 +167,21 @@
     }
 
     .meta-content {
-      max-width: 100%;
       margin-left:0px;
       padding-top: 150px;
+      width: fit-content;
     }
 
     .meta-grid-1 :global(.editable-content) {
       font-size: 22px;
       line-height: 36px;
+      max-width: 23rem;
     }
 
     .meta-grid-2 :global(.editable-content) {
       font-size: 16px;
       line-height: 28px;
-      max-width: 37rem;
+      max-width: 23rem;
     }
 
     .meta-grid {

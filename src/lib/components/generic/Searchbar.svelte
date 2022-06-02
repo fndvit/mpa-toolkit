@@ -133,6 +133,11 @@
     .searchbar.top {
       padding: 0px 15px;
       width: fit-content;
+
+      :focus {
+        width: 7rem;
+        max-width: 7rem;
+      }
     }
 
     .searchbar {

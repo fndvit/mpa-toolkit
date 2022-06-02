@@ -132,7 +132,7 @@
       background-position: left;
 
       h1 {
-        font-size: 4rem;
+        font-size: 55px;
         padding-bottom: 4rem;
         padding-top: 4rem;
       }
@@ -192,7 +192,7 @@
     .splash {
 
       h1 {
-        font-size: 2rem;
+        font-size: 48px;
         padding: 1rem 0rem;
       }
 

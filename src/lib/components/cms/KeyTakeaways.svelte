@@ -31,7 +31,8 @@
 
 <style lang="scss">
   .key-takeaways {
-    max-width: 850px;
+    max-width: 956px;
+    width: calc( 100% - 250px);
     margin-bottom: 25px;
     margin-left: -30px;
     --ec-hover-bg: #ffffff44;
@@ -45,14 +46,14 @@
     --ib-hover-border: 1px solid transparent;
     --ib-hover-bg: #00000011;
   }
-
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1155px) {
 
     .key-takeaways {
-      max-width: 100%;
+      width: 100%;
       margin-left: 0px;
     }
 
   }
+
 
 </style>

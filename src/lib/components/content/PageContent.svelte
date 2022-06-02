@@ -106,11 +106,12 @@
 
   .lifecycle-container {
     grid-area: right-margin;
-    padding-top: 1.5rem;
+    
     :global(.lifecycle) {
       margin: auto;
       max-width: 300px;
     }
+    transform: translate(0%, -19.5rem);
   }
 
   .tiny-carousel-container {
@@ -136,9 +137,12 @@
     .lifecycle-container {
       grid-area: body;
       grid-row: 1;
+      padding-top: 1.5rem;
       :global(.lifecycle) {
         max-width: none;
       }
+      transform: translate(0, -4rem);
+      
     }
   }
   @media screen and (max-width: 840px) {

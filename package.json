@@ -92,6 +92,7 @@
     "svelte-multiselect": "^4.0.1",
     "svelte-scrollto": "^0.2.0",
     "svgo": "^2.8.0",
+    "textfit": "^2.4.0",
     "topojson-client": "^3.1.0",
     "topojson-simplify": "^3.0.3",
     "uuid": "^8.3.2"

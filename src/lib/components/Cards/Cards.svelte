@@ -140,6 +140,9 @@
     .has-fixed-title & :global(.heading) {
       visibility: hidden;
     }
+    :global(.heading) {
+      max-width: 70%;
+    }
   }
 
   .fixed-title {

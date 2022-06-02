@@ -74,7 +74,7 @@
 
 
   afterUpdate(() => {
-	  if(infoTextElement) textFit(infoTextElement, fitTextOptions)
+	  if(infoTextElement) textFit(infoTextElement, fitTextOptions);
   });
 </script>
 
@@ -82,16 +82,11 @@
   <div class='top-section'>
     <h5 class='title'>Where in the MPA lifecycle?</h5>
     <HelpPopup text={helpText}>
-      <div slot="info" class="info">
-        <h3>What is the MPA lifecycle?</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida laoreet leo scelerisque aliquet mattis malesuada turpis volutpat. Ultrices lectus suspendisse sed pharetra. Proin elementum lacus volutpat felis, nulla convallis aenean faucibus. Ante nisi, volutpat pretium diam porta eget. Egestas tempor, risus tortor malesuada. Mus et cras risus dictum. Quisque sollicitudin nisi, feugiat aenean.
-        </p>
-        <a href="/">
-          <h5>More about this framework</h5>
-        </a>
-      </div>
-      <div slot="icon" class="help-button">?</div>
+      <h3>What is the MPA lifecycle?</h3>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida laoreet leo scelerisque aliquet mattis malesuada turpis volutpat. Ultrices lectus suspendisse sed pharetra. Proin elementum lacus volutpat felis, nulla convallis aenean faucibus. Ante nisi, volutpat pretium diam porta eget. Egestas tempor, risus tortor malesuada. Mus et cras risus dictum. Quisque sollicitudin nisi, feugiat aenean.
+      </p>
+      <a href="/">More about this framework</a>
     </HelpPopup>
   </div>
   <div class="circle-menu-section">
@@ -145,51 +140,13 @@
 </div>
 
 <style lang="scss">
-  .top-section{
+
+  .top-section {
     display: flex;
     justify-content: space-between;
-    :global(){
-      --width: 300px;
-      --max-width: 300px;
-      --bottom: -375px;
-      --left: -277px;
-    }
-  }
-  .info{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    text-align: left;
-    padding: 15px;
-
-    a{
-      align-self: end;
-    }
-
-    h5{
-      margin: 0;
-    }
-
-    h3{
-      margin-bottom: 0;
-    }
-  }
-  .help-button{
-    margin: 15px 0 10px;
-    right: 0;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    box-shadow: 0px 0px 5px #000000;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    cursor: pointer;
-    transition: all 0,3s;
   }
-  .help-button:hover{
-    box-shadow: 0px 0px 10px #000000;
-  }
+
   .lifecycle {
     background: #66CFD6;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
@@ -204,8 +161,8 @@
     line-height: 20px;
     color: #000000;
     margin: 15px 0 10px;
-    .lifecycle > &:first-child {
-      margin-top: 0;
+    .top-section &:first-child {
+      margin: 0;
     }
   }
 

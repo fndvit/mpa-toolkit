@@ -2,75 +2,85 @@
   export let text: string | boolean = false;
 </script>
 
-<div class="container" data-text={text}>
-  <div class="icon">
-    <slot name="icon"/>
-  </div>
+<div class="help-popup" data-text={text}>
+  ?
   <div class="popup-body">
-    <div class="arrow"/>
-    <slot name="info"/>
+    <slot/>
+    <slot class="bottom-link" name="bottom-link" />
   </div>
 </div>
 
 
 <style lang="scss">
-  :root{
-    --bg-color: #F9F9F9E5;
-    --width: 100%;
-    --min-width: 70px;
-    --max-width: 250px;
-    --bottom: 100%;
-    --left: 50%;
-    --color: #000;
-  }
-	.container {
-    position: relative;
-    z-index: 2;
-    display: block;
-  }
 
-  .popup-body,
-  .arrow {
-    display: hidden;
-    opacity: 0;
-    transition: .4s ease-out;
+	.help-popup {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0,3s;
+    &:hover {
+      box-shadow: 0px 0px 10px #000000;
+    }
   }
 
   .popup-body {
     position: absolute;
-    bottom: var(--bottom);
-    left: var(--left);
-    margin-bottom: 5px;
-    padding: 7px;
-    width: var(--width);
-    min-width: var(--min-width);
-    max-width: var(--max-width);
+    cursor: default;
+    right: -12px;
+    top: calc(100% + 5px);
+    z-index: 10;
+    width: 320px;
+    padding: 1rem 1.5rem;
+    box-sizing: border-box;
     border-radius: 15px;
-    background-color: var(--bg-color);
-    color: var(--color);
-    text-align: center;
+    background-color: var(--popup-bg-color, #F9F9F9E5);
+    color: #000;
     font-size: 14px;
     line-height: 1.2;
-    pointer-events: none;
+    transition: .4s ease-out;
+
+    > :global(a:last-child) {
+      float: right;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 10px 0 10px 10px;
+    }
+
+    .help-popup:not(:hover) & {
+      opacity: 0;
+      pointer-events: none;
+    }
   }
 
-  .arrow{
+  .popup-body:before {
+    content: '';
     position: absolute;
-    top: -7px;
+    bottom: 100%;
     right: 17px;
     width: 0;
-    border-bottom: 5px solid var(--bg-color);
-    border-right: 5px solid transparent;
-    border-left: 5px solid transparent;
-    transform: scale(2);
+    border-bottom: 10px solid var(--popup-bg-color, #F9F9F9E5);
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
   }
-  .icon:hover ~ .popup-body{
-      visibility: visible !important;
-      opacity: 1;
+
+  .popup-body:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 20px;
   }
+
   .popup-body:hover,
-  .arrow {
-    visibility: visible !important;
+  .popup-body:before {
+    visibility: visible;
     opacity: 1;
     pointer-events: all;
    }

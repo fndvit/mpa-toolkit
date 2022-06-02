@@ -91,7 +91,7 @@
 
     h1 {
       font-weight: 200;
-      font-size: 120px;
+      font-size: 68px;
       color: #FFFFFF;
       line-height: 1.15;
       margin-bottom: 15px;
@@ -101,8 +101,8 @@
       margin-top: 25px;
       margin-bottom: 80px;
       color: #FFFFFF;
-      font-size: 36px;
-      max-width: 800px;
+      font-size: 24px;
+      max-width: 520px;
       font-weight: 200;
     }
 

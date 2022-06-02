@@ -98,12 +98,12 @@
       right: 24px;
       top: 44px;
       display: flex;
-      column-gap: 10px;;
+      column-gap: 10px;
     }
 
     :global(.splide__arrow) {
       position: static;
-      background: transparent;
+      background: #fbe26b;
     }
     :global(.splide__arrow:disabled) {
       display: none;
@@ -141,7 +141,7 @@
       visibility: hidden;
     }
     :global(.heading) {
-      max-width: 70%;
+      max-width: 60%;
     }
   }
 
@@ -172,14 +172,13 @@
     .cards {
 
       :global(.splide__arrows) {
-        width: 70px;
-        top: 30px;
-        right: 10px;
+        top: 35px;
+        right: 15px;
       }
-      :global(.splide__arrow) {
-        width: 30px;
-        height: 30px;
 
+      :global(.splide__arrow) {
+        width: 48px;
+        height: 48px;
       }
 
       :global(.carousel-dots) {

@@ -147,8 +147,8 @@
 
   .fixed-title {
     :global(.heading) {
-      margin-left: var(--content-padding);
-      margin-top: var(--content-top-padding);
+      margin-left: 17px;
+      margin-top: 25px;
       position: absolute;
     }
   }

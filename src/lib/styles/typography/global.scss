@@ -1,0 +1,19 @@
+@use './mixins.scss' as *;
+@import './config.scss';
+
+@each $fontName, $fontSpec in $typography {
+  .font-#{$fontName} {
+    @include font($fontName);
+  }
+};
+
+@media(max-width: $mobile-breakpoint) {
+  @each $fontName, $fontSpec in $typography {
+    $fontStyleMap: nth($fontSpec, 2);
+    @if map-has-key($fontStyleMap, 'mobile') {
+      .font-#{$fontName} {
+        @include font($fontName, 'mobile');
+      }
+    }
+  }
+}

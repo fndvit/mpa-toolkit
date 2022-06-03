@@ -1,0 +1,48 @@
+@use "sass:math";
+@use "sass:list" as *;
+@use './util.scss' as *;
+@import './config.scss';
+@import './check.scss';
+
+@function _rem($fontSize) {
+  @return #{calc(stripUnit($fontSize) / stripUnit($html-font-size))}rem;
+}
+
+@mixin _fontCss($size, $weight, $lineHeight: null) {
+  font-size: _rem($size);
+  font-weight: $weight;
+  @if $lineHeight != null {
+    @if isUnit($lineHeight, 'px') {
+      line-height: decimalRound(math.div($lineHeight, $size), 2);
+    }
+    @else if isUnit($lineHeight, '') {
+      line-height: $lineHeight;
+    }
+  }
+}
+
+@function _getFontStyle($fontName, $breakpoint: 'main') {
+  @if not map-has-key($typography, $fontName) {
+    @error "No font named " + $fontName;
+  }
+  $fontSpec: map-get($typography, $fontName);
+  $fontFamily: nth($fontSpec, 1); // e.g. 'Montserrat'
+  $fontStyleMap: nth($fontSpec, 2); // e.g. ( main: 48 300, light: 24 300 )
+  @if not map-has-key($fontStyleMap, $breakpoint) {
+    @error $fontName + " has no " + $breakpoint + " breakpoint style";
+  }
+  @return (
+    $fontFamily,
+    map-get($fontStyleMap, $breakpoint)
+  );
+}
+
+@mixin font($fontName, $breakpoint: main, $includeFamily: true) {
+  $fontStyle: _getFontStyle($fontName, $breakpoint);
+
+  @if ($includeFamily) {
+    font-family: nth($fontStyle, 1);
+  }
+  @include _fontCss(nth($fontStyle, 2)...);
+
+}

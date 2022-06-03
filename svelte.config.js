@@ -4,7 +4,11 @@ import svg from '@poppanator/sveltekit-svg'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	preprocess: preprocess(),
+	preprocess: preprocess({
+    scss: {
+      prependData: `@use "./src/lib/styles/typography/mixins.scss" as *;`
+    }
+  }),
 
 	kit: {
 		adapter: adapter({}),

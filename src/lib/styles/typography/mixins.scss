@@ -22,9 +22,15 @@
 }
 
 @function _getFontStyle($fontName, $breakpoint: 'main') {
+  @if not map-has-key($typography, $fontName) {
+    @error "No font named " + $fontName;
+  }
   $fontSpec: map-get($typography, $fontName);
   $fontFamily: nth($fontSpec, 1); // e.g. 'Montserrat'
   $fontStyleMap: nth($fontSpec, 2); // e.g. ( main: 48 300, light: 24 300 )
+  @if not map-has-key($fontStyleMap, $breakpoint) {
+    @error $fontName + " has no " + $breakpoint + " breakpoint style";
+  }
   @return (
     $fontFamily,
     map-get($fontStyleMap, $breakpoint)

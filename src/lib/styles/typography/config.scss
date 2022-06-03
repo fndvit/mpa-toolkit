@@ -1,0 +1,38 @@
+$html-font-size: 16px; // used for px -> rem conversion
+
+$font-sans-serif: 'Montserrat', sans-serif;
+$font-serif: 'Bitter', serif;
+
+// `mobile` styles will be applied to gloabal classes
+// at this screen width
+$mobile-breakpoint: 500px;
+
+// these will output global css styles for each breakpoint named `.font-{fontName}`
+// format is: size-in-px, weight, line-height (optional - in px or a multiple of font-size)
+
+$typography: (
+  h1: $font-sans-serif (
+    main: 68px 300 1.2,
+    mobile: 48px 300,
+  ),
+  h2: $font-sans-serif (
+    main: 48px 300,
+    mobile: 32px 300,
+  ),
+  h2-graphic: $font-sans-serif (
+    main: 32px 500 40px,
+  ),
+  h3: $font-sans-serif (
+    main: 24px 700
+  ),
+  h4: $font-sans-serif (
+    main: 20px 700,
+    light: 24px 300,
+  ),
+  h4-light: $font-sans-serif (
+    main: 24px 300
+  ),
+  h5: $font-sans-serif (
+    main: 16px 700,
+  )
+);

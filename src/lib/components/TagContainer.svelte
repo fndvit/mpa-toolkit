@@ -3,7 +3,7 @@
   import Tag from "$lib/components/Tag.svelte";
 
   export let tags: SubTypes.PageTag[] = [];
-  export let currentTagHovered = -1;
+  export let currentTagHovered = null;
 </script>
 
 <div class="tag-container">

@@ -44,8 +44,8 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page.Fu
       staff: '',
       budget: '',
       budgetLevel: '',
-      lat: null,
-      long: null,
+      lat: -90,
+      long: 0,
       milestones: {}
     },
     chapter: type !== 'chapter' ? undefined : {

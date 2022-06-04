@@ -22,7 +22,11 @@
   </div>
   <div class="content">
     <h1 class="title">
-      {page.title}
+      {#if page.highlights}
+        {@html page.highlights}
+      {:else}
+        {page.caseStudy ? `${page.caseStudy.name} - ${page.title}` :  page.title}
+      {/if}
     </h1>
     <div class="byline">
       {#if authorsString}

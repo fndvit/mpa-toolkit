@@ -1,3 +1,4 @@
+import type { ContentBlock, ContentDocument, PageRequest, ParagraphBlock } from '../../src/lib/types';
 import { Tag, TagCategory } from '@prisma/client';
 import { Role, TagType } from '@prisma/client';
 import content from './data/content.json';
@@ -8,7 +9,6 @@ import SeedRandom from 'seedrandom';
 import { prisma } from '../../src/lib/prisma';
 import { groupBy } from '../../src/lib/helpers/utils';
 import { createPage } from '../../src/lib/prisma/wrappers';
-import type { ContentDocument, PageRequest } from '../../src/lib/types';
 
 const FIXED_SEED = 'fixed';
 const NUM_RANDOM_CHAPTERS = 20;
@@ -20,11 +20,25 @@ const titleLorem = new LoremIpsum({
   wordsPerSentence: { min: 10, max: 16 }
 });
 
+const headingLorem = new LoremIpsum({
+  seed: FIXED_SEED,
+  wordsPerSentence: { min: 2, max: 4 }
+});
+
 const summaryLorem = new LoremIpsum({
   seed: FIXED_SEED,
   sentencesPerParagraph: { min: 2, max: 2},
   wordsPerSentence: { min: 10, max: 20 }
 });
+
+const paragraphLorem = new LoremIpsum({
+  seed: FIXED_SEED,
+  sentencesPerParagraph: { min: 3, max: 5},
+  wordsPerSentence: { min: 10, max: 20 }
+});
+
+const randInt = (min: number, max: number) =>
+  Math.floor(rand() * (max - min + 1)) + min;
 
 const getRandItem = <T>(items: T[]): T => getXRandItems(items, 1)[0];
 
@@ -39,10 +53,26 @@ function getXRandItems<T>(items: T[], x: number): T[] {
   return result;
 }
 
+const generateRandomContent = (): ContentDocument => ({
+  type: "doc",
+  content: new Array(randInt(1, 3)).fill(0).map<ContentBlock[]>(() => ([
+    {
+      type: "heading",
+      attrs: { level: 1, showmore: 'Show more on this topic' },
+      content: [ { text: headingLorem.generateSentences(1), type: "text" } ]
+    },
+    ...new Array(randInt(1, 3)).fill(0).map<ParagraphBlock>(() => ({
+      type: "paragraph",
+      content: [ { text: paragraphLorem.generateParagraphs(1), type: "text" } ]
+    }))
+  ])).flat()
+});
+
 export async function seed(dev: boolean) {
 
   console.log(`Seeding ${dev ? 'dev' : 'prod'} data...`);
 
+  await prisma.$executeRaw`delete from "Search"`;
   await prisma.caseStudy.deleteMany();
   await prisma.chapter.deleteMany();
   await prisma.tagsOnPages.deleteMany();
@@ -94,7 +124,7 @@ export async function seed(dev: boolean) {
 
     await createPage({
         slug: "raja-ampat-mpa-network-adaptation-strate",
-        title: "Raja Ampat MPA Network – Adaptation strategies for a changing climate",
+        title: "Adaptation strategies for a changing climate",
         draft: false,
         img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
         content: content as any as ContentDocument,
@@ -145,14 +175,27 @@ async function createRandomPage(userIds: number[], allTags: Tag[]) {
   const title = titleLorem.generateSentences(1);
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
   const summary = summaryLorem.generateParagraphs(1);
+  const pageType = rand() < 0.2 ? 'case study' : 'chapter';
 
   await createPage({
     slug, title,
     draft: false,
     img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
-    content: content as any as ContentDocument,
+    content: generateRandomContent(),
     tags: getRandomTagsForContent(allTags),
-    chapter: {
+    caseStudy: pageType !== 'case study' ? undefined : {
+      name: headingLorem.generateSentences(1),
+      established: 2000 ,
+      size: 100 ,
+      governance: "" ,
+      staff: "" ,
+      budget: "" ,
+      budgetLevel: "" ,
+      lat: rand() * 180 - 90,
+      long: rand() * 360 - 180,
+      milestones: {'2000': [titleLorem.generateSentences(1)]}
+    },
+    chapter: pageType !== 'chapter' ? undefined : {
       summary,
       authors: getXRandItems(userIds, Math.ceil(Math.random() * 2)),
       keyTakeaways: Array(Math.floor(Math.random() * 4)).fill(null).map(() => summaryLorem.generateSentences(2))

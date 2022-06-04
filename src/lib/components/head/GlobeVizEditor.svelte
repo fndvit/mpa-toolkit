@@ -25,7 +25,7 @@
   const cancel = () => value = null;
 
   const parseInput = (value: string) => {
-    const [lat, long] = (value ||'').split(/,?\s+/).map(v => parseFloat(v));
+    const [lat, long] = (value ||'').split(/[,\s]+/).map(v => parseFloat(v));
     return {lat, long, valid: !isNaN(lat) && !isNaN(long)};
   };
 

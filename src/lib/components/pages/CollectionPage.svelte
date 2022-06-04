@@ -5,12 +5,18 @@
 
   export let pages: SubTypes.Page.CollectionCard[];
   export let title: string;
+  export let search: string = null;
+
 </script>
 
 <div class="collection-page">
-  <CollectionPageHeader {title} />
+  <CollectionPageHeader {title} {search} />
   <div class="content">
-    <CollectionCards {pages} />
+    {#if search && pages.length === 0}
+      <h2>No results found</h2>
+    {:else}
+      <CollectionCards {pages} />
+    {/if}
   </div>
 </div>
 

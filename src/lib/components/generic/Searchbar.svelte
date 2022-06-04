@@ -1,14 +1,20 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   export let type: 'inline'|'collection'|'top';
 
   let search: string;
-  const submit = () => {search ? alert(search) : alert("invalid search");};
+  let inputEl: HTMLElement;
+  const submit = () => search && goto('/search?q=' + search);
+
+  export const focus = () => {
+    if (inputEl) inputEl.focus();
+  };
 
 </script>
 
 
 <div class="searchbar" class:top={type==='top'} class:collection={type==='collection'}>
-  <input class="input-text" bind:value={search} spellcheck="false"/>
+  <input class="input-text" bind:this={inputEl} bind:value={search} spellcheck="false" on:keypress={({key}) => key === 'Enter' && submit()}/>
   {#if !search}
     {#if type === 'top'}
       <div class="placeholder">Try <b>asking us</b> anything</div>

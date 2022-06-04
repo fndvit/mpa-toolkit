@@ -1,6 +1,13 @@
 <script lang="ts">
   import '../app.css';
   import '$lib/styles/typography/global.scss';
+  import Toaster from '$lib/components/generic/Toaster.svelte';
+  import { setContext } from 'svelte';
+
+  let addToastMessage: Toaster['$$prop_def']['addMessage'];
+
+  const proxy: typeof addToastMessage = (...args) => addToastMessage(...args);
+  setContext('addToastMessage', proxy);
 </script>
 
 <svelte:head>
@@ -14,3 +21,5 @@
 </svelte:head>
 
 <slot />
+
+<Toaster bind:addMessage={addToastMessage} />

@@ -81,6 +81,7 @@ export const pageForCollectionCard = validate<Prisma.PageSelect>()({
       }
     }
   },
+  caseStudy: { select: { name: true } },
 });
 
 export namespace Chapter {
@@ -92,7 +93,9 @@ export namespace Page {
     Prisma.PageGetPayload<typeof pageFull>,
     { caseStudy?: CaseStudy.PageHead, chapter?: Chapter.PageHead, content: ContentDocument}
   >;
-  export type CollectionCard = Prisma.PageGetPayload<typeof pageForCollectionCard>;
+  export type CollectionCard =
+    Prisma.PageGetPayload<typeof pageForCollectionCard>
+    & { rank?: number, highlights?: string};
   export type ContentCard = Prisma.PageGetPayload<typeof pageForContentCard>;
 }
 

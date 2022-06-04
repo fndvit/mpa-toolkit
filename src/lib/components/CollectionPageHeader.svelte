@@ -4,6 +4,11 @@
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
 
   export let title: string;
+  export let search: string;
+
+  let focusSearch: () => void;
+
+  $: if (search && focusSearch) focusSearch();
 </script>
 
 <div class="container" style="background-image: url({landingMadlibBg})">
@@ -14,7 +19,7 @@
   <div class="content">
     <h2 class="text">{title}</h2>
     <div class="search-bar">
-      <Searchbar type={'collection'} />
+      <Searchbar type={'collection'} bind:focus={focusSearch} />
     </div>
   </div>
 </div>

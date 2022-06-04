@@ -3,9 +3,17 @@
   export let lat: number;
   export let long: number;
 
+  const isCoordValid = (val: any) => val != null && !isNaN(val);
+
+  $: valid = isCoordValid(lat) && isCoordValid(long);
+
 </script>
 
-<img class="globe" src="/globe.svg?lat={lat}&long={long}" alt="globe"/>
+{#if valid}
+  <img class="globe" src="/globe.svg?lat={lat}&long={long}" alt="globe"/>
+{:else}
+  <div class="globe" />
+{/if}
 
 <style>
   .globe {

@@ -39,6 +39,7 @@
     "@types/prosemirror-view": "^1.23.1",
     "@types/seedrandom": "^3.0.2",
     "@types/svgo": "^2.6.3",
+    "@types/textfit": "^2.4.2",
     "@types/topojson-client": "^3.1.1",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",

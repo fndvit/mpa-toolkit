@@ -4,6 +4,7 @@ import { feature } from 'topojson-client';
 import worldData from './110m.json';
 import { simplify, presimplify } from 'topojson-simplify';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const presimplified = presimplify(worldData as any);
 const simplified = simplify(presimplified, 0.1);
 const land = feature(simplified, simplified.objects.land);

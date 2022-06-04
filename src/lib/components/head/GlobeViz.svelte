@@ -3,7 +3,8 @@
   export let lat: number;
   export let long: number;
 
-  const isCoordValid = (val: any) => val != null && !isNaN(val);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isCoordValid = (val: unknown) => val != null && !isNaN(val as any);
 
   $: valid = isCoordValid(lat) && isCoordValid(long);
 

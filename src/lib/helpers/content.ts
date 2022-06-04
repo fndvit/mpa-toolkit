@@ -23,7 +23,6 @@ export function createSections(document: ContentDocument) {
   }, []);
 }
 
-
 export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page.Full {
   return {
     id: null,
@@ -54,4 +53,8 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page.Fu
       authors: []
     },
   };
+}
+
+export function getPageDisplayTitle(page: {title: string, caseStudy?: { name: string } }) {
+  return page.caseStudy ? `${page.caseStudy.name} - ${page.title}` :  page.title;
 }

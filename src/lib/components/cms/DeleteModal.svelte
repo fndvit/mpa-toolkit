@@ -27,6 +27,7 @@
 <style>
   .modal {
     position: fixed;
+    z-index: 10;
     top: 0;
     bottom: 0;
     right: 0;

@@ -185,6 +185,11 @@
       }
     }
 
-   }
+    .fixed-title {
+      :global(.heading) {
+        margin-left: 17px;
+      }
+    }
+  }
 
 </style>

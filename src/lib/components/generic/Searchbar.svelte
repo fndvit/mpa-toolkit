@@ -13,7 +13,7 @@
 </script>
 
 
-<div class="searchbar" class:top={type==='top'} class:inline={type==='inline'} class:collection={type==='collection'}>
+<div class="font-ui searchbar" class:top={type==='top'} class:inline={type==='inline'} class:collection={type==='collection'}>
   <input class="input-text" bind:this={inputEl} bind:value={search} spellcheck="false" on:keypress={({key}) => key === 'Enter' && submit()}/>
 
   {#if !search}
@@ -68,11 +68,17 @@
 
     &.collection {
       background: rgba(9, 110, 174, 0.5);
+      font-weight: 300;
+      font-size: 20px;
+    }
+
+    &.inline {
+      font-weight: 400;
+      font-size: 20px;
     }
   }
 
   .placeholder {
-    color: #000000;
     position: absolute;
     transform: translateY(10px);
     pointer-events: none;
@@ -83,6 +89,10 @@
 
     .collection & {
       color:#FFFFFF;
+    }
+
+    .inline & {
+      color: #000000;
     }
 
   }
@@ -102,7 +112,6 @@
   }
 
   .input-text {
-    font-size: 16px;
     color: #000000;
     padding: 10px 0px;
     display: inline-block;

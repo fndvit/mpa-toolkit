@@ -32,7 +32,7 @@
   <div class="splash" style="background-image: url({landingSplash})">
     <h1 class="font-h1">Here it is.<br><b>Your MPA toolkit.</b></h1>
     <h4 class="font-h4-light">A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
-    <p>In partnership with</p>
+    <p><b>In partnership with</b></p>
     <div class="partners-grid">
       <InlineSvg svg="IAFDC" />
       <InlineSvg svg="UoQ" />
@@ -99,11 +99,6 @@
       margin-bottom: 80px;
       color: #FFFFFF;
       max-width: 800px;
-    }
-
-    p {
-      font-weight: bold;
-      color: black;
     }
 
   }

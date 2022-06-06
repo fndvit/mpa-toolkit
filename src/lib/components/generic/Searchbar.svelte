@@ -36,17 +36,16 @@
 <style lang="scss">
 
   .search-path {
-    stroke:black;
     stroke-width: inherit;
     stroke-linecap:round;
     stroke-linejoin:round;
 
-    .top & {
+    .top &, .collection & {
       stroke:#FFFFFF;
     }
 
-    .collection & {
-      stroke:#FFFFFF;
+    .inline & {
+      stroke:black;
     }
   }
 
@@ -83,11 +82,7 @@
     transform: translateY(10px);
     pointer-events: none;
 
-    .top & {
-      color:#FFFFFF;
-    }
-
-    .collection & {
+    .top &, .collection & {
       color:#FFFFFF;
     }
 
@@ -112,7 +107,6 @@
   }
 
   .input-text {
-    color: #000000;
     padding: 10px 0px;
     display: inline-block;
     background: none;
@@ -121,12 +115,12 @@
     margin-bottom: 0px;
     width: 100rem;
 
-    .top & {
+    .top &, .collection & {
       color:#FFFFFF;
     }
 
-    .collection & {
-      color:#FFFFFF;
+    .inline & {
+      color: #000000;
     }
 
   }
@@ -158,6 +152,8 @@
 
     .searchbar {
       border-radius: 70px;
+      padding-bottom: 0px;
+      padding-top: 0px;
     }
 
     .placeholder {
@@ -165,11 +161,14 @@
         display: none;
       }
 
-      .inline &,
-      .collection & {
-        font-size: 14px;
-        transform: translateY(12px);
+      .inline &, .collection & {
+        font-size: 16px;
+        transform: translateY(10px);
       }
+    }
+
+    .input-text {
+      font-size: 16px;
     }
 
   }

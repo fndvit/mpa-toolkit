@@ -3,9 +3,18 @@
   export let lat: number;
   export let long: number;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isCoordValid = (val: unknown) => val != null && !isNaN(val as any);
+
+  $: valid = isCoordValid(lat) && isCoordValid(long);
+
 </script>
 
-<img class="globe" src="/globe.svg?lat={lat}&long={long}" alt="globe"/>
+{#if valid}
+  <img class="globe" src="/globe.svg?lat={lat}&long={long}" alt="globe"/>
+{:else}
+  <div class="globe" />
+{/if}
 
 <style>
   .globe {

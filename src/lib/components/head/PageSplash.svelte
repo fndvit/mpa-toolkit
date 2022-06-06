@@ -55,6 +55,9 @@
       > :global(*) {
         display: inline;
       }
+      > :global(*:empty) {
+        display: inline-block;
+      }
     }
 
 

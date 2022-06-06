@@ -1,9 +1,11 @@
+import type { Prisma } from "@prisma/client";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
 import type { PageRequest, SubTypes } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
 import { pageForContentCard, pageFull } from "./queries";
+import { createLookup, type Expand } from "$lib/helpers/utils";
 
 export async function getPage(slug: string, draft = false) {
   return prisma.page.findFirst({
@@ -46,7 +48,7 @@ export async function updatePage(id: number, page: PageRequest) {
 
   const { title, slug, content, img, caseStudy, chapter, tags, draft } = page;
 
-  return await prisma.page.update({
+  const pageUpdateQuery = prisma.page.update({
     where: { id },
     data: {
       title, slug, content, img, draft,
@@ -69,6 +71,13 @@ export async function updatePage(id: number, page: PageRequest) {
       editedAt: new Date()
     }
   });
+
+  const [_page] = await prisma.$transaction([
+    pageUpdateQuery,
+    prisma.$queryRaw`SELECT CAST (create_page_search_index(${id}) AS TEXT)`
+  ]);
+
+  return _page;
 }
 
 export async function createPage(page: PageRequest) {
@@ -77,7 +86,7 @@ export async function createPage(page: PageRequest) {
 
   const { title, slug, content, img, caseStudy, chapter, tags, draft } = page;
 
-  return await prisma.page.create({
+  const createPageQuery = prisma.page.create({
     data: {
       title, slug, content, img, draft,
       readTime: calcReadTime(content),
@@ -96,4 +105,54 @@ export async function createPage(page: PageRequest) {
       }
     }
   });
+
+  const [_page] = await prisma.$transaction([
+    createPageQuery,
+    prisma.$queryRaw`SELECT CAST (create_page_search_index(last_value) AS TEXT) FROM "Page_id_seq"`
+  ]);
+
+  return _page;
+}
+
+async function _searchPages(searchText: string) {
+  const results: { id: number, rank: number, highlights: string }[] =
+    await prisma.$queryRaw`SELECT * FROM search_pages(${searchText})`;
+  return results;
+}
+
+export async function searchPages<S extends Prisma.PageFindManyArgs> (searchText: string, fields: S) {
+  const searchResult = await _searchPages(searchText);
+  const searchLookup = createLookup(searchResult, r => r.id.toString(), r => r);
+
+  const pages = await prisma.page.findMany({
+    where: {
+      id: { in: searchResult.map(r => r.id) },
+      draft: false,
+      ...fields.where
+    },
+    select: {
+      id: true,
+      ...fields.select
+    },
+  });
+
+  return pages
+    .map(p => {
+      const searchResult = searchLookup[p.id.toString()];
+      return {
+        ...p,
+        rank: searchResult.rank,
+        highlights: searchResult.highlights,
+      };
+    })
+    .sort((a, b) => b.rank - a.rank) as Expand<Prisma.PageGetPayload<S> & { rank: number, highlights: string }>[];
+}
+
+export async function searchTags(searchText: string) {
+  const results: {tagId: number, highlight: string}[] =
+    await prisma.$queryRaw`SELECT * FROM tag_highlights(${searchText})`;
+  const o = Object.fromEntries(
+    results.map(r => [r.tagId, r.highlight])
+  ) as {[tagId: number]: string};
+  return o;
 }

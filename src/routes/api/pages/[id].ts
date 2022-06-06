@@ -37,6 +37,7 @@ export const del = authMiddleware(
       data: {
         chapter: page.chapter ? { delete: true } : undefined,
         caseStudy: page.caseStudy ? { delete: true } : undefined,
+        search: { delete: true },
         tags: {
           deleteMany: {
             OR: [

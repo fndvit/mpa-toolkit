@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SubTypes } from '$lib/types';
-  import { staticUrl } from '$lib/helpers/content';
+  import { getPageDisplayTitle, staticUrl } from '$lib/helpers/content';
   import TagContainer from '$lib/components/TagContainer.svelte';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
@@ -22,7 +22,11 @@
   </div>
   <div class="content">
     <h1 class="title">
-      {page.title}
+      {#if page.highlights}
+        {@html page.highlights}
+      {:else}
+        {getPageDisplayTitle(page)}
+      {/if}
     </h1>
     <div class="byline">
       {#if authorsString}

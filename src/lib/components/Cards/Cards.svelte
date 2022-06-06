@@ -133,7 +133,6 @@
 
   .slide {
     overflow: hidden;
-    font-family: 'Montserrat';
     top: 0;
     padding: var(--content-top-padding) var(--content-padding) 10px;
     margin-bottom: 15px;

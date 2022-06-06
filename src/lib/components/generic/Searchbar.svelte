@@ -156,11 +156,7 @@
         display: none;
       }
 
-      .inline & {
-        font-size: 14px;
-        transform: translateY(12px);
-      }
-
+      .inline &,
       .collection & {
         font-size: 14px;
         transform: translateY(12px);

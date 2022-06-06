@@ -60,7 +60,7 @@
   .gradient::before {
     content: '';
     position: absolute;
-    width: calc((100%) - var(--scrollbar-width) - var(--content-padding));
+    width: calc((100%) - var(--scrollbar-width) - var(--content-padding) + 17px);
     height: 75%;
     left: 0;
     background: linear-gradient(180deg, rgba(251, 226, 107, 0) 50%, rgba(251, 226, 107, 1) 80%);

@@ -23,7 +23,7 @@
     position: relative;
     font-weight: 300;
     font-size: inherit;
-    line-height: inherit;
+    line-height: 2;
     font-family: 'Montserrat';
   }
 

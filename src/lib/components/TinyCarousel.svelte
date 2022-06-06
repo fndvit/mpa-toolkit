@@ -18,6 +18,11 @@
     breakpoints: {
       1024: {
         perMove: 1
+      },
+      768: {
+        autoWidth: true,
+        gap: 50,
+        padding: {left: '22.5%', right: '0%'}
       }
     }
   });

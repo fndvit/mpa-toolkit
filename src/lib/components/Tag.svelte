@@ -21,7 +21,7 @@
   on:mouseenter
   on:mouseleave
 >
-  <span>
+  <span class="font-ui-small">
     {#if highlight}
       {@html highlight}
     {:else}
@@ -34,12 +34,8 @@
   .tag {
     cursor: pointer;
     display: inline-block;
-    font-size: 12px;
-    font-family: 'Montserrat';
-    font-weight: 400;
-    line-height: 18px;
     text-align: center;
-    padding: 4px 12px;
+    padding: 2px 12px 4px;
     border-radius: 18px;
     overflow: hidden;
     margin: 0;

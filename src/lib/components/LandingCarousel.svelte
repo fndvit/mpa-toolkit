@@ -41,7 +41,7 @@
 
 <div class="landing-carousel">
   <div class="title-container">
-    {@html title}
+    <h2 class="font-h2">{@html title}</h2>
     <CarouselDots
       bind:currentPageIndex={currentCard}
       pagesCount={pages.length}
@@ -102,11 +102,9 @@
   }
 
   .title-container {
-    font-size: 48px;
-    font-weight: 300;
     color: #2A2A2A;
     max-width: 600px;
-    padding: 25px var(--page-padding) 0;
+    padding: 0 var(--page-padding) 0;
   }
 
   .carousel-container {

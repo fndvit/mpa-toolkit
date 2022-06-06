@@ -39,5 +39,9 @@ $typography: (
   ),
   ui-small: $font-sans-serif (
     main: 12px 400 18px,
-  )
+  ),
+  p-medium: $font-serif (
+    main: 22px 400
+  ),
+
 );

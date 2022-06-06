@@ -73,7 +73,6 @@
     border: none;
     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
     cursor: pointer;
-    font-family: 'Montserrat';
     border-radius: 10px;
     position: relative;
 
@@ -116,7 +115,6 @@
     color: black;
     border: none;
     z-index: 1000;
-    font-size: inherit;
   }
 
   .arrow {

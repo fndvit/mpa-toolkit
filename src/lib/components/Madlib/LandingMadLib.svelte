@@ -13,7 +13,7 @@
 
 <div class="landing-madlib" style="--background-image: url({landingMadlibBg})">
 
-  <h2>Find information <strong>relevant to you</strong>.</h2>
+  <h2 class="font-h2">Find information <b>relevant to you</b>.</h2>
 
   <MadLib bind:value />
 
@@ -30,11 +30,8 @@
 
   .landing-madlib {
     color: white;
-    font-family: 'Montserrat';
-    font-size: 1.5rem;
     line-height: 1.5;
     padding-bottom: 0.5rem;
-
     width: auto;
     margin-top: 35px;
     padding: 0.5rem var(--page-padding) 5rem;
@@ -44,21 +41,14 @@
     background-position: bottom;
     background-image: var(--background-image);
 
-
     > :global(.madlib) {
       margin-top: 0.5rem;
       max-width: 700px;
     }
 
     h2 {
-      font-size: 3rem;
       margin-top: 6rem;
-      max-width: 620px;
       color: #FFFFFF;
-      font-weight: 300;
-      strong {
-        font-weight: inherit;
-      }
     }
 
   }
@@ -89,7 +79,6 @@
     transform: rotate(-90deg) scale(1.35) translateX(-0.25rem);
     overflow: hidden;
     outline: none;
-
     display: inline-block;
     position: relative;
     padding-left: 1rem;
@@ -111,26 +100,20 @@
       button {
         margin: 2rem 0 2rem;
       }
-
     }
-
   }
 
   @media screen and (max-width: 768px) {
 
     .landing-madlib {
-      font-size: 1.25rem;
 
       h2 {
-        font-size: 2rem;
         margin-bottom: 3rem;
-
-        strong {
-          font-weight: 700;
-        }
       }
+
       button {
         font-size: 1rem;
+        padding: 0.55rem 0.95rem 0.45rem 0.85rem;
       }
     }
   }

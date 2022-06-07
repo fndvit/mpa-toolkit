@@ -75,7 +75,6 @@
     --ui-color-placeholder: #ffffff55;
     background: #096EAE;
     color: #F9F9F9;
-    --page-padding: 6rem;
     padding: 2rem var(--page-padding) 3rem;
   }
 
@@ -116,12 +115,6 @@
   }
 
   @media screen and (max-width: 768px) {
-
-    .meta {
-      //padding-left: 20px;
-     // padding-right: 20px;
-     --page-padding: 2rem;
-    }
 
     .author-images {
       max-width: 100%;

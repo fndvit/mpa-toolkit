@@ -1,4 +1,5 @@
 @use './color/mixins.scss' as *;
+@import '@splidejs/splide/dist/css/splide.min.css';
 
 .splide__arrow {
   background-color: #FFFFFF77;

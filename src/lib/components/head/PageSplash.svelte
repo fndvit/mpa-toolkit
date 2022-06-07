@@ -24,7 +24,7 @@
   <InlineSvg svg="UNEP" />
 </div>
 <div class="splash" style="background-image: url({img});" class:splash-cs={page.caseStudy}>
-  <h1>
+  <h1 class="font-h1">
     {#if page.caseStudy}
       <EditableText bind:value={page.caseStudy.name} {editable} placeholder="Project name" />
       <span> &#x2013; </span>

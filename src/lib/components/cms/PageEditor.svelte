@@ -272,11 +272,6 @@
     }
   }
 
-  :global(.spinner) {
-    --color: black;
-    scale: 0.5;
-  }
-
   .page-editor {
     min-height: 100vh;
     display: flex;

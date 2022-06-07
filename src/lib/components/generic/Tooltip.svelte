@@ -8,7 +8,6 @@
 
   .tooltip {
     --arrow-size: 8px;
-    --ib-tooltip-bg: #{color(neutral-bg)};
     position: absolute;
     top: calc(100% + var(--arrow-size));
     left: 50%;
@@ -28,7 +27,7 @@
       width: max-content;
       max-width: 100%;
       padding: calc(6px + var(--arrow-size)) 8px 6px;
-      background: var(--ib-tooltip-bg);
+      background: color(neutral-bg);
       transform: translateX(-50%);
       clip-path: polygon(
         0 var(--arrow-size),

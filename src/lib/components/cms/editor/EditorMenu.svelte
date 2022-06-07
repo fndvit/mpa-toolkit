@@ -42,7 +42,6 @@
 <style lang="scss">
   .menu-bar {
     --ib-icon-bg: transparent;
-    --color: #333;
     --ib-hover-border: 1px solid #ddd;
     --ib-hover-bg: transparent;
     --ib-active-bg: white;

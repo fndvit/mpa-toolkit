@@ -44,7 +44,6 @@
 <style lang="scss">
   .collection-card {
     --cc-height: 200px;
-    --tag-bg: #{color(tag-bg-cards)};
     display: flex;
     background: color(neutral-bg);
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);

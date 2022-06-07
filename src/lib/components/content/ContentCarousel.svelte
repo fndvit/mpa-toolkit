@@ -2,7 +2,7 @@
   import type { SubTypes } from '$lib/types';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import { SplideOptions } from '$lib/helpers/splide';
-  import TinyPreviewCard from './TinyPreviewCard.svelte';
+  import ContentCarouselCard from './ContentCarouselCard.svelte';
 
   export let slides: SubTypes.Page.ContentCard[];
   export let title: string;
@@ -29,12 +29,12 @@
 
 </script>
 
-<div class="tiny-carousel">
+<div class="content-carousel">
   <p class="title">{title}</p>
   <Splide {options}>
     {#each slides as slide}
       <SplideSlide>
-        <TinyPreviewCard page={slide}/>
+        <ContentCarouselCard page={slide}/>
       </SplideSlide>
     {/each}
   </Splide>
@@ -43,7 +43,7 @@
 
 <style lang="scss">
 
-  .tiny-carousel {
+  .content-carousel {
     position: relative;
     line-height: 40px;
     color: color(neutral-dark);
@@ -81,7 +81,7 @@
 
   @media screen and (max-width: 768px) {
 
-    .tiny-carousel {
+    .content-carousel {
       :global(.splide__arrow) {
         transform: scale(0.75);
       }
@@ -96,7 +96,7 @@
 
   @media screen and (max-width: 840px) {
 
-    .tiny-carousel {
+    .content-carousel {
       border-radius: 0;
     }
   }

@@ -47,18 +47,19 @@
     position: relative;
     white-space: nowrap;
     height: fit-content;
-    &:before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      background: var(--tag-bg, #fbe26b);
+    background: color(highlight-1);
+    &.secondary {
+      background: color(highlight-1, 0.4);
     }
-    &.secondary::before {
-      opacity: var(--tag-bg-fade, 0.4);
+
+    :global(.collection-card) &,
+    :global(.content-carousel-card) & {
+      background: color(tag-bg-cards);
+      &.secondary {
+        background: color(tag-bg-cards, 0.4);
+      }
     }
+
     span {
       position: relative;
     }

@@ -8,7 +8,7 @@
   const {slug, img, title, tags} = page;
 </script>
 
-<div class="container" tabindex="0">
+<div class="content-carousel-card" tabindex="0">
   <a href={"/" + slug}>
     <img src={staticUrl(img)} alt="interesting-chapters" href={"/" + slug}/>
     <div class="title">{title}</div>
@@ -17,9 +17,8 @@
 </div>
 
 <style lang="scss">
-  .container {
+  .content-carousel-card {
     width: 292px;
-    --tag-bg: #{color(tag-bg-cards)};
   }
 
   img {
@@ -41,7 +40,7 @@
   }
 
   @media (max-width: 1320px) {
-    .container {
+    .content-carousel-card {
       max-width: 210px;
     }
     .title {

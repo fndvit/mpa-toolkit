@@ -85,7 +85,7 @@
 <style lang="scss">
 
   .meta-container {
-    --bg-color: #13487C;
+    --bg-color: #{color(deep-blue)};
     position: relative;
     background-color: var(--bg-color);
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
@@ -138,7 +138,7 @@
   .meta-grid > h4 {
     font-family: 'Montserrat';
     font-weight: bold;
-    color: #F9F9F9;
+    color: color(neutral-bg);
     font-size: 16px;
     line-height: 24px;
     margin: 0;

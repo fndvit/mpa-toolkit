@@ -91,9 +91,6 @@
     --ib-hover-icon-bg: #ffffff22;
     --ib-bg-color: transparent;
 
-    :global(.icon-button[data-icon="close"]) {
-      --ib-color: #a75050;
-    }
     :global(.icon-button) {
       border: 1px solid #ffffff11;
     }

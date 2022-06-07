@@ -46,8 +46,8 @@
   .tiny-carousel {
     position: relative;
     line-height: 40px;
-    color: #6C767D;
-    background-color: #F9F9F9;
+    color: color(neutral-dark);
+    background-color: color(neutral-bg);
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;
     padding: 0.5rem 0 2rem 1.5rem;
@@ -73,7 +73,7 @@
   .opacity-div {
     height: 100%;
     width: 15%;
-    background: linear-gradient(to right, #f9f9f900, #f9f9f9);
+    background: linear-gradient(to right, color(neutral-bg, 0), color(neutral-bg));
     position: absolute;
     top: 0;
     right: 0;

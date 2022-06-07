@@ -6,7 +6,7 @@
   <hr>
   <button on:click>
     <svg width="13" height="8" viewBox="0 0 13 8" fill="none" transform="scale(1, {expanded ? -1 : 1})" class="arrow">
-      <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
+      <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke-width="1.5"/>
     </svg>
     <div>
       <slot />
@@ -20,7 +20,7 @@
   hr {
     margin: 0;
     border: 0;
-    border-bottom: 0.5px solid #d9d9d9;
+    border-bottom: 0.5px solid color(neutral-light);
   }
 
   .arrow {
@@ -40,13 +40,16 @@
     font-size: 0.75rem;
     display: flex;
     text-align: left;
-    background: #F9F9F9;
+    background: color(neutral-bg);
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     border-radius: 0px 0px 20px 20px;
     &:hover {
       filter: brightness(95%);
     }
     margin-bottom: 2rem;
+    svg path {
+      stroke: color(neutral-black);
+    }
   }
 
 

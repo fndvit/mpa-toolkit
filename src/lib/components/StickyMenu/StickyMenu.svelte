@@ -51,7 +51,7 @@
   .mainnav {
     width: 215px;
     z-index: 10;
-    background: #f9f9f9;
+    background: color(neutral-bg);
     box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
     border-radius: 0px 0px 20px 20px;
     padding-top: 31px;

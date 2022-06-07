@@ -8,7 +8,7 @@
 
   .tooltip {
     --arrow-size: 8px;
-    --ib-tooltip-bg: #fafafa;
+    --ib-tooltip-bg: #{color(neutral-bg)};
     position: absolute;
     top: calc(100% + var(--arrow-size));
     left: 50%;

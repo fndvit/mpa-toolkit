@@ -75,7 +75,7 @@
     }
 
     :global(.splide__arrow) {
-      background-color: #F9F9F9;
+      background-color: color(neutral-bg);
       opacity: 0.5;
     }
 
@@ -104,7 +104,7 @@
   .title-container {
     font-size: 48px;
     font-weight: 300;
-    color: #2A2A2A;
+    color: color(neutral-black);
     max-width: 600px;
     padding: 25px var(--page-padding) 0;
   }

@@ -37,7 +37,7 @@
 
   .footer {
     padding: 0 var(--page-padding);
-    background: #F9F9F9;
+    background: color(neutral-bg);
 
     p {
       font-weight: bold;
@@ -49,7 +49,7 @@
     grid-template-columns: 126px 87px 148px 135px 39px;
     align-items: center;
     gap: 45px;
-    color: #6C767D;
+    color: color(neutral-dark);
   }
 
   .links {
@@ -59,7 +59,7 @@
     gap: 0.55em;
 
     a {
-      color: #6C767D;
+      color: color(neutral-dark);
       font-size: 12px;
       margin-right: 15px;
     }

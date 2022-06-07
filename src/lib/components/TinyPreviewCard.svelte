@@ -19,7 +19,7 @@
 <style lang="scss">
   .container {
     width: 292px;
-    --tag-bg: #dadce0;
+    --tag-bg: #{color(tag-bg-cards)};
   }
 
   img {

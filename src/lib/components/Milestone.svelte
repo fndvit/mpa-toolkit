@@ -145,9 +145,9 @@
 
   .main-circle {
     position: absolute;
-    stroke: #FBE26B;
+    stroke: color(highlight-1);
     stroke-width: 3;
-    fill: #096EAE;
+    fill: color(primary-blue);
   }
 
   .milestones-block {
@@ -156,7 +156,7 @@
 
   .main-line {
     pointer-events: none;
-    border-left: 1.5px dashed #FBE26B;
+    border-left: 1.5px dashed color(highlight-1);
     grid-column: 1;
     grid-row: 1 / span var(--num-milestones);
     margin-left: 7px;
@@ -171,7 +171,7 @@
     margin-left: 7px;
     path {
       stroke-dasharray: 3;
-      stroke: #FBE26B;
+      stroke: color(highlight-1);
       stroke-width: 1.5px;
       fill: none;
     }
@@ -188,27 +188,27 @@
 
   .milestone-circle {
     transform: translate(17px, -6px);
-    stroke: #FBE26B;
+    stroke: color(highlight-1);
     stroke-width: 3;
-    fill: #096EAE;
+    fill: color(primary-blue);
     &.expanded {
-      fill: #FBE26B;
+      fill: color(highlight-1);
     }
   }
 
   .expandable-circle {
-    stroke: #FBE26B;
+    stroke: color(highlight-1);
     transform: translate(16px, -7px);
 
     circle {
-      fill: #096EAE;
+      fill: color(primary-blue);
       stroke-width: 3px;
     }
   }
 
   .milestone-text {
     font-size: 16px;
-    color: #F9F9F9;
+    color: color(neutral-bg);
     padding-top: 1.5px;
     padding-left: 22px;
 
@@ -235,7 +235,7 @@
     column-gap: 5px;
     align-items: center;
     font-size: 12px;
-    color: #F9F9F9;
+    color: color(neutral-bg);
     height: 25px;
     padding-left: 4px;
     width: var(--ms-width);

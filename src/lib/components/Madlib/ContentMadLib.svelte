@@ -19,7 +19,7 @@
   <button tabindex="0" on:click={submit}>
     Let's find what you need
     <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
-      <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
+      <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke-width="1.5"/>
     </svg>
   </button>
 
@@ -31,8 +31,8 @@
     position: relative;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;
-    color: #6C767D;
-    background: #F9F9F9;
+    color: color(neutral-dark);
+    background: color(neutral-bg);
     padding: 0.75rem 1.5rem 2rem;
     font-family: 'Montserrat';
 
@@ -69,8 +69,8 @@
     right:0;
     bottom: 0;
     align-content: center;
-    background: #FBE26B;
-    color: #2A2A2A;
+    background: color(highlight-1);
+    color: color(neutral-black);
     padding: 0.5rem 0.2rem 0.5rem 1.25rem;
     border-radius: 20px 0px 0px 0px;
     box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
@@ -86,6 +86,10 @@
       transform: rotate(-90deg) scale(1.35) translateX(-0.25rem);
       overflow: hidden;
       outline: none;
+    }
+
+    svg path {
+      stroke: color(neutral-black);
     }
 
   }

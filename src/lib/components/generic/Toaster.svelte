@@ -67,7 +67,7 @@
     color: #333;
     border-radius: 5px;
     border: 1px solid #999;
-    background: #f1f1f1;
+    background: color(neutral-bg);
     padding: 10px 15px 10px 10px;
     display: flex;
     align-items: center;
@@ -76,7 +76,7 @@
     animation: animateToast 100ms;
 
     &[data-type="error"] .material-icons {
-      color: rgb(159, 26, 26);
+      color: color(error-red);
     }
 
     &[data-type="info"] .material-icons {

@@ -86,7 +86,7 @@
   }
 
   .unknown-block {
-    background: #fca5a5;
+    background: color(error-red);
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1rem -1rem;

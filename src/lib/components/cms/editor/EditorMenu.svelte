@@ -55,7 +55,7 @@
     width: 100%;
     padding: 0.5rem;
     border-bottom: 1px solid #ccc;
-    background: #f7f7f7;
+    background: color(neutral-bg);
     box-sizing: border-box;
   }
 

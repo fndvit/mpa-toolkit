@@ -18,7 +18,7 @@
 
 <style lang="scss">
   .globe {
-    background: #04558E;
+    background: color(dark-blue);
     border-radius: 50%;
     width: 245px;
     height: 245px;

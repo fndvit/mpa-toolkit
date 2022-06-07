@@ -41,11 +41,8 @@
     min-height: 60vh;
     display: flex;
     align-items: flex-end;
-    
-    --page-padding: 6rem;
+
     padding: 6rem var(--page-padding) 3rem;
-    //padding-bottom: 3rem;
-    //padding-left: 124px;
     background-size: cover;
     background-position: center center;
 
@@ -76,7 +73,7 @@
   @media screen and (max-width: 768px) {
 
     .splash {
-      --page-padding: 3rem;
+      
       padding: 6rem var(--page-padding) 4rem;
 
       h1 {
@@ -95,7 +92,6 @@
   @media screen and (max-width: 500px) {
 
     .splash {
-      --page-padding: 2rem;
       padding: 17rem var(--page-padding) 3rem;
 
       h1 {

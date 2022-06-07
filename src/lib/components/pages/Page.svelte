@@ -26,8 +26,16 @@
 <style lang="scss">
 
   .page-container {
+
+    --page-padding: 6rem;
+
+    @media screen and (max-width: 1024px) {
+      --page-padding: 3rem;
+    }
+
     @media screen and (max-width: 840px) {
       --lifecycle-overlap: 190px;
+      
 
       :global(.meta) {
         padding-bottom: var(--lifecycle-overlap);
@@ -43,6 +51,10 @@
       :global(.milestones) {
         padding-bottom: var(--lifecycle-overlap);
       }
+    }
+
+    @media screen and (max-width: 425px) {
+      --page-padding: 1.5rem;
     }
   }
 </style>

@@ -61,7 +61,7 @@
   on:keydown
 />
 
-<style>
+<style lang="scss">
   :global(body) {
     --ui-color-placeholder: #aaaaaa;
   }

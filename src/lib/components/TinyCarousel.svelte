@@ -41,7 +41,7 @@
   <div class="opacity-div" />
 </div>
 
-<style type="text/scss">
+<style lang="scss">
 
   .tiny-carousel {
     position: relative;

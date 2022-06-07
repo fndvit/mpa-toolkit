@@ -1,6 +1,6 @@
 <div class="spinner"></div>
 
-<style>
+<style lang="scss">
 .spinner {
   --color: #333;
   --size: 26px;

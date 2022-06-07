@@ -39,7 +39,7 @@
   </div>
 </div>
 
-<style>
+<style lang="scss">
   .menu-bar {
     --ib-icon-bg: transparent;
     --color: #333;

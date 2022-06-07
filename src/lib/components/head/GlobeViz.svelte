@@ -16,7 +16,7 @@
   <div class="globe" />
 {/if}
 
-<style>
+<style lang="scss">
   .globe {
     background: #04558E;
     border-radius: 50%;

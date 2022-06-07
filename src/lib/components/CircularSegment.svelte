@@ -82,7 +82,7 @@
   on:mouseleave
 />
 
-<style>
+<style lang="scss">
   .segment {
     cursor: pointer;
   }

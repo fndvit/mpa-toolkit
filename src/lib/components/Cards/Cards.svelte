@@ -80,7 +80,7 @@
   </Splide>
 </div>
 
-<style type="scss">
+<style lang="scss">
 
   .cards {
     --content-padding: 30px;

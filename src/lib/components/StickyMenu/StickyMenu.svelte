@@ -47,7 +47,7 @@
   {/each}
 </nav>
 
-<style>
+<style lang="scss">
   .mainnav {
     width: 215px;
     z-index: 10;

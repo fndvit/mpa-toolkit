@@ -19,14 +19,25 @@
 <style lang="scss">
   .content-carousel-card {
     width: 292px;
+    a {
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.6rem;
+      padding-bottom: 1rem;
+    }
+    a:hover {
+      text-decoration: none;
+      img {
+        filter: brightness(105%);
+      }
+      .title {
+        color: #555;
+      }
+    }
   }
 
   img {
     width: 100%;
-    margin-bottom: 10px;
-    a:hover & {
-      filter: brightness(105%);
-    }
   }
 
   .title {
@@ -35,7 +46,6 @@
     font-weight: 300;
     line-height: 25px;
     padding-left: 0.15rem;
-    margin-bottom: 1rem;
     color: black;
   }
 

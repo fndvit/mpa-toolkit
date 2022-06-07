@@ -46,7 +46,6 @@
   .content-carousel {
     position: relative;
     line-height: 40px;
-    color: color(neutral-dark);
     background-color: color(neutral-bg);
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;

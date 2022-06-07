@@ -81,7 +81,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--bg-color);
+    background-color: color(deep-blue);
     text-align: center;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.1);
     padding: 0 2px;

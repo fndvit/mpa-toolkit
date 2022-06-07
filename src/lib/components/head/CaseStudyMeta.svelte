@@ -85,9 +85,8 @@
 <style lang="scss">
 
   .meta-container {
-    --bg-color: #{color(deep-blue)};
     position: relative;
-    background-color: var(--bg-color);
+    background-color: color(deep-blue);
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
     --ui-color-placeholder: #ffffff55;
   }

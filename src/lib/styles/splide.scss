@@ -1,0 +1,19 @@
+@use './color/mixins.scss' as *;
+
+.splide__arrow {
+  background-color: #FFFFFF77;
+  box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+  width: 48px;
+  height: 48px;
+  opacity: 1;
+}
+
+.splide__arrow:hover {
+  box-shadow: 0px 3px 16px rgb(0 0 0 / 30%);
+}
+
+.splide__arrow svg path {
+  fill: none;
+  stroke-width: 4.4;
+  stroke: color(neutral-black);
+}

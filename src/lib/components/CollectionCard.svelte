@@ -106,9 +106,6 @@
       margin: 0;
       margin-top: 0.3rem;
     }
-    > :global(.tag-container) {
-      overflow: scroll;
-    }
   }
 
   .title {

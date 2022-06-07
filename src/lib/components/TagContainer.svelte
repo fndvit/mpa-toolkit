@@ -6,7 +6,7 @@
   export let currentTagHovered = null;
 </script>
 
-<div class="tag-container">
+<div class="tag-container secret-scrollbars">
   {#each tags as tag}
     <Tag
       {tag}
@@ -27,4 +27,19 @@
       flex: 0 0 auto;
     }
   }
+
+  :global(.collection-card) .tag-container {
+    overflow-y: scroll;
+  }
+
+  @media (max-width: 1024px) {
+    :global(.collection-card) .tag-container {
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+    }
+  }
+
 </style>

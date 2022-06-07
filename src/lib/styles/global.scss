@@ -58,3 +58,40 @@ button:focus:not(:focus-visible) {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.secret-scrollbars {
+  // TODO: cross browser testing
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: none !important;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar {
+    width: 3px !important;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  &:hover {
+    scrollbar-width: thin; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: none !important;
+      background-color: transparent !important;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px !important;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #acacac;
+      border-radius: 5px;
+    }
+
+  }
+}

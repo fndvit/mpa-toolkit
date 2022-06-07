@@ -65,6 +65,7 @@
     }
   }
   .tag:hover {
-    box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    filter: brightness(105%);
   }
 </style>

@@ -1,8 +1,7 @@
 @use "sass:math";
 @use "sass:list" as *;
 @use './util.scss' as *;
-@import './config.scss';
-@import './check.scss';
+@use './config.scss' as *;
 
 @function _rem($fontSize) {
   @return #{calc(stripUnit($fontSize) / stripUnit($html-font-size))}rem;

@@ -1,5 +1,5 @@
 @use "./util.scss" as *;
-@import './config.scss';
+@use './config.scss' as *;
 
 @function _checkStyles($fontSize, $weight, $lineHeight: null) {
   @return (

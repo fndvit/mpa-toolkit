@@ -1,5 +1,5 @@
 @use './mixins.scss' as *;
-@import './config.scss';
+@use './config.scss' as *;
 
 @each $fontName, $fontSpec in $typography {
   .font-#{$fontName} {

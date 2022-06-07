@@ -1,0 +1,14 @@
+@use 'sass:math';
+@use './config.scss' as *;
+
+@function color($colorName, $alpha: 1) {
+  @if not map-has-key($colors, $colorName) {
+    @error "No color named " + $colorName;
+  }
+  @if $alpha < 0 or $alpha > 1 {
+    @error "Invalid alpha value: " + $alpha;
+  }
+
+  $color: map-get($colors, $colorName);
+  @return rgba($color, $alpha);
+}

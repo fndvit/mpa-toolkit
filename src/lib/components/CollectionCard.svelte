@@ -44,9 +44,8 @@
 <style lang="scss">
   .collection-card {
     --cc-height: 200px;
-    --tag-bg: #dadce0;
     display: flex;
-    background: #f9f9f9;
+    background: color(neutral-bg);
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     height: var(--cc-height);
@@ -94,7 +93,7 @@
     display: flex;
     align-items: end;
     column-gap: 0.4rem;
-    color: #6C767D;
+    color: color(neutral-dark);
     white-space: nowrap;
   }
 

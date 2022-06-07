@@ -80,7 +80,7 @@
   </Splide>
 </div>
 
-<style type="scss">
+<style lang="scss">
 
   .cards {
     --content-padding: 30px;
@@ -90,7 +90,7 @@
     border-radius: 15px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
 
-    background-color: #fbe26b;
+    background-color: color(highlight-1);
     color: #333;
 
     :global(.splide__arrows) {
@@ -103,7 +103,7 @@
 
     :global(.splide__arrow) {
       position: static;
-      background: #fbe26b;
+      background: color(highlight-1);
     }
     :global(.splide__arrow:disabled) {
       display: none;

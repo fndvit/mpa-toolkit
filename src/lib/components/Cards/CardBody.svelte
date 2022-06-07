@@ -72,7 +72,7 @@
     cursor: pointer;
   }
   ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: color(neutral-bg);
   }
   ::-webkit-scrollbar-thumb {
     background: #888;

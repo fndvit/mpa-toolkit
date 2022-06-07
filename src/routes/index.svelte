@@ -58,7 +58,7 @@
 <style lang="scss">
 
   .landing-page {
-    background: #F9F9F9;
+    background: color(neutral-bg);
     --page-padding: 6rem;
   }
 

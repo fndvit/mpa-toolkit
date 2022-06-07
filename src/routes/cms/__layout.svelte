@@ -17,7 +17,7 @@
   />
 </Modals>
 
-<style>
+<style lang="scss">
   .backdrop {
     position: fixed;
     top: 0;

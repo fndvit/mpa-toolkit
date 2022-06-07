@@ -24,7 +24,7 @@
 </div>
 {/if}
 
-<style>
+<style lang="scss">
   .modal {
     position: fixed;
     z-index: 10;

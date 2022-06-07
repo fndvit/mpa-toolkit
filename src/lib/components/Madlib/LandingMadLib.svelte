@@ -20,7 +20,7 @@
   <button tabindex="0" on:click={submit}>
     Start your tour
     <svg class="arrow" viewBox="0 0 13 22">
-      <path d="M1.44165 20.5881L10.4526 11.0587L1.44165 1.52931" stroke="#2A2A2A" stroke-width="2.4"/>
+      <path d="M1.44165 20.5881L10.4526 11.0587L1.44165 1.52931" stroke-width="2.4"/>
     </svg>
   </button>
 
@@ -38,7 +38,7 @@
     width: auto;
     margin-top: 35px;
     padding: 0.5rem var(--page-padding) 5rem;
-    background: #096EAE;
+    background: color(primary-blue);
     height: 600px;
     background-size: cover;
     background-position: bottom;
@@ -61,6 +61,10 @@
       }
     }
 
+    svg path {
+      stroke: color(neutral-black);
+    }
+
   }
 
   .landing-madlib button {
@@ -68,7 +72,7 @@
     border: none;
     font-size: 1.25rem;
     font-weight: 700;
-    background: #FBE26B;
+    background: color(highlight-1);
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     position: relative;
     border-radius: 24px;

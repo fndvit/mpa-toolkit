@@ -39,10 +39,9 @@
   </div>
 </div>
 
-<style>
+<style lang="scss">
   .menu-bar {
     --ib-icon-bg: transparent;
-    --color: #333;
     --ib-hover-border: 1px solid #ddd;
     --ib-hover-bg: transparent;
     --ib-active-bg: white;
@@ -55,7 +54,7 @@
     width: 100%;
     padding: 0.5rem;
     border-bottom: 1px solid #ccc;
-    background: #f7f7f7;
+    background: color(neutral-bg);
     box-sizing: border-box;
   }
 

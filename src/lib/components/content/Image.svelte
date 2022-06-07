@@ -10,7 +10,7 @@
   <img src={staticUrl(block.attrs.src)} alt={block.attrs.alt} />
 </div>
 
-<style>
+<style lang="scss">
 
   .image-full {
     margin-left: calc(-1 * var(--img-full-breakout-l, 200px));

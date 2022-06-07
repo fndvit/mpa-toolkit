@@ -2,7 +2,7 @@
   import type { SubTypes } from '$lib/types';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import { SplideOptions } from '$lib/helpers/splide';
-  import TinyPreviewCard from './TinyPreviewCard.svelte';
+  import ContentCarouselCard from './ContentCarouselCard.svelte';
 
   export let slides: SubTypes.Page.ContentCard[];
   export let title: string;
@@ -29,25 +29,24 @@
 
 </script>
 
-<div class="tiny-carousel">
+<div class="content-carousel">
   <p class="title">{title}</p>
   <Splide {options}>
     {#each slides as slide}
       <SplideSlide>
-        <TinyPreviewCard page={slide}/>
+        <ContentCarouselCard page={slide}/>
       </SplideSlide>
     {/each}
   </Splide>
   <div class="opacity-div" />
 </div>
 
-<style type="text/scss">
+<style lang="scss">
 
-  .tiny-carousel {
+  .content-carousel {
     position: relative;
     line-height: 40px;
-    color: #6C767D;
-    background-color: #F9F9F9;
+    background-color: color(neutral-bg);
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;
     padding: 0.5rem 0 2rem 1.5rem;
@@ -73,7 +72,7 @@
   .opacity-div {
     height: 100%;
     width: 15%;
-    background: linear-gradient(to right, #f9f9f900, #f9f9f9);
+    background: linear-gradient(to right, color(neutral-bg, 0), color(neutral-bg));
     position: absolute;
     top: 0;
     right: 0;
@@ -81,7 +80,7 @@
 
   @media screen and (max-width: 768px) {
 
-    .tiny-carousel {
+    .content-carousel {
       :global(.splide__arrow) {
         transform: scale(0.75);
       }
@@ -96,7 +95,7 @@
 
   @media screen and (max-width: 840px) {
 
-    .tiny-carousel {
+    .content-carousel {
       border-radius: 0;
     }
   }

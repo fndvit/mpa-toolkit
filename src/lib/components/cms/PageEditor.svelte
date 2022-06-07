@@ -258,10 +258,6 @@
       margin-right: 10px;
       color: #999;
     }
-    .delete-button :global(.button) {
-      --bg-color: #e37777;
-      --border-color: #cb6666;
-    }
     @keyframes bgPulse {
       0% { border-color: #bbb;  }
       100% { border-color: #999;
@@ -274,11 +270,6 @@
     .is-new-page & :global(.icon-button[data-icon="open_in_new"]) {
       display: none;
     }
-  }
-
-  :global(.spinner) {
-    --color: black;
-    scale: 0.5;
   }
 
   .page-editor {

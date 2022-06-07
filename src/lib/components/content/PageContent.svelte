@@ -7,7 +7,7 @@
   import Paragraph from "./Paragraph.svelte";
   import TextSlider from "./TextSlider.svelte";
   import ContentMadLib from "$lib/components/Madlib/ContentMadLib.svelte";
-  import TinyCarousel from "$lib/components/TinyCarousel.svelte";
+  import ContentCarousel from "$lib/components/content/ContentCarousel.svelte";
   import LifeCycle from "$lib/components/LifeCycle.svelte";
   import Image from "./Image.svelte";
 
@@ -54,8 +54,8 @@
             <ContentMadLib />
           </div>
         {:else if i === 2 && recommendedPages?.length > 0}
-          <div class="tiny-carousel-container">
-            <TinyCarousel slides={recommendedPages} title={'You may also like'}/>
+          <div class="content-carousel-container">
+            <ContentCarousel slides={recommendedPages} title={'You may also like'}/>
           </div>
         {/if}
       {/if}
@@ -86,7 +86,7 @@
   }
 
   .unknown-block {
-    background: #fca5a5;
+    background: color(error-red);
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1rem -1rem;
@@ -113,12 +113,12 @@
     }
   }
 
-  .tiny-carousel-container {
+  .content-carousel-container {
     overflow: hidden;
   }
 
   .madlib-container,
-  .tiny-carousel-container {
+  .content-carousel-container {
       margin-left: -25px;
       margin-right: -20px;
       grid-column: body / right-margin;
@@ -129,7 +129,7 @@
       grid-template-columns: 250px minmax(500px, 600px) minmax(20px, auto);
     }
     .body-column {
-      :global(.tiny-carousel) {
+      :global(.content-carousel) {
         width: auto;
       }
     }

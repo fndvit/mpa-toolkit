@@ -1,3 +1,2 @@
-import * as skif from '@sveltejs/kit/install-fetch';
-skif.installFetch();
-
+import { installPolyfills } from '@sveltejs/kit/node/polyfills';
+installPolyfills();

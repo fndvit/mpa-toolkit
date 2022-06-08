@@ -18,7 +18,7 @@
   <MadLib bind:value />
 
   <button tabindex="0" on:click={submit}>
-    Start your tour
+    <h4 class="font-h4">Start your tour</h4>
     <svg class="arrow" viewBox="0 0 13 22">
       <path d="M1.44165 20.5881L10.4526 11.0587L1.44165 1.52931" stroke="#2A2A2A" stroke-width="2.4"/>
     </svg>
@@ -43,7 +43,7 @@
 
     > :global(.madlib) {
       margin-top: 0.5rem;
-      max-width: 700px;
+      max-width: 470px;
     }
 
     h2 {
@@ -51,13 +51,16 @@
       color: #FFFFFF;
     }
 
+    h4 {
+      display: inline-block;
+      margin: 0;
+    }
+
   }
 
   .landing-madlib button {
     cursor: pointer;
     border: none;
-    font-size: 1.25rem;
-    font-weight: 700;
     background: #FBE26B;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     position: relative;
@@ -112,8 +115,11 @@
       }
 
       button {
-        font-size: 1rem;
-        padding: 0.55rem 0.95rem 0.45rem 0.85rem;
+        padding: 0.35rem 0.85rem 0.45rem 0.85rem;
+      }
+
+      h4 {
+        font-size: 16px;
       }
     }
   }

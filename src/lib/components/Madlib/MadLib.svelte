@@ -10,12 +10,12 @@
 
 </script>
 
-<p class="madlib font-h4-light">
+<div class="madlib font-h4-light">
   I am <MadLibSelector options={typeUserList} bind:selected={value[0]}/> and want help
   finding <MadLibSelector options={objectiveList} bind:selected={value[1]}/> to
   <MadLibSelector options={objectiveVerbList} bind:selected={value[2]}/> decisions
   <MadLibSelector options={actionSubjectList} bind:selected={value[3]}/>
-</p>
+</div>
 
 <style lang="scss">
 

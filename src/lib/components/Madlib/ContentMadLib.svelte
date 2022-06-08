@@ -17,7 +17,7 @@
   <MadLib />
 
   <button tabindex="0" on:click={submit}>
-    Let's find what you need
+   <h5 class="font-h5">Let's find what you need</h5>
     <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
       <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
     </svg>
@@ -29,17 +29,18 @@
 
   .content-madlib {
     position: relative;
+    display: block;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;
     color: #6C767D;
     background: #F9F9F9;
-    padding: 0.75rem 1.5rem 2rem;
-    font-family: 'Montserrat';
+    padding: 0.75rem 1.5rem 3rem;
     line-height: 2;
 
     h5 {
       color: black;
       margin: 5px 0px 0px 0px;
+      display: inline-block;
     }
 
     :global(.madlib) {
@@ -56,20 +57,18 @@
   .content-madlib button {
     display: inline-block;
     cursor: pointer;
-    font-weight: 700;
     vertical-align: middle;
-    font-family: 'Montserrat';
     border: none;
-    font-size: 16px;
     position:absolute;
     right:0;
     bottom: 0;
     align-content: center;
     background: #FBE26B;
     color: #2A2A2A;
-    padding: 0.5rem 0.2rem 0.5rem 1.25rem;
+    padding: 0.3rem 0.2rem 0.45rem 1.25rem;
     border-radius: 20px 0px 0px 0px;
     box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
+
     &:hover {
       box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.15);
       filter: brightness(105%);

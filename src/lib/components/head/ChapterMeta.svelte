@@ -61,7 +61,7 @@
 
   </div>
 
-  <div class="summary">
+  <div class="summary font-p-large">
     <EditableText bind:value={chapter.summary} {editable} placeholder='Summary text...' />
   </div>
 
@@ -101,9 +101,6 @@
   }
 
   .summary {
-    font-family: var(--font-serif);
-    font-size: 28px;
-    line-height: 42px;
     max-width: 800px;
     margin-bottom: 40px;
   }
@@ -133,12 +130,6 @@
       margin-top: 20px;
     }
 
-    .summary {
-      font-size: 18px;
-      line-height: 32px;
-    }
-
   }
-
 
 </style>

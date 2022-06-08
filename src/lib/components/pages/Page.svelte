@@ -14,7 +14,7 @@
 <div class="page-container">
   <PageSplash {page} />
   {#if page.chapter }
-    <ChapterMeta chapter={page.chapter} readTime={page.readTime} />
+    <ChapterMeta chapter={page.chapter} readTime={page.readTime} tags={page.tags}/>
   {:else if page.caseStudy}
     <CaseStudyMeta caseStudy={page.caseStudy} />
   {/if}
@@ -35,11 +35,6 @@
 
     @media screen and (max-width: 840px) {
       --lifecycle-overlap: 190px;
-      
-
-      :global(.meta) {
-        padding-bottom: var(--lifecycle-overlap);
-      }
 
       :global(.lifecycle-container) {
         margin-top: calc(-1 * var(--lifecycle-overlap));

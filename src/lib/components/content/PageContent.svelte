@@ -8,7 +8,6 @@
   import TextSlider from "./TextSlider.svelte";
   import ContentMadLib from "$lib/components/Madlib/ContentMadLib.svelte";
   import TinyCarousel from "$lib/components/TinyCarousel.svelte";
-  import LifeCycle from "$lib/components/LifeCycle.svelte";
   import Image from "./Image.svelte";
 
   export let page: SubTypes.Page.Full;
@@ -30,9 +29,6 @@
 <div class="page-content">
   <div class="menu">
     <StickyMenu menuOptions={headings} />
-  </div>
-  <div class="lifecycle-container">
-    <LifeCycle tags={page.tags}/>
   </div>
   <div class="body-column">
     {#each sections as section, i}
@@ -68,7 +64,7 @@
   .page-content {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(250px, 300px) minmax(32rem, 40rem) minmax(300px, auto);
+    grid-template-columns: minmax(250px, 300px) minmax(30rem, 50rem) minmax(300px, auto);
     grid-template-areas: "left-margin body right-margin";
     grid-auto-flow: row;
     column-gap: 1.5rem;
@@ -106,7 +102,7 @@
 
   .lifecycle-container {
     grid-area: right-margin;
-    
+
     :global(.lifecycle) {
       margin: auto;
       max-width: 300px;
@@ -125,30 +121,26 @@
       grid-column: body / right-margin;
   }
 
-  @media screen and (max-width: 1150px) {
+  @media screen and (max-width: 1250px) {
+    .menu {
+      display: none; //temporary
+    }
     .page-content {
-      grid-template-columns: 250px minmax(500px, 600px) minmax(20px, auto);
+      grid-template-columns: auto;
+      display: block;
     }
     .body-column {
       :global(.tiny-carousel) {
         width: auto;
       }
-    }
-    .lifecycle-container {
-      grid-area: body;
-      grid-row: 1;
-      padding-top: 1.5rem;
-      :global(.lifecycle) {
-        max-width: none;
+      > :global(.content-section) {
+        max-width: 700px;
+        margin: auto;
       }
-      transform: translate(0, -4rem);
-      
     }
   }
   @media screen and (max-width: 840px) {
-    .page-content {
-      display: block;
-    }
+
 
     .madlib-container {
       margin-top: 1rem;
@@ -167,11 +159,6 @@
         max-width: 100%;
       }
     }
-
-    .menu {
-      display: none; //temporary
-    }
-
   }
 
 </style>

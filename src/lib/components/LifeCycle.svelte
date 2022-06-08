@@ -142,7 +142,8 @@
 <style lang="scss">
 
   .top-section {
-    display: flex;
+    display: grid;
+    grid-template-columns: 90% auto;
     justify-content: space-between;
     align-items: center;
   }

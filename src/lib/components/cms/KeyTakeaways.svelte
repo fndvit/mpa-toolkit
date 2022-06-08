@@ -32,7 +32,6 @@
 <style lang="scss">
   .key-takeaways {
     max-width: 956px;
-    width: calc( 100% - 250px);
     margin-bottom: 25px;
     margin-left: -30px;
     --ec-hover-bg: #ffffff44;

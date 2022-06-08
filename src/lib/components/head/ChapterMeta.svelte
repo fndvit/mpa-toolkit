@@ -4,8 +4,10 @@
   import KeyTakeaways from "$lib/components/cms/KeyTakeaways.svelte";
   import UserImage from "$lib/components/UserImage.svelte";
   import EditableText from "../generic/EditableText.svelte";
+  import LifeCycle from "../LifeCycle.svelte";
 
   export let chapter: SubTypes.Chapter.PageHead;
+  export let tags = [];
   export let allAuthors: UserInfo[] = [];
   export let editable = false;
   export let readTime: number = undefined;
@@ -65,12 +67,38 @@
     <EditableText bind:value={chapter.summary} {editable} placeholder='Summary text...' />
   </div>
 
-  <KeyTakeaways bind:keyTakeaways={chapter.keyTakeaways} {editable}/>
+  <div class="grid-container">
+    <div class="grid-item-keytakeaways">
+      <KeyTakeaways bind:keyTakeaways={chapter.keyTakeaways} {editable}/>
+    </div>
+    <div class="grid-item-lifecycle">
+      <LifeCycle tags={tags}/>
+    </div>
+  </div>
 
 </div>
 
 <style lang="scss">
+  .grid-container {
+    display: grid;
+    grid-template-columns: minmax(47rem, 69rem) minmax(250px, auto);
+    grid-template-rows: 1px auto;
+    grid-gap: 35px;
+    grid-template-areas:
+    "keytakeaways lifecycle"
+    "keytakeaways none";
+    .grid-item-keytakeaways {
+      grid-area: keytakeaways;
+    }
+    .grid-item-lifecycle {
+      grid-area: lifecycle;
 
+      :global(.lifecycle) {
+        margin: auto;
+        max-width: 300px;
+      }
+    }
+  }
   .meta {
     --ui-color-placeholder: #ffffff55;
     background: #096EAE;
@@ -113,7 +141,26 @@
       color: #333;
     }
   }
+  @media screen and (max-width: 1250px){
+    .grid-container{
+      grid-template-columns: auto;
+      grid-template-rows: auto 180px;
+      grid-template-areas:
+      "keytakeaways"
+      "lifecycle";
+    }
+    :global(.page-content .body-column  .content-section){
+      margin-top: 200px !important;
+    }
 
+    .grid-item-lifecycle{
+
+
+      :global(.lifecycle) {
+        max-width: 500px !important;
+      }
+    }
+  }
   @media screen and (max-width: 768px) {
 
     .author-images {

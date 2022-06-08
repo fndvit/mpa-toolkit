@@ -84,7 +84,7 @@
       }
 
       &.splash-cs h1 {
-        padding-bottom: 50px;
+        padding-bottom: 5rem;
       }
     }
   }

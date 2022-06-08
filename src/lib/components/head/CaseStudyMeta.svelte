@@ -30,13 +30,13 @@
 
     <div class="meta-grid meta-grid-1">
 
-      <h4>Name</h4>
+      <div class="font-h5-graphic meta-title">Name</div>
       <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
 
-      <h4>Established in</h4>
+      <div class="font-h5-graphic meta-title">Established in</div>
       <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
 
-      <h4>Size</h4>
+      <div class="font-h5-graphic meta-title">Size</div>
       <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
 
       <div class="globe-cell">
@@ -51,16 +51,16 @@
 
     <div class="meta-grid meta-grid-2">
 
-      <h4>Governance</h4>
+      <div class="font-h5-graphic meta-title">Governance</div>
       <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
 
-      <h4>Staff</h4>
+      <div class="font-h5-graphic meta-title">Staff</div>
       <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
 
-      <h4>Budget</h4>
+      <div class="font-h5-graphic meta-title">Budget</div>
       <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
 
-      <h4>Budget level</h4>
+      <div class="font-h5-graphic meta-title">Budget level</div>
       <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
 
     </div>
@@ -135,12 +135,8 @@
     line-height: 32px;
   }
 
-  .meta-grid > h4 {
-    font-family: 'Montserrat';
-    font-weight: bold;
+  .meta-title {
     color: #F9F9F9;
-    font-size: 16px;
-    line-height: 24px;
     margin: 0;
   }
 
@@ -160,9 +156,9 @@
     --ib-hover-bg: #00000011;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
 
-    .meta-grid > h4 {
+    .meta-title {
       margin-top: 20px;
     }
 
@@ -187,9 +183,13 @@
     .meta-grid {
       display: block;
       color: white;
+
       &.meta-grid-1 {
         margin-bottom: 0px;
         min-height: 110px;
+        :nth-child(1){
+          color: red;
+        }
       }
 
       &.meta-grid-2 {
@@ -208,7 +208,6 @@
         transform: translate(-50%);
       }
     }
-
   }
 
 </style>

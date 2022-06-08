@@ -80,7 +80,7 @@
   </Splide>
 </div>
 
-<style type="scss">
+<style lang="scss">
 
   .cards {
     --content-padding: 30px;
@@ -90,7 +90,7 @@
     border-radius: 15px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
 
-    background-color: #fbe26b;
+    background-color: color(highlight-1);
     color: #333;
 
     :global(.splide__arrows) {
@@ -98,12 +98,12 @@
       right: 24px;
       top: 44px;
       display: flex;
-      column-gap: 10px;;
+      column-gap: 10px;
     }
 
     :global(.splide__arrow) {
       position: static;
-      background: transparent;
+      background: color(highlight-1);
     }
     :global(.splide__arrow:disabled) {
       display: none;
@@ -140,12 +140,15 @@
     .has-fixed-title & :global(.heading) {
       visibility: hidden;
     }
+    :global(.heading) {
+      max-width: 60%;
+    }
   }
 
   .fixed-title {
     :global(.heading) {
-      margin-left: var(--content-padding);
-      margin-top: var(--content-top-padding);
+      margin-left: 17px;
+      margin-top: 25px;
       position: absolute;
     }
   }
@@ -169,14 +172,13 @@
     .cards {
 
       :global(.splide__arrows) {
-        width: 70px;
-        top: 30px;
-        right: 10px;
+        top: 35px;
+        right: 15px;
       }
-      :global(.splide__arrow) {
-        width: 30px;
-        height: 30px;
 
+      :global(.splide__arrow) {
+        width: 48px;
+        height: 48px;
       }
 
       :global(.carousel-dots) {

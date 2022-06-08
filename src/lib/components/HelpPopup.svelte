@@ -39,7 +39,7 @@
     padding: 1rem 1.5rem;
     box-sizing: border-box;
     border-radius: 15px;
-    background-color: var(--popup-bg-color, #F9F9F9E5);
+    background-color: var(--popup-bg-color, color(neutral-bg, 0.9));
     color: #000;
     font-size: 14px;
     line-height: 1.2;
@@ -64,7 +64,7 @@
     bottom: 100%;
     right: 17px;
     width: 0;
-    border-bottom: 10px solid var(--popup-bg-color, #F9F9F9E5);
+    border-bottom: 10px solid var(--popup-bg-color, color(neutral-bg, 0.9));
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;
   }

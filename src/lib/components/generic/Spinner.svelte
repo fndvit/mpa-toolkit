@@ -1,24 +1,24 @@
 <div class="spinner"></div>
 
-<style>
+<style lang="scss">
 .spinner {
-  --color: #333;
-  --size: 26px;
-  --border-width: 3px;
+  --spinner-color: #333;
+  --spinner-size: 26px;
+  --spinner-thickness: 3px;
   display: inline-block;
   position: relative;
-  width: var(--size);
-  height: var(--size);
+  width: var(--spinner-size);
+  height: var(--spinner-size);
 }
 .spinner:after {
-  --inner-size: calc(var(--size) * (3/4));
+  --inner-size: calc(var(--spinner-size) * (3/4));
   content: " ";
   display: block;
   width: var(--inner-size);
   height: var(--inner-size);
   border-radius: 50%;
-  border: var(--border-width) solid var(--color);
-  border-color: var(--color) transparent var(--color) transparent;
+  border: var(--spinner-thickness) solid var(--spinner-color);
+  border-color: var(--spinner-color) transparent var(--spinner-color) transparent;
   animation: lds-dual-ring 1.2s linear infinite;
   position: absolute;
   top: 0;

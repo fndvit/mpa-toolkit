@@ -1,6 +1,6 @@
 import type { TagCategory, Role } from '@prisma/client';
 import type { CardData } from './components/Cards/Cards.svelte';
-import type { CaseStudyMeta } from './prisma/queries';
+import type * as SubTypes from './prisma/queries';
 export type * as SubTypes from './prisma/queries';
 export type * from '@prisma/client';
 
@@ -38,7 +38,7 @@ export type PageRequest = {
     id: number,
     category: TagCategory
   }[];
-  caseStudy?: CaseStudyMeta;
+  caseStudy?: SubTypes.CaseStudy.PageHead;
   chapter?: {
     summary: string;
     authors: number[];

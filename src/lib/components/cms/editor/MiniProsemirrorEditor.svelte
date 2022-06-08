@@ -76,7 +76,7 @@
 <style lang="scss">
 
   .mini-editor {
-    --ui-color-placeholder: #aaaaaa;
+    --ui-color-placeholder: #{color(editor-placeholder)};
     position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;

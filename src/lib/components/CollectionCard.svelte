@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { SubTypes } from '$lib/types';
-  import { staticUrl } from '$lib/helpers/content';
+  import { getPageDisplayTitle, staticUrl } from '$lib/helpers/content';
   import TagContainer from '$lib/components/TagContainer.svelte';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
@@ -22,7 +22,11 @@
   </div>
   <div class="content">
     <h1 class="title">
-      {page.title}
+      {#if page.highlights}
+        {@html page.highlights}
+      {:else}
+        {getPageDisplayTitle(page)}
+      {/if}
     </h1>
     <div class="byline">
       {#if authorsString}
@@ -40,9 +44,8 @@
 <style lang="scss">
   .collection-card {
     --cc-height: 200px;
-    --tag-bg: #dadce0;
     display: flex;
-    background: #f9f9f9;
+    background: color(neutral-bg);
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     height: var(--cc-height);
@@ -90,7 +93,7 @@
     display: flex;
     align-items: end;
     column-gap: 0.4rem;
-    color: #6C767D;
+    color: color(neutral-dark);
     white-space: nowrap;
   }
 
@@ -102,9 +105,6 @@
     h3 {
       margin: 0;
       margin-top: 0.3rem;
-    }
-    > :global(.tag-container) {
-      overflow: scroll;
     }
   }
 

@@ -101,8 +101,8 @@
   }
   .meta {
     --ui-color-placeholder: #ffffff55;
-    background: #096EAE;
-    color: #F9F9F9;
+    background: color(primary-blue);
+    color: color(neutral-bg);
     padding: 2rem var(--page-padding) 3rem;
   }
 

@@ -11,7 +11,7 @@
 
 <img class="user-image" on:click {src} alt={user.name} />
 
-<style>
+<style lang="scss">
   img {
     border-radius: 50%;
     width: 66px;

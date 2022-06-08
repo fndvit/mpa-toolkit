@@ -1,6 +1,6 @@
 <div />
 
-<style>
+<style lang="scss">
   div {
     border-left: 1px solid #ccc;
     height: 2rem;

@@ -58,7 +58,6 @@
     justify-content: center;
     background: #22222266;
     border-radius: 50%;
-    --color: #222;
   }
 
   :global(.user-image) {

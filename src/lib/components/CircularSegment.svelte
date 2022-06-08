@@ -82,13 +82,16 @@
   on:mouseleave
 />
 
-<style>
+<style lang="scss">
   .segment {
     cursor: pointer;
   }
 
-  .segment__main { fill: #fbe26b; }
-  .segment__secondary { fill: #fbe26b80; }
+  .segment__main,
+  .segment__secondary {
+    fill: color(highlight-1);
+  }
+  .segment__secondary { opacity: 0.5;}
   .segment__unselected { fill: #FFFFFF80; }
 
   path {

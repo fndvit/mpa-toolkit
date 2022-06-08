@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { PageRequest, SubTypes, Tag, UserInfo } from '$lib/types';
+  import type Toaster from '$lib/components/generic/Toaster.svelte';
   import LifeCycle from '$lib/components/LifeCycle.svelte';
   import { openModal } from 'svelte-modals';
   import { goto } from "$app/navigation";
@@ -9,7 +10,6 @@
   import { createPage, deletePage, updatePage, uploadImage } from '$lib/api';
   import LoadingButton from '$lib/components/generic/LoadingButton.svelte';
   import Button from '$lib/components/generic/Button.svelte';
-  import TimedMessage from '$lib/components/generic/TimedMessage.svelte';
   import CaseStudyMeta from '$lib/components/head/CaseStudyMeta.svelte';
   import ChapterMeta from '$lib/components/head/ChapterMeta.svelte';
   import PageSplash from '$lib/components/head/PageSplash.svelte';
@@ -17,6 +17,7 @@
   import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import PageContent from '$lib/components/content/PageContent.svelte';
+  import { getContext } from 'svelte';
 
   export let users: UserInfo[];
   export let allTags: Tag[];
@@ -58,7 +59,7 @@
   let imageInput: HTMLInputElement;
   let preview = false;
 
-  let showSaveStatusText: TimedMessage['$$prop_def']['showMessage'];
+  const addToastMessage = getContext<Toaster['$$prop_def']['addMessage']>('addToastMessage');
 
   async function onClickSave() {
     saving = true;
@@ -70,14 +71,15 @@
       await updatePage(pageId, _page);
     }
     saving = false;
-    showSaveStatusText('Saved...');
+    addToastMessage('Saved', {type: 'done'});
     savedPage = clone(_page);
   }
 
   async function onDeleteModalYes() {
     deleting = true;
-    await deletePage(pageId);
-    goto('/cms/pages');
+    const success = await deletePage(pageId);
+    if (!success) addToastMessage('Delete failed', {type: 'error'});
+    else goto('/cms/pages');
   }
 
   async function onClickDelete() {
@@ -105,10 +107,8 @@
 
   $: dirty = !compareDeep(_page, savedPage);
 
-  $: dirty && showSaveStatusText && showSaveStatusText(null);
-
   $: if (autoPopulateSlug) {
-    _page.slug = slugify(_page.title);
+    _page.slug = pageType === 'Case Study' ? slugify(_page.caseStudy.name) : slugify(_page.title);
   }
 
   $: sharedFieldsComplete = _page.title && _page.slug;
@@ -175,7 +175,6 @@
     <Editor bind:content={_page.content}>
       <div slot="menu-extra" class="page-controls">
         {#if saving}Saving...{/if}
-        <TimedMessage bind:showMessage={showSaveStatusText} />
         <IconButton {href} rel="external" target="_blank" icon="open_in_new" title="Open link in new page" />
         <div class="draft-button">
           <IconButton on:click={() => _page.draft = !_page.draft} title={_page.draft ? "Click to publish" : "Click to make draft"}
@@ -259,10 +258,6 @@
       margin-right: 10px;
       color: #999;
     }
-    .delete-button :global(.button) {
-      --bg-color: #e37777;
-      --border-color: #cb6666;
-    }
     @keyframes bgPulse {
       0% { border-color: #bbb;  }
       100% { border-color: #999;
@@ -275,11 +270,6 @@
     .is-new-page & :global(.icon-button[data-icon="open_in_new"]) {
       display: none;
     }
-  }
-
-  :global(.spinner) {
-    --color: black;
-    scale: 0.5;
   }
 
   .page-editor {

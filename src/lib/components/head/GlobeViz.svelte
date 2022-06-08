@@ -3,13 +3,22 @@
   export let lat: number;
   export let long: number;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isCoordValid = (val: unknown) => val != null && !isNaN(val as any);
+
+  $: valid = isCoordValid(lat) && isCoordValid(long);
+
 </script>
 
-<img class="globe" src="/globe.svg?lat={lat}&long={long}" alt="globe"/>
+{#if valid}
+  <img class="globe" src="/globe.svg?lat={lat}&long={long}" alt="globe"/>
+{:else}
+  <div class="globe" />
+{/if}
 
-<style>
+<style lang="scss">
   .globe {
-    background: #04558E;
+    background: color(dark-blue);
     border-radius: 50%;
     width: 245px;
     height: 245px;

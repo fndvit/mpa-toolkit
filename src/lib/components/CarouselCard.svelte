@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
   import TagContainer from "$lib/components/TagContainer.svelte";
-  import { staticUrl } from "$lib/helpers/content";
+  import { getPageDisplayTitle, staticUrl } from "$lib/helpers/content";
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
 
@@ -22,7 +22,7 @@
 
   <div class="preview-content">
     <div class="title">
-      <span>{@html page.title}</span>
+      <span>{getPageDisplayTitle(page)}</span>
       <div class="circle-button" tabindex="0">
         <svg class="arrow-svg" viewBox="0 0 12 20">
           <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
@@ -49,11 +49,11 @@
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 40px;
     border: none;
-    background: #096EAE;
+    background: color(primary-blue);
     height: 100%;
 
     &.case-study {
-      background: #13487C;
+      background: color(deep-blue);
     }
 
     &:hover {
@@ -78,7 +78,7 @@
   }
 
   .arrow-path {
-    stroke:#2A2A2A ;
+    stroke:color(neutral-black) ;
     stroke-width: 2.4px;
   }
 
@@ -91,7 +91,7 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: #FBE26B;
+    background: color(highlight-1);
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
   }
 

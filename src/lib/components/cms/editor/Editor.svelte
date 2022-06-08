@@ -88,7 +88,7 @@
     }
     :global(card) {
       display: block;
-      background: #096EAE;
+      background: color(primary-blue);
       color: white;
       padding: 0 2rem;
       padding-bottom: 1rem;

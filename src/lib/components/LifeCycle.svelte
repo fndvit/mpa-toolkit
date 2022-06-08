@@ -149,7 +149,7 @@
   }
 
   .lifecycle {
-    background: #66CFD6;
+    background: color(lifecycle-bg);
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     padding: 20px;

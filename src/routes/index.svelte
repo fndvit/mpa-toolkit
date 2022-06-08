@@ -30,8 +30,8 @@
     <Searchbar type={'top'}/>
   </div>
   <div class="splash" style="background-image: url({landingSplash})">
-    <h1>Here it is.<br><b>Your MPA toolkit.</b></h1>
-    <h4>A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
+    <h1 class="font-h1">Here it is.<br><b>Your MPA toolkit.</b></h1>
+    <h4 class="font-h4-light">A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
     <p>In partnership with</p>
     <div class="partners-grid">
       <InlineSvg svg="IAFDC" />
@@ -58,7 +58,7 @@
 <style lang="scss">
 
   .landing-page {
-    background: #F9F9F9;
+    background: color(neutral-bg);
     --page-padding: 6rem;
   }
 
@@ -90,10 +90,7 @@
     background-position: bottom;
 
     h1 {
-      font-weight: 200;
-      font-size: 120px;
       color: #FFFFFF;
-      line-height: 1.15;
       margin-bottom: 15px;
     }
 
@@ -101,9 +98,7 @@
       margin-top: 25px;
       margin-bottom: 80px;
       color: #FFFFFF;
-      font-size: 36px;
       max-width: 800px;
-      font-weight: 200;
     }
 
     p {
@@ -132,7 +127,6 @@
       background-position: left;
 
       h1 {
-        font-size: 4rem;
         padding-bottom: 4rem;
         padding-top: 4rem;
       }
@@ -192,14 +186,12 @@
     .splash {
 
       h1 {
-        font-size: 2rem;
         padding: 1rem 0rem;
       }
 
       h4 {
         margin-bottom: 1rem;
         padding: 1rem 0rem;
-        font-size: 1.25rem;
       }
 
     }

@@ -27,7 +27,7 @@
   <Cards bind:cards={attrs.cards} editable />
 </div>
 
-<style>
+<style lang="scss">
   :global(.svelte-node-view--cards.ProseMirror-selectednode .cards) {
     filter: brightness(98%);
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.20);

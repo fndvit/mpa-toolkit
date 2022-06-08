@@ -25,7 +25,7 @@
   const cancel = () => value = null;
 
   const parseInput = (value: string) => {
-    const [lat, long] = (value ||'').split(/,?\s+/).map(v => parseFloat(v));
+    const [lat, long] = (value ||'').split(/[,\s]+/).map(v => parseFloat(v));
     return {lat, long, valid: !isNaN(lat) && !isNaN(long)};
   };
 
@@ -81,7 +81,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--bg-color);
+    background-color: color(deep-blue);
     text-align: center;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.1);
     padding: 0 2px;
@@ -91,9 +91,6 @@
     --ib-hover-icon-bg: #ffffff22;
     --ib-bg-color: transparent;
 
-    :global(.icon-button[data-icon="close"]) {
-      --ib-color: #a75050;
-    }
     :global(.icon-button) {
       border: 1px solid #ffffff11;
     }

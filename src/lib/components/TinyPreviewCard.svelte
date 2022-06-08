@@ -11,15 +11,25 @@
 <div class="container" tabindex="0">
   <a href={"/" + slug}>
     <img src={staticUrl(img)} alt="interesting-chapters" href={"/" + slug}/>
-    <div class="title">{title}</div>
+    <div class="title font-h5-light">{title}</div>
   </a>
-  <TagContainer {tags}/>
+
+  <div class="tags no-drag hide-scrollbar">
+    <TagContainer {tags}/>
+  </div>
+
 </div>
 
 <style lang="scss">
+
   .container {
     width: 292px;
     --tag-bg: #dadce0;
+  }
+
+  .tags {
+    line-height: 18px;
+    max-width: 292px;
   }
 
   img {
@@ -31,10 +41,7 @@
   }
 
   .title {
-    font-family: 'Montserrat';
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 25px;
+    line-height: 1.5rem;
     padding-left: 0.15rem;
     margin-bottom: 1rem;
     color: black;
@@ -45,14 +52,14 @@
       max-width: 210px;
     }
     .title {
-      font-size: 18px;
       line-height: 22px;
     }
-  }
 
-  @media screen and (max-width: 768px) {
-    .title {
-      font-size: 16px;
+    .tags {
+      overflow-x: scroll;
+      > :global(.tag-container) {
+        flex-wrap: nowrap;
+      }
     }
   }
 

@@ -1,12 +1,11 @@
 <script lang="ts">
   import type { SubTypes, UserInfo } from "$lib/types";
-  import AuthorsEditor from "$lib/components/cms/AuthorsEditor.svelte";
   import KeyTakeaways from "$lib/components/cms/KeyTakeaways.svelte";
   import UserImage from "$lib/components/UserImage.svelte";
   import EditableText from "../generic/EditableText.svelte";
+  import Authors from "./Authors.svelte";
 
   export let chapter: SubTypes.Chapter.PageHead;
-  export let allAuthors: UserInfo[] = [];
   export let editable = false;
   export let readTime: number = undefined;
 
@@ -18,14 +17,6 @@
     };
   }
 
-  const emptyAuthors = [{ id: 0, name: 'Author', img: '' }];
-
-  function onClickAuthor(i: number) {
-    chapter.authors = [...chapter.authors];
-    chapter.authors.splice(i, 1);
-  }
-
-  $: displayAuthors = editable && !chapter.authors.length ? emptyAuthors : chapter.authors;
 
 </script>
 
@@ -39,21 +30,7 @@
       {/each}
     </div>
 
-    {#if editable}
-
-      <div class="author-editor">
-        <AuthorsEditor {allAuthors} bind:authors={chapter.authors} />
-      </div>
-    {:else}
-      <div class="author-names">
-        {#each displayAuthors as author, i}
-          {#if i > 0 && i === displayAuthors.length - 1}
-            and
-          {/if}
-          <div on:click={() => editable && onClickAuthor(i)}>{author.name}</div>
-        {/each}
-      </div>
-    {/if}
+    <Authors bind:authors={chapter.authors} {editable} />
 
     {#if readTime !== undefined}
       <div class="readtime">{readTime} min read</div>

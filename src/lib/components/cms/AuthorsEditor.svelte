@@ -1,13 +1,14 @@
 <script lang="ts">
-  import MultiSelect from "svelte-multiselect";
   import type { UserInfo } from '$lib/types';
+  import MultiSelect from "svelte-multiselect";
+  import { getContext } from "svelte";
 
   type Author = Pick<UserInfo, 'id' | 'name' | 'img'>;
 
   export let authors: Author[] = [];
-  export let allAuthors: Author[];
   export let disabled = false;
 
+  const allAuthors = getContext<Author[]>('allUsers');
   const allAuthorOptions = allAuthors.map(u => ({
     value: u.id,
     label: u.name,

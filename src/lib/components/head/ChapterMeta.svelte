@@ -43,9 +43,12 @@
       <KeyTakeaways bind:keyTakeaways={chapter.keyTakeaways} {editable}/>
     </div>
   {/if}
-  <div class="lifecycle-container">
-    <LifeCycle {tags}/>
-  </div>
+
+  {#if !editable}
+    <div class="lifecycle-container">
+      <LifeCycle {tags}/>
+    </div>
+  {/if}
 
 </div>
 

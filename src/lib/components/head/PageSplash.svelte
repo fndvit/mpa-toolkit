@@ -75,13 +75,11 @@
   +breakpoint(page, medium)
     .splash {
       h1 {
-        font-size: 48px;
-        line-height: 65px;
         margin-bottom: 0px;
       }
 
       &.splash-cs h1 {
-        padding-bottom: 50px;
+        padding-bottom: 5rem;
       }
     }
 

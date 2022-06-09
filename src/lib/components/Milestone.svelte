@@ -51,7 +51,7 @@
 
 <div class="container" class:simple>
 
-  <div class="year">
+  <div class="year font-ui-small">
     <EditableText bind:this={editableYear} bind:value={editYear} {editable} placeholder="year" bind:focused={yearFocused}/>
     {#if editable}
       {#if !year || yearFocused}
@@ -72,7 +72,7 @@
 
   {#if simple}
 
-    <div class="milestone-text" on:click={() => onClickMilestone(0)}>
+    <div class="milestone-text font-p-graphic" on:click={() => onClickMilestone(0)}>
       <EditableText bind:value={content[0]}  {editable} />
     </div>
 
@@ -101,7 +101,7 @@
             </svg>
           {/if}
 
-          <div class="milestone-text" class:contracted={contracted[i]}>
+          <div class="milestone-text font-p-graphic" class:contracted={contracted[i]}>
             <EditableText bind:value={content[i]}  {editable} />
           </div>
 
@@ -207,7 +207,6 @@
   }
 
   .milestone-text {
-    font-size: 16px;
     color: $colors.neutral-bg;
     padding-top: 1.5px;
     padding-left: 22px;
@@ -227,23 +226,20 @@
         text-overflow: ellipsis;
       }
     }
-
   }
 
   .year {
     display: flex;
     column-gap: 5px;
     align-items: center;
-    font-size: 12px;
     color: $colors.neutral-bg;
     height: 25px;
-    padding-left: 4px;
+    padding-left: 2px;
     width: var(--ms-width);
     :global(input) {
       width: 40px;
     }
   }
-
 
   .delete-year-button,
   .delete-milestone-button,
@@ -294,8 +290,6 @@
 
   @media screen and (max-width: 768px) {
     .milestone-text {
-      font-size: 12px;
-      line-height: 18px;
       padding-right: 30px;
       max-width: 125px;
     }

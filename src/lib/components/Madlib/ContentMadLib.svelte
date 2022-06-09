@@ -12,7 +12,7 @@
 
 <div class="content-madlib">
 
-  <h2>Is this not for you?</h2>
+  <h5 class="font-h5">Is this not for you?</h5>
 
   <MadLib />
 
@@ -35,19 +35,15 @@
     background: $colors.neutral-bg;
     padding: 0.75rem 1.5rem 2rem;
     font-family: 'Montserrat';
-
-    font-size: 1.25rem;
     line-height: 2;
 
-    h2 {
+    h5 {
       color: black;
-      font-weight: 700;
-      font-size: 16px;
       margin: 5px 0px 0px 0px;
     }
 
     :global(.madlib) {
-      max-width: 600px;
+      max-width: 570px;
     }
 
     :global(.madlib-selector) {

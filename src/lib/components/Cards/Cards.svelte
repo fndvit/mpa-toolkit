@@ -133,7 +133,6 @@
 
   .slide {
     overflow: hidden;
-    font-family: 'Montserrat';
     top: 0;
     padding: var(--content-top-padding) var(--content-padding) 10px;
     margin-bottom: 15px;
@@ -147,7 +146,7 @@
 
   .fixed-title {
     :global(.heading) {
-      margin-left: 30px;
+      margin-left: 32px;
       margin-top: 25px;
       position: absolute;
     }
@@ -186,6 +185,11 @@
       }
     }
 
-   }
+    .fixed-title {
+      :global(.heading) {
+        margin-left: 17px;
+      }
+    }
+  }
 
 </style>

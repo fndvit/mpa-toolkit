@@ -24,7 +24,7 @@
 </script>
 
 <div
-  class="content"
+  class="content font-p-medium"
   class:hide-scrollbar={hideScroll}
   class:gradient={showGradient}
   on:mouseenter={showScroll}
@@ -37,11 +37,9 @@
 <style lang="stylus">
   .content {
     margin-top: 25px;
-    font-size: 22px;
     overflow: auto;
     min-height: 50px;
     max-height: 170px;
-    font-family: var(--font-serif);
     &::-webkit-scrollbar {
       width: 5px;
     }

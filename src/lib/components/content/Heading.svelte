@@ -4,16 +4,6 @@
 
   export let block: HeadingBlock;
 </script>
-<h1>
+<h2 class="font-h2">
   {#each block.content as child}<Inline block={child}/>{/each}
-</h1>
-
-<style lang="stylus">
-  h1
-    font-size: 2.5rem
-
-  +breakpoint(page, medium)
-    h1
-      font-size: 2rem
-
-</style>
+</h2>

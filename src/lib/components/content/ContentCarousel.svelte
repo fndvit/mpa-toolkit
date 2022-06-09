@@ -15,6 +15,7 @@
     autoWidth: true,
     pagination: false,
     padding: { right: '13%' },
+    noDrag: '.no-drag, .no-drag *',
     breakpoints: {
       1024: {
         perMove: 1
@@ -30,7 +31,7 @@
 </script>
 
 <div class="content-carousel">
-  <p class="title">{title}</p>
+  <p class="title font-h5">{title}</p>
   <Splide {options}>
     {#each slides as slide}
       <SplideSlide>
@@ -45,14 +46,12 @@
 
   .content-carousel {
     position: relative;
+    color: #6C767D;
     line-height: 40px;
     background-color: $colors.neutral-bg;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;
     padding: 0.5rem 0 2rem 1.5rem;
-    font-family: 'Montserrat';
-    font-weight: 400;
-    font-size: 20px;
 
     :global(.splide__arrow) {
       background: #ffffffdd;
@@ -65,8 +64,7 @@
   }
 
   .title {
-    font-family: 'Montserrat';
-    font-weight: 700;
+    color: black;
   }
 
   .opacity-div {
@@ -85,13 +83,7 @@
         transform: scale(0.75);
       }
     }
-
-    .title {
-      font-size: 14px;
-    }
-
   }
-
 
   @media screen and (max-width: 840px) {
 

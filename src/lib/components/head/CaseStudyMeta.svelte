@@ -82,11 +82,11 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .meta-container {
     position: relative;
-    background-color: color(deep-blue);
+    background-color: $colors.deep-blue;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
     --ui-color-placeholder: #ffffff55;
   }
@@ -137,7 +137,7 @@
   .meta-grid > h4 {
     font-family: 'Montserrat';
     font-weight: bold;
-    color: color(neutral-bg);
+    color: $colors.neutral-bg;
     font-size: 16px;
     line-height: 24px;
     margin: 0;

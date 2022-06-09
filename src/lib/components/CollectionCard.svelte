@@ -41,11 +41,11 @@
   </div>
 </a>
 
-<style lang="scss">
+<style lang="stylus">
   .collection-card {
     --cc-height: 200px;
     display: flex;
-    background: color(neutral-bg);
+    background: $colors.neutral-bg;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     height: var(--cc-height);
@@ -70,7 +70,7 @@
     flex: 1;
     display: grid;
     grid-template-areas:
-      "title  tags"
+      "title  tags"\
       "byline tags";
     grid-template-columns: 1fr 300px;
     grid-template-rows: 1fr auto;
@@ -93,7 +93,7 @@
     display: flex;
     align-items: end;
     column-gap: 0.4rem;
-    color: color(neutral-dark);
+    color: $colors.neutral-dark;
     white-space: nowrap;
   }
 

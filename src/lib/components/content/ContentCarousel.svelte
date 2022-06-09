@@ -41,12 +41,12 @@
   <div class="opacity-div" />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .content-carousel {
     position: relative;
     line-height: 40px;
-    background-color: color(neutral-bg);
+    background-color: $colors.neutral-bg;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;
     padding: 0.5rem 0 2rem 1.5rem;
@@ -72,7 +72,7 @@
   .opacity-div {
     height: 100%;
     width: 15%;
-    background: linear-gradient(to right, color(neutral-bg, 0), color(neutral-bg));
+    background: linear-gradient(to right, alpha($colors.neutral-bg, 0), $colors.neutral-bg);
     position: absolute;
     top: 0;
     right: 0;

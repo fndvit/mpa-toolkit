@@ -13,7 +13,7 @@
   <div class="dot-background" />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .dot {
     position: relative;

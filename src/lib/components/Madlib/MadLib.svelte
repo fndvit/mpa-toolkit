@@ -17,7 +17,7 @@
   <MadLibSelector options={actionSubjectList} bind:selected={value[3]}/>
 </p>
 
-<style lang="scss">
+<style lang="stylus">
 
   .madlib {
     position: relative;

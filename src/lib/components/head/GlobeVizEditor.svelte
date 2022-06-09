@@ -60,7 +60,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .globe-editor {
     cursor: pointer;
@@ -81,7 +81,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: color(deep-blue);
+    background-color: $colors.deep-blue;
     text-align: center;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.1);
     padding: 0 2px;

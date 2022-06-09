@@ -30,7 +30,7 @@
   </span>
 </a>
 
-<style lang="scss">
+<style lang="stylus">
   .tag {
     cursor: pointer;
     display: inline-block;
@@ -47,16 +47,16 @@
     position: relative;
     white-space: nowrap;
     height: fit-content;
-    background: color(highlight-1);
+    background: $colors.highlight-1;
     &.secondary {
       background: color(highlight-1, 0.4);
     }
 
     :global(.collection-card) &,
     :global(.content-carousel-card) & {
-      background: color(tag-bg-cards);
+      background: $colors.tag-bg-cards;
       &.secondary {
-        background: color(tag-bg-cards, 0.4);
+        background: alpha($colors.tag-bg-cards, 0.4);
       }
     }
 

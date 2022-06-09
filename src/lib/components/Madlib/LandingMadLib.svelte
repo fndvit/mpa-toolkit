@@ -26,7 +26,7 @@
 
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .landing-madlib {
     color: white;
@@ -38,7 +38,7 @@
     width: auto;
     margin-top: 35px;
     padding: 0.5rem var(--page-padding) 5rem;
-    background: color(primary-blue);
+    background: $colors.primary-blue;
     height: 600px;
     background-size: cover;
     background-position: bottom;
@@ -62,7 +62,7 @@
     }
 
     svg path {
-      stroke: color(neutral-black);
+      stroke: $colors.neutral-black;
     }
 
   }
@@ -72,7 +72,7 @@
     border: none;
     font-size: 1.25rem;
     font-weight: 700;
-    background: color(highlight-1);
+    background: $colors.highlight-1;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     position: relative;
     border-radius: 24px;

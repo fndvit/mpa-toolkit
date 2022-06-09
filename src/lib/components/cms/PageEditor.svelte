@@ -202,7 +202,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .draft-button {
     :global(.icon-button) {

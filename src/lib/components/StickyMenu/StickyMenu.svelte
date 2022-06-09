@@ -33,7 +33,7 @@
 
 </script>
 
-<nav class="mainnav" bind:this={nav}>
+<nav class="sticky-menu" bind:this={nav}>
   {#each menuOptions as {id, title}, i}
     <div
       class="menuoption"
@@ -47,11 +47,10 @@
   {/each}
 </nav>
 
-<style lang="scss">
-  .mainnav {
-    width: 215px;
+<style lang="stylus">
+  .sticky-menu {
     z-index: 10;
-    background: color(neutral-bg);
+    background: $colors.neutral-bg;
     box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
     border-radius: 0px 0px 20px 20px;
     padding-top: 31px;

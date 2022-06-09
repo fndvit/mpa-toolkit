@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .container {
     background-size: cover;
     background-repeat: no-repeat;

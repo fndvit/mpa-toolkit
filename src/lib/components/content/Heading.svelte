@@ -8,14 +8,12 @@
   {#each block.content as child}<Inline block={child}/>{/each}
 </h1>
 
-<style lang="scss">
-  h1 {
-    font-size: 2.5rem;
-  }
+<style lang="stylus">
+  h1
+    font-size: 2.5rem
 
-  @media screen and (max-width: 768px) {
-    h1 {
-      font-size: 2rem;
-    }
-  }
+  +breakpoint(page, medium)
+    h1
+      font-size: 2rem
+
 </style>

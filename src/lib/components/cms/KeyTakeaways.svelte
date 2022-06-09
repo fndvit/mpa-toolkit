@@ -29,7 +29,7 @@
   </div>
 {/if}
 
-<style lang="scss">
+<style lang="stylus">
   .key-takeaways {
     max-width: 850px;
     margin-bottom: 25px;

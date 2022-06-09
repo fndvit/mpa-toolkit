@@ -16,7 +16,7 @@
   {/each}
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .tag-container {
     --tag-spacing: 0.5rem;
     display: flex;

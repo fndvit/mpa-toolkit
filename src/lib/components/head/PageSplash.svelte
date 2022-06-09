@@ -33,7 +33,7 @@
   </h1>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .splash {
     --ec-hover-bg: #ffffff22;

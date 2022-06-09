@@ -35,7 +35,7 @@
   <div class="editable-content editable-text">{value || ''}</div>
 {/if}
 
-<style lang="scss">
+<style lang="stylus">
   .editable-text {
     caret-color: var(--caret-color, white);
     color: inherit;

@@ -23,7 +23,7 @@
   <MultiSelect placeholder="Add an author" bind:selected={authorOptions} options={allAuthorOptions} {disabled} />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .author-editor {
     --sms-selected-bg: transparent;
     --sms-border: none;

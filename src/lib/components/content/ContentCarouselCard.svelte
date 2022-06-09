@@ -16,7 +16,7 @@
   <TagContainer {tags}/>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .content-carousel-card {
     width: 292px;
     a {

@@ -62,7 +62,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .landing-carousel {
 
@@ -75,7 +75,7 @@
     }
 
     :global(.splide__arrow) {
-      background-color: color(neutral-bg);
+      background-color: $colors.neutral-bg;
       opacity: 0.5;
     }
 
@@ -104,7 +104,7 @@
   .title-container {
     font-size: 48px;
     font-weight: 300;
-    color: color(neutral-black);
+    color: $colors.neutral-black;
     max-width: 600px;
     padding: 25px var(--page-padding) 0;
   }

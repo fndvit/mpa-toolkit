@@ -33,11 +33,11 @@
 
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .footer {
     padding: 0 var(--page-padding);
-    background: color(neutral-bg);
+    background: $colors.neutral-bg;
 
     p {
       font-weight: bold;
@@ -49,7 +49,7 @@
     grid-template-columns: 126px 87px 148px 135px 39px;
     align-items: center;
     gap: 45px;
-    color: color(neutral-dark);
+    color: $colors.neutral-dark;
   }
 
   .links {
@@ -59,7 +59,7 @@
     gap: 0.55em;
 
     a {
-      color: color(neutral-dark);
+      color: $colors.neutral-dark;
       font-size: 12px;
       margin-right: 15px;
     }

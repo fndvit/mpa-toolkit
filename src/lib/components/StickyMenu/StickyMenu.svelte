@@ -48,6 +48,7 @@
 </nav>
 
 <style lang="scss">
+  
   .mainnav {
     width: 215px;
     z-index: 10;
@@ -68,4 +69,12 @@
   .active {
     font-weight: 700;
   }
+
+  @media(max-width: 1250px) {
+    .mainnav {
+      width: 150px;
+      border-radius: 0px 20px 20px 0px;
+    }
+  }
+
 </style>

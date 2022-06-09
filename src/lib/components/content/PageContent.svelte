@@ -27,8 +27,17 @@
 </script>
 
 <div class="page-content">
+ 
   <div class="menu">
-    <StickyMenu menuOptions={headings} />
+    <div class="sliding-menu">
+      <svg class="arrow-svg" viewBox="0 0 12 20">
+        <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
+      </svg>
+    </div>
+    <div class="sidebarMenu">
+      <StickyMenu menuOptions={headings} />
+    </div>
+    
   </div>
   <div class="body-column">
     {#each sections as section, i}
@@ -121,10 +130,59 @@
       grid-column: body / right-margin;
   }
 
+
+  .sliding-menu {
+    display: none;
+  }
+
+  .arrow-svg {
+    width: 12px;
+    height: 20px;
+    fill: none;
+    transform: translateX(8px) translateY(10px);
+  }
+
+  .arrow-path {
+    stroke:color(neutral-black) ;
+    stroke-width: 2.4px;
+  }
+
   @media screen and (max-width: 1250px) {
-    .menu {
-      display: none; //temporary
+
+    .sliding-menu {
+      display: flex;
+      padding: 1rem;
+      margin-top: 2rem;
+      background: color(neutral-bg);
+      width: 20px;
+      height: 40px;
+      z-index: 10;
+      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+      border-radius: 0px 20px 20px 0px;
+      position: sticky;
+      transform: translateX(-2rem);
+      transition: .4s ease-out;
+
+      .menu:hover & {
+        box-shadow: 0px 0px 10px #000000;
+        opacity: 0;
+      }
+      
     }
+
+    .sidebarMenu {
+      transform: translateX(-4rem) translateY(-6rem);
+      width: 220px;
+      padding: 1rem 1.5rem;
+      box-sizing: border-box;
+      transition: .4s ease-out;
+    
+      .menu:not(:hover) & {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+
     .page-content {
       grid-template-columns: auto;
       display: block;
@@ -139,8 +197,8 @@
       }
     }
   }
-  @media screen and (max-width: 840px) {
 
+  @media screen and (max-width: 840px) {
 
     .madlib-container {
       margin-top: 1rem;

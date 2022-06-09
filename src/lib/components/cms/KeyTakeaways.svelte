@@ -31,9 +31,6 @@
 
 <style lang="stylus">
   .key-takeaways {
-    max-width: 850px;
-    margin-bottom: 25px;
-    margin-left: -30px;
     --ec-hover-bg: #ffffff44;
     :global(.button) {
       margin: auto;

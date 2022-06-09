@@ -36,20 +36,19 @@
 <style lang="stylus">
 
   .splash {
+    grid-config(page, splash);
+
     --ec-hover-bg: #ffffff22;
     --ui-color-placeholder: #ffffff55;
     min-height: 60vh;
-    display: flex;
-    align-items: flex-end;
-    padding: 6rem;
     padding-bottom: 3rem;
-    padding-left: 124px;
     background-size: cover;
     background-position: center center;
 
     h1 {
-      max-width: 800px;
-      width: 100%;
+      grid-area: title;
+      display: flex;
+      align-items: end;
       color: white;
       text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.45);
       > :global(*) {
@@ -59,7 +58,6 @@
         display: inline-block;
       }
     }
-
 
     &.splash-cs h1 > :global(*:first-child) {
       font-weight: 700;
@@ -74,12 +72,8 @@
     color: white;
   }
 
-  @media screen and (max-width: 768px) {
-
+  +breakpoint(page, medium)
     .splash {
-      padding-left: 20px;
-      padding-right: 20px;
-
       h1 {
         font-size: 48px;
         line-height: 65px;
@@ -90,7 +84,6 @@
         padding-bottom: 50px;
       }
     }
-  }
 
 
 </style>

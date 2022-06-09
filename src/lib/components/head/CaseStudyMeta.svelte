@@ -30,14 +30,20 @@
 
     <div class="meta-grid meta-grid-1">
 
-      <div class="font-h5-graphic meta-title">Name</div>
-      <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Name</div>
+        <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
+      </div>
 
-      <div class="font-h5-graphic meta-title">Established in</div>
-      <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
+      <div class="grid-cell side-by-side-1">
+        <div class="font-h5-graphic meta-title">Established in</div>
+        <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
+      </div>
 
-      <div class="font-h5-graphic meta-title">Size</div>
-      <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
+      <div class="grid-cell side-by-side-2">
+        <div class="font-h5-graphic meta-title">Size</div>
+        <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
+      </div>
 
       <div class="globe-cell">
         {#if editable}
@@ -51,17 +57,25 @@
 
     <div class="meta-grid meta-grid-2">
 
-      <div class="font-h5-graphic meta-title">Governance</div>
-      <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Governance</div>
+        <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
+      </div>
 
-      <div class="font-h5-graphic meta-title">Staff</div>
-      <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Staff</div>
+        <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
+      </div>
 
-      <div class="font-h5-graphic meta-title">Budget</div>
-      <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Budget</div>
+        <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
+      </div>
 
-      <div class="font-h5-graphic meta-title">Budget level</div>
-      <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Budget level</div>
+        <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
+      </div>
 
     </div>
 
@@ -84,6 +98,10 @@
 
 <style lang="scss">
 
+  .grid-cell {
+    margin-bottom: 5rem;
+  }
+
   .meta-container {
     --bg-color: #13487C;
     position: relative;
@@ -93,7 +111,7 @@
   }
 
   .meta-content {
-    width: 1300px;
+    width: auto;
     margin-left: 124px;
     padding: 35px 20px;
   }
@@ -101,20 +119,18 @@
   .meta-grid {
     display: grid;
     grid-template-rows: auto auto;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
     column-gap: 1.5rem;
     color: white;
 
     &.meta-grid-1 {
-      grid-template-columns: 325px 225px 425px 325px;
-      margin-bottom: 40px;
+      grid-template-columns: 20% 12% 28% 20%;
       min-height: 110px;
     }
 
     &.meta-grid-2 {
-      grid-template-columns: 325px 325px 325px 325px;
+      grid-template-columns: 20% 20% 20% 20%;
     }
-
   }
 
   .meta-grid :global(.editable-content) {
@@ -158,8 +174,13 @@
 
   @media screen and (max-width: 1024px) {
 
-    .meta-title {
-      margin-top: 20px;
+    .side-by-side-1 {
+      display: inline-block;
+      margin-right: 75px;
+    }
+
+    .side-by-side-2 {
+      display: inline-block;
     }
 
     .meta-content {
@@ -185,11 +206,7 @@
       color: white;
 
       &.meta-grid-1 {
-        margin-bottom: 0px;
         min-height: 110px;
-        :nth-child(1){
-          color: red;
-        }
       }
 
       &.meta-grid-2 {

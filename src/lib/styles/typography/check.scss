@@ -1,21 +1,21 @@
-@use "./util.scss" as *;
+@use "../util.scss" as *;
 @use './config.scss' as *;
 
-@function _checkStyles($fontSize, $weight, $lineHeight: null) {
+@function check-styles($font-size, $weight, $line-height: null) {
   @return (
-    isUnit($fontSize, "px") and
-    isUnit($weight, "") and
-    ($lineHeight == null or isUnit($lineHeight, "px") or isUnit($lineHeight, ""))
+    is-unit($font-size, "px") and
+    is-unit($weight, "") and
+    ($line-height == null or is-unit($line-height, "px") or is-unit($line-height, ""))
   );
 }
 
-@each $fontName, $fontSpec in $typography {
-  $fontFamily: nth($fontSpec, 1);
-  $fontStyleMap: nth($fontSpec, 2);
-  @each $fontSubType, $fontStyle in $fontStyleMap {
-    $valid:_checkStyles($fontStyle...);
-    @if not _checkStyles($fontStyle...) {
-      @error "Invalid font style for " + $fontName;
+@each $font-name, $font-spec in $typography {
+  $font-family: nth($font-spec, 1);
+  $font-style-map: nth($font-spec, 2);
+  @each $font-sub-type, $font-style in $font-style-map {
+    $valid:check-styles($font-style...);
+    @if not check-styles($font-style...) {
+      @error "Invalid font style for " + $font-name;
     }
   }
 }

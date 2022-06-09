@@ -1,4 +1,3 @@
-@use './color/mixins.scss' as *;
 @import '@splidejs/splide/dist/css/splide.min.css';
 
 .splide__arrow {
@@ -16,5 +15,5 @@
 .splide__arrow svg path {
   fill: none;
   stroke-width: 4.4;
-  stroke: color(neutral-black);
+  stroke: #2A2A2A;
 }

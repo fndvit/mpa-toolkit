@@ -43,7 +43,7 @@
   />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .editable-user-image {
     position: relative;
     font-size: 0;
@@ -58,7 +58,6 @@
     justify-content: center;
     background: #22222266;
     border-radius: 50%;
-    --color: #222;
   }
 
   :global(.user-image) {

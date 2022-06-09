@@ -1,6 +1,5 @@
 <script lang="ts">
-  import '../app.css';
-  import '$lib/styles/typography/global.scss';
+  import '$lib/styles/app.scss';
   import Toaster from '$lib/components/generic/Toaster.svelte';
   import { setContext } from 'svelte';
 

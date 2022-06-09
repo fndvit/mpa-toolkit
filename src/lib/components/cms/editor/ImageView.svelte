@@ -23,7 +23,7 @@
   <img src={staticUrl(attrs.src)} alt={attrs.alt} title={attrs.title} />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   :global(.svelte-node-view.ProseMirror-selectednode) .imageview {
     outline: 1px solid #333333aa;

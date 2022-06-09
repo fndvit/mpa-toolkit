@@ -7,7 +7,7 @@
   import Paragraph from "./Paragraph.svelte";
   import TextSlider from "./TextSlider.svelte";
   import ContentMadLib from "$lib/components/Madlib/ContentMadLib.svelte";
-  import TinyCarousel from "$lib/components/TinyCarousel.svelte";
+  import ContentCarousel from "$lib/components/content/ContentCarousel.svelte";
   import LifeCycle from "$lib/components/LifeCycle.svelte";
   import Image from "./Image.svelte";
 
@@ -31,9 +31,11 @@
   <div class="menu">
     <StickyMenu menuOptions={headings} />
   </div>
-  <div class="lifecycle-container">
-    <LifeCycle tags={page.tags}/>
-  </div>
+  {#if page.caseStudy }
+    <div class="lifecycle-container">
+      <LifeCycle tags={page.tags}/>
+    </div>
+  {/if}
   <div class="body-column">
     {#each sections as section, i}
       <Section {section}>
@@ -54,8 +56,8 @@
             <ContentMadLib />
           </div>
         {:else if i === 2 && recommendedPages?.length > 0}
-          <div class="tiny-carousel-container">
-            <TinyCarousel slides={recommendedPages} title={'You may also like'}/>
+          <div class="content-carousel-container">
+            <ContentCarousel slides={recommendedPages} title={'You may also like'}/>
           </div>
         {/if}
       {/if}
@@ -63,16 +65,15 @@
     </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .page-content {
+    grid-config(page, content);
+
     position: relative;
-    display: grid;
-    grid-template-columns: minmax(250px, 300px) minmax(32rem, 40rem) minmax(300px, auto);
-    grid-template-areas: "left-margin body right-margin";
-    grid-auto-flow: row;
-    column-gap: 1.5rem;
-    padding: 0 20px;
+    min-height: 800px // so empty pages don't collapse
+    grid-auto-rows: min-content;
+    padding-bottom: 2rem;
   }
 
   .body-column {
@@ -81,31 +82,39 @@
     font-size: 18px;
     line-height: 32px;
     > :global(*) {
-      grid-column-start: body;
+      grid-column: body;
     }
   }
 
   .unknown-block {
-    background: #fca5a5;
+    background: $colors.error-red;
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1rem -1rem;
   }
 
   .menu {
-    grid-area: left-margin;
-    top: 10px;
-    padding-right: 1rem;
-    :global(.mainnav) {
+    grid-column: menu;
+    grid-row: 1 / span 100; // can't span -1 through dynamic rows
+    margin: 0 1rem 0 -30px;
+    :global(.sticky-menu) {
       position: sticky;
-      float: right;
-      top: 10px;
+      top: 0;
       flex: 0;
+    }
+
+    +breakpoint(page, medium) {
+      margin: 0 1rem 0 0;
+      display: none;
+    }
+
+    +breakpoint(page, small) {
+      display: none;
     }
   }
 
   .lifecycle-container {
-    grid-area: right-margin;
+    grid-area: lifecycle;
     padding-top: 1.5rem;
     :global(.lifecycle) {
       margin: auto;
@@ -113,61 +122,14 @@
     }
   }
 
-  .tiny-carousel-container {
+  .content-carousel-container {
     overflow: hidden;
   }
 
   .madlib-container,
-  .tiny-carousel-container {
-      margin-left: -25px;
-      margin-right: -20px;
-      grid-column: body / right-margin;
-  }
-
-  @media screen and (max-width: 1150px) {
-    .page-content {
-      grid-template-columns: 250px minmax(500px, 600px) minmax(20px, auto);
-    }
-    .body-column {
-      :global(.tiny-carousel) {
-        width: auto;
-      }
-    }
-    .lifecycle-container {
-      grid-area: body;
-      grid-row: 1;
-      :global(.lifecycle) {
-        max-width: none;
-      }
-    }
-  }
-  @media screen and (max-width: 840px) {
-    .page-content {
-      display: block;
-    }
-
-    .madlib-container {
-      margin-top: 1rem;
-      margin-right: 0;
-    }
-
-    .body-column {
-      font-size: 16px;
-      line-height: 28px;
-      > :global(.content-section) {
-        max-width: 480px;
-        margin: auto;
-      }
-
-      :global(img) {
-        max-width: 100%;
-      }
-    }
-
-    .menu {
-      display: none; //temporary
-    }
-
+  .content-carousel-container {
+    margin-left: -25px;
+    grid-column: body / -1;
   }
 
 </style>

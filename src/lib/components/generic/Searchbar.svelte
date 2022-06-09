@@ -33,7 +33,7 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .search-path {
     stroke-width: inherit;

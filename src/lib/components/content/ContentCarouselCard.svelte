@@ -8,7 +8,7 @@
   const {slug, img, title, tags} = page;
 </script>
 
-<div class="container" tabindex="0">
+<div class="content-carousel-card" tabindex="0">
   <a href={"/" + slug}>
     <img src={staticUrl(img)} alt="interesting-chapters" href={"/" + slug}/>
     <div class="title font-h5-light">{title}</div>
@@ -20,11 +20,24 @@
 
 </div>
 
-<style lang="scss">
-
-  .container {
+<style lang="stylus">
+  .content-carousel-card {
     width: 292px;
-    --tag-bg: #dadce0;
+    a {
+      display: flex;
+      flex-direction: column;
+      row-gap: 0.6rem;
+      padding-bottom: 1rem;
+    }
+    a:hover {
+      text-decoration: none;
+      img {
+        filter: brightness(105%);
+      }
+      .title {
+        color: #555;
+      }
+    }
   }
 
   .tags {
@@ -34,21 +47,16 @@
 
   img {
     width: 100%;
-    margin-bottom: 10px;
-    a:hover & {
-      filter: brightness(105%);
-    }
   }
 
   .title {
     line-height: 1.5rem;
     padding-left: 0.15rem;
-    margin-bottom: 1rem;
     color: black;
   }
 
   @media (max-width: 1320px) {
-    .container {
+    .content-carousel-card {
       max-width: 210px;
     }
     .title {

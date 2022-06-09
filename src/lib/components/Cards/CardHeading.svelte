@@ -8,7 +8,7 @@
   <EditableText bind:value={text} {editable} placeholder='Heading...' />
 </div>
 
-<style>
+<style lang="stylus">
   .heading {
     margin-top: 5px;
   }

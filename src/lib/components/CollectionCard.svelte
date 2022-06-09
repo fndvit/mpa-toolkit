@@ -41,12 +41,11 @@
   </div>
 </a>
 
-<style lang="scss">
+<style lang="stylus">
   .collection-card {
     --cc-height: 200px;
-    --tag-bg: #dadce0;
     display: flex;
-    background: #f9f9f9;
+    background: $colors.neutral-bg;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     height: var(--cc-height);
@@ -71,7 +70,7 @@
     flex: 1;
     display: grid;
     grid-template-areas:
-      "title  tags"
+      "title  tags"\
       "byline tags";
     grid-template-columns: 1fr 300px;
     grid-template-rows: 1fr auto;
@@ -94,7 +93,7 @@
     display: flex;
     align-items: end;
     column-gap: 0.4rem;
-    color: #6C767D;
+    color: $colors.neutral-dark;
     white-space: nowrap;
   }
 
@@ -106,9 +105,6 @@
     h3 {
       margin: 0;
       margin-top: 0.3rem;
-    }
-    > :global(.tag-container) {
-      overflow: scroll;
     }
   }
 

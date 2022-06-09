@@ -53,7 +53,7 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
   .editor-content {
     display: grid;
     grid-template-columns: 70% auto;
@@ -88,7 +88,7 @@
     }
     :global(card) {
       display: block;
-      background: #096EAE;
+      background: $colors.primary-blue;
       color: white;
       padding: 0 2rem;
       padding-bottom: 1rem;

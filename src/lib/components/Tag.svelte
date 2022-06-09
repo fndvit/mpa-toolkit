@@ -30,7 +30,7 @@
   </span>
 </a>
 
-<style lang="scss">
+<style lang="stylus">
   .tag {
     cursor: pointer;
     display: inline-block;
@@ -43,23 +43,25 @@
     position: relative;
     white-space: nowrap;
     height: fit-content;
-    &:before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      background: var(--tag-bg, #fbe26b);
+    background: $colors.highlight-1;
+    &.secondary {
+      background: color(highlight-1, 0.4);
     }
-    &.secondary::before {
-      opacity: var(--tag-bg-fade, 0.4);
+
+    :global(.collection-card) &,
+    :global(.content-carousel-card) & {
+      background: $colors.tag-bg-cards;
+      &.secondary {
+        background: alpha($colors.tag-bg-cards, 0.4);
+      }
     }
+
     span {
       position: relative;
     }
   }
   .tag:hover {
-    box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    filter: brightness(105%);
   }
 </style>

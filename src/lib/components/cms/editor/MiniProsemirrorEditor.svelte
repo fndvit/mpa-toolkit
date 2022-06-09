@@ -73,10 +73,10 @@
   bind:this={editor}
 />
 
-<style lang="scss">
+<style lang="stylus">
 
   .mini-editor {
-    --ui-color-placeholder: #aaaaaa;
+    --ui-color-placeholder: $colors.editor-placeholder;
     position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;

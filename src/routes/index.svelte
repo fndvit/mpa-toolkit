@@ -55,10 +55,10 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .landing-page {
-    background: #F9F9F9;
+    background: $colors.neutral-bg;
     --page-padding: 6rem;
   }
 

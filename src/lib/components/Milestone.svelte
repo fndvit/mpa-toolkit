@@ -126,7 +126,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .container {
     --ms-width: 200px;
@@ -145,9 +145,9 @@
 
   .main-circle {
     position: absolute;
-    stroke: #FBE26B;
+    stroke: $colors.highlight-1;
     stroke-width: 3;
-    fill: #096EAE;
+    fill: $colors.primary-blue;
   }
 
   .milestones-block {
@@ -156,7 +156,7 @@
 
   .main-line {
     pointer-events: none;
-    border-left: 1.5px dashed #FBE26B;
+    border-left: 1.5px dashed $colors.highlight-1;
     grid-column: 1;
     grid-row: 1 / span var(--num-milestones);
     margin-left: 7px;
@@ -171,7 +171,7 @@
     margin-left: 7px;
     path {
       stroke-dasharray: 3;
-      stroke: #FBE26B;
+      stroke: $colors.highlight-1;
       stroke-width: 1.5px;
       fill: none;
     }
@@ -188,26 +188,26 @@
 
   .milestone-circle {
     transform: translate(17px, -6px);
-    stroke: #FBE26B;
+    stroke: $colors.highlight-1;
     stroke-width: 3;
-    fill: #096EAE;
+    fill: $colors.primary-blue;
     &.expanded {
-      fill: #FBE26B;
+      fill: $colors.highlight-1;
     }
   }
 
   .expandable-circle {
-    stroke: #FBE26B;
+    stroke: $colors.highlight-1;
     transform: translate(16px, -7px);
 
     circle {
-      fill: #096EAE;
+      fill: $colors.primary-blue;
       stroke-width: 3px;
     }
   }
 
   .milestone-text {
-    color: #F9F9F9;
+    color: $colors.neutral-bg;
     padding-top: 1.5px;
     padding-left: 22px;
 
@@ -232,7 +232,7 @@
     display: flex;
     column-gap: 5px;
     align-items: center;
-    color: #F9F9F9;
+    color: $colors.neutral-bg;
     height: 25px;
     padding-left: 2px;
     width: var(--ms-width);

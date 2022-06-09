@@ -45,7 +45,7 @@
     <div class="editable-content">{value || ''} {unitSuffix || ''}</div>
 {/if}
 
-<style lang="scss">
+<style lang="stylus">
   input {
     caret-color: white;
     color: inherit;

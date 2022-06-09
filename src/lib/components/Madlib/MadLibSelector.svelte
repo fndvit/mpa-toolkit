@@ -58,7 +58,7 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .madlib-selector {
     display: inline-block;
@@ -111,7 +111,7 @@
     box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2);
     padding: 0.35rem 0.7rem 0.35rem 0.7rem;
     border-radius: 20px;
-    background-color: #F9F9F9;
+    background-color: $colors.neutral-bg;
     color: black;
     border: none;
     z-index: 1000;

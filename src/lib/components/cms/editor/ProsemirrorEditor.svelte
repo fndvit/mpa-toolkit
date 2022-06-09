@@ -61,9 +61,9 @@
   on:keydown
 />
 
-<style>
+<style lang="stylus">
   :global(body) {
-    --ui-color-placeholder: #aaaaaa;
+    --ui-color-placeholder: $colors.editor-placeholder;
   }
   :global(.ProseMirror) {
     position: relative;

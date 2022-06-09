@@ -96,16 +96,15 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .grid-cell {
     margin-bottom: 5rem;
   }
 
   .meta-container {
-    --bg-color: #13487C;
     position: relative;
-    background-color: var(--bg-color);
+    background-color: $colors.deep-blue;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
     --ui-color-placeholder: #ffffff55;
   }
@@ -153,6 +152,7 @@
 
   .meta-title {
     color: #F9F9F9;
+    color: $colors.neutral-bg;
     margin: 0;
   }
 

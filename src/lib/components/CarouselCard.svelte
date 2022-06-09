@@ -42,7 +42,7 @@
 </a>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .carousel-card {
     display: flex;
@@ -51,11 +51,11 @@
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 40px;
     border: none;
-    background: #096EAE;
+    background: $colors.primary-blue;
     height: 100%;
 
     &.case-study {
-      background: #13487C;
+      background: $colors.deep-blue;
     }
 
     &:hover {
@@ -80,7 +80,7 @@
   }
 
   .arrow-path {
-    stroke:#2A2A2A ;
+    stroke:$colors.neutral-black ;
     stroke-width: 2.4px;
   }
 
@@ -93,7 +93,7 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: #FBE26B;
+    background: $colors.highlight-1;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
   }
 

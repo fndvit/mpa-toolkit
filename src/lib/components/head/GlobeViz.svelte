@@ -16,9 +16,9 @@
   <div class="globe" />
 {/if}
 
-<style>
+<style lang="stylus">
   .globe {
-    background: #04558E;
+    background: $colors.dark-blue;
     border-radius: 50%;
     width: 245px;
     height: 245px;

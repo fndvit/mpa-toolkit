@@ -16,23 +16,18 @@
 </button>
 {/if}
 
-<style lang="scss">
+<style lang="stylus">
 
   .button {
-    --bg-color: #efefef;
-    --color: #333;
-    --border-color: #bbb;
-    --height: 2em;
-
     position: relative;
-    color: var(--color);
-    background-color: var(--bg-color);
-    border: 1px solid var(--border-color);
+    color: #333;
+    background-color: #efefef;
+    border: 1px solid #bbb;
     border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--height);
+    height: 2em;
     padding: 0 15px;
     cursor: pointer;
 

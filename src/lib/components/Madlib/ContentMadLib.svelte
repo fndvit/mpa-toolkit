@@ -19,20 +19,20 @@
   <button tabindex="0" on:click={submit}>
     Let's find what you need
     <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
-      <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke="#2A2A2A" stroke-width="1.5"/>
+      <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke-width="1.5"/>
     </svg>
   </button>
 
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .content-madlib {
     position: relative;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;
-    color: #6C767D;
-    background: #F9F9F9;
+    color: $colors.neutral-dark;
+    background: $colors.neutral-bg;
     padding: 0.75rem 1.5rem 2rem;
     font-family: 'Montserrat';
     line-height: 2;
@@ -65,8 +65,8 @@
     right:0;
     bottom: 0;
     align-content: center;
-    background: #FBE26B;
-    color: #2A2A2A;
+    background: $colors.highlight-1;
+    color: $colors.neutral-black;
     padding: 0.5rem 0.2rem 0.5rem 1.25rem;
     border-radius: 20px 0px 0px 0px;
     box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
@@ -82,6 +82,10 @@
       transform: rotate(-90deg) scale(1.35) translateX(-0.25rem);
       overflow: hidden;
       outline: none;
+    }
+
+    svg path {
+      stroke: $colors.neutral-black;
     }
 
   }

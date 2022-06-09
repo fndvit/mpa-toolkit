@@ -7,7 +7,7 @@
 
 <span class="{markClasses.join(' ')}">{block.text}</span>
 
-<style>
+<style lang="stylus">
   .mark--strong {
     font-weight: 600;
   }

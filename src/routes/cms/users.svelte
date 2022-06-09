@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .container {
     max-width: 1200px;

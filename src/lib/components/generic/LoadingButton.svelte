@@ -17,7 +17,7 @@
   </div>
 </Button>
 
-<style lang="scss">
+<style lang="stylus">
 
   .contents {
     display: flex;
@@ -26,9 +26,9 @@
 
     > :global(.spinner) {
       position: absolute;
-      --size: calc(var(--height) - 6px);
-      --border-width: 2px;
-      --color: #333;
+      --spinner-size: 1.5rem;
+      --spinner-thickness: 2px;
+      --spinner-color: #333;
     }
   }
 

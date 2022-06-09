@@ -7,7 +7,7 @@ $font-serif: 'Bitter', serif;
 // at this screen width
 $mobile-breakpoint: 500px;
 
-// these will output global css styles for each breakpoint named `.font-{fontName}`
+// these will output global css styles for each breakpoint named `.font-{font-name}`
 // format is: size-in-px, weight, line-height (optional - in px or a multiple of font-size)
 
 $typography: (

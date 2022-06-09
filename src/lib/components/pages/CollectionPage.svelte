@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .collection-page {
     --page-padding: 90px;

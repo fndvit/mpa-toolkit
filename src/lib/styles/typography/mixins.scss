@@ -1,48 +1,47 @@
 @use "sass:math";
 @use "sass:list" as *;
-@use './util.scss' as *;
-@import './config.scss';
-@import './check.scss';
+@use '../util.scss' as *;
+@use './config.scss' as *;
 
-@function _rem($fontSize) {
-  @return #{calc(stripUnit($fontSize) / stripUnit($html-font-size))}rem;
+@function _rem($font-size) {
+  @return #{calc(strip-unit($font-size) / strip-unit($html-font-size))}rem;
 }
 
-@mixin _fontCss($size, $weight, $lineHeight: null) {
+@mixin _font-css($size, $weight, $line-height: null) {
   font-size: _rem($size);
   font-weight: $weight;
-  @if $lineHeight != null {
-    @if isUnit($lineHeight, 'px') {
-      line-height: decimalRound(math.div($lineHeight, $size), 2);
+  @if $line-height != null {
+    @if is-unit($line-height, 'px') {
+      line-height: decimal-round(math.div($line-height, $size), 2);
     }
-    @else if isUnit($lineHeight, '') {
-      line-height: $lineHeight;
+    @else if is-unit($line-height, '') {
+      line-height: $line-height;
     }
   }
 }
 
-@function _getFontStyle($fontName, $breakpoint: 'main') {
-  @if not map-has-key($typography, $fontName) {
-    @error "No font named " + $fontName;
+@function _get-font-style($font-name, $breakpoint: 'main') {
+  @if not map-has-key($typography, $font-name) {
+    @error "No font named " + $font-name;
   }
-  $fontSpec: map-get($typography, $fontName);
-  $fontFamily: nth($fontSpec, 1); // e.g. 'Montserrat'
-  $fontStyleMap: nth($fontSpec, 2); // e.g. ( main: 48 300, light: 24 300 )
-  @if not map-has-key($fontStyleMap, $breakpoint) {
-    @error $fontName + " has no " + $breakpoint + " breakpoint style";
+  $font-spec: map-get($typography, $font-name);
+  $font-family: nth($font-spec, 1); // e.g. 'Montserrat'
+  $font-style-map: nth($font-spec, 2); // e.g. ( main: 48 300, light: 24 300 )
+  @if not map-has-key($font-style-map, $breakpoint) {
+    @error $font-name + " has no " + $breakpoint + " breakpoint style";
   }
   @return (
-    $fontFamily,
-    map-get($fontStyleMap, $breakpoint)
+    $font-family,
+    map-get($font-style-map, $breakpoint)
   );
 }
 
-@mixin font($fontName, $breakpoint: main, $includeFamily: true) {
-  $fontStyle: _getFontStyle($fontName, $breakpoint);
+@mixin font($font-name, $breakpoint: main, $include-family: true) {
+  $font-style: _get-font-style($font-name, $breakpoint);
 
-  @if ($includeFamily) {
-    font-family: nth($fontStyle, 1);
+  @if ($include-family) {
+    font-family: nth($font-style, 1);
   }
-  @include _fontCss(nth($fontStyle, 2)...);
+  @include _font-css(nth($font-style, 2)...);
 
 }

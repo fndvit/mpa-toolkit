@@ -80,7 +80,7 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .milestones {
     --width: auto;
@@ -88,7 +88,7 @@
 
     padding-bottom: 40px;
 
-    background: #04558E;
+    background: $colors.dark-blue;
     box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
     position: relative;
 
@@ -133,7 +133,7 @@
     transform: translateY(30px);
 
     line {
-      stroke:#FBE26B;
+      stroke:$colors.highlight-1;
       stroke-width:3;
     }
   }

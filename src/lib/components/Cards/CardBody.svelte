@@ -34,7 +34,7 @@
   <EditableText bind:value={text} {editable} placeholder='Body text...' />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .content {
     margin-top: 25px;
     overflow: auto;
@@ -70,7 +70,7 @@
     cursor: pointer;
   }
   ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: $colors.neutral-bg;
   }
   ::-webkit-scrollbar-thumb {
     background: #888;

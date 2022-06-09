@@ -15,7 +15,7 @@
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-alpha": "^2.16.0-alpha.0",
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.17.0-alpha.0",
-    "@sveltejs/kit": "next",
+    "@sveltejs/kit": "^1.0.0-next.348",
     "@types/aws-lambda": "^8.10.93",
     "@types/fs-extra": "^9.0.13",
     "aws-cdk-lib": "^2.16.0",

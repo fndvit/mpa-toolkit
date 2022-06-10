@@ -24,6 +24,7 @@
     align-items: center;
     cursor: pointer;
     transition: all 0,3s;
+    color: #000000;
     &:hover {
       box-shadow: 0px 0px 10px #000000;
     }
@@ -32,10 +33,10 @@
   .popup-body {
     position: absolute;
     cursor: default;
-    right: -12px;
+    right: 0;
     top: calc(100% + 5px);
     z-index: 10;
-    width: 320px;
+    width: 270px;
     padding: 1rem 1.5rem;
     box-sizing: border-box;
     border-radius: 15px;
@@ -61,8 +62,8 @@
   .popup-body:before {
     content: '';
     position: absolute;
-    bottom: 100%;
-    right: 17px;
+    bottom: 99.3%;
+    right: 5px;
     width: 0;
     border-bottom: 10px solid var(--popup-bg-color, alpha($colors.neutral-bg, 0.9));
     border-right: 10px solid transparent;

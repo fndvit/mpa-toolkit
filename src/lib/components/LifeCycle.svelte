@@ -153,6 +153,8 @@
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     padding: 20px;
+    width: auto;
+    z-index: 1;
   }
   .title {
     font-family: 'Montserrat';
@@ -200,6 +202,7 @@
         -webkit-animation: fadeIn ease-in-out 0.5s;
         -moz-animation: fadeIn ease-in-out 0.5s;
         z-index: -1;
+        color: #000000;
       }
     }
   }

@@ -10,6 +10,8 @@
   $: highlight = tagHighlightFn && tagHighlightFn(tag.tag);
 
   $: secondary = tag.category == 'SECONDARY';
+
+  console.log(tag.category)
 </script>
 
 <a
@@ -45,7 +47,7 @@
     height: fit-content;
     background: $colors.highlight-1;
     &.secondary {
-      background: color(highlight-1, 0.4);
+      background: alpha($colors.highlight-1, 0.4);
     }
 
     :global(.collection-card) &,

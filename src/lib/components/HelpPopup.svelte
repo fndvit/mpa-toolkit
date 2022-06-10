@@ -57,6 +57,14 @@
       opacity: 0;
       pointer-events: none;
     }
+
+    +breakpoint(page, medium){
+      width: 435px;
+    }
+
+    +breakpoint(page, xs){
+      width: 270px;
+    }
   }
 
   .popup-body:before {

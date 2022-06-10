@@ -11,7 +11,7 @@ import type { DecorationSet } from "prosemirror-view";
 
 export { dropCursor, gapCursor };
 
-export const emptyPlugin = new Plugin<DecorationSet<Schema>>({
+export const emptyPlugin = new Plugin<DecorationSet>({
   view: _view => {
     const update = view => {
       const isEmpty = view.state.doc.content.size === 0

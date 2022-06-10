@@ -1,6 +1,9 @@
 use("./util.styl.cjs")
 
 $grid = {
+  // breakpoints are also calculateded from this. the minimum width for each grid
+  // (the sum of the min size of each column) forms the breakpoint at which point
+  // the next smallest grid style is applied
   page: {
     large:  minmax(64px, 96px) 220px 600px 300px minmax(64px, 96px) 1fr
     medium: minmax(40px, 1fr) 240px minmax(500px, 600px) minmax(40px, 1fr)

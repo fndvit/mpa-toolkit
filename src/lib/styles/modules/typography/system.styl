@@ -1,0 +1,70 @@
+@require '../layout'
+
+$typography = {}
+
+_process-config()
+  $cfg = {
+    default-line-height: unset
+  }
+
+  normalize-line-height($font-size, $line-height)
+    $unit = unit($line-height)
+    if $unit == ''
+      return $line-height
+    else if $unit == 'px'
+      return unit($line-height / $font-size, '')
+    else
+      error('Line-height must be in px or a multiple of font-size. Got "%s" instead.' % $line-height)
+
+  parse-font-property(a, b = null, c = null, d = null)
+    $font-name = selector()
+    $font-style-name = current-property[0]
+    $typography[$font-name] = $typography[$font-name] || {};
+
+    size: a
+    line-height: b == '/' ? c : $cfg.default-line-height
+    weight: (b == '/' ? d : b) || @weight;
+
+    if (not @size)
+      error('Size is required for all styles')
+
+    if (not @weight) and ($font-style-name == 'default')
+      error('Font-weight required for default style')
+
+    $typography[$font-name][$font-style-name] = {
+      font-family: @font-family
+      style-name: $font-style-name
+      size: @size
+      line-height: normalize-line-height(@size, @line-height)
+      weight: @weight
+    }
+
+  // assign the property parse function to the name of each breakpoint (and "default") to
+  // allow font config prop spec such as: `default: 24px/1.2 300` and `small: 16px`
+  default = parse-font-property
+  for $breakpoint-name in keys($grid.page)
+    define($breakpoint-name, parse-font-property)
+
+  font-group() // this swallows the mixin block so it doesn't get rendered out
+    return
+
+  config(opts)
+    $cfg.default-line-height = opts.default-line-height
+
+  @require 'config'
+
+_process-config()
+
+get-font-css($cfg)
+  // converts an internal font-style (the return hash from parse-font-property) to a `font` css declaration
+  font: $cfg.weight $cfg.size/$cfg.line-height $cfg.font-family
+
+typography-generate-global-class-css()
+  for $font-name, $font-styles in $typography
+    .font-{$font-name}
+      for $font-style-name, $font-style in $font-styles
+        if $font-style-name == 'default'
+          get-font-css($font-style)
+        else
+          +breakpoint(page, $font-style-name)
+            get-font-css($font-style)

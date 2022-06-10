@@ -13,7 +13,7 @@
 </script>
 
 
-<div class="searchbar" class:top={type==='top'} class:inline={type==='inline'} class:collection={type==='collection'}>
+<div class="font-ui searchbar" class:top={type==='top'} class:inline={type==='inline'} class:collection={type==='collection'}>
   <input class="input-text" bind:this={inputEl} bind:value={search} spellcheck="false" on:keypress={({key}) => key === 'Enter' && submit()}/>
 
   {#if !search}
@@ -33,20 +33,19 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .search-path {
-    stroke:black;
     stroke-width: inherit;
     stroke-linecap:round;
     stroke-linejoin:round;
 
-    .top & {
+    .top &, .collection & {
       stroke:#FFFFFF;
     }
 
-    .collection & {
-      stroke:#FFFFFF;
+    .inline & {
+      stroke:black;
     }
   }
 
@@ -68,21 +67,27 @@
 
     &.collection {
       background: rgba(9, 110, 174, 0.5);
+      font-weight: 300;
+      font-size: 20px;
+    }
+
+    &.inline {
+      font-weight: 400;
+      font-size: 20px;
     }
   }
 
   .placeholder {
-    color: #000000;
     position: absolute;
     transform: translateY(10px);
     pointer-events: none;
 
-    .top & {
+    .top &, .collection & {
       color:#FFFFFF;
     }
 
-    .collection & {
-      color:#FFFFFF;
+    .inline & {
+      color: #000000;
     }
 
   }
@@ -102,8 +107,6 @@
   }
 
   .input-text {
-    font-size: 16px;
-    color: #000000;
     padding: 10px 0px;
     display: inline-block;
     background: none;
@@ -112,12 +115,12 @@
     margin-bottom: 0px;
     width: 100rem;
 
-    .top & {
+    .top &, .collection & {
       color:#FFFFFF;
     }
 
-    .collection & {
-      color:#FFFFFF;
+    .inline & {
+      color: #000000;
     }
 
   }
@@ -149,6 +152,8 @@
 
     .searchbar {
       border-radius: 70px;
+      padding-bottom: 0px;
+      padding-top: 0px;
     }
 
     .placeholder {
@@ -156,11 +161,14 @@
         display: none;
       }
 
-      .inline &,
-      .collection & {
-        font-size: 14px;
-        transform: translateY(12px);
+      .inline &, .collection & {
+        font-size: 16px;
+        transform: translateY(10px);
       }
+    }
+
+    .input-text {
+      font-size: 16px;
     }
 
   }

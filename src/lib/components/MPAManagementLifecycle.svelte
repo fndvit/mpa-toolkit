@@ -60,7 +60,8 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
+
   .landing-lifecycle {
     width: 100%;
     height: 800px;
@@ -68,7 +69,7 @@
     grid-template-rows: 30%;
     grid-template-columns: 50% 50%;
     grid-template-areas:
-      "title circlemenu"
+      "title circlemenu"\
       "textslide circlemenu";
     display: grid;
     font-family: 'Montserrat';

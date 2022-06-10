@@ -6,6 +6,6 @@
 
 </script>
 
-<p>
+<p class="font-p">
   {#each (block.content || []) as child}<Inline block={child}/>{/each}
 </p>

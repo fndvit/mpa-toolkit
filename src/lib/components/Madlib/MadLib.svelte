@@ -10,21 +10,20 @@
 
 </script>
 
-<p class="madlib">
+<p class="madlib font-h4-light">
   I am <MadLibSelector options={typeUserList} bind:selected={value[0]}/> and want help
   finding <MadLibSelector options={objectiveList} bind:selected={value[1]}/> to
   <MadLibSelector options={objectiveVerbList} bind:selected={value[2]}/> decisions
   <MadLibSelector options={actionSubjectList} bind:selected={value[3]}/>
 </p>
 
-<style lang="scss">
+<style lang="stylus">
 
   .madlib {
     position: relative;
-    font-weight: 300;
     font-size: inherit;
+    font-weight: inherit;
     line-height: 2;
-    font-family: 'Montserrat';
   }
 
 </style>

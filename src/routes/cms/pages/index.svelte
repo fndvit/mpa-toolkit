@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .container {
     width: 100%;
     box-sizing: border-box;

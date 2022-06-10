@@ -44,7 +44,7 @@
 
 <img src={imgSrc} alt="crop" bind:this={imgEl} on:load={initCropper} />
 
-<style lang="scss">
+<style lang="stylus">
   img {
     display: block;
     max-width: 100%;

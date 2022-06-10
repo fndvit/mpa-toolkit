@@ -4,7 +4,7 @@
 
 <div class="tooltip" data-text={text} />
 
-<style lang="scss">
+<style lang="stylus">
 
   .tooltip {
     --arrow-size: 8px;
@@ -27,7 +27,7 @@
       width: max-content;
       max-width: 100%;
       padding: calc(6px + var(--arrow-size)) 8px 6px;
-      background: color(neutral-bg);
+      background: $colors.neutral-bg;
       transform: translateX(-50%);
       clip-path: polygon(
         0 var(--arrow-size),

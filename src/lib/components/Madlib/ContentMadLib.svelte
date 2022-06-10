@@ -12,7 +12,7 @@
 
 <div class="content-madlib">
 
-  <h2>Is this not for you?</h2>
+  <h5 class="font-h5">Is this not for you?</h5>
 
   <MadLib />
 
@@ -25,29 +25,25 @@
 
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .content-madlib {
     position: relative;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
     border-radius: 40px 0px 0px 40px;
-    color: color(neutral-dark);
-    background: color(neutral-bg);
+    color: $colors.neutral-dark;
+    background: $colors.neutral-bg;
     padding: 0.75rem 1.5rem 2rem;
     font-family: 'Montserrat';
-
-    font-size: 1.25rem;
     line-height: 2;
 
-    h2 {
+    h5 {
       color: black;
-      font-weight: 700;
-      font-size: 16px;
       margin: 5px 0px 0px 0px;
     }
 
     :global(.madlib) {
-      max-width: 600px;
+      max-width: 570px;
     }
 
     :global(.madlib-selector) {
@@ -69,8 +65,8 @@
     right:0;
     bottom: 0;
     align-content: center;
-    background: color(highlight-1);
-    color: color(neutral-black);
+    background: $colors.highlight-1;
+    color: $colors.neutral-black;
     padding: 0.5rem 0.2rem 0.5rem 1.25rem;
     border-radius: 20px 0px 0px 0px;
     box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
@@ -89,7 +85,7 @@
     }
 
     svg path {
-      stroke: color(neutral-black);
+      stroke: $colors.neutral-black;
     }
 
   }

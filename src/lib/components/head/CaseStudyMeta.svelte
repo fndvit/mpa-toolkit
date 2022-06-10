@@ -30,14 +30,20 @@
 
     <div class="meta-grid meta-grid-1">
 
-      <h4>Name</h4>
-      <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Name</div>
+        <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
+      </div>
 
-      <h4>Established in</h4>
-      <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
+      <div class="grid-cell side-by-side-1">
+        <div class="font-h5-graphic meta-title">Established in</div>
+        <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
+      </div>
 
-      <h4>Size</h4>
-      <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
+      <div class="grid-cell side-by-side-2">
+        <div class="font-h5-graphic meta-title">Size</div>
+        <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
+      </div>
 
       <div class="globe-cell">
         {#if editable}
@@ -51,17 +57,25 @@
 
     <div class="meta-grid meta-grid-2">
 
-      <h4>Governance</h4>
-      <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Governance</div>
+        <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
+      </div>
 
-      <h4>Staff</h4>
-      <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Staff</div>
+        <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
+      </div>
 
-      <h4>Budget</h4>
-      <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Budget</div>
+        <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
+      </div>
 
-      <h4>Budget level</h4>
-      <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
+      <div class="grid-cell">
+        <div class="font-h5-graphic meta-title">Budget level</div>
+        <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
+      </div>
 
     </div>
 
@@ -82,17 +96,21 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
+
+  .grid-cell {
+    margin-bottom: 5rem;
+  }
 
   .meta-container {
     position: relative;
-    background-color: color(deep-blue);
+    background-color: $colors.deep-blue;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
     --ui-color-placeholder: #ffffff55;
   }
 
   .meta-content {
-    width: 1300px;
+    width: auto;
     margin-left: 124px;
     padding: 35px 20px;
   }
@@ -100,20 +118,18 @@
   .meta-grid {
     display: grid;
     grid-template-rows: auto auto;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
     column-gap: 1.5rem;
     color: white;
 
     &.meta-grid-1 {
-      grid-template-columns: 325px 225px 425px 325px;
-      margin-bottom: 40px;
+      grid-template-columns: 20% 12% 28% 20%;
       min-height: 110px;
     }
 
     &.meta-grid-2 {
-      grid-template-columns: 325px 325px 325px 325px;
+      grid-template-columns: 20% 20% 20% 20%;
     }
-
   }
 
   .meta-grid :global(.editable-content) {
@@ -134,12 +150,9 @@
     line-height: 32px;
   }
 
-  .meta-grid > h4 {
-    font-family: 'Montserrat';
-    font-weight: bold;
-    color: color(neutral-bg);
-    font-size: 16px;
-    line-height: 24px;
+  .meta-title {
+    color: #F9F9F9;
+    color: $colors.neutral-bg;
     margin: 0;
   }
 
@@ -159,10 +172,15 @@
     --ib-hover-bg: #00000011;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
 
-    .meta-grid > h4 {
-      margin-top: 20px;
+    .side-by-side-1 {
+      display: inline-block;
+      margin-right: 75px;
+    }
+
+    .side-by-side-2 {
+      display: inline-block;
     }
 
     .meta-content {
@@ -186,8 +204,8 @@
     .meta-grid {
       display: block;
       color: white;
+
       &.meta-grid-1 {
-        margin-bottom: 0px;
         min-height: 110px;
       }
 
@@ -207,7 +225,6 @@
         transform: translate(-50%);
       }
     }
-
   }
 
 </style>

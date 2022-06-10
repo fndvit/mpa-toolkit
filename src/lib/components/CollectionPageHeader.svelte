@@ -17,14 +17,14 @@
   </div>
 
   <div class="content">
-    <h2 class="text">{title}</h2>
+    <h2 class="text font-h2">{title}</h2>
     <div class="search-bar">
       <Searchbar type={'collection'} bind:focus={focusSearch} />
     </div>
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .container {
     background-size: cover;
     background-repeat: no-repeat;
@@ -44,10 +44,6 @@
     margin: auto;
   }
   .text {
-    font-family: 'Montserrat';
-    font-weight: 300;
-    font-size: 2.5rem;
-    line-height: 3rem;
     color: #ffffff;
     margin: 0;
   }
@@ -65,13 +61,8 @@
   }
 
   @media only screen and (max-width: 1024px) {
-    .text {
-      font-size: 2rem;
-    }
-
     .container {
       row-gap: 40px;
-      padding-bottom: 60px;
     }
 
     .search-bar {

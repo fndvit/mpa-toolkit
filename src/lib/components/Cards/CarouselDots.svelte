@@ -17,7 +17,7 @@
   {/each}
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .carousel-dots {
     --dot-size: 10px;
     --dot-color: black;

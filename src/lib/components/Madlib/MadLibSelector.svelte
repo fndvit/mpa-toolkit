@@ -58,7 +58,7 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .madlib-selector {
     display: inline-block;
@@ -73,7 +73,6 @@
     border: none;
     padding: 0.5rem 0.5rem 0.5rem 0.5rem;
     cursor: pointer;
-    font-family: 'Montserrat';
     border-radius: 10px;
     position: relative;
 
@@ -112,11 +111,10 @@
     box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2);
     padding: 0.35rem 0.7rem 0.35rem 0.7rem;
     border-radius: 20px;
-    background-color: color(neutral-bg);
+    background-color: $colors.neutral-bg;
     color: black;
     border: none;
     z-index: 1000;
-    font-size: inherit;
   }
 
   .arrow {

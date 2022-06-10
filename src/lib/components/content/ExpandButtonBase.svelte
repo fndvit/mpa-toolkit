@@ -15,12 +15,12 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   hr {
     margin: 0;
     border: 0;
-    border-bottom: 0.5px solid color(neutral-light);
+    border-bottom: 0.5px solid $colors.neutral-light;
   }
 
   .arrow {
@@ -40,7 +40,7 @@
     font-size: 0.75rem;
     display: flex;
     text-align: left;
-    background: color(neutral-bg);
+    background: $colors.neutral-bg;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     border-radius: 0px 0px 20px 20px;
     &:hover {
@@ -48,7 +48,7 @@
     }
     margin-bottom: 2rem;
     svg path {
-      stroke: color(neutral-black);
+      stroke: $colors.neutral-black;
     }
   }
 

@@ -22,7 +22,7 @@
 
   <div class="preview-content">
     <div class="title">
-      <span>{getPageDisplayTitle(page)}</span>
+      <span><h3 class="font-h3-light">{getPageDisplayTitle(page)}</h3></span>
       <div class="circle-button" tabindex="0">
         <svg class="arrow-svg" viewBox="0 0 12 20">
           <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
@@ -31,7 +31,9 @@
     </div>
 
     <div>
-      <div class="tags-title">What's this about?</div>
+      <div class="tags-title">
+        <h5 class="font-h5">What's this about?</h5>
+      </div>
       <div class="tags no-drag hide-scrollbar">
         <TagContainer tags={page.tags}/>
       </div>
@@ -40,7 +42,7 @@
 </a>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .carousel-card {
     display: flex;
@@ -49,11 +51,11 @@
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 40px;
     border: none;
-    background: color(primary-blue);
+    background: $colors.primary-blue;
     height: 100%;
 
     &.case-study {
-      background: color(deep-blue);
+      background: $colors.deep-blue;
     }
 
     &:hover {
@@ -78,7 +80,7 @@
   }
 
   .arrow-path {
-    stroke:color(neutral-black) ;
+    stroke:$colors.neutral-black ;
     stroke-width: 2.4px;
   }
 
@@ -91,7 +93,7 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: color(highlight-1);
+    background: $colors.highlight-1;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
   }
 
@@ -101,13 +103,13 @@
 
   .tags-title {
     margin: 2.5rem 0 1rem;
-    font-weight: 700;
-    font-size: 16px;
+
+    h5 {
+      margin: 0;
+    }
   }
 
   .title {
-    font-weight: 275;
-    font-size: 32px;
     max-height: 5em;
     text-overflow: clip;
     word-wrap: break-word;
@@ -121,6 +123,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
       -webkit-box-orient: vertical;
+    }
+
+    h3 {
+      margin: 0;
     }
   }
 

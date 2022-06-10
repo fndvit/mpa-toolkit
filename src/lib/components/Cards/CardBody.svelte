@@ -24,7 +24,7 @@
 </script>
 
 <div
-  class="content"
+  class="content font-p-medium"
   class:hide-scrollbar={hideScroll}
   class:gradient={showGradient}
   on:mouseenter={showScroll}
@@ -34,14 +34,12 @@
   <EditableText bind:value={text} {editable} placeholder='Body text...' />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .content {
     margin-top: 25px;
-    font-size: 22px;
     overflow: auto;
     min-height: 50px;
     max-height: 170px;
-    font-family: var(--font-serif);
     &::-webkit-scrollbar {
       width: 5px;
     }
@@ -72,7 +70,7 @@
     cursor: pointer;
   }
   ::-webkit-scrollbar-track {
-    background: color(neutral-bg);
+    background: $colors.neutral-bg;
   }
   ::-webkit-scrollbar-thumb {
     background: #888;

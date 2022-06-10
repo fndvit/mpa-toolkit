@@ -82,14 +82,14 @@
   on:mouseleave
 />
 
-<style lang="scss">
+<style lang="stylus">
   .segment {
     cursor: pointer;
   }
 
   .segment__main,
   .segment__secondary {
-    fill: color(highlight-1);
+    fill: $colors.highlight-1;
   }
   .segment__secondary { opacity: 0.5;}
   .segment__unselected { fill: #FFFFFF80; }

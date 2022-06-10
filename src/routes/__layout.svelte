@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '$lib/styles/app.scss';
+  import '$lib/styles/app.styl';
   import Toaster from '$lib/components/generic/Toaster.svelte';
   import { setContext } from 'svelte';
 

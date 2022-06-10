@@ -17,11 +17,13 @@
   import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import PageContent from '$lib/components/content/PageContent.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, setContext } from 'svelte';
 
   export let users: UserInfo[];
   export let allTags: Tag[];
   export let page: SubTypes.Page.Full;
+
+  setContext('allUsers', users);
 
   const userLookup = createLookup(users, u => u.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
@@ -161,7 +163,7 @@
     {#if pageType === "Case Study"}
       <CaseStudyMeta bind:caseStudy={_page.caseStudy} editable={!preview} />
     {:else}
-      <ChapterMeta bind:chapter allAuthors={users} editable={!preview} />
+      <ChapterMeta bind:chapter editable={!preview} tags={page.tags} />
     {/if}
 
   </div>
@@ -202,7 +204,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .draft-button {
     :global(.icon-button) {

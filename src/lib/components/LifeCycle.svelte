@@ -139,7 +139,7 @@
 
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .top-section {
     display: grid;
@@ -149,7 +149,7 @@
   }
 
   .lifecycle {
-    background: color(lifecycle-bg);
+    background: $colors.lifecycle-bg;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     padding: 20px;

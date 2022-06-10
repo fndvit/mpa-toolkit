@@ -31,7 +31,7 @@
   />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
 
   .icon-button-container {

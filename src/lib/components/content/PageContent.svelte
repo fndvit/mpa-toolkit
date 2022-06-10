@@ -9,6 +9,7 @@
   import ContentMadLib from "$lib/components/Madlib/ContentMadLib.svelte";
   import ContentCarousel from "$lib/components/content/ContentCarousel.svelte";
   import Image from "./Image.svelte";
+  import LifeCycle from "../LifeCycle.svelte";
 
   export let page: SubTypes.Page.Full;
   export let recommendedPages: SubTypes.Page.ContentCard[] = null;
@@ -27,18 +28,15 @@
 </script>
 
 <div class="page-content">
- 
+
   <div class="menu">
-    <div class="sliding-menu">
-      <svg class="arrow-svg" viewBox="0 0 12 20">
-        <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
-      </svg>
-    </div>
-    <div class="sidebarMenu">
-      <StickyMenu menuOptions={headings} />
-    </div>
-    
+    <StickyMenu menuOptions={headings} />
   </div>
+  {#if page.caseStudy }
+    <div class="lifecycle-container">
+      <LifeCycle tags={page.tags}/>
+    </div>
+  {/if}
   <div class="body-column">
     {#each sections as section, i}
       <Section {section}>
@@ -68,16 +66,15 @@
     </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .page-content {
+    grid-config(page, content);
+
     position: relative;
-    display: grid;
-    grid-template-columns: minmax(250px, 300px) minmax(30rem, 50rem) minmax(300px, auto);
-    grid-template-areas: "left-margin body right-margin";
-    grid-auto-flow: row;
-    column-gap: 1.5rem;
-    padding: 0 20px;
+    min-height: 800px // so empty pages don't collapse
+    grid-auto-rows: min-content;
+    padding-bottom: 2rem;
   }
 
   .body-column {
@@ -86,32 +83,40 @@
     font-size: 18px;
     line-height: 32px;
     > :global(*) {
-      grid-column-start: body;
+      grid-column: body;
     }
   }
 
   .unknown-block {
-    background: color(error-red);
+    background: $colors.error-red;
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1rem -1rem;
   }
 
   .menu {
-    grid-area: left-margin;
-    top: 10px;
-    padding-right: 1rem;
-    :global(.mainnav) {
+    grid-column: menu;
+    grid-row: 1 / span 100; // can't span -1 through dynamic rows
+    margin: 0 1rem 0 -30px;
+    :global(.sticky-menu) {
       position: sticky;
-      float: right;
-      top: 10px;
+      top: 0;
       flex: 0;
+    }
+
+    +breakpoint(page, medium) {
+      margin: 0 1rem 0 0;
+      display: none;
+    }
+
+    +breakpoint(page, small) {
+      display: none;
     }
   }
 
   .lifecycle-container {
-    grid-area: right-margin;
-
+    grid-area: lifecycle;
+    padding-top: 1.5rem;
     :global(.lifecycle) {
       margin: auto;
       max-width: 300px;
@@ -125,98 +130,8 @@
 
   .madlib-container,
   .content-carousel-container {
-      margin-left: -25px;
-      margin-right: -20px;
-      grid-column: body / right-margin;
-  }
-
-
-  .sliding-menu {
-    display: none;
-  }
-
-  .arrow-svg {
-    width: 12px;
-    height: 20px;
-    fill: none;
-    transform: translateX(8px) translateY(10px);
-  }
-
-  .arrow-path {
-    stroke:color(neutral-black) ;
-    stroke-width: 2.4px;
-  }
-
-  @media screen and (max-width: 1250px) {
-
-    .sliding-menu {
-      display: flex;
-      padding: 1rem;
-      margin-top: 2rem;
-      background: color(neutral-bg);
-      width: 20px;
-      height: 40px;
-      z-index: 10;
-      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
-      border-radius: 0px 20px 20px 0px;
-      position: sticky;
-      transform: translateX(-2rem);
-      transition: .4s ease-out;
-
-      .menu:hover & {
-        box-shadow: 0px 0px 10px #000000;
-        opacity: 0;
-      }
-      
-    }
-
-    .sidebarMenu {
-      transform: translateX(-4rem) translateY(-6rem);
-      width: 220px;
-      padding: 1rem 1.5rem;
-      box-sizing: border-box;
-      transition: .4s ease-out;
-    
-      .menu:not(:hover) & {
-        opacity: 0;
-        pointer-events: none;
-      }
-    }
-
-    .page-content {
-      grid-template-columns: auto;
-      display: block;
-    }
-    .body-column {
-      :global(.content-carousel) {
-        width: auto;
-      }
-      > :global(.content-section) {
-        max-width: 700px;
-        margin: auto;
-      }
-    }
-  }
-
-  @media screen and (max-width: 840px) {
-
-    .madlib-container {
-      margin-top: 1rem;
-      margin-right: 0;
-    }
-
-    .body-column {
-      font-size: 16px;
-      line-height: 28px;
-      > :global(.content-section) {
-        max-width: 480px;
-        margin: auto;
-      }
-
-      :global(img) {
-        max-width: 100%;
-      }
-    }
+    margin-left: -25px;
+    grid-column: body / -1;
   }
 
 </style>

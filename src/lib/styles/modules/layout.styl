@@ -1,0 +1,109 @@
+use("./util.styl.cjs")
+
+$grid = {
+  // breakpoints are also calculateded from this. the minimum width for each grid
+  // (the sum of the min size of each column) forms the breakpoint at which point
+  // the next smallest grid style is applied
+  page: {
+    large:  minmax(64px, 96px) 220px 600px 300px minmax(64px, 96px) 1fr
+    medium: minmax(40px, 1fr) 240px minmax(500px, 600px) minmax(40px, 1fr)
+    small:  minmax(20px, 1fr) minmax(200px, 600px) minmax(20px, 1fr)
+  }
+}
+
+breakpoint($group, $size)
+  @media screen and (max-width: $breakpoints[$group][$size])
+    {block}
+
+$areas = {
+  page: {
+
+    large: {
+      splash:
+        "paddingl title         title         empty     paddingr"
+      chapter:
+        "paddingl byline        byline        empty     paddingr"\
+        "paddingl summary       summary       empty     paddingr"\
+        "paddingl keytakeaways  keytakeaways  lifecycle paddingr"
+      chapter-no-keytakeaways:
+        "paddingl byline        byline        lifecycle paddingr"\
+        "paddingl summary       summary       lifecycle paddingr"
+      content:
+        "paddingl menu          body          lifecycle paddingr"
+      footer:
+        "paddingl footer        footer        empty     paddingr"
+    }
+
+    medium: {
+      splash:
+        "paddingl title         title       paddingr"
+      chapter:
+        "paddingl byline       byline       paddingr"\
+        "paddingl summary      summary      paddingr"\
+        "paddingl keytakeaways keytakeaways paddingr"\
+        "paddingl lifecycle    lifecycle    paddingr"
+      chapter-no-keytakeaways:
+        "paddingl byline       byline       paddingr"\
+        "paddingl summary      summary      paddingr"\
+        "paddingl lifecycle    lifecycle    paddingr"
+      content:
+        "paddingl body         body         paddingr"
+      footer:
+        "paddingl footer       footer       paddingr"
+    }
+
+    small: {
+      splash:
+        "paddingl title        paddingr"
+      chapter:
+        "paddingl byline       paddingr"\
+        "paddingl summary      paddingr"\
+        "paddingl keytakeaways paddingr"\
+        "paddingl lifecycle    paddingr"
+      chapter-no-keytakeaways:
+        "paddingl byline       paddingr"\
+        "paddingl summary      paddingr"\
+        "paddingl lifecycle    paddingr"
+      content:
+        "paddingl body         paddingr"
+      footer:
+        "paddingl footer       paddingr"
+    }
+  }
+}
+
+grid-config-at-breakpoint($group, $element, $breakpoint)
+  grid-template-columns: $grid[$group][$breakpoint]
+  grid-template-areas: $areas[$group][$breakpoint][$element]
+
+grid-config($group, $element)
+  display: grid
+  grid-config-at-breakpoint($group, $element, large)
+  +breakpoint($group, medium)
+    grid-config-at-breakpoint($group, $element, medium)
+  +breakpoint($group, small)
+    grid-config-at-breakpoint($group, $element, small)
+
+calc-min-grid-width(tracklist)
+  total = 0
+  for def in tracklist
+    if def is a 'call'
+      $min = extract-min-from-minmax(def)
+      total += $min
+    else if def is a 'unit' and unit(def) == 'px'
+      total += def
+  total
+
+$breakpoints = {
+  page: {
+    // breakpoints calculated from the grid config above
+    // // e.g. medium is set to the min width of the large grid
+    medium: calc-min-grid-width($grid.page.large)
+    small: calc-min-grid-width($grid.page.medium)
+    tiny: calc-min-grid-width($grid.page.small)
+
+    // example custom breakpoints (unused currently)
+    xs: 480px
+    xl: 1400px
+  }
+}

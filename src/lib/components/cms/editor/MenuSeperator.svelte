@@ -1,6 +1,6 @@
 <div />
 
-<style lang="scss">
+<style lang="stylus">
   div {
     border-left: 1px solid #ccc;
     height: 2rem;

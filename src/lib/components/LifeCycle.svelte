@@ -154,7 +154,7 @@
     padding: 20px;
   }
   .title {
-    font-family: 'Montserrat';
+    font-family: var(--font-sans-serif);
     font-style: normal;
     font-weight: bold;
     font-size: 16px;

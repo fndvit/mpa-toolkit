@@ -131,6 +131,10 @@ export type Unpacked<T> = T extends (infer U)[] ? U : T;
 export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 export type Modify<T, R> = Expand<Omit<T, keyof R> & R>;
 
+export type DistributiveOmit<T, K extends keyof any> = T extends any
+  ? Omit<T, K>
+  : never;
+
 type Cast<A, B> = A extends B ? A : B;
 
 type Narrowable = string | number | boolean | bigint;

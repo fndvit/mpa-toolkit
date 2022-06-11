@@ -33,18 +33,24 @@ export function slugify(text: string, maxLen = 40) {
   return (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, maxLen);
 }
 
-export function createLookup<T, Y>
+export function createLookup<T, U extends string, Y = never>
 (
   arr: T[],
-  keyFn: (d: T) => string,
-  valFn: (d: T) => Y
-): {[key: string]: Y} {
-
-  const lookup: {[key: string]: Y} = {};
+  keyFn: (d: T) => U | U[],
+  valFn?: (d: T) => Y
+) {
+  type R = [Y] extends [never] ? T : Y
+  const lookup: {[key in U]?: R} = {};
+  const _valFn = (valFn ?? (d=>d)) as (d: T) => R;
 
   arr.forEach(d => {
     const key = keyFn(d);
-    lookup[key] = valFn(d);
+    if (typeof key === 'string') {
+      lookup[key] = _valFn(d);
+    } else {
+      key.forEach(k => lookup[k] = _valFn(d));
+    }
+
   });
 
   return lookup;

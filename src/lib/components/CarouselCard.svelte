@@ -16,6 +16,7 @@
   href="/{page.slug}"
   class:case-study={!!page.caseStudy}
   tabindex="0"
+  rel="external"
 >
 
   <img class="image" src={staticUrl(page.img, fallbackImg)} alt="preview">

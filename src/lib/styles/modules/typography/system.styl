@@ -5,6 +5,7 @@ $typography = {}
 _process-config()
   $cfg = {
     default-line-height: unset
+    html-font-size: unset
   }
 
   normalize-line-height($font-size, $line-height)
@@ -34,7 +35,7 @@ _process-config()
     $typography[$font-name][$font-style-name] = {
       font-family: @font-family
       style-name: $font-style-name
-      size: @size
+      size: unit(@size / $cfg.html-font-size, 'rem')
       line-height: normalize-line-height(@size, @line-height)
       weight: @weight
     }
@@ -50,6 +51,7 @@ _process-config()
 
   config(opts)
     $cfg.default-line-height = opts.default-line-height
+    $cfg.html-font-size = opts.html-font-size
 
   @require 'config'
 

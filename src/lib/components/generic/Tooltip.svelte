@@ -13,7 +13,7 @@
     left: 50%;
     pointer-events: none;
     filter: drop-shadow(0px 1px 3px #00000044);
-    font-family: 'Montserrat';
+    font-family: var(--font-sans-serif);
     font-size: 13px;
     line-height: 16px;
     max-width: 150px;

@@ -1,12 +1,13 @@
 
 config({
   default-line-height: 1.5
+  html-font-size: 16px // for rem calcs
 })
 
 // `default` requires font-size and weight. breakpoint specific
 // definitions require only font-size (and will inherit the rest)
 +font-group()
-  font-family: 'Montserrat', sans-serif
+  font-family: var(--font-sans-serif)
   h1
     default: 64px/1.2 300
     small: 48px

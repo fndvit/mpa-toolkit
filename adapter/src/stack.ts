@@ -6,8 +6,12 @@ import {
   aws_lambda_nodejs as lambdanode,
   aws_ec2 as ec2,
   aws_rds as rds,
+  aws_sqs as sqs,
+  aws_sns as sns,
+  aws_lambda_event_sources as lambda_event_sources,
+  aws_lambda_nodejs as lambda_nodejs,
+  aws_sns_subscriptions as subs,
   aws_cloudfront as cloudfront,
-  aws_certificatemanager as certificatemanager,
   StackProps,
   App,
   CfnOutput,
@@ -35,13 +39,35 @@ class AWSAdapterStack extends Stack {
 
     const dotenvConfig = dotenv.config({ path: envPath });
     if (dotenvConfig.error) throw dotenvConfig.error;
-    const env = dotenvConfig.parsed!;
+    if (!dotenvConfig.parsed) throw new Error('Failed to load .env file');
+
+    const env = dotenvConfig.parsed;
 
     const REQUIRED_ENV = ['GOOGLE_OAUTH_CLIENT_ID', 'GOOGLE_OAUTH_CLIENT_SECRET', 'ORIGIN'];
     const missingEnv = REQUIRED_ENV.filter(key => !env[key]);
     if (missingEnv.length > 0) throw new Error(`Missing environment variables: ${missingEnv.join(', ')}`);
 
-    const { hostname } = new URL(env.ORIGIN);
+    const deadLetterQueue = new sqs.Queue(this, 'DeadLetterQueue', {
+      retentionPeriod: Duration.minutes(30)
+    });
+
+    const eventProcessorQueue = new sqs.Queue(this, 'EventProcessorQueue', {
+      deadLetterQueue: {
+        queue: deadLetterQueue,
+        maxReceiveCount: 5
+      }
+    });
+
+    const pageUpdateTopic = new sns.Topic(this, 'PageEventTopic', {
+      topicName: 'page',
+    });
+
+    pageUpdateTopic.addSubscription(new subs.SqsSubscription(eventProcessorQueue));
+
+    new CfnOutput(this, 'PageUpdateTopicArn', {
+      value: pageUpdateTopic.topicArn,
+      description: 'The arn of the SNS PageUpdateTopic',
+    });
 
     const bucket = new s3.Bucket(this, 'StaticContentBucket', {
       removalPolicy: RemovalPolicy.DESTROY,
@@ -53,11 +79,6 @@ class AWSAdapterStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       publicReadAccess: true,
-    });
-
-    const certificate = new certificatemanager.Certificate(this, "Certificate", {
-      domainName: hostname,
-      validation: certificatemanager.CertificateValidation.fromDns()
     });
 
     const vpc = new ec2.Vpc(this, 'VPC', {
@@ -104,7 +125,7 @@ class AWSAdapterStack extends Stack {
     });
 
     const routerLambdaHandler = new cloudfront.experimental.EdgeFunction(this, 'RouterEdgeFunctionHandler', {
-      code: new lambda.AssetCode(edgePath!),
+      code: new lambda.AssetCode(edgePath),
       handler: 'index.handler',
       runtime: lambda.Runtime.NODEJS_14_X,
       memorySize: 128,
@@ -123,6 +144,7 @@ class AWSAdapterStack extends Stack {
     const fullEnvVars = {
       ...env,
       AWS_S3_CONTENT_BUCKET: contentBucket.bucketName,
+      AWS_SNS_PAGE_UPDATE_TOPIC: pageUpdateTopic.topicArn,
       DATABASE_URL: databaseUrl(
         db.instanceEndpoint.hostname, DB_PORT,
         credentials.username, credentials.password!.toString(),
@@ -157,9 +179,10 @@ class AWSAdapterStack extends Stack {
     });
 
     contentBucket.grantPut(serverFn);
+    pageUpdateTopic.grantPublish(serverFn);
 
     const migrationRunner = new lambdanode.NodejsFunction(this, "MigrationRunner", {
-      entry: "./src/migration-runner.ts",
+      entry: "./src/lambda/migration-runner.ts",
       memorySize: 256,
       timeout: Duration.seconds(20),
       vpc,
@@ -203,13 +226,6 @@ class AWSAdapterStack extends Stack {
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
       enabled: true,
       defaultRootObject: '',
-      viewerCertificate: {
-        aliases: [hostname],
-        props: {
-          acmCertificateArn: certificate.certificateArn,
-          sslSupportMethod: cloudfront.SSLMethod.SNI,
-        },
-      },
       originConfigs: [
         {
           customOriginSource: {
@@ -245,14 +261,65 @@ class AWSAdapterStack extends Stack {
       ],
     });
 
-    new s3_deployment.BucketDeployment(this, 'StaticContentDeployment', {
+    new s3_deployment.BucketDeployment(this, 'ImmutableAssetDeployment', {
       destinationBucket: bucket,
-      sources: [s3_deployment.Source.asset(staticPath!), s3_deployment.Source.asset(prerenderedPath!)],
+      sources: [s3_deployment.Source.asset(path.join(staticPath, '_app'))],
+      destinationKeyPrefix: '_app/',
+      cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
       retainOnDelete: false,
       prune: true,
-      distribution: distribution,
-      distributionPaths: ['/*'],
+      distribution,
     });
+
+    new s3_deployment.BucketDeployment(this, 'StaticContentDeployment', {
+      destinationBucket: bucket,
+      sources: [
+        s3_deployment.Source.asset(staticPath, { exclude: ['_app/*'] }),
+        s3_deployment.Source.asset(prerenderedPath)
+      ],
+      cacheControl: [s3_deployment.CacheControl.fromString('max-age=3600, public')],
+      retainOnDelete: false,
+      prune: true,
+      exclude: ['_app', '_app/', '_app/*'],
+      distribution,
+    });
+
+    const cachePurgeLambda = new lambda_nodejs.NodejsFunction(this, 'CachePurgeLambda', {
+      entry: "./src/lambda/cache-purger.ts",
+      memorySize: 256,
+      timeout: Duration.seconds(5),
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'main',
+      environment: fullEnvVars,
+      securityGroups: [lambdaSg],
+      depsLockFilePath: path.join(projectRoot, "./yarn.lock"),
+      vpc,
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
+      },
+    });
+
+    cachePurgeLambda.addEventSource(
+      new lambda_event_sources.SqsEventSource(eventProcessorQueue, {
+        batchSize: 10,
+      }),
+    );
+
+    const dlqLambda = new lambda_nodejs.NodejsFunction(this, 'DlqLambda', {
+      entry: "./src/lambda/dlq.ts",
+      memorySize: 1024,
+      timeout: Duration.seconds(5),
+      runtime: lambda.Runtime.NODEJS_16_X,
+      handler: 'main',
+      securityGroups: [lambdaSg],
+      depsLockFilePath: path.join(projectRoot, "./yarn.lock"),
+      vpc,
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
+      },
+    });
+
+    dlqLambda.addEventSource(new lambda_event_sources.SqsEventSource(deadLetterQueue));
   }
 }
 

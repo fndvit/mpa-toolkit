@@ -1,3 +1,6 @@
 @require system
-typography(name, breakpoint = default)
-  get-font-css($typography[name][breakpoint])
+typography(name, breakpoints...)
+  if not breakpoints
+    push(breakpoints, "default")
+  for breakpoint in breakpoints
+    get-font-css($typography[name][breakpoint])

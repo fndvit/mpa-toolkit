@@ -7,10 +7,13 @@ interface MpaEnv {
   GOOGLE_OAUTH_CLIENT_SECRET: string;
   JWT_SECRET_KEY: string;
   AWS_S3_CONTENT_BUCKET: string;
+  AWS_SNS_PAGE_UPDATE_TOPIC?: string;
   AWS_EXECUTION_ENV?: string;
   LOG_TRANSPORT?: string;
   LAMBDA_TASK_ROOT?: string;
   ORIGIN: string;
+  FASTLY_API_KEY?: string;
+  FASTLY_SERVICE_ID?: string;
 }
 
 const REQUIRED_ENV: (keyof MpaEnv)[] = [
@@ -38,7 +41,12 @@ const env = {
   googleOAuthClientSecret: processEnv.GOOGLE_OAUTH_CLIENT_SECRET,
   jwtSecret: processEnv.JWT_SECRET_KEY,
   logTransport: processEnv.LOG_TRANSPORT,
-  s3contentBucket: processEnv.AWS_S3_CONTENT_BUCKET
+  s3contentBucket: processEnv.AWS_S3_CONTENT_BUCKET,
+  snsPageUpdateTopic: processEnv.AWS_SNS_PAGE_UPDATE_TOPIC,
+  fastly: {
+    apiKey: processEnv.FASTLY_API_KEY,
+    serviceId: processEnv.FASTLY_SERVICE_ID
+  }
 };
 
 export default env;

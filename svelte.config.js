@@ -8,6 +8,9 @@ const globalStylus = `
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+  compilerOptions: {
+    cssHash: ({hash, css}) => `mpa-${hash(css)}`
+  },
 	preprocess: preprocess({
     stylus: {
       prependData: globalStylus

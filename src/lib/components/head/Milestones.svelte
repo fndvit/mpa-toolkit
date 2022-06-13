@@ -13,10 +13,11 @@
     gap: '25px',
     pagination: false,
     perPage: 5,
+    autoWidth: true,
     arrows: true,
     breakpoints: {
-      1200: { perPage: 4 },
-      1000: { perPage: 3 }
+      1250: { perPage: 3, gap: '35px' },
+      820: { perPage: 2, gap: '-20px'}
     }
   });
 
@@ -135,26 +136,23 @@
     margin: 0 var(--margin);
   }
 
-  +breakpoint(page, small) {
+  +breakpoint(page, medium) {
 
     .milestones {
-      margin: 0px;
-      padding: 0 20px;
-      max-width: 100%;
-      overflow-x: hidden;
+      --width: 700px;
 
       :global(.splide__arrow--prev){
         top: 0rem;
         left: auto;
-        right: 45px;
-        transform: translateY(-50px) scale(0.65) !important;
+        right: 55px;
+        transform: translateY(-50px) scale(0.80) !important;
       }
 
       :global(.splide__arrow--next){
         top: 0rem;
         left: auto;
         right: 0rem;
-        transform: translateY(-50px) scale(0.65) !important;
+        transform: translateY(-50px) scale(0.80) !important;
       }
 
       :global(.splide__arrow:disabled){
@@ -164,8 +162,20 @@
       }
     }
 
-    .milestones-content {
-      margin: 0px;
+  }
+
+  +breakpoint(page, small) {
+
+    .milestones {
+      --width: 330px;
+
+      :global(.splide__arrow--prev){
+        right: 45px;
+        transform: translateY(-50px) scale(0.65) !important;
+      }
+      :global(.splide__arrow--next){
+        transform: translateY(-50px) scale(0.65) !important;
+      }
     }
 
   }

@@ -129,7 +129,6 @@
 <style lang="stylus">
 
   .milestone {
-    margin-right: 10px;
 
     :global(.icon-button) {
       --ib-color: white;

@@ -12,7 +12,7 @@
     perMove: 1,
     pagination: false,
     perPage: 5,
-    gap: "10px",
+    gap: "20px",
     arrows: true,
     breakpoints: {
       1250: { perPage: 3 },

@@ -37,6 +37,7 @@
 
   .splash {
     grid-config(page, splash);
+    grid-template-rows: 1fr auto;
 
     --ec-hover-bg: #ffffff22;
     --ui-color-placeholder: #ffffff55;
@@ -47,8 +48,6 @@
 
     h1 {
       grid-area: title;
-      display: flex;
-      align-items: end;
       color: white;
       text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.45);
       > :global(*) {

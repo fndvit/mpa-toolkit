@@ -24,7 +24,7 @@
 
 </script>
 
-<div class="meta-container" class:has-milestones={hasMilestones}>
+<div class="meta-container">
 
   <div class="meta-content">
 
@@ -86,20 +86,23 @@
     {/if}
 
   </div>
-
-  <div class="milestones-container">
-    {#if hasMilestones}
-      <Milestones bind:milestones={caseStudy.milestones} {editable} />
-    {/if}
-  </div>
-
 </div>
+
+{#if hasMilestones}
+<div class="meta-container meta-container-milestones">
+  <Milestones bind:milestones={caseStudy.milestones} {editable} />
+</div>
+{/if}
 
 
 <style lang="stylus">
 
-  .grid-cell {
-    margin-bottom: 5rem;
+  .meta-container {
+    grid-config(page, case-study);
+
+    & > :global(.milestones) {
+      grid-area: meta;
+    }
   }
 
   .meta-container {
@@ -109,10 +112,15 @@
     --ui-color-placeholder: #ffffff55;
   }
 
+  .meta-container-milestones {
+    background: $colors.dark-blue;
+    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
+  }
+
   .meta-content {
     width: auto;
-    margin-left: 124px;
-    padding: 35px 20px;
+    grid-area: meta;
+    padding: 35px 0px;
   }
 
   .meta-grid {
@@ -123,12 +131,13 @@
     color: white;
 
     &.meta-grid-1 {
-      grid-template-columns: 20% 12% 28% 20%;
+      grid-template-columns: 30% 15% 22.5% 30%;
       min-height: 110px;
+      margin-bottom: 45px;
     }
 
     &.meta-grid-2 {
-      grid-template-columns: 20% 20% 20% 20%;
+      grid-template-columns: 22.5% 22.5% 22.5% 22.5%;
     }
   }
 
@@ -172,7 +181,21 @@
     --ib-hover-bg: #00000011;
   }
 
-  @media screen and (max-width: 1024px) {
+  +breakpoint(page, medium) {
+    .meta-grid {
+      &.meta-grid-1 {
+        grid-template-columns: 22.5% 15% 22.5% 30%;
+        min-height: 110px;
+      }
+    }
+
+  }
+
+  +breakpoint(page, small) {
+
+    .grid-cell {
+      margin-bottom: 2rem;
+    }
 
     .side-by-side-1 {
       display: inline-block;
@@ -192,13 +215,11 @@
     .meta-grid-1 :global(.editable-content) {
       font-size: 22px;
       line-height: 36px;
-      max-width: 23rem;
     }
 
     .meta-grid-2 :global(.editable-content) {
       font-size: 16px;
       line-height: 28px;
-      max-width: 23rem;
     }
 
     .meta-grid {
@@ -207,6 +228,7 @@
 
       &.meta-grid-1 {
         min-height: 110px;
+        margin-bottom: 0px;
       }
 
       &.meta-grid-2 {
@@ -225,6 +247,7 @@
         transform: translate(-50%);
       }
     }
+
   }
 
 </style>

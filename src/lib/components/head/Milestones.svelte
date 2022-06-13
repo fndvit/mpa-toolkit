@@ -10,15 +10,13 @@
 
   const options = SplideOptions({
     perMove: 1,
-    gap: '25px',
     pagination: false,
-    perPage: 6,
+    perPage: 5,
+    gap: "20px",
     arrows: true,
     breakpoints: {
-      1600: { perPage: 5 },
-      1400: { perPage: 4 },
-      1200: { perPage: 3 },
-      1000: { perPage: 2 }
+      1250: { perPage: 3 },
+      820: { perPage: 2 }
     }
   });
 
@@ -61,6 +59,7 @@
       <line x1="0" y1="50%" x2="100%" y2="50%"/>
     </svg>
 
+
     <Splide {options} bind:this={splide}>
       {#each Object.keys(milestones).sort() as year (year)}
         <SplideSlide>
@@ -83,14 +82,7 @@
 <style lang="stylus">
 
   .milestones {
-    --width: auto;
-    --margin: 120px;
-
     padding-bottom: 40px;
-
-    background: $colors.dark-blue;
-    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
-    position: relative;
 
     :global(.splide__arrow:disabled){
       display: none;
@@ -105,6 +97,18 @@
     }
     &:not(:hover) .milestones-title :global(.icon-button) {
       visibility: hidden;
+    }
+  }
+
+  .svg-line {
+    position: absolute;
+    left: 0;
+    height: 3px;
+    width: 100vw;
+    transform: translateY(30px);
+    line {
+      stroke:$colors.highlight-1;
+      stroke-width:3;
     }
   }
 
@@ -124,44 +128,22 @@
     }
   }
 
-  .svg-line {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 3px;
-    width: 100%;
-    transform: translateY(30px);
+  +breakpoint(page, medium) {
 
-    line {
-      stroke:$colors.highlight-1;
-      stroke-width:3;
-    }
-  }
-
-  .milestones-content {
-    width: var(--width);
-    margin: 0 var(--margin);
-  }
-
-  @media screen and (max-width: 768px) {
     .milestones {
-      margin: 0px;
-      padding: 0 20px;
-      max-width: 100%;
-      overflow-x: hidden;
 
       :global(.splide__arrow--prev){
         top: 0rem;
         left: auto;
-        right: 45px;
-        transform: translateY(-50px) scale(0.65) !important;
+        right: 55px;
+        transform: translateY(-50px) scale(0.80) !important;
       }
 
       :global(.splide__arrow--next){
         top: 0rem;
         left: auto;
         right: 0rem;
-        transform: translateY(-50px) scale(0.65) !important;
+        transform: translateY(-50px) scale(0.80) !important;
       }
 
       :global(.splide__arrow:disabled){
@@ -171,9 +153,21 @@
       }
     }
 
-    .milestones-content {
-      margin: 0px;
+  }
+
+  +breakpoint(page, small) {
+
+    .milestones {
+
+      :global(.splide__arrow--prev){
+        right: 45px;
+        transform: translateY(-50px) scale(0.65) !important;
+      }
+      :global(.splide__arrow--next){
+        transform: translateY(-50px) scale(0.65) !important;
+      }
     }
+
   }
 
 </style>

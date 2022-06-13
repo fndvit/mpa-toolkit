@@ -61,7 +61,7 @@
           </div>
         {/if}
       {/if}
-      {/each}
+    {/each}
     </div>
 </div>
 
@@ -119,6 +119,9 @@
     :global(.lifecycle) {
       margin: auto;
       max-width: 300px;
+      +breakpoint(page, medium) {
+        max-width: none;
+      }
     }
   }
 

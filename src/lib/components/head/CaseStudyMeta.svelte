@@ -87,18 +87,14 @@
 
   </div>
 
-  <!--
   <div class="milestones-container">
     {#if hasMilestones}
-      <div class="backgroundgg"></div>
       <svg class="svg-line">
         <line x1="0" y1="50%" x2="100%" y2="50%"/>
       </svg>
       <Milestones bind:milestones={caseStudy.milestones} {editable} />
     {/if}
-  </div>-->
-
-
+  </div>
 
 </div>
 
@@ -121,6 +117,8 @@
   .milestones-container {
     display: flex;
     grid-area: milestones;
+    background: $colors.dark-blue;
+    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
   }
 
   .meta-container:not(.has-milestones) {
@@ -207,7 +205,6 @@
 
   +breakpoint(page, medium) {
     .meta-grid {
-      color: red;
       &.meta-grid-1 {
         grid-template-columns: 22.5% 15% 22.5% 30%;
         min-height: 110px;
@@ -217,6 +214,10 @@
   }
 
   +breakpoint(page, small) {
+
+    .grid-cell {
+      margin-bottom: 2rem;
+    }
 
     .side-by-side-1 {
       display: inline-block;

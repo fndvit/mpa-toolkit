@@ -12,13 +12,11 @@
     perMove: 1,
     gap: '25px',
     pagination: false,
-    perPage: 6,
+    perPage: 5,
     arrows: true,
     breakpoints: {
-      1600: { perPage: 5 },
-      1400: { perPage: 4 },
-      1200: { perPage: 3 },
-      1000: { perPage: 2 }
+      1200: { perPage: 4 },
+      1000: { perPage: 3 }
     }
   });
 
@@ -79,7 +77,7 @@
 <style lang="stylus">
 
   .milestones {
-    --width: 1200px;
+    --width: 1100px;
     margin-right: 50px;
     padding-bottom: 40px;
     position: relative;
@@ -121,7 +119,8 @@
     margin: 0 var(--margin);
   }
 
-  @media screen and (max-width: 768px) {
+  +breakpoint(page, small) {
+
     .milestones {
       margin: 0px;
       padding: 0 20px;
@@ -152,6 +151,7 @@
     .milestones-content {
       margin: 0px;
     }
+
   }
 
 </style>

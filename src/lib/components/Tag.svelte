@@ -11,7 +11,6 @@
 
   $: secondary = tag.category == 'SECONDARY';
 
-  console.log(tag.category)
 </script>
 
 <a

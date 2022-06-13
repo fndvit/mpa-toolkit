@@ -45,7 +45,6 @@
   @media screen and (max-width: 1155px) {
 
     .key-takeaways {
-      width: 100%;
       margin-left: 0px;
     }
 

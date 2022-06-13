@@ -59,11 +59,14 @@
     }
 
     +breakpoint(page, medium){
-      width: 435px;
+      max-width: 600px;
+      width: calc(100vw - 250px);
+      min-width: 420px;
     }
 
     +breakpoint(page, xs){
-      width: 270px;
+      width: calc(100vw - 70px);
+      min-width: 210px;
     }
   }
 

@@ -87,19 +87,48 @@
 
   </div>
 
+  <!--
   <div class="milestones-container">
     {#if hasMilestones}
+      <div class="backgroundgg"></div>
+      <svg class="svg-line">
+        <line x1="0" y1="50%" x2="100%" y2="50%"/>
+      </svg>
       <Milestones bind:milestones={caseStudy.milestones} {editable} />
     {/if}
-  </div>
+  </div>-->
+
+
 
 </div>
 
 
 <style lang="stylus">
 
-  .grid-cell {
-    margin-bottom: 5rem;
+  .svg-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    width: 100%;
+    transform: translateY(95px);
+    line {
+      stroke:$colors.highlight-1;
+      stroke-width:3;
+    }
+  }
+
+  .milestones-container {
+    display: flex;
+    grid-area: milestones;
+  }
+
+  .meta-container:not(.has-milestones) {
+    grid-config(page, case-study-no-milestones);
+  }
+
+  .meta-container.has-milestones {
+    grid-config(page, case-study);
   }
 
   .meta-container {
@@ -109,10 +138,14 @@
     --ui-color-placeholder: #ffffff55;
   }
 
+  .grid-cell {
+    margin-bottom: 5rem;
+  }
+
   .meta-content {
     width: auto;
-    margin-left: 124px;
-    padding: 35px 20px;
+    grid-area: meta;
+    padding: 35px 0px;
   }
 
   .meta-grid {
@@ -123,12 +156,12 @@
     color: white;
 
     &.meta-grid-1 {
-      grid-template-columns: 20% 12% 28% 20%;
+      grid-template-columns: 30% 15% 22.5% 30%;
       min-height: 110px;
     }
 
     &.meta-grid-2 {
-      grid-template-columns: 20% 20% 20% 20%;
+      grid-template-columns: 22.5% 22.5% 22.5% 22.5%;
     }
   }
 
@@ -172,7 +205,18 @@
     --ib-hover-bg: #00000011;
   }
 
-  @media screen and (max-width: 1024px) {
+  +breakpoint(page, medium) {
+    .meta-grid {
+      color: red;
+      &.meta-grid-1 {
+        grid-template-columns: 22.5% 15% 22.5% 30%;
+        min-height: 110px;
+      }
+    }
+
+  }
+
+  +breakpoint(page, small) {
 
     .side-by-side-1 {
       display: inline-block;
@@ -225,6 +269,7 @@
         transform: translate(-50%);
       }
     }
+
   }
 
 </style>

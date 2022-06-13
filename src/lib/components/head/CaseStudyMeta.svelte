@@ -215,13 +215,11 @@
     .meta-grid-1 :global(.editable-content) {
       font-size: 22px;
       line-height: 36px;
-      max-width: 23rem;
     }
 
     .meta-grid-2 :global(.editable-content) {
       font-size: 16px;
       line-height: 28px;
-      max-width: 23rem;
     }
 
     .meta-grid {

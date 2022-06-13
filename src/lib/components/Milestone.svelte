@@ -49,7 +49,7 @@
   $: simple = content.length <= 1;
 </script>
 
-<div class="container" class:simple>
+<div class="milestone" class:simple>
 
   <div class="year font-ui-small">
     <EditableText bind:this={editableYear} bind:value={editYear} {editable} placeholder="year" bind:focused={yearFocused}/>
@@ -81,7 +81,7 @@
     <div class="milestones-block">
 
       {#each content as _, i}
-        <div class='milestone-container' on:click={() => onClickMilestone(i)} style="--row: {i+1};">
+        <div class='milestone-item' on:click={() => onClickMilestone(i)} style="--row: {i+1};">
 
           <svg class="sub-thread-line" width="10" height="4" viewBox="0 0 10 4">
             <path d="M1.22933 0.955129V0.955129C2.81493 2.54068 5.01818 3.34773 7.25278 3.1615L9.729 2.95514"/>
@@ -128,8 +128,8 @@
 
 <style lang="stylus">
 
-  .container {
-    --ms-width: 200px;
+  .milestone {
+    margin-right: 10px;
 
     :global(.icon-button) {
       --ib-color: white;
@@ -177,13 +177,14 @@
     }
   }
 
-  .milestone-container {
+  .milestone-item {
     grid-column: 1;
     grid-row: var(--row);
     padding: 40px 0 0;
     cursor: pointer;
     position: relative;
-    width: var(--ms-width);
+    max-width: 100%;
+    overflow: hidden;
   }
 
   .milestone-circle {
@@ -214,7 +215,6 @@
     .simple & {
       padding-top: 28px;
       padding-left: 3px;
-      width: var(--ms-width);
     }
 
     &.contracted {
@@ -235,7 +235,6 @@
     color: $colors.neutral-bg;
     height: 25px;
     padding-left: 2px;
-    width: var(--ms-width);
     :global(input) {
       width: 40px;
     }
@@ -272,7 +271,7 @@
     }
   }
 
-  :global(.splide__slide:hover) .container :global(.editable-content-container:not(.empty) [contenteditable]) {
+  :global(.splide__slide:hover) .milestone :global(.editable-content-container:not(.empty) [contenteditable]) {
     background: #ffffff10;
     border-radius: 4px;
   }
@@ -285,15 +284,6 @@
     :global(.icon-button) {
       --ib-hover-bg: #03395f;
       --ib-icon-bg: #034676;
-    }
-  }
-
-  +breakpoint(page, small) {
-    .milestone-text {
-      --ms-width: 120px;
-      padding-right: 0px;
-      margin-right: 0px;
-      max-width: 120px;
     }
   }
 

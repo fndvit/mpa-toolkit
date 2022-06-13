@@ -10,14 +10,13 @@
 
   const options = SplideOptions({
     perMove: 1,
-    gap: '25px',
     pagination: false,
     perPage: 5,
-    autoWidth: true,
+    gap: "10px",
     arrows: true,
     breakpoints: {
-      1250: { perPage: 3, gap: '35px' },
-      820: { perPage: 2, gap: '-20px'}
+      1250: { perPage: 3 },
+      820: { perPage: 2 }
     }
   });
 
@@ -83,8 +82,6 @@
 <style lang="stylus">
 
   .milestones {
-    --width: 1100px;
-    margin-right: 50px;
     padding-bottom: 40px;
 
     :global(.splide__arrow:disabled){
@@ -131,15 +128,9 @@
     }
   }
 
-  .milestones-content {
-    width: var(--width);
-    margin: 0 var(--margin);
-  }
-
   +breakpoint(page, medium) {
 
     .milestones {
-      --width: 700px;
 
       :global(.splide__arrow--prev){
         top: 0rem;
@@ -167,7 +158,6 @@
   +breakpoint(page, small) {
 
     .milestones {
-      --width: 330px;
 
       :global(.splide__arrow--prev){
         right: 45px;

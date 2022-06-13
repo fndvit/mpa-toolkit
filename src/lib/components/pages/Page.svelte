@@ -18,6 +18,6 @@
   {:else if page.caseStudy}
     <CaseStudyMeta caseStudy={page.caseStudy} />
   {/if}
-  <!--<PageContent {page} {recommendedPages} />
-  <Footer/>-->
+  <PageContent {page} {recommendedPages} />
+  <Footer/>
 </div>

@@ -57,10 +57,6 @@
       {/if}
     </div>
 
-    <svg class="svg-line">
-      <line x1="0" y1="50%" x2="100%" y2="50%"/>
-    </svg>
-
     <Splide {options} bind:this={splide}>
       {#each Object.keys(milestones).sort() as year (year)}
         <SplideSlide>
@@ -83,13 +79,9 @@
 <style lang="stylus">
 
   .milestones {
-    --width: auto;
-    --margin: 120px;
-
+    --width: 1200px;
+    margin-right: 50px;
     padding-bottom: 40px;
-
-    background: $colors.dark-blue;
-    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
     position: relative;
 
     :global(.splide__arrow:disabled){
@@ -121,20 +113,6 @@
       --ib-color: #ffffffee;
       --ib-hover-bg: #00000011;
       --ib-size: 1.5rem;
-    }
-  }
-
-  .svg-line {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 3px;
-    width: 100%;
-    transform: translateY(30px);
-
-    line {
-      stroke:$colors.highlight-1;
-      stroke-width:3;
     }
   }
 

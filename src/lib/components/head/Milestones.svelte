@@ -55,6 +55,11 @@
       {/if}
     </div>
 
+    <svg class="svg-line">
+      <line x1="0" y1="50%" x2="100%" y2="50%"/>
+    </svg>
+
+
     <Splide {options} bind:this={splide}>
       {#each Object.keys(milestones).sort() as year (year)}
         <SplideSlide>
@@ -80,7 +85,6 @@
     --width: 1100px;
     margin-right: 50px;
     padding-bottom: 40px;
-    position: relative;
 
     :global(.splide__arrow:disabled){
       display: none;
@@ -95,6 +99,18 @@
     }
     &:not(:hover) .milestones-title :global(.icon-button) {
       visibility: hidden;
+    }
+  }
+
+  .svg-line {
+    position: absolute;
+    left: 0;
+    height: 3px;
+    width: 100vw;
+    transform: translateY(30px);
+    line {
+      stroke:$colors.highlight-1;
+      stroke-width:3;
     }
   }
 

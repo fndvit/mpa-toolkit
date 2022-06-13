@@ -86,33 +86,16 @@
     {/if}
 
   </div>
-
-  <div class="milestones-container">
-    {#if hasMilestones}
-      <svg class="svg-line">
-        <line x1="0" y1="50%" x2="100%" y2="50%"/>
-      </svg>
-      <Milestones bind:milestones={caseStudy.milestones} {editable} />
-    {/if}
-  </div>
-
 </div>
+
+{#if hasMilestones}
+<div class="meta-container meta-container-milestones" class:has-milestones={hasMilestones}>
+  <Milestones bind:milestones={caseStudy.milestones} {editable} />
+</div>
+{/if}
 
 
 <style lang="stylus">
-
-  .svg-line {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 3px;
-    width: 100%;
-    transform: translateY(95px);
-    line {
-      stroke:$colors.highlight-1;
-      stroke-width:3;
-    }
-  }
 
   .milestones-container {
     display: flex;
@@ -121,12 +104,12 @@
     box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
   }
 
-  .meta-container:not(.has-milestones) {
-    grid-config(page, case-study-no-milestones);
-  }
-
-  .meta-container.has-milestones {
+  .meta-container {
     grid-config(page, case-study);
+
+    & > :global(.milestones) {
+      grid-area: milestones;
+    }
   }
 
   .meta-container {
@@ -134,6 +117,10 @@
     background-color: $colors.deep-blue;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
     --ui-color-placeholder: #ffffff55;
+  }
+
+  .meta-container-milestones {
+    background: red;
   }
 
   .grid-cell {

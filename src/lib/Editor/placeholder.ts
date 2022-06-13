@@ -1,8 +1,7 @@
-import type { Schema } from "./schema";
 import { EditorState, Plugin } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
 
-export const placeholderPlugin = new Plugin<DecorationSet<Schema>>({
+export const placeholderPlugin = new Plugin<DecorationSet>({
   state: {
     init() { return DecorationSet.empty; },
     apply(tr, set) {
@@ -12,7 +11,7 @@ export const placeholderPlugin = new Plugin<DecorationSet<Schema>>({
       const action = tr.getMeta(this);
       if (action && action.add) {
         const widget = document.createElement("placeholder");
-        const deco = Decoration.widget(action.add.pos, widget, {id: action.add.id});
+        const deco = Decoration.widget(action.add.pos, widget, { key: action.add.id });
         set = set.add(tr.doc, [deco]);
       } else if (action && action.remove) {
         set = set.remove(

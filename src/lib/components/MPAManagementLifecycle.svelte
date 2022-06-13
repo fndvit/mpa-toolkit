@@ -72,7 +72,7 @@
       "title circlemenu"\
       "textslide circlemenu";
     display: grid;
-    font-family: 'Montserrat';
+    font-family: var(--font-sans-serif);
     overflow: hidden;
     padding: 0 var(--page-padding);
     box-sizing: border-box;

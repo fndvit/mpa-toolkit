@@ -166,7 +166,7 @@
   }
 
   .meta-grid :global(.editable-content) {
-    font-family: 'Bitter';
+    font-family: var(--font-serif);
     background: transparent;
     border: 0;
     padding: 0;

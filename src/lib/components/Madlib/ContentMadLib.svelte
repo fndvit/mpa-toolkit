@@ -34,7 +34,7 @@
     color: $colors.neutral-dark;
     background: $colors.neutral-bg;
     padding: 0.75rem 1.5rem 2rem;
-    font-family: 'Montserrat';
+    font-family: var(--font-sans-serif);
     line-height: 2;
 
     h5 {
@@ -58,7 +58,7 @@
     cursor: pointer;
     font-weight: 700;
     vertical-align: middle;
-    font-family: 'Montserrat';
+    font-family: var(--font-sans-serif);
     border: none;
     font-size: 16px;
     position:absolute;

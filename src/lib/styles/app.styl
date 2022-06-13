@@ -1,6 +1,16 @@
+@require "modules/colors"
+@require "modules/typography"
+@require "fonts"
+@import '@splidejs/splide/dist/css/splide.min.css'
+
+// ****************************
+//    General global CSS
+// ****************************
+
 :root {
 	font-family: 'Montserrat', sans-serif;
-	--font-serif: 'Bitter', serif; // TODO: remove after typography work
+	--font-sans-serif: 'Montserrat', sans-serif;
+	--font-serif: 'Bitter', serif;
 }
 
 body {
@@ -14,10 +24,6 @@ body {
 	flex-direction: column;
 }
 
-p {
-	line-height: 1.5;
-}
-
 a {
 	text-decoration: none;
   &:hover {
@@ -25,14 +31,10 @@ a {
   }
 }
 
-h1 {
-	font-size: 2rem;
+p,
+h1, h2, h3, h4, h5, h6
+ {
 	line-height: 1.5;
-	font-weight: 300;
-}
-
-h2 {
-	font-size: 1rem;
 }
 
 input,
@@ -94,4 +96,32 @@ button:focus:not(:focus-visible) {
     }
 
   }
+}
+
+// ****************************
+//    Global font classes
+// ****************************
+
+typography-generate-global-class-css()
+
+// ****************************
+//    Splide styling
+// ****************************
+
+.splide__arrow {
+  background-color: #FFFFFF77;
+  box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+  width: 48px;
+  height: 48px;
+  opacity: 1;
+}
+
+.splide__arrow:hover {
+  box-shadow: 0px 3px 16px rgb(0 0 0 / 30%);
+}
+
+.splide__arrow svg path {
+  fill: none;
+  stroke-width: 4.4;
+  stroke: $colors.neutral-black;
 }

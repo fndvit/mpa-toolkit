@@ -28,7 +28,7 @@
   }
 
   .expand-button button {
-    font-family: 'Montserrat';
+    font-family: var(--font-sans-serif);
     border: 0;
     outline: none;
     cursor: pointer;

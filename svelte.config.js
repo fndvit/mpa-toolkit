@@ -3,11 +3,14 @@ import preprocess from 'svelte-preprocess';
 import svg from '@poppanator/sveltekit-svg'
 
 const globalStylus = `
-  @require './src/lib/styles/global'
+  @require './src/lib/styles/svelte-global'
 `;
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+  compilerOptions: {
+    cssHash: ({hash, css}) => `mpa-${hash(css)}`
+  },
 	preprocess: preprocess({
     stylus: {
       prependData: globalStylus

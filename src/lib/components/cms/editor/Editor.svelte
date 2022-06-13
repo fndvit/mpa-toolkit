@@ -63,7 +63,7 @@
     width: 40rem;
     margin: 0 auto;
     text-align: left;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans-serif);
     --heading-color: #000;
     :global(h1), :global(h2) {
       font-weight: 300;

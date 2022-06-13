@@ -288,10 +288,12 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  +breakpoint(page, small) {
     .milestone-text {
-      padding-right: 30px;
-      max-width: 125px;
+      --ms-width: 120px;
+      padding-right: 0px;
+      margin-right: 0px;
+      max-width: 120px;
     }
   }
 

@@ -120,6 +120,13 @@ export const timedBoolean = () => {
   return obj;
 };
 
+export const imgLoadingStatus = (node: HTMLImageElement, cb: (loading: boolean) => void) => {;
+  node.addEventListener('load', () => cb(false));
+  cb(!node.complete);
+  new MutationObserver(() => cb(!node.complete))
+    .observe(node,{attributes:true,attributeFilter:["src"]});
+};
+
 // ************************
 //     TypeScript util
 // ************************

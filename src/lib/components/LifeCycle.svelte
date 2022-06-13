@@ -141,13 +141,6 @@
 
 <style lang="stylus">
 
-  .top-section {
-    display: grid;
-    grid-template-columns: 90% auto;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   .lifecycle {
     background: $colors.lifecycle-bg;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
@@ -156,6 +149,17 @@
     width: auto;
     z-index: 1;
   }
+
+  .top-section {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    > :global(.help-popup) {
+      flex-shrink: 0;
+    }
+  }
+
   .title {
     font-family: 'Montserrat';
     font-style: normal;

@@ -14,7 +14,6 @@
 <style lang="stylus">
 
 	.help-popup {
-    position: relative;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -32,11 +31,12 @@
 
   .popup-body {
     position: absolute;
+    right: -9px;
+    top: calc(100% + 12px);
     cursor: default;
-    right: 0;
-    top: calc(100% + 5px);
     z-index: 10;
-    width: 270px;
+    width: "calc(100% + %s)" % (-@right * 2);
+    max-width: 600px;
     padding: 1rem 1.5rem;
     box-sizing: border-box;
     border-radius: 15px;
@@ -44,7 +44,7 @@
     color: #000;
     font-size: 14px;
     line-height: 1.2;
-    transition: .4s ease-out;
+    transition: opacity .4s ease-out;
 
     > :global(a:last-child) {
       float: right;
@@ -57,24 +57,13 @@
       opacity: 0;
       pointer-events: none;
     }
-
-    +breakpoint(page, medium){
-      max-width: 600px;
-      width: calc(100vw - 250px);
-      min-width: 420px;
-    }
-
-    +breakpoint(page, xs){
-      width: calc(100vw - 70px);
-      min-width: 210px;
-    }
   }
 
   .popup-body:before {
     content: '';
     position: absolute;
-    bottom: 99.3%;
-    right: 5px;
+    bottom: 100%;
+    right: 14px;
     width: 0;
     border-bottom: 10px solid var(--popup-bg-color, alpha($colors.neutral-bg, 0.9));
     border-right: 10px solid transparent;

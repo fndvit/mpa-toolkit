@@ -55,6 +55,8 @@
     border-radius: 0px 0px 20px 20px;
     padding-top: 31px;
     padding-bottom: 29px;
+    max-height: 70vh;
+    overflow-y: scroll;
   }
   .menuoption {
     margin: 10px 40px 0px 28px;
@@ -62,17 +64,11 @@
     font-size: 12px;
     font-weight: 300;
     line-height: 18px;
-    cursor: pointer;
+    cursor: pointer;    
   }
   .active {
     font-weight: 700;
   }
 
-  @media(max-width: 1250px) {
-    .mainnav {
-      width: 150px;
-      border-radius: 0px 20px 20px 0px;
-    }
-  }
 
 </style>

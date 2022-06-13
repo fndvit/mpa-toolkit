@@ -24,7 +24,7 @@
 
 </script>
 
-<div class="meta-container" class:has-milestones={hasMilestones}>
+<div class="meta-container">
 
   <div class="meta-content">
 
@@ -89,7 +89,7 @@
 </div>
 
 {#if hasMilestones}
-<div class="meta-container meta-container-milestones" class:has-milestones={hasMilestones}>
+<div class="meta-container meta-container-milestones">
   <Milestones bind:milestones={caseStudy.milestones} {editable} />
 </div>
 {/if}
@@ -97,18 +97,11 @@
 
 <style lang="stylus">
 
-  .milestones-container {
-    display: flex;
-    grid-area: milestones;
-    background: $colors.dark-blue;
-    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
-  }
-
   .meta-container {
     grid-config(page, case-study);
 
     & > :global(.milestones) {
-      grid-area: milestones;
+      grid-area: meta;
     }
   }
 
@@ -120,11 +113,8 @@
   }
 
   .meta-container-milestones {
-    background: red;
-  }
-
-  .grid-cell {
-    margin-bottom: 5rem;
+    background: $colors.dark-blue;
+    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
   }
 
   .meta-content {
@@ -143,6 +133,7 @@
     &.meta-grid-1 {
       grid-template-columns: 30% 15% 22.5% 30%;
       min-height: 110px;
+      margin-bottom: 45px;
     }
 
     &.meta-grid-2 {
@@ -239,6 +230,7 @@
 
       &.meta-grid-1 {
         min-height: 110px;
+        margin-bottom: 0px;
       }
 
       &.meta-grid-2 {

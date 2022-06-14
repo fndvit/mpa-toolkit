@@ -1,19 +1,22 @@
 <script lang="ts">
   import { session } from "$app/stores";
+  import { updateUser } from "$lib/api";
   import EditableUserImage from "$lib/components/cms/EditableUserImage.svelte";
+  import { getToaster } from "$lib/helpers/utils";
   import type { User, Role } from "$lib/types";
 
   export let users: User[];
 
+  const toaster = getToaster();
+
   async function onChangeRole(user: User, role: string) {
     try {
-      await fetch(`/api/users/${user.id}/role`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ role }),
-      });
+      await updateUser(user.id, {role: role as User['role']});
+      toaster('User role updated', {type: 'done'});
+
     } catch (err) {
       console.error(err);
+      toaster(`Error updating user role: ${err.message}`, {type: 'error'});
     }
   }
 
@@ -53,6 +56,7 @@
   }
 
   .users {
+    typography: ui;
     display: grid;
     font-size: 20px;
     grid-template-columns: 100px 1fr 1fr 1fr;
@@ -62,6 +66,10 @@
       display: flex;
       align-items: center;
     }
+  }
+
+  h1 {
+    typography: h2-responsive;
   }
 
 </style>

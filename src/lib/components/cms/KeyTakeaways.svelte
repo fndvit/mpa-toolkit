@@ -42,13 +42,5 @@
     --ib-hover-border: 1px solid transparent;
     --ib-hover-bg: #00000011;
   }
-  @media screen and (max-width: 1155px) {
-
-    .key-takeaways {
-      margin-left: 0px;
-    }
-
-  }
-
 
 </style>

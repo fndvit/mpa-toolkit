@@ -100,19 +100,25 @@
   .meta-container {
     grid-config(page, case-study);
 
-    & > :global(.milestones) {
-      grid-area: meta;
-    }
-  }
-
-  .meta-container {
+    --ui-color-placeholder: #ffffff55;
     position: relative;
     background-color: $colors.deep-blue;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
-    --ui-color-placeholder: #ffffff55;
+
+    +breakpoint(page, medium) {
+      :global(.page-static[data-pagetype="casestudy-with-milestones"]) &.meta-container-milestones,
+      :global(.page-static[data-pagetype="casestudy"]) &:not(.meta-container-milestones) {
+        margin-bottom: $lifecycle-y-overlap * -1;
+        padding-bottom: $lifecycle-y-overlap;
+      }
+    }
+
   }
 
   .meta-container-milestones {
+    > :global(.milestones) {
+      grid-area: meta;
+    }
     background: $colors.dark-blue;
     box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
   }

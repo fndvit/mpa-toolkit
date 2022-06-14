@@ -74,7 +74,7 @@
         content: '';
         grid-column: 1 / -1;
         grid-row: -2 / -1;
-        background: linear-gradient(180deg, transparent 200px, white 200px);
+        background: linear-gradient(180deg, transparent $lifecycle-y-overlap, white $lifecycle-y-overlap);
 
       }
     }
@@ -117,7 +117,7 @@
 
       +breakpoint(page, medium) {
         position: static;
-        margin: 0 0 2rem;
+        margin: 0;
         max-width: none;
       }
     }

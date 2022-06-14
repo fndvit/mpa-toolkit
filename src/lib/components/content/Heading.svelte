@@ -11,5 +11,6 @@
 <style lang="stylus">
   h2 {
     typography: h2-responsive;
+    margin: 2rem 0;
   }
 </style>

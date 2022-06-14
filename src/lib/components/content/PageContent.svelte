@@ -28,19 +28,21 @@
 
 <div class="page-content">
 
-  <div class="menu">
-    <div class="sliding-arrow">
-      <svg class="arrow-svg" viewBox="0 0 12 20">
-        <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
-      </svg>
+  <div class="menu-container">
+    <div class="menu">
+      <StickyMenu menuOptions={headings} />
+      <div class="sliding-arrow">
+        <svg viewBox="0 0 12 20">
+          <path d="M1.1814 19L9.81849 10L1.1814 1" />
+        </svg>
+      </div>
     </div>
-    <StickyMenu menuOptions={headings} />
   </div>
-  {#if page.caseStudy }
-    <div class="lifecycle-container">
+  <div class="lifecycle-container">
+    {#if page.caseStudy }
       <LifeCycle tags={page.tags}/>
-    </div>
-  {/if}
+      {/if}
+  </div>
   <div class="body-column">
     {#each sections as section, i}
       <Section {section}>
@@ -95,83 +97,92 @@
     margin: 1rem -1rem;
   }
 
-  .menu {
+  .menu-container {
     grid-column: menu;
-    grid-row: 1 / span 100; // can't span -1 through dynamic rows
+    grid-row: menu / span 100; // can't span -1 through dynamic rows
     margin: 0 1rem 0 -30px;
     z-index: sticky-menu;
 
     +breakpoint(page, medium) {
       margin: 0 1rem 0 0;
     }
-
   }
 
-  .menu :global(.sticky-menu) {
+  .menu {
     position: sticky;
     top: 0;
-    flex: 0;
+    flex: 0
 
     +breakpoint(page, medium) {
-      width: 220px;
-      border-radius: 0px 20px 20px 0px;
-      top: 50%;
-      transform: translate(-100%, -50%);
-      transition: .5s ease-out;
+      margin-top: 5px;
+      width: fit-content;
+      transform: translateX(-100%);
+      transition: transform .5s ease-out;
 
-      :hover& {
-        transform: translate(0, -50%);
+      :global(.sticky-menu) {
+        position: relative;
+        z-index: 1;
+        width: 220px;
+        border-radius: 0px 20px 20px 0px;
+      }
+
+      .menu-container:hover & {
+        transform: translateX(0);
+        .sliding-arrow {
+          transform: translateX(-100%);
+        }
       }
     }
   }
 
   .sliding-arrow {
     display: none;
+
     cursor: pointer;
-    padding: 0.8rem;
+    position: absolute;
+    z-index: 0;
+    width: 30px;
+    left: 100%;
+    top: 30px;
+    bottom: 30px;
+    max-height: 80px;
+    transform-origin: 0% 0%;
     background: alpha($colors.neutral-dark, 0.2);
-    width: 10px;
-    height: 25px;
     box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
     border-radius: 0px 10px 10px 0px;
-    transition: .4s ease-out;
-    position: sticky;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+    transition: transform 0.1s ease-out;
 
-    +breakpoint(page, medium) {
-      display: flex;
-      .menu:hover & {
-        box-shadow: 0px 0px 10px #000000;
-        opacity: 0;
+    svg {
+      width: 10px;
+      fill: none;
+      margin: auto;
+      path {
+        stroke: $colors.neutral-black ;
+        stroke-width: 2.4px;
       }
     }
 
-    +breakpoint(page, small) {
-      padding: 0.25rem;
+    +breakpoint(page, medium) {
+      display: flex;
     }
-  }
 
-  .arrow-svg {
-    width: 10px;
-    height: 14px;
-    fill: none;
-    align-self: center;
-  }
-
-  .arrow-path {
-    stroke: $colors.neutral-black ;
-    stroke-width: 2.4px;
+    +breakpoint(page, small) {
+      width: 18px;
+      svg {
+        width: 6px;
+      }
+    }
   }
 
   .lifecycle-container {
     grid-area: lifecycle;
-    padding-top: 1.5rem;
 
     :global(.lifecycle) {
-      margin: auto;
+      margin: 1rem auto 0;
+      // margin: 1rem 0 0 1rem;
       max-width: 300px;
+      position: relative;
+      z-index: 1;
       +breakpoint(page, medium) {
         max-width: none;
       }

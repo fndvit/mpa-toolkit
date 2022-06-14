@@ -18,6 +18,7 @@
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import PageContent from '$lib/components/content/PageContent.svelte';
   import { getContext, setContext } from 'svelte';
+  import { getPageTypeStr } from '$lib/helpers/content';
 
   export let users: UserInfo[];
   export let allTags: Tag[];
@@ -141,8 +142,7 @@
 
 </script>
 
-
-<div class="page-editor" class:preview class:is-new-page={isNewPage}>
+<div class="page page-editor" class:preview class:is-new-page={isNewPage} data-pagetype={getPageTypeStr(page)} >
   <div class="meta">
 
     <div class="top-controls">

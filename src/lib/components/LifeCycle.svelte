@@ -62,7 +62,14 @@
     );
   }
 
-  $: renderTags = !editable && groupBy(tags, t => t.tag.type);
+  function sortAndGroupTags(_tags: typeof tags) {
+    // sort primary tags to the top and sort by id so it's consistent
+    const tagSortVal = (t: SubTypes.PageTag) => (t.category === 'PRIMARY' ? 0 : 100) + t.tag.id;
+    const sortedTags = _tags.sort((a,b) => tagSortVal(a) - tagSortVal(b));
+    return groupBy(sortedTags, t => t.tag.type);
+  }
+
+  $: renderTags = !editable && sortAndGroupTags(tags);
 
   $: menuData = LIFECYCLE_CONFIG.map<MenuElement>((percentage, i) => {
     const category = tags.find(({tag}) => tag.id === i)?.category;

@@ -267,7 +267,7 @@ class AWSAdapterStack extends Stack {
       destinationKeyPrefix: '_app/',
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
       retainOnDelete: false,
-      prune: true,
+      prune: false, // TODO: delayed pruning (for seamless deployments)
       distribution,
     });
 
@@ -278,7 +278,7 @@ class AWSAdapterStack extends Stack {
         s3_deployment.Source.asset(prerenderedPath)
       ],
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=3600, public')],
-      retainOnDelete: false,
+      retainOnDelete: true,
       prune: true,
       exclude: ['_app', '_app/', '_app/*'],
       distribution,

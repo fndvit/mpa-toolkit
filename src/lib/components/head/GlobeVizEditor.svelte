@@ -2,12 +2,14 @@
   import { clickOutside, timedBoolean } from "$lib/helpers/utils";
   import EditableText from "../generic/EditableText.svelte";
   import IconButton from "../generic/IconButton.svelte";
+  import Spinner from "../generic/Spinner.svelte";
   import GlobeViz from "./GlobeViz.svelte";
 
   export let lat: number;
   export let long: number;
 
   let value: string = null;
+  let loading = false;
 
   const {value: wiggling, start: wiggle} = timedBoolean();
 
@@ -48,7 +50,11 @@
   use:clickOutside={cancel}
   on:click={() => value = value ?? `${lat}, ${long}`}
 >
-  <GlobeViz {lat} {long} />
+  {#if loading}
+    <Spinner />
+  {/if}
+
+  <GlobeViz {lat} {long} bind:loading />
 
   {#if value == null}
     <div class="globe-edit-icon material-icons">edit</div>
@@ -60,12 +66,28 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .globe-editor {
     cursor: pointer;
     &:hover {
       filter: brightness(105%);
+    }
+    :global(.spinner) {
+      --spinner-color: white;
+      --spinner-size: 50px;
+      --spinner-thickness: 4px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      z-index: 1;
+
+      & + :global(.globe) {
+        opacity: 0.5;
+      }
     }
   }
 
@@ -81,7 +103,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: color(deep-blue);
+    background-color: $colors.deep-blue;
     text-align: center;
     box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.1);
     padding: 0 2px;

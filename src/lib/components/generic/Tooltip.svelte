@@ -4,7 +4,7 @@
 
 <div class="tooltip" data-text={text} />
 
-<style lang="scss">
+<style lang="stylus">
 
   .tooltip {
     --arrow-size: 8px;
@@ -13,7 +13,7 @@
     left: 50%;
     pointer-events: none;
     filter: drop-shadow(0px 1px 3px #00000044);
-    font-family: 'Montserrat';
+    font-family: var(--font-sans-serif);
     font-size: 13px;
     line-height: 16px;
     max-width: 150px;
@@ -27,7 +27,7 @@
       width: max-content;
       max-width: 100%;
       padding: calc(6px + var(--arrow-size)) 8px 6px;
-      background: color(neutral-bg);
+      background: $colors.neutral-bg;
       transform: translateX(-50%);
       clip-path: polygon(
         0 var(--arrow-size),

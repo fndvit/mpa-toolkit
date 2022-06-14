@@ -9,3 +9,9 @@
 <p>
   {#each (block.content || []) as child}<Inline block={child}/>{/each}
 </p>
+
+<style lang="stylus">
+  p {
+    typography: p-responsive;
+  }
+</style>

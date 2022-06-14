@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { SubTypes, UserInfo } from "$lib/types";
-  import AuthorsEditor from "$lib/components/cms/AuthorsEditor.svelte";
+  import type { SubTypes } from "$lib/types";
   import KeyTakeaways from "$lib/components/cms/KeyTakeaways.svelte";
-  import UserImage from "$lib/components/UserImage.svelte";
   import EditableText from "../generic/EditableText.svelte";
+  import LifeCycle from "../LifeCycle.svelte";
+  import Authors from "./Authors.svelte";
 
   export let chapter: SubTypes.Chapter.PageHead;
-  export let allAuthors: UserInfo[] = [];
+  export let tags: SubTypes.PageTag[];
   export let editable = false;
   export let readTime: number = undefined;
 
@@ -18,42 +18,15 @@
     };
   }
 
-  const emptyAuthors = [{ id: 0, name: 'Author', img: '' }];
-
-  function onClickAuthor(i: number) {
-    chapter.authors = [...chapter.authors];
-    chapter.authors.splice(i, 1);
-  }
-
-  $: displayAuthors = editable && !chapter.authors.length ? emptyAuthors : chapter.authors;
+  $: hasKeyTakeaways = chapter.keyTakeaways?.length > 0;
 
 </script>
 
-<div class="meta" class:meta-editable={editable}>
+<div class="meta" class:meta-editable={editable} class:has-keytakeaways={hasKeyTakeaways}>
 
-  <div class="first-line">
+  <div class="byline">
 
-    <div class="author-images">
-      {#each displayAuthors as user}
-        <UserImage {user} />
-      {/each}
-    </div>
-
-    {#if editable}
-
-      <div class="author-editor">
-        <AuthorsEditor {allAuthors} bind:authors={chapter.authors} />
-      </div>
-    {:else}
-      <div class="author-names">
-        {#each displayAuthors as author, i}
-          {#if i > 0 && i === displayAuthors.length - 1}
-            and
-          {/if}
-          <div on:click={() => editable && onClickAuthor(i)}>{author.name}</div>
-        {/each}
-      </div>
-    {/if}
+    <Authors bind:authors={chapter.authors} {editable} />
 
     {#if readTime !== undefined}
       <div class="readtime">{readTime} min read</div>
@@ -65,80 +38,90 @@
     <EditableText bind:value={chapter.summary} {editable} placeholder='Summary text...' />
   </div>
 
-  <KeyTakeaways bind:keyTakeaways={chapter.keyTakeaways} {editable}/>
+  {#if hasKeyTakeaways}
+    <div class="keytakeaways-container">
+      <KeyTakeaways bind:keyTakeaways={chapter.keyTakeaways} {editable}/>
+    </div>
+  {/if}
+
+  {#if !editable}
+    <div class="lifecycle-container">
+      <LifeCycle {tags}/>
+    </div>
+  {/if}
 
 </div>
 
-<style lang="scss">
+<style lang="stylus">
+
+  .meta:not(.has-keytakeaways) {
+    grid-config(page, chapter-no-keytakeaways);
+  }
+
+  .meta.has-keytakeaways {
+    grid-config(page, chapter);
+  }
 
   .meta {
     --ui-color-placeholder: #ffffff55;
-    background: color(primary-blue);
-    color: color(neutral-bg);
-    padding: 2rem 124px;
+
+    padding: 2rem 0 0;
+    background: $colors.primary-blue;
+    color: $colors.neutral-bg;
+
+    +breakpoint(page, medium) {
+      &:before {
+        content: '';
+        grid-column: 1 / -1;
+        grid-row: -2 / -1;
+        background: linear-gradient(180deg, transparent $lifecycle-y-overlap, white $lifecycle-y-overlap);
+
+      }
+    }
   }
 
-  .first-line {
+  .byline {
+    grid-area: byline;
+    typography: ui;
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
     column-gap: 10px;
   }
 
-  .author-images {
-    height: 66px;
-    margin-right: 15px;
-    display: flex;
-    column-gap: 10px;
-  }
-
-  .author-names {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    font-size: 16px;
-    column-gap: 5px;
-  }
-
   .summary {
-    font-family: var(--font-serif);
-    font-size: 28px;
-    line-height: 42px;
+    typography: p-large-responsive;
+    grid-area: summary;
     max-width: 800px;
     margin-bottom: 40px;
   }
+  .keytakeaways-container {
+    grid-area: keytakeaways;
+    margin: 0 0 2rem -30px;
 
-  .author-editor {
-    :global(.options) {
-      color: #333;
+    +breakpoint(page, medium) {
+      margin-left: 0;
     }
   }
 
-  @media screen and (max-width: 768px) {
+  .lifecycle-container {
+    grid-area: lifecycle;
+    position: relative;
+    > :global(.lifecycle) {
+      position: absolute;
+      z-index: lifecycle;
+      margin-right: -30px;
+      margin-left: 20px;
+      max-width: 300px;
+      box-sizing: border-box;
 
-    .meta {
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-
-    .author-images {
-      max-width: 100%;
-    }
-
-    .first-line {
-      display: block;
-    }
-
-    .author-names {
-      margin-top: 20px;
-    }
-
-    .summary {
-      font-size: 18px;
-      line-height: 32px;
+      +breakpoint(page, medium) {
+        position: static;
+        margin: 0;
+        max-width: none;
+      }
     }
 
   }
-
 
 </style>

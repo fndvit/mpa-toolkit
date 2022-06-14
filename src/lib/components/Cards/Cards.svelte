@@ -49,7 +49,7 @@
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
-        <CardHeading text={fixedTitle } />
+        <CardHeading text={fixedTitle} />
       </div>
     {/if}
     <SplideTrack>
@@ -80,17 +80,17 @@
   </Splide>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .cards {
     --content-padding: 30px;
     --content-top-padding: 30px;
     --scrollbar-width: 10px;
     --caret-color: #333;
-    border-radius: 15px;
+    border-radius: 20px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
 
-    background-color: color(highlight-1);
+    background-color: $colors.highlight-1;
     color: #333;
 
     :global(.splide__arrows) {
@@ -103,7 +103,7 @@
 
     :global(.splide__arrow) {
       position: static;
-      background: color(highlight-1);
+      background: $colors.highlight-1;
     }
     :global(.splide__arrow:disabled) {
       display: none;
@@ -133,7 +133,6 @@
 
   .slide {
     overflow: hidden;
-    font-family: 'Montserrat';
     top: 0;
     padding: var(--content-top-padding) var(--content-padding) 10px;
     margin-bottom: 15px;
@@ -147,7 +146,7 @@
 
   .fixed-title {
     :global(.heading) {
-      margin-left: 17px;
+      margin-left: 32px;
       margin-top: 25px;
       position: absolute;
     }
@@ -157,16 +156,6 @@
 
     .slide {
       padding: 1rem;
-
-      :global(.heading) {
-        font-size: 1rem;
-        text-align: left;
-      }
-
-      :global(.content) {
-        font-size: 1rem;
-        text-align: left;
-      }
     }
 
     .cards {
@@ -186,6 +175,11 @@
       }
     }
 
-   }
+    .fixed-title {
+      :global(.heading) {
+        margin-left: 17px;
+      }
+    }
+  }
 
 </style>

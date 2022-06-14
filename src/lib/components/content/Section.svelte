@@ -15,7 +15,7 @@
   {/if}
 </section>
 
-<style lang="scss">
+<style lang="stylus">
   .collapsed > :global(h1 ~ p ~ p ~ :not(.expand-button)) {
     display: none;
   }

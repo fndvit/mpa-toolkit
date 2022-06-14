@@ -17,11 +17,14 @@
   import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import PageContent from '$lib/components/content/PageContent.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, setContext } from 'svelte';
+  import { getPageTypeStr } from '$lib/helpers/content';
 
   export let users: UserInfo[];
   export let allTags: Tag[];
   export let page: SubTypes.Page.Full;
+
+  setContext('allUsers', users);
 
   const userLookup = createLookup(users, u => u.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
@@ -100,7 +103,8 @@
 
   const onBeforeInputSlug: svelte.JSX.EventHandler<InputEvent, HTMLInputElement> = e => {
     const validChars = /[a-zA-Z0-9-]/;
-    if (!validChars.exec(e.data)) e.preventDefault();
+    if (!validChars.exec(e.data)) return e.preventDefault();
+    else autoPopulateSlug = false;
   };
 
   $: _page.tags = tags.map(pageTagToRequestTag);
@@ -138,8 +142,7 @@
 
 </script>
 
-
-<div class="page-editor" class:preview class:is-new-page={isNewPage}>
+<div class="page page-editor" class:preview class:is-new-page={isNewPage} data-pagetype={getPageTypeStr(page)} >
   <div class="meta">
 
     <div class="top-controls">
@@ -161,7 +164,7 @@
     {#if pageType === "Case Study"}
       <CaseStudyMeta bind:caseStudy={_page.caseStudy} editable={!preview} />
     {:else}
-      <ChapterMeta bind:chapter allAuthors={users} editable={!preview} />
+      <ChapterMeta bind:chapter editable={!preview} tags={page.tags} />
     {/if}
 
   </div>
@@ -202,7 +205,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .draft-button {
     :global(.icon-button) {

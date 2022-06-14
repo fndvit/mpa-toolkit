@@ -1,0 +1,122 @@
+use("./util.styl.cjs")
+
+$grid = {
+  // breakpoints are also calculateded from this. the minimum width for each grid
+  // (the sum of the min size of each column) forms the breakpoint at which point
+  // the next smallest grid style is applied
+  page: {
+    large:  minmax(64px, 96px) 220px 600px 300px minmax(64px, 96px) 1fr
+    medium: minmax(40px, 1fr) 240px minmax(500px, 600px) minmax(40px, 1fr)
+    small:  minmax(20px, 1fr) minmax(200px, 600px) minmax(20px, 1fr)
+  }
+}
+
+breakpoint($group, $size)
+  @media screen and (max-width: $breakpoints[$group][$size])
+    {block}
+
+$areas = {
+  page: {
+
+    large: {
+      splash:
+        ".    .             .             .            ."\
+        ".    title         title         .            ."
+      chapter:
+        ".    byline        byline        .            ."\
+        ".    summary       summary       .            ."\
+        ".    keytakeaways  keytakeaways  lifecycle    ."
+      chapter-no-keytakeaways:
+        ".    byline        byline        lifecycle    ."\
+        ".    summary       summary       lifecycle    ."
+      case-study:
+        ".    meta          meta          meta         ."\
+        ".    meta          meta          meta         ."\
+        ".    milestones    milestones    milestones   ."
+      content:
+        ".    menu          body          lifecycle    lifecycle"
+      footer:
+        ".    footer        footer        .            ."
+    }
+
+    medium: {
+      splash:
+        ".    .            .            ."\
+        ".    title        title        ."
+      chapter:
+        ".    byline       byline       ."\
+        ".    summary      summary      ."\
+        ".    keytakeaways keytakeaways ."\
+        ".    lifecycle    lifecycle    ."
+      chapter-no-keytakeaways:
+        ".    byline       byline       ."\
+        ".    summary      summary      ."\
+        ".    lifecycle    lifecycle    ."
+      case-study:
+        ".    meta          meta        ."
+      content:
+        ".    lifecycle    lifecycle    ."\
+        "menu body         body         ."
+      footer:
+        ".    footer       footer       ."
+    }
+
+    small: {
+      splash:
+        ".    .            ."\
+        ".    title        ."
+      chapter:
+        ".    byline       ."\
+        ".    summary      ."\
+        ".    keytakeaways ."\
+        ".    lifecycle    ."
+      chapter-no-keytakeaways:
+        ".    byline       ."\
+        ".    summary      ."\
+        ".    lifecycle    ."
+      case-study:
+        ".    meta         ."
+      content:
+        ".    lifecycle    ."\
+        "menu body         ."
+      footer:
+        ".    footer       ."
+    }
+  }
+}
+
+grid-config-at-breakpoint($group, $element, $breakpoint)
+  grid-template-columns: $grid[$group][$breakpoint]
+  grid-template-areas: $areas[$group][$breakpoint][$element]
+
+grid-config($group, $element)
+  display: grid
+  grid-config-at-breakpoint($group, $element, large)
+  +breakpoint($group, medium)
+    grid-config-at-breakpoint($group, $element, medium)
+  +breakpoint($group, small)
+    grid-config-at-breakpoint($group, $element, small)
+
+calc-min-grid-width(tracklist)
+  total = 0
+  for def in tracklist
+    if def is a 'call'
+      $min = extract-min-from-minmax(def)
+      total += $min
+    else if def is a 'unit' and unit(def) == 'px'
+      total += def
+  total
+
+$breakpoints = {
+  page: {
+    // breakpoints calculated from the grid config above
+    // // e.g. medium is set to the min width of the large grid
+    medium: calc-min-grid-width($grid.page.large)
+    small: calc-min-grid-width($grid.page.medium)
+    tiny: calc-min-grid-width($grid.page.small)
+
+    // example custom breakpoints (unused currently)
+    xs: 480px
+    xl: 1400px
+  }
+}

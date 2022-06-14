@@ -6,6 +6,7 @@ import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
 import { pageForContentCard, pageFull } from "./queries";
 import { createLookup, type Expand } from "$lib/helpers/utils";
+import { publishEvent } from "$lib/events";
 
 export async function getPage(slug: string, draft = false) {
   return prisma.page.findFirst({
@@ -77,7 +78,35 @@ export async function updatePage(id: number, page: PageRequest) {
     prisma.$queryRaw`SELECT CAST (create_page_search_index(${id}) AS TEXT)`
   ]);
 
+  await publishEvent('page-updated', { id });
+
   return _page;
+}
+
+export async function deletePage(id: number) {
+
+  const page = await prisma.page.findFirst({
+    where: { id },
+    include: { chapter: true, caseStudy: true }
+  });
+
+  const cascade = prisma.page.update({
+    where: { id },
+    data: {
+      chapter: page.chapter ? { delete: true } : undefined,
+      caseStudy: page.caseStudy ? { delete: true } : undefined,
+      search: { delete: true },
+      tags: { deleteMany: { OR: [ { pageId: { equals: id } }, ] } }
+    }
+  });
+
+  const deletePage = prisma.page.delete({ where: { id } });
+
+  await prisma.$transaction([cascade, deletePage]);
+
+  await publishEvent('page-deleted', { id });
+
+  return true;
 }
 
 export async function createPage(page: PageRequest) {
@@ -110,6 +139,8 @@ export async function createPage(page: PageRequest) {
     createPageQuery,
     prisma.$queryRaw`SELECT CAST (create_page_search_index(last_value) AS TEXT) FROM "Page_id_seq"`
   ]);
+
+  await publishEvent('page-created', { id: _page.id });
 
   return _page;
 }

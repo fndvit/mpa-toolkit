@@ -14,7 +14,7 @@
   {/each}
 </ul>
 
-<style lang="scss">
+<style lang="stylus">
   .collection-cards {
     padding: 0;
     margin: 0;

@@ -8,8 +8,8 @@
   import TextSlider from "./TextSlider.svelte";
   import ContentMadLib from "$lib/components/Madlib/ContentMadLib.svelte";
   import ContentCarousel from "$lib/components/content/ContentCarousel.svelte";
-  import LifeCycle from "$lib/components/LifeCycle.svelte";
   import Image from "./Image.svelte";
+  import LifeCycle from "../LifeCycle.svelte";
 
   export let page: SubTypes.Page.Full;
   export let recommendedPages: SubTypes.Page.ContentCard[] = null;
@@ -24,15 +24,24 @@
   };
 
   const headings = sections.filter(s => s.id);
-
 </script>
 
 <div class="page-content">
-  <div class="menu">
-    <StickyMenu menuOptions={headings} />
+
+  <div class="menu-container">
+    <div class="menu">
+      <StickyMenu menuOptions={headings} />
+      <div class="sliding-arrow">
+        <svg viewBox="0 0 12 20">
+          <path d="M1.1814 19L9.81849 10L1.1814 1" />
+        </svg>
+      </div>
+    </div>
   </div>
   <div class="lifecycle-container">
-    <LifeCycle tags={page.tags}/>
+    {#if page.caseStudy }
+      <LifeCycle tags={page.tags}/>
+      {/if}
   </div>
   <div class="body-column">
     {#each sections as section, i}
@@ -59,57 +68,124 @@
           </div>
         {/if}
       {/if}
-      {/each}
+    {/each}
     </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .page-content {
+    grid-config(page, content);
+
     position: relative;
-    display: grid;
-    grid-template-columns: minmax(250px, 300px) minmax(32rem, 40rem) minmax(300px, auto);
-    grid-template-areas: "left-margin body right-margin";
-    grid-auto-flow: row;
-    column-gap: 1.5rem;
-    padding: 0 20px;
+    min-height: 800px // so empty pages don't collapse
+    grid-auto-rows: min-content;
+    padding-bottom: 2rem;
   }
 
   .body-column {
     display: contents;
-    font-family: var(--font-serif);
-    font-size: 18px;
-    line-height: 32px;
     > :global(*) {
-      grid-column-start: body;
+      grid-column: body;
     }
   }
 
   .unknown-block {
-    background: color(error-red);
+    background: $colors.error-red;
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1rem -1rem;
   }
 
+  .menu-container {
+    grid-column: menu;
+    grid-row: menu / span 100; // can't span -1 through dynamic rows
+    margin: 0 1rem 0 -30px;
+    z-index: sticky-menu;
+
+    +breakpoint(page, medium) {
+      margin: 0 1rem 0 0;
+    }
+  }
+
   .menu {
-    grid-area: left-margin;
-    top: 10px;
-    padding-right: 1rem;
-    :global(.mainnav) {
-      position: sticky;
-      float: right;
-      top: 10px;
-      flex: 0;
+    position: sticky;
+    top: 0;
+    flex: 0
+
+    +breakpoint(page, medium) {
+      margin-top: 5px;
+      width: fit-content;
+      transform: translateX(-100%);
+      transition: transform .5s ease-out;
+
+      :global(.sticky-menu) {
+        position: relative;
+        z-index: 1;
+        width: 220px;
+        border-radius: 0px 20px 20px 0px;
+      }
+
+      .menu-container:hover & {
+        transform: translateX(0);
+        .sliding-arrow {
+          transform: translateX(-100%);
+        }
+      }
+    }
+  }
+
+  .sliding-arrow {
+    display: none;
+
+    cursor: pointer;
+    position: absolute;
+    z-index: 0;
+    width: 30px;
+    left: 100%;
+    top: 30px;
+    bottom: 30px;
+    max-height: 80px;
+    transform-origin: 0% 0%;
+    background: alpha($colors.neutral-dark, 0.2);
+    box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 10px 10px 0px;
+    transition: transform 0.1s ease-out;
+
+    svg {
+      width: 10px;
+      fill: none;
+      margin: auto;
+      path {
+        stroke: $colors.neutral-black ;
+        stroke-width: 2.4px;
+      }
+    }
+
+    +breakpoint(page, medium) {
+      display: flex;
+    }
+
+    +breakpoint(page, small) {
+      width: 18px;
+      svg {
+        width: 6px;
+      }
     }
   }
 
   .lifecycle-container {
-    grid-area: right-margin;
-    padding-top: 1.5rem;
+    grid-area: lifecycle;
+
     :global(.lifecycle) {
-      margin: auto;
+      margin: 1rem auto 0;
+      // margin: 1rem 0 0 1rem;
       max-width: 300px;
+      position: relative;
+      z-index: 1;
+      +breakpoint(page, medium) {
+        max-width: none;
+      }
     }
   }
 
@@ -119,55 +195,8 @@
 
   .madlib-container,
   .content-carousel-container {
-      margin-left: -25px;
-      margin-right: -20px;
-      grid-column: body / right-margin;
-  }
-
-  @media screen and (max-width: 1150px) {
-    .page-content {
-      grid-template-columns: 250px minmax(500px, 600px) minmax(20px, auto);
-    }
-    .body-column {
-      :global(.content-carousel) {
-        width: auto;
-      }
-    }
-    .lifecycle-container {
-      grid-area: body;
-      grid-row: 1;
-      :global(.lifecycle) {
-        max-width: none;
-      }
-    }
-  }
-  @media screen and (max-width: 840px) {
-    .page-content {
-      display: block;
-    }
-
-    .madlib-container {
-      margin-top: 1rem;
-      margin-right: 0;
-    }
-
-    .body-column {
-      font-size: 16px;
-      line-height: 28px;
-      > :global(.content-section) {
-        max-width: 480px;
-        margin: auto;
-      }
-
-      :global(img) {
-        max-width: 100%;
-      }
-    }
-
-    .menu {
-      display: none; //temporary
-    }
-
+    margin-left: -25px;
+    grid-column: body / -1;
   }
 
 </style>

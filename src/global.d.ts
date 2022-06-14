@@ -13,6 +13,10 @@ declare namespace App {
       role: 'ADMIN' | 'USER' | 'CONTENT_MANAGER';
     }
   }
+
+  export interface Locals {
+    cacheKey?: string;
+  }
 }
 
 declare module 'svelte-scrollto' {

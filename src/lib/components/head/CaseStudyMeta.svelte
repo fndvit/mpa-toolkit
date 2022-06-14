@@ -24,20 +24,26 @@
 
 </script>
 
-<div class="meta-container" class:has-milestones={hasMilestones}>
+<div class="meta-container">
 
   <div class="meta-content">
 
     <div class="meta-grid meta-grid-1">
 
-      <h4>Name</h4>
-      <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
+      <div class="grid-cell">
+        <div class="meta-title">Name</div>
+        <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
+      </div>
 
-      <h4>Established in</h4>
-      <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
+      <div class="grid-cell side-by-side-1">
+        <div class="meta-title">Established in</div>
+        <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
+      </div>
 
-      <h4>Size</h4>
-      <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
+      <div class="grid-cell side-by-side-2">
+        <div class="meta-title">Size</div>
+        <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
+      </div>
 
       <div class="globe-cell">
         {#if editable}
@@ -51,17 +57,25 @@
 
     <div class="meta-grid meta-grid-2">
 
-      <h4>Governance</h4>
-      <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
+      <div class="grid-cell">
+        <div class="meta-title">Governance</div>
+        <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
+      </div>
 
-      <h4>Staff</h4>
-      <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
+      <div class="grid-cell">
+        <div class="meta-title">Staff</div>
+        <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
+      </div>
 
-      <h4>Budget</h4>
-      <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
+      <div class="grid-cell">
+        <div class="meta-title">Budget</div>
+        <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
+      </div>
 
-      <h4>Budget level</h4>
-      <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
+      <div class="grid-cell">
+        <div class="meta-title">Budget level</div>
+        <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
+      </div>
 
     </div>
 
@@ -72,52 +86,68 @@
     {/if}
 
   </div>
-
-  <div class="milestones-container">
-    {#if hasMilestones}
-      <Milestones bind:milestones={caseStudy.milestones} {editable} />
-    {/if}
-  </div>
-
 </div>
 
+{#if hasMilestones}
+<div class="meta-container meta-container-milestones">
+  <Milestones bind:milestones={caseStudy.milestones} {editable} />
+</div>
+{/if}
 
-<style lang="scss">
+
+<style lang="stylus">
 
   .meta-container {
-    position: relative;
-    background-color: color(deep-blue);
-    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
+    grid-config(page, case-study);
+
     --ui-color-placeholder: #ffffff55;
+    position: relative;
+    background-color: $colors.deep-blue;
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
+
+    +breakpoint(page, medium) {
+      :global(.page-static[data-pagetype="casestudy-with-milestones"]) &.meta-container-milestones,
+      :global(.page-static[data-pagetype="casestudy"]) &:not(.meta-container-milestones) {
+        margin-bottom: $lifecycle-y-overlap * -1;
+        padding-bottom: $lifecycle-y-overlap;
+      }
+    }
+
+  }
+
+  .meta-container-milestones {
+    > :global(.milestones) {
+      grid-area: meta;
+    }
+    background: $colors.dark-blue;
+    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
   }
 
   .meta-content {
-    width: 1300px;
-    margin-left: 124px;
-    padding: 35px 20px;
+    width: auto;
+    grid-area: meta;
+    padding: 35px 0px;
   }
 
   .meta-grid {
     display: grid;
     grid-template-rows: auto auto;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
     column-gap: 1.5rem;
     color: white;
 
     &.meta-grid-1 {
-      grid-template-columns: 325px 225px 425px 325px;
-      margin-bottom: 40px;
+      grid-template-columns: 30% 15% 22.5% 30%;
       min-height: 110px;
+      margin-bottom: 45px;
     }
 
     &.meta-grid-2 {
-      grid-template-columns: 325px 325px 325px 325px;
+      grid-template-columns: 22.5% 22.5% 22.5% 22.5%;
     }
-
   }
 
   .meta-grid :global(.editable-content) {
-    font-family: 'Bitter';
     background: transparent;
     border: 0;
     padding: 0;
@@ -125,21 +155,17 @@
   }
 
   .meta-grid-1 :global(.editable-content) {
-    font-size: 28px;
-    line-height: 42px;
+    typography: p-large-responsive;
   }
 
   .meta-grid-2 :global(.editable-content) {
-    font-size: 18px;
-    line-height: 32px;
+    typography: p-responsive;
   }
 
-  .meta-grid > h4 {
-    font-family: 'Montserrat';
-    font-weight: bold;
-    color: color(neutral-bg);
-    font-size: 16px;
-    line-height: 24px;
+  .meta-title {
+    typography: h5-graphic;
+    color: #F9F9F9;
+    color: $colors.neutral-bg;
     margin: 0;
   }
 
@@ -159,10 +185,29 @@
     --ib-hover-bg: #00000011;
   }
 
-  @media screen and (max-width: 768px) {
+  +breakpoint(page, medium) {
+    .meta-grid {
+      &.meta-grid-1 {
+        grid-template-columns: 22.5% 15% 22.5% 30%;
+        min-height: 110px;
+      }
+    }
 
-    .meta-grid > h4 {
-      margin-top: 20px;
+  }
+
+  +breakpoint(page, small) {
+
+    .grid-cell {
+      margin-bottom: 2rem;
+    }
+
+    .side-by-side-1 {
+      display: inline-block;
+      margin-right: 75px;
+    }
+
+    .side-by-side-2 {
+      display: inline-block;
     }
 
     .meta-content {
@@ -171,24 +216,13 @@
       width: fit-content;
     }
 
-    .meta-grid-1 :global(.editable-content) {
-      font-size: 22px;
-      line-height: 36px;
-      max-width: 23rem;
-    }
-
-    .meta-grid-2 :global(.editable-content) {
-      font-size: 16px;
-      line-height: 28px;
-      max-width: 23rem;
-    }
-
     .meta-grid {
       display: block;
       color: white;
+
       &.meta-grid-1 {
-        margin-bottom: 0px;
         min-height: 110px;
+        margin-bottom: 0px;
       }
 
       &.meta-grid-2 {

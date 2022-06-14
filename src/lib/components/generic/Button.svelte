@@ -16,7 +16,7 @@
 </button>
 {/if}
 
-<style lang="scss">
+<style lang="stylus">
 
   .button {
     position: relative;

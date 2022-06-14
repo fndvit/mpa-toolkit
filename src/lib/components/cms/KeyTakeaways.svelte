@@ -29,11 +29,8 @@
   </div>
 {/if}
 
-<style lang="scss">
+<style lang="stylus">
   .key-takeaways {
-    max-width: 850px;
-    margin-bottom: 25px;
-    margin-left: -30px;
     --ec-hover-bg: #ffffff44;
     :global(.button) {
       margin: auto;
@@ -44,15 +41,6 @@
     --ib-color: #ffffffee;
     --ib-hover-border: 1px solid transparent;
     --ib-hover-bg: #00000011;
-  }
-
-  @media screen and (max-width: 768px) {
-
-    .key-takeaways {
-      max-width: 100%;
-      margin-left: 0px;
-    }
-
   }
 
 </style>

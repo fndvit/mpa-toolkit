@@ -4,43 +4,54 @@
 
 <div class="footer">
 
-  <p>A partnership between</p>
+  <div class="footer-content">
+    <h5>A partnership between</h5>
 
-  <div class="partners-grid">
-    <InlineSvg svg="UNEP" />
-    <InlineSvg svg="IAFDC" />
-    <InlineSvg svg="UoQ" />
-    <InlineSvg svg="TNC" />
-    <InlineSvg svg="WWF" />
-  </div>
-
-  <div class="links">
-
-    <div>
-      <a href="/cms" rel="external"><b>Contact us</b></a>
-      <a href="/cms" rel="external"><b>Follow us</b></a>
+    <div class="partners-grid">
+      <InlineSvg svg="UNEP" />
+      <InlineSvg svg="IAFDC" />
+      <InlineSvg svg="UoQ" />
+      <InlineSvg svg="TNC" />
+      <InlineSvg svg="WWF" />
     </div>
 
-    <div>
-      <a href="/cms" rel="external">Partners</a>
-      <a href="/cms" rel="external">Team</a>
-      <a href="/cms" rel="external">Privacy policy</a>
-      <a href="/cms" rel="external">Terms of use</a>
-      <a href="/cms" rel="external">Sitemap</a>
-    </div>
+    <div class="links">
 
+      <div>
+        <a href="/cms" rel="external">Contact us</a>
+        <a href="/cms" rel="external">Follow us</a>
+      </div>
+
+      <div>
+        <a href="/cms" rel="external">Partners</a>
+        <a href="/cms" rel="external">Team</a>
+        <a href="/cms" rel="external">Privacy policy</a>
+        <a href="/cms" rel="external">Terms of use</a>
+        <a href="/cms" rel="external">Sitemap</a>
+      </div>
+
+    </div>
   </div>
+
 
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .footer {
-    padding: 0 var(--page-padding);
-    background: color(neutral-bg);
+    grid-config(page, footer);
+
+    background: $colors.neutral-bg;
 
     p {
       font-weight: bold;
+    }
+  }
+
+  .footer-content {
+    grid-area: footer;
+    > h5 {
+      typography: h5-responsive;
     }
   }
 
@@ -49,18 +60,22 @@
     grid-template-columns: 126px 87px 148px 135px 39px;
     align-items: center;
     gap: 45px;
-    color: color(neutral-dark);
+    color: $colors.neutral-dark;
   }
 
   .links {
+    typography: ui-small;
     margin: 40px 0px;
     display: flex;
     flex-direction: column;
     gap: 0.55em;
 
+    > div:first-child {
+      font-weight: 700;
+    }
+
     a {
-      color: color(neutral-dark);
-      font-size: 12px;
+      color: $colors.neutral-dark;
       margin-right: 15px;
     }
   }
@@ -68,42 +83,10 @@
   @media(max-width: 1024px) {
 
     .partners-grid {
-
       grid-template-columns: 0.25fr 0.25fr 0.25fr;
       grid-template-rows: auto;
       margin-top: 3rem;
-
     }
-
-    .links {
-
-      width: 100%;
-      a {
-        font-size: 1.25rem;
-      }
-
-    }
-  }
-
-  @media(max-width: 768px) {
-
-    .links {
-      a {
-        font-size: 1rem;
-      }
-    }
-
-  }
-
-  @media(max-width: 425px) {
-
-
-    .links {
-      a {
-        font-size: 0.75rem;
-      }
-    }
-
   }
 
 </style>

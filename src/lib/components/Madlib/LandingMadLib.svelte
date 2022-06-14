@@ -13,7 +13,7 @@
 
 <div class="landing-madlib" style="--background-image: url({landingMadlibBg})">
 
-  <h2>Find information <strong>relevant to you</strong>.</h2>
+  <h2>Find information <b>relevant to you</b>.</h2>
 
   <MadLib bind:value />
 
@@ -26,24 +26,20 @@
 
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .landing-madlib {
     color: white;
-    font-family: 'Montserrat';
-    font-size: 1.5rem;
     line-height: 1.5;
     padding-bottom: 0.5rem;
-
     width: auto;
     margin-top: 35px;
     padding: 0.5rem var(--page-padding) 5rem;
-    background: color(primary-blue);
+    background: $colors.primary-blue;
     height: 600px;
     background-size: cover;
     background-position: bottom;
     background-image: var(--background-image);
-
 
     > :global(.madlib) {
       margin-top: 0.5rem;
@@ -51,28 +47,22 @@
     }
 
     h2 {
-      font-size: 3rem;
+      typography: h2-responsive;
       margin-top: 6rem;
-      max-width: 620px;
       color: #FFFFFF;
-      font-weight: 300;
-      strong {
-        font-weight: inherit;
-      }
     }
 
     svg path {
-      stroke: color(neutral-black);
+      stroke: $colors.neutral-black;
     }
 
   }
 
   .landing-madlib button {
+    typography: h4-responsive;
     cursor: pointer;
     border: none;
-    font-size: 1.25rem;
-    font-weight: 700;
-    background: color(highlight-1);
+    background: $colors.highlight-1;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     position: relative;
     border-radius: 24px;
@@ -93,7 +83,6 @@
     transform: rotate(-90deg) scale(1.35) translateX(-0.25rem);
     overflow: hidden;
     outline: none;
-
     display: inline-block;
     position: relative;
     padding-left: 1rem;
@@ -115,26 +104,19 @@
       button {
         margin: 2rem 0 2rem;
       }
-
     }
-
   }
 
   @media screen and (max-width: 768px) {
 
     .landing-madlib {
-      font-size: 1.25rem;
 
       h2 {
-        font-size: 2rem;
         margin-bottom: 3rem;
-
-        strong {
-          font-weight: 700;
-        }
       }
+
       button {
-        font-size: 1rem;
+        padding: 0.55rem 0.95rem 0.45rem 0.85rem;
       }
     }
   }

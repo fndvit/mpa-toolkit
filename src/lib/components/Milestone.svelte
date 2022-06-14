@@ -49,7 +49,7 @@
   $: simple = content.length <= 1;
 </script>
 
-<div class="container" class:simple>
+<div class="milestone" class:simple>
 
   <div class="year">
     <EditableText bind:this={editableYear} bind:value={editYear} {editable} placeholder="year" bind:focused={yearFocused}/>
@@ -81,7 +81,7 @@
     <div class="milestones-block">
 
       {#each content as _, i}
-        <div class='milestone-container' on:click={() => onClickMilestone(i)} style="--row: {i+1};">
+        <div class='milestone-item' on:click={() => onClickMilestone(i)} style="--row: {i+1};">
 
           <svg class="sub-thread-line" width="10" height="4" viewBox="0 0 10 4">
             <path d="M1.22933 0.955129V0.955129C2.81493 2.54068 5.01818 3.34773 7.25278 3.1615L9.729 2.95514"/>
@@ -126,10 +126,9 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
-  .container {
-    --ms-width: 200px;
+  .milestone {
 
     :global(.icon-button) {
       --ib-color: white;
@@ -145,9 +144,9 @@
 
   .main-circle {
     position: absolute;
-    stroke: color(highlight-1);
+    stroke: $colors.highlight-1;
     stroke-width: 3;
-    fill: color(primary-blue);
+    fill: $colors.primary-blue;
   }
 
   .milestones-block {
@@ -156,7 +155,7 @@
 
   .main-line {
     pointer-events: none;
-    border-left: 1.5px dashed color(highlight-1);
+    border-left: 1.5px dashed $colors.highlight-1;
     grid-column: 1;
     grid-row: 1 / span var(--num-milestones);
     margin-left: 7px;
@@ -171,51 +170,51 @@
     margin-left: 7px;
     path {
       stroke-dasharray: 3;
-      stroke: color(highlight-1);
+      stroke: $colors.highlight-1;
       stroke-width: 1.5px;
       fill: none;
     }
   }
 
-  .milestone-container {
+  .milestone-item {
     grid-column: 1;
     grid-row: var(--row);
     padding: 40px 0 0;
     cursor: pointer;
     position: relative;
-    width: var(--ms-width);
+    max-width: 100%;
+    overflow: hidden;
   }
 
   .milestone-circle {
     transform: translate(17px, -6px);
-    stroke: color(highlight-1);
+    stroke: $colors.highlight-1;
     stroke-width: 3;
-    fill: color(primary-blue);
+    fill: $colors.primary-blue;
     &.expanded {
-      fill: color(highlight-1);
+      fill: $colors.highlight-1;
     }
   }
 
   .expandable-circle {
-    stroke: color(highlight-1);
+    stroke: $colors.highlight-1;
     transform: translate(16px, -7px);
 
     circle {
-      fill: color(primary-blue);
+      fill: $colors.primary-blue;
       stroke-width: 3px;
     }
   }
 
   .milestone-text {
-    font-size: 16px;
-    color: color(neutral-bg);
+    typography: p-graphic-responsive
+    color: $colors.neutral-bg;
     padding-top: 1.5px;
     padding-left: 22px;
 
     .simple & {
       padding-top: 28px;
       padding-left: 3px;
-      width: var(--ms-width);
     }
 
     &.contracted {
@@ -227,23 +226,20 @@
         text-overflow: ellipsis;
       }
     }
-
   }
 
   .year {
+    typography: ui-small;
     display: flex;
     column-gap: 5px;
     align-items: center;
-    font-size: 12px;
-    color: color(neutral-bg);
+    color: $colors.neutral-bg;
     height: 25px;
-    padding-left: 4px;
-    width: var(--ms-width);
+    padding-left: 2px;
     :global(input) {
       width: 40px;
     }
   }
-
 
   .delete-year-button,
   .delete-milestone-button,
@@ -276,7 +272,7 @@
     }
   }
 
-  :global(.splide__slide:hover) .container :global(.editable-content-container:not(.empty) [contenteditable]) {
+  :global(.splide__slide:hover) .milestone :global(.editable-content-container:not(.empty) [contenteditable]) {
     background: #ffffff10;
     border-radius: 4px;
   }
@@ -289,15 +285,6 @@
     :global(.icon-button) {
       --ib-hover-bg: #03395f;
       --ib-icon-bg: #034676;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    .milestone-text {
-      font-size: 12px;
-      line-height: 18px;
-      padding-right: 30px;
-      max-width: 125px;
     }
   }
 

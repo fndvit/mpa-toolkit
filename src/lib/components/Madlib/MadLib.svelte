@@ -17,14 +17,14 @@
   <MadLibSelector options={actionSubjectList} bind:selected={value[3]}/>
 </p>
 
-<style lang="scss">
+<style lang="stylus">
 
   .madlib {
+    typography: h4-light;
     position: relative;
-    font-weight: 300;
-    font-size: inherit;
-    line-height: 2;
-    font-family: 'Montserrat';
+    :global(.content-madlib) & {
+      typography: ui-large;
+    }
   }
 
 </style>

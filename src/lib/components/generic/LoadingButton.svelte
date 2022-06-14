@@ -17,7 +17,7 @@
   </div>
 </Button>
 
-<style lang="scss">
+<style lang="stylus">
 
   .contents {
     display: flex;

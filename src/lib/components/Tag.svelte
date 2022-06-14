@@ -10,6 +10,7 @@
   $: highlight = tagHighlightFn && tagHighlightFn(tag.tag);
 
   $: secondary = tag.category == 'SECONDARY';
+
 </script>
 
 <a
@@ -30,16 +31,12 @@
   </span>
 </a>
 
-<style lang="scss">
+<style lang="stylus">
   .tag {
     cursor: pointer;
     display: inline-block;
-    font-size: 12px;
-    font-family: 'Montserrat';
-    font-weight: 400;
-    line-height: 18px;
     text-align: center;
-    padding: 4px 12px;
+    padding: 2px 12px 4px;
     border-radius: 18px;
     overflow: hidden;
     margin: 0;
@@ -47,20 +44,21 @@
     position: relative;
     white-space: nowrap;
     height: fit-content;
-    background: color(highlight-1);
+    background: $colors.highlight-1;
     &.secondary {
-      background: color(highlight-1, 0.4);
+      background: alpha($colors.highlight-1, 0.4);
     }
 
     :global(.collection-card) &,
     :global(.content-carousel-card) & {
-      background: color(tag-bg-cards);
+      background: $colors.tag-bg-cards;
       &.secondary {
-        background: color(tag-bg-cards, 0.4);
+        background: alpha($colors.tag-bg-cards, 0.4);
       }
     }
 
     span {
+      typography: ui-small;
       position: relative;
     }
   }

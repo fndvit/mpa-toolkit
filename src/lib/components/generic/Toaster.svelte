@@ -42,12 +42,12 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
   .toaster {
     position: fixed;
     bottom: 0;
     right: 0;
-    z-index: 10;
+    z-index: toast;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -67,7 +67,7 @@
     color: #333;
     border-radius: 5px;
     border: 1px solid #999;
-    background: color(neutral-bg);
+    background: $colors.neutral-bg;
     padding: 10px 15px 10px 10px;
     display: flex;
     align-items: center;
@@ -76,7 +76,7 @@
     animation: animateToast 100ms;
 
     &[data-type="error"] .material-icons {
-      color: color(error-red);
+      color: $colors.error-red;
     }
 
     &[data-type="info"] .material-icons {

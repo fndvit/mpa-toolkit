@@ -13,10 +13,14 @@
     <img src={staticUrl(img)} alt="interesting-chapters" href={"/" + slug}/>
     <div class="title">{title}</div>
   </a>
-  <TagContainer {tags}/>
+
+  <div class="tags no-drag hide-scrollbar">
+    <TagContainer {tags}/>
+  </div>
+
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .content-carousel-card {
     width: 292px;
     a {
@@ -36,15 +40,18 @@
     }
   }
 
+  .tags {
+    line-height: 18px;
+    max-width: 292px;
+  }
+
   img {
     width: 100%;
   }
 
   .title {
-    font-family: 'Montserrat';
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 25px;
+    typography: h5-light;
+    line-height: 1.5rem;
     padding-left: 0.15rem;
     color: black;
   }
@@ -54,14 +61,14 @@
       max-width: 210px;
     }
     .title {
-      font-size: 18px;
       line-height: 22px;
     }
-  }
 
-  @media screen and (max-width: 768px) {
-    .title {
-      font-size: 16px;
+    .tags {
+      overflow-x: scroll;
+      > :global(.tag-container) {
+        flex-wrap: nowrap;
+      }
     }
   }
 

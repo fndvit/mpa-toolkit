@@ -1,7 +1,8 @@
 import type { Handler } from "aws-lambda";
 import { execFile } from "child_process";
 import path from "path";
-import { seed } from "../prisma/seed/seed";
+import { seed } from "../../prisma/seed/seed";
+import { reset } from "../../prisma/reset/reset";
 
 // example cmd to invoke using aws cli:
 // aws lambda invoke --function-name AppStack-MigrationRunner07C61515-63HtCcSdD3K6 response.json
@@ -13,16 +14,16 @@ export const handler: Handler = async (event) => {
   // If you want to add commands, please refer to: https://www.prisma.io/docs/concepts/components/prisma-migrate
   const command: string = event.command ?? "deploy";
 
-  let options: string[] = [];
-
   if (command === "seed") {
     await seed(event.seed === 'dev');
   }
-  else {
-    if (command == "reset") {
-      // skip confirmation and code generation
-      options = ["--force", "--skip-generate"];
-    }
+  else if (command === 'nuke') {
+    await reset();
+    await seed(event.seed === 'dev');
+  }
+  else if (command === 'reset' || command === 'migrate') {
+
+    const options: string[] = command == "reset" ? ["--force", "--skip-generate"] : [];
 
     // Currently we don't have any direct method to invoke prisma migration programatically.
     // As a workaround, we spawn migration script as a child process and wait for its completion.

@@ -1,0 +1,18 @@
+@require system
+@require '../layout'
+
+typography($name)
+  $responsive = $typography-responsive[$name]
+  if $responsive
+    get-font-css($responsive['default'])
+    for $bp in $breakpoints.page
+      $font = $responsive[$bp]
+      if $font
+        +breakpoint(page, $bp)
+          get-font-css($font)
+  else if $typography[$name]
+    get-font-css($name)
+  else
+    p($typography-responsive)
+    error('No typography defined for ' + $name)
+

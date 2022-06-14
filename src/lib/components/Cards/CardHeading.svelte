@@ -8,10 +8,9 @@
   <EditableText bind:value={text} {editable} placeholder='Heading...' />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .heading {
+    typography: h4;
     margin-top: 5px;
-    font-size: 20px;
-    font-weight: 700;
   }
 </style>

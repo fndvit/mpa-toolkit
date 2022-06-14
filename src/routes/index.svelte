@@ -30,9 +30,9 @@
     <Searchbar type={'top'}/>
   </div>
   <div class="splash" style="background-image: url({landingSplash})">
-    <h1 class="font-h1">Here it is.<br><b>Your MPA toolkit.</b></h1>
-    <h4 class="font-h4-light">A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
-    <p>In partnership with</p>
+    <h1>Here it is.<br><b>Your MPA toolkit.</b></h1>
+    <h4>A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
+    <h5>In partnership with</h5>
     <div class="partners-grid">
       <InlineSvg svg="IAFDC" />
       <InlineSvg svg="UoQ" />
@@ -55,10 +55,10 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
   .landing-page {
-    background: color(neutral-bg);
+    background: $colors.neutral-bg;
     --page-padding: 6rem;
   }
 
@@ -90,20 +90,21 @@
     background-position: bottom;
 
     h1 {
+      typography: h1-responsive;
       color: #FFFFFF;
       margin-bottom: 15px;
     }
 
     h4 {
+      typography: h4-light;
       margin-top: 25px;
       margin-bottom: 80px;
       color: #FFFFFF;
       max-width: 800px;
     }
 
-    p {
-      font-weight: bold;
-      color: black;
+    h5 {
+      typography: h5;
     }
 
   }

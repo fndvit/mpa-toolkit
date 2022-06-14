@@ -12,17 +12,18 @@
 </script>
 
 <a
-  class="carousel-card"
+  class="landing-carousel-card"
   href="/{page.slug}"
   class:case-study={!!page.caseStudy}
   tabindex="0"
+  rel="external"
 >
 
   <img class="image" src={staticUrl(page.img, fallbackImg)} alt="preview">
 
   <div class="preview-content">
     <div class="title">
-      <span>{getPageDisplayTitle(page)}</span>
+      <span><h3>{getPageDisplayTitle(page)}</h3></span>
       <div class="circle-button" tabindex="0">
         <svg class="arrow-svg" viewBox="0 0 12 20">
           <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
@@ -31,7 +32,9 @@
     </div>
 
     <div>
-      <div class="tags-title">What's this about?</div>
+      <div class="tags-title">
+        <h5>What's this about?</h5>
+      </div>
       <div class="tags no-drag hide-scrollbar">
         <TagContainer tags={page.tags}/>
       </div>
@@ -40,20 +43,20 @@
 </a>
 
 
-<style lang="scss">
+<style lang="stylus">
 
-  .carousel-card {
+  .landing-carousel-card {
     display: flex;
     flex-direction: column;
     width: 766px;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 40px;
     border: none;
-    background: color(primary-blue);
+    background: $colors.primary-blue;
     height: 100%;
 
     &.case-study {
-      background: color(deep-blue);
+      background: $colors.deep-blue;
     }
 
     &:hover {
@@ -66,7 +69,7 @@
 
   }
 
-  a.carousel-card {
+  a.landing-carousel-card {
     text-decoration: none;
   }
 
@@ -78,7 +81,7 @@
   }
 
   .arrow-path {
-    stroke:color(neutral-black) ;
+    stroke:$colors.neutral-black ;
     stroke-width: 2.4px;
   }
 
@@ -91,7 +94,7 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: color(highlight-1);
+    background: $colors.highlight-1;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
   }
 
@@ -101,14 +104,15 @@
 
   .tags-title {
     margin: 2.5rem 0 1rem;
-    font-weight: 700;
-    font-size: 16px;
+
+    h5 {
+      typography: h5;
+      margin: 0;
+    }
   }
 
   .title {
-    font-weight: 275;
-    font-size: 32px;
-    max-height: 5em;
+    $max-lines = 4;
     text-overflow: clip;
     word-wrap: break-word;
     display: flex;
@@ -116,11 +120,16 @@
     > span {
       flex: 0 1 570px;
       display: -webkit-box;
-      -webkit-line-clamp: 4;
-      line-clamp: 4;
+      -webkit-line-clamp: $max-lines;
+      line-clamp: $max-lines;
       overflow: hidden;
       text-overflow: ellipsis;
       -webkit-box-orient: vertical;
+    }
+
+    h3 {
+      typography: h3-light-responsive;
+      margin: 0;
     }
   }
 
@@ -142,7 +151,7 @@
 
   @media(max-width: 1024px) {
 
-    .carousel-card {
+    .landing-carousel-card {
       max-width: 500px;
       width: calc(100vw - 120px);
     }
@@ -164,10 +173,6 @@
       padding: 1rem 1.5rem 1.5rem;
     }
 
-    .title {
-      font-size: 1.75rem;
-    }
-
     .tags {
       margin-top: 2rem;
       overflow-x: scroll;
@@ -180,13 +185,9 @@
 
   @media(max-width: 550px) {
 
-    .carousel-card {
+    .landing-carousel-card {
       max-width: 500px;
       width: calc(100vw - 80px);
-    }
-
-    .title {
-      font-size: 1.25rem;
     }
 
   }

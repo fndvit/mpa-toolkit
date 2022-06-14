@@ -4,18 +4,13 @@
 
   export let block: HeadingBlock;
 </script>
-<h1>
+<h2>
   {#each block.content as child}<Inline block={child}/>{/each}
-</h1>
+</h2>
 
-<style lang="scss">
-  h1 {
-    font-size: 2.5rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    h1 {
-      font-size: 2rem;
-    }
+<style lang="stylus">
+  h2 {
+    typography: h2-responsive;
+    margin: 2rem 0;
   }
 </style>

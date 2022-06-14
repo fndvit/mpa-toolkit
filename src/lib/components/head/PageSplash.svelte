@@ -24,7 +24,7 @@
   <InlineSvg svg="UNEP" />
 </div>
 <div class="splash" style="background-image: url({img});" class:splash-cs={page.caseStudy}>
-  <h1 class="font-h1">
+  <h1>
     {#if page.caseStudy}
       <EditableText bind:value={page.caseStudy.name} {editable} placeholder="Project name" />
       <span> &#x2013; </span>
@@ -33,23 +33,22 @@
   </h1>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .splash {
+    grid-config(page, splash);
+    grid-template-rows: 1fr auto;
+
     --ec-hover-bg: #ffffff22;
     --ui-color-placeholder: #ffffff55;
     min-height: 60vh;
-    display: flex;
-    align-items: flex-end;
-    padding: 6rem;
     padding-bottom: 3rem;
-    padding-left: 124px;
     background-size: cover;
     background-position: center center;
 
     h1 {
-      max-width: 800px;
-      width: 100%;
+      grid-area: title;
+      typography: h1-responsive;
       color: white;
       text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.45);
       > :global(*) {
@@ -59,7 +58,6 @@
         display: inline-block;
       }
     }
-
 
     &.splash-cs h1 > :global(*:first-child) {
       font-weight: 700;
@@ -74,23 +72,23 @@
     color: white;
   }
 
-  @media screen and (max-width: 768px) {
-
+  +breakpoint(page, medium)
     .splash {
-      padding-left: 20px;
-      padding-right: 20px;
-
       h1 {
-        font-size: 48px;
-        line-height: 65px;
         margin-bottom: 0px;
       }
 
+
       &.splash-cs h1 {
-        padding-bottom: 50px;
+        padding-bottom: 5rem;
       }
     }
-  }
+  +breakpoint(page, small)
+      h1 {
+        margin-top: 283px;
+      }
+
+
 
 
 </style>

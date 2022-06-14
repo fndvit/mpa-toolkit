@@ -39,7 +39,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .menu-bar {
     --ib-icon-bg: transparent;
     --ib-hover-border: 1px solid #ddd;
@@ -50,11 +50,11 @@
     position: sticky;
     display: flex;
     top: 0;
-    z-index: 1;
+    z-index: editor-menubar;
     width: 100%;
     padding: 0.5rem;
     border-bottom: 1px solid #ccc;
-    background: color(neutral-bg);
+    background: $colors.neutral-bg;
     box-sizing: border-box;
   }
 

@@ -48,7 +48,7 @@
 
 <div class="landing-lifecycle" style="background-image: url({landingLifecycle});">
   <div class="column1">
-    <h2 class="font-h2">What's the <b>MPA management cycle</b></h2>
+    <h2>What's the <b>MPA management cycle</b></h2>
   </div>
   <div class="column2">
     <Cards cards={cardBlocks} bind:currentPageIndex />
@@ -60,7 +60,8 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
+
   .landing-lifecycle {
     width: 100%;
     height: 800px;
@@ -68,13 +69,16 @@
     grid-template-rows: 30%;
     grid-template-columns: 50% 50%;
     grid-template-areas:
-      "title circlemenu"
+      "title circlemenu"\
       "textslide circlemenu";
     display: grid;
-    font-family: 'Montserrat';
     overflow: hidden;
     padding: 0 var(--page-padding);
     box-sizing: border-box;
+
+    h2 {
+      typography: h2-responsive;
+    }
 
     .column1 {
       margin-top: 149px;

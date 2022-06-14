@@ -58,3 +58,11 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page.Fu
 export function getPageDisplayTitle(page: {title: string, caseStudy?: { name: string } }) {
   return page.caseStudy ? `${page.caseStudy.name} - ${page.title}` :  page.title;
 }
+
+export function getPageTypeStr (p: SubTypes.Page.Full): string {
+  if (p.caseStudy) {
+    const hasMilestones = p.caseStudy.milestones && Object.keys(p.caseStudy.milestones).length;
+    return hasMilestones ? "casestudy-with-milestones" : "casestudy";
+  }
+  else if (p.chapter) p.chapter.keyTakeaways ? "chapter-with-key-takeaways" : "chapter";
+};

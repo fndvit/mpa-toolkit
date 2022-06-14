@@ -139,26 +139,29 @@
 
 </div>
 
-<style lang="scss">
-
-  .top-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+<style lang="stylus">
 
   .lifecycle {
-    background: color(lifecycle-bg);
+    background: $colors.lifecycle-bg;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     padding: 20px;
+    box-sizing: border-box;
+    width: auto;
   }
+
+  .top-section {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    > :global(.help-popup) {
+      flex-shrink: 0;
+    }
+  }
+
   .title {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 20px;
+    typography: h5-responsive;
     color: #000000;
     margin: 15px 0 10px;
     .top-section &:first-child {
@@ -187,9 +190,11 @@
       }
 
       .info-text {
+        position: absolute;
         width: 50%;
         height: 50%;
-        position: absolute;
+        typography: ui-small;
+        color: black;
         top: 0;
         bottom: 0;
         left: 0;
@@ -198,7 +203,8 @@
         animation: fadeIn ease-in-out 0.5s;
         -webkit-animation: fadeIn ease-in-out 0.5s;
         -moz-animation: fadeIn ease-in-out 0.5s;
-        z-index: -1;
+        z-index: 0;
+        color: #000000;
       }
     }
   }

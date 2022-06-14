@@ -11,10 +11,11 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
 
 	.help-popup {
-    position: relative;
+    typography: ui;
+    color: black;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -24,6 +25,7 @@
     align-items: center;
     cursor: pointer;
     transition: all 0,3s;
+    color: #000000;
     &:hover {
       box-shadow: 0px 0px 10px #000000;
     }
@@ -31,24 +33,26 @@
 
   .popup-body {
     position: absolute;
+    right: -9px;
+    top: calc(100% + 12px);
     cursor: default;
-    right: -12px;
-    top: calc(100% + 5px);
-    z-index: 10;
-    width: 320px;
+    z-index: tooltip;
+    width: "calc(100% + %s)" % (-@right * 2);
+    max-width: 600px;
     padding: 1rem 1.5rem;
     box-sizing: border-box;
     border-radius: 15px;
-    background-color: var(--popup-bg-color, color(neutral-bg, 0.9));
+    background-color: var(--popup-bg-color, alpha($colors.neutral-bg, 0.9));
     color: #000;
-    font-size: 14px;
-    line-height: 1.2;
-    transition: .4s ease-out;
+    transition: opacity .4s ease-out;
+
+    :global(a) {
+      color: black;
+    }
 
     > :global(a:last-child) {
       float: right;
-      font-weight: 700;
-      font-size: 12px;
+      typography: ui-link;
       padding: 10px 0 10px 10px;
     }
 
@@ -62,9 +66,9 @@
     content: '';
     position: absolute;
     bottom: 100%;
-    right: 17px;
+    right: 14px;
     width: 0;
-    border-bottom: 10px solid var(--popup-bg-color, color(neutral-bg, 0.9));
+    border-bottom: 10px solid var(--popup-bg-color, alpha($colors.neutral-bg, 0.9));
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;
   }

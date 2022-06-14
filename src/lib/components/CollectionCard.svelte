@@ -41,11 +41,11 @@
   </div>
 </a>
 
-<style lang="scss">
+<style lang="stylus">
   .collection-card {
     --cc-height: 200px;
     display: flex;
-    background: color(neutral-bg);
+    background: $colors.neutral-bg;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     height: var(--cc-height);
@@ -70,7 +70,7 @@
     flex: 1;
     display: grid;
     grid-template-areas:
-      "title  tags"
+      "title  tags"\
       "byline tags";
     grid-template-columns: 1fr 300px;
     grid-template-rows: 1fr auto;
@@ -79,6 +79,7 @@
 
   .title {
     grid-area: title;
+    typography: h4-light-responsive;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4;
@@ -93,7 +94,7 @@
     display: flex;
     align-items: end;
     column-gap: 0.4rem;
-    color: color(neutral-dark);
+    color: $colors.neutral-dark;
     white-space: nowrap;
   }
 
@@ -103,18 +104,22 @@
     flex-direction: column;
     row-gap: 0.6rem;
     h3 {
+      typography: h5;
       margin: 0;
       margin-top: 0.3rem;
     }
   }
 
   .title {
-    font-size: 1.5rem;
     margin: 0px;
   }
 
   .authors {
-    font-weight: 700;
+    typography: h5-responsive;
+  }
+
+  .read-time {
+    typography: ui;
   }
 
   .image {
@@ -142,7 +147,6 @@
       row-gap: 1rem;
     }
     .title {
-      font-size: 1.25rem;
       -webkit-line-clamp: 5;
       line-clamp: 5;
     }

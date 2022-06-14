@@ -53,7 +53,7 @@
 </div>
 
 
-<style lang="scss">
+<style lang="stylus">
   .editor-content {
     display: grid;
     grid-template-columns: 70% auto;
@@ -63,7 +63,7 @@
     width: 40rem;
     margin: 0 auto;
     text-align: left;
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-sans-serif);
     --heading-color: #000;
     :global(h1), :global(h2) {
       font-weight: 300;
@@ -88,7 +88,7 @@
     }
     :global(card) {
       display: block;
-      background: color(primary-blue);
+      background: $colors.primary-blue;
       color: white;
       padding: 0 2rem;
       padding-bottom: 1rem;

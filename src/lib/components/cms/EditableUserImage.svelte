@@ -43,7 +43,7 @@
   />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .editable-user-image {
     position: relative;
     font-size: 0;

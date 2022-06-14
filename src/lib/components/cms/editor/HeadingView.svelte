@@ -32,7 +32,7 @@
   </svelte:element>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
   .hv {
     position: relative;
   }

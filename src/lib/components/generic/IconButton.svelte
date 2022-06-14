@@ -31,7 +31,7 @@
   />
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
 
   .icon-button-container {
@@ -83,7 +83,7 @@
 
     &[data-text]::after {
       content: attr(data-text);
-      font-family: 'Montserrat';
+      font-family: var(--font-sans-serif);
       font-size: var(--ib-font-size, 1rem);
     }
 

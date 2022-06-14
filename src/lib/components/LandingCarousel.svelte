@@ -2,7 +2,7 @@
   import type { SubTypes } from "$lib/types";
   import {Splide, SplideSlide} from "@splidejs/svelte-splide";
   import CarouselDots from './Cards/CarouselDots.svelte';
-  import CarouselCard from './CarouselCard.svelte';
+  import LandingCarouselCard from './LandingCarouselCard.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
 
   export let pages: SubTypes.Page.ContentCard[];
@@ -41,7 +41,7 @@
 
 <div class="landing-carousel">
   <div class="title-container">
-    {@html title}
+    <h2>{@html title}</h2>
     <CarouselDots
       bind:currentPageIndex={currentCard}
       pagesCount={pages.length}
@@ -55,14 +55,14 @@
     >
       {#each pages as page}
         <SplideSlide>
-          <CarouselCard {page}/>
+          <LandingCarouselCard {page}/>
         </SplideSlide>
       {/each}
     </Splide>
   </div>
 </div>
 
-<style lang="scss">
+<style lang="stylus">
 
   .landing-carousel {
 
@@ -75,7 +75,7 @@
     }
 
     :global(.splide__arrow) {
-      background-color: color(neutral-bg);
+      background-color: $colors.neutral-bg;
       opacity: 0.5;
     }
 
@@ -102,11 +102,12 @@
   }
 
   .title-container {
-    font-size: 48px;
-    font-weight: 300;
-    color: color(neutral-black);
+    color: $colors.neutral-black;
     max-width: 600px;
-    padding: 25px var(--page-padding) 0;
+    padding: 0 var(--page-padding) 0;
+    > h2 {
+      typography: h2-responsive;
+    }
   }
 
   .carousel-container {
@@ -125,14 +126,6 @@
         display: none;
       }
     }
-  }
-
-  @media(max-width: 570px) {
-
-    .title-container {
-      font-size: 2rem;
-    }
-
   }
 
   @media(max-width: 425px) {

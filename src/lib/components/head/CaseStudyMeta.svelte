@@ -31,17 +31,17 @@
     <div class="meta-grid meta-grid-1">
 
       <div class="grid-cell">
-        <div class="font-h5-graphic meta-title">Name</div>
+        <div class="meta-title">Name</div>
         <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
       </div>
 
       <div class="grid-cell side-by-side-1">
-        <div class="font-h5-graphic meta-title">Established in</div>
+        <div class="meta-title">Established in</div>
         <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
       </div>
 
       <div class="grid-cell side-by-side-2">
-        <div class="font-h5-graphic meta-title">Size</div>
+        <div class="meta-title">Size</div>
         <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
       </div>
 
@@ -58,22 +58,22 @@
     <div class="meta-grid meta-grid-2">
 
       <div class="grid-cell">
-        <div class="font-h5-graphic meta-title">Governance</div>
+        <div class="meta-title">Governance</div>
         <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
       </div>
 
       <div class="grid-cell">
-        <div class="font-h5-graphic meta-title">Staff</div>
+        <div class="meta-title">Staff</div>
         <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
       </div>
 
       <div class="grid-cell">
-        <div class="font-h5-graphic meta-title">Budget</div>
+        <div class="meta-title">Budget</div>
         <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
       </div>
 
       <div class="grid-cell">
-        <div class="font-h5-graphic meta-title">Budget level</div>
+        <div class="meta-title">Budget level</div>
         <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
       </div>
 
@@ -142,7 +142,6 @@
   }
 
   .meta-grid :global(.editable-content) {
-    font-family: var(--font-serif);
     background: transparent;
     border: 0;
     padding: 0;
@@ -150,16 +149,15 @@
   }
 
   .meta-grid-1 :global(.editable-content) {
-    font-size: 28px;
-    line-height: 42px;
+    typography: p-large-responsive;
   }
 
   .meta-grid-2 :global(.editable-content) {
-    font-size: 18px;
-    line-height: 32px;
+    typography: p-responsive;
   }
 
   .meta-title {
+    typography: h5-graphic;
     color: #F9F9F9;
     color: $colors.neutral-bg;
     margin: 0;
@@ -210,16 +208,6 @@
       margin-left:0px;
       padding-top: 150px;
       width: fit-content;
-    }
-
-    .meta-grid-1 :global(.editable-content) {
-      font-size: 22px;
-      line-height: 36px;
-    }
-
-    .meta-grid-2 :global(.editable-content) {
-      font-size: 16px;
-      line-height: 28px;
     }
 
     .meta-grid {

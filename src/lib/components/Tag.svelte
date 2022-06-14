@@ -21,7 +21,7 @@
   on:mouseenter
   on:mouseleave
 >
-  <span class="font-ui-small">
+  <span>
     {#if highlight}
       {@html highlight}
     {:else}
@@ -57,6 +57,7 @@
     }
 
     span {
+      typography: ui-small;
       position: relative;
     }
   }

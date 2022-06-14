@@ -31,7 +31,7 @@
 </script>
 
 <div class="content-carousel">
-  <p class="title font-h5">{title}</p>
+  <p class="title">{title}</p>
   <Splide {options}>
     {#each slides as slide}
       <SplideSlide>
@@ -64,6 +64,7 @@
   }
 
   .title {
+    typography: h5;
     color: black;
   }
 

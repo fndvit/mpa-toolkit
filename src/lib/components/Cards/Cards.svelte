@@ -156,16 +156,6 @@
 
     .slide {
       padding: 1rem;
-
-      :global(.heading) {
-        font-size: 1rem;
-        text-align: left;
-      }
-
-      :global(.content) {
-        font-size: 1rem;
-        text-align: left;
-      }
     }
 
     .cards {

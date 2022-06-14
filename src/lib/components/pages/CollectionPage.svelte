@@ -31,6 +31,9 @@
     padding: 30px var(--page-padding);
     max-width: var(--page-max-content-width);
     margin: auto;
+    h2 {
+      typography: h3-light-responsive;
+    }
   }
   @media (max-width: 1024px) {
     .collection-page {

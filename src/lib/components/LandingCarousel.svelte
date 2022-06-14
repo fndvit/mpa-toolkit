@@ -41,7 +41,7 @@
 
 <div class="landing-carousel">
   <div class="title-container">
-    <h2 class="font-h2">{@html title}</h2>
+    <h2>{@html title}</h2>
     <CarouselDots
       bind:currentPageIndex={currentCard}
       pagesCount={pages.length}
@@ -105,6 +105,9 @@
     color: $colors.neutral-black;
     max-width: 600px;
     padding: 0 var(--page-padding) 0;
+    > h2 {
+      typography: h2-responsive;
+    }
   }
 
   .carousel-container {
@@ -123,14 +126,6 @@
         display: none;
       }
     }
-  }
-
-  @media(max-width: 570px) {
-
-    .title-container {
-      font-size: 2rem;
-    }
-
   }
 
   @media(max-width: 425px) {

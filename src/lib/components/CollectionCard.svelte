@@ -79,6 +79,7 @@
 
   .title {
     grid-area: title;
+    typography: h4-light-responsive;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4;
@@ -103,18 +104,22 @@
     flex-direction: column;
     row-gap: 0.6rem;
     h3 {
+      typography: h5;
       margin: 0;
       margin-top: 0.3rem;
     }
   }
 
   .title {
-    font-size: 1.5rem;
     margin: 0px;
   }
 
   .authors {
-    font-weight: 700;
+    typography: h5-responsive;
+  }
+
+  .read-time {
+    typography: ui;
   }
 
   .image {
@@ -142,7 +147,6 @@
       row-gap: 1rem;
     }
     .title {
-      font-size: 1.25rem;
       -webkit-line-clamp: 5;
       line-clamp: 5;
     }

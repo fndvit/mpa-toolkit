@@ -169,6 +169,24 @@
     }
   }
 
+  .tag-container :global(.multiselect) {
+    --sms-border: 1px solid alpha(black, 0.1);
+    --sms-border-radius: 0;
+    --sms-padding: 0.1rem;
+    box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.05);
+    typography: ui-small;
+
+    :global(.selected > li[aria-selected]) {
+      padding: 3px 12px;
+      border-radius: 18px;
+      background: $colors.highlight-1;
+      line-height: 1em;
+    }
+    :global(.selected > li:last-child:not([aria-selected])) {
+      display: none !important;
+    }
+  }
+
   .circle-menu-section {
     display: flex;
     flex-wrap: wrap;

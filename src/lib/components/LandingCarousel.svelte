@@ -2,7 +2,7 @@
   import type { SubTypes } from "$lib/types";
   import {Splide, SplideSlide} from "@splidejs/svelte-splide";
   import CarouselDots from './Cards/CarouselDots.svelte';
-  import CarouselCard from './CarouselCard.svelte';
+  import LandingCarouselCard from './LandingCarouselCard.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
 
   export let pages: SubTypes.Page.ContentCard[];
@@ -55,7 +55,7 @@
     >
       {#each pages as page}
         <SplideSlide>
-          <CarouselCard {page}/>
+          <LandingCarouselCard {page}/>
         </SplideSlide>
       {/each}
     </Splide>

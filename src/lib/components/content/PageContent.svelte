@@ -22,7 +22,7 @@
     'cards' : TextSlider,
     'image': Image,
   };
-  
+
   const headings = sections.filter(s => s.id);
 </script>
 
@@ -129,7 +129,7 @@
         border-radius: 0px 20px 20px 0px;
         top: 50%;
         transform: translate(-100%, -50%);
-        transition: .5s ease-out;  
+        transition: .5s ease-out;
       }
     }
   }
@@ -148,7 +148,7 @@
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    
+
     +breakpoint(page, medium) {
       display: flex;
     }
@@ -164,7 +164,7 @@
     fill: none;
     align-self: center;
   }
-  
+
   .arrow-path {
     stroke: $colors.neutral-black ;
     stroke-width: 2.4px;

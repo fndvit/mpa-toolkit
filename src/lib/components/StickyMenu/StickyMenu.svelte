@@ -64,7 +64,7 @@
     font-size: 12px;
     font-weight: 300;
     line-height: 18px;
-    cursor: pointer;    
+    cursor: pointer;
   }
   .active {
     font-weight: 700;

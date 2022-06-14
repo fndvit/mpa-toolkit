@@ -59,8 +59,12 @@
   }
   .menuoption {
     typography: ui-small;
-    margin: 10px 40px 0px 28px;
+    padding: 10px 40px 0px 28px;
     cursor: pointer;
+    &:hover {
+      font-weight: 500;
+      letter-spacing: -0.005em; // to keep spacing consistent when bolding
+    }
   }
   .active {
     font-weight: 700;

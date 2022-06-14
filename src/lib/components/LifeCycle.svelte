@@ -160,9 +160,12 @@
     }
   }
 
+  .subtitle,
   .title {
     typography: h5-responsive;
-    color: #000000;
+  }
+
+  .title {
     margin: 15px 0 10px;
     .top-section &:first-child {
       margin: 0;

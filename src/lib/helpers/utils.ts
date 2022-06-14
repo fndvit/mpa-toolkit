@@ -127,6 +127,12 @@ export const imgLoadingStatus = (node: HTMLImageElement, cb: (loading: boolean) 
     .observe(node,{attributes:true,attributeFilter:["src"]});
 };
 
+export function insertInTextArea(text, el: HTMLInputElement) {
+  const [start, end] = [el.selectionStart, el.selectionEnd];
+  el.setRangeText(text, start, end, 'select');
+  el.setSelectionRange(start + text.length, start + text.length);
+}
+
 // ************************
 //     TypeScript util
 // ************************

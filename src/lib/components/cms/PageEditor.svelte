@@ -14,17 +14,21 @@
   import ChapterMeta from '$lib/components/head/ChapterMeta.svelte';
   import PageSplash from '$lib/components/head/PageSplash.svelte';
   import clone from 'clone';
-  import { compareDeep, createLookup, slugify, Unpacked } from '$lib/helpers/utils';
+  import { compareDeep, createLookup, insertInTextArea, slugify, Unpacked } from '$lib/helpers/utils';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import PageContent from '$lib/components/content/PageContent.svelte';
   import { getContext, setContext } from 'svelte';
   import { getPageTypeStr } from '$lib/helpers/content';
+  import { page as pageStore } from '$app/stores';
 
   export let users: UserInfo[];
   export let allTags: Tag[];
   export let page: SubTypes.Page.Full;
 
   setContext('allUsers', users);
+
+  const { protocol, hostname, port } = $pageStore.url;
+  const URL_PREFIX = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;
 
   const userLookup = createLookup(users, u => u.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
@@ -103,7 +107,11 @@
 
   const onBeforeInputSlug: svelte.JSX.EventHandler<InputEvent, HTMLInputElement> = e => {
     const validChars = /[a-zA-Z0-9-]/;
-    if (!validChars.exec(e.data)) return e.preventDefault();
+    if (e.data === ' ') {
+      e.preventDefault();
+      insertInTextArea('-', e.target as HTMLInputElement);
+    }
+    else if (!validChars.exec(e.data)) return e.preventDefault();
     else autoPopulateSlug = false;
   };
 
@@ -148,10 +156,13 @@
     <div class="top-controls">
       <input class="image-input" bind:this={imageInput} type="file" on:change={onImageChange} accept=".jpg, .jpeg" {disabled} >
 
-      <input class="slug" type="text" id="slug" bind:value={_page.slug} {disabled}
-        on:beforeinput={onBeforeInputSlug}
-        on:change={onChangeSlug}
-      />
+      <div class="slug">
+        <span class="url-prefix">{URL_PREFIX}</span>
+        <input type="text" id="slug" bind:value={_page.slug} {disabled}
+          on:beforeinput={onBeforeInputSlug}
+          on:change={onChangeSlug}
+        />
+      </div>
 
       <IconButton icon="image" {disabled} on:click={() => imageInput.click()} />
       <div class="spinner" class:hidden={!uploadingImage}>
@@ -240,13 +251,28 @@
   }
 
   .slug {
-    text-transform: lowercase;
-    width: 400px;
+    typography: ui;
+    width: 550px;
     background: #ffffff99;
     border: 1px solid #00000055;
     border-radius: 2px;
     height: 32px;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    .url-prefix {
+      margin-left: 2px;
+      opacity: 0.5;
+      margin-right: -2px;
+    }
+    input {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      flex: 1;
+      margin-bottom: 1px;
+      text-transform: lowercase;
+    }
   }
 
   .image-input {

@@ -19,6 +19,7 @@
 <style lang="stylus">
 
   .button {
+    typography: p-graphic;
     position: relative;
     color: #333;
     background-color: #efefef;

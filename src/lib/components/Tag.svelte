@@ -10,6 +10,7 @@
   $: highlight = tagHighlightFn && tagHighlightFn(tag.tag);
 
   $: secondary = tag.category == 'SECONDARY';
+
 </script>
 
 <a
@@ -21,7 +22,7 @@
   on:mouseenter
   on:mouseleave
 >
-  <span class="font-ui-small">
+  <span>
     {#if highlight}
       {@html highlight}
     {:else}
@@ -45,7 +46,7 @@
     height: fit-content;
     background: $colors.highlight-1;
     &.secondary {
-      background: color(highlight-1, 0.4);
+      background: alpha($colors.highlight-1, 0.4);
     }
 
     :global(.collection-card) &,
@@ -57,6 +58,7 @@
     }
 
     span {
+      typography: ui-small;
       position: relative;
     }
   }

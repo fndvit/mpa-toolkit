@@ -113,11 +113,10 @@
   }
 
   .milestones-title {
+    typography: h4-graphic;
     display: flex;
     column-gap: 20px;
     align-items: center;
-    font-size: 20px;
-    font-weight: bold;
     color: #FFFFFF;
     padding-top: 25px;
     padding-bottom: 15px;

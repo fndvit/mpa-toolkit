@@ -51,7 +51,7 @@
 
 <div class="milestone" class:simple>
 
-  <div class="year font-ui-small">
+  <div class="year">
     <EditableText bind:this={editableYear} bind:value={editYear} {editable} placeholder="year" bind:focused={yearFocused}/>
     {#if editable}
       {#if !year || yearFocused}
@@ -72,7 +72,7 @@
 
   {#if simple}
 
-    <div class="milestone-text font-p-graphic" on:click={() => onClickMilestone(0)}>
+    <div class="milestone-text" on:click={() => onClickMilestone(0)}>
       <EditableText bind:value={content[0]}  {editable} />
     </div>
 
@@ -101,7 +101,7 @@
             </svg>
           {/if}
 
-          <div class="milestone-text font-p-graphic" class:contracted={contracted[i]}>
+          <div class="milestone-text" class:contracted={contracted[i]}>
             <EditableText bind:value={content[i]}  {editable} />
           </div>
 
@@ -207,6 +207,7 @@
   }
 
   .milestone-text {
+    typography: p-graphic-responsive
     color: $colors.neutral-bg;
     padding-top: 1.5px;
     padding-left: 22px;
@@ -228,6 +229,7 @@
   }
 
   .year {
+    typography: ui-small;
     display: flex;
     column-gap: 5px;
     align-items: center;

@@ -17,7 +17,7 @@
   </div>
 
   <div class="content">
-    <h2 class="text font-h2">{title}</h2>
+    <h2 class="text">{title}</h2>
     <div class="search-bar">
       <Searchbar type={'collection'} bind:focus={focusSearch} />
     </div>
@@ -44,6 +44,7 @@
     margin: auto;
   }
   .text {
+    typography: h2-responsive;
     color: #ffffff;
     margin: 0;
   }

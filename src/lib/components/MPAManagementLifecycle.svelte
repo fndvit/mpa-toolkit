@@ -48,7 +48,7 @@
 
 <div class="landing-lifecycle" style="background-image: url({landingLifecycle});">
   <div class="column1">
-    <h2 class="font-h2">What's the <b>MPA management cycle</b></h2>
+    <h2>What's the <b>MPA management cycle</b></h2>
   </div>
   <div class="column2">
     <Cards cards={cardBlocks} bind:currentPageIndex />
@@ -72,10 +72,13 @@
       "title circlemenu"\
       "textslide circlemenu";
     display: grid;
-    font-family: var(--font-sans-serif);
     overflow: hidden;
     padding: 0 var(--page-padding);
     box-sizing: border-box;
+
+    h2 {
+      typography: h2-responsive;
+    }
 
     .column1 {
       margin-top: 149px;

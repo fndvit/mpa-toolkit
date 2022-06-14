@@ -24,7 +24,7 @@
 </script>
 
 <div
-  class="content font-p-medium"
+  class="content"
   class:hide-scrollbar={hideScroll}
   class:gradient={showGradient}
   on:mouseenter={showScroll}
@@ -36,6 +36,7 @@
 
 <style lang="stylus">
   .content {
+    typography: card-body;
     margin-top: 25px;
     overflow: auto;
     min-height: 50px;

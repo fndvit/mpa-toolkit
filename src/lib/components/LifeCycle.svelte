@@ -141,24 +141,27 @@
 
 <style lang="stylus">
 
-  .top-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
   .lifecycle {
     background: $colors.lifecycle-bg;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     padding: 20px;
+    width: auto;
+    z-index: 1;
   }
+
+  .top-section {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    > :global(.help-popup) {
+      flex-shrink: 0;
+    }
+  }
+
   .title {
-    font-family: var(--font-sans-serif);
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 20px;
+    typography: h5-responsive;
     color: #000000;
     margin: 15px 0 10px;
     .top-section &:first-child {
@@ -187,9 +190,11 @@
       }
 
       .info-text {
+        position: absolute;
         width: 50%;
         height: 50%;
-        position: absolute;
+        typography: ui-small;
+        color: black;
         top: 0;
         bottom: 0;
         left: 0;
@@ -199,6 +204,7 @@
         -webkit-animation: fadeIn ease-in-out 0.5s;
         -moz-animation: fadeIn ease-in-out 0.5s;
         z-index: -1;
+        color: #000000;
       }
     }
   }

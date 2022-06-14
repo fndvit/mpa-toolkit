@@ -47,10 +47,9 @@
   }
 
   .author-names {
+    typography: h5;
     display: flex;
     align-items: center;
-    font-weight: bold;
-    font-size: 16px;
     column-gap: 5px;
   }
 

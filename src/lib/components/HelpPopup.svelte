@@ -16,7 +16,6 @@
 	.help-popup {
     typography: ui;
     color: black;
-    position: relative;
     width: 30px;
     height: 30px;
     border-radius: 50%;

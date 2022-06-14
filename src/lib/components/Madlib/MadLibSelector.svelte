@@ -114,7 +114,7 @@
     background-color: $colors.neutral-bg;
     color: black;
     border: none;
-    z-index: 1000;
+    z-index: tooltip;
   }
 
   .arrow {

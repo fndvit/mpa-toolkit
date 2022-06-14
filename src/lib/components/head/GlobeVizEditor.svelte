@@ -83,7 +83,7 @@
       top: 0;
       bottom: 0;
       margin: auto;
-      z-index: 10;
+      z-index: 1;
 
       & + :global(.globe) {
         opacity: 0.5;

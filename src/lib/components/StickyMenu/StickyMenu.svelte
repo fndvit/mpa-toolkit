@@ -49,7 +49,6 @@
 
 <style lang="stylus">
   .sticky-menu {
-    z-index: 10;
     background: $colors.neutral-bg;
     box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
     border-radius: 0px 0px 20px 20px;

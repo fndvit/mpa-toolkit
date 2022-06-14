@@ -147,7 +147,6 @@
     border-radius: 20px;
     padding: 20px;
     width: auto;
-    z-index: 1;
   }
 
   .top-section {
@@ -203,7 +202,7 @@
         animation: fadeIn ease-in-out 0.5s;
         -webkit-animation: fadeIn ease-in-out 0.5s;
         -moz-animation: fadeIn ease-in-out 0.5s;
-        z-index: -1;
+        z-index: 0;
         color: #000000;
       }
     }

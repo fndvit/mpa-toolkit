@@ -99,7 +99,7 @@
     grid-column: menu;
     grid-row: 1 / span 100; // can't span -1 through dynamic rows
     margin: 0 1rem 0 -30px;
-    z-index: 1;
+    z-index: sticky-menu;
 
     +breakpoint(page, medium) {
       margin: 0 1rem 0 0;

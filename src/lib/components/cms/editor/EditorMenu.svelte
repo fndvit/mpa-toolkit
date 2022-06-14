@@ -50,7 +50,7 @@
     position: sticky;
     display: flex;
     top: 0;
-    z-index: 1;
+    z-index: editor-menubar;
     width: 100%;
     padding: 0.5rem;
     border-bottom: 1px solid #ccc;

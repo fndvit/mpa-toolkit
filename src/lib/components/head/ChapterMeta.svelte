@@ -109,7 +109,7 @@
     position: relative;
     > :global(.lifecycle) {
       position: absolute;
-      z-index: 1;
+      z-index: lifecycle;
       margin-right: -30px;
       margin-left: 20px;
       max-width: 300px;

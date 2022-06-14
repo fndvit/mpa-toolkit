@@ -36,7 +36,7 @@
     right: -9px;
     top: calc(100% + 12px);
     cursor: default;
-    z-index: 10;
+    z-index: tooltip;
     width: "calc(100% + %s)" % (-@right * 2);
     max-width: 600px;
     padding: 1rem 1.5rem;

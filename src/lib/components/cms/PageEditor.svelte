@@ -102,7 +102,8 @@
 
   const onBeforeInputSlug: svelte.JSX.EventHandler<InputEvent, HTMLInputElement> = e => {
     const validChars = /[a-zA-Z0-9-]/;
-    if (!validChars.exec(e.data)) e.preventDefault();
+    if (!validChars.exec(e.data)) return e.preventDefault();
+    else autoPopulateSlug = false;
   };
 
   $: _page.tags = tags.map(pageTagToRequestTag);

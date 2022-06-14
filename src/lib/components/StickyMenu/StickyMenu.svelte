@@ -59,11 +59,8 @@
     overflow-y: scroll;
   }
   .menuoption {
+    typography: ui-small;
     margin: 10px 40px 0px 28px;
-    font-family: 'Montserrat';
-    font-size: 12px;
-    font-weight: 300;
-    line-height: 18px;
     cursor: pointer;
   }
   .active {

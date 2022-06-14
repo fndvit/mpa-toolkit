@@ -14,6 +14,9 @@
 <style lang="stylus">
 
 	.help-popup {
+    typography: ui;
+    color: black;
+    position: relative;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -42,14 +45,15 @@
     border-radius: 15px;
     background-color: var(--popup-bg-color, alpha($colors.neutral-bg, 0.9));
     color: #000;
-    font-size: 14px;
-    line-height: 1.2;
     transition: opacity .4s ease-out;
+
+    :global(a) {
+      color: black;
+    }
 
     > :global(a:last-child) {
       float: right;
-      font-weight: 700;
-      font-size: 12px;
+      typography: ui-link;
       padding: 10px 0 10px 10px;
     }
 

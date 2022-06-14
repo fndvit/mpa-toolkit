@@ -20,23 +20,29 @@ $areas = {
 
     large: {
       splash:
-        "paddingl title         title         empty     paddingr"
+        "paddingl .             .             .            paddingr"\
+        "paddingl title         title         .            paddingr"
       chapter:
-        "paddingl byline        byline        empty     paddingr"\
-        "paddingl summary       summary       empty     paddingr"\
-        "paddingl keytakeaways  keytakeaways  lifecycle paddingr"
+        "paddingl byline        byline        .            paddingr"\
+        "paddingl summary       summary       .            paddingr"\
+        "paddingl keytakeaways  keytakeaways  lifecycle    paddingr"
       chapter-no-keytakeaways:
-        "paddingl byline        byline        lifecycle paddingr"\
-        "paddingl summary       summary       lifecycle paddingr"
+        "paddingl byline        byline        lifecycle    paddingr"\
+        "paddingl summary       summary       lifecycle    paddingr"
+      case-study:
+        "paddingl meta          meta          meta         paddingr"\
+        "paddingl meta          meta          meta         paddingr"\
+        "paddingl milestones    milestones    milestones   paddingr"
       content:
-        "paddingl menu          body          lifecycle paddingr"
+        "paddingl menu          body          lifecycle    paddingr"
       footer:
-        "paddingl footer        footer        empty     paddingr"
+        "paddingl footer        footer        .            paddingr"
     }
 
     medium: {
       splash:
-        "paddingl title         title       paddingr"
+        "paddingl .            .            paddingr"\
+        "paddingl title        title        paddingr"
       chapter:
         "paddingl byline       byline       paddingr"\
         "paddingl summary      summary      paddingr"\
@@ -46,7 +52,10 @@ $areas = {
         "paddingl byline       byline       paddingr"\
         "paddingl summary      summary      paddingr"\
         "paddingl lifecycle    lifecycle    paddingr"
+      case-study:
+        "paddingl meta          meta        paddingr"
       content:
+        "menu     lifecycle    lifecycle    paddingr"\
         "menu     body         body         paddingr"
       footer:
         "paddingl footer       footer       paddingr"
@@ -54,6 +63,7 @@ $areas = {
 
     small: {
       splash:
+        "paddingl .            paddingr"\
         "paddingl title        paddingr"
       chapter:
         "paddingl byline       paddingr"\
@@ -64,7 +74,10 @@ $areas = {
         "paddingl byline       paddingr"\
         "paddingl summary      paddingr"\
         "paddingl lifecycle    paddingr"
+      case-study:
+        "paddingl meta         paddingr"
       content:
+        "menu     lifecycle    paddingr"\
         "menu     body         paddingr"
       footer:
         "paddingl footer       paddingr"

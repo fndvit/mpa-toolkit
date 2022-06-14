@@ -10,7 +10,7 @@
 
 </script>
 
-<p class="madlib font-h4-light">
+<p class="madlib">
   I am <MadLibSelector options={typeUserList} bind:selected={value[0]}/> and want help
   finding <MadLibSelector options={objectiveList} bind:selected={value[1]}/> to
   <MadLibSelector options={objectiveVerbList} bind:selected={value[2]}/> decisions
@@ -20,10 +20,11 @@
 <style lang="stylus">
 
   .madlib {
+    typography: h4-light;
     position: relative;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: 2;
+    :global(.content-madlib) & {
+      typography: ui-large;
+    }
   }
 
 </style>

@@ -34,7 +34,7 @@
 
   </div>
 
-  <div class="summary font-p-large">
+  <div class="summary">
     <EditableText bind:value={chapter.summary} {editable} placeholder='Summary text...' />
   </div>
 
@@ -82,6 +82,7 @@
 
   .byline {
     grid-area: byline;
+    typography: ui;
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
@@ -89,6 +90,7 @@
   }
 
   .summary {
+    typography: p-large-responsive;
     grid-area: summary;
     max-width: 800px;
     margin-bottom: 40px;
@@ -107,6 +109,7 @@
     position: relative;
     > :global(.lifecycle) {
       position: absolute;
+      z-index: 1;
       margin-right: -30px;
       margin-left: 20px;
       max-width: 300px;

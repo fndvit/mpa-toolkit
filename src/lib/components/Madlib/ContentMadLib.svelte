@@ -12,7 +12,7 @@
 
 <div class="content-madlib">
 
-  <h5 class="font-h5">Is this not for you?</h5>
+  <h5>Is this not for you?</h5>
 
   <MadLib />
 
@@ -34,10 +34,10 @@
     color: $colors.neutral-dark;
     background: $colors.neutral-bg;
     padding: 0.75rem 1.5rem 2rem;
-    font-family: 'Montserrat';
     line-height: 2;
 
     h5 {
+      typography: h5;
       color: black;
       margin: 5px 0px 0px 0px;
     }
@@ -48,20 +48,17 @@
 
     :global(.madlib-selector) {
       color: #333;
-      font-weight: 400;
     }
 
   }
 
   .content-madlib button {
+    typography: h5;
     display: inline-block;
     cursor: pointer;
-    font-weight: 700;
     vertical-align: middle;
-    font-family: 'Montserrat';
     border: none;
-    font-size: 16px;
-    position:absolute;
+    position: absolute;
     right:0;
     bottom: 0;
     align-content: center;

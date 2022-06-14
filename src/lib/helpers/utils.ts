@@ -33,18 +33,24 @@ export function slugify(text: string, maxLen = 40) {
   return (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, maxLen);
 }
 
-export function createLookup<T, Y>
+export function createLookup<T, U extends string, Y = never>
 (
   arr: T[],
-  keyFn: (d: T) => string,
-  valFn: (d: T) => Y
-): {[key: string]: Y} {
-
-  const lookup: {[key: string]: Y} = {};
+  keyFn: (d: T) => U | U[],
+  valFn?: (d: T) => Y
+) {
+  type R = [Y] extends [never] ? T : Y
+  const lookup: {[key in U]?: R} = {};
+  const _valFn = (valFn ?? (d=>d)) as (d: T) => R;
 
   arr.forEach(d => {
     const key = keyFn(d);
-    lookup[key] = valFn(d);
+    if (typeof key === 'string') {
+      lookup[key] = _valFn(d);
+    } else {
+      key.forEach(k => lookup[k] = _valFn(d));
+    }
+
   });
 
   return lookup;
@@ -114,6 +120,13 @@ export const timedBoolean = () => {
   return obj;
 };
 
+export const imgLoadingStatus = (node: HTMLImageElement, cb: (loading: boolean) => void) => {;
+  node.addEventListener('load', () => cb(false));
+  cb(!node.complete);
+  new MutationObserver(() => cb(!node.complete))
+    .observe(node,{attributes:true,attributeFilter:["src"]});
+};
+
 // ************************
 //     TypeScript util
 // ************************
@@ -124,6 +137,10 @@ export type ExpandRecursively<T> = T extends object
 export type Unpacked<T> = T extends (infer U)[] ? U : T;
 export type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 export type Modify<T, R> = Expand<Omit<T, keyof R> & R>;
+
+export type DistributiveOmit<T, K extends keyof any> = T extends any
+  ? Omit<T, K>
+  : never;
 
 type Cast<A, B> = A extends B ? A : B;
 

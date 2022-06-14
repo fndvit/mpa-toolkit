@@ -83,7 +83,7 @@
 
     &[data-text]::after {
       content: attr(data-text);
-      font-family: 'Montserrat';
+      font-family: var(--font-sans-serif);
       font-size: var(--ib-font-size, 1rem);
     }
 

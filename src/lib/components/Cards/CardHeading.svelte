@@ -4,12 +4,13 @@
   export let editable = false;
 </script>
 
-<div class="heading font-h4">
+<div class="heading">
   <EditableText bind:value={text} {editable} placeholder='Heading...' />
 </div>
 
 <style lang="stylus">
   .heading {
+    typography: h4;
     margin-top: 5px;
   }
 </style>

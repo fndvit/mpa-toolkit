@@ -49,9 +49,9 @@
   $: simple = content.length <= 1;
 </script>
 
-<div class="container" class:simple>
+<div class="milestone" class:simple>
 
-  <div class="year font-ui-small">
+  <div class="year">
     <EditableText bind:this={editableYear} bind:value={editYear} {editable} placeholder="year" bind:focused={yearFocused}/>
     {#if editable}
       {#if !year || yearFocused}
@@ -72,7 +72,7 @@
 
   {#if simple}
 
-    <div class="milestone-text font-p-graphic" on:click={() => onClickMilestone(0)}>
+    <div class="milestone-text" on:click={() => onClickMilestone(0)}>
       <EditableText bind:value={content[0]}  {editable} />
     </div>
 
@@ -81,7 +81,7 @@
     <div class="milestones-block">
 
       {#each content as _, i}
-        <div class='milestone-container' on:click={() => onClickMilestone(i)} style="--row: {i+1};">
+        <div class='milestone-item' on:click={() => onClickMilestone(i)} style="--row: {i+1};">
 
           <svg class="sub-thread-line" width="10" height="4" viewBox="0 0 10 4">
             <path d="M1.22933 0.955129V0.955129C2.81493 2.54068 5.01818 3.34773 7.25278 3.1615L9.729 2.95514"/>
@@ -101,7 +101,7 @@
             </svg>
           {/if}
 
-          <div class="milestone-text font-p-graphic" class:contracted={contracted[i]}>
+          <div class="milestone-text" class:contracted={contracted[i]}>
             <EditableText bind:value={content[i]}  {editable} />
           </div>
 
@@ -128,8 +128,7 @@
 
 <style lang="stylus">
 
-  .container {
-    --ms-width: 200px;
+  .milestone {
 
     :global(.icon-button) {
       --ib-color: white;
@@ -177,13 +176,14 @@
     }
   }
 
-  .milestone-container {
+  .milestone-item {
     grid-column: 1;
     grid-row: var(--row);
     padding: 40px 0 0;
     cursor: pointer;
     position: relative;
-    width: var(--ms-width);
+    max-width: 100%;
+    overflow: hidden;
   }
 
   .milestone-circle {
@@ -207,6 +207,7 @@
   }
 
   .milestone-text {
+    typography: p-graphic-responsive
     color: $colors.neutral-bg;
     padding-top: 1.5px;
     padding-left: 22px;
@@ -214,7 +215,6 @@
     .simple & {
       padding-top: 28px;
       padding-left: 3px;
-      width: var(--ms-width);
     }
 
     &.contracted {
@@ -229,13 +229,13 @@
   }
 
   .year {
+    typography: ui-small;
     display: flex;
     column-gap: 5px;
     align-items: center;
     color: $colors.neutral-bg;
     height: 25px;
     padding-left: 2px;
-    width: var(--ms-width);
     :global(input) {
       width: 40px;
     }
@@ -272,7 +272,7 @@
     }
   }
 
-  :global(.splide__slide:hover) .container :global(.editable-content-container:not(.empty) [contenteditable]) {
+  :global(.splide__slide:hover) .milestone :global(.editable-content-container:not(.empty) [contenteditable]) {
     background: #ffffff10;
     border-radius: 4px;
   }
@@ -285,13 +285,6 @@
     :global(.icon-button) {
       --ib-hover-bg: #03395f;
       --ib-icon-bg: #034676;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    .milestone-text {
-      padding-right: 30px;
-      max-width: 125px;
     }
   }
 

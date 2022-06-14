@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { imgLoadingStatus } from "$lib/helpers/utils";
 
   export let lat: number;
   export let long: number;
+
+  export let loading = false;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const isCoordValid = (val: unknown) => val != null && !isNaN(val as any);
@@ -11,7 +14,12 @@
 </script>
 
 {#if valid}
-  <img class="globe" src="/globe.svg?lat={lat}&long={long}" alt="globe"/>
+  <img
+    use:imgLoadingStatus={v => loading = v}
+    class="globe"
+    src="/globe.svg?lat={lat}&long={long}"
+    alt="globe"
+  />
 {:else}
   <div class="globe" />
 {/if}

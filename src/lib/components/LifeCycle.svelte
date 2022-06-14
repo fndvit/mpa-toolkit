@@ -161,11 +161,7 @@
   }
 
   .title {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 20px;
+    typography: h5-responsive;
     color: #000000;
     margin: 15px 0 10px;
     .top-section &:first-child {
@@ -194,9 +190,11 @@
       }
 
       .info-text {
+        position: absolute;
         width: 50%;
         height: 50%;
-        position: absolute;
+        typography: ui-small;
+        color: black;
         top: 0;
         bottom: 0;
         left: 0;

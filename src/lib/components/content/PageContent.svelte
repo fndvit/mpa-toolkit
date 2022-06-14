@@ -66,7 +66,7 @@
           </div>
         {/if}
       {/if}
-      {/each}
+    {/each}
     </div>
 </div>
 
@@ -83,9 +83,6 @@
 
   .body-column {
     display: contents;
-    font-family: var(--font-serif);
-    font-size: 18px;
-    line-height: 32px;
     > :global(*) {
       grid-column: body;
     }
@@ -177,6 +174,9 @@
     :global(.lifecycle) {
       margin: auto;
       max-width: 300px;
+      +breakpoint(page, medium) {
+        max-width: none;
+      }
     }
   }
 

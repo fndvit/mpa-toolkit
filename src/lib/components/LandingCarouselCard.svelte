@@ -12,17 +12,18 @@
 </script>
 
 <a
-  class="carousel-card"
+  class="landing-carousel-card"
   href="/{page.slug}"
   class:case-study={!!page.caseStudy}
   tabindex="0"
+  rel="external"
 >
 
   <img class="image" src={staticUrl(page.img, fallbackImg)} alt="preview">
 
   <div class="preview-content">
     <div class="title">
-      <span><h3 class="font-h3-light">{getPageDisplayTitle(page)}</h3></span>
+      <span><h3>{getPageDisplayTitle(page)}</h3></span>
       <div class="circle-button" tabindex="0">
         <svg class="arrow-svg" viewBox="0 0 12 20">
           <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
@@ -32,7 +33,7 @@
 
     <div>
       <div class="tags-title">
-        <h5 class="font-h5">What's this about?</h5>
+        <h5>What's this about?</h5>
       </div>
       <div class="tags no-drag hide-scrollbar">
         <TagContainer tags={page.tags}/>
@@ -44,7 +45,7 @@
 
 <style lang="stylus">
 
-  .carousel-card {
+  .landing-carousel-card {
     display: flex;
     flex-direction: column;
     width: 766px;
@@ -68,7 +69,7 @@
 
   }
 
-  a.carousel-card {
+  a.landing-carousel-card {
     text-decoration: none;
   }
 
@@ -105,12 +106,13 @@
     margin: 2.5rem 0 1rem;
 
     h5 {
+      typography: h5;
       margin: 0;
     }
   }
 
   .title {
-    max-height: 5em;
+    $max-lines = 4;
     text-overflow: clip;
     word-wrap: break-word;
     display: flex;
@@ -118,14 +120,15 @@
     > span {
       flex: 0 1 570px;
       display: -webkit-box;
-      -webkit-line-clamp: 4;
-      line-clamp: 4;
+      -webkit-line-clamp: $max-lines;
+      line-clamp: $max-lines;
       overflow: hidden;
       text-overflow: ellipsis;
       -webkit-box-orient: vertical;
     }
 
     h3 {
+      typography: h3-light-responsive;
       margin: 0;
     }
   }
@@ -148,7 +151,7 @@
 
   @media(max-width: 1024px) {
 
-    .carousel-card {
+    .landing-carousel-card {
       max-width: 500px;
       width: calc(100vw - 120px);
     }
@@ -170,10 +173,6 @@
       padding: 1rem 1.5rem 1.5rem;
     }
 
-    .title {
-      font-size: 1.75rem;
-    }
-
     .tags {
       margin-top: 2rem;
       overflow-x: scroll;
@@ -186,13 +185,9 @@
 
   @media(max-width: 550px) {
 
-    .carousel-card {
+    .landing-carousel-card {
       max-width: 500px;
       width: calc(100vw - 80px);
-    }
-
-    .title {
-      font-size: 1.25rem;
     }
 
   }

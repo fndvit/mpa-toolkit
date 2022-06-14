@@ -11,7 +11,7 @@
 <div class="content-carousel-card" tabindex="0">
   <a href={"/" + slug}>
     <img src={staticUrl(img)} alt="interesting-chapters" href={"/" + slug}/>
-    <div class="title font-h5-light">{title}</div>
+    <div class="title">{title}</div>
   </a>
 
   <div class="tags no-drag hide-scrollbar">
@@ -50,6 +50,7 @@
   }
 
   .title {
+    typography: h5-light;
     line-height: 1.5rem;
     padding-left: 0.15rem;
     color: black;

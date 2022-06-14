@@ -9,7 +9,7 @@
 
 <style lang="stylus">
   .mark--strong {
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .mark--em {

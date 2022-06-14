@@ -13,7 +13,7 @@
 
 <div class="landing-madlib" style="--background-image: url({landingMadlibBg})">
 
-  <h2 class="font-h2">Find information <b>relevant to you</b>.</h2>
+  <h2>Find information <b>relevant to you</b>.</h2>
 
   <MadLib bind:value />
 
@@ -47,6 +47,7 @@
     }
 
     h2 {
+      typography: h2-responsive;
       margin-top: 6rem;
       color: #FFFFFF;
     }
@@ -58,10 +59,9 @@
   }
 
   .landing-madlib button {
+    typography: h4-responsive;
     cursor: pointer;
     border: none;
-    font-size: 1.25rem;
-    font-weight: 700;
     background: $colors.highlight-1;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     position: relative;
@@ -116,7 +116,6 @@
       }
 
       button {
-        font-size: 1rem;
         padding: 0.55rem 0.95rem 0.45rem 0.85rem;
       }
     }

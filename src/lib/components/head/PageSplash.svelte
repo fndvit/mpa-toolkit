@@ -24,7 +24,7 @@
   <InlineSvg svg="UNEP" />
 </div>
 <div class="splash" style="background-image: url({img});" class:splash-cs={page.caseStudy}>
-  <h1 class="font-h1">
+  <h1>
     {#if page.caseStudy}
       <EditableText bind:value={page.caseStudy.name} {editable} placeholder="Project name" />
       <span> &#x2013; </span>
@@ -37,6 +37,7 @@
 
   .splash {
     grid-config(page, splash);
+    grid-template-rows: 1fr auto;
 
     --ec-hover-bg: #ffffff22;
     --ui-color-placeholder: #ffffff55;
@@ -47,8 +48,7 @@
 
     h1 {
       grid-area: title;
-      display: flex;
-      align-items: end;
+      typography: h1-responsive;
       color: white;
       text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.45);
       > :global(*) {

@@ -4,7 +4,7 @@ import { prisma } from "$lib/prisma";
 import { pageForContentCard, tag } from "$lib/prisma/queries";
 import { groupBy } from "$lib/helpers/utils";
 
-export const get: RequestHandler<{ id: string }> = async () => {
+export const get: RequestHandler<{ id: string }> = async ({locals}) => {
 
   const pages = await prisma.page.findMany({
     where: { draft: false },
@@ -15,6 +15,8 @@ export const get: RequestHandler<{ id: string }> = async () => {
     where: { type: "TOPIC" },
     ...tag
   });
+
+  locals.cacheKey = 'pages';
 
   const groups = groupBy(pages, p => p.chapter ? 'chapters' : 'caseStudies');
 

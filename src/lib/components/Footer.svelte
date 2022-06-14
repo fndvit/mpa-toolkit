@@ -40,12 +40,7 @@
 
   .footer {
     grid-config(page, footer);
-
     background: $colors.neutral-bg;
-
-    p {
-      font-weight: bold;
-    }
   }
 
   .footer-content {

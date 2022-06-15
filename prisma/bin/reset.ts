@@ -1,6 +1,6 @@
 import { prisma } from '../../src/lib/prisma';
-import { reset } from "./reset";
+import { reset as _reset } from "../lib/reset";
 
-reset()
+_reset()
   .catch(console.error)
   .finally(async () => prisma.$disconnect());

@@ -14,15 +14,18 @@ async function dropAllFunctions() {
   );
 }
 
-async function prismaReset() {
+async function prismaCmd(cmd: string) {
   return new Promise((resolve) => {
     execFile(
-      path.resolve("./node_modules/prisma/build/index.js"),
-      ["migrate", "reset", "--force" ],
+      'node',
+      [
+        path.resolve("./node_modules/prisma/build/index.js"),
+        ...cmd.split(' ')
+      ],
       (error, stdout) => {
         if (error != null) {
           console.log(stdout);
-          console.error(`prisma migrate exited with error ${error.message}`);
+          console.error(`prisma exited with error ${error.message}`);
           resolve(error.code ?? 1);
         } else {
           resolve(0);
@@ -33,8 +36,14 @@ async function prismaReset() {
 }
 
 export async function reset() {
+
+  console.log('Generating prisma client files...');
+  await prismaCmd('generate');
+
   console.log('Dropping all functions...');
   await dropAllFunctions();
+
   console.log('Running prisma reset...');
-  await prismaReset();
+  await prismaCmd('migrate reset --force');
+
 }

@@ -103,6 +103,7 @@
 
     :global(.splide__arrow) {
       position: static;
+
     }
 
     :global(.splide__arrow:disabled) {
@@ -112,6 +113,8 @@
     &.content {
       background-color: $colors.primary-blue;
       color: $colors.neutral-bg;
+      border-radius: 20px 20px 0px 0px;
+
       :global(.splide__arrow) {
         background: $colors.ocean;
       }

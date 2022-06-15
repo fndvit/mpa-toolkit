@@ -60,9 +60,9 @@
   .gradient::before {
     content: '';
     position: absolute;
-    width: calc((100%) - var(--scrollbar-width) - var(--content-padding) + 17px);
+    width: calc((100%) - var(--scrollbar-width) - var(--content-padding) - 28px);
     height: 75%;
-    left: 0;
+    left: inherit;
     background: linear-gradient(180deg, rgba(351, 46, 107, 0) 50%, rgba(251, 1, 107, 1) 80%);
     transition: all 2s;
     pointer-events: none;

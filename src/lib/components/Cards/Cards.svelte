@@ -47,7 +47,8 @@
 </script>
 
 <div class="cards" class:has-fixed-title={fixedTitle} class:selected
-  class:highlight={type==='highlight'} class:content={type==='content'} class:cs-first={type==="case-study-first"} class:cs-second={}>
+  class:highlight={type==='highlight'} class:content={type==='content'}
+  class:cs-first={type==="case-study-first"} class:cs-second={type==="case-study-second"}>
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
@@ -75,7 +76,7 @@
         <CarouselDots
           bind:currentPageIndex
           pagesCount={cards.length}
-          progress={!editable}
+          progress={!editable && type !== 'content'}
         />
       </div>
     {/if}
@@ -88,12 +89,9 @@
     --content-padding: 30px;
     --content-top-padding: 30px;
     --scrollbar-width: 10px;
-    --caret-color: #333;
     border-radius: 20px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
-
-    background-color: $colors.highlight-1;
-    color: #333;
+    color: black;
 
     :global(.splide__arrows) {
       position: absolute;
@@ -105,10 +103,43 @@
 
     :global(.splide__arrow) {
       position: static;
-      background: $colors.highlight-1;
     }
+
     :global(.splide__arrow:disabled) {
       display: none;
+    }
+
+    &.content {
+      background-color: $colors.primary-blue;
+      color: $colors.neutral-bg;
+      :global(.splide__arrow) {
+        background: $colors.ocean;
+      }
+
+      :global(.carousel-dots) {
+        --dot-color: $colors.neutral-bg;
+      }
+    }
+
+    &.highlight {
+      background-color: $colors.highlight-1;
+      :global(.splide__arrow) {
+        background: $colors.highlight-1;
+      }
+    }
+
+    &.cs-first {
+      background-color: $colors.neutral-bg;
+      :global(.splide__arrow) {
+        background: $colors.neutral-bg;
+      }
+    }
+
+    &.cs-second {
+      background-color: $colors.neutral-light;
+      :global(.splide__arrow) {
+        background: $colors.neutral-light;
+      }
     }
   }
 

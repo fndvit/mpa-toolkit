@@ -3,6 +3,7 @@
 
   export let text: string;
   export let editable = false;
+  export let type: 'content' | 'highlight' | 'case-study-first' | 'case-study-second' = 'content';
 
   let hideScroll = false;
   let showGradient = false;
@@ -62,7 +63,7 @@
     width: calc((100%) - var(--scrollbar-width) - var(--content-padding) + 17px);
     height: 75%;
     left: 0;
-    background: linear-gradient(180deg, rgba(251, 226, 107, 0) 50%, rgba(251, 226, 107, 1) 80%);
+    background: linear-gradient(180deg, rgba(351, 46, 107, 0) 50%, rgba(251, 1, 107, 1) 80%);
     transition: all 2s;
     pointer-events: none;
   }

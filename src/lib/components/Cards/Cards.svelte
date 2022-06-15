@@ -19,6 +19,7 @@
   export let editable = false;
   export let fixedTitle: string = null;
   export let selected = false;
+  export let type: 'content' | 'highlight' | 'case-study-first' | 'case-study-second' = 'content';
 
   let splide: Splide;
 
@@ -45,7 +46,8 @@
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 </script>
 
-<div class="cards" class:has-fixed-title={fixedTitle} class:selected>
+<div class="cards" class:has-fixed-title={fixedTitle} class:selected
+  class:highlight={type==='highlight'} class:content={type==='content'} class:cs-first={type==="case-study-first"} class:cs-second={}>
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">

@@ -18,9 +18,10 @@
 </div>
 
 <style lang="stylus">
+
   .carousel-dots {
     --dot-size: 10px;
-    --dot-color: black;
+    --dot-color: #000000;
     --dot-fade: 0.25;
     --dot-progress-duration: 10s;
     display: flex;
@@ -28,4 +29,5 @@
     padding: 10px 30px;
     column-gap: 4px;
   }
+
 </style>

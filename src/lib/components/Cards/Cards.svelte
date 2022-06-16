@@ -13,13 +13,13 @@
   import { SplideOptions } from '$lib/helpers/splide';
   import IconButton from '$lib/components/generic/IconButton.svelte';
 
-
   export let cards: CardData[];
   export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;
   export let selected = false;
-  export let type: 'content' | 'highlight' | 'case-study-first' | 'case-study-second' = 'content';
+  export let style: 'content' | 'highlight' | 'case-study-first' | 'case-study-second' = 'content';
+  export let type: 'default' | 'no-heading' = 'default';
 
   let splide: Splide;
 
@@ -42,12 +42,16 @@
     splide.go(goTo);
   };
 
+  const onClickChangeType = () => {
+    type === 'default' ? type = 'no-heading' : type = 'default';
+  }
+
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 </script>
 
 <div class="cards" class:has-fixed-title={fixedTitle} class:selected
-  class:highlight={type==='highlight'} class:content={type==='content'}
-  class:cs-first={type==="case-study-first"} class:cs-second={type==="case-study-second"}>
+  class:highlight={style==='highlight'} class:content={style==='content'}
+  class:cs-first={style==="case-study-first"} class:cs-second={style==="case-study-second"}>
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
@@ -58,7 +62,9 @@
       {#each cards as card, i}
         <SplideSlide>
           <div class="slide">
+            {#if type !== 'no-heading'}
             <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
+            {/if}
             <CardBody bind:text={card.body} editable={editable && currentPageIndex === i} />
           </div>
         </SplideSlide>
@@ -68,6 +74,9 @@
       <div class="editor-buttons">
         <IconButton icon="add" on:click={onClickAddCard} />
         <IconButton icon="delete" on:click={onClickRemoveCard} />
+        {#if style==='content'}
+          <IconButton icon="title" on:click={onClickChangeType} />
+        {/if}
       </div>
     {/if}
     {#if editable || cards.length > 1}
@@ -75,7 +84,7 @@
         <CarouselDots
           bind:currentPageIndex
           pagesCount={cards.length}
-          progress={!editable && type !== 'content'}
+          progress={!editable && style !== 'content'}
         />
       </div>
     {/if}
@@ -102,7 +111,6 @@
 
     :global(.splide__arrow) {
       position: static;
-
     }
 
     :global(.splide__arrow:disabled) {
@@ -192,6 +200,12 @@
     }
     :global(.heading) {
       max-width: 60%;
+    }
+
+    .content & {
+      :global(.content) {
+        typography: content-card-body;
+      }
     }
   }
 

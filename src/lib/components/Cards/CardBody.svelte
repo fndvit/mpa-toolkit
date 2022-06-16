@@ -37,8 +37,8 @@
 <style lang="stylus">
 
   .content {
-    typography: card-body;
-    margin-top: 25px;
+    typography: summary-card-body;
+    margin-top: 0.5rem;
     overflow: auto;
     min-height: 50px;
     max-height: 170px;

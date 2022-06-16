@@ -11,13 +11,10 @@ export const patch = authMiddleware(
 
   validate('user', body);
 
-  const { role, img } = body;
   try {
     const user = await prisma.user.update({
-      where: {
-        id: parseInt(params.id),
-      },
-      data: { role, img }
+      where: { id: parseInt(params.id), },
+      data: body
     });
     return {
       status: 200,

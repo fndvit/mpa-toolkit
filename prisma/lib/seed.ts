@@ -68,18 +68,7 @@ const generateRandomContent = (): ContentDocument => ({
   ])).flat()
 });
 
-export async function seed(dev: boolean) {
-
-  console.log(`Seeding ${dev ? 'dev' : 'prod'} data...`);
-
-  await prisma.$executeRaw`delete from "Search"`;
-  await prisma.caseStudy.deleteMany();
-  await prisma.chapter.deleteMany();
-  await prisma.tagsOnPages.deleteMany();
-  await prisma.page.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.tag.deleteMany();
-
+export async function createTags() {
   await prisma.tag.createMany({
     data: [
       ...tags.stage.map((value, i) => ({id: i, value, type: TagType.STAGE})),
@@ -87,65 +76,84 @@ export async function seed(dev: boolean) {
       ...tags.user.map(value => ({value, type: TagType.USER})),
     ]
   });
+}
 
-  if (dev) {
-    const names = [ "Emma Doyle", "Nicolas Smith", "Kirby Heath", "Todd Frey", "Del Robertson" ];
+async function createDevData() {
+  const names = [ "Emma Doyle", "Nicolas Smith", "Kirby Heath", "Todd Frey", "Del Robertson" ];
 
-    await prisma.user.createMany({
-      data: names.map((name, i) => ({
-        email: `user${i}@example.com`,
-        name,
-        role: Role.CONTENT_MANAGER
-      }))
-    });
+  await prisma.user.createMany({
+    data: names.map((name, i) => ({
+      email: `user${i}@example.com`,
+      name,
+      role: Role.CONTENT_MANAGER
+    }))
+  });
 
-    const users = await prisma.user.findMany();
-    const userIds = users.map(user => user.id);
+  const users = await prisma.user.findMany();
+  const userIds = users.map(user => user.id);
 
-    const allTags = await prisma.tag.findMany();
+  const allTags = await prisma.tag.findMany();
 
-    await createPage({
-      slug: "blue-economy",
-      title: "What should MPA managers know about the blue economy and business planning?",
+  await createPage({
+    slug: "blue-economy",
+    title: "What should MPA managers know about the blue economy and business planning?",
+    draft: false,
+    img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
+    content: content as any as ContentDocument,
+    tags: getRandomTagsForContent(allTags),
+    chapter: {
+      keyTakeaways: [
+        summaryLorem.generateSentences(2),
+        summaryLorem.generateSentences(2),
+        summaryLorem.generateSentences(2),
+      ],
+      summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
+      authors: [userIds[0]]
+    }
+  });
+
+  await createPage({
+      slug: "raja-ampat-mpa-network-adaptation-strate",
+      title: "Adaptation strategies for a changing climate",
       draft: false,
       img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
       content: content as any as ContentDocument,
       tags: getRandomTagsForContent(allTags),
-      chapter: {
-        keyTakeaways: [
-          summaryLorem.generateSentences(2),
-          summaryLorem.generateSentences(2),
-          summaryLorem.generateSentences(2),
-        ],
-        summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
-        authors: [userIds[0]]
+      caseStudy: {
+        name: "Raja Ampat MPA Network",
+        established: 2008,
+        size: 20002,
+        governance: "Co-management with the regional public service agency",
+        staff: "56 workers",
+        budget: "Entrance fees (87–88%) + grants (11–12%):US$1,470,000. The pandemic caused a drastic reduction in 2020/2021.",
+        budgetLevel: "Between basic (IDR 13-14 billion ~ US$950,000) and optimal (IDR 30 billion ~ US$2.1 million)",
+        lat: -0.23333324,
+        long: 130.51666646,
+        milestones
       }
-    });
+  });
 
-    await createPage({
-        slug: "raja-ampat-mpa-network-adaptation-strate",
-        title: "Adaptation strategies for a changing climate",
-        draft: false,
-        img: "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
-        content: content as any as ContentDocument,
-        tags: getRandomTagsForContent(allTags),
-        caseStudy: {
-          name: "Raja Ampat MPA Network",
-          established: 2008,
-          size: 20002,
-          governance: "Co-management with the regional public service agency",
-          staff: "56 workers",
-          budget: "Entrance fees (87–88%) + grants (11–12%):US$1,470,000. The pandemic caused a drastic reduction in 2020/2021.",
-          budgetLevel: "Between basic (IDR 13-14 billion ~ US$950,000) and optimal (IDR 30 billion ~ US$2.1 million)",
-          lat: -0.23333324,
-          long: 130.51666646,
-          milestones
-        }
-    });
+  for (let i = 0; i < NUM_RANDOM_CHAPTERS; i++) {
+    await createRandomPage(userIds, allTags);
+  }
+}
 
-    for (let i = 0; i < NUM_RANDOM_CHAPTERS; i++) {
-      await createRandomPage(userIds, allTags);
-    }
+export async function seed(dev: boolean) {
+
+  console.log(`Seeding: ${dev ? 'dev' : 'prod'}`);
+
+  const tables = ['search', 'caseStudy', 'chapter', 'tagsOnPages', 'page', 'user', 'tag'];
+  for (const table of tables) {
+    console.log(`Clearing table "${table}"...`);
+    await prisma[table].deleteMany();
+  }
+
+  console.log('Creating tags...');
+  await createTags();
+
+  if (dev) {
+    console.log('Creating dev data...');
+    await createDevData();
   }
 
   console.log('Finished');

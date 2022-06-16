@@ -1,13 +1,4 @@
 {
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs"
-    },
-    "moduleTypes": {
-      "./prisma/**/*": "cjs",
-      "./src/**/*": "cjs",
-    }
-  },
   "compilerOptions": {
     "moduleResolution": "node",
     "module": "es2020",
@@ -36,6 +27,6 @@
       "$lib/*": ["src/lib/*"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "prisma/**/*.ts"],
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
 }

@@ -1,4 +1,6 @@
+import { getContext } from "svelte";
 import { writable } from "svelte/store";
+import type Toaster from '$lib/components/generic/Toaster.svelte';
 
 export function groupBy<T, K extends string, U = null>
 (arr: T[], keyFn: (i: T) => K, mapFn?: (i: T) => U) {
@@ -131,6 +133,10 @@ export function insertInTextArea(text, el: HTMLInputElement) {
   const [start, end] = [el.selectionStart, el.selectionEnd];
   el.setRangeText(text, start, end, 'select');
   el.setSelectionRange(start + text.length, start + text.length);
+}
+
+export function getToaster() {
+  return getContext<Toaster['$$prop_def']['addMessage']>('addToastMessage');
 }
 
 // ************************

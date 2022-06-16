@@ -1,6 +1,6 @@
 import { prisma } from "../../src/lib/prisma";
-import { seed } from "./seed";
+import { seed as _seed } from "../lib/seed";
 
-seed(true)
+_seed(true)
   .catch(console.error)
   .finally(async () => prisma.$disconnect());

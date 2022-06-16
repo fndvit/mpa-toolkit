@@ -3,7 +3,6 @@
 
   export let text: string;
   export let editable = false;
-  export let type: 'content' | 'highlight' | 'case-study-first' | 'case-study-second' = 'content';
 
   let hideScroll = false;
   let showGradient = false;

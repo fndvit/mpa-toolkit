@@ -1,12 +1,28 @@
 <script lang="ts">
   import { closeModal } from 'svelte-modals';
 
+  export let title: string;
+  export let message: string;
   export let isOpen: boolean;
+  export let confirmText: string = null;
   export let onYes: () => void;
 
+  let currentText = '';
+  let confirmTextError = false;
+
+  const resetErrorField = (e) => {
+    confirmTextError = false;
+    e.target.value = '';
+  };
+
   async function onClickDelete() {
-    onYes();
-    closeModal();
+    console.log(currentText);
+    if(confirmText === currentText || !confirmText) {
+      onYes();
+      closeModal();
+    } else {
+      confirmTextError = true;
+    }
   }
 
 </script>
@@ -14,8 +30,15 @@
 {#if isOpen}
 <div role="dialog" class="modal">
   <div class="contents">
-    <h2>Delete page</h2>
-    <p>Are you sure you want to delete this page?</p>
+    <h2>{title}</h2>
+    <p>{message}</p>
+    {#if confirmText}
+    <p>Write <b>{confirmText}</b> to confirm</p>
+    <input class:confirmTextError type="text" placeholder="Confirm text" on:keyup="{(e) => {currentText = e.target.value}}" on:focus={resetErrorField}/>
+      {#if confirmTextError}
+        <p class="confirmTextError">The text does not match</p>
+      {/if}
+    {/if}
     <div class="actions">
       <button on:click="{closeModal}">Cancel</button>
       <button on:click="{onClickDelete}">Delete</button>
@@ -63,5 +86,9 @@
     margin-top: 32px;
     display: flex;
     justify-content: flex-end;
+  }
+
+  .confirmTextError{
+    color: $colors.error-red;
   }
 </style>

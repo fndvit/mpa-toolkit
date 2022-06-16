@@ -1,10 +1,10 @@
 import type { Prisma } from "@prisma/client";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import type { PageRequest, SubTypes } from "$lib/types";
+import type { PageRequest, SubTypes, TagRequest } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
-import { pageForContentCard, pageFull } from "./queries";
+import { pageForContentCard, pageFull, tag } from "./queries";
 import { createLookup, type Expand } from "$lib/helpers/utils";
 import { publishEvent } from "$lib/events";
 
@@ -186,4 +186,67 @@ export async function searchTags(searchText: string) {
     results.map(r => [r.tagId, r.highlight])
   ) as {[tagId: number]: string};
   return o;
+}
+
+export async function updateTag(id: number, tag: TagRequest) {
+
+  validate('tag', tag);
+
+  if(tag.type !== 'TOPIC') return false;
+  if(tag.value.length > 30) return false;
+
+  const { value, type } = tag;
+
+  const tagUpdateQuery = prisma.tag.update({
+    where: { id },
+    data: {
+      value, type,
+    }
+  });
+
+  const [_tag] = await prisma.$transaction([
+    tagUpdateQuery
+  ]);
+
+  await publishEvent('tag-updated', { id });
+
+  return _tag;
+}
+
+export async function deleteTag(id: number) {
+
+  const tag = await prisma.tag.findFirst({
+    where: { id }
+  });
+
+  if(tag.type !== 'TOPIC') return false;
+
+  const deleteTag = prisma.tag.delete({ where: { id } });
+
+  await prisma.$transaction([deleteTag]);
+
+  await publishEvent('tag-deleted', { id });
+
+  return true;
+}
+
+export async function createTag(tag: TagRequest) {
+
+  validate('tag', tag);
+
+  const { value, type } = tag;
+
+  const createTagQuery = prisma.tag.create({
+    data: {
+      value, type
+    }
+  });
+
+  const [_tag] = await prisma.$transaction([
+    createTagQuery
+  ]);
+
+  await publishEvent('page-created', { id: _tag.id });
+
+  return _tag;
 }

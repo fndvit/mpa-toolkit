@@ -1,0 +1,13 @@
+{
+  "$id": "tag",
+
+  "type": "object",
+  "properties": {
+
+    "value": { "type": "string" },
+    "type": { "type": "string", "enum": [ "TOPIC", "USER", "STAGE" ] }
+
+  },
+  "additionalProperties": false,
+  "minProperties": 1
+}

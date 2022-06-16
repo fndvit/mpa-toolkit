@@ -30,6 +30,8 @@
     data-placeholder={placeholder}
     bind:textContent={value}
     tabindex=0
+    on:focus
+    on:focusout
      />
 {:else}
   <div class="editable-content editable-text">{value || ''}</div>
@@ -43,7 +45,7 @@
 
     &:focus {
       outline: none;
-      outline: 2px solid #ffffff88;
+      outline: 2px solid var(--outline-color, #ffffff88);
       border-radius: 4px;
       background-color: var(--ui-color-focus);
     }

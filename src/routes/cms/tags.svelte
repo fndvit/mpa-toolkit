@@ -2,12 +2,13 @@
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import Searchbar from '$lib/components/generic/Searchbar.svelte';
   import type { Tag } from '$lib/types';
+  import { TagType } from '$lib/types';
   import EditableText from '$lib/components/generic/EditableText.svelte';
   import { getContext } from 'svelte';
   import type Toaster from '$lib/components/generic/Toaster.svelte';
   import DeleteModal from '$lib/components/cms/DeleteModal.svelte';
   import { openModal } from 'svelte-modals';
-import { createTag } from '$lib/api';
+  import { createTag, deleteTag, updateTag } from '$lib/prisma/wrappers';
 
 
   export let tags: (Tag & {_count: {pageTags: number}})[];
@@ -17,35 +18,68 @@ import { createTag } from '$lib/api';
 
   const addToastMessage = getContext<Toaster['$$prop_def']['addMessage']>('addToastMessage');
 
-  const addNewTag = () => {
-    createTag({
+  const addNewTagDB = async (tag: Tag) => {
+    try {
+      await createTag(tag)
+      addToastMessage('Tag updated', {  type: 'done'});
+    } catch (error) {
+      addToastMessage('Error creating tag', {  type: 'error'});
+    }
+  }
+
+  const updateTagDB = async (tag: Tag) => {
+    try {
+      await updateTag(tag.id, tag)
+      addToastMessage('Tag updated', {  type: 'done'});
+    } catch (error) {
+      addToastMessage('Error updating tag', {  type: 'error'});
+    }
+  }
+
+  const deleteTagDB = async (tag: Tag) => {
+    try {
+      await deleteTag(tag.id)
+      addToastMessage('Tag deleted', {  type: 'done'});
+    } catch (error) {
+      addToastMessage('Error deleting tag', {  type: 'error'});
+    }
+  }
+
+  const addNewTag = (tag: Tag) => {
+
+    tags.push({
       value: 'New Tag',
-      type: 'TOPIC'
-    }).then((t) => {
-      addToastMessage('Tag created successfully');
-      console.log(t);
-    }).catch(err => {
-      addToastMessage('Error creating tag');
-      console.error('Error creating tag: ' + err);
-    });
+      type: TagType.TOPIC,
+      id: null,
+      _count: {
+        pageTags: 0
+      }
+    })
+    tags = tags
+    tagFocused = tags.length - 1;
+    addToastMessage('New tag added', { type: 'done' });
   };
 
-  const deleteTag = (i: number) => {
+  const removeTag = (i: number) => {
     if(tags[i]._count.pageTags > 0){
       openModal(DeleteModal, {
         title: 'Delete Tag',
         message: 'This tag is used on some pages. Are you sure you want to delete it? It will be removed from ' + tags[i]._count.pageTags + ' pages.',
         confirmText: tags[i].value,
         onYes: () => {
-          tags.splice(i, 1);
-          tags = tags;
-          addToastMessage('Tag deleted', {type: 'done'});
+          deleteTagDB(tags[i]).then(() => {
+            tags.splice(i, 1);
+            tagFocused = -1;
+            tags = tags;
+          });
         }
       });
     } else {
-      tags.splice(i, 1);
-      tags = tags;
-      addToastMessage('Tag deleted', {type: 'done'});
+      deleteTagDB(tags[i]).then(() => {
+            tags.splice(i, 1);
+            tagFocused = -1;
+            tags = tags;
+        });
     }
   };
 
@@ -59,6 +93,11 @@ import { createTag } from '$lib/api';
     if(tags[i].value.trim() === ''){
       addToastMessage('Tag cannot be empty', {type: 'error'});
       return;
+    }
+    if (tags[i].id === null) {
+      addNewTagDB(tags[i]);
+    } else {
+      updateTagDB(tags[i]);
     }
     tags = tags;
     tagFocused = -1;

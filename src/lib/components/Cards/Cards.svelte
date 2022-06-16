@@ -2,6 +2,7 @@
   export type CardData = {
     heading: string;
     body: string;
+    type: string;
   }
 </script>
 
@@ -19,7 +20,8 @@
   export let fixedTitle: string = null;
   export let selected = false;
   export let style: 'content' | 'highlight' | 'case-study-first' | 'case-study-second' = 'content';
-  export let type: 'default' | 'no-heading' = 'default';
+
+  let cardType: string = cards[currentPageIndex].type;
 
   let splide: Splide;
 
@@ -31,7 +33,7 @@
   });
 
   const onClickAddCard = () => {
-    cards.push({heading: '', body: ''});
+    cards.push({heading: '', body: '', type: cardType});
     cards = cards;
     window.setTimeout(() => splide.go(cards.length - 1));
   };
@@ -43,7 +45,9 @@
   };
 
   const onClickChangeType = () => {
-    type === 'default' ? type = 'no-heading' : type = 'default';
+    cardType === 'default' ? cardType = 'no-heading' : cardType = 'default';
+    cards = cards.map(c => {return {...c, type: cardType}});
+    console.log(cards);
   }
 
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
@@ -61,8 +65,8 @@
     <SplideTrack>
       {#each cards as card, i}
         <SplideSlide>
-          <div class="slide">
-            {#if type !== 'no-heading'}
+          <div class="slide" class:no-heading={card.type==='no-heading'}>
+            {#if card.type !== 'no-heading'}
             <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
             {/if}
             <CardBody bind:text={card.body} editable={editable && currentPageIndex === i} />
@@ -195,6 +199,11 @@
     top: 0;
     padding: var(--content-top-padding) var(--content-padding) 10px;
     margin-bottom: 15px;
+
+    &.no-heading {
+      padding-right: 140px;
+    }
+
     .has-fixed-title & :global(.heading) {
       visibility: hidden;
     }
@@ -224,7 +233,6 @@
     }
 
     .cards {
-
       :global(.splide__arrows) {
         top: 35px;
         right: 15px;

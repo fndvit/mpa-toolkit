@@ -92,7 +92,7 @@ export const schema = new ProsemirrorSchema({
     },
 
     cards: {
-      ...svelteSchemaNode('cards', { cards: [{ heading: '', body: ''}] } ),
+      ...svelteSchemaNode('cards', { cards: [{ heading: '', body: '', type: 'default'}] } ),
       group: 'block',
     },
 

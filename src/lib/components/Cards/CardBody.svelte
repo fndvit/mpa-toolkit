@@ -36,25 +36,35 @@
 </div>
 
 <style lang="stylus">
+
   .content {
     typography: card-body;
     margin-top: 25px;
     overflow: auto;
     min-height: 50px;
     max-height: 170px;
+
     &::-webkit-scrollbar {
       width: 5px;
     }
+
     &::-webkit-scrollbar-track {
       display: none;
     }
+
     &::-webkit-scrollbar-thumb {
       background: #333;
       border-radius: 5px;
     }
+
     :global(.editable-content) {
       --ui-color-placeholder: #00000044;
     }
+
+  }
+
+  .gradient {
+    --gradient-color: $colors.primary-blue;
   }
 
   .gradient::before {
@@ -63,18 +73,22 @@
     width: calc((100%) - var(--scrollbar-width) - var(--content-padding) - 28px);
     height: 75%;
     left: inherit;
-    background: linear-gradient(180deg, rgba(351, 46, 107, 0) 50%, rgba(251, 1, 107, 1) 80%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, var(--gradient-color) 80%);
     transition: all 2s;
     pointer-events: none;
   }
+
   ::-webkit-scrollbar {
     width: var(--scrollbar-width);
     cursor: pointer;
   }
+
   ::-webkit-scrollbar-track {
     background: $colors.neutral-bg;
   }
+
   ::-webkit-scrollbar-thumb {
     background: #888;
   }
+
 </style>

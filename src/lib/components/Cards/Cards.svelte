@@ -126,23 +126,39 @@
 
     &.highlight {
       background-color: $colors.highlight-1;
+
       :global(.splide__arrow) {
         background: $colors.highlight-1;
+      }
+
+      :global(.gradient) {
+        --gradient-color: $colors.highlight-1;
       }
     }
 
     &.cs-first {
       background-color: $colors.neutral-bg;
+
       :global(.splide__arrow) {
         background: $colors.neutral-bg;
+      }
+
+      :global(.gradient) {
+        --gradient-color: $colors.neutral-bg;
       }
     }
 
     &.cs-second {
       background-color: $colors.neutral-light;
+
       :global(.splide__arrow) {
         background: $colors.neutral-light;
       }
+
+      :global(.gradient) {
+        --gradient-color: $colors.neutral-light;
+      }
+
     }
   }
 

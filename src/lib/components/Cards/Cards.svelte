@@ -26,7 +26,6 @@
   let options = SplideOptions({
     rewind: true,
     autoHeight: true,
-    autoplay: !editable,
     gap: -3,
     pagination: false
   });

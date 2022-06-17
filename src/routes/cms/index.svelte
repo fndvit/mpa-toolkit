@@ -15,5 +15,6 @@
   <div>
     <a href="/cms/pages">Pages</a>
     <a href="/cms/users">Users</a>
+    <a href="/cms/tags">Tags</a>
   </div>
 {/if}

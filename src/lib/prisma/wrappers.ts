@@ -221,9 +221,13 @@ export async function deleteTag(id: number) {
 
   if(tag.type !== 'TOPIC') return false;
 
+  const cascade = prisma.tagsOnPages.deleteMany({
+    where: { tagId: id }
+  });
+
   const deleteTag = prisma.tag.delete({ where: { id } });
 
-  await prisma.$transaction([deleteTag]);
+  await prisma.$transaction([cascade, deleteTag]);
 
   await publishEvent('tag-deleted', { id });
 

@@ -1,31 +1,30 @@
 <script lang="ts">
   import IconButton from '../generic/IconButton.svelte';
   import type { Tag } from '$lib/types';
-  import { TagType } from '@prisma/client';
-  import DeleteModal from '$lib/components/cms/DeleteModal.svelte';
-  import { openModal } from 'svelte-modals';
-  import { createTag, deleteTag, updateTag } from '$lib/api';
   import EditableText from '$lib/components/generic/EditableText.svelte';
-  import { createEventDispatcher, getContext } from 'svelte';
-  import type Toaster from '$lib/components/generic/Toaster.svelte';
+  import { createEventDispatcher } from 'svelte';
 
-  export let tag: (Tag & {_count: {pageTags: number}});
+
+  export let tag: Tag;
+  export let disabled = false;
 
   let editTag = tag.value;
   let tagFocused = false;
   let editableTag: EditableText;
 
-  const dispatch = createEventDispatcher<{saveTag: string, delete: (Tag & {_count: {pageTags: number}})}>();
+  const dispatch = createEventDispatcher<{saveTag: Tag, delete: Tag}>();
 
   const onClickSaveTag = () => {
-    dispatch('saveTag', editTag);
     tag.value = editTag;
     editableTag.blur();
+    tagFocused = false;
+    dispatch('saveTag', tag);
   };
 
   const onClickCancelTag = () => {
     editTag = tag.value;
     editableTag.blur();
+    tagFocused = false;
   };
 
   const onClickDeleteTag = () => {
@@ -41,13 +40,13 @@
     placeholder="Tag name"
     bind:focused={tagFocused}
   />
-  <p>- Frequency: {tag._count.pageTags}</p>
-  {#if tagFocused}
-    <IconButton icon="done" on:click={onClickSaveTag}/>
-    <IconButton icon="close" on:click={onClickCancelTag}/>
+  <p>- Frequency: {tag._count?.pageTags}</p>
+  {#if tagFocused }
+    <IconButton icon="done" on:click={onClickSaveTag} {disabled}/>
+    <IconButton icon="close" on:click={onClickCancelTag} {disabled}/>
   {/if}
   <div class="delete-year-button">
-    <IconButton icon="delete" on:click={onClickDeleteTag}/>
+    <IconButton icon="delete" on:click={onClickDeleteTag} {disabled}/>
   </div>
 </div>
 

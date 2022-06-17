@@ -1,9 +1,11 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   export let type: 'inline'|'collection'|'top';
+  export let placeholder: string = null;
+  export let search: string = '';
 
-  let search: string;
   let inputEl: HTMLElement;
+
   const submit = () => search && goto('/search?q=' + search);
 
   export const focus = () => {
@@ -19,7 +21,9 @@
   {#if !search}
     <div class="placeholder">
       <span>
-        {#if type === 'top'}
+        {#if placeholder}
+          {placeholder}
+        {:else if type === 'top'}
           Try <b>asking us</b> anything
         {:else}
           Or, looking for <b>something else?</b>

@@ -235,7 +235,7 @@ export async function deleteTag(id: number) {
 }
 
 export async function createTag(tag: TagRequest) {
-
+  console.log('createTag', tag);
   validate('tag', tag);
 
   const { value, type } = tag;

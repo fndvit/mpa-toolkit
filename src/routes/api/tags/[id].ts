@@ -9,7 +9,7 @@ export const patch = authMiddleware(
     const body = await request.json() as TagRequest;
 
     const tag = await updateTag(parseInt(params.id), body);
-
+    console.log('Tag: ' + tag);
     return {
       status: 200,
       body: tag

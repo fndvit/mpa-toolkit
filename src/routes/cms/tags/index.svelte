@@ -19,27 +19,41 @@
 
   const addToastMessage = getContext<Toaster['$$prop_def']['addMessage']>('addToastMessage');
   const onDeleteTag = async (tag: Tag) => {
-    openModal(DeleteModal, {
-      title: 'Delete Tag',
-      message:
-        'This tag is used on some pages. Are you sure you want to delete it? It will be removed from ' +
-        tag._count?.pageTags +
-        ' pages.',
-      confirmText: tag.value,
-      onYes: async () => {
-        savingTag = true;
-        
-        await deleteTag(tag.id).then(() => {
-          addToastMessage('Tag deleted', { type: 'done' });
-          tags = tags.slice(0, tag.id).concat(tags.slice(tag.id + 1));
-          tags = tags;
-        }).catch(() => {
-          addToastMessage('Error deleting tag', { type: 'error' });
-        });
+    if(tag._count.pageTags > 0){
+      openModal(DeleteModal, {
+        title: 'Delete Tag',
+        message:
+          'This tag is used on some pages. Are you sure you want to delete it? It will be removed from ' +
+          tag._count?.pageTags +
+          ' pages.',
+        confirmText: tag.value,
+        onYes: async () => {
+          savingTag = true;
 
-        savingTag = false;
-      }
-    });
+          await deleteTag(tag.id).then(() => {
+            addToastMessage('Tag deleted', { type: 'done' });
+            tags.splice(tags.indexOf(tag), 1);
+            tags = tags;
+          }).catch(() => {
+            addToastMessage('Error deleting tag', { type: 'error' });
+          });
+
+          savingTag = false;
+        }
+      });
+    } else {
+      savingTag = true;
+
+      await deleteTag(tag.id).then(() => {
+        addToastMessage('Tag deleted', { type: 'done' });
+        tags.splice(tags.indexOf(tag), 1);
+        tags = tags;
+      }).catch(() => {
+        addToastMessage('Error deleting tag', { type: 'error' });
+      });
+
+      savingTag = false;
+    }
   };
   const onSaveTag = async (tag: Tag) => {
     savingTag = true;
@@ -62,7 +76,7 @@
   };
   const onClickAdd = () => {
     tags.push({
-      
+
         value: 'New Tag',
         type: TagType.TOPIC,
         id: null,
@@ -85,7 +99,7 @@
       <IconButton text="Add Tag" icon="add" on:click={onClickAdd} disabled={savingTag}/>
     </div>
     <div class="tool-bar-item">
-      <Searchbar bind:search={tagSearch} type="top" placeholder={"Sear a Tag..."} />
+      <Searchbar bind:search={tagSearch} type="top" placeholder={"Search a Tag..."} />
     </div>
     {#if savingTag}
     <p>Saving</p><Spinner/>
@@ -121,7 +135,7 @@
     }
   }
   .tool-bar-item{
-    :global(.searchbar){ 
+    :global(.searchbar){
       :global(.placeholder){
         color: $colors.neutral-black;
       }

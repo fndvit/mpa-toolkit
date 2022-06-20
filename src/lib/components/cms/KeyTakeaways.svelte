@@ -8,12 +8,13 @@
   let cards = keyTakeaways.map(text => ({
     heading: 'Key takeaways',
     body: text,
+    type: 'default'
   }));
 
   $: keyTakeaways = cards.map(c => c.body);
 
   const onClickAdd = () => {
-    cards.push({ heading: 'Key takeaways', body: '' });
+    cards.push({ heading: 'Key takeaways', body: '' , type: 'default'});
     cards = cards;
   };
 
@@ -21,7 +22,7 @@
 
 {#if keyTakeaways.length}
   <div class="key-takeaways">
-    <Cards bind:cards {editable} style={'highlight'} fixedTitle="Key takeaways" />
+    <Cards bind:cards {editable} fixedTitle="Key takeaways" />
   </div>
 {:else if editable}
   <div class="add-key-takeaways">

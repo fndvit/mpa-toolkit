@@ -1,9 +1,16 @@
 <script lang="ts" context="module">
+
+  let idGen: number = 0;
+  export function generateID(){
+    return idGen++;
+  }
+
   export type CardData = {
     heading: string;
     body: string;
     type: string;
   }
+
 </script>
 
 <script lang="ts">
@@ -13,16 +20,18 @@
   import CardBody from './CardBody.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
   import IconButton from '$lib/components/generic/IconButton.svelte';
+  import { getContext } from 'svelte/internal';
 
   export let cards: CardData[];
   export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;
   export let selected = false;
-  export let style: 'content' | 'highlight' | 'case-study-first' | 'case-study-second' = 'content';
+
+  const dataCardsId = generateID();
+  const context = getContext('page-type');
 
   let cardType: string = cards[currentPageIndex].type;
-
   let splide: Splide;
 
   let options = SplideOptions({
@@ -53,9 +62,7 @@
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 </script>
 
-<div class="cards" class:has-fixed-title={fixedTitle} class:selected
-  class:highlight={style==='highlight'} class:content={style==='content'}
-  class:cs-first={style==="case-study-first"} class:cs-second={style==="case-study-second"}>
+<div class="cards" style="--data-cards-id: {dataCardsId}; --page-type: {context};" class:has-fixed-title={fixedTitle} class:selected>
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
@@ -78,9 +85,7 @@
       <div class="editor-buttons">
         <IconButton icon="add" on:click={onClickAddCard} />
         <IconButton icon="delete" on:click={onClickRemoveCard} />
-        {#if style==='content'}
-          <IconButton icon="title" on:click={onClickChangeType} />
-        {/if}
+        <IconButton icon="title" on:click={onClickChangeType} />
       </div>
     {/if}
     {#if editable || cards.length > 1}
@@ -88,7 +93,7 @@
         <CarouselDots
           bind:currentPageIndex
           pagesCount={cards.length}
-          progress={!editable && style !== 'content'}
+          progress={!editable}
         />
       </div>
     {/if}
@@ -97,6 +102,13 @@
 
 <style lang="stylus">
 
+
+  colors = red black blue
+
+  colorDefinition(n)
+    background-color: colors[n] !important
+
+
   .cards {
     --content-padding: 30px;
     --content-top-padding: 30px;
@@ -104,6 +116,7 @@
     border-radius: 20px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     color: black;
+    colorDefinition(--id);
 
     :global(.splide__arrows) {
       position: absolute;

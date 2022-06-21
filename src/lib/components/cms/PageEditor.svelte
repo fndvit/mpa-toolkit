@@ -90,7 +90,11 @@
   }
 
   async function onClickDelete() {
-    openModal(DeleteModal, { onYes: onDeleteModalYes, title: 'Delete page', message: 'Are you sure you want to delete this page?' });
+    openModal(DeleteModal, {
+      onYes: onDeleteModalYes,
+      title: 'Delete page',
+      message: 'Are you sure you want to delete this page?'
+    });
   }
 
   const onImageChange: svelte.JSX.EventHandler<FormDataEvent, HTMLInputElement> = async (e) => {

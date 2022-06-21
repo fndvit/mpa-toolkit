@@ -10,14 +10,15 @@
   import { deleteTag, createTag, updateTag } from '$lib/api';
   import Spinner from '$lib/components/generic/Spinner.svelte';
   import type { SubTypes } from '$lib/types';
+  import { getToaster } from '$lib/helpers/utils';
 
   export let tags: SubTypes.Tag.WithPageCount[];
   export let savingTag = false;
 
   let tagSearch = '';
-  let filtredTags: SubTypes.Tag.WithPageCount[] = tags;
+  let filteredTags: SubTypes.Tag.WithPageCount[] = tags;
 
-  const addToastMessage = getContext<Toaster['$$prop_def']['addMessage']>('addToastMessage');
+  const toaster = getToaster();
   const onDeleteTag = async (tag: SubTypes.Tag.WithPageCount) => {
     if(tag._count.pageTags > 0){
       openModal(DeleteModal, {
@@ -29,28 +30,30 @@
         confirmText: tag.value,
         onYes: async () => {
           savingTag = true;
-
-          await deleteTag(tag.id).then(() => {
-            addToastMessage('Tag deleted', { type: 'done' });
-            tags.splice(tags.indexOf(tag), 1);
-            tags = tags;
-          }).catch(() => {
-            addToastMessage('Error deleting tag', { type: 'error' });
-          });
-
+          try{
+            await deleteTag(tag.id);
+            tags = tags.filter(t => t.id !== tag.id);
+            filteredTags = tags;
+            toaster('Tag deleted', { type: 'done' });
+          }
+          catch(e){
+            toaster('Error deleting tag', { type: 'error' });
+          }
           savingTag = false;
         }
       });
     } else {
       savingTag = true;
 
-      await deleteTag(tag.id).then(() => {
-        addToastMessage('Tag deleted', { type: 'done' });
-        tags.splice(tags.indexOf(tag), 1);
-        tags = tags;
-      }).catch(() => {
-        addToastMessage('Error deleting tag', { type: 'error' });
-      });
+      try{
+        await deleteTag(tag.id);
+        tags = tags.filter(t => t.id !== tag.id);
+        filteredTags = tags;
+        toaster('Tag deleted', { type: 'done' });
+      }
+      catch(e){
+        toaster('Error deleting tag', { type: 'error' });
+      }
 
       savingTag = false;
     }
@@ -59,23 +62,27 @@
     savingTag = true;
 
     if (tag.id) {
-      await updateTag(tag.id, tag).then(() => {
-        addToastMessage('Tag updated', { type: 'done' });
-      }).catch(() => {
-        addToastMessage('Error updating tag', { type: 'error' });
-      });
+      try{
+        await updateTag(tag.id, tag);
+        toaster('Tag updated', { type: 'done' });
+      }
+      catch(e){
+        toaster('Error updating tag', { type: 'error' });
+      }
+
     } else {
-      await createTag(tag).then(() => {
-        addToastMessage('Tag created', { type: 'done' });
-      }).catch(() => {
-        addToastMessage('Error creating tag', { type: 'error' });
-      });
+      try{
+        await createTag(tag);
+        toaster('Tag created', { type: 'done' });
+      }
+      catch(e){
+        toaster('Error creating tag', { type: 'error' });
+      }
     }
     savingTag = false;
   };
   const onClickAdd = () => {
     tags.push({
-
         value: 'New Tag',
         type: TagType.TOPIC,
         id: null,
@@ -87,9 +94,10 @@
   };
 
   $: {
-    filtredTags = tags.filter(tag => (tag.value.toLowerCase().search(tagSearch.toLowerCase()) !== -1 || tagSearch.length === 0));
-    filtredTags = filtredTags;
+    let regExp = new RegExp(tagSearch, 'i');
+    filteredTags = tags.filter(tag => regExp.test(tag.value));
   }
+
 </script>
 
 <div class="tags-container">
@@ -105,8 +113,13 @@
     {/if}
   </div>
   <div class="tags-list">
-    {#each filtredTags as tag}
-      <TagEditor disabled={savingTag} {tag} on:delete={({ detail }) => onDeleteTag(detail)} on:saveTag={({ detail }) => onSaveTag(detail)} />
+    {#each filteredTags as tag}
+      <TagEditor
+        disabled={savingTag}
+        {tag}
+        on:delete={({ detail }) => onDeleteTag(detail)}
+        on:saveTag={({ detail }) => onSaveTag(detail)}
+      />
     {/each}
   </div>
 </div>
@@ -115,16 +128,12 @@
   .tags-list{
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
   }
   .tool-bar{
     display: flex;
-    justify-content: center
+    justify-content: center;
     align-items: center;
     width: 100%;
     margin-bottom: 20px;

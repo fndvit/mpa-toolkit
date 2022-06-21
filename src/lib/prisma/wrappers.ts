@@ -4,7 +4,7 @@ import { prisma } from "$lib/prisma";
 import type { PageRequest, SubTypes, TagRequest } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
-import { pageForContentCard, pageFull, tag } from "./queries";
+import { pageForContentCard, pageFull } from "./queries";
 import { createLookup, type Expand } from "$lib/helpers/utils";
 import { publishEvent } from "$lib/events";
 
@@ -192,17 +192,14 @@ export async function updateTag(id: number, tag: TagRequest) {
 
   validate('tag', tag);
 
-  if(tag.type !== 'TOPIC') return false;
-  if(tag.value.length > 30) return false;
-
   const { value, type } = tag;
 
-  const tagUpdateQuery = prisma.tag.update({
+  const tagUpdateQuery = type === 'TOPIC' ? prisma.tag.update({
     where: { id },
     data: {
-      value, type,
+      value,
     }
-  });
+  }) : null;
 
   const [_tag] = await prisma.$transaction([
     tagUpdateQuery
@@ -235,6 +232,7 @@ export async function deleteTag(id: number) {
 }
 
 export async function createTag(tag: TagRequest) {
+
   validate('tag', tag);
 
   const { value, type } = tag;

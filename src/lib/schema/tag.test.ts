@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, test } from "vitest";
 import { validate } from "./validation";
-import tagValid from "./testdata/user.valid.json";
-import tagInvalid from "./testdata/user.invalid.json";
+import tagValid from "./testdata/tag.valid.json";
+import tagInvalid from "./testdata/tag.invalid.json";
 
 describe("Page", () => {
 

@@ -68,7 +68,7 @@ model Page {
 
 model Tag {
   id        Int       @id @default(autoincrement())
-  value     String
+  value     String    @unique
   type      TagType
   pageTags  TagsOnPages[]
 
@@ -90,7 +90,7 @@ model TagsOnPages {
   page        Page        @relation(fields: [pageId], references: [id])
   tag         Tag         @relation(fields: [tagId], references: [id])
   category    TagCategory @default(PRIMARY)
-  
+
   pageId      Int
   tagId       Int
 

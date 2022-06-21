@@ -30,8 +30,6 @@
     data-placeholder={placeholder}
     bind:textContent={value}
     tabindex=0
-    on:focus
-    on:focusout
      />
 {:else}
   <div class="editable-content editable-text">{value || ''}</div>

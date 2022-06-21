@@ -1,7 +1,6 @@
 <script lang="ts">
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import Searchbar from '$lib/components/generic/Searchbar.svelte';
-  import type { Tag } from '$lib/types';
   import { TagType } from '@prisma/client';
   import { getContext } from 'svelte';
   import type Toaster from '$lib/components/generic/Toaster.svelte';
@@ -10,15 +9,16 @@
   import DeleteModal from '$lib/components/cms/DeleteModal.svelte';
   import { deleteTag, createTag, updateTag } from '$lib/api';
   import Spinner from '$lib/components/generic/Spinner.svelte';
+  import type { SubTypes } from '$lib/types';
 
-  export let tags: Tag[];
+  export let tags: SubTypes.Tag.Count[];
   export let savingTag = false;
 
   let tagSearch = '';
-  let filtredTags: Tag[] = tags;
+  let filtredTags: SubTypes.Tag.Count[] = tags;
 
   const addToastMessage = getContext<Toaster['$$prop_def']['addMessage']>('addToastMessage');
-  const onDeleteTag = async (tag: Tag) => {
+  const onDeleteTag = async (tag: SubTypes.Tag.Count) => {
     if(tag._count.pageTags > 0){
       openModal(DeleteModal, {
         title: 'Delete Tag',
@@ -55,7 +55,7 @@
       savingTag = false;
     }
   };
-  const onSaveTag = async (tag: Tag) => {
+  const onSaveTag = async (tag: SubTypes.Tag.Count) => {
     savingTag = true;
 
     if (tag.id) {
@@ -71,7 +71,6 @@
         addToastMessage('Error creating tag', { type: 'error' });
       });
     }
-
     savingTag = false;
   };
   const onClickAdd = () => {

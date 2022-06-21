@@ -1,18 +1,18 @@
 <script lang="ts">
   import IconButton from '../generic/IconButton.svelte';
-  import type { Tag } from '$lib/types';
   import EditableText from '$lib/components/generic/EditableText.svelte';
   import { createEventDispatcher } from 'svelte';
+import type { SubTypes } from '$lib/types';
 
 
-  export let tag: Tag;
+  export let tag: SubTypes.Tag.Count;
   export let disabled = false;
 
   let editTag = tag.value;
   let tagFocused = false;
   let editableTag: EditableText;
 
-  const dispatch = createEventDispatcher<{saveTag: Tag, delete: Tag}>();
+  const dispatch = createEventDispatcher<{saveTag: SubTypes.Tag.Count, delete: SubTypes.Tag.Count}>();
 
   const onClickSaveTag = () => {
     tag.value = editTag;

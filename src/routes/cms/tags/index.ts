@@ -1,5 +1,6 @@
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
+import { countTags } from "$lib/prisma/queries";
 
 export const get = authMiddleware(
   { role: 'CONTENT_MANAGER' },
@@ -8,13 +9,7 @@ export const get = authMiddleware(
       body: {
         tags: await prisma.tag.findMany({
           where: { type: "TOPIC" },
-          include: {
-            _count: {
-              select: {
-                pageTags: true
-              }
-            }
-          },
+          ...countTags,
           orderBy: {
             value: 'asc'
           }

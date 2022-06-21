@@ -38,6 +38,17 @@ export const caseStudyForPageHead = validate<Prisma.CaseStudySelect>()({
     milestones: true
 });
 
+export const countTags = validate<Prisma.TagSelect>()({
+  id: true,
+  value: true,
+  type: true,
+  _count: {
+    select: {
+      pageTags: true
+    }
+  }
+});
+
 export const pageFull = validate<Prisma.PageSelect>()({
   id: true,
   slug: true,
@@ -110,6 +121,10 @@ export namespace CaseStudy {
 export type PageTag = Prisma.TagsOnPagesGetPayload<typeof pageTag>;
 
 export type Tag = Prisma.TagGetPayload<typeof tag>;
+
+export namespace Tag{
+  export type Count = Prisma.TagGetPayload<typeof countTags>;
+}
 
 // ***********************
 //   Typescript helpers

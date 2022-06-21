@@ -7,22 +7,15 @@
   export let confirmText: string = null;
   export let onYes: () => void;
 
-  let currentText = '';
-  let confirmTextError = false;
+  let currentText: string = null;
 
-  const resetErrorField = (e) => {
-    confirmTextError = false;
-    e.target.value = '';
+  const resetErrorField = (e: HTMLInputElement) => {
+    e.value = '';
   };
 
   async function onClickDelete() {
-    console.log(currentText);
-    if(confirmText === currentText || !confirmText) {
       onYes();
       closeModal();
-    } else {
-      confirmTextError = true;
-    }
   }
 
 </script>
@@ -33,15 +26,17 @@
     <h2>{title}</h2>
     <p>{message}</p>
     {#if confirmText}
-    <p>Write <b>{confirmText}</b> to confirm</p>
-    <input class:confirmTextError type="text" placeholder="Confirm text" on:keyup="{(e) => {currentText = e.target.value}}" on:focus={resetErrorField}/>
-      {#if confirmTextError}
-        <p class="confirmTextError">The text does not match</p>
-      {/if}
+      <p>Write <b>{confirmText}</b> to confirm</p>
+      <input
+        type="text"
+        placeholder="Confirm text"
+        on:keyup={(e) => {currentText = e.currentTarget.value}}
+        on:focus={(e) => resetErrorField(e.currentTarget)}
+      />
     {/if}
     <div class="actions">
       <button on:click="{closeModal}">Cancel</button>
-      <button on:click="{onClickDelete}">Delete</button>
+      <button on:click="{onClickDelete}" disabled={confirmText !== currentText}>Delete</button>
     </div>
   </div>
 </div>
@@ -88,7 +83,4 @@
     justify-content: flex-end;
   }
 
-  .confirmTextError{
-    color: $colors.error-red;
-  }
 </style>

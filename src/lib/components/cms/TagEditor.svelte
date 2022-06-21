@@ -2,7 +2,7 @@
   import IconButton from '../generic/IconButton.svelte';
   import EditableText from '$lib/components/generic/EditableText.svelte';
   import { createEventDispatcher } from 'svelte';
-import type { SubTypes } from '$lib/types';
+  import type { SubTypes } from '$lib/types';
 
 
   export let tag: SubTypes.Tag.Count;

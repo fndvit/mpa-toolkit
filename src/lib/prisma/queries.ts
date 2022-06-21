@@ -123,7 +123,7 @@ export type PageTag = Prisma.TagsOnPagesGetPayload<typeof pageTag>;
 export type Tag = Prisma.TagGetPayload<typeof tag>;
 
 export namespace Tag{
-  export type Count = Prisma.TagGetPayload<typeof countTags>;
+  export type WithPageCount = Prisma.TagGetPayload<typeof countTags>;
 }
 
 // ***********************

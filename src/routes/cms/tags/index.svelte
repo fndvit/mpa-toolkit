@@ -11,14 +11,14 @@
   import Spinner from '$lib/components/generic/Spinner.svelte';
   import type { SubTypes } from '$lib/types';
 
-  export let tags: SubTypes.Tag.Count[];
+  export let tags: SubTypes.Tag.WithPageCount[];
   export let savingTag = false;
 
   let tagSearch = '';
-  let filtredTags: SubTypes.Tag.Count[] = tags;
+  let filtredTags: SubTypes.Tag.WithPageCount[] = tags;
 
   const addToastMessage = getContext<Toaster['$$prop_def']['addMessage']>('addToastMessage');
-  const onDeleteTag = async (tag: SubTypes.Tag.Count) => {
+  const onDeleteTag = async (tag: SubTypes.Tag.WithPageCount) => {
     if(tag._count.pageTags > 0){
       openModal(DeleteModal, {
         title: 'Delete Tag',
@@ -55,7 +55,7 @@
       savingTag = false;
     }
   };
-  const onSaveTag = async (tag: SubTypes.Tag.Count) => {
+  const onSaveTag = async (tag: SubTypes.Tag.WithPageCount) => {
     savingTag = true;
 
     if (tag.id) {

@@ -5,14 +5,14 @@
   import type { SubTypes } from '$lib/types';
 
 
-  export let tag: SubTypes.Tag.Count;
+  export let tag: SubTypes.Tag.WithPageCount;
   export let disabled = false;
 
   let editTag = tag.value;
   let tagFocused = false;
   let editableTag: EditableText;
 
-  const dispatch = createEventDispatcher<{saveTag: SubTypes.Tag.Count, delete: SubTypes.Tag.Count}>();
+  const dispatch = createEventDispatcher<{saveTag: SubTypes.Tag.WithPageCount, delete: SubTypes.Tag.WithPageCount}>();
 
   const onClickSaveTag = () => {
     tag.value = editTag;

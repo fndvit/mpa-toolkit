@@ -14,7 +14,6 @@
   };
 
   async function onClickDelete() {
-    if(confirmText === currentText || !confirmText) {
       onYes();
       closeModal();
   }

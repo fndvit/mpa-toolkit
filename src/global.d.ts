@@ -7,9 +7,10 @@ interface ImportMetaEnv {
 declare namespace App {
 	export interface Session {
     user: {
-      id: string;
+      id: number;
       email: string;
       name: string;
+      img: string;
       role: 'ADMIN' | 'USER' | 'CONTENT_MANAGER';
     }
   }

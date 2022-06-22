@@ -26,6 +26,7 @@
   export let page: SubTypes.Page.Full;
 
   setContext('allUsers', users);
+  setContext('page-type', page.chapter ? 'chapter' : 'case-study');
 
   const { protocol, hostname, port } = $pageStore.url;
   const URL_PREFIX = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;

@@ -10,7 +10,6 @@
   import ContentCarousel from "$lib/components/content/ContentCarousel.svelte";
   import Image from "./Image.svelte";
   import LifeCycle from "../LifeCycle.svelte";
-  import { setContext } from "svelte/internal";
 
   export let page: SubTypes.Page.Full;
   export let recommendedPages: SubTypes.Page.ContentCard[] = null;
@@ -23,8 +22,6 @@
     'cards' : TextSlider,
     'image': Image,
   };
-
-  setContext('page-type', page.chapter ? 'chapter' : 'case-study');
 
   const headings = sections.filter(s => s.id);
 </script>

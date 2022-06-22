@@ -29,7 +29,6 @@
   export let selected = false;
 
   const dataCardsId = generateID();
-  console.log(dataCardsId);
   const context = getContext('page-type');
 
   let cardType: string = cards[currentPageIndex].type;
@@ -57,17 +56,20 @@
   const onClickChangeType = () => {
     cardType === 'default' ? cardType = 'no-heading' : cardType = 'default';
     cards = cards.map(c => {return {...c, type: cardType}});
-    console.log(cards);
   }
-
-  let rootElement;
-  $: rootElement && rootElement.style.setProperty('--id-number', dataCardsId);
 
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 
+  $: highlight = (context !== 'case-study' && dataCardsId === 0) ? true : false;
+  $: csfirst = (context === 'case-study' && dataCardsId === 0) ? true : false;
+  $: cssecond = (context === 'case-study' && dataCardsId === 1) ? true: false;
+  $: normal = (!highlight && !csfirst && !cssecond);
+
 </script>
 
-<div class="cards" class:has-fixed-title={fixedTitle} class:selected>
+<div class="cards" class:has-fixed-title={fixedTitle} class:selected
+  class:highlight class:csfirst class:cssecond class:normal>
+
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
@@ -107,12 +109,6 @@
 
 <style lang="stylus">
 
-  //$cardColors = red, black, blue
-
-  //for $cardColor, i in $cardColors
-    //.card[actualID=\"{i}\"]
-      //background-color: $cardColor
-
   .cards {
     --content-padding: 30px;
     --content-top-padding: 30px;
@@ -138,7 +134,7 @@
       display: none;
     }
 
-    &.content {
+    &.normal {
       background-color: $colors.primary-blue;
       color: $colors.neutral-bg;
       border-radius: 20px 20px 0px 0px;
@@ -164,7 +160,7 @@
       }
     }
 
-    &.cs-first {
+    &.csfirst {
       background-color: $colors.neutral-bg;
 
       :global(.splide__arrow) {
@@ -176,7 +172,7 @@
       }
     }
 
-    &.cs-second {
+    &.cssecond {
       background-color: $colors.neutral-light;
 
       :global(.splide__arrow) {

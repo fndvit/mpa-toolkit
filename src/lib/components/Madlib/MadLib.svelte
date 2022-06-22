@@ -20,22 +20,12 @@
 <style lang="stylus">
 
   .madlib {
-
     typography: h4-light-responsive;
     position: relative;
 
     :global(.content-madlib) & {
       typography: ui-large-responsive;
-      line-height: 42px;
     }
-  }
-
-  +breakpoint(page, small) {
-
-    .madlib {
-      line-height: 38px;
-    }
-
   }
 
 </style>

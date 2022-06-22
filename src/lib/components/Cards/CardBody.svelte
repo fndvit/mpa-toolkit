@@ -38,7 +38,7 @@
 
   .content {
     typography: summary-card-body;
-    margin-top: 0.5rem;
+    margin-top: 2rem;
     overflow: auto;
     min-height: 50px;
     max-height: 170px;

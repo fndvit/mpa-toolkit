@@ -29,6 +29,7 @@
   export let selected = false;
 
   const dataCardsId = generateID();
+  console.log(dataCardsId);
   const context = getContext('page-type');
 
   let cardType: string = cards[currentPageIndex].type;
@@ -59,10 +60,14 @@
     console.log(cards);
   }
 
+  let rootElement;
+  $: rootElement && rootElement.style.setProperty('--id-number', dataCardsId);
+
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
+
 </script>
 
-<div class="cards" style="--data-cards-id: {dataCardsId}; --page-type: {context};" class:has-fixed-title={fixedTitle} class:selected>
+<div class="cards" class:has-fixed-title={fixedTitle} class:selected>
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
@@ -102,12 +107,11 @@
 
 <style lang="stylus">
 
+  //$cardColors = red, black, blue
 
-  colors = red black blue
-
-  colorDefinition(n)
-    background-color: colors[n] !important
-
+  //for $cardColor, i in $cardColors
+    //.card[actualID=\"{i}\"]
+      //background-color: $cardColor
 
   .cards {
     --content-padding: 30px;
@@ -116,7 +120,7 @@
     border-radius: 20px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     color: black;
-    colorDefinition(--id);
+    background-color: $colors.highlight-1;
 
     :global(.splide__arrows) {
       position: absolute;

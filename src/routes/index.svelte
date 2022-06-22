@@ -36,8 +36,10 @@
     <div class="partners-grid">
       <InlineSvg svg="IAFDC" />
       <InlineSvg svg="UoQ" />
-      <InlineSvg svg="TNC" />
-      <InlineSvg svg="WWF" />
+      <div class="partners-grid-2">
+        <InlineSvg svg="TNC" />
+        <InlineSvg svg="WWF" />
+      </div>
     </div>
   </div>
 
@@ -72,9 +74,16 @@
 
   .partners-grid {
     display: grid;
-    grid-template-columns: 108px 185px 168px 50px;
+    grid-template-columns: 108px 185px 1fr;
     align-items: center;
     gap: 45px;
+  }
+
+  .partners-grid-2 {
+    display: inherit;
+    grid-template-columns: 168px 50px;
+    align-items: inherit;
+    gap: inherit;
   }
 
   .top-searchbar {
@@ -106,7 +115,6 @@
     h5 {
       typography: h5;
     }
-
   }
 
   .unep-logo {
@@ -117,8 +125,7 @@
   }
 
 
-
-  @media (max-width: 1024px) {
+  +breakpoint(page, medium) {
 
     .landing-page {
       --page-padding: 3rem;
@@ -163,23 +170,14 @@
         max-width: 50px;
       }
     }
-
   }
 
-  @media(max-width: 700px) {
 
-    .partners-grid {
-      grid-template-columns: 150px 100px;
-    }
+  +breakpoint(page, small) {
 
     .inline-searchbar {
       margin: 0rem;
     }
-
-  }
-
-  @media(max-width: 425px) {
-
 
     .landing-page {
       --page-padding: 1.5rem;
@@ -198,7 +196,11 @@
     }
 
     .partners-grid {
-      grid-template-columns: 100px 70px;
+      grid-template-columns: 100px 165px;
+    }
+
+    .partners-grid-2 {
+      grid-template-columns: 146px 42px;
     }
 
     .top-searchbar {
@@ -220,7 +222,6 @@
       width: 80px;
       margin-left: 2rem;
     }
-
   }
 
 </style>

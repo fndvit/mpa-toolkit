@@ -126,10 +126,12 @@
 
 <style lang="stylus">
   .tags-list{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    row-gap: 15px;
+    column-gap: 15px;
+    margin: auto;
+    width: fit-content;
   }
   .tool-bar{
     display: flex;

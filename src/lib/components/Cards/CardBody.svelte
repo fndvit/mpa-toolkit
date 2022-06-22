@@ -91,4 +91,10 @@
     background: #888;
   }
 
+  +breakpoint(page, small) {
+    .content {
+      margin-top: 1.5rem;
+    }
+  }
+
 </style>

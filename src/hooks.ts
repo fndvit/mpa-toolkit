@@ -1,5 +1,6 @@
 import type { GetSession, Handle, RequestEvent } from '@sveltejs/kit';
 import { auth } from '$lib/auth';
+import { prisma } from "$lib/prisma";
 
 
 const RouteCache: {[routeId: string]: string} = {
@@ -34,8 +35,16 @@ export const getSession: GetSession = async (event) => {
   // only get the session on cms routes
   const re = /^\/cms\b/.exec(event.url.pathname);
   if (re) {
-    return auth.getSession(event);
+    const session = await auth.getSession(event);
+
+    if (session?.user) {
+      const user = await prisma.user.findUnique({
+        where: { id: session.user.id }
+      });
+      return {user};
+    }
   }
+  return { user: undefined };
 };
 
 export const handle: Handle = async ({ event, resolve }) => {

@@ -9,7 +9,7 @@
   </a>
 {:else}
   <div>
-    Logged in as: {$session.user.email}
+    Logged in as {$session.user.role} {$session.user.email}
     <a href="/api/auth/signout">Signout</a>
   </div>
   <div>

@@ -24,7 +24,7 @@
 
 <div class="landing-page">
   <div class="unep-logo">
-    <InlineSvg svg="UNEP" />
+    <InlineSvg href="https://www.unep.org" svg="UNEP" />
   </div>
   <div class="top-searchbar">
     <Searchbar type={'top'}/>
@@ -34,11 +34,11 @@
     <h4>A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
     <h5>In partnership with</h5>
     <div class="partners-grid">
-      <InlineSvg svg="IAFDC" />
-      <InlineSvg svg="UoQ" />
+      <InlineSvg href="https://www.aics.gov.it/language/en/" svg="IAFDC" />
+      <InlineSvg href="https://www.uq.edu.au" svg="UoQ" />
       <div class="partners-grid-2">
-        <InlineSvg svg="TNC" />
-        <InlineSvg svg="WWF" />
+        <InlineSvg href="https://www.nature.org/" svg="TNC" />
+        <InlineSvg href="https://wwf.panda.org" svg="WWF" />
       </div>
     </div>
   </div>

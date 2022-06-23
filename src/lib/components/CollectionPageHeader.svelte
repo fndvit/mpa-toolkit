@@ -13,7 +13,7 @@
 
 <div class="container" style="background-image: url({landingMadlibBg})">
   <div class="unep-logo">
-    <InlineSvg svg="UNEP" />
+    <InlineSvg href="https://www.unep.org" svg="UNEP" />
   </div>
 
   <div class="content">

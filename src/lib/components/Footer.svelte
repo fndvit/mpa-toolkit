@@ -8,12 +8,12 @@
     <h5>A partnership between</h5>
 
     <div class="partners-grid">
-      <InlineSvg svg="UNEP"/>
-      <InlineSvg svg="IAFDC" />
-      <InlineSvg svg="WWF" />
+      <InlineSvg href="https://www.unep.org" svg="UNEP"/>
+      <InlineSvg href="https://www.aics.gov.it/language/en/" svg="IAFDC" />
+      <InlineSvg href="https://wwf.panda.org" svg="WWF" />
       <div class="partners-grid-2">
-        <InlineSvg svg="UoQ" />
-        <InlineSvg svg="TNC" />
+        <InlineSvg href="https://www.uq.edu.au" svg="UoQ" />
+        <InlineSvg  href="https://www.nature.org/" svg="TNC" />
       </div>
     </div>
 

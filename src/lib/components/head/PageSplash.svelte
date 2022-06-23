@@ -21,7 +21,7 @@
 </script>
 
 <div class="unep-logo">
-  <InlineSvg svg="UNEP" />
+  <InlineSvg href="https://www.unep.org" svg="UNEP" />
 </div>
 <div class="splash" style="background-image: url({img});" class:splash-cs={page.caseStudy}>
   <h1>

@@ -2,6 +2,18 @@
   import * as svgs from '$lib/svg';
 
   export let svg: keyof typeof svgs;
+  export let href: string = "https://www.unep.org";
 </script>
 
-<svelte:component this={svgs[svg]} />
+
+<a {href} target="_blank" rel="external">
+    <svelte:component this={svgs[svg]}/>
+</a>
+
+<style>
+
+  a {
+    color: inherit;
+  }
+
+</style>

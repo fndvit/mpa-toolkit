@@ -60,9 +60,9 @@
 
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 
-  $: highlight = (context !== 'case-study' && dataCardsId === 0) ? true : false;
-  $: csfirst = (context === 'case-study' && dataCardsId === 0) ? true : false;
-  $: cssecond = (context === 'case-study' && dataCardsId === 1) ? true: false;
+  $: highlight = (context !== 'case-study' && dataCardsId === 0);
+  $: csfirst = (context === 'case-study' && dataCardsId === 0);
+  $: cssecond = (context === 'case-study' && dataCardsId === 1);
   $: normal = (!highlight && !csfirst && !cssecond);
 
 </script>
@@ -81,7 +81,7 @@
         <SplideSlide>
           <div class="slide" class:no-heading={card.type==='no-heading'}>
             {#if card.type !== 'no-heading'}
-            <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
+              <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
             {/if}
             <CardBody bind:text={card.body} editable={editable && currentPageIndex === i} />
           </div>

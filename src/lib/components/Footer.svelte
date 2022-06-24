@@ -54,7 +54,7 @@
 
   .partners-grid {
     display: grid;
-    grid-template-columns: 126px 87px 39px 1fr;
+    grid-template-columns: 102px 87px 39px 1fr;
     align-items: center;
     gap: 45px;
     color: $colors.neutral-dark;

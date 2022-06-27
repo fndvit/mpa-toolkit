@@ -108,9 +108,9 @@
     <div class="tool-bar-item">
       <Searchbar bind:search={tagSearch} type="top" placeholder={"Search a Tag..."} />
     </div>
-    {#if savingTag}
-    <p>Saving</p><Spinner/>
-    {/if}
+    <div class="spinner" class:savingTag>
+      Saving...<Spinner/>
+    </div>
   </div>
   <div class="tags-list">
     {#each filteredTags as tag}
@@ -136,13 +136,11 @@
   .tool-bar{
     display: flex;
     justify-content: center;
+    column-gap: 15px;
     align-items: center;
     width: 100%;
+    margin-top: 15px;
     margin-bottom: 20px;
-    p{
-      margin-right: 10px;
-      margin-left: 10px;
-    }
   }
   .tool-bar-item{
     :global(.searchbar){
@@ -153,5 +151,16 @@
         color: $colors.neutral-black;
       }
     }
+  }
+  .spinner{
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+    font-family: 'Montserrat', 'sans-serif';
+  }
+
+  .savingTag{
+    opacity: 1 !important
   }
 </style>

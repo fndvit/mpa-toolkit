@@ -108,7 +108,7 @@
     <div class="tool-bar-item">
       <Searchbar bind:search={tagSearch} type="top" placeholder={"Search a Tag..."} />
     </div>
-    <div class="spinner" class:savingTag>
+    <div class="spinner p-responsive" class:savingTag>
       Saving...<Spinner/>
     </div>
   </div>
@@ -125,6 +125,9 @@
 </div>
 
 <style lang="stylus">
+  .tags-container {
+    font-family: var(--font-sans-serif);
+  }
   .tags-list{
     display: grid;
     grid-template-columns: auto auto auto;
@@ -153,11 +156,10 @@
     }
   }
   .spinner{
-    opacity: 0;
+    opacity: 1;
     display: flex;
     align-items: center;
     column-gap: 15px;
-    font-family: 'Montserrat', 'sans-serif';
   }
 
   .savingTag{

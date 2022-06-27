@@ -112,7 +112,12 @@
       <IconButton text="Add Tag" icon="add" on:click={onClickAdd} disabled={savingTag || newTag}/>
     </div>
     <div class="tool-bar-item">
-      <Searchbar bind:search={tagSearch} type="top" placeholder={"Search a Tag..."} />
+      <Searchbar
+        bind:search={tagSearch}
+        type="top"
+        placeholder={"Search a Tag..."}
+        submit={null}
+        />
     </div>
     <div class="spinner p-responsive" class:savingTag>
       Saving...<Spinner/>

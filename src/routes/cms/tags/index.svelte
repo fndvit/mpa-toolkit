@@ -17,6 +17,7 @@
 
   let tagSearch = '';
   let filteredTags: SubTypes.Tag.WithPageCount[] = tags;
+  let newTag = false;
 
   const toaster = getToaster();
   const onDeleteTag = async (tag: SubTypes.Tag.WithPageCount) => {
@@ -44,16 +45,21 @@
       });
     } else {
       savingTag = true;
+      if(tag.id){
+        try{
+          await deleteTag(tag.id);
+          tags = tags.filter(t => t.id !== tag.id);
+          filteredTags = tags;
+          toaster('Tag deleted', { type: 'done' });
+        }
+        catch(e){
+          toaster('Error deleting tag', { type: 'error' });
+        }
+      } else {
+        tags = tags.filter(t => t.value !== tag.value);
+        newTag = false;
+      }
 
-      try{
-        await deleteTag(tag.id);
-        tags = tags.filter(t => t.id !== tag.id);
-        filteredTags = tags;
-        toaster('Tag deleted', { type: 'done' });
-      }
-      catch(e){
-        toaster('Error deleting tag', { type: 'error' });
-      }
 
       savingTag = false;
     }
@@ -72,7 +78,9 @@
 
     } else {
       try{
-        await createTag(tag);
+        let res = await createTag(tag);
+        tags.find(t => t.value === res.value).id = res.id;
+        newTag = false;
         toaster('Tag created', { type: 'done' });
       }
       catch(e){
@@ -91,11 +99,12 @@
         }
     });
     tags = tags;
+    newTag = true;
   };
 
   $: {
     let regExp = new RegExp(tagSearch, 'i');
-    filteredTags = tags.filter(tag => regExp.test(tag.value));
+    filteredTags = tags.filter(tag => regExp.test(tag.value) || tag.id === null);
   }
 
 </script>
@@ -103,7 +112,7 @@
 <div class="tags-container">
   <div class="tool-bar">
     <div class="tool-bar-item">
-      <IconButton text="Add Tag" icon="add" on:click={onClickAdd} disabled={savingTag}/>
+      <IconButton text="Add Tag" icon="add" on:click={onClickAdd} disabled={savingTag || newTag}/>
     </div>
     <div class="tool-bar-item">
       <Searchbar bind:search={tagSearch} type="top" placeholder={"Search a Tag..."} />
@@ -130,7 +139,7 @@
   }
   .tags-list{
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     row-gap: 15px;
     column-gap: 15px;
     margin: auto;
@@ -156,7 +165,7 @@
     }
   }
   .spinner{
-    opacity: 1;
+    opacity: 0;
     display: flex;
     align-items: center;
     column-gap: 15px;

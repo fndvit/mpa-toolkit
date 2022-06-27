@@ -16,6 +16,8 @@
   export const blur = () => el && el.blur();
   export const focus = () => el && el.focus();
 
+  $: if(focused && el) focus();
+
 </script>
 
 {#if editable}

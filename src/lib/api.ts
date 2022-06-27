@@ -1,4 +1,4 @@
-import type { UserRequest, PageRequest, TagRequest, User, Page } from "$lib/types";
+import type { UserRequest, PageRequest, TagRequest, User, Page, Tag } from "$lib/types";
 
 export async function uploadImage(file: File) {
   const formData = new FormData();
@@ -44,7 +44,7 @@ async function _tag(data: TagRequest, id?: number) {
     }
   );
 
-  const page = await response.json() as Page;
+  const page = await response.json() as Tag;
   return page;
 }
 

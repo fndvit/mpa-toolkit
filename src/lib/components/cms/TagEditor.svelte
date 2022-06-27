@@ -7,15 +7,17 @@
 
   export let tag: SubTypes.Tag.WithPageCount;
   export let disabled = false;
+  export let tagFocused = tag.id === null;
 
   let editTag = tag.value;
-  let tagFocused = false;
+  let saveTag = false;
   let editableTag: EditableText;
 
   const dispatch = createEventDispatcher<{saveTag: SubTypes.Tag.WithPageCount, delete: SubTypes.Tag.WithPageCount}>();
 
   const onClickSaveTag = () => {
     tag.value = editTag;
+    saveTag = true;
     editableTag.blur();
     tagFocused = false;
     dispatch('saveTag', tag);
@@ -23,13 +25,17 @@
 
   const onClickCancelTag = () => {
     editTag = tag.value;
-    editableTag.blur();
+    editableTag?.blur();
     tagFocused = false;
+    if(tag.id === null) dispatch('delete', tag);
   };
 
   const onClickDeleteTag = () => {
     dispatch('delete', tag);
   };
+
+  $: if(!tagFocused && !saveTag) onClickCancelTag();
+     else saveTag = false;
 </script>
 
 <div class="tag" class:editing={tagFocused}>
@@ -45,8 +51,14 @@
     <IconButton icon="close" on:click={onClickCancelTag} {disabled}/>
   </div>
 
-  <span class="page-count">{tag._count?.pageTags} pages</span>
-  <IconButton icon="delete" on:click={onClickDeleteTag} {disabled}/>
+  <div class="col-2">
+    <span class="page-count">{tag._count?.pageTags} pages</span>
+    {#if tag.id}
+    <IconButton icon="delete" on:click={onClickDeleteTag} {disabled}/>
+    {/if}
+  </div>
+
+
 </div>
 
 <style lang="stylus">
@@ -85,4 +97,8 @@
     text-align: right;
   }
 
+  .col-2{
+    display: flex;
+    column-gap: 10px;
+  }
 </style>

@@ -21,73 +21,70 @@
 
   const toaster = getToaster();
   const onDeleteTag = async (tag: SubTypes.Tag.WithPageCount) => {
-    if(tag._count.pageTags > 0){
-      openModal(DeleteModal, {
-        title: 'Delete Tag',
-        message:
-          'This tag is used on some pages. Are you sure you want to delete it? It will be removed from ' +
-          tag._count?.pageTags +
-          ' pages.',
-        confirmText: tag.value,
-        onYes: async () => {
-          savingTag = true;
-          try{
-            await deleteTag(tag.id);
-            tags = tags.filter(t => t.id !== tag.id);
-            filteredTags = tags;
-            toaster('Tag deleted', { type: 'done' });
-          }
-          catch(e){
-            toaster('Error deleting tag', { type: 'error' });
-          }
-          savingTag = false;
-        }
-      });
-    } else {
-      savingTag = true;
-      if(tag.id){
-        try{
-          await deleteTag(tag.id);
-          tags = tags.filter(t => t.id !== tag.id);
-          filteredTags = tags;
-          toaster('Tag deleted', { type: 'done' });
-        }
-        catch(e){
-          toaster('Error deleting tag', { type: 'error' });
-        }
-      } else {
+
+    savingTag = true;
+
+    try{
+
+      let localDelete = !tag.id;
+      let confirmDelete = tag._count.pageTags === 0;
+
+      if(tag._count.pageTags > 0){
+        openModal(DeleteModal, {
+          title: 'Delete Tag',
+          message:
+            'This tag is used on some pages. Are you sure you want to delete it? It will be removed from ' +
+            tag._count?.pageTags +
+            ' pages.',
+          confirmText: tag.value,
+          onYes: async () => confirmDelete = true,
+        });
+      }
+      if(confirmDelete && !localDelete){
+        await deleteTag(tag.id);
+        tags = tags.filter(t => t.id !== tag.id);
+      }
+      else{
         tags = tags.filter(t => t.value !== tag.value);
         newTag = false;
       }
 
+      toaster('Tag deleted', { type: 'done' });
 
-      savingTag = false;
+    }catch(e){
+      toaster('Error deleting tag', { type: 'error' });
     }
+
+    savingTag = false;
+
   };
   const onSaveTag = async (tag: SubTypes.Tag.WithPageCount) => {
+
     savingTag = true;
 
-    if (tag.id) {
-      try{
-        await updateTag(tag.id, tag);
-        toaster('Tag updated', { type: 'done' });
-      }
-      catch(e){
-        toaster('Error updating tag', { type: 'error' });
-      }
+    if(tag.value.trim() === ''){
+      toaster('Tag cannot be empty', { type: 'error' });
+      savingTag = false;
+      return;
+    }
 
-    } else {
-      try{
+    try{
+
+      if (tag.id) {
+        await updateTag(tag.id, tag);
+      } else {
         let res = await createTag(tag);
         tags.find(t => t.value === res.value).id = res.id;
         newTag = false;
-        toaster('Tag created', { type: 'done' });
       }
-      catch(e){
-        toaster('Error creating tag', { type: 'error' });
-      }
+      toaster('Tag saved', { type: 'done' });
     }
+    catch(e){
+      toaster('Error saving tag', { type: 'error' });
+    }
+
     savingTag = false;
+
   };
   const onClickAdd = () => {
     tags.push({

@@ -16,12 +16,22 @@
   const dispatch = createEventDispatcher<{saveTag: SubTypes.Tag.WithPageCount, delete: SubTypes.Tag.WithPageCount}>();
 
   const onClickSaveTag = () => {
-    tag.value = editTag;
+    let auxTagValue = tag.value
+
     saveTag = true;
+
+    tag.value = editTag;
+
     editableTag.blur();
-    tagFocused = false;
+
     dispatch('saveTag', tag);
+
+    if(tag.value.trim() === ''){ // if tag is empty, restore original value and keep focus on tag
+      tagFocused = true;
+      tag.value = auxTagValue;
+    };
   };
+
 
   const onClickCancelTag = () => {
     editTag = tag.value;
@@ -48,7 +58,7 @@
       bind:focused={tagFocused}
     />
     <IconButton icon="done" on:click={onClickSaveTag} {disabled}/>
-    <IconButton icon="close" on:click={onClickCancelTag} {disabled}/>
+    <IconButton icon="close" on:click={() => tagFocused =  false} {disabled}/>
   </div>
 
   <div class="col-2">
@@ -98,7 +108,8 @@
   }
 
   .col-2{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto;
     column-gap: 10px;
   }
 </style>

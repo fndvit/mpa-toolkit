@@ -15,7 +15,6 @@
 
 <div class="searchbar" class:top={type==='top'} class:inline={type==='inline'} class:collection={type==='collection'}>
 
-
   {#if !search}
     <div class="placeholder">
       <span>
@@ -172,10 +171,6 @@
     .placeholder {
       .top & {
         display: none;
-      }
-
-      .inline &, .collection & {
-        transform: translateY(10px);
       }
     }
 

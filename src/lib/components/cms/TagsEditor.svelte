@@ -2,8 +2,6 @@
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import Searchbar from '$lib/components/generic/Searchbar.svelte';
   import { TagType } from '@prisma/client';
-  import { getContext } from 'svelte';
-  import type Toaster from '$lib/components/generic/Toaster.svelte';
   import TagEditor from '$lib/components/cms/TagEditor.svelte';
   import { openModal } from 'svelte-modals';
   import DeleteModal from '$lib/components/cms/DeleteModal.svelte';

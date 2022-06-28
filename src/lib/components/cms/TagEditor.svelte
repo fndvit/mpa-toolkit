@@ -5,47 +5,66 @@
   import type { SubTypes } from '$lib/types';
 
 
+
   export let tag: SubTypes.Tag.WithPageCount;
   export let disabled = false;
   export let tagFocused = tag.id === null;
 
-  let editTag = tag.value;
-  let saveTag = false;
-  let editableTag: EditableText;
+  export const updateCB = (state: string) => {
+    switch (state) {
+      case 'error':
+        editTag = tag.value;
+        tag.value = initialValue;
+        editableTag?.focus();
+        break;
+      case 'saved':
+        initialValue = tag.value;
+        editTag = tag.value;
+        editableTag?.blur();
+        break;
+      default:
+        console.error('Unknown state: ', state);
+        break;
+    }
+    saving = false;
+  };
 
-  const dispatch = createEventDispatcher<{saveTag: SubTypes.Tag.WithPageCount, delete: SubTypes.Tag.WithPageCount}>();
+  let editTag = tag.value;
+  let initialValue = tag.value;
+  let editableTag: EditableText;
+  let saving: boolean = false;
+
+  const dispatch = createEventDispatcher<{saveTag: {tag: SubTypes.Tag.WithPageCount, updateCB: (state: string) => void }, delete: SubTypes.Tag.WithPageCount}>();
+
 
   const onClickSaveTag = () => {
-    let auxTagValue = tag.value
+    saving = true;
 
-    saveTag = true;
+    tag.value =  editTag;
 
-    tag.value = editTag;
+    editableTag?.blur();
 
-    editableTag.blur();
-
-    dispatch('saveTag', tag);
-
-    if(tag.value.trim() === ''){ // if tag is empty, restore original value and keep focus on tag
-      tagFocused = true;
-      tag.value = auxTagValue;
-    };
+    dispatch('saveTag', {tag: tag, updateCB: updateCB});
   };
 
 
   const onClickCancelTag = () => {
-    editTag = tag.value;
-    editableTag?.blur();
-    tagFocused = false;
-    if(tag.id === null) dispatch('delete', tag);
+    if(!saving){
+      editTag = tag.value;
+
+      editableTag?.blur();
+
+      if(tag.id === null) onClickDeleteTag(); //It's a new tag (not saved on the DB), so delete it
+    }
   };
+
 
   const onClickDeleteTag = () => {
     dispatch('delete', tag);
   };
 
-  $: if(!tagFocused && !saveTag) onClickCancelTag();
-     else saveTag = false;
+  $: tagFocused ? null : onClickCancelTag();
+
 </script>
 
 <div class="tag" class:editing={tagFocused}>
@@ -58,7 +77,7 @@
       bind:focused={tagFocused}
     />
     <IconButton icon="done" on:click={onClickSaveTag} {disabled}/>
-    <IconButton icon="close" on:click={() => tagFocused =  false} {disabled}/>
+    <IconButton icon="close" on:click={onClickCancelTag} {disabled}/>
   </div>
 
   <div class="col-2">

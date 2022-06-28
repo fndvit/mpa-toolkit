@@ -19,6 +19,14 @@ export const userBasic = validate<Prisma.UserSelect>()({
   img: true
 });
 
+export const userSession = validate<Prisma.UserSelect>()({
+  id: true,
+  email: true,
+  name: true,
+  img: true,
+  role: true,
+});
+
 export const chapterForPageHead = validate<Prisma.ChapterSelect>()({
   keyTakeaways: true,
   summary: true,
@@ -84,6 +92,10 @@ export const pageForCollectionCard = validate<Prisma.PageSelect>()({
   },
   caseStudy: { select: { name: true } },
 });
+
+export namespace User {
+  export type Session = Prisma.UserGetPayload<typeof userSession>;
+}
 
 export namespace Chapter {
   export type PageHead = Prisma.ChapterGetPayload<typeof chapterForPageHead>;

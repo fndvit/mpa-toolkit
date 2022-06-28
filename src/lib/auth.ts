@@ -79,9 +79,9 @@ export const auth = new SvelteKitAuth({
       if (profile?.provider === 'google') {
         log.info(`User login via Google: ${profile.sub}`);
         const user = await getOrCreateUser(profile);
-        const { id, email, name } = user;
+        const { id } = user;
         token = { ...token,
-          user: { id, email, name }
+          user: { id }
         };
       }
       return token;

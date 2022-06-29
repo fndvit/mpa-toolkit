@@ -20,6 +20,13 @@ export async function updateUser(id: number, data: UserRequest) {
   return user;
 }
 
+export async function deleteUser(id: number) {
+  const response = await fetch(`/api/users/${id}`, {
+    method: 'DELETE',
+  });
+  return response.ok;
+}
+
 async function _page(data: PageRequest, id?: number) {
   const newPage = id === undefined;
   const response = await fetch(

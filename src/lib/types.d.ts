@@ -26,6 +26,7 @@ export type MilestonesData = {
 export type UserRequest = {
   role?: Role;
   img?: string;
+  name?: string;
 }
 
 export type PageRequest = {

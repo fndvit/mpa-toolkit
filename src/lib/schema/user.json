@@ -5,7 +5,8 @@
   "properties": {
 
     "role": { "type": "string", "enum": [ "USER", "CONTENT_MANAGER", "ADMIN" ] },
-    "img": { "type": "string" }
+    "img": { "type": "string" },
+    "name": { "type": "string"}
 
   },
   "additionalProperties": false,

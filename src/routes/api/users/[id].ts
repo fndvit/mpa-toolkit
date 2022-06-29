@@ -8,7 +8,7 @@ export const patch = authMiddleware(
   async ({ params, request }) => {
 
   const body = await request.json() as UserRequest;
-
+  
   validate('user', body);
 
   try {
@@ -25,4 +25,22 @@ export const patch = authMiddleware(
       status: 500
     };
   }
-});
+})
+
+export const del = authMiddleware(
+  { role:'ADMIN' },
+  async ({ params }) => {
+    try {
+      await prisma.user.delete({
+        where: {id: parseInt(params.id)}
+      });
+      return {
+        status: 200
+      }
+    }catch (e) {
+      return {
+        status: 500
+      };
+    }
+  }
+);

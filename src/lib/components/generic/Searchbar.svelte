@@ -16,7 +16,6 @@
 
 <div class="searchbar" class:top={type==='top'} class:inline={type==='inline'} class:collection={type==='collection'}>
 
-
   {#if !search}
     <div class="placeholder">
       <span>
@@ -108,8 +107,8 @@
     width: 24px;
     height: 24px;
     fill: none;
-    transform: translateY(-2px);
     cursor: pointer;
+    display: flex;
   }
 
   .search-icon :hover {
@@ -135,11 +134,16 @@
 
   }
 
-  @media(max-width: 1024px) {
+  +breakpoint(page, medium) {
 
     .searchbar.top {
       padding: 5px 25px;
       width: fit-content;
+
+      :focus {
+        width: 10rem;
+        max-width: 10rem;
+      }
     }
 
     .search-icon {
@@ -148,7 +152,8 @@
 
   }
 
-  @media(max-width: 414px) {
+
+  +breakpoint(page, small) {
 
     .searchbar.top {
       padding: 0px 15px;
@@ -169,10 +174,6 @@
     .placeholder {
       .top & {
         display: none;
-      }
-
-      .inline &, .collection & {
-        transform: translateY(10px);
       }
     }
 

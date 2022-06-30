@@ -30,7 +30,6 @@
 
   .landing-madlib {
     color: white;
-    line-height: 1.5;
     padding-bottom: 0.5rem;
     width: auto;
     margin-top: 35px;
@@ -43,7 +42,12 @@
 
     > :global(.madlib) {
       margin-top: 0.5rem;
+      line-height: 3rem;
       max-width: 700px;
+
+      > :global(.madlib-selector) {
+        font-weight: 600;
+      }
     }
 
     h2 {
@@ -91,11 +95,9 @@
     width: 13px;
     height: 22px;
     fill: none;
-
   }
 
-  @media(max-width: 1024px) {
-
+  +breakpoint(page, medium) {
     .landing-madlib {
       width: auto;
       height: auto;
@@ -107,9 +109,13 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  +breakpoint(page, small) {
 
     .landing-madlib {
+
+      > :global(.madlib) {
+        line-height: 2.5rem;
+      }
 
       h2 {
         margin-bottom: 3rem;
@@ -118,7 +124,9 @@
       button {
         padding: 0.55rem 0.95rem 0.45rem 0.85rem;
       }
+
     }
   }
+
 
 </style>

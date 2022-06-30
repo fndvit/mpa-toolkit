@@ -34,7 +34,6 @@
     color: $colors.neutral-dark;
     background: $colors.neutral-bg;
     padding: 0.75rem 1.5rem 2rem;
-    line-height: 2;
 
     h5 {
       typography: h5;
@@ -44,6 +43,7 @@
 
     :global(.madlib) {
       max-width: 570px;
+      line-height: 2.5rem;
     }
 
     :global(.madlib-selector) {
@@ -87,9 +87,14 @@
 
   }
 
-  @media screen and (max-width: 840px) {
+  +breakpoint(page, small) {
+
     .content-madlib {
       border-radius: 0px 50px 0px 0px;
+
+      :global(.madlib) {
+        line-height: 2rem;
+      }
     }
   }
 

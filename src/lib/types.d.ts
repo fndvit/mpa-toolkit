@@ -72,6 +72,7 @@ export type ParagraphBlock = {
 export type CardsBlock = {
   type: 'cards';
   attrs: {
+    style: 'default' | 'no-heading',
     cards: CardData[];
   }
 };

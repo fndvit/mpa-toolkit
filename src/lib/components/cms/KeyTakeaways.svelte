@@ -13,7 +13,7 @@
   $: keyTakeaways = cards.map(c => c.body);
 
   const onClickAdd = () => {
-    cards.push({ heading: 'Key takeaways', body: '' });
+    cards.push({ heading: 'Key takeaways', body: ''});
     cards = cards;
   };
 

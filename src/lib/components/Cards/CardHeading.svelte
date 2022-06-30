@@ -10,7 +10,7 @@
 
 <style lang="stylus">
   .heading {
-    typography: h4;
+    typography: h4-responsive;
     margin-top: 5px;
   }
 </style>

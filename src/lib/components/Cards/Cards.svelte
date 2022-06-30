@@ -1,8 +1,12 @@
 <script lang="ts" context="module">
+
+  export type CardStackStyle = 'no-heading' | 'default';
+
   export type CardData = {
     heading: string;
     body: string;
   }
+
 </script>
 
 <script lang="ts">
@@ -13,8 +17,8 @@
   import { SplideOptions } from '$lib/helpers/splide';
   import IconButton from '$lib/components/generic/IconButton.svelte';
 
-
   export let cards: CardData[];
+  export let style: CardStackStyle = 'default';
   export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;
@@ -25,7 +29,6 @@
   let options = SplideOptions({
     rewind: true,
     autoHeight: true,
-    autoplay: !editable,
     gap: -3,
     pagination: false
   });
@@ -42,10 +45,19 @@
     splide.go(goTo);
   };
 
+  const onClickChangeType = () => {
+    style = style === 'default' ? 'no-heading' : 'default';
+  };
+
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
+
 </script>
 
-<div class="cards" class:has-fixed-title={fixedTitle} class:selected>
+<div class="cards"
+  class:has-fixed-title={fixedTitle}
+  data-card-style={style}
+  class:selected>
+
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
       <div class="fixed-title">
@@ -56,7 +68,9 @@
       {#each cards as card, i}
         <SplideSlide>
           <div class="slide">
-            <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
+            {#if style !== 'no-heading'}
+              <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
+            {/if}
             <CardBody bind:text={card.body} editable={editable && currentPageIndex === i} />
           </div>
         </SplideSlide>
@@ -66,6 +80,7 @@
       <div class="editor-buttons">
         <IconButton icon="add" on:click={onClickAddCard} />
         <IconButton icon="delete" on:click={onClickRemoveCard} />
+        <IconButton icon="title" active={style === 'default'} on:click={onClickChangeType} />
       </div>
     {/if}
     {#if editable || cards.length > 1}
@@ -82,16 +97,21 @@
 
 <style lang="stylus">
 
+  card-styles($cardColor)
+    $textColor = dark($cardColor) ? white : black;
+    --card-color: $cardColor;
+    --caret-color: $textColor;
+    --dot-color: $textColor;
+    color: $textColor;
+
   .cards {
     --content-padding: 30px;
     --content-top-padding: 30px;
     --scrollbar-width: 10px;
-    --caret-color: #333;
     border-radius: 20px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
-
-    background-color: $colors.highlight-1;
-    color: #333;
+    color: black;
+    background-color: var(--card-color);
 
     :global(.splide__arrows) {
       position: absolute;
@@ -103,10 +123,26 @@
 
     :global(.splide__arrow) {
       position: static;
-      background: $colors.highlight-1;
+      background-color: var(--card-color);
     }
+
     :global(.splide__arrow:disabled) {
       display: none;
+    }
+
+    :global(.gradient) {
+      --gradient-color: var(--card-color);
+    }
+
+    :global(.key-takeaways) & {
+      card-styles($colors.highlight-1)
+    }
+
+    :global(.body-column) &,
+    :global(.editor-content) & {
+      card-styles($colors.primary-blue);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
 
@@ -120,6 +156,7 @@
       --ib-icon-bg: #00000022;
       --ib-hover-bg: #00000022;
       --ib-hover-border-color: #00000022;
+      --ib-active-bg: #ffffff77;
     }
   }
 
@@ -136,12 +173,18 @@
     top: 0;
     padding: var(--content-top-padding) var(--content-padding) 10px;
     margin-bottom: 15px;
+
+    .cards[data-card-style="no-heading"] & {
+      padding-right: 140px;
+    }
+
     .has-fixed-title & :global(.heading) {
       visibility: hidden;
     }
     :global(.heading) {
       max-width: 60%;
     }
+
   }
 
   .fixed-title {
@@ -159,7 +202,6 @@
     }
 
     .cards {
-
       :global(.splide__arrows) {
         top: 35px;
         right: 15px;

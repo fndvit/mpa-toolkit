@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Cards from "$lib/components/Cards/Cards.svelte";
-  import type { CardData } from "$lib/components/Cards/Cards.svelte";
+  import type { CardsBlock } from "$lib/types";
   import type { SvelteNodeViewControls } from "prosemirror-svelte-nodeview";
+  import Cards from "$lib/components/Cards/Cards.svelte";
   import clone from "clone";
 
-  export let attrs: {cards: CardData[]};
+  export let attrs: CardsBlock['attrs'];
   export let controls: SvelteNodeViewControls;
   export let rootDOM: (node: HTMLElement) => void;
 
@@ -24,7 +24,7 @@
 </script>
 
 <div use:rootDOM contenteditable="false">
-  <Cards bind:cards={attrs.cards} editable />
+  <Cards bind:cards={attrs.cards} bind:style={attrs.style} editable />
 </div>
 
 <style lang="stylus">

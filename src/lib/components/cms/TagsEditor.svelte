@@ -9,6 +9,7 @@
   import Spinner from '$lib/components/generic/Spinner.svelte';
   import type { SubTypes } from '$lib/types';
   import { getToaster } from '$lib/helpers/utils';
+import { tag } from '$lib/prisma/queries';
 
   export let tags: SubTypes.Tag.WithPageCount[];
 
@@ -20,86 +21,82 @@
   const toaster = getToaster();
 
   const handleDelete = async (tag: SubTypes.Tag.WithPageCount) => {
+
     const { id } = tag;
+    const tagIndex = tags.findIndex(t => t.id === id);
 
-    tags = tags.filter(t => (t.id !== null && t.id !== id));
+    try{
+      tags.splice(tagIndex, 1);
 
-    if (id === null) return;
+      if (id === null) return; // new tags are not saved to the database
 
-    await deleteTag(tag.id);
+      await deleteTag(tag.id);
+
+      toaster('Tag deleted', { type: 'done' });
+    }
+    catch(e){
+      tags.splice(tagIndex, 0, tag) // restore the tag to the list
+      toaster('Error deleting tag', { type: 'error' });
+    }finally{
+      tags = tags;
+    }
   };
 
 
   const onDeleteTag = async (tag: SubTypes.Tag.WithPageCount) => {
-    savingTag = true;
-
-    try{
+    if(!savingTag){
+      savingTag = true;
 
       if(tag._count.pageTags > 0){
-         openModal(DeleteModal, {
+          openModal(DeleteModal, {
           title: 'Delete Tag',
           message:
             'This tag is used on some pages. Are you sure you want to delete it? It will be removed from ' +
             tag._count?.pageTags +
             ' pages.',
           confirmText: tag.value,
-          onYes: async () => handleDelete(tag),
+          onYes: async () => await handleDelete(tag),
         });
       }
       else{
-        handleDelete(tag);
+        await handleDelete(tag);
       }
 
       addTag = true;
-      toaster('Tag deleted', { type: 'done' });
-
-    }catch(e){
-
-      toaster('Error deleting tag', { type: 'error' });
-
+      savingTag = false;
     }
-
-    savingTag = false;
   };
 
 
   const onSaveTag = async (tag: SubTypes.Tag.WithPageCount, updateCB: (state: string) => void) => {
-    savingTag = true;
+    if(!savingTag){
+      savingTag = true;
 
-
-
-    if(tag.value.trim() === ''){
-      updateCB('error');
-      toaster('Tag cannot be empty', { type: 'error' });
-      savingTag = false;
-      return;
-    }
-
-    try{
-      let response = null;
-      if (tag.id) {
-
-        response = await updateTag(tag.id, tag);
-
-      } else {
-
-        response = await createTag(tag);
-        tags.find(t => t.value === response?.value).id = response?.id;
-        addTag = true;
+      if(tag.value.trim() === ''){
+        updateCB('error');
+        toaster('Tag cannot be empty', { type: 'error' });
+        savingTag = false;
+        return;
       }
 
-      updateCB('saved');
-      toaster('Tag saved', { type: 'done' });
-
+      try{
+        let response = null;
+        if (tag.id) {
+          response = await updateTag(tag.id, tag);
+        } else {
+          response = await createTag(tag);
+          tags.find(t => t.value === response?.value).id = response?.id; // update the id of the tag to match the one in the database
+          addTag = true;
+        }
+        updateCB('saved');
+        toaster('Tag saved', { type: 'done' });
+      }
+      catch(e){
+        updateCB('error');
+        toaster('Error saving tag', { type: 'error' });
+      }
+      savingTag = false;
     }
-    catch(e){
-
-      updateCB('error');
-      toaster('Error saving tag', { type: 'error' });
-
-    }
-
-    savingTag = false;
   };
 
 
@@ -149,7 +146,7 @@
         {tag}
         tagFocused={tag.id === null}
         on:delete={({ detail }) => onDeleteTag(detail)}
-        on:saveTag={({ detail }) => {onSaveTag(detail.tag, detail.updateCB)}}
+        on:saveTag={({ detail }) => onSaveTag(detail.tag, detail.updateCB)}
       />
     {/each}
   </div>

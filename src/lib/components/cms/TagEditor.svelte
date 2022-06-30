@@ -4,13 +4,16 @@
   import { createEventDispatcher } from 'svelte';
   import type { SubTypes } from '$lib/types';
 
-
-
   export let tag: SubTypes.Tag.WithPageCount;
   export let disabled = false;
   export let tagFocused = tag.id === null;
 
-  export const updateCB = (state: string) => {
+  let editTag = tag.value;
+  let initialValue = tag.value;
+  let editableTag: EditableText;
+  let saving: boolean = false;
+
+  const updateCB = (state: string) => {
     switch (state) {
       case 'error':
         editTag = tag.value;
@@ -29,13 +32,7 @@
     saving = false;
   };
 
-  let editTag = tag.value;
-  let initialValue = tag.value;
-  let editableTag: EditableText;
-  let saving: boolean = false;
-
   const dispatch = createEventDispatcher<{saveTag: {tag: SubTypes.Tag.WithPageCount, updateCB: (state: string) => void }, delete: SubTypes.Tag.WithPageCount}>();
-
 
   const onClickSaveTag = () => {
     saving = true;
@@ -47,23 +44,25 @@
     dispatch('saveTag', {tag: tag, updateCB: updateCB});
   };
 
-
   const onClickCancelTag = () => {
     if(!saving){
       editTag = tag.value;
 
       editableTag?.blur();
 
-      if(tag.id === null) onClickDeleteTag(); //It's a new tag (not saved on the DB), so delete it
+      if(tag.id === null) {
+        onClickDeleteTag(); //It's a new tag (not saved on the DB), so delete it
+      }
     }
   };
-
 
   const onClickDeleteTag = () => {
     dispatch('delete', tag);
   };
 
   $: tagFocused ? null : onClickCancelTag();
+
+  $: if(tag.value != editTag && !tagFocused) editTag = tag.value;
 
 </script>
 

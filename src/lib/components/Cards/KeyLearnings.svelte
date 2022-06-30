@@ -11,7 +11,13 @@
 
   const example_card: KeyLearningsData[] = [ { subject: "What is needed", body: ['Budget efficiencies through use of technology','Effective local partnerships', 'Community engagement'] },
   { subject: "What doesn't work", body: ['Budget efficiencies through use of technology 2','Effective local partnerships 2', 'Community engagement 2'] },
-  { subject: "What works", body: ['Budget efficiencies through use of technology 3','Effective local partnerships 3', 'Community engagement 3'] } ];
+  { subject: "What works", body: ['Budget efficiencies through use of technology 3','Effective local partnerships 3', 'Community engagement 3'] },
+  { subject: "What could work", body: ['Budget efficiencies through use of technology 4','Effective local partnerships 4', 'Community engagement 4'] },
+  { subject: "What will not work", body: ['Budget efficiencies through use of technology 5','Effective local partnerships 5', 'Community engagement 5'] },
+  { subject: "What you will do", body: ['Budget efficiencies through use of technology 6','Effective local partnerships 6', 'Community engagement 6'] },
+  { subject: "What you can't do", body: ['Budget efficiencies through use of technology 7','Effective local partnerships 7', 'Community engagement 7'] },
+  { subject: "What you must do", body: ['Budget efficiencies through use of technology 8','Effective local partnerships 8', 'Community engagement 8'] },
+];
 
   export let cards: KeyLearningsData[] = example_card;
   export let currentSubject = 0;
@@ -48,12 +54,17 @@
         {/each}
       </div>
 
-      <div class="vertical-dots">
-        <CarouselDots
-          bind:currentPageIndex={currentSubject}
-          pagesCount={cards.length}
-          progress={false}
-        />
+      <div class="middle-area">
+        <div class="vertical-dots">
+          <CarouselDots
+            bind:currentPageIndex={currentSubject}
+            pagesCount={cards.length}
+            progress={false}
+          />
+        </div>
+
+        <div class="line"/>
+
       </div>
 
     </div>
@@ -65,37 +76,68 @@
 </div>
 
 
-
 <style lang="stylus">
 
-  .navigation-menu {
+  .middle-area {
     display: flex;
-    width: 219px;
+    flex-direction: column;
+    width: 50px;
+  }
+
+  .line {
+    margin: auto;
+    top: 0px;
+    height: 100%;
+    width: 3px;
+    background-color: green;
+  }
+
+  .navigation-menu {
+    max-width: 220px;
+    display: flex;
   }
 
   .vertical-dots {
+    height: 100%;
+    padding-top: 32.5px;
+    background-color: red;
+    padding-bottom: 32.5px;
     :global(.carousel-dots) {
       transform: rotate(90deg);
+      padding-left: 0px;
     }
+  }
+
+  .titles-area {
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 155px;
+    typography: ui-small;
+    color: black;
   }
 
   .title {
     cursor: pointer;
-    color: red;
+    opacity: 0.5;
+    line-height: 22px;
 
     &.selected {
-      color: blue;
+      opacity: 1;
+      font-weight: bold;
     }
   }
 
   .container {
     background-color: $colors.neutral-light;
+    padding: 100px;
   }
 
   .card {
     display: flex;
     background-color: $colors.neutral-bg;
     max-width: 957px;
+    border-radius: 20px;
   }
 
   .card-content {
@@ -103,10 +145,6 @@
       background-color: transparent;
       box-shadow: none;
     }
-  }
-
-  .carousel-dots {
-
   }
 
 </style>

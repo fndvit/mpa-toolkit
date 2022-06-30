@@ -6,12 +6,9 @@
   import PageContent from "$lib/components/content/PageContent.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import { getPageTypeStr } from "$lib/helpers/content";
-  import { setContext } from "svelte/internal";
 
   export let page: SubTypes.Page.Full;
   export let recommendedPages: SubTypes.Page.ContentCard[];
-
-  setContext('page-type', page.chapter ? 'chapter' : 'case-study');
 
 </script>
 

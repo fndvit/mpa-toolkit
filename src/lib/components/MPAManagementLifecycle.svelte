@@ -58,7 +58,7 @@
     <h2>What's the <b>MPA management cycle</b></h2>
   </div>
   <div class="column2">
-    <Cards cards={cardBlocks} context={'home'} bind:currentPageIndex />
+    <Cards cards={cardBlocks} bind:currentPageIndex />
   </div>
   <div class="column3">
     <div class="circle-menu">

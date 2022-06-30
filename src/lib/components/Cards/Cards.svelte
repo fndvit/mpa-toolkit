@@ -1,14 +1,10 @@
 <script lang="ts" context="module">
 
-  let idGen: number = 0;
-  export function generateID(){
-    return idGen++;
-  }
+  export type CardStackStyle = 'no-heading' | 'default';
 
   export type CardData = {
     heading: string;
     body: string;
-    type: string;
   }
 
 </script>
@@ -20,18 +16,14 @@
   import CardBody from './CardBody.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
   import IconButton from '$lib/components/generic/IconButton.svelte';
-  import { getContext } from 'svelte/internal';
 
   export let cards: CardData[];
+  export let style: CardStackStyle = 'default';
   export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;
   export let selected = false;
 
-  const dataCardsId = generateID();
-  const context = getContext('page-type');
-
-  let cardType: string = cards[currentPageIndex].type;
   let splide: Splide;
 
   let options = SplideOptions({
@@ -42,7 +34,7 @@
   });
 
   const onClickAddCard = () => {
-    cards.push({heading: '', body: '', type: cardType});
+    cards.push({heading: '', body: ''});
     cards = cards;
     window.setTimeout(() => splide.go(cards.length - 1));
   };
@@ -54,21 +46,17 @@
   };
 
   const onClickChangeType = () => {
-    cardType === 'default' ? cardType = 'no-heading' : cardType = 'default';
-    cards = cards.map(c => {return {...c, type: cardType}});
-  }
+    style = style === 'default' ? 'no-heading' : 'default';
+  };
 
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
 
-  $: highlight = (context !== 'case-study' && dataCardsId === 0);
-  $: csfirst = (context === 'case-study' && dataCardsId === 0);
-  $: cssecond = (context === 'case-study' && dataCardsId === 1);
-  $: normal = (!highlight && !csfirst && !cssecond);
-
 </script>
 
-<div class="cards" class:has-fixed-title={fixedTitle} class:selected
-  class:highlight class:csfirst class:cssecond class:normal>
+<div class="cards"
+  class:has-fixed-title={fixedTitle}
+  data-card-style={style}
+  class:selected>
 
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
     {#if fixedTitle}
@@ -79,8 +67,8 @@
     <SplideTrack>
       {#each cards as card, i}
         <SplideSlide>
-          <div class="slide" class:no-heading={card.type==='no-heading'}>
-            {#if card.type !== 'no-heading'}
+          <div class="slide">
+            {#if style !== 'no-heading'}
               <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
             {/if}
             <CardBody bind:text={card.body} editable={editable && currentPageIndex === i} />
@@ -92,7 +80,7 @@
       <div class="editor-buttons">
         <IconButton icon="add" on:click={onClickAddCard} />
         <IconButton icon="delete" on:click={onClickRemoveCard} />
-        <IconButton icon="title" on:click={onClickChangeType} />
+        <IconButton icon="title" active={style === 'default'} on:click={onClickChangeType} />
       </div>
     {/if}
     {#if editable || cards.length > 1}
@@ -109,6 +97,13 @@
 
 <style lang="stylus">
 
+  card-styles($cardColor)
+    $textColor = dark($cardColor) ? white : black;
+    --card-color: $cardColor;
+    --caret-color: $textColor;
+    --dot-color: $textColor;
+    color: $textColor;
+
   .cards {
     --content-padding: 30px;
     --content-top-padding: 30px;
@@ -116,7 +111,7 @@
     border-radius: 20px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     color: black;
-    background-color: $colors.highlight-1;
+    background-color: var(--card-color);
 
     :global(.splide__arrows) {
       position: absolute;
@@ -128,61 +123,24 @@
 
     :global(.splide__arrow) {
       position: static;
+      background-color: var(--card-color);
     }
 
     :global(.splide__arrow:disabled) {
       display: none;
     }
 
-    &.normal {
-      background-color: $colors.primary-blue;
-      color: $colors.neutral-bg;
-      border-radius: 20px 20px 0px 0px;
-
-      :global(.splide__arrow) {
-        background: $colors.ocean;
-      }
-
-      :global(.carousel-dots) {
-        --dot-color: $colors.neutral-bg;
-      }
+    :global(.gradient) {
+      --gradient-color: var(--card-color);
     }
 
-    &.highlight {
-      background-color: $colors.highlight-1;
-
-      :global(.splide__arrow) {
-        background: $colors.highlight-1;
-      }
-
-      :global(.gradient) {
-        --gradient-color: $colors.highlight-1;
-      }
+    :global(.key-takeaways) & {
+      card-styles($colors.highlight-1)
     }
 
-    &.csfirst {
-      background-color: $colors.neutral-bg;
-
-      :global(.splide__arrow) {
-        background: $colors.neutral-bg;
-      }
-
-      :global(.gradient) {
-        --gradient-color: $colors.neutral-bg;
-      }
-    }
-
-    &.cssecond {
-      background-color: $colors.neutral-light;
-
-      :global(.splide__arrow) {
-        background: $colors.neutral-light;
-      }
-
-      :global(.gradient) {
-        --gradient-color: $colors.neutral-light;
-      }
-
+    :global(.body-column) &,
+    :global(.editor-content) & {
+      card-styles($colors.primary-blue)
     }
   }
 
@@ -196,6 +154,7 @@
       --ib-icon-bg: #00000022;
       --ib-hover-bg: #00000022;
       --ib-hover-border-color: #00000022;
+      --ib-active-bg: #ffffff77;
     }
   }
 
@@ -213,7 +172,7 @@
     padding: var(--content-top-padding) var(--content-padding) 10px;
     margin-bottom: 15px;
 
-    &.no-heading {
+    .cards[data-card-style="no-heading"] & {
       padding-right: 140px;
     }
 
@@ -224,11 +183,6 @@
       max-width: 60%;
     }
 
-    .content & {
-      :global(.content) {
-        typography: content-card-body;
-      }
-    }
   }
 
   .fixed-title {

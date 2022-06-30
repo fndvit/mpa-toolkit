@@ -8,13 +8,12 @@
   let cards = keyTakeaways.map(text => ({
     heading: 'Key takeaways',
     body: text,
-    type: 'default'
   }));
 
   $: keyTakeaways = cards.map(c => c.body);
 
   const onClickAdd = () => {
-    cards.push({ heading: 'Key takeaways', body: '' , type: 'default'});
+    cards.push({ heading: 'Key takeaways', body: ''});
     cards = cards;
   };
 

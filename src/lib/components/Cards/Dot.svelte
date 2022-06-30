@@ -15,20 +15,22 @@
 
 <style lang="stylus">
 
+  $defaults = {
+    color: black,
+    size: 10px,
+    progress-duration: 10s,
+    fade: 0.25
+  };
+
   .dot {
     position: relative;
-    border-radius: var(--dot-size);
+    border-radius: var(--dot-size, $defaults.size);
     overflow: hidden;
     transition: opacity 100ms ease, height 100ms ease, flex 100ms ease;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    flex: 0 0 var(--dot-size);
-    height: var(--dot-size);
-
-    &.active:not(.progress) {
-      height: calc(var(--dot-size) + 2px);
-      width: calc(var(--dot-size) + 2px);
-    }
+    flex: 0 0 var(--dot-size, $defaults.size);
+    height: var(--dot-size, $defaults.size);
 
     @keyframes dot-progressbar-animation {
       from { width: 0; }
@@ -40,7 +42,7 @@
       flex: 0 1 200px;
       cursor: default;
       .dot-progressbar {
-        animation: var(--dot-progress-duration) dot-progressbar-animation 0s linear;
+        animation: var(--dot-progress-duration, $defaults.progress-duration) dot-progressbar-animation 0s linear;
       }
     }
 
@@ -48,16 +50,16 @@
 
   .dot-progressbar {
     position: absolute;
-    background-color: var(--dot-color);
-    height: var(--dot-size);
+    background-color: var(--dot-color, $defaults.color);
+    height: var(--dot-size, $defaults.size);
     .dot:not(.progress.active) & {
       display: none;
     };
   }
 
   .dot-background {
-    background-color: var(--dot-color);
-    opacity: var(--dot-fade);
+    background-color: var(--dot-color, $defaults.color);
+    opacity: var(--dot-fade, $defaults.fade);
     width: 100%;
     height: 100%;
     .dot.active:not(.progress) & {

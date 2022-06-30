@@ -6,4 +6,4 @@
 
 </script>
 
-<Cards cards={block.attrs.cards} />
+<Cards cards={block.attrs.cards} style={block.attrs.style} />

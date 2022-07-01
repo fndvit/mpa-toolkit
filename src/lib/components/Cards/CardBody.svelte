@@ -38,10 +38,14 @@
 
   .content {
     typography: summary-card-body;
-    margin-top: 2rem;
+    margin-top: 10px;
     overflow: auto;
     min-height: 50px;
     max-height: 170px;
+
+    :global(.no-heading) & {
+      margin-top: 0px;
+    }
 
     &::-webkit-scrollbar {
       width: 5px;

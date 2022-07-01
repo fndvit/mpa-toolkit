@@ -67,7 +67,7 @@
     <SplideTrack>
       {#each cards as card, i}
         <SplideSlide>
-          <div class="slide">
+          <div class="slide" class:no-heading={style==='no-heading'}>
             {#if style !== 'no-heading'}
               <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
             {/if}
@@ -134,7 +134,8 @@
       --gradient-color: var(--card-color);
     }
 
-    :global(.key-takeaways) & {
+    :global(.key-takeaways) &,
+    :global(.landing-lifecycle) & {
       card-styles($colors.highlight-1)
     }
 
@@ -184,7 +185,6 @@
     :global(.heading) {
       max-width: 60%;
     }
-
   }
 
   .fixed-title {

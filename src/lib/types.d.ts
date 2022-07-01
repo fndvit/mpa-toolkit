@@ -48,7 +48,6 @@ export type PageRequest = {
 
 export type TagRequest = {
   value: string;
-  type: TagType;
 }
 
 // **********************

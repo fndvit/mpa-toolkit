@@ -5,7 +5,7 @@
   export let message: string;
   export let isOpen: boolean;
   export let confirmText: string = null;
-  export let onYes: () => void;
+  export let onYes: () => unknown;
 
   let currentText: string = null;
 
@@ -30,7 +30,7 @@
       <input
         type="text"
         placeholder="Confirm text"
-        on:keyup={(e) => {currentText = e.currentTarget.value}}
+        on:keyup={(e) => currentText = e.currentTarget.value}
         on:focus={(e) => resetErrorField(e.currentTarget)}
       />
     {/if}

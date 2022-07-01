@@ -7,10 +7,6 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 30
-    },
-    "type": {
-      "type": "string",
-      "enum": [ "TOPIC", "USER", "STAGE" ]
     }
   },
   "additionalProperties": false,

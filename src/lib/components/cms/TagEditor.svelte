@@ -1,101 +1,66 @@
 <script lang="ts">
   import IconButton from '../generic/IconButton.svelte';
   import EditableText from '$lib/components/generic/EditableText.svelte';
-  import { createEventDispatcher } from 'svelte';
   import type { SubTypes } from '$lib/types';
+  import { getToaster } from '$lib/helpers/utils';
+  import { createTag, updateTag } from '$lib/api';
 
-  export let tag: SubTypes.Tag.WithPageCount;
-  export let disabled = false;
-  export let tagFocused = tag.id === null;
+  export let tag: Pick<SubTypes.Tag, 'id' | 'value'>;
+  export let loading: boolean;
 
   let editTag = tag.value;
-  let initialValue = tag.value;
-  let editableTag: EditableText;
-  let saving: boolean = false;
+  let focused = tag.id == null;
 
-  const updateCB = (state: string) => {
-    switch (state) {
-      case 'error':
-        editTag = tag.value;
-        tag.value = initialValue;
-        editableTag?.focus();
-        break;
-      case 'saved':
-        initialValue = tag.value;
-        editTag = tag.value;
-        editableTag?.blur();
-        break;
-      default:
-        console.error('Unknown state: ', state);
-        break;
+  const toaster = getToaster();
+
+  const onClickSaveTag = async () => {
+    loading = true;
+
+    try {
+      const apiCall = await tag.id == null
+        ? createTag({ value: editTag })
+        : updateTag(tag.id, { value: editTag });
+      const _tag = await apiCall;
+      tag.id = _tag.id; // id from createTag
+      tag.value = _tag.value;
+      toaster('Tag saved', { type: 'done' });
+      focused = false;
     }
-    saving = false;
-  };
+    catch(e) {
+      toaster('Error saving tag', { type: 'error' });
+    }
 
-  const dispatch = createEventDispatcher<{saveTag: {tag: SubTypes.Tag.WithPageCount, updateCB: (state: string) => void }, delete: SubTypes.Tag.WithPageCount}>();
-
-  const onClickSaveTag = () => {
-    saving = true;
-
-    tag.value =  editTag;
-
-    editableTag?.blur();
-
-    dispatch('saveTag', {tag: tag, updateCB: updateCB});
+    loading = false;
   };
 
   const onClickCancelTag = () => {
-    if(!saving){
-      editTag = tag.value;
-
-      editableTag?.blur();
-
-      if(tag.id === null) {
-        onClickDeleteTag(); //It's a new tag (not saved on the DB), so delete it
-      }
-    }
+    if (tag.id == null) tag = undefined;
+    else editTag = tag.value;
+    focused = false;
   };
 
-  const onClickDeleteTag = () => {
-    dispatch('delete', tag);
-  };
-
-  $: tagFocused ? null : onClickCancelTag();
-
-  $: if(tag.value != editTag && !tagFocused) editTag = tag.value;
+  $: if (!focused) onClickCancelTag();
 
 </script>
 
-<div class="tag" class:editing={tagFocused}>
-  <div class="value-editor">
-    <EditableText
-      bind:this={editableTag}
-      bind:value={editTag}
-      editable={true}
-      placeholder="Tag name"
-      bind:focused={tagFocused}
-    />
-    <IconButton icon="done" on:click={onClickSaveTag} {disabled}/>
-    <IconButton icon="close" on:click={onClickCancelTag} {disabled}/>
-  </div>
-
-  <div class="col-2">
-    <span class="page-count">{tag._count?.pageTags} pages</span>
-    {#if tag.id}
-    <IconButton icon="delete" on:click={onClickDeleteTag} {disabled}/>
-    {/if}
-  </div>
-
-
+<div class="tag-editor" class:editing={focused}>
+  <EditableText
+    bind:value={editTag}
+    editable={true}
+    placeholder="Tag name"
+    bind:focused
+  />
+  <IconButton icon="done" on:click={onClickSaveTag} disabled={loading || editTag.trim().length === 0}/>
+  <IconButton icon="close" on:click={onClickCancelTag} disabled={loading}/>
 </div>
 
 <style lang="stylus">
-  .tag {
+  .tag-editor {
     typography: ui;
-    display: contents;
     align-items: center;
     height: 25px;
     padding-left: 2px;
+    display: flex;
 
     &:not(.editing) {
       :global([data-id="done"]),
@@ -107,27 +72,8 @@
     :global(.editable-text){
       --caret-color: $colors.neutral-black;
       --outline-color: $colors.neutral-black;
-    }
-    :global(.icon-button){
-      --ib-size: 20px;
-    }
-  }
-
-  .value-editor {
-    display: flex;
-    > :global(.editable-text) {
       flex: 1;
-      margin-right: 10px;
+      margin-right 15px;
     }
-  }
-
-  .page-count {
-    text-align: right;
-  }
-
-  .col-2{
-    display: grid;
-    grid-template-columns: 1fr auto;
-    column-gap: 10px;
   }
 </style>

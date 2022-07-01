@@ -5,127 +5,71 @@
   import TagEditor from '$lib/components/cms/TagEditor.svelte';
   import { openModal } from 'svelte-modals';
   import DeleteModal from '$lib/components/cms/DeleteModal.svelte';
-  import { deleteTag, createTag, updateTag } from '$lib/api';
+  import { deleteTag } from '$lib/api';
   import Spinner from '$lib/components/generic/Spinner.svelte';
   import type { SubTypes } from '$lib/types';
   import { getToaster } from '$lib/helpers/utils';
-import { tag } from '$lib/prisma/queries';
 
   export let tags: SubTypes.Tag.WithPageCount[];
 
-  let savingTag = false;
   let tagSearch = '';
   let filteredTags: SubTypes.Tag.WithPageCount[] = tags;
-  let addTag = true;
+  let loading = false;
+
+  let newTag: Pick<SubTypes.Tag, 'id' | 'value'>;
 
   const toaster = getToaster();
 
   const handleDelete = async (tag: SubTypes.Tag.WithPageCount) => {
+    loading = true;
 
-    const { id } = tag;
-    const tagIndex = tags.findIndex(t => t.id === id);
-
-    try{
-      tags.splice(tagIndex, 1);
-
-      if (id === null) return; // new tags are not saved to the database
-
-      await deleteTag(tag.id);
-
-      toaster('Tag deleted', { type: 'done' });
-    }
-    catch(e){
-      tags.splice(tagIndex, 0, tag) // restore the tag to the list
-      toaster('Error deleting tag', { type: 'error' });
-    }finally{
-      tags = tags;
-    }
-  };
-
-
-  const onDeleteTag = async (tag: SubTypes.Tag.WithPageCount) => {
-    if(!savingTag){
-      savingTag = true;
-
-      if(tag._count.pageTags > 0){
-          openModal(DeleteModal, {
-          title: 'Delete Tag',
-          message:
-            'This tag is used on some pages. Are you sure you want to delete it? It will be removed from ' +
-            tag._count?.pageTags +
-            ' pages.',
-          confirmText: tag.value,
-          onYes: async () => await handleDelete(tag),
-        });
+    if (tag.id !== null) {
+      try {
+        await deleteTag(tag.id);
+        toaster('Tag deleted', { type: 'done' });
       }
-      else{
-        await handleDelete(tag);
-      }
-
-      addTag = true;
-      savingTag = false;
-    }
-  };
-
-
-  const onSaveTag = async (tag: SubTypes.Tag.WithPageCount, updateCB: (state: string) => void) => {
-    if(!savingTag){
-      savingTag = true;
-
-      if(tag.value.trim() === ''){
-        updateCB('error');
-        toaster('Tag cannot be empty', { type: 'error' });
-        savingTag = false;
+      catch(e) {
+        toaster('Error deleting tag', { type: 'error' });
         return;
       }
+    }
+    tags = tags.filter(_tag => _tag !== tag);
+    loading = false;
+  };
 
-      try{
-        let response = null;
-        if (tag.id) {
-          response = await updateTag(tag.id, tag);
-        } else {
-          response = await createTag(tag);
-          tags.find(t => t.value === response?.value).id = response?.id; // update the id of the tag to match the one in the database
-          addTag = true;
-        }
-        updateCB('saved');
-        toaster('Tag saved', { type: 'done' });
-      }
-      catch(e){
-        updateCB('error');
-        toaster('Error saving tag', { type: 'error' });
-      }
-      savingTag = false;
+
+  const onClickDelete = async (tag: SubTypes.Tag.WithPageCount) => {
+    if (tag._count.pageTags == 0) {
+      await handleDelete(tag);
+    } else {
+      openModal(DeleteModal, {
+        title: 'Delete Tag',
+        message:
+          'This tag is used on some pages. Are you sure you want to delete it?' +
+          `It will be removed from ${tag._count?.pageTags} pages.`,
+        confirmText: tag.value,
+        onYes: () => handleDelete(tag),
+      });
     }
   };
 
+  const onClickAdd = () => newTag = { id: undefined, value: 'New Tag' };
 
-  const onClickAdd = () => {
-    tags.push({
-        value: 'New Tag',
-        type: TagType.TOPIC,
-        id: null,
-        _count:{
-          pageTags: 0
-        }
-    });
-    tags = tags;
-    addTag = false;
-  };
-
-  $: {
-
-    let regExp = new RegExp(tagSearch, 'i');
-
-    filteredTags = tags.filter(tag => regExp.test(tag.value) || tag.id === null);
-
+  $: if (newTag?.id != null) { // new tag has been saved
+    tags.push({ ...newTag, type: TagType.TOPIC, _count: { pageTags: 0 } });
+    tags = tags.sort((a,b) => a.value > b.value ? 1 : -1);
+    newTag = undefined;
   }
+
+  $: searchRegex = new RegExp(tagSearch, 'i');
+  $: filteredTags = tags.filter(tag => searchRegex.test(tag.value));
+
 </script>
 
 <div class="tags-container">
   <div class="tool-bar">
     <div class="tool-bar-item">
-      <IconButton text="Add Tag" icon="add" on:click={onClickAdd} disabled={savingTag || !addTag}/>
+      <IconButton text="Add Tag" icon="add" on:click={onClickAdd} disabled={loading || !!newTag}/>
     </div>
     <div class="tool-bar-item">
       <Searchbar
@@ -135,36 +79,49 @@ import { tag } from '$lib/prisma/queries';
         submit={null}
         />
     </div>
-    <div class="spinner p-responsive" class:savingTag>
+    <div class="spinner p-responsive" class:loading>
       Saving...<Spinner/>
     </div>
   </div>
-  <div class="tags-list">
-    {#each filteredTags as tag}
-      <TagEditor
-        disabled={savingTag}
-        {tag}
-        tagFocused={tag.id === null}
-        on:delete={({ detail }) => onDeleteTag(detail)}
-        on:saveTag={({ detail }) => onSaveTag(detail.tag, detail.updateCB)}
-      />
+  <ul class="tags-list">
+    {#each filteredTags as tag (tag.id)}
+      <li class="tag-row">
+        <TagEditor bind:loading bind:tag />
+        <span class="page-count">{tag._count?.pageTags} pages</span>
+        <IconButton icon="delete" on:click={() => onClickDelete(tag)} disabled={loading}/>
+      </li>
     {/each}
-  </div>
+
+    {#if newTag}
+      <li class="tag-row">
+        <TagEditor bind:loading bind:tag={newTag} />
+      </li>
+    {/if}
+  </ul>
 </div>
 
 <style lang="stylus">
   .tags-container {
     font-family: var(--font-sans-serif);
   }
-  .tags-list{
+  .tags-list {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto 1fr;
+    width: 500px;
     row-gap: 15px;
     column-gap: 15px;
     margin: auto;
     width: fit-content;
+    padding: 0;
+    list-style: none;
+    :global(.icon-button){
+      --ib-size: 20px;
+    }
   }
-  .tool-bar{
+  .tag-row {
+    display: contents;
+  }
+  .tool-bar {
     display: flex;
     justify-content: center;
     column-gap: 15px;
@@ -173,7 +130,7 @@ import { tag } from '$lib/prisma/queries';
     margin-top: 15px;
     margin-bottom: 20px;
   }
-  .tool-bar-item{
+  .tool-bar-item {
     :global(.searchbar){
       :global(.placeholder){
         color: $colors.neutral-black;
@@ -183,14 +140,12 @@ import { tag } from '$lib/prisma/queries';
       }
     }
   }
-  .spinner{
-    opacity: 0;
+  .spinner {
     display: flex;
     align-items: center;
     column-gap: 15px;
-  }
-
-  .savingTag{
-    opacity: 1 !important
+    &:not(.loading) {
+      visibility: hidden;
+    }
   }
 </style>

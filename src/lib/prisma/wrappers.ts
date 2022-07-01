@@ -192,18 +192,19 @@ export async function updateTag(id: number, tag: TagRequest) {
 
   validate('tag', tag);
 
-  const { value, type } = tag;
+  const { value } = tag;
 
-  const tagUpdateQuery = type === 'TOPIC' ? prisma.tag.update({
+  const _typeCheckTag = await prisma.tag.findFirst({
     where: { id },
-    data: {
-      value,
-    }
-  }) : null;
+    select: { type: true }
+  });
 
-  const [_tag] = await prisma.$transaction([
-    tagUpdateQuery
-  ]);
+  if (_typeCheckTag.type !== 'TOPIC') throw new Error('Only topic tags can be updated');
+
+  const _tag = await prisma.tag.update({
+    where: { id },
+    data: { value },
+  });
 
   await publishEvent('tag-updated', { id });
 
@@ -235,12 +236,10 @@ export async function createTag(tag: TagRequest) {
 
   validate('tag', tag);
 
-  const { value, type } = tag;
+  const { value } = tag;
 
   const createTagQuery = prisma.tag.create({
-    data: {
-      value, type
-    }
+    data: { value, type: 'TOPIC' }
   });
 
   const [_tag] = await prisma.$transaction([

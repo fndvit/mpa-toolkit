@@ -23,6 +23,7 @@
   export let editable = false;
   export let fixedTitle: string = null;
   export let selected = false;
+  export let progress = true;
 
   let splide: Splide;
 
@@ -89,7 +90,7 @@
         <CarouselDots
           bind:currentPageIndex
           pagesCount={cards.length}
-          progress={!editable}
+          progress={!editable && progress}
         />
       </div>
     {/if}

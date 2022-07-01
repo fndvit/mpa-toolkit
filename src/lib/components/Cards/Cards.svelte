@@ -85,7 +85,7 @@
       </div>
     {/if}
     {#if editable || cards.length > 1}
-      <div class="carousel-dots">
+      <div class="carousel-dots card-bottom">
         <CarouselDots
           bind:currentPageIndex
           pagesCount={cards.length}
@@ -178,7 +178,6 @@
 
     .cards[data-card-style="no-heading"][multiple-slides=true] & {
       padding-right: 140px;
-      background-color: red;
     }
 
     .has-fixed-title & :global(.heading) {

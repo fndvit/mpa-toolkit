@@ -6,6 +6,7 @@
   import EditableText from "../generic/EditableText.svelte";
   import EditableNumber from "../generic/EditableNumber.svelte";
   import GlobeVizEditor from "./GlobeVizEditor.svelte";
+import KeyLearnings from "../Cards/KeyLearnings.svelte";
 
   export let caseStudy: SubTypes.CaseStudy.PageHead;
   export let editable = false;
@@ -93,6 +94,8 @@
   <Milestones bind:milestones={caseStudy.milestones} {editable} />
 </div>
 {/if}
+
+<KeyLearnings/>
 
 
 <style lang="stylus">

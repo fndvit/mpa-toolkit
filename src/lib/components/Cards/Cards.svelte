@@ -56,6 +56,7 @@
 <div class="cards"
   class:has-fixed-title={fixedTitle}
   data-card-style={style}
+  multiple-slides={cards.length > 1}
   class:selected>
 
   <Splide {options} bind:this={splide} on:move={e => currentPageIndex = e.detail.index} hasTrack={false}>
@@ -175,13 +176,15 @@
     padding: var(--content-top-padding) var(--content-padding) 10px;
     margin-bottom: 15px;
 
-    .cards[data-card-style="no-heading"] & {
+    .cards[data-card-style="no-heading"][multiple-slides=true] & {
       padding-right: 140px;
+      background-color: red;
     }
 
     .has-fixed-title & :global(.heading) {
       visibility: hidden;
     }
+
     :global(.heading) {
       max-width: 60%;
     }

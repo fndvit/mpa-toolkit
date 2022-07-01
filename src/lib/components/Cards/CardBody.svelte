@@ -38,7 +38,7 @@
 
   .content {
     typography: summary-card-body;
-    margin-top: 10px;
+    margin-top: 15px;
     overflow: auto;
     min-height: 50px;
     max-height: 170px;
@@ -93,12 +93,6 @@
 
   ::-webkit-scrollbar-thumb {
     background: #888;
-  }
-
-  +breakpoint(page, small) {
-    .content {
-      margin-top: 1.5rem;
-    }
   }
 
 </style>

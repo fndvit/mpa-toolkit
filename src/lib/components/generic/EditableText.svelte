@@ -37,13 +37,15 @@
 
 <style lang="stylus">
   .editable-text {
-    caret-color: var(--caret-color, white);
     color: inherit;
     background-color: inherit;
+    --outline-color: #ffffff88;
+    --caret-color: white;
+    caret-color: var(--caret-color);
 
     &:focus {
       outline: none;
-      outline: 2px solid #ffffff88;
+      outline: 2px solid var(--outline-color);
       border-radius: 4px;
       background-color: var(--ui-color-focus);
     }

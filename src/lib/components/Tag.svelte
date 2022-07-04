@@ -3,33 +3,45 @@
   import { slugify } from "$lib/helpers/utils";
   import { getContext } from "svelte";
 
-  export let tag: SubTypes.PageTag;
+  type TagStyles = 'PRIMARY' | 'SECONDARY';
 
+  export let tag: SubTypes.Tag;
+  export let style: TagStyles;
+  export let cms = false;
+
+  const tagName = cms ? 'button' : 'a';
   const tagHighlightFn = getContext<(tag: Tag) => string>('tagHighlightFn');
 
-  $: highlight = tagHighlightFn && tagHighlightFn(tag.tag);
+  $: highlight = tagHighlightFn && tagHighlightFn(tag);
 
-  $: secondary = tag.category == 'SECONDARY';
+  $: secondary = style === 'SECONDARY';
 
 </script>
 
-<a
-  href={`/tag/${slugify(tag.tag.value)}`}
+<svelte:element
+  this={tagName}
+  href={ !cms && `/tag/${slugify(tag.value)}`}
   class="tag"
   class:secondary
   tabindex="0"
-  style=""
   on:mouseenter
   on:mouseleave
+  on:click
 >
   <span>
     {#if highlight}
       {@html highlight}
     {:else}
-      {tag.tag.value}
+      {tag.value}
+      {#if cms && style === 'PRIMARY'}
+        <svg width="20" height="15">
+          <path d="M 14.9215 4.5128 L 15.4871 5.0784 L 5.0783 15.4864 L 4.5127 14.9212 L 14.9215 4.5128 Z"></path>
+          <path d="M 5.0783 4.5128 L 15.4871 14.9208 L 14.9215 15.4868 L 4.5127 5.0788 L 5.0783 4.5128 Z"></path>
+        </svg>
+      {/if}
     {/if}
   </span>
-</a>
+</svelte:element>
 
 <style lang="stylus">
   .tag {
@@ -38,12 +50,14 @@
     text-align: center;
     padding: 2px 12px 4px;
     border-radius: 18px;
+    border: none;
     overflow: hidden;
     margin: 0;
     color: black;
     position: relative;
     white-space: nowrap;
     height: fit-content;
+    width: fit-content;
     background: $colors.highlight-1;
     &.secondary {
       background: alpha($colors.highlight-1, 0.4);
@@ -60,6 +74,11 @@
     span {
       typography: ui-small;
       position: relative;
+    }
+
+    svg {
+
+      padding-left: 10px;
     }
   }
   .tag:hover {

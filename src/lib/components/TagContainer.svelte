@@ -9,7 +9,8 @@
 <div class="tag-container secret-scrollbars">
   {#each tags as tag}
     <Tag
-      {tag}
+      tag={tag.tag}
+      style={tag.category}
       on:mouseenter={() => currentTagHovered = tag.tag.id}
       on:mouseleave={() => currentTagHovered = null}
     />

@@ -9,7 +9,8 @@ export const get = authMiddleware(
     body: {
       pages: await prisma.page.findMany({
         ...pageForCollectionCard
-      })
+      }),
+      allTags: await prisma.tag.findMany()
     }
   };
 });

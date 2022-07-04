@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, test } from "vitest";
 import { validate } from "./validation";
 import userValid from "./testdata/user.valid.json";
 import userInvalid from "./testdata/user.invalid.json";
+import { schemaExpectInvalid } from "./testutil";
 
 describe("User", () => {
 
@@ -14,11 +15,7 @@ describe("User", () => {
   });
 
   test("invalid", () => {
-    userInvalid.forEach(user => {
-      validate.errors = undefined;
-      expect(() => validate("user", user)).toThrowError();
-      expect(validate.errors.length).greaterThanOrEqual(1);
-    });
+    userInvalid.forEach(user => schemaExpectInvalid("user", user));
   });
 
   test("valid", () => {

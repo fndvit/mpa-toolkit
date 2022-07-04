@@ -1,11 +1,12 @@
 [
-  [
-    {
-      "type": "TOPIC"
-    },
-    {
-      "type": "TOPIC",
-      "value": "New Tag"
-    }
-  ]
+  {
+    "value": "New Tag"
+  },
+  {
+    "foo": "additional properties should be valid & discarded",
+    "value": "New tag"
+  },
+  {
+    "value": "valid as max 30 chars - 123456"
+  }
 ]

@@ -2,8 +2,9 @@ import { beforeAll, describe, expect, test } from "vitest";
 import { validate } from "./validation";
 import tagValid from "./testdata/tag.valid.json";
 import tagInvalid from "./testdata/tag.invalid.json";
+import { schemaExpectInvalid } from "./testutil";
 
-describe("Page", () => {
+describe("Tag", () => {
 
   beforeAll(() => {
     validate.errors = undefined;
@@ -14,11 +15,7 @@ describe("Page", () => {
   });
 
   test("invalid", () => {
-    tagInvalid.forEach(tag => {
-      validate.errors = undefined;
-      expect(() => validate("tag", tag)).toThrowError();
-      expect(validate.errors.length).greaterThanOrEqual(1);
-    });
+    tagInvalid.forEach(tag => schemaExpectInvalid("tag", tag));
   });
 
   test("valid", () => {

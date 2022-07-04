@@ -3,6 +3,9 @@
     "value": 1
   },
   {
-    "type": "ADMIN"
+    "value": ""
+  },
+  {
+    "value": "should fail as max 30 chars 123"
   }
 ]

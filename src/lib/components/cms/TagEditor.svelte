@@ -17,7 +17,7 @@
     loading = true;
 
     try {
-      const apiCall = await tag.id == null
+      const apiCall = tag.id == null
         ? createTag({ value: editTag })
         : updateTag(tag.id, { value: editTag });
       const _tag = await apiCall;

@@ -213,14 +213,12 @@ export async function updateTag(id: number, tag: TagRequest) {
 
 export async function deleteTag(id: number) {
 
-  const tag = await prisma.tag.findFirst({
-    where: { id }
-  });
+  const tag = await prisma.tag.findFirst({ where: { id } });
 
-  if(tag.type !== 'TOPIC') return false;
+  if(tag.type !== 'TOPIC') throw new Error('Only topic tags can be deleted');;
 
   const cascade = prisma.tagsOnPages.deleteMany({
-    where: { tagId: id }
+    where: { tagId: id, tag: { type: 'TOPIC' } }
   });
 
   const deleteTag = prisma.tag.delete({ where: { id } });

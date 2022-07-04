@@ -7,7 +7,9 @@
 
     let activeTagSet = new Set<SubTypes.Tag>();
     let cms = true;
-
+    
+    $: unselectedTags = tags.filter(tag => !activeTags.includes(tag));
+    
     function onClickTag(tag: SubTypes.Tag) {
         if (activeTagSet.has(tag)) activeTagSet.delete(tag);
         else activeTagSet.add(tag);
@@ -16,7 +18,7 @@
         activeTags = Array.from(activeTagSet);
     }
 
-    $: unselectedTags = tags.filter(tag => !activeTags.includes(tag));
+    
   
 </script>
 

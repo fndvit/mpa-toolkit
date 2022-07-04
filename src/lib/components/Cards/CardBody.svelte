@@ -74,7 +74,7 @@
     content: '';
     position: absolute;
     width: calc((100%) - var(--scrollbar-width) - var(--content-padding) - 18px);
-    height: 75%;
+    height: 76%;
     left: inherit;
     z-index: 10;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, var(--gradient-color) 80%);

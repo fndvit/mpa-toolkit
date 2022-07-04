@@ -8,11 +8,11 @@ export const put = authMiddleware(
 
     const body = await request.json() as TagRequest;
 
-    const page = await createTag(body);
+    const tag = await createTag(body);
 
     return {
       status: 200,
-      body: page
+      body: tag
     };
 
   }

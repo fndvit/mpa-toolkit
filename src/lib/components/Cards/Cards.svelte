@@ -109,7 +109,7 @@
   .cards {
     --content-padding: 30px;
     --content-top-padding: 30px;
-    --scrollbar-width: 10px;
+    --scrollbar-width: 5px;
     border-radius: 20px;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     color: black;

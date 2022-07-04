@@ -48,7 +48,7 @@
     }
 
     &::-webkit-scrollbar {
-      width: 5px;
+      width: var(--scrollbar-width);
     }
 
     &::-webkit-scrollbar-track {
@@ -73,7 +73,7 @@
   .gradient::before {
     content: '';
     position: absolute;
-    width: calc((100%) - calc(var(--content-padding) * 2) - 5px); //Content Padding Less Scrollbar 5px Width from &::-webkit-scrollbar
+    width: calc((100%) - calc(var(--content-padding) * 2) - var(--scrollbar-width)); //Content Padding Less Scrollbar 5px Width from &::-webkit-scrollbar
     height: 76%;
     left: inherit;
     z-index: 10;
@@ -82,8 +82,9 @@
     pointer-events: none;
   }
 
+  //Does it has some efect?  all next 3 css blocks/* ALX */
   ::-webkit-scrollbar {
-    width: var(--scrollbar-width); //Does it has some efect? /* ALX */
+    width: var(--scrollbar-width);
     cursor: pointer;
   }
 
@@ -92,6 +93,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
+    background: #888;
   }
 
 </style>

@@ -68,7 +68,7 @@ model Page {
 
 model Tag {
   id        Int       @id @default(autoincrement())
-  value     String    @unique
+  value     String
   type      TagType
   pageTags  TagsOnPages[]
 

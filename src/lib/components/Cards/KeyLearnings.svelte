@@ -75,8 +75,8 @@
         </div>
         <div class="line"/>
       </div>
-
     </div>
+
     <div class="card-content no-heading key-learnings">
       <Cards cards={slides} progress={isTimerActive} style='no-heading' {editable} bind:currentPageIndex={slideIndex}/>
     </div>
@@ -149,7 +149,7 @@
     max-width: 220px;
     display: flex;
     background-color: $colors.neutral-bg;
-    border-radius: 20px;
+    border-radius: 20px 0px 0px 20px;
   }
 
   .titles-area {
@@ -186,8 +186,7 @@
   .card {
     grid-area: keylearnings;
     display: flex;
-    background-color: $colors.neutral-bg;
-    border-radius: 20px 0px 0px 20px;
+    background-color: red;
   }
 
   .card-content {
@@ -209,6 +208,25 @@
     :global(.content){
       padding-top: 0px !important;
     }
+  }
+
+
+  +breakpoint(page, medium) {
+
+    .card {
+      //background-color: blue;
+    }
+
+    .card-content {
+      //background-color: red;
+
+      :global(.cards) {
+        width: 550px;
+        //background-color: yellow;
+      }
+
+    }
+
   }
 
 </style>

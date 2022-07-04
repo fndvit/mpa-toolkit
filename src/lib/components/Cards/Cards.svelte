@@ -82,7 +82,9 @@
       <div class="editor-buttons">
         <IconButton icon="add" on:click={onClickAddCard} />
         <IconButton icon="delete" on:click={onClickRemoveCard} />
-        <IconButton icon="title" active={style === 'default'} on:click={onClickChangeType} />
+        {#if !fixedTitle}
+          <IconButton icon="title" active={style === 'default'} on:click={onClickChangeType} />
+        {/if}
       </div>
     {/if}
     {#if editable || cards.length > 1}

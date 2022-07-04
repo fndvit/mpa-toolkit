@@ -1,26 +1,26 @@
 import { beforeAll, describe, expect, test } from "vitest";
 import { validate } from "./validation";
-import userValid from "./testdata/user.valid.json";
-import userInvalid from "./testdata/user.invalid.json";
+import tagValid from "./testdata/tag.valid.json";
+import tagInvalid from "./testdata/tag.invalid.json";
 import { schemaExpectInvalid } from "./testutil";
 
-describe("User", () => {
+describe("Tag", () => {
 
   beforeAll(() => {
     validate.errors = undefined;
   });
 
   test("empty", () => {
-    expect(() => validate("user", {})).toThrowError();
+    expect(() => validate("tag", {})).toThrowError();
   });
 
   test("invalid", () => {
-    userInvalid.forEach(user => schemaExpectInvalid("user", user));
+    tagInvalid.forEach(tag => schemaExpectInvalid("tag", tag));
   });
 
   test("valid", () => {
-    userValid.forEach(user => {
-      validate("user", user);
+    tagValid.forEach(tag => {
+      validate("tag", tag);
     });
   });
 

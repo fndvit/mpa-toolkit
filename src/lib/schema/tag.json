@@ -1,0 +1,14 @@
+{
+  "$id": "tag",
+
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30
+    }
+  },
+  "additionalProperties": false,
+  "minProperties": 1
+}

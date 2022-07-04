@@ -147,6 +147,12 @@
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }
+
+    :global(.key-learnings) & {
+      card-styles($colors.neutral-bg);
+      box-shadow: none;
+      border-radius: 0px 20px 20px 0px;
+    }
   }
 
   .editor-buttons {

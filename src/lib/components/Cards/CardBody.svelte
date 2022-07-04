@@ -73,7 +73,7 @@
   .gradient::before {
     content: '';
     position: absolute;
-    width: calc((100%) - var(--scrollbar-width) - var(--content-padding) - 18px);
+    width: calc((100%) - calc(var(--content-padding) * 2) - 5px); //Content Padding Less Scrollbar 5px Width from &::-webkit-scrollbar
     height: 76%;
     left: inherit;
     z-index: 10;
@@ -83,7 +83,7 @@
   }
 
   ::-webkit-scrollbar {
-    width: var(--scrollbar-width);
+    width: var(--scrollbar-width); //Does it has some efect? /* ALX */
     cursor: pointer;
   }
 
@@ -92,7 +92,6 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #888;
   }
 
 </style>

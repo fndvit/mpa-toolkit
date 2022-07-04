@@ -14,14 +14,20 @@
   $: filteredPages = pages.filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
   
   $: {
-    if(orderby[0]) {
-      filteredPages = filteredPages.filter(p => p.chapter != null );
-      filteredPages = filteredPages.sort((a, b) => {
-          return (a.chapter.authors[0].name >  b.chapter.authors[0].name ? 1 : ( a.chapter.authors[0].name ===  b.chapter.authors[0].name ? 0 : -1)) }
-      );
+    if(!orderby.find(() => true)) {
+      filteredPages = pages.filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
     }
-    if (orderby[1]) filteredPages = filteredPages.filter(p => p.chapter != null );
+    if(orderby[0] || orderby[1]) {
+      filteredPages = filteredPages.filter(p => p.chapter != null );
+
+      if(orderby[0])
+        filteredPages = filteredPages.sort((a, b) => {
+            return (a.chapter.authors[0].name >  b.chapter.authors[0].name ? 1 : ( a.chapter.authors[0].name ===  b.chapter.authors[0].name ? 0 : -1)) }
+        );
+    }    
     if(orderby[2]) filteredPages = filteredPages.filter(p => p.caseStudy != null );
+    
+    
   }
 
   const groupedOptions = groupBy(allTags, tag => tag.type);

@@ -39,8 +39,13 @@
     <h1>Order by</h1>
     <div class="orderby-grid">
       {#each options as opt, index}
-        <input type="checkbox" bind:checked={orderby[index]}>
-        <label for="authors">{opt}</label>
+        {#if ((orderby[0] === true || orderby[1] === true) && index == 2) ||  (orderby[2] === true && index != 2)}
+          <input type="checkbox" bind:checked={orderby[index]} id={opt} disabled>
+          <label for="authors">{opt}</label>
+        {:else}
+          <input type="checkbox" bind:checked={orderby[index]} id={opt} >
+          <label for="authors">{opt}</label>
+        {/if}
       {/each}
       
     </div>
@@ -91,9 +96,8 @@
   .orderby-grid {
     margin: 20px 5px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: auto 1fr auto 1fr auto 1fr;
     grid-gap: 20px;
     width: 750px;
   }
-
 </style>

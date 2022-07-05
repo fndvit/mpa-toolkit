@@ -1,5 +1,6 @@
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
+import { pageForCollectionCard, userBasic } from "$lib/prisma/queries";
 
 export const get = authMiddleware(
   { role: 'ADMIN' },
@@ -15,6 +16,16 @@ export const get = authMiddleware(
             id: 'asc'
           }
         ]
+      }),
+      authors: await prisma.user.findMany({
+        select: {
+          ...userBasic.select,
+          chapter: {
+            select: {
+              page: pageForCollectionCard
+            }
+          }
+        }
       })
     }
   };

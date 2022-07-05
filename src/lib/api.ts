@@ -27,6 +27,15 @@ export async function deleteUser(id: number) {
   return response.ok;
 }
 
+export async function createUser(data: UserRequest) {
+  const response = await fetch('/api/users/create', {
+    method: 'PUT',
+    body: JSON.stringify(data)
+  });
+  return response.ok;
+}
+
+
 async function _page(data: PageRequest, id?: number) {
   const newPage = id === undefined;
   const response = await fetch(

@@ -27,6 +27,7 @@ export type UserRequest = {
   role?: Role;
   img?: string;
   name?: string;
+  email?: string;
 }
 
 export type PageRequest = {

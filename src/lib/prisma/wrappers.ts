@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import type { PageRequest, SubTypes } from "$lib/types";
+import type { PageRequest, SubTypes, UserRequest } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
 import { pageForContentCard, pageFull } from "./queries";
@@ -186,4 +186,28 @@ export async function searchTags(searchText: string) {
     results.map(r => [r.tagId, r.highlight])
   ) as {[tagId: number]: string};
   return o;
+}
+
+export async function createUser(user: UserRequest) {
+
+  const { name, email, role } = user;
+
+  const createUserQuery = prisma.user.create({
+    data: {
+      name, email, role
+    }});
+
+  const [_user] = await prisma.$transaction([
+    createUserQuery
+  ]);
+  
+  return _user;
+}
+
+export async function deleteUser(id: number) {
+
+  
+  //const deleteUser = prisma.user.delete({ where: { id } });
+
+  //return true;
 }

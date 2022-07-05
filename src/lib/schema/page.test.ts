@@ -7,6 +7,7 @@ import pageInvalidCaseStudies from './testdata/page.invalid.casestudies.json';
 import pageInvalidChapters from './testdata/page.invalid.chapters.json';
 import pageInvalid from './testdata/page.invalid.json';
 import pageInvalidMilestones from './testdata/page.invalid.milestones.json';
+import pageInvalidKeyLearnings from './testdata/page.invalid.keylearnings.json';
 
 describe("Page", () => {
 
@@ -20,6 +21,7 @@ describe("Page", () => {
     expect(ajv.getSchema('page#/$defs/caseStudy')).toBeTruthy();
     expect(ajv.getSchema('page#/$defs/tag')).toBeTruthy();
     expect(ajv.getSchema('page#/$defs/milestones')).toBeTruthy();
+    expect(ajv.getSchema('page#/$defs/keyLearnings')).toBeTruthy();
   });
 
   test("valid chapter", () => {
@@ -70,6 +72,14 @@ describe("Page", () => {
     pageInvalidMilestones.forEach(milestones => {
       validate.errors = undefined;
       expect(() => validate("page#/$defs/milestones", milestones)).toThrowError();
+      expect(validate.errors?.length).greaterThanOrEqual(1);
+    });
+  });
+
+  test("invalid key learnings", () => {
+    pageInvalidKeyLearnings.forEach(keylearning => {
+      validate.errors = undefined;
+      expect(() => validate("page#/$defs/keyLearnings", keylearning)).toThrowError();
       expect(validate.errors?.length).greaterThanOrEqual(1);
     });
   });

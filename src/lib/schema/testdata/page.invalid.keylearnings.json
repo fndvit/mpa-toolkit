@@ -1,0 +1,18 @@
+[
+  {
+    "What's wrong": [ "a"],
+    "42143234": [ "a", "b" ]
+  },
+  {
+    "What'swrong2": [ "a", "b" ]
+  },
+  {
+    "What is needed": [ "a", 5 ]
+  },
+  {
+    "What's wrong": []
+  },
+  {
+    "What is needed": "error"
+  }
+]

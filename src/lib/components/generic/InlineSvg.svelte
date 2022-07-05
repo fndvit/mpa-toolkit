@@ -2,7 +2,7 @@
   import * as svgs from '$lib/svg';
 
   export let svg: keyof typeof svgs;
-  export let href: string = "https://www.unep.org";
+  export let href: string;
 </script>
 
 

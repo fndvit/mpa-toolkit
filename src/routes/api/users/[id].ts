@@ -1,5 +1,6 @@
 import { authMiddleware } from "$lib/auth";
 import { prisma } from "$lib/prisma";
+import { deleteUser } from "$lib/prisma/wrappers";
 import { validate } from "$lib/schema/validation";
 import type { UserRequest } from "$lib/types";
 
@@ -30,17 +31,14 @@ export const patch = authMiddleware(
 export const del = authMiddleware(
   { role:'ADMIN' },
   async ({ params }) => {
-    try {
-      await prisma.user.delete({
-        where: {id: parseInt(params.id)}
-      });
-      return {
-        status: 200
-      }
-    }catch (e) {
-      return {
-        status: 500
-      };
-    }
+   
+    const userId = parseInt(params.id);
+
+    await deleteUser(userId);
+
+    return {
+      status: 200
+    };
   }
+
 );

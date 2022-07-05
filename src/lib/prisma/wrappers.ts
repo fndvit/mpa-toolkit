@@ -206,10 +206,30 @@ export async function createUser(user: UserRequest) {
 
 export async function deleteUser(id: number) {
 
-  
-  //const deleteUser = prisma.user.delete({ where: { id } });
+  const user = await prisma.user.findFirst({ where: { id } });
 
-  //return true;
+  const cascade = prisma.page.updateMany({
+      where: {
+        chapter: {
+          authors: { some: { id } }
+        }
+        
+      },
+      data: {
+        content: {
+          page: {
+            update: {
+              authors: {
+                delete: { id }
+              }
+      }}}}
+  });
+
+  const deleteUser = prisma.user.delete({ where: { id } });
+
+  await prisma.$transaction([cascade, deleteUser]);
+
+  return true;
 }
 
 export async function updateTag(id: number, tag: TagRequest) {

@@ -7,6 +7,8 @@
   import type { User, Role } from "$lib/types";
   import NewUser from "$lib/components/NewUser.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
+  import DeleteModal from '$lib/components/cms/DeleteModal.svelte';
+  import { openModal } from 'svelte-modals';
 
   export let users: User[];
   export let authors: User[];
@@ -20,8 +22,8 @@
   const handleDelete = async (user: User) => {
 
     try {
-      //await deleteUser(user.id);
-      //toaster('User deleted', {type: 'done'});
+      await deleteUser(user.id);
+      toaster('User deleted', {type: 'done'});
     }
     catch (err) {
       console.error(err);
@@ -60,7 +62,13 @@
       await handleDelete(user);
     }
     else {
-      //Show DeleteModal Confirmation
+      openModal(DeleteModal, {
+        title: 'Delete User',
+        message:
+          'This user is an author on some pages. Are you sure you want to delete it?',
+        confirmText: user.name,
+        onYes: () => handleDelete(user),
+      });
     }
   };
 

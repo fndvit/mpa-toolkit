@@ -24,6 +24,7 @@
   export let fixedTitle: string = null;
   export let selected = false;
   export let progress = true;
+  export let handleDeletion = null;
 
   let splide: Splide;
 
@@ -41,6 +42,9 @@
   };
 
   const onClickRemoveCard = () => {
+    if (cards.length <= 1) {
+      handleDeletion();
+    }
     cards = cards.filter((_, i) => i !== currentPageIndex);
     const goTo = Math.max(0, Math.min(currentPageIndex, cards.length-1));
     splide.go(goTo);
@@ -110,6 +114,7 @@
 
   .cards {
     --content-padding: 30px;
+    --content-right-padding: 30px;
     --content-top-padding: 30px;
     --scrollbar-width: 5px;
     border-radius: 20px;
@@ -135,7 +140,8 @@
     }
 
     :global(.gradient) {
-      --gradient-color: var(--card-color);
+      //--gradient-color: var(--card-color);
+      --gradient-color: red;
     }
 
     :global(.key-takeaways) &,
@@ -182,11 +188,15 @@
   .slide {
     overflow: hidden;
     top: 0;
-    padding: var(--content-top-padding) var(--content-padding) 10px;
+    padding: var(--content-top-padding) var(--content-right-padding) 10px var(--content-padding);
     margin-bottom: 15px;
 
     .cards[data-card-style="no-heading"][multiple-slides=true] & {
-      padding-right: 140px;
+      --content-right-padding: 140px;
+      :global(.content) {
+        //padding-right: 140px;
+      }
+
     }
 
     .has-fixed-title & :global(.heading) {

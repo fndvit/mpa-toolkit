@@ -203,11 +203,11 @@ async function createRandomPage(userIds: number[], allTags: Tag[]) {
       budgetLevel: "" ,
       lat: rand() * 180 - 90,
       long: rand() * 360 - 180,
-      milestones: {'2000': [titleLorem.generateSentences(1)]}
-      keyLearnings: { [
+      milestones: {'2000': [titleLorem.generateSentences(1)]},
+      keyLearnings: [
         { subject: "What works", body: [titleLorem.generateSentences(1), titleLorem.generateSentences(1), titleLorem.generateSentences(1)] },
         { subject: "What doesn't work", body: [titleLorem.generateSentences(1), titleLorem.generateSentences(1), titleLorem.generateSentences(1)] }
-      ] }
+      ]
     },
     chapter: pageType !== 'chapter' ? undefined : {
       summary,

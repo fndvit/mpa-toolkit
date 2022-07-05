@@ -4,6 +4,7 @@ import { Role, TagType } from '@prisma/client';
 import content from './data/content.json';
 import tags from './data/tags.json';
 import milestones from './data/milestones.json';
+import keyLearnings from './data/keyLearnings.json';
 import { LoremIpsum } from "lorem-ipsum";
 import SeedRandom from 'seedrandom';
 import { prisma } from '../../src/lib/prisma';
@@ -129,7 +130,8 @@ async function createDevData() {
         budgetLevel: "Between basic (IDR 13-14 billion ~ US$950,000) and optimal (IDR 30 billion ~ US$2.1 million)",
         lat: -0.23333324,
         long: 130.51666646,
-        milestones
+        milestones,
+        keyLearnings
       }
   });
 
@@ -202,6 +204,8 @@ async function createRandomPage(userIds: number[], allTags: Tag[]) {
       lat: rand() * 180 - 90,
       long: rand() * 360 - 180,
       milestones: {'2000': [titleLorem.generateSentences(1)]}
+      keyLearnings: {"What works": [titleLorem.generateSentences(1), titleLorem.generateSentences(1), titleLorem.generateSentences(1)],
+      "What doesn't work": [titleLorem.generateSentences(1), titleLorem.generateSentences(1), titleLorem.generateSentences(1)] }
     },
     chapter: pageType !== 'chapter' ? undefined : {
       summary,

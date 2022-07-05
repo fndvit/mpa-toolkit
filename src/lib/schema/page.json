@@ -80,7 +80,7 @@
       },
       "required": [
         "name", "established", "size", "governance", "staff",
-        "budget", "budgetLevel", "lat", "long", "milestones"
+        "budget", "budgetLevel", "lat", "long", "milestones", "keyLearnings"
       ],
       "additionalProperties": false
     },

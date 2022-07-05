@@ -26,7 +26,7 @@ function getCacheHeaders(event: RequestEvent): CacheHeaders {
   if (event.routeId == null) return {};
   return {
     'Cache-Control': getCacheControl(event),
-    'Surrogate-Key': event.locals.cacheKey != null ? event.locals.cacheKey : undefined,
+    'Surrogate-Key': event.locals.cacheKey != null ? Array.from(event.locals.cacheKey).join(' ') : undefined,
     'Surrogate-Control': 'stale-while-revalidate=30, stale-if-error=3600',
   };
 }

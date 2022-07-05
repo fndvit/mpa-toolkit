@@ -116,7 +116,7 @@ export namespace Page {
 export namespace CaseStudy {
   export type PageHead = Modify<
     Prisma.CaseStudyGetPayload<typeof caseStudyForPageHead>,
-    { milestones: MilestonesData, keyLearnings: KeyLearningsData }
+    { milestones: MilestonesData, keyLearnings: KeyLearningsData[] }
   >
 }
 

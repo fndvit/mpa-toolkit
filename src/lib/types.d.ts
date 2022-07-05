@@ -1,4 +1,4 @@
-import type { TagCategory, Role } from '@prisma/client';
+import type { TagCategory, Role, TagType } from '@prisma/client';
 import type { CardData } from './components/Cards/Cards.svelte';
 import type * as SubTypes from './prisma/queries';
 export type * as SubTypes from './prisma/queries';
@@ -48,6 +48,10 @@ export type PageRequest = {
   }
 }
 
+export type TagRequest = {
+  value: string;
+}
+
 // **********************
 //  TOP LEVEL COMPONENTS
 // **********************
@@ -69,6 +73,7 @@ export type ParagraphBlock = {
 export type CardsBlock = {
   type: 'cards';
   attrs: {
+    style: 'default' | 'no-heading',
     cards: CardData[];
   }
 };

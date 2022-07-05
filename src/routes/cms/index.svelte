@@ -8,7 +8,7 @@
     title: "PAGES"
   }, {
     icon: 'TagIcon',
-    path: "",
+    path: "tags",
     title: "TAGS"
   },{
     icon: 'UserIcon',

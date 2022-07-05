@@ -65,7 +65,6 @@
     border-radius: 20px;
     line-height: 100%;
     box-shadow: var(--madlib-selector-box-shadow, 0px 1px 8px 0px rgba(0, 0, 0, 0.2));
-    font-weight: 400;
   }
 
   .option {

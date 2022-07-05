@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import type { PageRequest, SubTypes, UserRequest } from "$lib/types";
+import type { PageRequest, SubTypes, UserRequest, TagRequest } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
 import { pageForContentCard, pageFull } from "./queries";
@@ -210,4 +210,65 @@ export async function deleteUser(id: number) {
   //const deleteUser = prisma.user.delete({ where: { id } });
 
   //return true;
+}
+
+export async function updateTag(id: number, tag: TagRequest) {
+
+  validate('tag', tag);
+
+  const { value } = tag;
+
+  const _typeCheckTag = await prisma.tag.findFirst({
+    where: { id },
+    select: { type: true }
+  });
+
+  if (_typeCheckTag.type !== 'TOPIC') throw new Error('Only topic tags can be updated');
+
+  const _tag = await prisma.tag.update({
+    where: { id },
+    data: { value },
+  });
+
+  await publishEvent('tag-updated', { id });
+
+  return _tag;
+}
+
+export async function deleteTag(id: number) {
+
+  const tag = await prisma.tag.findFirst({ where: { id } });
+
+  if(tag.type !== 'TOPIC') throw new Error('Only topic tags can be deleted');;
+
+  const cascade = prisma.tagsOnPages.deleteMany({
+    where: { tagId: id }
+  });
+
+  const deleteTag = prisma.tag.delete({ where: { id } });
+
+  await prisma.$transaction([cascade, deleteTag]);
+
+  await publishEvent('tag-deleted', { id });
+
+  return true;
+}
+
+export async function createTag(tag: TagRequest) {
+
+  validate('tag', tag);
+
+  const { value } = tag;
+
+  const createTagQuery = prisma.tag.create({
+    data: { value, type: 'TOPIC' }
+  });
+
+  const [_tag] = await prisma.$transaction([
+    createTagQuery
+  ]);
+
+  await publishEvent('page-created', { id: _tag.id });
+
+  return _tag;
 }

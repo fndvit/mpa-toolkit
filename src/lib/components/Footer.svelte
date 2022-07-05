@@ -8,11 +8,13 @@
     <h5>A partnership between</h5>
 
     <div class="partners-grid">
-      <InlineSvg svg="UNEP" />
-      <InlineSvg svg="IAFDC" />
-      <InlineSvg svg="UoQ" />
-      <InlineSvg svg="TNC" />
-      <InlineSvg svg="WWF" />
+      <InlineSvg href="https://www.unep.org" svg="UNEP"/>
+      <InlineSvg href="https://www.aics.gov.it/language/en/" svg="IAFDC" />
+      <InlineSvg href="https://wwf.panda.org" svg="WWF" />
+      <div class="partners-grid-2">
+        <InlineSvg href="https://www.uq.edu.au" svg="UoQ" />
+        <InlineSvg  href="https://www.nature.org/" svg="TNC" />
+      </div>
     </div>
 
     <div class="links">
@@ -52,10 +54,18 @@
 
   .partners-grid {
     display: grid;
-    grid-template-columns: 126px 87px 148px 135px 39px;
+    grid-template-columns: 102px 87px 39px 1fr;
     align-items: center;
     gap: 45px;
     color: $colors.neutral-dark;
+  }
+
+  .partners-grid-2 {
+    display: inherit;
+    grid-template-columns: 148px 135px;
+    align-items: inherit;
+    gap: inherit;
+    color: inherit;
   }
 
   .links {
@@ -78,9 +88,13 @@
   @media(max-width: 1024px) {
 
     .partners-grid {
-      grid-template-columns: 0.25fr 0.25fr 0.25fr;
+      grid-template-columns: 126px 87px 39px;
       grid-template-rows: auto;
-      margin-top: 3rem;
+      margin-top: 1rem;
+    }
+
+    .partners-grid-2 {
+      grid-template-columns: 148px 135px;
     }
   }
 

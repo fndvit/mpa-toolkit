@@ -1,10 +1,11 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   export let type: 'inline'|'collection'|'top';
+  export let placeholder: string = null;
+  export let search: string = '';
+  export let submit = () => search && goto('/search?q=' + search);
 
-  let search: string;
   let inputEl: HTMLElement;
-  const submit = () => search && goto('/search?q=' + search);
 
   export const focus = () => {
     if (inputEl) inputEl.focus();
@@ -15,11 +16,12 @@
 
 <div class="searchbar" class:top={type==='top'} class:inline={type==='inline'} class:collection={type==='collection'}>
 
-
   {#if !search}
     <div class="placeholder">
       <span>
-        {#if type === 'top'}
+        {#if placeholder}
+          {placeholder}
+        {:else if type === 'top'}
           Try <b>asking us</b> anything
         {:else}
           Or, looking for <b>something else?</b>
@@ -28,7 +30,7 @@
     </div>
   {/if}
 
-  <input class="input-text" bind:this={inputEl} bind:value={search} spellcheck="false" on:keypress={({key}) => key === 'Enter' && submit()}/>
+  <input class="input-text" bind:this={inputEl} bind:value={search} spellcheck="false" on:keypress={({key}) => key === 'Enter' && submit && submit()}/>
 
   <div class="search-icon" on:click={submit}>
     <svg class="search-icon" viewBox="0 0 24 24">
@@ -105,8 +107,8 @@
     width: 24px;
     height: 24px;
     fill: none;
-    transform: translateY(-2px);
     cursor: pointer;
+    display: flex;
   }
 
   .search-icon :hover {
@@ -132,11 +134,16 @@
 
   }
 
-  @media(max-width: 1024px) {
+  +breakpoint(page, medium) {
 
     .searchbar.top {
       padding: 5px 25px;
       width: fit-content;
+
+      :focus {
+        width: 10rem;
+        max-width: 10rem;
+      }
     }
 
     .search-icon {
@@ -145,7 +152,8 @@
 
   }
 
-  @media(max-width: 414px) {
+
+  +breakpoint(page, small) {
 
     .searchbar.top {
       padding: 0px 15px;
@@ -166,10 +174,6 @@
     .placeholder {
       .top & {
         display: none;
-      }
-
-      .inline &, .collection & {
-        transform: translateY(10px);
       }
     }
 

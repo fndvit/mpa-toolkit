@@ -20,7 +20,22 @@ export type PageCreatedEvent = {
   details: { id: number };
 };
 
-export type Event = PageDeletedEvent | PageUpdatedEvent | PageCreatedEvent;
+export type TagDeletedEvent = {
+  type: 'tag-deleted';
+  details: { id: number };
+}
+
+export type TagUpdatedEvent = {
+  type: 'tag-updated';
+  details: { id: number };
+}
+
+export type TagCreatedEvent = {
+  type: 'tag-created';
+  details: { id: number };
+}
+
+export type Event = PageDeletedEvent | PageUpdatedEvent | PageCreatedEvent | TagDeletedEvent | TagUpdatedEvent | TagCreatedEvent;
 export type EventByType<T extends Event['type']> = Extract<Event, { type: T }>;
 
 export async function publishEvent<T extends Event['type']>(type: T, details: EventByType<T>['details']) {

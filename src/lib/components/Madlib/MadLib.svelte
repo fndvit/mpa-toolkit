@@ -20,10 +20,11 @@
 <style lang="stylus">
 
   .madlib {
-    typography: h4-light;
+    typography: h4-light-responsive;
     position: relative;
+
     :global(.content-madlib) & {
-      typography: ui-large;
+      typography: ui-large-responsive;
     }
   }
 

@@ -95,7 +95,7 @@ import KeyLearnings from "../Cards/KeyLearnings.svelte";
 </div>
 {/if}
 
-<KeyLearnings/>
+<KeyLearnings {editable}/>
 
 
 <style lang="stylus">

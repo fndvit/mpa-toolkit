@@ -11,12 +11,16 @@
 
   let activeTags: SubTypes.Tag[] = [];
   let orderby = new Array(3);
+  let pageSearch = '';
 
-  $: filteredPages = pages.filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
-  
+  $: searchRegex = new RegExp(pageSearch, 'i');
+  $: filteredPagesSearch = pages.filter(p => searchRegex.test(p.title));
+
+  $: filteredPages = filteredPagesSearch.filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
+
   $: {
     if(!orderby.find(() => true)) {
-      filteredPages = pages.filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
+      filteredPages = filteredPagesSearch.filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
     }
     if(orderby[0] || orderby[1]) {
       filteredPages = filteredPages.filter(p => p.chapter != null );
@@ -63,7 +67,12 @@
   </div>
 
   <div class="searchbar">
-    <Searchbar type={'inline'}/>
+    <Searchbar
+        bind:search={pageSearch}
+        type="top"
+        placeholder={"Search a Page..."}
+        submit={null}
+        />
   </div>
 
   <div class="filters">
@@ -169,8 +178,13 @@
     max-width: 530px;
     margin-top: 100px;
 
-    :global(.placeholder) {
-      display: none !important;
+    :global(.searchbar){
+      :global(.placeholder){
+        color: $colors.neutral-black;
+      }
+      :global(.input-text){
+        color: $colors.neutral-black;
+      }
     }
   }
 

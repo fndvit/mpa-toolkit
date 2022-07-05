@@ -46,7 +46,7 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page.Fu
       lat: -90,
       long: 0,
       milestones: {},
-      keyLearnings: {}
+      keyLearnings: []
     },
     chapter: type !== 'chapter' ? undefined : {
       summary: '',

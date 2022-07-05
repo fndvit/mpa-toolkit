@@ -16,22 +16,38 @@
   let activeTopicTags: SubTypes.Tag[] = [];
   let activeUsersTags: SubTypes.Tag[] = [];
 
+  let tagSearch = '';
+
+  $: searchRegex = new RegExp(tagSearch, 'i');
+  
+  $: filteredTagsStage = tags.STAGE.filter(p => searchRegex.test(p.value));
+  $: filteredTagsTopic = tags.TOPIC.filter(p => searchRegex.test(p.value));
+  $: filteredTagsUser = tags.USER.filter(p => searchRegex.test(p.value));
+
 </script>
 
 <div class="filters">
   <div class="tags">
-    <h1>Tags</h1>
+    <div class="title">
+      <h1>Tags</h1>
+      <svg width="24" height="24" viewBox="0 0 24 24">
+        <path d="M 15.5 15.5 L 19 19" stroke-linecap="round" stroke-width="1.5" stroke-linejoin="round" stroke="#606060"/>
+        <path d="M 5 11 C 5 14.3137 7.68629 17 11 17 C 12.6597 17 14.1621 16.3261 15.2483 15.237 C 16.3308 14.1517 17 12.654 17 11 C 17 7.68629 14.3137 5 11 5 C 7.68629 5 5 7.68629 5 11 Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke="#606060"/>
+      </svg>
+      <input type="text" bind:value={tagSearch}>
+    </div>
+    
     <div>
       <p>MPA lifecycle</p>
-      <TagFilter tags={tags.STAGE} bind:activeTags={activeStageTags} />
+      <TagFilter tags={filteredTagsStage} bind:activeTags={activeStageTags} />
     </div>
     <div class="type-topic">
       <p>What's this about</p>
-      <TagFilter tags={tags.TOPIC} bind:activeTags={activeTopicTags}/>
+      <TagFilter tags={filteredTagsTopic} bind:activeTags={activeTopicTags}/>
     </div>
     <div class="type-user">
       <p>Good for</p>
-      <TagFilter tags={tags.USER} bind:activeTags={activeUsersTags}/>
+      <TagFilter tags={filteredTagsUser} bind:activeTags={activeUsersTags}/>
     </div>
   </div>
 
@@ -90,6 +106,27 @@
           font-size: 12px;
           font-weight: 700;
           margin: 10px;
+      }
+
+      .title {
+        display: flex;
+        align-items: center;
+
+        input {
+          height: 25px;
+          border: none;
+          text-decoration: none;
+
+          &:focus {
+            outline: none;
+            border-bottom: 1px solid;
+          }
+        }
+
+        svg {
+          fill: none;
+          margin-left: 20px;
+        }
       }
   }
 

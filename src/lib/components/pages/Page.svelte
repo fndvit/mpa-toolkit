@@ -17,7 +17,7 @@
   {#if page.chapter }
     <ChapterMeta chapter={page.chapter} readTime={page.readTime} tags={page.tags} />
   {:else if page.caseStudy}
-    <CaseStudyMeta caseStudy={page.caseStudy} />
+    <CaseStudyMeta caseStudy={page.caseStudy} tags={page.tags} />
   {/if}
   <PageContent {page} {recommendedPages} />
   <Footer/>

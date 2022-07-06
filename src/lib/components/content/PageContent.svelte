@@ -38,11 +38,11 @@
       </div>
     </div>
   </div>
-  <div class="lifecycle-container">
+  <!--<div class="lifecycle-container">
     {#if page.caseStudy }
       <LifeCycle tags={page.tags}/>
       {/if}
-  </div>
+  </div>-->
   <div class="body-column">
     {#each sections as section, i}
       <Section {section}>
@@ -174,7 +174,7 @@
     }
   }
 
-  .lifecycle-container {
+  /*.lifecycle-container {
     grid-area: lifecycle;
 
     :global(.lifecycle) {
@@ -187,7 +187,7 @@
         max-width: none;
       }
     }
-  }
+  }*/
 
   .content-carousel-container {
     overflow: hidden;

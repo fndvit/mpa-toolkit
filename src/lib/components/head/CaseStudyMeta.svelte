@@ -7,8 +7,10 @@
   import EditableNumber from "../generic/EditableNumber.svelte";
   import GlobeVizEditor from "./GlobeVizEditor.svelte";
   import KeyLearnings from "../Cards/KeyLearnings.svelte";
+  import LifeCycle from "../LifeCycle.svelte";
 
   export let caseStudy: SubTypes.CaseStudy.PageHead;
+  export let tags: SubTypes.PageTag[] = null;
   export let editable = false;
 
   const placeholders = {
@@ -95,28 +97,59 @@
 </div>
 {/if}
 
+{#if !editable}
+  <div class="jesus">
+    <div class="lifecycle-container">
+      <LifeCycle {tags}/>
+    </div>
+  </div>
+{/if}
+
 <div class="key-learnings-container">
   <div class="key-learnings-card">
     <KeyLearnings {editable}/>
   </div>
 </div>
 
-
 <style lang="stylus">
+
+  .jesus {
+    grid-config(page, case-study);
+  }
+
+  .lifecycle-container {
+    grid-area: lifecycle;
+    position: relative;
+
+    > :global(.lifecycle) {
+      position: absolute;
+      z-index: lifecycle;
+      margin-right: -30px;
+      margin-left: 20px;
+      margin-top: 40px;
+      max-width: 300px;
+      box-sizing: border-box;
+
+      +breakpoint(page, medium) {
+        position: static;
+        margin: 0;
+        max-width: none;
+      }
+    }
+  }
 
   .key-learnings-container {
     grid-config(page, case-study);
     position: relative;
     background-color: $colors.secondary-bg;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 40px;
+    padding-bottom: 40px;
   }
 
   .key-learnings-card {
     grid-area: keylearnings;
     transform: translateX(-30px);
   }
-
 
   .meta-container {
     grid-config(page, case-study);
@@ -133,7 +166,6 @@
         padding-bottom: $lifecycle-y-overlap;
       }
     }
-
   }
 
   .meta-container-milestones {

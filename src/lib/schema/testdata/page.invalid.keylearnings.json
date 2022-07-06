@@ -1,18 +1,18 @@
 [
   {
-    "What's wrong": [ "a"],
-    "42143234": [ "a", "b" ]
+    "subject": "12352343",
+    "body": [ "a", "b" ]
   },
   {
-    "What'swrong2": [ "a", "b" ]
+    "subject": "What's wrong",
+    "body": ["a", 5]
   },
   {
-    "What is needed": [ "a", 5 ]
+    "subject": "What is needed",
+    "body": []
   },
   {
-    "What's wrong": []
-  },
-  {
-    "What is needed": "error"
+    "subject": "What works",
+    "body": ["error"]
   }
 ]

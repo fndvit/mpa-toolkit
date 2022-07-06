@@ -159,7 +159,6 @@
     :global(.key-learnings) & {
       card-styles($colors.neutral-bg);
       box-shadow: none;
-      border-radius: 0px 20px 20px 0px;
     }
   }
 

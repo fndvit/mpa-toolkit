@@ -214,6 +214,10 @@
       }
     }
 
+    .key-learnings-card {
+      transform: translateX(0px);
+    }
+
   }
 
   +breakpoint(page, small) {

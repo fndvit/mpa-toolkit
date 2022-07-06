@@ -151,8 +151,6 @@
   .navigation-menu {
     max-width: 220px;
     display: flex;
-    background-color: $colors.neutral-bg;
-    border-radius: 20px 0px 0px 20px;
   }
 
   .titles-area {
@@ -180,6 +178,7 @@
     flex-direction: row;
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
     border-radius: 20px;
+    background-color: $colors.neutral-bg;
 
     :global(.editable-text) {
       --outline-color: $colors.neutral-black;
@@ -188,45 +187,84 @@
   }
 
   .card-content {
-
     display: block;
     min-width: 0;
 
     :global(.cards){
-      height: 100%;
+      //height: 100%;
     }
 
     :global(.splide){
-      height: 100%;
+      //height: 100%;
     }
 
     :global(.content){
       padding-top: 0px !important;
-      height: 100%;
+      //height: 100%;
     }
 
-    :global(.card-bottom) {
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-    }
+    //:global(.card-bottom) {
+      //position: absolute;
+     // width: 100%;
+      //bottom: 0;
+    //}
   }
 
 
   +breakpoint(page, medium) {
 
-    .card {
-
+    .navigation-menu {
+      flex-direction: column;
+      max-width: none;
     }
 
-    .card-content {
+    .titles-area {
+      display: flex;
+      flex-direction: row;
+      width: auto;
+      column-gap: 15px;
+      padding: 20px 0px 10px 0px;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      border-left: 30px solid $colors.neutral-bg;
+      border-right: 30px solid $colors.neutral-bg;
 
-
-      :global(.cards) {
-
+      &::-webkit-scrollbar {
+        display: none;
       }
+    }
 
+    .middle-area {
+      flex-direction: row;
+      padding: 15px 0px 0px 0px;
+    }
 
+    .vertical-dots {
+      height: 10px;
+      width: auto;
+      flex-direction: row;
+      column-gap: 7px;
+      padding-left: 25px;
+      padding-right: 10px;
+      z-index: 10;
+    }
+
+    .title {
+      white-space: nowrap;
+    }
+
+    .card {
+      flex-direction: column;
+      background-color: $colors.neutral-bg;
+    }
+
+    .line {
+      margin: auto;
+      height: 1px;
+      width: 100%;
+      transform: translateY(-5px);
     }
 
   }

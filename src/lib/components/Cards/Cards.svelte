@@ -140,8 +140,8 @@
     }
 
     :global(.gradient) {
-      //--gradient-color: var(--card-color);
-      --gradient-color: red;
+      --gradient-color: var(--card-color);
+      //--gradient-color: red;
     }
 
     :global(.key-takeaways) &,

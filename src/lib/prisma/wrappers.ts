@@ -215,7 +215,7 @@ export async function deleteTag(id: number) {
 
   const tag = await prisma.tag.findFirst({ where: { id } });
 
-  if(tag.type !== 'TOPIC') throw new Error('Only topic tags can be deleted');;
+  if(tag.type !== 'TOPIC') throw new Error('Only topic tags can be deleted');
 
   const cascade = prisma.tagsOnPages.deleteMany({
     where: { tagId: id }
@@ -244,7 +244,7 @@ export async function createTag(tag: TagRequest) {
     createTagQuery
   ]);
 
-  await publishEvent('page-created', { id: _tag.id });
+  await publishEvent('tag-created', { id: _tag.id });
 
   return _tag;
 }

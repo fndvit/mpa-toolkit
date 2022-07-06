@@ -16,7 +16,7 @@ declare namespace App {
   }
 
   export interface Locals {
-    cacheKey?: string;
+    cacheKeys?: Set<string>;
   }
 }
 

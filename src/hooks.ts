@@ -6,6 +6,7 @@ import { prisma } from "$lib/prisma";
 const RouteCache: {[routeId: string]: string} = {
   '': 's-maxage=604800, max-age=0', // index/homepage route
   '[slug]': 's-maxage=604800, max-age=0',
+  'search': 's-maxage=604800, max-age=0',
   'globe.svg': 'max-age=604800'
 };
 
@@ -26,7 +27,7 @@ function getCacheHeaders(event: RequestEvent): CacheHeaders {
   if (event.routeId == null) return {};
   return {
     'Cache-Control': getCacheControl(event),
-    'Surrogate-Key': event.locals.cacheKey != null ? event.locals.cacheKey : undefined,
+    'Surrogate-Key': event.locals.cacheKeys.size > 0 ? Array.from(event.locals.cacheKeys).join(' ') : undefined,
     'Surrogate-Control': 'stale-while-revalidate=30, stale-if-error=3600',
   };
 }
@@ -48,6 +49,7 @@ export const getSession: GetSession = async (event) => {
 };
 
 export const handle: Handle = async ({ event, resolve }) => {
+  event.locals.cacheKeys = new Set();
   const response = await resolve(event);
   if (response.ok) {
     const cacheHeaders = getCacheHeaders(event);

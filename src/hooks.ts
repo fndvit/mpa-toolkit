@@ -6,6 +6,7 @@ import { prisma } from "$lib/prisma";
 const RouteCache: {[routeId: string]: string} = {
   '': 's-maxage=604800, max-age=0', // index/homepage route
   '[slug]': 's-maxage=604800, max-age=0',
+  'search': 's-maxage=604800, max-age=0',
   'globe.svg': 'max-age=604800'
 };
 

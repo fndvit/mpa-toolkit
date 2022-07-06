@@ -10,12 +10,9 @@ export const get: RequestHandler<{ slug: string }> = async ({ locals, url }) => 
 
   locals.cacheKey ??= new Set();
 
-  pages.forEach(page => {
-    locals.cacheKey.add(`page-${page.id}`);
-    page.tags.forEach(tag => locals.cacheKey.add(`tag-${tag.tag.id}`));
+  Object.entries(tagHighlights).forEach(tag => {
+    if(tag[0] != null)locals.cacheKey.add(`page-${tag[0]}`);
   });
-
-  console.log('cacheKey:', locals.cacheKey);
   
   return {
     status: 200,

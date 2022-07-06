@@ -141,7 +141,6 @@
 
     :global(.gradient) {
       --gradient-color: var(--card-color);
-      //--gradient-color: red;
     }
 
     :global(.key-takeaways) &,
@@ -192,10 +191,6 @@
 
     .cards[data-card-style="no-heading"][multiple-slides=true] & {
       --content-right-padding: 140px;
-      :global(.content) {
-        //padding-right: 140px;
-      }
-
     }
 
     .has-fixed-title & :global(.heading) {
@@ -216,10 +211,6 @@
   }
 
   @media(max-width: 425px) {
-
-    .slide {
-      padding: 1rem;
-    }
 
     .cards {
       :global(.splide__arrows) {

@@ -73,7 +73,7 @@
   .gradient::before {
     content: '';
     position: absolute;
-    width: calc((100%) - calc(var(--content-padding) * 2) - var(--scrollbar-width)); //Content Padding Less Scrollbar 5px Width from &::-webkit-scrollbar
+    width: calc((100%) - var(--content-padding) - var(--content-right-padding) - var(--scrollbar-width)); //Content Padding Less Scrollbar 5px Width from &::-webkit-scrollbar
     height: 76%;
     left: inherit;
     z-index: 10;

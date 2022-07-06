@@ -239,6 +239,7 @@
     .middle-area {
       flex-direction: row;
       padding: 15px 0px 0px 0px;
+      margin-right: 0px;
     }
 
     .vertical-dots {

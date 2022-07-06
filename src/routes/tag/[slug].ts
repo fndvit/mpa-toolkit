@@ -44,6 +44,8 @@ export const get: RequestHandler<{ slug: string }> = async ({ locals, params }) 
   const pages = tag.pageTags.map(t => t.page);
 
   pages.map(p => p.tags.map(t => locals.cacheKeys.add(`tag-${t.tag.id}`)));
+  locals.cacheKeys.add('pages');
+
   return pages
     ? { body: { pages, tag } }
     : error404('Page not found');

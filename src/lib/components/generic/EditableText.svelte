@@ -16,6 +16,8 @@
   export const blur = () => el && el.blur();
   export const focus = () => el && el.focus();
 
+  $: if (el && focused != null) focused ? focus() : blur();
+
 </script>
 
 {#if editable}
@@ -44,8 +46,7 @@
     caret-color: var(--caret-color);
 
     &:focus {
-      outline: none;
-      outline: 2px solid var(--outline-color);
+      outline: 2px solid var(--outline-color, #ffffff88);
       border-radius: 4px;
       background-color: var(--ui-color-focus);
     }

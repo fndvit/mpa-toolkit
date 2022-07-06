@@ -1,12 +1,21 @@
 <script lang="ts">
   import { closeModal } from 'svelte-modals';
 
+  export let title: string;
+  export let message: string;
   export let isOpen: boolean;
-  export let onYes: () => void;
+  export let confirmText: string = null;
+  export let onYes: () => unknown;
+
+  let currentText: string = null;
+
+  const resetErrorField = (e: HTMLInputElement) => {
+    e.value = '';
+  };
 
   async function onClickDelete() {
-    onYes();
-    closeModal();
+      onYes();
+      closeModal();
   }
 
 </script>
@@ -14,11 +23,20 @@
 {#if isOpen}
 <div role="dialog" class="modal">
   <div class="contents">
-    <h2>Delete page</h2>
-    <p>Are you sure you want to delete this page?</p>
+    <h2>{title}</h2>
+    <p>{message}</p>
+    {#if confirmText}
+      <p>Write <b>{confirmText}</b> to confirm</p>
+      <input
+        type="text"
+        placeholder="Confirm text"
+        on:keyup={(e) => currentText = e.currentTarget.value}
+        on:focus={(e) => resetErrorField(e.currentTarget)}
+      />
+    {/if}
     <div class="actions">
       <button on:click="{closeModal}">Cancel</button>
-      <button on:click="{onClickDelete}">Delete</button>
+      <button on:click="{onClickDelete}" disabled={confirmText !== currentText}>Delete</button>
     </div>
   </div>
 </div>
@@ -64,4 +82,5 @@
     display: flex;
     justify-content: flex-end;
   }
+
 </style>

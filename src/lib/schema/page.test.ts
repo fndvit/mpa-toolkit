@@ -7,7 +7,7 @@ import pageInvalidCaseStudies from './testdata/page.invalid.casestudies.json';
 import pageInvalidChapters from './testdata/page.invalid.chapters.json';
 import pageInvalid from './testdata/page.invalid.json';
 import pageInvalidMilestones from './testdata/page.invalid.milestones.json';
-import pageInvalidKeyLearnings from './testdata/page.invalid.keylearnings.json';
+import { schemaExpectInvalid } from "./testutil";
 
 describe("Page", () => {
 
@@ -37,51 +37,23 @@ describe("Page", () => {
   });
 
   test("invalid tags", () => {
-    pageInvalidTags.forEach(tag => {
-      validate.errors = undefined;
-      expect(() => validate("page#/$defs/tag", tag)).toThrowError();
-      expect(validate.errors.length).greaterThanOrEqual(1);
-    });
+    pageInvalidTags.forEach(tag => schemaExpectInvalid("page#/$defs/tag", tag));
   });
 
   test("invalid case studies", () => {
-    pageInvalidCaseStudies.forEach(casestudy => {
-      validate.errors = undefined;
-      expect(() => validate("page#/$defs/caseStudy", casestudy)).toThrowError();
-      expect(validate.errors.length).greaterThanOrEqual(1);
-    });
+    pageInvalidCaseStudies.forEach(cs => schemaExpectInvalid("page#/$defs/caseStudy", cs));
   });
 
   test("invalid chapters", () => {
-    pageInvalidChapters.forEach(chapter => {
-      validate.errors = undefined;
-      expect(() => validate("page#/$defs/chapter", chapter)).toThrowError();
-      expect(validate.errors.length).greaterThanOrEqual(1);
-    });
+    pageInvalidChapters.forEach(chapter => schemaExpectInvalid("page#/$defs/chapter", chapter));
   });
 
   test("invalid pages", () => {
-    pageInvalid.forEach(page => {
-      validate.errors = undefined;
-      expect(() => validate("page", page)).toThrowError();
-      expect(validate.errors.length).greaterThanOrEqual(1);
-    });
+    pageInvalid.forEach(page => schemaExpectInvalid("page", page));
   });
 
   test("invalid milestones", () => {
-    pageInvalidMilestones.forEach(milestones => {
-      validate.errors = undefined;
-      expect(() => validate("page#/$defs/milestones", milestones)).toThrowError();
-      expect(validate.errors?.length).greaterThanOrEqual(1);
-    });
+    pageInvalidMilestones.forEach(ms => schemaExpectInvalid("page#/$defs/milestones", ms));
   });
-
-  /*test("invalid key learnings", () => {
-    pageInvalidKeyLearnings.forEach(keylearning => {
-      validate.errors = undefined;
-      expect(() => validate("page#/$defs/keyLearnings", keylearning)).toThrowError();
-      expect(validate.errors?.length).greaterThanOrEqual(1);
-    });
-  });*/
 
 });

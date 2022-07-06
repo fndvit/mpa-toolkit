@@ -78,7 +78,7 @@ export const addFocusClass = (node: HTMLElement, cb: (focused: boolean) => void 
   };
 
   node.addEventListener('focus', focus);
-  node.addEventListener('blur', focus);
+  node.addEventListener('blur', blur);
 
   return {
     destroy() {

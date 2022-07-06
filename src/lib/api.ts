@@ -1,4 +1,4 @@
-import type { UserRequest, PageRequest, User, Page } from "$lib/types";
+import type { UserRequest, PageRequest, TagRequest, User, Page, Tag } from "$lib/types";
 
 export async function uploadImage(file: File) {
   const formData = new FormData();
@@ -34,6 +34,20 @@ async function _page(data: PageRequest, id?: number) {
   return page;
 }
 
+async function _tag(data: TagRequest, id?: number) {
+  const newTag = id === undefined;
+  const response = await fetch(
+    newTag ? '/api/tags/create' : `/api/tags/${id}`,
+    {
+      method: newTag ? 'PUT' : 'PATCH',
+      body: JSON.stringify(data)
+    }
+  );
+
+  const page = await response.json() as Tag;
+  return page;
+}
+
 export async function createPage(data: PageRequest) {
   return _page(data);
 }
@@ -44,6 +58,21 @@ export async function updatePage(id: number, data: PageRequest) {
 
 export async function deletePage(id: number) {
   const response = await fetch(`/api/pages/${id}`, {
+    method: 'DELETE',
+  });
+  return response.ok;
+}
+
+export async function createTag(data: TagRequest){
+  return _tag(data);
+}
+
+export async function updateTag(id: number, data: TagRequest) {
+  return _tag(data, id);
+}
+
+export async function deleteTag(id: number) {
+  const response = await fetch(`/api/tags/${id}`, {
     method: 'DELETE',
   });
   return response.ok;

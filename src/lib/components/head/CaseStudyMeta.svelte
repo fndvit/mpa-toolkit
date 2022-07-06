@@ -95,19 +95,28 @@
 </div>
 {/if}
 
-<div class="meta-container  key-learnings">
-  <KeyLearnings {editable}/>
+<div class="key-learnings-container">
+  <div class="key-learnings-card">
+    <KeyLearnings {editable}/>
+  </div>
 </div>
-
 
 
 <style lang="stylus">
 
-  .key-learnings {
+  .key-learnings-container {
+    grid-config(page, case-study);
+    position: relative;
     background-color: $colors.secondary-bg;
-    margin: 30px 0px 30px 0px;
-    grid-area: keylearnings;
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
+
+  .key-learnings-card {
+    grid-area: keylearnings;
+    transform: translateX(-30px);
+  }
+
 
   .meta-container {
     grid-config(page, case-study);

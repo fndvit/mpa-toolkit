@@ -49,40 +49,35 @@
 
 </script>
 
-
-<div class="container">
-  <div class="card">
-    <div class="navigation-menu">
-      <div class="titles-area">
-        {#each cards as card, i}
-          <div class="title" id={i.toString()} class:selected={i===currentSubject} on:click={() => onClickChangeSubject(i)}>
-            <EditableText bind:value={card.subject} {editable} placeholder='Key learning...' />
-          </div>
-        {/each}
-        {#if editable}
-          <div class="editor-button">
-            <IconButton icon="add" on:click={onClickAddKeyLearning} />
-          </div>
-        {/if}
-      </div>
-
-      <div class="middle-area">
-        <div class="vertical-dots">
-          {#each cards as {}, i}
-            <div class="circle" class:selected={i===currentSubject} on:click={() => onClickChangeSubject(i)}/>
-          {/each}
+<div class="card">
+  <div class="navigation-menu">
+    <div class="titles-area">
+      {#each cards as card, i}
+        <div class="title" id={i.toString()} class:selected={i===currentSubject} on:click={() => onClickChangeSubject(i)}>
+          <EditableText bind:value={card.subject} {editable} placeholder='Key learning...' />
         </div>
-        <div class="line"/>
+      {/each}
+      {#if editable}
+        <div class="editor-button">
+          <IconButton icon="add" on:click={onClickAddKeyLearning} />
+        </div>
+      {/if}
+    </div>
+
+    <div class="middle-area">
+      <div class="vertical-dots">
+        {#each cards as {}, i}
+          <div class="circle" class:selected={i===currentSubject} on:click={() => onClickChangeSubject(i)}/>
+        {/each}
       </div>
+      <div class="line"/>
     </div>
+  </div>
 
-    <div class="card-content no-heading key-learnings">
-      <Cards cards={slides} handleDeletion={onClickRemoveKeyLearning} progress={isTimerActive} style='no-heading' {editable} bind:currentPageIndex={slideIndex}/>
-    </div>
-
+  <div class="card-content no-heading key-learnings">
+    <Cards cards={slides} handleDeletion={onClickRemoveKeyLearning} progress={isTimerActive} style='no-heading' {editable} bind:currentPageIndex={slideIndex}/>
   </div>
 </div>
-
 
 <style lang="stylus">
 
@@ -152,7 +147,7 @@
   }
 
   .titles-area {
-    padding-left: 25px;
+    padding-left: 30px;
     padding-top: 35px;
     padding-bottom: 35px;
     width: 155px;
@@ -171,19 +166,14 @@
     }
   }
 
-  .container {
-    background-color: $colors.neutral-light;
-    padding: 100px;
+  .card {
+    display: flex;
+    width: auto;
 
     :global(.editable-text) {
       --outline-color: $colors.neutral-black;
       --caret-color: $colors.neutral-black;
     }
-  }
-
-  .card {
-    display: flex;
-    width: auto;
   }
 
   .card-content {

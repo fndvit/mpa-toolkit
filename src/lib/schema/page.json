@@ -52,14 +52,15 @@
     },
 
     "keyLearnings": {
-      "type": "object",
-      "patternProperties": {
-        "^[0-9]+$": {
-          "type": "array",
-          "items": { "type": "string" },
-          "minItems": 1
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "subject": { "type": "string" },
+          "body": {"type": "array", "items": {"type": "string"}}
         }
       },
+      "minItems": 1,
       "additionalProperties": false
     },
 

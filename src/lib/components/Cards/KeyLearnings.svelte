@@ -174,7 +174,6 @@
   .container {
     background-color: $colors.neutral-light;
     padding: 100px;
-    grid-config(page, test);
 
     :global(.editable-text) {
       --outline-color: $colors.neutral-black;
@@ -183,7 +182,6 @@
   }
 
   .card {
-    grid-area: keylearnings;
     display: flex;
     width: auto;
   }
@@ -217,19 +215,22 @@
   +breakpoint(page, medium) {
 
     .card {
-      //background-color: blue;
+
     }
 
     .card-content {
-      //background-color: red;
+
 
       :global(.cards) {
-        //width: 550px;
-        //background-color: yellow;
+
       }
 
 
     }
+
+  }
+
+  +breakpoint(page, small){
 
   }
 

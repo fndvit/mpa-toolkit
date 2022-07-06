@@ -6,7 +6,7 @@
   import EditableText from "../generic/EditableText.svelte";
   import EditableNumber from "../generic/EditableNumber.svelte";
   import GlobeVizEditor from "./GlobeVizEditor.svelte";
-import KeyLearnings from "../Cards/KeyLearnings.svelte";
+  import KeyLearnings from "../Cards/KeyLearnings.svelte";
 
   export let caseStudy: SubTypes.CaseStudy.PageHead;
   export let editable = false;
@@ -95,10 +95,19 @@ import KeyLearnings from "../Cards/KeyLearnings.svelte";
 </div>
 {/if}
 
-<KeyLearnings {editable}/>
+<div class="meta-container  key-learnings">
+  <KeyLearnings {editable}/>
+</div>
+
 
 
 <style lang="stylus">
+
+  .key-learnings {
+    background-color: $colors.secondary-bg;
+    margin: 30px 0px 30px 0px;
+    grid-area: keylearnings;
+  }
 
   .meta-container {
     grid-config(page, case-study);

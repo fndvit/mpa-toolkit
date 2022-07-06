@@ -16,10 +16,8 @@ export const get: RequestHandler<{ id: string }> = async ({locals}) => {
     ...tag
   });
 
-  locals.cacheKey ??= new Set();
-  
-  locals.cacheKey.add(`pages`);
-  locals.cacheKey.add(`tags`);
+  locals.cacheKeys.add(`pages`);
+  locals.cacheKeys.add(`tags`);
 
   const groups = groupBy(pages, p => p.chapter ? 'chapters' : 'caseStudies');
 

@@ -8,12 +8,8 @@ export const get: RequestHandler<{ slug: string }> = async ({ locals, url }) => 
   const pages = await searchPages(search_text, pageForCollectionCard);
   const tagHighlights = await searchTags(search_text);
 
-  locals.cacheKey ??= new Set();
+  pages.map(p => p.tags.map(t => locals.cacheKeys.add(`tag-${t.tag.id}`)));
 
-  Object.entries(tagHighlights).forEach(tag => {
-    if(tag[0] != null)locals.cacheKey.add(`page-${tag[0]}`);
-  });
-  
   return {
     status: 200,
     body: {

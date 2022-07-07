@@ -227,12 +227,6 @@
         --dot-size: 7px;
       }
     }
-
-    .fixed-title {
-      :global(.heading) {
-        margin-left: 17px;
-      }
-    }
   }
 
 </style>

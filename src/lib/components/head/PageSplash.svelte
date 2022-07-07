@@ -21,7 +21,7 @@
 </script>
 
 <div class="unep-logo">
-  <InlineSvg href="https://www.unep.org" svg="UNEP" />
+  <a href="https://www.unep.org" rel="external" target="_blank"><InlineSvg  svg="UNEP" /></a>
 </div>
 <div class="splash" style="background-image: url({img});" class:splash-cs={page.caseStudy}>
   <h1>
@@ -70,6 +70,10 @@
     margin: 2rem;
     width: 110px;
     color: white;
+
+    a {
+      color: inherit;
+    }
   }
 
   +breakpoint(page, medium)

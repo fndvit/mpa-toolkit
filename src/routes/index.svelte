@@ -24,7 +24,7 @@
 
 <div class="landing-page">
   <div class="unep-logo">
-    <InlineSvg href="https://www.unep.org" svg="UNEP" />
+    <a href="https://www.unep.org" rel="external" target="_blank"><InlineSvg  svg="UNEP" /></a>
   </div>
   <div class="top-searchbar">
     <Searchbar type={'top'}/>
@@ -34,11 +34,11 @@
     <h4>A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
     <h5>In partnership with</h5>
     <div class="partners-grid">
-      <InlineSvg href="https://www.aics.gov.it/language/en/" svg="IAFDC" />
-      <InlineSvg href="https://www.uq.edu.au" svg="UoQ" />
+      <a href="https://www.aics.gov.it/language/en/" rel="external" target="_blank"><InlineSvg svg="IAFDC" /></a>
+      <a href="https://www.uq.edu.au" rel="external" target="_blank"><InlineSvg svg="UoQ" /></a>
       <div class="partners-grid-2">
-        <InlineSvg href="https://www.nature.org/" svg="TNC" />
-        <InlineSvg href="https://wwf.panda.org" svg="WWF" />
+        <a  href="https://www.nature.org/" rel="external" target="_blank"><InlineSvg svg="TNC" /></a>
+        <a href="https://wwf.panda.org" rel="external" target="_blank"><InlineSvg svg="WWF" /></a>
       </div>
     </div>
   </div>
@@ -122,6 +122,10 @@
     margin: 2rem;
     color: white;
     width: 110px;
+  }
+
+  a {
+    color: inherit;
   }
 
 

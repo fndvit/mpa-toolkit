@@ -8,12 +8,12 @@
     <h5>A partnership between</h5>
 
     <div class="partners-grid">
-      <InlineSvg href="https://www.unep.org" svg="UNEP"/>
-      <InlineSvg href="https://www.aics.gov.it/language/en/" svg="IAFDC" />
-      <InlineSvg href="https://wwf.panda.org" svg="WWF" />
+      <a href="https://www.unep.org" rel="external" target="_blank"><InlineSvg svg="UNEP"/></a>
+      <a href="https://www.aics.gov.it/language/en/" rel="external" target="_blank"><InlineSvg  svg="IAFDC" /></a>
+      <a href="https://wwf.panda.org" rel="external" target="_blank"><InlineSvg svg="WWF" /></a>
       <div class="partners-grid-2">
-        <InlineSvg href="https://www.uq.edu.au" svg="UoQ" />
-        <InlineSvg  href="https://www.nature.org/" svg="TNC" />
+        <a href="https://www.uq.edu.au" rel="external" target="_blank"><InlineSvg  svg="UoQ" /></a>
+        <a href="https://www.nature.org/" rel="external" target="_blank"><InlineSvg svg="TNC" /></a>
       </div>
     </div>
 
@@ -58,6 +58,10 @@
     align-items: center;
     gap: 45px;
     color: $colors.neutral-dark;
+
+    a {
+      color: inherit;
+    }
   }
 
   .partners-grid-2 {

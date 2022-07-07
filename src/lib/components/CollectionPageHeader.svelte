@@ -13,7 +13,7 @@
 
 <div class="container" style="background-image: url({landingMadlibBg})">
   <div class="unep-logo">
-    <InlineSvg href="https://www.unep.org" svg="UNEP" />
+    <a href="https://www.unep.org" rel="external" target="_blank"><InlineSvg svg="UNEP" /></a>
   </div>
 
   <div class="content">
@@ -59,6 +59,10 @@
     left: 20px;
     width: 110px;
     color: white;
+
+    a {
+      color: inherit;
+    }
   }
 
   @media only screen and (max-width: 1024px) {

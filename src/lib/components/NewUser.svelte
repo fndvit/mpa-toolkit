@@ -1,9 +1,8 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
     import { getToaster } from "$lib/helpers/utils";
     import { createUser } from "$lib/api";
+    import { closeModal } from 'svelte-modals';
 
-    const dispatch = createEventDispatcher();
     const toaster = getToaster();
     const roles = ["ADMIN", "CONTENT_MANAGER", "USER"];
 
@@ -12,11 +11,6 @@
     let name;
     let email;
     let role;
-
-    function closeModal() {
-        isOpen = false;
-        dispatch('closeModal', { isOpen });
-    }
 
     async function addNewUser() {
         if(name != null && email != null) {
@@ -32,7 +26,7 @@
     }
 </script>
 
-<div class="background" style="--display: {isOpen ? 'block' : 'none'};" on:click={closeModal}></div>
+<div class="background" style="--display: {isOpen ? 'block' : 'none'};" on:click={() => closeModal()}></div>
 <div class="modal" style="--display: {isOpen ? 'block' : 'none'};">
 
     <h1>NEW USER</h1>

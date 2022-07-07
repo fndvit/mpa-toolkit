@@ -11,13 +11,9 @@
   import { openModal } from 'svelte-modals';
 
   export let users: User[];
-  export let authors: User[];
   
   const toaster = getToaster();
-  let isOpen = false;
   $: users = users;
-
-  function showPopup() { isOpen = !isOpen; };
 
   const handleDelete = async (user: User) => {
 
@@ -56,9 +52,7 @@
 
   async function onClickDeleteUser(user: User) {
 
-    let hasChapters = authors.find(a => a.id === user.id);
-
-    if (hasChapters["chapter"].length == 0 ) {
+    if (user["chapter"].length == 0) {
       await handleDelete(user);
     }
     else {
@@ -84,18 +78,18 @@
     </a>
     <h1>Users</h1>
 
-    <button on:click={showPopup} class="new-user">
+    <button on:click={() => openModal(NewUser)} class="new-user">
       <div>
         <InlineSvg svg="UserIcon"/>
       </div>
       <p>NEW USER</p>
     </button>
-    <NewUser isOpen={isOpen} on:closeModal={showPopup}/>
+
  
   </div>
 
   <div class="users">
-    {#each users as user}
+    {#each users as user (user.id)}
       <div>
         <EditableUserImage bind:user={user} />
       </div>

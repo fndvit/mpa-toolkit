@@ -20,7 +20,7 @@
 
 <svelte:element
   this={tagName}
-  href={ !cms && `/tag/${slugify(tag.value)}`}
+  href={ cms ? undefined :  `/tag/${slugify(tag.value)}`}
   class="tag {secondary ? 'secondary' : ''} "
   tabindex="0"
   on:mouseenter

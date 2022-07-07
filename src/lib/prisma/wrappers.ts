@@ -201,10 +201,23 @@ export async function updateTag(id: number, tag: TagRequest) {
 
   if (_typeCheckTag.type !== 'TOPIC') throw new Error('Only topic tags can be updated');
 
-  const _tag = await prisma.tag.update({
+  const updateTagQuery = prisma.tag.update({
     where: { id },
     data: { value },
   });
+
+  const pagesWithTagId = await prisma.page.findMany({
+    where: {
+      tags: {
+        some: {  tagId: { equals: id } }
+      }
+    },
+    select: { id: true }
+  });
+
+  const createPageSearchIndex = pagesWithTagId.map(p => prisma.$queryRaw`SELECT CAST (create_page_search_index(${p.id}) AS TEXT)`);
+
+  const [_tag] = await prisma.$transaction([].concat(updateTagQuery, createPageSearchIndex));
 
   await publishEvent('tag-updated', { id });
 

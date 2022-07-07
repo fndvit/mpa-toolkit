@@ -190,6 +190,8 @@ export async function searchTags(searchText: string) {
 
 export async function createUser(user: UserRequest) {
 
+  validate('user', user);
+
   const { name, email, role } = user;
 
   const createUserQuery = prisma.user.create({

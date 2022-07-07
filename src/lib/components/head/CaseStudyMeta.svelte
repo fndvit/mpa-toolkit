@@ -10,7 +10,7 @@
   import LifeCycle from "../LifeCycle.svelte";
 
   export let caseStudy: SubTypes.CaseStudy.PageHead;
-  export let tags: SubTypes.PageTag[] = null;
+  export let tags: SubTypes.PageTag[];
   export let editable = false;
 
   const placeholders = {
@@ -98,8 +98,8 @@
 {/if}
 
 {#if !editable}
-  <div class="jesus">
-    <div class="lifecycle-container">
+  <div class="lifecycle-container">
+    <div class="lifecycle">
       <LifeCycle {tags}/>
     </div>
   </div>
@@ -107,18 +107,18 @@
 
 <div class="key-learnings-container">
   <div class="key-learnings-card">
-    <KeyLearnings {editable}/>
+    <KeyLearnings bind:keyLearnings={caseStudy.keyLearnings} {editable}/>
   </div>
 </div>
 
 <style lang="stylus">
 
-  .jesus {
+  .lifecycle-container {
     grid-config(page, case-study);
-    //background-color: $colors.secondary-bg;
+    background-color: $colors.secondary-bg;
   }
 
-  .lifecycle-container {
+  .lifecycle {
     grid-area: lifecycle;
     position: relative;
 
@@ -249,6 +249,14 @@
 
     .key-learnings-card {
       margin-left: 0px;
+    }
+
+    .lifecycle-container {
+      padding-bottom: 40px;
+    }
+
+    .key-learnings-container {
+      padding-top: 0px;
     }
 
   }

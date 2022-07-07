@@ -14,7 +14,6 @@
         if (activeTagSet.has(tag)) activeTagSet.delete(tag);
         else activeTagSet.add(tag);
 
-        activeTagSet = activeTagSet;
         activeTags = Array.from(activeTagSet);
     }
 

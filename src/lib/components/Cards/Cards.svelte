@@ -24,7 +24,7 @@
   export let fixedTitle: string = null;
   export let selected = false;
   export let progress = true;
-  export let handleDeletion = null;
+  export let canToggleHeading = true;
 
   let splide: Splide;
 
@@ -42,9 +42,9 @@
   };
 
   const onClickRemoveCard = () => {
-    if (cards.length <= 1) {
-      handleDeletion();
-    }
+   //if (cards.length <= 1) {
+      //handleDeletion();
+    //}
     cards = cards.filter((_, i) => i !== currentPageIndex);
     const goTo = Math.max(0, Math.min(currentPageIndex, cards.length-1));
     splide.go(goTo);
@@ -86,7 +86,7 @@
       <div class="editor-buttons">
         <IconButton icon="add" on:click={onClickAddCard} />
         <IconButton icon="delete" on:click={onClickRemoveCard} />
-        {#if !fixedTitle}
+        {#if canToggleHeading}
           <IconButton icon="title" active={style === 'default'} on:click={onClickChangeType} />
         {/if}
       </div>

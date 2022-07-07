@@ -115,6 +115,7 @@
 
   .jesus {
     grid-config(page, case-study);
+    //background-color: $colors.secondary-bg;
   }
 
   .lifecycle-container {
@@ -148,7 +149,7 @@
 
   .key-learnings-card {
     grid-area: keylearnings;
-    transform: translateX(-30px);
+    margin-left: -30px;
   }
 
   .meta-container {
@@ -247,7 +248,7 @@
     }
 
     .key-learnings-card {
-      transform: translateX(0px);
+      margin-left: 0px;
     }
 
   }

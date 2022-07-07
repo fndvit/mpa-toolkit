@@ -204,6 +204,20 @@ export async function createUser(user: UserRequest) {
   return _user;
 }
 
+export async function updateUser(id: number, user: UserRequest) {
+  
+  validate('user', user);
+
+  const { name, email, role } = user;
+
+  const _user = await prisma.user.update({
+    where: { id },
+    data: { name, email, role },
+  });
+
+  return _user;
+}
+
 export async function deleteUser(id: number) {
 
   const user = await prisma.user.findFirst({ where: { id } });

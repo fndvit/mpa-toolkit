@@ -32,14 +32,11 @@
       {@html highlight}
     {:else}
       {tag.value}
-      {#if cms && style === 'PRIMARY'}
-        <svg width="20" height="15">
-          <path d="M 14.9215 4.5128 L 15.4871 5.0784 L 5.0783 15.4864 L 4.5127 14.9212 L 14.9215 4.5128 Z"></path>
-          <path d="M 5.0783 4.5128 L 15.4871 14.9208 L 14.9215 15.4868 L 4.5127 5.0788 L 5.0783 4.5128 Z"></path>
-        </svg>
-      {/if}
     {/if}
   </span>
+  {#if cms && style === 'PRIMARY'}
+    <span class="material-icons">close</span>
+  {/if}
 </svelte:element>
 
 <style lang="stylus">
@@ -70,14 +67,14 @@
       }
     }
 
-    span {
+    span:first-child {
       typography: ui-small;
       position: relative;
     }
 
-    svg {
-
-      padding-left: 10px;
+    .material-icons {
+      font-size: 14px;
+      vertical-align: middle;
     }
   }
   .tag:hover {

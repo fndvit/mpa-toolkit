@@ -124,11 +124,6 @@
     width: 110px;
   }
 
-  a {
-    color: inherit;
-  }
-
-
   +breakpoint(page, medium) {
 
     .landing-page {

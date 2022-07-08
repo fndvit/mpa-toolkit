@@ -70,10 +70,6 @@
     margin: 2rem;
     width: 110px;
     color: white;
-
-    a {
-      color: inherit;
-    }
   }
 
   +breakpoint(page, medium)

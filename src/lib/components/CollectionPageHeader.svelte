@@ -59,10 +59,6 @@
     left: 20px;
     width: 110px;
     color: white;
-
-    a {
-      color: inherit;
-    }
   }
 
   @media only screen and (max-width: 1024px) {

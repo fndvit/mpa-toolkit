@@ -58,10 +58,6 @@
     align-items: center;
     gap: 45px;
     color: $colors.neutral-dark;
-
-    a {
-      color: inherit;
-    }
   }
 
   .partners-grid-2 {

@@ -125,7 +125,7 @@ export namespace Page {
   export type CollectionCard =
     Prisma.PageGetPayload<typeof pageForCollectionCard>
     & { rank?: number, highlights?: string};
-  export type CmsList = CollectionCard;
+  export type CmsList = Prisma.PageGetPayload<typeof pageForCmsList>;
   export type ContentCard = Prisma.PageGetPayload<typeof pageForContentCard>;
 }
 

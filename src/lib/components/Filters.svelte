@@ -2,9 +2,9 @@
   import TagFilter from '$lib/components/cms/TagFilter.svelte';
   import { groupBy } from '$lib/helpers/utils';
   import type { SubTypes } from '$lib/types';
-  
+
   export let tags: SubTypes.Tag[];
- 
+
   export let activeTags: SubTypes.Tag[] = [];
 
   $: activeTags = [...activeStageTags, ...activeTopicTags, ...activeUsersTags ];
@@ -15,9 +15,9 @@
 
   let tagSearch = '';
   let groupedOptions = groupBy(tags, tag => tag.type);
- 
+
   $: searchRegex = new RegExp(tagSearch, 'i');
-  
+
   $: filteredTagsStage = groupedOptions.STAGE.filter(p => searchRegex.test(p.value));
   $: filteredTagsTopic = groupedOptions.TOPIC.filter(p => searchRegex.test(p.value));
   $: filteredTagsUser = groupedOptions.USER.filter(p => searchRegex.test(p.value));
@@ -34,7 +34,7 @@
       </svg>
       <input type="text" bind:value={tagSearch}>
     </div>
-    
+
     <div>
       <p>MPA lifecycle</p>
       <TagFilter tags={filteredTagsStage} bind:activeTags={activeStageTags} />
@@ -51,7 +51,7 @@
 </div>
 
 <style lang="stylus">
-  
+
   .filters {
       width: 100%;
       height: auto;
@@ -68,7 +68,7 @@
         :global(.tag-filter .tag) {
           background: #66CFD6;
         }
-       
+
       }
 
       .type-user {

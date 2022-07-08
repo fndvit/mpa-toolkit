@@ -1,6 +1,7 @@
 import type { ContentDocument, MilestonesData } from "$lib/types";
 import type { ExpandRecursively, Exact, Modify, Expand } from "$lib/helpers/utils";
 import { Prisma, TagType } from "@prisma/client";
+import clone from "clone";
 
 export const tag = validate<Prisma.TagSelect>()({
   id: true,
@@ -104,6 +105,10 @@ export const pageForCollectionCard = validate<Prisma.PageSelect>()({
   caseStudy: { select: { name: true } },
 });
 
+
+export const pageForCmsList = clone(pageForCollectionCard);
+pageForCmsList.select.tags.where = undefined;
+
 export namespace User {
   export type Session = Prisma.UserGetPayload<typeof userSession>;
 }
@@ -120,6 +125,7 @@ export namespace Page {
   export type CollectionCard =
     Prisma.PageGetPayload<typeof pageForCollectionCard>
     & { rank?: number, highlights?: string};
+  export type CmsList = CollectionCard;
   export type ContentCard = Prisma.PageGetPayload<typeof pageForContentCard>;
 }
 

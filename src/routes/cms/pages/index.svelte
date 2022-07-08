@@ -3,25 +3,24 @@
   import CollectionCards from "$lib/components/CollectionCards.svelte";
   import { groupBy } from "$lib/helpers/utils";
   import Searchbar from "$lib/components/generic/Searchbar.svelte";
-  import Filters from "$lib/components/Filters.svelte"; 
+  import Filters from "$lib/components/Filters.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
-  
+
   export let allTags: Tag[] = null;
-  export let allPages: SubTypes.Page.Full[];
-  export let pages: SubTypes.Page.CollectionCard[];
+  export let pages: SubTypes.Page.CmsList[];
 
   let activeTags: SubTypes.Tag[] = [];
   let pageSearch = '';
 
   $: searchRegex = new RegExp(pageSearch, 'i');
-  $: filteredPagesSearch = allPages.filter(p => searchRegex.test(p.title));
 
-  $: filteredPages = filteredPagesSearch.filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
+  $: filteredPages = pages
+    .filter(p => searchRegex.test(p.title))
+    .filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
 
-  $: selectPages = pages.filter(p => filteredPages.find(a => a.id === p.id));
-  $: grouped = groupBy(selectPages, p => p.draft ? 'draft' : 'live');
+  $: grouped = groupBy(filteredPages, p => p.draft ? 'draft' : 'live');
 
-  
+
 </script>
 
 <div class="container">
@@ -40,7 +39,7 @@
           </div>
           <p>CHAPTER</p>
         </div></a>
-  
+
       <a href="/cms/pages/create/case-study">
         <div class="cms-links">
           <div class="icon">
@@ -83,7 +82,7 @@
 </div>
 
 <style lang="stylus">
- 
+
   .container {
     width: 100%;
     box-sizing: border-box;
@@ -144,7 +143,7 @@
     .cms-links {
       background: white;
       border-radius: 24px;
-      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1); 
+      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
       width: 185px;
       height: 140px;
 

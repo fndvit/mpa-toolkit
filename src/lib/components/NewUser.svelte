@@ -21,7 +21,7 @@
             } catch (err) {
                 console.error(err);
                 toaster(`Error creating a new user: ${err.message}`, {type: 'error'});
-            } 
+            }
         }
     }
 </script>
@@ -70,11 +70,11 @@
 
     width: 420px;
     height: auto;
-    
+
     background: white;
     border-radius: 24px;
     box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
-    text-align: center; 
+    text-align: center;
 
     h1 {
         typography: h3-light-responsive;
@@ -116,8 +116,8 @@
     background: white;
     border-radius: 10px;
     border: none;
-    box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1); 
-    
+    box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+
     margin: 5rem 2rem;
 
     &:hover {

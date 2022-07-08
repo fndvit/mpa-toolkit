@@ -1,15 +1,12 @@
 <script lang="ts">
   import TagFilter from '$lib/components/cms/TagFilter.svelte';
+  import { groupBy } from '$lib/helpers/utils';
   import type { SubTypes } from '$lib/types';
   
-  export let tags;
+  export let tags: SubTypes.Tag[];
  
   export let activeTags: SubTypes.Tag[] = [];
-  export let orderby;
 
-  let options = ["Authors", "Chapter", "CaseStudy"];
-
-  $: orderby = options.map(() => false);
   $: activeTags = [...activeStageTags, ...activeTopicTags, ...activeUsersTags ];
 
   let activeStageTags: SubTypes.Tag[] = [];
@@ -17,12 +14,13 @@
   let activeUsersTags: SubTypes.Tag[] = [];
 
   let tagSearch = '';
-
+  let groupedOptions = groupBy(tags, tag => tag.type);
+ 
   $: searchRegex = new RegExp(tagSearch, 'i');
   
-  $: filteredTagsStage = tags.STAGE.filter(p => searchRegex.test(p.value));
-  $: filteredTagsTopic = tags.TOPIC.filter(p => searchRegex.test(p.value));
-  $: filteredTagsUser = tags.USER.filter(p => searchRegex.test(p.value));
+  $: filteredTagsStage = groupedOptions.STAGE.filter(p => searchRegex.test(p.value));
+  $: filteredTagsTopic = groupedOptions.TOPIC.filter(p => searchRegex.test(p.value));
+  $: filteredTagsUser = groupedOptions.USER.filter(p => searchRegex.test(p.value));
 
 </script>
 
@@ -50,22 +48,6 @@
       <TagFilter tags={filteredTagsUser} bind:activeTags={activeUsersTags}/>
     </div>
   </div>
-
-  <div class="order">
-    <h1>Order by</h1>
-    <div class="orderby-grid">
-      {#each options as opt, index}
-        {#if ((orderby[0] === true || orderby[1] === true) && index == 2) ||  (orderby[2] === true && index != 2)}
-          <input type="checkbox" bind:checked={orderby[index]} id={opt} disabled>
-          <label for="authors">{opt}</label>
-        {:else}
-          <input type="checkbox" bind:checked={orderby[index]} id={opt} >
-          <label for="authors">{opt}</label>
-        {/if}
-      {/each}
-      
-    </div>
-  </div>
 </div>
 
 <style lang="stylus">
@@ -76,7 +58,7 @@
       box-sizing: border-box;
       box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.1);
       border-radius: 20px;
-      padding: 5px 25px;
+      padding: 0px 0px 15px 25px;
       margin-top: 26px;
 
       .type-topic {
@@ -128,13 +110,5 @@
           margin-left: 20px;
         }
       }
-  }
-
-  .orderby-grid {
-    margin: 20px 5px;
-    display: grid;
-    grid-template-columns: auto 1fr auto 1fr auto 1fr;
-    grid-gap: 20px;
-    width: 750px;
   }
 </style>

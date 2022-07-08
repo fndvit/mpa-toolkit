@@ -7,36 +7,21 @@
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
   
   export let allTags: Tag[] = null;
+  export let allPages: SubTypes.Page.Full[];
   export let pages: SubTypes.Page.CollectionCard[];
 
   let activeTags: SubTypes.Tag[] = [];
-  let orderby = new Array(3);
   let pageSearch = '';
 
   $: searchRegex = new RegExp(pageSearch, 'i');
-  $: filteredPagesSearch = pages.filter(p => searchRegex.test(p.title));
+  $: filteredPagesSearch = allPages.filter(p => searchRegex.test(p.title));
 
   $: filteredPages = filteredPagesSearch.filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
 
-  $: {
-    if(!orderby.find(() => true)) {
-      filteredPages = filteredPagesSearch.filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
-    }
-    if(orderby[0] || orderby[1]) {
-      filteredPages = filteredPages.filter(p => p.chapter != null );
+  $: selectPages = pages.filter(p => filteredPages.find(a => a.id === p.id));
+  $: grouped = groupBy(selectPages, p => p.draft ? 'draft' : 'live');
 
-      if(orderby[0])
-        filteredPages = filteredPages.sort((a, b) => {
-            return (a.chapter.authors[0].name >  b.chapter.authors[0].name ? 1 : ( a.chapter.authors[0].name ===  b.chapter.authors[0].name ? 0 : -1)) }
-        );
-    }    
-    if(orderby[2]) filteredPages = filteredPages.filter(p => p.caseStudy != null );
-    
-  }
-
-  const groupedOptions = groupBy(allTags, tag => tag.type);
-  $: grouped = groupBy(filteredPages, p => p.draft ? 'draft' : 'live');
-
+  
 </script>
 
 <div class="container">
@@ -76,7 +61,7 @@
   </div>
 
   <div class="filters">
-    <Filters tags={groupedOptions} bind:activeTags bind:orderby/>
+    <Filters tags={allTags} bind:activeTags/>
   </div>
 
   <div class="pages">

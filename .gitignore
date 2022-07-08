@@ -11,4 +11,5 @@ node_modules
 cdk.out
 yarn-error.log
 package-lock.json
-.vscode
+.vscode/*
+!.vscode/extensions.json

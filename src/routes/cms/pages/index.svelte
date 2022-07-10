@@ -2,7 +2,6 @@
   import type { SubTypes, Tag } from '$lib/types';
   import CollectionCards from "$lib/components/CollectionCards.svelte";
   import { groupBy } from "$lib/helpers/utils";
-  import Searchbar from "$lib/components/generic/Searchbar.svelte";
   import Filters from "$lib/components/Filters.svelte";
   import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
 
@@ -10,7 +9,7 @@
   export let pages: SubTypes.Page.CmsList[];
 
   let activeTags: SubTypes.Tag[] = [];
-  let pageSearch = '';
+  let pageSearch: string;
 
   $: searchRegex = new RegExp(pageSearch, 'i');
 
@@ -19,7 +18,6 @@
     .filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
 
   $: grouped = groupBy(filteredPages, p => p.draft ? 'draft' : 'live');
-
 
 </script>
 
@@ -50,17 +48,8 @@
     </div>
   </div>
 
-  <div class="searchbar">
-    <Searchbar
-        bind:search={pageSearch}
-        type="top"
-        placeholder={"Search a Page..."}
-        submit={null}
-        />
-  </div>
-
   <div class="filters">
-    <Filters tags={allTags} bind:activeTags/>
+    <Filters tags={allTags} bind:activeTags {pageSearch}/>
   </div>
 
   <div class="pages">
@@ -154,20 +143,6 @@
       .icon {
         padding-top: 20px;
         transform: scale(0.85);
-      }
-    }
-  }
-
-  .searchbar {
-    max-width: 530px;
-    margin-top: 100px;
-
-    :global(.searchbar){
-      :global(.placeholder){
-        color: $colors.neutral-black;
-      }
-      :global(.input-text){
-        color: $colors.neutral-black;
       }
     }
   }

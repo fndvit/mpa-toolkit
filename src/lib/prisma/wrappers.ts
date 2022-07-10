@@ -202,12 +202,12 @@ export async function createUser(user: UserRequest) {
   const [_user] = await prisma.$transaction([
     createUserQuery
   ]);
-  
+
   return _user;
 }
 
 export async function updateUser(id: number, user: UserRequest) {
-  
+
   validate('user', user);
 
   const { name, email, role } = user;
@@ -222,14 +222,12 @@ export async function updateUser(id: number, user: UserRequest) {
 
 export async function deleteUser(id: number) {
 
-  const user = await prisma.user.findFirst({ where: { id } });
-
   const cascade = prisma.page.updateMany({
       where: {
         chapter: {
           authors: { some: { id } }
         }
-        
+
       },
       data: {
         content: {

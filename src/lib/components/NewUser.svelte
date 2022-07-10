@@ -1,55 +1,56 @@
-<script>
-    import { getToaster } from "$lib/helpers/utils";
-    import { createUser } from "$lib/api";
-    import { closeModal } from 'svelte-modals';
+<script lang="ts">
+  import { getToaster } from "$lib/helpers/utils";
+  import { createUser } from "$lib/api";
+  import { closeModal } from 'svelte-modals';
+  import type { Role } from "@prisma/client";
 
-    const toaster = getToaster();
-    const roles = ["ADMIN", "CONTENT_MANAGER", "USER"];
+  export let isOpen: boolean;
 
-    export let isOpen;
+  const toaster = getToaster();
+  const roles = ["ADMIN", "CONTENT_MANAGER", "USER"];
 
-    let name;
-    let email;
-    let role;
+  let name: string = "";
+  let email: string = null;
+  let role: Role;
 
-    async function addNewUser() {
-        if(name != null && email != null) {
-            try {
-                await createUser({name, email, role});
-                toaster('User created', {type: 'done'});
+  async function addNewUser() {
+    if(name != null) {
+      try {
+        await createUser({name, email, role});
+        toaster('User created', {type: 'done'});
 
-            } catch (err) {
-                console.error(err);
-                toaster(`Error creating a new user: ${err.message}`, {type: 'error'});
-            }
-        }
+      } catch (err) {
+        console.error(err);
+        toaster(`Error creating a new user: ${err.message}`, {type: 'error'});
+      }
     }
+  }
 </script>
 
 <div class="background" style="--display: {isOpen ? 'block' : 'none'};" on:click={() => closeModal()}></div>
 <div class="modal" style="--display: {isOpen ? 'block' : 'none'};">
 
-    <h1>NEW USER</h1>
+  <h1>NEW USER</h1>
 
-    <form class="inputs">
-        <div>
-            <input type="text" bind:value={name} placeholder="Name" required>
-        </div>
-        <div>
-            <input type="text" bind:value={email} placeholder="Email" required>
-        </div>
-        <select bind:value={role} required>
-            {#each roles as role}
-            <option value="{role}">{role}</option>
-            {/each}
-        </select>
-        <button class="add-user" on:click|once={() => addNewUser()}>ADD</button>
-    </form>
+  <form class="inputs">
+    <div>
+      <input type="text" bind:value={name} placeholder="Name" required>
+    </div>
+    <div>
+      <input type="text" bind:value={email} placeholder="Email">
+    </div>
+    <select bind:value={role} required>
+      {#each roles as role}
+        <option value="{role}">{role}</option>
+      {/each}
+    </select>
+    <button class="add-user" on:click|preventDefault={() => addNewUser()}>ADD</button>
+  </form>
 </div>
 
 <style lang="stylus">
 
-.background {
+  .background {
     display: var(--display);
     backdrop-filter: blur(3px);
     position: fixed;
@@ -58,9 +59,9 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-}
+  }
 
-.modal {
+  .modal {
     display: var(--display);
     position: fixed;
     z-index: 2;
@@ -77,39 +78,39 @@
     text-align: center;
 
     h1 {
-        typography: h3-light-responsive;
-        margin: 2rem;
+      typography: h3-light-responsive;
+      margin: 2rem;
     }
 
-}
+  }
 
-.inputs {
+  .inputs {
     typography: h5-light;
 
     input {
-        border: none;
-        margin: 1.5rem;
-        text-decoration: none;
-        width: 300px;
+      border: none;
+      margin: 1.5rem;
+      text-decoration: none;
+      width: 300px;
 
-        &:focus {
-            outline: none;
-            border-bottom: solid 1px;
-        }
+      &:focus {
+        outline: none;
+        border-bottom: solid 1px;
+      }
     }
 
     select {
-        border: none;
-        padding: 1rem;
-        width: 300px;
-        background-color: $colors.neutral-bg;
-        border-radius: 10px;
-        typography: ui;
-        margin: 1.5rem;
+      border: none;
+      padding: 1rem;
+      width: 300px;
+      background-color: $colors.neutral-bg;
+      border-radius: 10px;
+      typography: ui;
+      margin: 1.5rem;
     }
-}
+  }
 
-.add-user {
+  .add-user {
     typography: ui;
     padding: 1rem;
     width: 115px;
@@ -121,8 +122,8 @@
     margin: 5rem 2rem;
 
     &:hover {
-        background: $colors.neutral-bg;
+      background: $colors.neutral-bg;
     }
-}
+  }
 
 </style>

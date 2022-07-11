@@ -1,12 +1,12 @@
 <script lang="ts">
   import { updateUser, uploadImage } from "$lib/api";
-  import type { User } from "$lib/types";
+  import type { SubTypes } from "$lib/types";
   import { openModal } from "svelte-modals";
   import UserImage from "$lib/components/UserImage.svelte";
   import CropModal from "$lib/components/cms/CropModal.svelte";
   import Spinner from "$lib/components/generic/Spinner.svelte";
 
-  export let user: User;
+  export let user: SubTypes.User.ForCMS;
 
   let inputEl: HTMLInputElement;
   let file: File;
@@ -15,8 +15,9 @@
   async function onCrop(file: File) {
     saving = true;
     const img = await uploadImage(file);
-    user = await updateUser(user.id, { img });
+    await updateUser(user.id, { img });
     saving = false;
+    user.img = img;
   }
 
   const onChangeFile: svelte.JSX.ChangeEventHandler<HTMLInputElement> = async (e) => {

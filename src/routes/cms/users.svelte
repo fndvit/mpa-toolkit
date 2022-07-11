@@ -4,18 +4,17 @@
   import { updateUser, deleteUser } from "$lib/api";
   import EditableUserImage from "$lib/components/cms/EditableUserImage.svelte";
   import { getToaster } from "$lib/helpers/utils";
-  import type { User, Role } from "$lib/types";
+  import type { User, Role, SubTypes } from "$lib/types";
   import NewUser from "$lib/components/NewUser.svelte";
-  import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
   import DeleteModal from '$lib/components/cms/DeleteModal.svelte';
   import { openModal } from 'svelte-modals';
 
-  export let users: User[];
+  export let users: SubTypes.User.ForCMS[];
 
   const toaster = getToaster();
   $: users = users;
 
-  const handleDelete = async (user: User) => {
+  const handleDelete = async (user: SubTypes.User.ForCMS) => {
 
     try {
       await deleteUser(user.id);
@@ -28,7 +27,7 @@
     users = users.filter(row => row != user);
   };
 
-  async function onChangeRole(user: User, role: string) {
+  async function onChangeRole(user: SubTypes.User.ForCMS, role: string) {
     try {
       await updateUser(user.id, {role: role as User['role']});
       toaster('User role updated', {type: 'done'});
@@ -39,7 +38,7 @@
     }
   }
 
-  async function onChangeName(user: User, name: string) {
+  async function onChangeName(user: SubTypes.User.ForCMS, name: string) {
     try {
       await updateUser(user.id, { name });
       toaster('User name updated', {type: 'done'});
@@ -50,9 +49,9 @@
     }
   }
 
-  async function onClickDeleteUser(user: User) {
+  async function onClickDeleteUser(user: SubTypes.User.ForCMS) {
 
-    if (user["chapter"].length == 0) {
+    if (user.chapter.length == 0) {
       await handleDelete(user);
     }
     else {
@@ -92,7 +91,11 @@
       <div data-id={user.id}>
         <input type="text" value={user.name} on:change={ evt => onChangeName(user, evt.currentTarget.value)}/>
       </div>
-      <div>{user.email}</div>
+      <div>
+        {#if user.email != null}
+          {user.email}
+        {/if}
+      </div>
       <div>
         {#if $session.user.email === user.email}
           {user.role}

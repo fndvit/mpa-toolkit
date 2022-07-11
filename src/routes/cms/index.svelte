@@ -22,11 +22,11 @@
 
     <div class="grid-links">
 
-      <InlineSvgLink href="/cms/pages" svg="FileIcon">Pages</InlineSvgLink>
-      <InlineSvgLink href="/cms/tags" svg="TagIcon">Tags</InlineSvgLink>
+      <a href="cms/pages"><span class="material-icons">description</span>Pages</a>
+      <a href="cms/tags"><span class="material-icons">sell</span>Tags</a>
 
       {#if $session.user.role == "ADMIN"}
-        <InlineSvgLink href="/cms/users" svg="UserIcon">Users</InlineSvgLink>
+        <a href="cms/users"><span class="material-icons">person</span>Users</a>
       {/if}
 
     </div>
@@ -38,6 +38,10 @@
 </div>
 
 <style lang="stylus">
+
+  .material-icons {
+    font-size: 77px;
+  }
 
  .cms-homepage {
 

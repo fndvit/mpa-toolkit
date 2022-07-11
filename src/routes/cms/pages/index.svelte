@@ -25,24 +25,20 @@
   <div class="title">
 
     <a href="/cms">
-      <InlineSvg svg="BackButton"/>
+      <span class="material-icons">navigate_before</span>
     </a>
     <h2>Pages</h2>
 
     <div class="grid-links">
       <a href="/cms/pages/create/chapter">
         <div class="cms-links">
-          <div class="icon">
-            <InlineSvg svg="BookIcon"/>
-          </div>
+          <div class="icon"><InlineSvg svg="BookIcon"/></div>
           <p>CHAPTER</p>
         </div></a>
 
       <a href="/cms/pages/create/case-study">
         <div class="cms-links">
-          <div class="icon">
-            <InlineSvg svg="UbicationIcon"/>
-          </div>
+          <span class="material-icons location">location_on</span>
           <p>CASE STUDY</p>
         </div></a>
     </div>
@@ -98,16 +94,6 @@
       margin: 0 10px 15px 0;
     }
 
-    .arrow-back {
-      width: 10px;
-      fill: none;
-      transform: rotate(180deg);
-      path {
-        stroke: $colors.neutral-black ;
-        stroke-width: 2.4px;
-      }
-    }
-
     .grid-links {
 
       display: grid;
@@ -129,6 +115,11 @@
       }
     }
 
+    .material-icons {
+      color: black;
+      font-size: 32px;
+    }
+
     .cms-links {
       background: white;
       border-radius: 24px;
@@ -140,11 +131,14 @@
         background: $colors.neutral-light;
       }
 
+      .location {
+        padding: 20px 0 10px;
+        font-size: 68px;
+      }
+
       .icon {
         padding-top: 20px;
-        transform: scale(0.85);
       }
     }
   }
-
 </style>

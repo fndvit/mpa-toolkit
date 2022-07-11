@@ -11,7 +11,7 @@
   import { openModal } from 'svelte-modals';
 
   export let users: User[];
-  
+
   const toaster = getToaster();
   $: users = users;
 
@@ -74,18 +74,14 @@
 
   <div class="title">
     <a href="/cms">
-      <InlineSvg svg="BackButton"/>
+      <span class="material-icons arrow">navigate_before</span>
     </a>
     <h1>Users</h1>
 
     <button on:click={() => openModal(NewUser)} class="new-user">
-      <div>
-        <InlineSvg svg="UserIcon"/>
-      </div>
+      <span class="material-icons">person</span>
       <p>NEW USER</p>
     </button>
-
- 
   </div>
 
   <div class="users">
@@ -110,10 +106,10 @@
       </div>
       <div>
         <button on:click|once={() => onClickDeleteUser(user)} class="delete-user">
-          <InlineSvg svg="Delete"/>
+          <div class="material-icons">delete</div>
         </button>
       </div>
-      
+
     {/each}
   </div>
 </div>
@@ -158,26 +154,26 @@
     .delete-user {
       border: none;
       background: none;
-      margin-left: auto; 
+      margin-left: auto;
       margin-right: 0;
       cursor: pointer;
 
       &:hover {
-        transform: scale(1.2);  
+        transform: scale(1.2);
       }
     }
 
     input {
-        border: none;
-        
-        margin: 1.5rem;
-        text-decoration: none;
-        width: 300px;
+      border: none;
 
-        &:focus {
-          outline: none;
-          border-bottom: solid 1px;
-        }
+      margin: 1.5rem;
+      text-decoration: none;
+      width: 300px;
+
+      &:focus {
+        outline: none;
+        border-bottom: solid 1px;
+      }
     }
   }
 
@@ -192,14 +188,9 @@
     margin-bottom: 20px;
     --ib-hover-border: 1px solid #ddd;
 
-    .arrow-back {
-      width: 10px;
-      fill: none;
-      transform: rotate(180deg);
-      path {
-        stroke: $colors.neutral-black ;
-        stroke-width: 2.4px;
-      }
+    .arrow {
+     color: black;
+     font-size: 32px;
     }
 
     .new-user {
@@ -207,7 +198,7 @@
       background: white;
       border: none;
       border-radius: 24px;
-      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1); 
+      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
       width: 200px;
       height: 140px;
 
@@ -225,9 +216,9 @@
         background: $colors.neutral-light;
       }
 
-      svg {
-        margin-top: 20px;
-        transform: scale(0.85);
+      .material-icons {
+        margin-top: 15px;
+        font-size: 77px;
       }
     }
   }

@@ -6,15 +6,15 @@ import { validate } from "$lib/schema/validation";
 export const put = authMiddleware(
     {role:'ADMIN'},
     async ({ request }) => {
-  
+
     const body = await request.json() as UserRequest;
-  
+
     validate('user', body);
- 
-    let user = await createUser(body);
+
+    const user = await createUser(body);
     return {
         status: 200,
         body: user
     };
-    
+
 });

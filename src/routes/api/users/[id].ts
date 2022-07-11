@@ -5,7 +5,7 @@ import type { UserRequest } from "$lib/types";
 export const patch = authMiddleware(
   {role:'ADMIN'},
   async ({ params, request }) => {
-  
+
   const body = await request.json() as UserRequest;
   const user = await updateUser(parseInt(params.id), body);
 
@@ -13,12 +13,12 @@ export const patch = authMiddleware(
     status: 200,
     body: user
   };
-})
+});
 
 export const del = authMiddleware(
   { role:'ADMIN' },
   async ({ params }) => {
-   
+
     const userId = parseInt(params.id);
 
     await deleteUser(userId);
@@ -26,6 +26,4 @@ export const del = authMiddleware(
     return {
       status: 200
     };
-  }
-
-);
+});

@@ -7,7 +7,12 @@
     "role": { "type": "string", "enum": [ "USER", "CONTENT_MANAGER", "ADMIN" ] },
     "img": { "type": "string" },
     "name": { "type": "string", "minLength": 2, "maxLength": 30},
-    "email": { "type": "string" }
+    "email": {
+      "oneOf": [
+        { "type": "string", "minLength": 5 },
+        { "type": "null" }
+      ]
+    }
 
   },
   "additionalProperties": false,

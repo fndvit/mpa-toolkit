@@ -7,6 +7,14 @@ export const get = authMiddleware(
   return {
     body: {
       users: await prisma.user.findMany({
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          chapter: {
+            select: { _count: true }
+          }
+        },
         orderBy: [
           {
             role: 'desc'
@@ -14,10 +22,7 @@ export const get = authMiddleware(
           {
             id: 'asc'
           }
-        ],
-        include: {
-          chapter: true
-        }
+        ]
       })
     },
   };

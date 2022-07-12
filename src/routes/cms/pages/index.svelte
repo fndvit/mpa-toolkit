@@ -3,7 +3,6 @@
   import CollectionCards from "$lib/components/CollectionCards.svelte";
   import { groupBy } from "$lib/helpers/utils";
   import Filters from "$lib/components/Filters.svelte";
-  import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
 
   export let allTags: Tag[] = null;
   export let pages: SubTypes.Page.CmsList[];
@@ -32,13 +31,13 @@
     <div class="grid-links">
       <a href="/cms/pages/create/chapter">
         <div class="cms-links">
-          <div class="icon"><InlineSvg svg="BookIcon"/></div>
+          <span class="material-icons icon-links">auto_stories</span>
           <p>CHAPTER</p>
         </div></a>
 
       <a href="/cms/pages/create/case-study">
         <div class="cms-links">
-          <span class="material-icons location">location_on</span>
+          <span class="material-icons icon-links">location_on</span>
           <p>CASE STUDY</p>
         </div></a>
     </div>
@@ -131,7 +130,7 @@
         background: $colors.neutral-light;
       }
 
-      .location {
+      .icon-links {
         padding: 20px 0 10px;
         font-size: 68px;
       }

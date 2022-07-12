@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getToaster } from "$lib/helpers/utils";
   import { createUser } from "$lib/api";
-  import { closeModal } from 'svelte-modals';
   import type { Role } from "@prisma/client";
 
   export let isOpen: boolean;
@@ -9,8 +8,8 @@
   const toaster = getToaster();
   const roles = ["ADMIN", "CONTENT_MANAGER", "USER"];
 
-  let name: string = "";
-  let email: string = null;
+  let name = "";
+  let email = null;
   let role: Role;
 
   async function addNewUser() {
@@ -27,8 +26,8 @@
   }
 </script>
 
-<div class="background" style="--display: {isOpen ? 'block' : 'none'};" on:click={() => closeModal()}></div>
-<div class="modal" style="--display: {isOpen ? 'block' : 'none'};">
+{#if isOpen}
+<div class="modal">
 
   <h1>NEW USER</h1>
 
@@ -47,30 +46,17 @@
     <button class="add-user" on:click|preventDefault={() => addNewUser()}>ADD</button>
   </form>
 </div>
+{/if}
 
 <style lang="stylus">
 
-  .background {
-    display: var(--display);
-    backdrop-filter: blur(3px);
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-  }
-
   .modal {
-    display: var(--display);
     position: fixed;
     z-index: 2;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     width: 420px;
-    height: auto;
 
     background: white;
     border-radius: 24px;

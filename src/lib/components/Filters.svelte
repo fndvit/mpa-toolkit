@@ -82,19 +82,19 @@
 
     .type-topic {
       :global(.tag-filter .tag.secondary) {
-        background: alpha(#66CFD6, 0.4);
+        background: alpha($colors.lifecycle-bg, 0.4);
       }
       :global(.tag-filter .tag) {
-        background: #66CFD6;
+        background: $colors.lifecycle-bg;
       }
     }
 
     .type-user {
       :global(.tag-filter .tag.secondary) {
-        background: alpha(#DADCE0, 0.4);
+        background: alpha($colors.tag-bg-cards, 0.4);
       }
       :global(.tag-filter .tag) {
-        background: #DADCE0;
+        background: $colors.tag-bg-cards;
       }
     }
 

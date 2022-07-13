@@ -9,11 +9,9 @@
 
     <h2>WELCOME</h2>
 
-    <div class="signIn-button">
-      <a href="/api/auth/signin/google">
-        Sign in with Google
-      </a>
-    </div>
+    <a href="/api/auth/signin/google" class="signin-button">
+      Sign in with Google
+    </a>
 
   {:else}
 
@@ -69,13 +67,16 @@
     }
   }
 
-  .signIn-button {
-
+  .signin-button {
+    display: block;
     padding: 1.5rem;
+    box-sizing: border-box;
     width: 275px;
     background: $colors.neutral-light;
     border-radius: 24px;
-
+    &:hover {
+      filter: brightness(105%);
+    }
   }
 
   .grid-links {

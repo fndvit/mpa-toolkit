@@ -89,9 +89,6 @@
     column-gap: 30px;
     margin-bottom: 20px;
     --ib-hover-border: 1px solid #ddd;
-    > h1 {
-      margin: 0 10px 15px 0;
-    }
 
     .grid-links {
 
@@ -133,10 +130,6 @@
       .icon-links {
         padding: 20px 0 10px;
         font-size: 68px;
-      }
-
-      .icon {
-        padding-top: 20px;
       }
     }
   }

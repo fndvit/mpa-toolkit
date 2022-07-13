@@ -1,6 +1,5 @@
 <script lang="ts">
   import { session } from "$app/stores";
-  import InlineSvgLink from '$lib/components/generic/InlineSvgLink.svelte';
 
 </script>
 

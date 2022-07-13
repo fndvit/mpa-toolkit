@@ -21,11 +21,11 @@
 <div class="tag-filter">
   {#if activeTags.length > 0}
     {#each activeTags as tag}
-      <Tag tag={tag} style={'PRIMARY'} on:click={() => onClickTag(tag)} cms={true} />
+      <Tag tag={tag} style={'PRIMARY'} on:click={() => onClickTag(tag)} cms />
     {/each}
   {/if}
   {#each unselectedTags as tag}
-    <Tag tag={tag} style={'SECONDARY'} on:click={() => onClickTag(tag)} cms={true} />
+    <Tag tag={tag} style={'SECONDARY'} on:click={() => onClickTag(tag)} cms />
   {/each}
 </div>
 

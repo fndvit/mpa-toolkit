@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import type { PageRequest, SubTypes, TagRequest } from "$lib/types";
+import type { PageRequest, SubTypes, UserRequest, TagRequest } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
 import { pageForContentCard, pageFull } from "./queries";
@@ -186,6 +186,64 @@ export async function searchTags(searchText: string) {
     results.map(r => [r.tagId, r.highlight])
   ) as {[tagId: number]: string};
   return o;
+}
+
+export async function createUser(user: UserRequest) {
+
+  validate('user', user);
+
+  const { name, email, role } = user;
+
+  const createUserQuery = prisma.user.create({
+    data: {
+      name, email, role
+    }});
+
+  const [_user] = await prisma.$transaction([
+    createUserQuery
+  ]);
+
+  return _user;
+}
+
+export async function updateUser(id: number, user: UserRequest) {
+
+  validate('user', user);
+
+  const { name, email, role, img } = user;
+
+  const _user = await prisma.user.update({
+    where: { id },
+    data: { name, email, role, img },
+  });
+
+  return _user;
+}
+
+export async function deleteUser(id: number) {
+
+  const cascade = prisma.page.updateMany({
+      where: {
+        chapter: {
+          authors: { some: { id } }
+        }
+
+      },
+      data: {
+        content: {
+          page: {
+            update: {
+              authors: {
+                delete: { id }
+              }
+      }}}}
+  });
+
+  const deleteUser = prisma.user.delete({ where: { id } });
+
+  await prisma.$transaction([cascade, deleteUser]);
+
+  return true;
 }
 
 export async function updateTag(id: number, tag: TagRequest) {

@@ -8,5 +8,11 @@
   },
   {
     "img": "sompath.jpg"
+  },
+  {
+    "email": "a@b.c"
+  },
+  {
+    "email": null
   }
 ]

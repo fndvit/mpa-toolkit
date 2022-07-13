@@ -5,10 +5,10 @@
   import Searchbar from "$lib/components/generic/Searchbar.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import TagContainer from "$lib/components/TagContainer.svelte";
-  import InlineSvg from "$lib/components/generic/InlineSvg.svelte";
   import landingSplash from '$lib/assets/landing-splash.jpg';
   import MpaManagementLifecycle from "$lib/components/MPAManagementLifecycle.svelte";
   import LandingMadlib from "$lib/components/Madlib/LandingMadLib.svelte";
+  import InlineSvgLink from "$lib/components/generic/InlineSvgLink.svelte";
 
   export let chapters: SubTypes.Page.ContentCard[] = [];
   export let caseStudies: SubTypes.Page.ContentCard[] = [];
@@ -24,7 +24,7 @@
 
 <div class="landing-page">
   <div class="unep-logo">
-    <InlineSvg href="https://www.unep.org" svg="UNEP" />
+    <InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab />
   </div>
   <div class="top-searchbar">
     <Searchbar type={'top'}/>
@@ -34,11 +34,11 @@
     <h4>A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable solutions.</h4>
     <h5>In partnership with</h5>
     <div class="partners-grid">
-      <InlineSvg href="https://www.aics.gov.it/language/en/" svg="IAFDC" />
-      <InlineSvg href="https://www.uq.edu.au" svg="UoQ" />
+      <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab />
+      <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
       <div class="partners-grid-2">
-        <InlineSvg href="https://www.nature.org/" svg="TNC" />
-        <InlineSvg href="https://wwf.panda.org" svg="WWF" />
+        <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab />
+        <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       </div>
     </div>
   </div>
@@ -123,7 +123,6 @@
     color: white;
     width: 110px;
   }
-
 
   +breakpoint(page, medium) {
 

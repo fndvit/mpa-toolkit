@@ -3,33 +3,41 @@
   import { slugify } from "$lib/helpers/utils";
   import { getContext } from "svelte";
 
-  export let tag: SubTypes.PageTag;
+  type TagStyles = 'PRIMARY' | 'SECONDARY';
 
+  export let tag: SubTypes.Tag;
+  export let style: TagStyles;
+  export let cms = false;
+
+  const tagName = cms ? 'button' : 'a';
   const tagHighlightFn = getContext<(tag: Tag) => string>('tagHighlightFn');
 
-  $: highlight = tagHighlightFn && tagHighlightFn(tag.tag);
+  $: highlight = tagHighlightFn && tagHighlightFn(tag);
 
-  $: secondary = tag.category == 'SECONDARY';
+  $: secondary = style === 'SECONDARY';
 
 </script>
 
-<a
-  href={`/tag/${slugify(tag.tag.value)}`}
-  class="tag"
-  class:secondary
+<svelte:element
+  this={tagName}
+  href={ cms ? undefined :  `/tag/${slugify(tag.value)}`}
+  class="tag {secondary ? 'secondary' : ''} "
   tabindex="0"
-  style=""
   on:mouseenter
   on:mouseleave
+  on:click
 >
   <span>
     {#if highlight}
       {@html highlight}
     {:else}
-      {tag.tag.value}
+      {tag.value}
     {/if}
   </span>
-</a>
+  {#if cms && style === 'PRIMARY'}
+    <span class="material-icons">close</span>
+  {/if}
+</svelte:element>
 
 <style lang="stylus">
   .tag {
@@ -38,12 +46,14 @@
     text-align: center;
     padding: 2px 12px 4px;
     border-radius: 18px;
+    border: none;
     overflow: hidden;
     margin: 0;
     color: black;
     position: relative;
     white-space: nowrap;
     height: fit-content;
+    width: fit-content;
     background: $colors.highlight-1;
     &.secondary {
       background: alpha($colors.highlight-1, 0.4);
@@ -57,9 +67,14 @@
       }
     }
 
-    span {
+    span:first-child {
       typography: ui-small;
       position: relative;
+    }
+
+    .material-icons {
+      font-size: 14px;
+      vertical-align: middle;
     }
   }
   .tag:hover {

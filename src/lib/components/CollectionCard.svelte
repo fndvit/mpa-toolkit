@@ -15,6 +15,8 @@
   $: href = cms ? `/cms/pages/${page.id}` : `/${page.slug}`;
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
   $: img = staticUrl(page.img, fallbackImg);
+
+  $: tags = page.tags.filter(t => t.tag.type === 'TOPIC');
 </script>
 
 <a class="collection-card" {href} rel="external" class:cms-card={cms}>
@@ -36,7 +38,7 @@
     </div>
     <div class="tags">
       <h3>What's this about</h3>
-      <TagContainer tags={page.tags} />
+      <TagContainer {tags} />
     </div>
   </div>
 </a>

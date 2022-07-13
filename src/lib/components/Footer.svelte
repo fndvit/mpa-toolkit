@@ -1,5 +1,5 @@
 <script lang="ts">
-  import InlineSvg from "./generic/InlineSvg.svelte";
+  import InlineSvgLink from "./generic/InlineSvgLink.svelte";
 </script>
 
 <div class="footer">
@@ -8,12 +8,12 @@
     <h5>A partnership between</h5>
 
     <div class="partners-grid">
-      <InlineSvg href="https://www.unep.org" svg="UNEP"/>
-      <InlineSvg href="https://www.aics.gov.it/language/en/" svg="IAFDC" />
-      <InlineSvg href="https://wwf.panda.org" svg="WWF" />
+      <InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab/>
+      <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab/>
+      <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab/>
       <div class="partners-grid-2">
-        <InlineSvg href="https://www.uq.edu.au" svg="UoQ" />
-        <InlineSvg  href="https://www.nature.org/" svg="TNC" />
+        <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab/>
+        <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab/>
       </div>
     </div>
 

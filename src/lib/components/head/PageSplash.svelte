@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { Modify } from "$lib/helpers/utils";
   import type { SubTypes } from "$lib/types";
-  import InlineSvg from "../generic/InlineSvg.svelte";
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import { staticUrl } from "$lib/helpers/content";
   import EditableText from "../generic/EditableText.svelte";
+  import InlineSvgLink from "../generic/InlineSvgLink.svelte";
 
   type PageForSplash = Modify<
     Pick<SubTypes.Page.Full, 'title' | 'img'>,
@@ -21,7 +21,7 @@
 </script>
 
 <div class="unep-logo">
-  <InlineSvg href="https://www.unep.org" svg="UNEP" />
+  <InlineSvgLink href="https://www.unep.org"  svg="UNEP" newTab />
 </div>
 <div class="splash" style="background-image: url({img});" class:splash-cs={page.caseStudy}>
   <h1>

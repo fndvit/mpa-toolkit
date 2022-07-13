@@ -32,7 +32,9 @@ export async function createUser(data: UserRequest) {
     method: 'PUT',
     body: JSON.stringify(data)
   });
-  return response.ok;
+
+  const user = await response.json() as User;
+  return user;
 }
 
 

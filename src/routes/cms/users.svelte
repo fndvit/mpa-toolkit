@@ -12,7 +12,15 @@
   export let users: SubTypes.User.ForCMS[];
 
   const toaster = getToaster();
+  let newUser: Pick<SubTypes.User.ForCMS, 'id' | 'name' | 'email' | 'role'>;
+
   $: users = users;
+  
+  const handleAdd = async () => {
+    users.push({ ...newUser, img: null, chapter: [] });
+    users = users.sort((a, b) => a.id < b.id ? 1: -1).sort((a,b) => a.role > b.role ? 1 : -1);
+    newUser = undefined;
+  }
 
   const handleDelete = async (user: SubTypes.User.ForCMS) => {
 
@@ -65,6 +73,14 @@
     }
   };
 
+  async function createNewUser() {
+    newUser = { id: undefined, name: undefined, email: undefined, role: undefined };
+    openModal(NewUser, {
+      user: newUser,
+      onAdd: () => handleAdd()
+    });
+  };
+
   const roles: Role[] = ["ADMIN", "CONTENT_MANAGER", "USER"];
 
 </script>
@@ -77,7 +93,7 @@
     </a>
     <h1>Users</h1>
 
-    <button on:click={() => openModal(NewUser)} class="new-user">
+    <button on:click={() => createNewUser()} class="new-user">
       <span class="material-icons">person</span>
       <p>NEW USER</p>
     </button>

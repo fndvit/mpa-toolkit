@@ -2,8 +2,12 @@
   import { getToaster } from "$lib/helpers/utils";
   import { createUser } from "$lib/api";
   import type { Role } from "@prisma/client";
+  import type { SubTypes } from "$lib/types";
+  import { closeModal } from "svelte-modals";
 
   export let isOpen: boolean;
+  export let user: Pick<SubTypes.User.ForCMS, 'id' | 'name' | 'email' | 'role'>;
+  export let onAdd: () => unknown;
 
   const toaster = getToaster();
   const roles = ["ADMIN", "CONTENT_MANAGER", "USER"];
@@ -15,9 +19,17 @@
   async function addNewUser() {
     if(name != null) {
       try {
-        await createUser({name, email, role});
+        const _user = await createUser({name, email, role});
         toaster('User created', {type: 'done'});
 
+        user.id = _user.id;
+        user.name = _user.name;
+        user.email = _user.email;
+        user.role = _user.role;
+
+        onAdd();
+        closeModal();
+        
       } catch (err) {
         console.error(err);
         toaster(`Error creating a new user: ${err.message}`, {type: 'error'});

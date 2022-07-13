@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SubTypes, Tag } from '$lib/types';
+  import type { SubTypes, Tag } from "$lib/types";
   import CollectionCards from "$lib/components/CollectionCards.svelte";
   import { groupBy } from "$lib/helpers/utils";
   import Filters from "$lib/components/Filters.svelte";

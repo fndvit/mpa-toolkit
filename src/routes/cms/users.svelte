@@ -14,13 +14,20 @@
   const toaster = getToaster();
   let newUser: Pick<SubTypes.User.ForCMS, 'id' | 'name' | 'email' | 'role'>;
 
-  $: users = users;
-  
+  const sortUsers = () => {
+    users = users.sort((a, b) => {
+      if (a.role === b.role) return a.id > b.id ? 1 : -1;
+      else return a.role > b.role ? 1 : -1;
+    });
+  };
+
+  sortUsers();
+
   const handleAdd = async () => {
     users.push({ ...newUser, img: null, chapter: [] });
-    users = users.sort((a, b) => a.id < b.id ? 1: -1).sort((a,b) => a.role > b.role ? 1 : -1);
+    sortUsers();
     newUser = undefined;
-  }
+  };
 
   const handleDelete = async (user: SubTypes.User.ForCMS) => {
 

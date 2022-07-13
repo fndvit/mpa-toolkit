@@ -14,7 +14,7 @@
   let activeTopicTags: SubTypes.Tag[] = [];
   let activeUsersTags: SubTypes.Tag[] = [];
 
-  let tagSearch: string = '';
+  let tagSearch = '';
   let groupedOptions = groupBy(tags, tag => tag.type);
 
   $: searchRegex = new RegExp(tagSearch, 'i');

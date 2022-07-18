@@ -16,24 +16,21 @@ export const pageTag = validate<Prisma.TagsOnPagesSelect>()({
 
 export const userBasic = validate<Prisma.UserSelect>()({
   id: true,
-  name: true,
-  img: true
+  name: true
 });
 
 export const userSession = validate<Prisma.UserSelect>()({
   id: true,
   email: true,
   name: true,
-  img: true,
-  role: true,
+  role: true
 });
 
-export const userForCMS = validate<Prisma.UserSelect>()({
+export const authorForCMS = validate<Prisma.AuthorSelect>()({
   id: true,
-  email: true,
   name: true,
+  bio: true,
   img: true,
-  role: true,
   chapter: {
     select: { pageId: true }
   }
@@ -122,7 +119,10 @@ pageForCmsList.select.tags.where = undefined;
 
 export namespace User {
   export type Session = Prisma.UserGetPayload<typeof userSession>;
-  export type ForCMS = Prisma.UserGetPayload<typeof userForCMS>
+}
+
+export namespace Author {
+  export type ForCMS = Prisma.AuthorGetPayload<typeof authorForCMS>;
 }
 
 export namespace Chapter {

@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import type { PageRequest, SubTypes, UserRequest, TagRequest } from "$lib/types";
+import type { PageRequest, SubTypes, UserRequest, TagRequest, AuthorRequest } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
 import { pageForContentCard, pageFull } from "./queries";
@@ -210,11 +210,11 @@ export async function updateUser(id: number, user: UserRequest) {
 
   validate('user', user);
 
-  const { name, email, role, img } = user;
+  const { name, email, role } = user;
 
   const _user = await prisma.user.update({
     where: { id },
-    data: { name, email, role, img },
+    data: { name, email, role },
   });
 
   return _user;
@@ -222,26 +222,7 @@ export async function updateUser(id: number, user: UserRequest) {
 
 export async function deleteUser(id: number) {
 
-  const cascade = prisma.page.updateMany({
-      where: {
-        chapter: {
-          authors: { some: { id } }
-        }
-
-      },
-      data: {
-        content: {
-          page: {
-            update: {
-              authors: {
-                delete: { id }
-              }
-      }}}}
-  });
-
-  const deleteUser = prisma.user.delete({ where: { id } });
-
-  await prisma.$transaction([cascade, deleteUser]);
+  await prisma.user.delete({ where: { id } });
 
   return true;
 }
@@ -305,4 +286,63 @@ export async function createTag(tag: TagRequest) {
   await publishEvent('tag-created', { id: _tag.id });
 
   return _tag;
+}
+
+
+export async function createAuthor(author: AuthorRequest) {
+
+  validate('author', author);
+
+  const { name, bio, img } = author;
+
+  const createAuthorQuery = prisma.author.create({
+    data: {
+      name, bio, img
+    }});
+
+  const [_author] = await prisma.$transaction([
+    createAuthorQuery
+  ]);
+
+  return _author;
+}
+
+export async function updateAuthor(id: number, author: AuthorRequest) {
+
+  validate('author', author);
+
+  const { name, bio, img } = author;
+
+  const _author = await prisma.author.update({
+    where: { id },
+    data: { name, bio, img },
+  });
+
+  return _author;
+}
+
+export async function deleteAuthor(id: number) {
+
+  const cascade = prisma.page.updateMany({
+      where: {
+        chapter: {
+          authors: { some: { id } }
+        }
+
+      },
+      data: {
+        content: {
+          page: {
+            update: {
+              authors: {
+                delete: { id }
+              }
+      }}}}
+  });
+
+  const deleteAuthor = prisma.author.delete({ where: { id } });
+
+  await prisma.$transaction([cascade, deleteAuthor]);
+
+  return true;
 }

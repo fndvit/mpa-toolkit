@@ -5,7 +5,6 @@
   "properties": {
 
     "role": { "type": "string", "enum": [ "USER", "CONTENT_MANAGER", "ADMIN" ] },
-    "img": { "type": "string" },
     "name": { "type": "string", "minLength": 2, "maxLength": 30},
     "email": {
       "oneOf": [

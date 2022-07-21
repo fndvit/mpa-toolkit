@@ -205,17 +205,9 @@ export async function updateTag(id: number, tag: TagRequest) {
     where: { id },
     data: { value },
   });
+  //update all tag search indexes from all tagsonpages tags
 
-  const pagesWithTagId = await prisma.page.findMany({
-    where: {
-      tags: {
-        some: {  tagId: { equals: id } }
-      }
-    },
-    select: { id: true }
-  });
-
-  const createPageSearchIndex = pagesWithTagId.map(p => prisma.$queryRaw`SELECT CAST (create_page_search_index(${p.id}) AS TEXT)`);
+  const createPageSearchIndex = prisma.$queryRaw`SELECT CAST (create_page_search_index("pageId") AS TEXT) FROM "TagsOnPages" WHERE "tagId" = ${id};`;
 
   const [_tag] = await prisma.$transaction([].concat(updateTagQuery, createPageSearchIndex));
 

@@ -209,7 +209,7 @@ export async function updateTag(id: number, tag: TagRequest) {
 
   const createPageSearchIndex = prisma.$queryRaw`SELECT CAST (create_page_search_index("pageId") AS TEXT) FROM "TagsOnPages" WHERE "tagId" = ${id};`;
 
-  const [_tag] = await prisma.$transaction([].concat(updateTagQuery, createPageSearchIndex));
+  const [_tag] = await prisma.$transaction([updateTagQuery, createPageSearchIndex]);
 
   await publishEvent('tag-updated', { id });
 

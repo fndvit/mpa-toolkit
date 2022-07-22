@@ -45,6 +45,9 @@
       font-size: 16px;
       font-weight: 700;
     }
+    :global(div.multiselect) {
+      z-index: authors-list;
+    }
   }
 
 </style>

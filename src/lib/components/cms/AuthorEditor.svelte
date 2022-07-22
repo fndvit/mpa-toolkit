@@ -22,8 +22,8 @@
   }
 
   $: if (author.bio != null) {
-      if (author.bio.length > 100)
-        toaster(`The biography can have a maximum of 100 letters only`);
+      if (author.bio.length > 700)
+        toaster(`The biography can have a maximum of 700 letters only`);
       if (author.name.length > 30)
         toaster(`The name can have a maximum of 30 letters only`);
     }
@@ -40,7 +40,7 @@
     <input type="text" bind:value={author.name} on:change={onChangeAuthor} placeholder="Enter a name..." />
   </div>
   <div>
-    <textarea rows="2" bind:value={author.bio} on:change={onChangeAuthor} placeholder="Enter a biography..." />
+    <textarea rows="3" bind:value={author.bio} on:change={onChangeAuthor} placeholder="Enter a biography..." />
   </div>
 </div>
 
@@ -61,6 +61,14 @@
       width: 100%;
       resize: none;
       typography: ui;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 5px;
+      }
 
       &:focus {
         outline: none;

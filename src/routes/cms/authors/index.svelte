@@ -99,14 +99,18 @@
   </div>
 
   <div class="authors">
-    {#each filteredAuthors as author (author.id)}
-      <li>
-        <AuthorEditor bind:author/>
-        <button on:click|once={() => onClickDeleteAuthor(author)} class="icon-author">
-          <div class="material-icons">delete</div>
-        </button>
-      </li>
-    {/each}
+    {#if filteredAuthors.length > 0}
+      {#each filteredAuthors as author (author.id)}
+        <li>
+          <AuthorEditor bind:author/>
+          <button on:click|once={() => onClickDeleteAuthor(author)} class="icon-author">
+            <div class="material-icons">delete</div>
+          </button>
+        </li>
+      {/each}
+    {:else}
+      <p>No authors</p>
+    {/if}
 
     {#if newAuthor}
       <li>
@@ -190,6 +194,11 @@
       &:hover {
         transform: scale(1.2);
       }
+    }
+
+    p {
+      typography: ui;
+      border-bottom: none;
     }
   }
 

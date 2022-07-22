@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PageRequest, SubTypes, Tag, UserInfo } from '$lib/types';
+  import type { PageRequest, SubTypes, Tag, Author } from '$lib/types';
   import type Toaster from '$lib/components/generic/Toaster.svelte';
   import LifeCycle from '$lib/components/LifeCycle.svelte';
   import { openModal } from 'svelte-modals';
@@ -21,7 +21,7 @@
   import { getPageTypeStr } from '$lib/helpers/content';
   import { page as pageStore } from '$app/stores';
 
-  export let users: UserInfo[];
+  export let users: Author[];
   export let allTags: Tag[];
   export let page: SubTypes.Page.Full;
 
@@ -146,7 +146,7 @@
     })),
     chapter: !_page.chapter ? undefined : {
       ..._page.chapter,
-      authors: _page.chapter.authors.map<UserInfo>(a => userLookup[a.toString()]),
+      authors: _page.chapter.authors.map<Author>(a => userLookup[a.toString()]),
     }
   };
 

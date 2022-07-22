@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { UserInfo } from '$lib/types';
   import MultiSelect from "svelte-multiselect";
+  import type { Author, SubTypes } from "$lib/types";
   import { getContext } from "svelte";
 
-  type Author = Pick<UserInfo, 'id' | 'name' | 'img'>;
-
-  export let authors: Author[] = [];
+  export let authors: SubTypes.Chapter.PageHead['authors'] = [];
   export let disabled = false;
 
   const allAuthors = getContext<Author[]>('allUsers');

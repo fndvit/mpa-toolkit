@@ -14,9 +14,11 @@ export const pageTag = validate<Prisma.TagsOnPagesSelect>()({
     category: true
 });
 
-export const userBasic = validate<Prisma.UserSelect>()({
+export const author = validate<Prisma.AuthorSelect>()({
   id: true,
-  name: true
+  name: true,
+  img: true,
+  bio: true
 });
 
 export const userSession = validate<Prisma.UserSelect>()({
@@ -39,7 +41,7 @@ export const authorForCMS = validate<Prisma.AuthorSelect>()({
 export const chapterForPageHead = validate<Prisma.ChapterSelect>()({
   keyTakeaways: true,
   summary: true,
-  authors: userBasic
+  authors: author
 });
 
 export const caseStudyForPageHead = validate<Prisma.CaseStudySelect>()({
@@ -151,6 +153,7 @@ export namespace CaseStudy {
 export type PageTag = Prisma.TagsOnPagesGetPayload<typeof pageTag>;
 
 export type Tag = Prisma.TagGetPayload<typeof tag>;
+export type Author = Prisma.AuthorGetPayload<typeof author>;
 
 export namespace Tag{
   export type WithPageCount = Prisma.TagGetPayload<typeof countTags>;

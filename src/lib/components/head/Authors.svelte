@@ -18,12 +18,12 @@
 </script>
 
 <div class="author-images">
-  {#each displayAuthors as user}
-    <UserImage {user} />
+  {#each displayAuthors as author}
+    <UserImage {author} />
   {/each}
 </div>
 
-    {#if editable}
+  {#if editable}
     <div class="author-editor">
       <AuthorsEditor bind:authors={authors} />
     </div>

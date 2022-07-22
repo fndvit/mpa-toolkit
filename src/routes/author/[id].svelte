@@ -7,4 +7,4 @@
 
 </script>
 
-<CollectionPage {pages} title={_author.name}/>
+<CollectionPage {pages} title={_author.name} bio={_author.bio}/>

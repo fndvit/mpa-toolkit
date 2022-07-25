@@ -6,11 +6,6 @@
   export let authors: SubTypes.Chapter.PageHead['authors'];
   export let editable = false;
 
-  function onClickAuthor(i: number) {
-    authors = [...authors];
-    authors.splice(i, 1);
-  }
-
   const emptyAuthors = [{ id: 0, name: 'Author', img: '' }];
 
   $: displayAuthors = editable && !authors.length ? emptyAuthors : authors;
@@ -33,7 +28,7 @@
         {#if i > 0 && i === displayAuthors.length - 1}
           and
         {/if}
-        <div on:click={() => editable && onClickAuthor(i)}>{author.name}</div>
+        <a href="/author/{author.id}" rel="external">{author.name}</a>
       {/each}
     </div>
   {/if}
@@ -51,6 +46,11 @@
     display: flex;
     align-items: center;
     column-gap: 5px;
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 
   .author-editor {

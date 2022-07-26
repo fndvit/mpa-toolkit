@@ -1,6 +1,7 @@
 import type { ContentDocument, KeyLearningsData, MilestonesData } from "$lib/types";
 import type { ExpandRecursively, Exact, Modify, Expand } from "$lib/helpers/utils";
 import { Prisma, TagType } from "@prisma/client";
+import clone from "clone";
 
 export const tag = validate<Prisma.TagSelect>()({
   id: true,
@@ -25,6 +26,17 @@ export const userSession = validate<Prisma.UserSelect>()({
   name: true,
   img: true,
   role: true,
+});
+
+export const userForCMS = validate<Prisma.UserSelect>()({
+  id: true,
+  email: true,
+  name: true,
+  img: true,
+  role: true,
+  chapter: {
+    select: { pageId: true }
+  }
 });
 
 export const chapterForPageHead = validate<Prisma.ChapterSelect>()({
@@ -105,8 +117,13 @@ export const pageForCollectionCard = validate<Prisma.PageSelect>()({
   caseStudy: { select: { name: true } },
 });
 
+
+export const pageForCmsList = clone(pageForCollectionCard);
+pageForCmsList.select.tags.where = undefined;
+
 export namespace User {
   export type Session = Prisma.UserGetPayload<typeof userSession>;
+  export type ForCMS = Prisma.UserGetPayload<typeof userForCMS>
 }
 
 export namespace Chapter {
@@ -121,6 +138,7 @@ export namespace Page {
   export type CollectionCard =
     Prisma.PageGetPayload<typeof pageForCollectionCard>
     & { rank?: number, highlights?: string};
+  export type CmsList = Prisma.PageGetPayload<typeof pageForCmsList>;
   export type ContentCard = Prisma.PageGetPayload<typeof pageForContentCard>;
 }
 

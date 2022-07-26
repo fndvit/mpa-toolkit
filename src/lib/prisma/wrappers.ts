@@ -1,7 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import { error404 } from "$lib/errors";
 import { prisma } from "$lib/prisma";
-import type { PageRequest, SubTypes, TagRequest } from "$lib/types";
+import type { PageRequest, SubTypes, UserRequest, TagRequest } from "$lib/types";
 import { calcReadTime } from "$lib/readtime";
 import { validate } from "$lib/schema/validation";
 import { pageForContentCard, pageFull } from "./queries";
@@ -188,6 +188,64 @@ export async function searchTags(searchText: string) {
   return o;
 }
 
+export async function createUser(user: UserRequest) {
+
+  validate('user', user);
+
+  const { name, email, role } = user;
+
+  const createUserQuery = prisma.user.create({
+    data: {
+      name, email, role
+    }});
+
+  const [_user] = await prisma.$transaction([
+    createUserQuery
+  ]);
+
+  return _user;
+}
+
+export async function updateUser(id: number, user: UserRequest) {
+
+  validate('user', user);
+
+  const { name, email, role, img } = user;
+
+  const _user = await prisma.user.update({
+    where: { id },
+    data: { name, email, role, img },
+  });
+
+  return _user;
+}
+
+export async function deleteUser(id: number) {
+
+  const cascade = prisma.page.updateMany({
+      where: {
+        chapter: {
+          authors: { some: { id } }
+        }
+
+      },
+      data: {
+        content: {
+          page: {
+            update: {
+              authors: {
+                delete: { id }
+              }
+      }}}}
+  });
+
+  const deleteUser = prisma.user.delete({ where: { id } });
+
+  await prisma.$transaction([cascade, deleteUser]);
+
+  return true;
+}
+
 export async function updateTag(id: number, tag: TagRequest) {
 
   validate('tag', tag);
@@ -201,10 +259,15 @@ export async function updateTag(id: number, tag: TagRequest) {
 
   if (_typeCheckTag.type !== 'TOPIC') throw new Error('Only topic tags can be updated');
 
-  const _tag = await prisma.tag.update({
+  const updateTagQuery = prisma.tag.update({
     where: { id },
     data: { value },
   });
+  //update all tag search indexes from all tagsonpages tags
+
+  const createPageSearchIndex = prisma.$queryRaw`SELECT CAST (create_page_search_index("pageId") AS TEXT) FROM "TagsOnPages" WHERE "tagId" = ${id};`;
+
+  const [_tag] = await prisma.$transaction([updateTagQuery, createPageSearchIndex]);
 
   await publishEvent('tag-updated', { id });
 
@@ -215,7 +278,7 @@ export async function deleteTag(id: number) {
 
   const tag = await prisma.tag.findFirst({ where: { id } });
 
-  if(tag.type !== 'TOPIC') throw new Error('Only topic tags can be deleted');;
+  if(tag.type !== 'TOPIC') throw new Error('Only topic tags can be deleted');
 
   const cascade = prisma.tagsOnPages.deleteMany({
     where: { tagId: id }
@@ -244,7 +307,7 @@ export async function createTag(tag: TagRequest) {
     createTagQuery
   ]);
 
-  await publishEvent('page-created', { id: _tag.id });
+  await publishEvent('tag-created', { id: _tag.id });
 
   return _tag;
 }

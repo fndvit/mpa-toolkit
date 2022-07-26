@@ -1,7 +1,7 @@
 <script lang="ts">
-  import InlineSvg from "./generic/InlineSvg.svelte";
   import Searchbar from './generic/Searchbar.svelte';
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
+  import InlineSvgLink from './generic/InlineSvgLink.svelte';
 
   export let title: string;
   export let search: string;
@@ -13,7 +13,7 @@
 
 <div class="container" style="background-image: url({landingMadlibBg})">
   <div class="unep-logo">
-    <InlineSvg href="https://www.unep.org" svg="UNEP" />
+    <InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab />
   </div>
 
   <div class="content">

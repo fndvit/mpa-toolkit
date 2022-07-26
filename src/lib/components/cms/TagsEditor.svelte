@@ -1,7 +1,6 @@
 <script lang="ts">
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import Searchbar from '$lib/components/generic/Searchbar.svelte';
-  import { TagType } from '@prisma/client';
   import TagEditor from '$lib/components/cms/TagEditor.svelte';
   import { openModal } from 'svelte-modals';
   import DeleteModal from '$lib/components/cms/DeleteModal.svelte';
@@ -56,7 +55,7 @@
   const onClickAdd = () => newTag = { id: undefined, value: 'New Tag' };
 
   $: if (newTag?.id != null) { // new tag has been saved
-    tags.push({ ...newTag, type: TagType.TOPIC, _count: { pageTags: 0 } });
+    tags.push({ ...newTag, type: 'TOPIC', _count: { pageTags: 0 } });
     tags = tags.sort((a,b) => a.value > b.value ? 1 : -1);
     newTag = undefined;
   }

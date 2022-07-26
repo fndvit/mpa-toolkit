@@ -1,8 +1,8 @@
 import type { Handler } from "aws-lambda";
 import { execFile } from "child_process";
 import path from "path";
-import { seed } from "../../prisma/seed/seed";
-import { reset } from "../../prisma/reset/reset";
+import { seed } from "../../prisma/lib/seed";
+import { reset } from "../../prisma/lib/reset";
 
 // example cmd to invoke using aws cli:
 // aws lambda invoke --function-name AppStack-MigrationRunner07C61515-63HtCcSdD3K6 response.json

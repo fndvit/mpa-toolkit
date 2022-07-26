@@ -1,6 +1,5 @@
 import { authMiddleware } from "$lib/auth";
-import { prisma } from "$lib/prisma";
-import { validate } from "$lib/schema/validation";
+import { deleteUser, updateUser } from "$lib/prisma/wrappers";
 import type { UserRequest } from "$lib/types";
 
 export const patch = authMiddleware(
@@ -8,21 +7,23 @@ export const patch = authMiddleware(
   async ({ params, request }) => {
 
   const body = await request.json() as UserRequest;
+  const user = await updateUser(parseInt(params.id), body);
 
-  validate('user', body);
+  return {
+    status: 200,
+    body: user
+  };
+});
 
-  try {
-    const user = await prisma.user.update({
-      where: { id: parseInt(params.id), },
-      data: body
-    });
+export const del = authMiddleware(
+  { role:'ADMIN' },
+  async ({ params }) => {
+
+    const userId = parseInt(params.id);
+
+    await deleteUser(userId);
+
     return {
-      status: 200,
-      body: { user }
+      status: 200
     };
-  } catch (e) {
-    return {
-      status: 500
-    };
-  }
 });

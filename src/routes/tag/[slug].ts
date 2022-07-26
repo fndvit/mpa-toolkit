@@ -18,7 +18,7 @@ async function getTagIdBySlug(slug: string) {
   return tag?.id;
 }
 
-export const get: RequestHandler<{ slug: string }> = async ({ params }) => {
+export const get: RequestHandler<{ slug: string }> = async ({ locals, params }) => {
   const slug = params.slug.toLowerCase();
   if (slug !== params.slug) return { status: 301, redirect: `/tag/${slug}` };
 
@@ -42,6 +42,9 @@ export const get: RequestHandler<{ slug: string }> = async ({ params }) => {
   if (!tag) return error404('Page not found');
 
   const pages = tag.pageTags.map(t => t.page);
+
+  pages.map(p => p.tags.map(t => locals.cacheKeys.add(`tag-${t.tag.id}`)));
+  locals.cacheKeys.add('pages');
 
   return pages
     ? { body: { pages, tag } }

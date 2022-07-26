@@ -54,10 +54,13 @@
     justify-content: center;
     align-items: center;
     pointer-events: none;
+    
+    typography: h4-light;
   }
 
   .contents {
     min-width: 240px;
+    max-width: 650px;
     border-radius: 6px;
     padding: 16px;
     background: white;
@@ -65,6 +68,15 @@
     flex-direction: column;
     justify-content: space-between;
     pointer-events: auto;
+    
+    input {
+      border: none;
+      border-bottom: 1px solid;
+
+      &:focus {
+        outline: none;
+      }
+    }
   }
 
   h2 {
@@ -81,6 +93,17 @@
     margin-top: 32px;
     display: flex;
     justify-content: flex-end;
+
+    button {
+      border-radius: 10px;
+      padding: 1rem;
+      border: none;
+
+      &:hover {
+        filter: brightness(105%)
+      }
+    }
+    
   }
 
 </style>

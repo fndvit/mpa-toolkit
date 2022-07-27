@@ -41,7 +41,7 @@
   const onClickSaveAuthor = async () => {
 
     try {
-      const _author = await createAuthor({ name: newAuthor.name, bio: newAuthor.bio })
+      const _author = await createAuthor({ name: newAuthor.name, bio: newAuthor.bio });
       newAuthor.id = _author.id;
 
       authors.push({ ...newAuthor });

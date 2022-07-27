@@ -19,7 +19,7 @@ enum Role {
 
 model Author {
   id        Int     @id @default(autoincrement())
-  name      String?
+  name      String  @unique
   bio       String?
   img       String?
   chapter   Chapter[]

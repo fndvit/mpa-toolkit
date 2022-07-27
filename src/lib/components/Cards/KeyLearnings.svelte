@@ -14,17 +14,16 @@
     { subject: "What you must do", body: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed elementum tempus odio at rutrum. Phasellus commodo neque eget tristique iaculis. Mauris quis mattis risus.','Vestibulum quis urna nec odio ultricies blandit viverra imperdiet magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'Curabitur in mi ac justo luctus convallis. Sed sed mattis mauris, nec viverra leo. Nam vitae purus ante. Curabitur condimentum semper venenatis.'] },
   ];
 
-  const placeholder_example: KeyLearningsData = {subject: "", body: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.']};
+  const placeholder_example: KeyLearningsData = {subject: "", body: ['Introduce your text here.']};
 
   export let keyLearnings: KeyLearningsData[] = placeholders;
   export let currentSubject = 0;
   export let editable = false;
 
-  let slideIndex: number = 0;
+  let currentCard: number = 0;
   let isTimerActive = true;
 
   let cards: CardData[] = [];
-
   const loadCardStack = () => {
     cards = keyLearnings[currentSubject].body.map(c=> ({
       heading: null,
@@ -41,7 +40,7 @@
       isTimerActive = false;
       setTimeout(() => {isTimerActive = true}, 100);
       currentSubject = n;
-      slideIndex = 0;
+      currentCard = 0;
       loadCardStack();
     }
   }
@@ -61,6 +60,7 @@
   const click = () => {
     console.log("CARDS -> ", cards);
     console.log("KEY LEARNINGS -> ", keyLearnings);
+    console.log("N -> ", currentSubject);
   }
 
 </script>
@@ -101,7 +101,7 @@
         progress={isTimerActive}
         style='no-heading'
         {editable}
-        bind:currentPageIndex={slideIndex}
+        bind:currentPageIndex={currentCard}
       />
     </div>
   </div>

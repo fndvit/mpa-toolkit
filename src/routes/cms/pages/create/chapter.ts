@@ -4,8 +4,8 @@ import { prisma } from "$lib/prisma";
 export const get = authMiddleware(
   { role: 'CONTENT_MANAGER' },
   async () => {
-    const users = await prisma.author.findMany();
+    const authors = await prisma.author.findMany();
     const allTags = await prisma.tag.findMany();
-    return { body: { users, allTags } };
+    return { body: { authors, allTags } };
   }
 );

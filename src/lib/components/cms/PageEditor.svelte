@@ -21,16 +21,16 @@
   import { getPageTypeStr } from '$lib/helpers/content';
   import { page as pageStore } from '$app/stores';
 
-  export let users: Author[];
+  export let authors: SubTypes.Author[];
   export let allTags: Tag[];
   export let page: SubTypes.Page.Full;
 
-  setContext('allUsers', users);
+  setContext('allUsers', authors);
 
   const { protocol, hostname, port } = $pageStore.url;
   const URL_PREFIX = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;
 
-  const userLookup = createLookup(users, u => u.id.toString(), u => u);
+  const userLookup = createLookup(authors, u => u.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
 
   const pageId = page.id;

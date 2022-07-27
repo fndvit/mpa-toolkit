@@ -23,17 +23,29 @@
   let currentCard: number = 0;
   let isTimerActive = true;
 
-  let cards: CardData[] = [];
-  const loadCardStack = () => {
-    cards = keyLearnings[currentSubject].body.map(c=> ({
+  let cartas: CardData[][] = [];
+
+  keyLearnings.forEach(k => {
+    let ca = k.body.map(c=> ({
       heading: null,
       body: c
     }));
+    cartas.push(ca);
+  });
+
+  $: keyLearnings = updateKeyLearnings(cartas);
+
+  const updateKeyLearnings = (cartas: CardData[][]) => {
+    let newKeyLearnings: KeyLearningsData[] = [];
+    for (let c = 0; c < cartas.length; c++) {
+      let k: KeyLearningsData = {subject: keyLearnings[c].subject, body: []}
+      cartas[c].forEach(b => {
+        k.body.push(b.body);
+      });
+      newKeyLearnings.push(k);
+    }
+    return newKeyLearnings;
   }
-
-  loadCardStack();
-
-  $: keyLearnings[currentSubject].body = cards.map(c => c.body);
 
   const onClickChangeSubject = (n: number) => {
     if (n !== currentSubject) {
@@ -41,31 +53,38 @@
       setTimeout(() => {isTimerActive = true}, 100);
       currentSubject = n;
       currentCard = 0;
-      loadCardStack();
     }
   }
 
-  const onClickAddKeyLearning = () => {
-    let newKeyLearning: KeyLearningsData = placeholder_example;
-    keyLearnings = [...keyLearnings, newKeyLearning];
-    keyLearnings = keyLearnings;
+  const onClickAddKeyLearning = (c: CardData[][]) => {
+    let newKeyLearnings: KeyLearningsData = {subject: "", body: ["Enter your text here."]};
+    keyLearnings = [...keyLearnings, newKeyLearnings];
+    let newSubject = [];
+    let newCard = { heading: "", body: "Enter your text here." };
+    newSubject.push(newCard);
+    cartas.push(newSubject);
+    keyLearnings = updateKeyLearnings(cartas);
     onClickChangeSubject(keyLearnings.length-1);
   }
 
   const onClickRemoveKeyLearning = (i: number) => {
-    //keyLearnings.splice(i, 1);
-    //keyLearnings = keyLearnings;
+    if (keyLearnings.length > 1){
+      keyLearnings.splice(i, 1);
+      cartas.splice(i, 1);
+      cartas = cartas;
+      onClickChangeSubject(0);
+    }
   }
 
   const click = () => {
-    console.log("CARDS -> ", cards);
+    console.log("CARTAS -> ", cartas);
     console.log("KEY LEARNINGS -> ", keyLearnings);
     console.log("N -> ", currentSubject);
   }
 
 </script>
 
-<button on:click={click}>JAJA</button>
+<button on:click={click}>log</button>
 
 <div class="container">
   <div class="card">
@@ -78,7 +97,7 @@
         {/each}
         {#if editable}
           <div class="editor-button">
-            <IconButton icon="add" on:click={onClickAddKeyLearning} />
+            <IconButton icon="add" on:click={() => onClickAddKeyLearning(cartas)} />
             <IconButton icon="delete" on:click={() => onClickRemoveKeyLearning(currentSubject)} />
           </div>
         {/if}
@@ -96,7 +115,7 @@
 
     <div class="card-content no-heading key-learnings">
       <Cards
-        bind:cards
+        bind:cards = {cartas[currentSubject]}
         canToggleHeading={false}
         progress={isTimerActive}
         style='no-heading'

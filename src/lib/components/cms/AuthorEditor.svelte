@@ -2,7 +2,7 @@
   import { updateAuthor } from "$lib/api";
   import { getToaster } from "$lib/helpers/utils";
   import type { SubTypes } from "$lib/types";
-  import EditableUserImage from "$lib/components/cms/EditableUserImage.svelte";
+  import EditableAuthorImage from "$lib/components/cms/EditableAuthorImage.svelte";
 
   export let author: SubTypes.Author.ForCMS;
 
@@ -33,7 +33,7 @@
 <div class="author-editor">
   <div>
     {#if author.id != null}
-      <EditableUserImage bind:author={author}/>
+      <EditableAuthorImage bind:author={author}/>
     {/if}
   </div>
   <div>

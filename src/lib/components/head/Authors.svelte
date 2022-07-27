@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SubTypes } from "$lib/types";
   import AuthorsEditor from "../cms/AuthorsEditor.svelte";
-  import UserImage from "../UserImage.svelte";
+  import AuthorImage from "../AuthorImage.svelte";
 
   export let authors: SubTypes.Chapter.PageHead['authors'];
   export let editable = false;
@@ -14,7 +14,7 @@
 
 <div class="author-images">
   {#each displayAuthors as author}
-    <UserImage {author} />
+    <AuthorImage {author} />
   {/each}
 </div>
 

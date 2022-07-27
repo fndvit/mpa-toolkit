@@ -2,7 +2,7 @@
   import { updateAuthor, uploadImage } from "$lib/api";
   import type { SubTypes } from "$lib/types";
   import { openModal } from "svelte-modals";
-  import UserImage from "$lib/components/UserImage.svelte";
+  import AuthorImage from "$lib/components/AuthorImage.svelte";
   import CropModal from "$lib/components/cms/CropModal.svelte";
   import Spinner from "$lib/components/generic/Spinner.svelte";
 
@@ -34,7 +34,7 @@
     <Spinner/>
   </div>
   {/if}
-  <UserImage on:click={() => inputEl.click()} {author} />
+  <AuthorImage on:click={() => inputEl.click()} {author} />
   <input
     bind:this={inputEl}
     style="display: none;"

@@ -14,14 +14,12 @@
   let newAuthor: SubTypes.Author.ForCMS;
 
   const toaster = getToaster();
-  const sortAuthors = () => {
-    authors = authors.sort((a, b) => {
-      if (a.name === b.name) return a.id > b.id ? 1 : -1;
-      else return a.name > b.name ? 1 : -1;
-    });
-  };
 
-  sortAuthors();
+  const sortAuthors = (_authors: typeof authors) => [..._authors].sort((a, b) =>
+    a.name.localeCompare(b.name, undefined, { sensitivity: 'accent' })
+  );
+
+  authors = sortAuthors(authors);
 
   const handleDelete = async (author: SubTypes.Author.ForCMS) => {
 
@@ -45,7 +43,7 @@
       newAuthor.id = _author.id;
 
       authors.push({ ...newAuthor });
-      sortAuthors();
+      authors = sortAuthors(authors);
       newAuthor = undefined;
 
       toaster('Author saved', { type: 'done' });

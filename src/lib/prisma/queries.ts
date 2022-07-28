@@ -14,26 +14,25 @@ export const pageTag = validate<Prisma.TagsOnPagesSelect>()({
     category: true
 });
 
-export const userBasic = validate<Prisma.UserSelect>()({
+export const author = validate<Prisma.AuthorSelect>()({
   id: true,
   name: true,
-  img: true
+  img: true,
+  bio: true
 });
 
 export const userSession = validate<Prisma.UserSelect>()({
   id: true,
   email: true,
   name: true,
-  img: true,
-  role: true,
+  role: true
 });
 
-export const userForCMS = validate<Prisma.UserSelect>()({
+export const authorForCMS = validate<Prisma.AuthorSelect>()({
   id: true,
-  email: true,
   name: true,
+  bio: true,
   img: true,
-  role: true,
   chapter: {
     select: { pageId: true }
   }
@@ -42,7 +41,7 @@ export const userForCMS = validate<Prisma.UserSelect>()({
 export const chapterForPageHead = validate<Prisma.ChapterSelect>()({
   keyTakeaways: true,
   summary: true,
-  authors: userBasic
+  authors: author
 });
 
 export const caseStudyForPageHead = validate<Prisma.CaseStudySelect>()({
@@ -122,7 +121,10 @@ pageForCmsList.select.tags.where = undefined;
 
 export namespace User {
   export type Session = Prisma.UserGetPayload<typeof userSession>;
-  export type ForCMS = Prisma.UserGetPayload<typeof userForCMS>
+}
+
+export namespace Author {
+  export type ForCMS = Prisma.AuthorGetPayload<typeof authorForCMS>;
 }
 
 export namespace Chapter {
@@ -151,6 +153,7 @@ export namespace CaseStudy {
 export type PageTag = Prisma.TagsOnPagesGetPayload<typeof pageTag>;
 
 export type Tag = Prisma.TagGetPayload<typeof tag>;
+export type Author = Prisma.AuthorGetPayload<typeof author>;
 
 export namespace Tag{
   export type WithPageCount = Prisma.TagGetPayload<typeof countTags>;

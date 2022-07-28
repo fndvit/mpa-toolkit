@@ -25,7 +25,7 @@
   export let allTags: Tag[];
   export let page: SubTypes.Page.Full;
 
-  setContext('allUsers', authors);
+  setContext('allAuthors', authors);
 
   const { protocol, hostname, port } = $pageStore.url;
   const URL_PREFIX = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;

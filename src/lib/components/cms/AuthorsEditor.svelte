@@ -6,7 +6,7 @@
   export let authors: SubTypes.Chapter.PageHead['authors'] = [];
   export let disabled = false;
 
-  const allAuthors = getContext<Author[]>('allUsers');
+  const allAuthors = getContext<Author[]>('allAuthors');
   const allAuthorOptions = allAuthors.map(u => ({
     value: u.id,
     label: u.name,

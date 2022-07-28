@@ -30,7 +30,7 @@
   const { protocol, hostname, port } = $pageStore.url;
   const URL_PREFIX = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;
 
-  const userLookup = createLookup(authors, u => u.id.toString(), u => u);
+  const authorLookup = createLookup(authors, a => a.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
 
   const pageId = page.id;
@@ -146,7 +146,7 @@
     })),
     chapter: !_page.chapter ? undefined : {
       ..._page.chapter,
-      authors: _page.chapter.authors.map<Author>(a => userLookup[a.toString()]),
+      authors: _page.chapter.authors.map<Author>(a => authorLookup[a.toString()]),
     }
   };
 

@@ -96,8 +96,18 @@
     </button>
   </div>
 
-  <div class="authors">
-    {#if filteredAuthors.length > 0}
+  {#if filteredAuthors.length === 0 && !newAuthor }
+    <div class="no-authors">No authors</div>
+  {:else}
+    <ul class="authors">
+      {#if newAuthor}
+        <li>
+          <AuthorEditor bind:author={newAuthor} />
+          <button on:click|once={onClickSaveAuthor} class="icon-author">
+            <div class="material-icons">done</div>
+          </button>
+        </li>
+      {/if}
       {#each filteredAuthors as author (author.id)}
         <li>
           <AuthorEditor bind:author/>
@@ -106,19 +116,8 @@
           </button>
         </li>
       {/each}
-    {:else}
-      <p>No authors</p>
-    {/if}
-
-    {#if newAuthor}
-      <li>
-        <AuthorEditor bind:author={newAuthor} />
-        <button on:click|once={onClickSaveAuthor} class="icon-author">
-          <div class="material-icons">done</div>
-        </button>
-      </li>
-    {/if}
-  </div>
+    </ul>
+  {/if}
 </div>
 
 <style lang="stylus">
@@ -130,12 +129,14 @@
   }
 
   .tool-bar {
-    display: flow-root;
-    margin-top: 60px;
+    margin: 60px 0;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    justify-content: space-between;
   }
 
   .searchbar {
-    float:left;
 
     :global(.searchbar){
       width: 530px;
@@ -153,7 +154,7 @@
     align-items: center;
     width: 252px;
     padding: 5px 20px;
-    float: right;
+    cursor: pointer;
 
     typography: h5-light;
     text-transform: uppercase;
@@ -174,9 +175,12 @@
     }
   }
 
-  .authors {
-    margin-top: 80px;
+  .no-authors {
+    typography: ui;
+  }
 
+  .authors {
+    padding: 0;
     > * {
       display: flex;
       border-bottom: solid 3px #F5F5F5;
@@ -192,11 +196,6 @@
       &:hover {
         transform: scale(1.2);
       }
-    }
-
-    p {
-      typography: ui;
-      border-bottom: none;
     }
   }
 

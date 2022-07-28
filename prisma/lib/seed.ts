@@ -1,6 +1,6 @@
 import type { ContentBlock, ContentDocument, PageRequest, ParagraphBlock } from '../../src/lib/types';
 import { Tag, TagCategory } from '@prisma/client';
-import { Role, TagType } from '@prisma/client';
+import { TagType } from '@prisma/client';
 import content from './data/content.json';
 import tags from './data/tags.json';
 import milestones from './data/milestones.json';
@@ -82,16 +82,15 @@ export async function createTags() {
 async function createDevData() {
   const names = [ "Emma Doyle", "Nicolas Smith", "Kirby Heath", "Todd Frey", "Del Robertson" ];
 
-  await prisma.user.createMany({
-    data: names.map((name, i) => ({
-      email: `user${i}@example.com`,
+  await prisma.author.createMany({
+    data: names.map(name => ({
       name,
-      role: Role.CONTENT_MANAGER
+      bio: summaryLorem.generateParagraphs(1),
     }))
   });
 
-  const users = await prisma.user.findMany();
-  const userIds = users.map(user => user.id);
+  const authors = await prisma.author.findMany();
+  const authorIds = authors.map(a => a.id);
 
   const allTags = await prisma.tag.findMany();
 
@@ -109,7 +108,7 @@ async function createDevData() {
         summaryLorem.generateSentences(2),
       ],
       summary: "The blue economy is the use of marine resources for sustainable economic development while improving livelihoods, creating jobs, and protecting and supporting marine ecosystems. Find out how to leverage this for your MPA.",
-      authors: [userIds[0]]
+      authors: [authorIds[0]]
     }
   });
 
@@ -136,7 +135,7 @@ async function createDevData() {
   });
 
   for (let i = 0; i < NUM_RANDOM_CHAPTERS; i++) {
-    await createRandomPage(userIds, allTags);
+    await createRandomPage(authorIds, allTags);
   }
 }
 
@@ -181,7 +180,7 @@ function getRandomTagsForContent(allTags: Tag[]): PageRequest['tags'] {
   ];
 }
 
-async function createRandomPage(userIds: number[], allTags: Tag[]) {
+async function createRandomPage(authorIds: number[], allTags: Tag[]) {
   const title = titleLorem.generateSentences(1);
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40);
   const summary = summaryLorem.generateParagraphs(1);
@@ -211,7 +210,7 @@ async function createRandomPage(userIds: number[], allTags: Tag[]) {
     },
     chapter: pageType !== 'chapter' ? undefined : {
       summary,
-      authors: getXRandItems(userIds, Math.ceil(Math.random() * 2)),
+      authors: getXRandItems(authorIds, Math.ceil(Math.random() * 2)),
       keyTakeaways: Array(Math.floor(Math.random() * 4)).fill(null).map(() => summaryLorem.generateSentences(2))
     }
   });

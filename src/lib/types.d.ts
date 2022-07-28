@@ -12,7 +12,6 @@ export interface UserInfo {
   id: number;
   email: string;
   name: string;
-  img: string;
 }
 
 export type MilestonesData = {
@@ -30,9 +29,14 @@ export type KeyLearningsData = {
 
 export type UserRequest = {
   role?: Role;
-  img?: string;
   name?: string;
   email?: string;
+}
+
+export type AuthorRequest = {
+  name?: string;
+  bio?: string;
+  img?: string;
 }
 
 export type PageRequest = {

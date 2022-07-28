@@ -1,32 +1,23 @@
 <script lang="ts">
   import { getToaster } from "$lib/helpers/utils";
   import { createUser } from "$lib/api";
-  import type { Role } from "@prisma/client";
   import type { SubTypes } from "$lib/types";
   import { closeModal } from "svelte-modals";
 
   export let isOpen: boolean;
-  export let user: Pick<SubTypes.User.ForCMS, 'id' | 'name' | 'email' | 'role'>;
+  export let user: SubTypes.User.Session;
   export let onAdd: () => unknown;
 
   const toaster = getToaster();
   const roles = ["ADMIN", "CONTENT_MANAGER", "USER"];
 
-  let name = "";
-  let email = null;
-  let role: Role;
-
   async function addNewUser() {
-    if(name != null) {
+    if(user.name != null) {
       try {
-        const _user = await createUser({name, email, role});
-        toaster('User created', {type: 'done'});
-
+        const _user = await createUser({name: user.name, email: user.email, role: user.role});
         user.id = _user.id;
-        user.name = _user.name;
-        user.email = _user.email;
-        user.role = _user.role;
 
+        toaster('User created', {type: 'done'});
         onAdd();
         closeModal();
         
@@ -45,12 +36,12 @@
 
   <form class="inputs">
     <div>
-      <input type="text" bind:value={name} placeholder="Name" required>
+      <input type="text" bind:value={user.name} placeholder="Name" required>
     </div>
     <div>
-      <input type="text" bind:value={email} placeholder="Email">
+      <input type="text" bind:value={user.email} placeholder="Email">
     </div>
-    <select bind:value={role} required>
+    <select bind:value={user.role} required>
       {#each roles as role}
         <option value="{role}">{role}</option>
       {/each}
@@ -79,7 +70,6 @@
       typography: h3-light-responsive;
       margin: 2rem;
     }
-
   }
 
   .inputs {

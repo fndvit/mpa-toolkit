@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PageRequest, SubTypes, Tag, UserInfo } from '$lib/types';
+  import type { PageRequest, SubTypes, Tag, Author } from '$lib/types';
   import type Toaster from '$lib/components/generic/Toaster.svelte';
   import LifeCycle from '$lib/components/LifeCycle.svelte';
   import { openModal } from 'svelte-modals';
@@ -21,16 +21,16 @@
   import { getPageTypeStr } from '$lib/helpers/content';
   import { page as pageStore } from '$app/stores';
 
-  export let users: UserInfo[];
+  export let authors: SubTypes.Author[];
   export let allTags: Tag[];
   export let page: SubTypes.Page.Full;
 
-  setContext('allUsers', users);
+  setContext('allAuthors', authors);
 
   const { protocol, hostname, port } = $pageStore.url;
   const URL_PREFIX = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;
 
-  const userLookup = createLookup(users, u => u.id.toString(), u => u);
+  const authorLookup = createLookup(authors, a => a.id.toString(), u => u);
   const tagLookup = createLookup(allTags, t => t.id.toString(), t => t);
 
   const pageId = page.id;
@@ -146,7 +146,7 @@
     })),
     chapter: !_page.chapter ? undefined : {
       ..._page.chapter,
-      authors: _page.chapter.authors.map<UserInfo>(a => userLookup[a.toString()]),
+      authors: _page.chapter.authors.map<Author>(a => authorLookup[a.toString()]),
     }
   };
 

@@ -20,7 +20,7 @@ DROP TABLE "_ChapterToUser";
 -- CreateTable
 CREATE TABLE "Author" (
     "id" SERIAL NOT NULL,
-    "name" TEXT,
+    "name" TEXT NOT NULL,
     "bio" TEXT,
     "img" TEXT,
 
@@ -32,6 +32,9 @@ CREATE TABLE "_AuthorToChapter" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Author_name_key" ON "Author"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_AuthorToChapter_AB_unique" ON "_AuthorToChapter"("A", "B");

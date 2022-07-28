@@ -5,7 +5,7 @@
 
 <div class="cms-homepage">
 
-  {#if $session.user === undefined}
+  {#if $session.user == null}
 
     <h2>WELCOME</h2>
 

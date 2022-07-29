@@ -231,25 +231,6 @@
     display: block;
     min-width: 0;
     flex: 1;
-
-    :global(.cards){
-      //height: 100%;
-    }
-
-    :global(.splide){
-      //height: 100%;
-    }
-
-    :global(.content){
-      padding-top: 0px !important;
-      //height: 100%;
-    }
-
-    //:global(.card-bottom) {
-      //position: absolute;
-      //width: 100%;
-      //bottom: 0;
-    //}
   }
 
 

@@ -127,7 +127,7 @@
     _page.slug = pageType === 'Case Study' ? slugify(_page.caseStudy.name) : slugify(_page.title);
   }
 
-  $: sharedFieldsComplete = _page.title && _page.slug;
+  $: sharedFieldsComplete = !!(_page.title && _page.slug);
 
   $: disabled = saving || deleting;
 

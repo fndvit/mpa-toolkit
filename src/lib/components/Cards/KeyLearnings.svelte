@@ -183,7 +183,6 @@
   }
 
   .card-content {
-    display: block;
     min-width: 0;
     flex: 1;
     &:not(.card-content-active) {
@@ -192,6 +191,22 @@
     :global(.editable-content[contenteditable]) {
       margin: 2px;
     }
+
+    :global(.cards) {
+      height: 100%;
+    }
+    :global(.splide) {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    :global(.splide__track) {
+      flex: 1;
+    }
+    :global(.cards .editor-buttons) {
+      bottom: 20px;
+    }
+
   }
 
 

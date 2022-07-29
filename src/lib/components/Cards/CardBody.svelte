@@ -73,27 +73,13 @@
   .gradient::before {
     content: '';
     position: absolute;
-    width: calc((100%) - var(--content-padding) - var(--content-right-padding) - var(--scrollbar-width)); //Content Padding Less Scrollbar 5px Width from &::-webkit-scrollbar
+    width: calc((100%) - var(--content-padding) - var(--content-right-padding) - var(--scrollbar-width));
     height: 76%;
     left: inherit;
     z-index: 10;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, var(--gradient-color) 80%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, var(--gradient-color) 95%);
     transition: all 2s;
     pointer-events: none;
-  }
-
-  //Does it has some efect?  all next 3 css blocks/* ALX */
-  ::-webkit-scrollbar {
-    width: var(--scrollbar-width);
-    cursor: pointer;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: $colors.neutral-bg;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #888;
   }
 
 </style>

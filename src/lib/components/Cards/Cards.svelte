@@ -43,9 +43,6 @@
   };
 
   const onClickRemoveCard = () => {
-   //if (cards.length <= 1) {
-      //handleDeletion();
-    //}
     cards = cards.filter((_, i) => i !== currentPageIndex);
     const goTo = Math.max(0, Math.min(currentPageIndex, cards.length-1));
     splide.go(goTo);

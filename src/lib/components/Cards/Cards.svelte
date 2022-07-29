@@ -156,7 +156,7 @@
       border-bottom-right-radius: 0;
     }
 
-    :global(.key-learnings) & {
+    :global(.key-learnings .card-content) & {
       card-styles($colors.neutral-bg);
       box-shadow: none;
     }

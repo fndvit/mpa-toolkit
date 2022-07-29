@@ -1,68 +1,27 @@
 <script lang="ts">
   import type { KeyLearningsData } from '$lib/types';
-  import Cards, { CardData } from './Cards.svelte';
   import IconButton from '$lib/components/generic/IconButton.svelte';
   import EditableText from "../generic/EditableText.svelte";
+  import KeyLearningsCards from './KeyLearningsCards.svelte';
 
   export let keyLearnings: KeyLearningsData[] = [];
   export let currentSubject = 0;
   export let editable = false;
 
-  let currentCard = 0;
-  let isTimerActive = true;
-
-  const generateCards = () => {
-    let newCards = [];
-    keyLearnings.forEach(k => {
-      let ca = k.body.map(c=> ({
-        heading: null,
-        body: c
-      }));
-      newCards.push(ca);
-    });
-    return newCards;
-  };
-
-  let cards: CardData[][] = generateCards();
-
-  const updateKeyLearnings = (cards: CardData[][]) => {
-    let newKeyLearnings: KeyLearningsData[] = [];
-    for (let c = 0; c < cards.length; c++) {
-      let k: KeyLearningsData = {subject: keyLearnings[c].subject, body: []};
-      cards[c].forEach(b => {
-        k.body.push(b.body);
-      });
-      newKeyLearnings.push(k);
-    }
-    return newKeyLearnings;
-  };
-
   const onClickChangeSubject = (n: number) => {
-    if (n !== currentSubject) {
-      isTimerActive = false;
-      setTimeout(() => isTimerActive = true, 100);
-      currentSubject = n;
-      currentCard = 0;
-    }
+    currentSubject = n;
   };
 
   const onClickAddKeyLearning = () => {
     let newKeyLearnings: KeyLearningsData = {subject: "", body: ["Enter your text here."]};
     keyLearnings = [...keyLearnings, newKeyLearnings];
-    let newSubject = [];
-    let newCard = { heading: "", body: "Enter your text here." };
-    newSubject.push(newCard);
-    cards.push(newSubject);
-    keyLearnings = updateKeyLearnings(cards);
     onClickChangeSubject(keyLearnings.length-1);
   };
 
   const onClickRemoveKeyLearning = (i: number) => {
-    if (keyLearnings.length > 1){
-      keyLearnings.splice(i, 1);
-      cards.splice(i, 1);
-      cards = cards;
-      onClickChangeSubject(0);
+    if (keyLearnings.length > 1) {
+      keyLearnings = keyLearnings.filter((_, j) => j !== i);
+      if(i > 0) onClickChangeSubject(i - 1);
     }
   };
 
@@ -70,11 +29,9 @@
     onClickAddKeyLearning();
   }
 
-  $: keyLearnings = updateKeyLearnings(cards);
-
 </script>
 
-<div class="container">
+<div class="key-learnings">
   <div class="card">
     <div class="navigation-menu">
       <div class="titles-area">
@@ -102,25 +59,17 @@
       </div>
     </div>
 
-    {#if cards[currentSubject]}
-      <div class="card-content no-heading key-learnings">
-        <Cards
-          bind:cards={cards[currentSubject]}
-          canToggleHeading={false}
-          progress={isTimerActive}
-          removable={false}
-          style='no-heading'
-          {editable}
-          bind:currentPageIndex={currentCard}
-        />
+    {#each keyLearnings as k, i}
+      <div class="card-content no-heading" class:card-content-active={currentSubject === i}>
+        <KeyLearningsCards bind:cards={k.body} {editable} />
       </div>
-    {/if}
+    {/each}
   </div>
 </div>
 
 <style lang="stylus">
 
-  .container {
+  .key-learnings {
     display: block;
     position: relative;
     width: 100%;
@@ -212,6 +161,10 @@
       opacity: 1;
       font-weight: bold;
     }
+
+    :global(.editable-content) {
+      margin-right: 2px;
+    }
   }
 
   .card {
@@ -222,7 +175,7 @@
     background-color: $colors.neutral-bg;
 
     :global(.editable-text) {
-      --outline-color: $colors.neutral-black;
+      --outline-color: #d1d1d1;
       --caret-color: $colors.neutral-black;
     }
   }
@@ -231,6 +184,12 @@
     display: block;
     min-width: 0;
     flex: 1;
+    &:not(.card-content-active) {
+      display: none;
+    }
+    :global(.editable-content[contenteditable]) {
+      margin: 2px;
+    }
   }
 
 

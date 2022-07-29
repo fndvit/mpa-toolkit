@@ -13,7 +13,7 @@
   const onClickChangeSubject = (n: number) => currentSubject = n;
 
   const onClickAddKeyLearning = () => {
-    let newKeyLearnings: KeyLearningsData = {subject: "", body: ["Enter your text here."]};
+    let newKeyLearnings: KeyLearningsData = {subject: "", body: [""]};
     keyLearnings = [...keyLearnings, newKeyLearnings];
     const newIndex = keyLearnings.length - 1;
     onClickChangeSubject(newIndex);

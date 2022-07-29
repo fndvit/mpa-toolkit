@@ -25,6 +25,7 @@
   export let selected = false;
   export let progress = true;
   export let canToggleHeading = true;
+  export let removable = true;
 
   let splide: Splide;
 
@@ -85,7 +86,7 @@
     {#if editable}
       <div class="editor-buttons">
         <IconButton icon="add" on:click={onClickAddCard} />
-        <IconButton icon="delete" on:click={onClickRemoveCard} />
+        <IconButton icon="delete" on:click={onClickRemoveCard} disabled={!removable && cards.length === 1} />
         {#if canToggleHeading}
           <IconButton icon="title" active={style === 'default'} on:click={onClickChangeType} />
         {/if}

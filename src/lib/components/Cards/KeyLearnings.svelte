@@ -8,7 +8,7 @@
   export let currentSubject = 0;
   export let editable = false;
 
-  let currentCard: number = 0;
+  let currentCard = 0;
   let isTimerActive = true;
 
   const generateCards = () => {
@@ -21,30 +21,30 @@
       newCards.push(ca);
     });
     return newCards;
-  }
+  };
 
   let cards: CardData[][] = generateCards();
 
   const updateKeyLearnings = (cards: CardData[][]) => {
     let newKeyLearnings: KeyLearningsData[] = [];
     for (let c = 0; c < cards.length; c++) {
-      let k: KeyLearningsData = {subject: keyLearnings[c].subject, body: []}
+      let k: KeyLearningsData = {subject: keyLearnings[c].subject, body: []};
       cards[c].forEach(b => {
         k.body.push(b.body);
       });
       newKeyLearnings.push(k);
     }
     return newKeyLearnings;
-  }
+  };
 
   const onClickChangeSubject = (n: number) => {
     if (n !== currentSubject) {
       isTimerActive = false;
-      setTimeout(() => {isTimerActive = true}, 100);
+      setTimeout(() => isTimerActive = true, 100);
       currentSubject = n;
       currentCard = 0;
     }
-  }
+  };
 
   const onClickAddKeyLearning = () => {
     let newKeyLearnings: KeyLearningsData = {subject: "", body: ["Enter your text here."]};
@@ -55,7 +55,7 @@
     cards.push(newSubject);
     keyLearnings = updateKeyLearnings(cards);
     onClickChangeSubject(keyLearnings.length-1);
-  }
+  };
 
   const onClickRemoveKeyLearning = (i: number) => {
     if (keyLearnings.length > 1){
@@ -64,7 +64,7 @@
       cards = cards;
       onClickChangeSubject(0);
     }
-  }
+  };
 
   if (keyLearnings.length === 0) {
     onClickAddKeyLearning();
@@ -86,7 +86,8 @@
         {#if editable}
           <div class="editor-button">
             <IconButton icon="add" on:click={() => onClickAddKeyLearning()} />
-            <IconButton icon="delete" on:click={() => onClickRemoveKeyLearning(currentSubject)} />
+            <IconButton icon="delete" disabled={keyLearnings.length === 1}
+              on:click={() => onClickRemoveKeyLearning(currentSubject)} />
           </div>
         {/if}
       </div>
@@ -104,9 +105,10 @@
     {#if cards[currentSubject]}
       <div class="card-content no-heading key-learnings">
         <Cards
-          bind:cards = {cards[currentSubject]}
+          bind:cards={cards[currentSubject]}
           canToggleHeading={false}
           progress={isTimerActive}
+          removable={false}
           style='no-heading'
           {editable}
           bind:currentPageIndex={currentCard}

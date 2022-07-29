@@ -230,6 +230,7 @@
   .card-content {
     display: block;
     min-width: 0;
+    flex: 1;
 
     :global(.cards){
       //height: 100%;

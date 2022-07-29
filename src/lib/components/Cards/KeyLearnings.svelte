@@ -8,20 +8,22 @@
   export let currentSubject = 0;
   export let editable = false;
 
-  const onClickChangeSubject = (n: number) => {
-    currentSubject = n;
-  };
+  let focusSubjects: (() => void)[] = [];
+
+  const onClickChangeSubject = (n: number) => currentSubject = n;
 
   const onClickAddKeyLearning = () => {
     let newKeyLearnings: KeyLearningsData = {subject: "", body: ["Enter your text here."]};
     keyLearnings = [...keyLearnings, newKeyLearnings];
-    onClickChangeSubject(keyLearnings.length-1);
+    const newIndex = keyLearnings.length - 1;
+    onClickChangeSubject(newIndex);
+    setTimeout(() => focusSubjects[newIndex](), 1);
   };
 
   const onClickRemoveKeyLearning = (i: number) => {
     if (keyLearnings.length > 1) {
       keyLearnings = keyLearnings.filter((_, j) => j !== i);
-      if(i > 0) onClickChangeSubject(i - 1);
+      if (i > 0) onClickChangeSubject(i - 1);
     }
   };
 
@@ -37,7 +39,7 @@
       <div class="titles-area">
         {#each keyLearnings as k, i}
           <div class="title" id={i.toString()} class:selected={i===currentSubject} on:click={() => onClickChangeSubject(i)}>
-            <EditableText bind:value={k.subject} {editable} placeholder='Key learning...' />
+            <EditableText bind:value={k.subject} {editable} placeholder='Key learning...' bind:focus={focusSubjects[i]} />
           </div>
         {/each}
         {#if editable}

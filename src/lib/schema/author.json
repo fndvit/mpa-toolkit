@@ -1,17 +1,17 @@
 {
-  "$id": "user",
+  "$id": "author",
 
   "type": "object",
   "properties": {
 
-    "role": { "type": "string", "enum": [ "USER", "CONTENT_MANAGER", "ADMIN" ] },
     "name": { "type": "string", "minLength": 2, "maxLength": 30},
-    "email": {
+    "bio": {
       "oneOf": [
-        { "type": "string", "minLength": 5 },
+        { "type": "string", "maxLength": 700 },
         { "type": "null" }
       ]
-    }
+    },
+    "img": { "type": "string" }
 
   },
   "additionalProperties": false,

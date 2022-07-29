@@ -2,13 +2,7 @@
   {
     "role": "USER"
   },
-  {
-    "role": "ADMIN",
-    "img": "sompath.jpg"
-  },
-  {
-    "img": "sompath.jpg"
-  },
+
   {
     "email": "a@b.c"
   },

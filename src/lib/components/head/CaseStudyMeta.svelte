@@ -1,187 +1,77 @@
 <script lang="ts">
-  import type { SubTypes } from "$lib/types";
-  import IconButton from '$lib/components/generic/IconButton.svelte';
-  import GlobeViz from "./GlobeViz.svelte";
-  import Milestones from './Milestones.svelte';
-  import EditableText from "../generic/EditableText.svelte";
-  import EditableNumber from "../generic/EditableNumber.svelte";
-  import GlobeVizEditor from "./GlobeVizEditor.svelte";
-  import KeyLearnings from "../Cards/KeyLearnings.svelte";
-  import LifeCycle from "../LifeCycle.svelte";
+  import type { SubTypes } from '$lib/types';
+
+  import EditableNumber from '../generic/EditableNumber.svelte';
+
+  import EditableText from '../generic/EditableText.svelte';
+  import GlobeViz from './GlobeViz.svelte';
+  import GlobeVizEditor from './GlobeVizEditor.svelte';
 
   export let caseStudy: SubTypes.CaseStudy.PageHead;
-  export let tags: SubTypes.PageTag[];
   export let editable = false;
 
   const placeholders = {
-    name: "Project name",
+    name: 'Project name',
     established: 2000,
     size: 1234,
-    governance: "Adipisicing minim eiusmod eu officia voluptate incididunt officia sit nostrud cupidatat.",
-    staff: "12 workers",
-    budget: "US$552,479 as direct costs of the protected area, plus part of the support services and enterprise development costs of the co-managing NGO",
-    budgetLevel: "Above basic, but less than optimal",
+    governance: 'Adipisicing minim eiusmod eu officia voluptate incididunt officia sit nostrud cupidatat.',
+    staff: '12 workers',
+    budget:
+      'US$552,479 as direct costs of the protected area, plus part of the support services and enterprise development costs of the co-managing NGO',
+    budgetLevel: 'Above basic, but less than optimal'
   };
-
-  $: hasMilestones = !!Object.keys(caseStudy.milestones).length;
-
 </script>
 
-<div class="meta-container">
-
-  <div class="meta-content">
-
-    <div class="meta-grid meta-grid-1">
-
-      <div class="grid-cell">
-        <div class="meta-title">Name</div>
-        <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
-      </div>
-
-      <div class="grid-cell side-by-side-1">
-        <div class="meta-title">Established in</div>
-        <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
-      </div>
-
-      <div class="grid-cell side-by-side-2">
-        <div class="meta-title">Size</div>
-        <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²"/>
-      </div>
-
-      <div class="globe-cell">
-        {#if editable}
-          <GlobeVizEditor bind:lat={caseStudy.lat} bind:long={caseStudy.long} />
-        {:else}
-          <GlobeViz lat={caseStudy.lat} long={caseStudy.long} />
-        {/if}
-      </div>
-
+<div class="casestudy-meta">
+  <div class="meta-grid meta-grid-1">
+    <div class="grid-cell">
+      <div class="meta-title">Name</div>
+      <EditableText bind:value={caseStudy.name} placeholder={placeholders.name} {editable} />
     </div>
 
-    <div class="meta-grid meta-grid-2">
-
-      <div class="grid-cell">
-        <div class="meta-title">Governance</div>
-        <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
-      </div>
-
-      <div class="grid-cell">
-        <div class="meta-title">Staff</div>
-        <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
-      </div>
-
-      <div class="grid-cell">
-        <div class="meta-title">Budget</div>
-        <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
-      </div>
-
-      <div class="grid-cell">
-        <div class="meta-title">Budget level</div>
-        <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
-      </div>
-
+    <div class="grid-cell side-by-side-1">
+      <div class="meta-title">Established in</div>
+      <EditableNumber bind:value={caseStudy.established} {editable} placeholder={placeholders.established} />
     </div>
 
-    {#if editable && !hasMilestones}
-      <div class="add-milestones-button">
-        <IconButton icon="add" on:click={() => caseStudy.milestones = {'': ['']}} text="Add milestones" />
-      </div>
-    {/if}
+    <div class="grid-cell side-by-side-2">
+      <div class="meta-title">Size</div>
+      <EditableNumber bind:value={caseStudy.size} {editable} placeholder={placeholders.size} unitSuffix="km²" />
+    </div>
 
-  </div>
-</div>
-
-{#if hasMilestones}
-<div class="meta-container meta-container-milestones">
-  <Milestones bind:milestones={caseStudy.milestones} {editable} />
-</div>
-{/if}
-
-{#if !editable}
-  <div class="lifecycle-container">
-    <div class="lifecycle">
-      <LifeCycle {tags}/>
+    <div class="globe-cell">
+      {#if editable}
+        <GlobeVizEditor bind:lat={caseStudy.lat} bind:long={caseStudy.long} />
+      {:else}
+        <GlobeViz lat={caseStudy.lat} long={caseStudy.long} />
+      {/if}
     </div>
   </div>
-{/if}
 
-<div class="key-learnings-container">
-  <div class="key-learnings-card">
-    <KeyLearnings bind:keyLearnings={caseStudy.keyLearnings} {editable}/>
+  <div class="meta-grid meta-grid-2">
+    <div class="grid-cell">
+      <div class="meta-title">Governance</div>
+      <EditableText bind:value={caseStudy.governance} placeholder={placeholders.governance} {editable} />
+    </div>
+
+    <div class="grid-cell">
+      <div class="meta-title">Staff</div>
+      <EditableText bind:value={caseStudy.staff} placeholder={placeholders.staff} {editable} />
+    </div>
+
+    <div class="grid-cell">
+      <div class="meta-title">Budget</div>
+      <EditableText bind:value={caseStudy.budget} placeholder={placeholders.budget} {editable} />
+    </div>
+
+    <div class="grid-cell">
+      <div class="meta-title">Budget level</div>
+      <EditableText bind:value={caseStudy.budgetLevel} placeholder={placeholders.budgetLevel} {editable} />
+    </div>
   </div>
 </div>
 
 <style lang="stylus">
-
-  .lifecycle-container {
-    grid-config(page, case-study);
-    background-color: $colors.secondary-bg;
-  }
-
-  .lifecycle {
-    grid-area: lifecycle;
-    position: relative;
-
-    > :global(.lifecycle) {
-      position: absolute;
-      z-index: lifecycle;
-      margin-right: -30px;
-      margin-left: 20px;
-      margin-top: 40px;
-      max-width: 300px;
-      box-sizing: border-box;
-
-      +breakpoint(page, medium) {
-        position: static;
-        margin: 0;
-        max-width: none;
-      }
-    }
-  }
-
-  .key-learnings-container {
-    grid-config(page, case-study);
-    position: relative;
-    background-color: $colors.secondary-bg;
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
-
-  .key-learnings-card {
-    grid-area: keylearnings;
-    margin-left: -30px;
-  }
-
-  .meta-container {
-    grid-config(page, case-study);
-
-    --ui-color-placeholder: #ffffff55;
-    position: relative;
-    background-color: $colors.deep-blue;
-    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
-
-    +breakpoint(page, medium) {
-      :global(.page-static[data-pagetype="casestudy-with-milestones"]) &.meta-container-milestones,
-      :global(.page-static[data-pagetype="casestudy"]) &:not(.meta-container-milestones) {
-        margin-bottom: $lifecycle-y-overlap * -1;
-        padding-bottom: $lifecycle-y-overlap;
-      }
-    }
-  }
-
-  .meta-container-milestones {
-    > :global(.milestones) {
-      grid-area: meta;
-    }
-    background: $colors.dark-blue;
-    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
-  }
-
-  .meta-content {
-    width: auto;
-    grid-area: meta;
-    padding: 35px 0px;
-  }
 
   .meta-grid {
     display: grid;
@@ -231,13 +121,6 @@
     }
   }
 
-  .add-milestones-button {
-    margin-bottom: -20px;
-    margin-top: 10px;
-    --ib-color: #ffffffee;
-    --ib-hover-border: 1px solid transparent;
-    --ib-hover-bg: #00000011;
-  }
 
   +breakpoint(page, medium) {
     .meta-grid {
@@ -246,20 +129,8 @@
         min-height: 110px;
       }
     }
-
-    .key-learnings-card {
-      margin-left: 0px;
-    }
-
-    .lifecycle-container {
-      padding-bottom: 40px;
-    }
-
-    .key-learnings-container {
-      padding-top: 0px;
-    }
-
   }
+
 
   +breakpoint(page, small) {
 
@@ -274,12 +145,6 @@
 
     .side-by-side-2 {
       display: inline-block;
-    }
-
-    .meta-content {
-      margin-left:0px;
-      padding-top: 150px;
-      width: fit-content;
     }
 
     .meta-grid {

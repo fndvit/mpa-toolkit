@@ -29,8 +29,6 @@ export type KeyLearningsData = {
 
 export type UserRequest = {
   role?: Role;
-  name?: string;
-  email?: string;
 }
 
 export type AuthorRequest = {

@@ -192,11 +192,11 @@ export async function updateUser(id: number, user: UserRequest) {
 
   validate('user', user);
 
-  const { name, email, role } = user;
+  const { role } = user;
 
   const _user = await prisma.user.update({
     where: { id },
-    data: { name, email, role },
+    data: { role },
   });
 
   return _user;

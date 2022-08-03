@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { SubTypes } from '$lib/types';
-
   import EditableNumber from '../generic/EditableNumber.svelte';
-
   import EditableText from '../generic/EditableText.svelte';
   import GlobeViz from './GlobeViz.svelte';
   import GlobeVizEditor from './GlobeVizEditor.svelte';

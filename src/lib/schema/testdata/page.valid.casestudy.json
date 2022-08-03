@@ -22,9 +22,15 @@
       "2020": [ "a", "b" ],
       "2022": [ "c" ]
     },
-    "keyLearnings": {
-      "What works": [ "a", "b" ],
-      "What doesn't work": [ "c" ]
-    }
+    "keyLearnings": [
+      {
+        "subject": "What works",
+        "body": [ "a", "b" ]
+      },
+      {
+        "subject": "What doesn't work",
+        "body": [ "c" ]
+      }
+    ]
   }
 }

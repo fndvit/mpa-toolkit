@@ -21,6 +21,10 @@
     "milestones": {
       "2020": [ "a", "b" ],
       "2022": [ "c" ]
+    },
+    "keyLearnings": {
+      "What works": [ "a", "b" ],
+      "What doesn't work": [ "c" ]
     }
   }
 }

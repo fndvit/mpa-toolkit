@@ -19,23 +19,27 @@ export const handler: Handler = async (event) => {
   } else if (command === 'nuke') {
     await reset();
     await seed(event.seed === 'dev');
-  } else if (command === 'reset' || command === 'migrate') {
-    const options: string[] = command == 'reset' ? ['reset', '--force', '--skip-generate'] : [];
+  } else if (command === 'reset' || command === 'deploy') {
+    const options: string[] = command == 'reset' ? ['--force', '--skip-generate'] : [];
 
     // Currently we don't have any direct method to invoke prisma migration programatically.
     // As a workaround, we spawn migration script as a child process and wait for its completion.
     // Please also refer to the following GitHub issue: https://github.com/prisma/prisma/issues/4703
     try {
       const exitCode = await new Promise((resolve) => {
-        execFile(path.resolve('./node_modules/prisma/build/index.js'), ['migrate', ...options], (error, stdout) => {
-          console.log(stdout);
-          if (error != null) {
-            console.log(`prisma migrate ${command} exited with error ${error.message}`);
-            resolve(error.code ?? 1);
-          } else {
-            resolve(0);
+        execFile(
+          path.resolve('./node_modules/prisma/build/index.js'),
+          ['migrate', command, ...options],
+          (error, stdout) => {
+            console.log(stdout);
+            if (error != null) {
+              console.log(`prisma migrate ${command} exited with error ${error.message}`);
+              resolve(error.code ?? 1);
+            } else {
+              resolve(0);
+            }
           }
-        });
+        );
       });
 
       if (exitCode != 0) throw Error(`command ${command} failed with exit code ${exitCode}`);

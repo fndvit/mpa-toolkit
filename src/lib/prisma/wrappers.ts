@@ -1,12 +1,46 @@
-import type { Prisma } from "@prisma/client";
-import { error404 } from "$lib/errors";
-import { prisma } from "$lib/prisma";
-import type { PageRequest, SubTypes, UserRequest, TagRequest, AuthorRequest } from "$lib/types";
-import { calcReadTime } from "$lib/readtime";
-import { validate } from "$lib/schema/validation";
-import { pageForContentCard, pageFull } from "./queries";
-import { createLookup, type Expand } from "$lib/helpers/utils";
-import { publishEvent } from "$lib/events";
+import type { Prisma } from '@prisma/client';
+import { error404 } from '$lib/errors';
+import { prisma } from '$lib/prisma';
+import type { PageRequest, SubTypes, UserRequest, TagRequest, AuthorRequest } from '$lib/types';
+import { calcReadTime } from '$lib/readtime';
+import { validate } from '$lib/schema/validation';
+import { pageForContentCard, pageFull, session } from './queries';
+import { createLookup, type Expand } from '$lib/helpers/utils';
+import { publishEvent } from '$lib/events';
+import type { TokenPayload } from 'google-auth-library';
+
+export async function startSession(payload: TokenPayload) {
+  const firstUser = (await prisma.user.count()) === 0;
+  return prisma.session.create({
+    data: {
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7 days
+      user: {
+        connectOrCreate: {
+          where: { googleId: payload.sub },
+          create: {
+            name: payload.name,
+            email: payload.email,
+            googleId: payload.sub,
+            role: firstUser ? 'ADMIN' : 'USER'
+          }
+        }
+      }
+    },
+    ...session
+  });
+}
+export async function getSessionAndUser(sessionId: string) {
+  return prisma.session.findUnique({
+    where: { id: sessionId },
+    ...session
+  });
+}
+
+export async function endSession(userId: number) {
+  await prisma.session.deleteMany({
+    where: { userId }
+  });
+}
 
 export async function getPage(slug: string, draft = false) {
   return prisma.page.findFirst({
@@ -25,10 +59,9 @@ export async function getRecommendedPages(page: Pick<SubTypes.Page.Full, 'id' | 
     orderBy: { tags: { _count: 'asc' } },
     ...pageForContentCard
   });
-};
+}
 
 export async function getPageComponentProps(slug: string, draft = false) {
-
   const page = await getPage(slug, draft);
 
   if (!page) return error404('Page not found');
@@ -41,10 +74,9 @@ export async function getPageComponentProps(slug: string, draft = false) {
       recommendedPages
     }
   };
-};
+}
 
 export async function updatePage(id: number, page: PageRequest) {
-
   validate('page', page);
 
   const { title, slug, content, img, caseStudy, chapter, tags, draft } = page;
@@ -52,20 +84,24 @@ export async function updatePage(id: number, page: PageRequest) {
   const pageUpdateQuery = prisma.page.update({
     where: { id },
     data: {
-      title, slug, content, img, draft,
+      title,
+      slug,
+      content,
+      img,
+      draft,
       readTime: calcReadTime(content),
       tags: {
-        deleteMany: { OR: [ { pageId: { equals: id } }, ] },
+        deleteMany: { OR: [{ pageId: { equals: id } }] },
         createMany: {
-          data: tags.map(({id: tagId, category}) => ({ tagId, category }))
-        },
+          data: tags.map(({ id: tagId, category }) => ({ tagId, category }))
+        }
       },
       caseStudy: caseStudy && { update: caseStudy },
       chapter: chapter && {
         update: {
           summary: { set: chapter.summary },
           keyTakeaways: { set: chapter.keyTakeaways },
-          authors: { set: chapter.authors.map(id => ({id})) },
+          authors: { set: chapter.authors.map(id => ({ id })) }
         }
       },
 
@@ -84,7 +120,6 @@ export async function updatePage(id: number, page: PageRequest) {
 }
 
 export async function deletePage(id: number) {
-
   const page = await prisma.page.findFirst({
     where: { id },
     include: { chapter: true, caseStudy: true }
@@ -96,7 +131,7 @@ export async function deletePage(id: number) {
       chapter: page.chapter ? { delete: true } : undefined,
       caseStudy: page.caseStudy ? { delete: true } : undefined,
       search: { delete: true },
-      tags: { deleteMany: { OR: [ { pageId: { equals: id } }, ] } }
+      tags: { deleteMany: { OR: [{ pageId: { equals: id } }] } }
     }
   });
 
@@ -110,26 +145,29 @@ export async function deletePage(id: number) {
 }
 
 export async function createPage(page: PageRequest) {
-
   validate('page', page);
 
   const { title, slug, content, img, caseStudy, chapter, tags, draft } = page;
 
   const createPageQuery = prisma.page.create({
     data: {
-      title, slug, content, img, draft,
+      title,
+      slug,
+      content,
+      img,
+      draft,
       readTime: calcReadTime(content),
       tags: {
         createMany: {
-          data: tags.map(({id: tagId, category}) => ({ tagId, category }))
-        },
+          data: tags.map(({ id: tagId, category }) => ({ tagId, category }))
+        }
       },
       caseStudy: caseStudy && { create: caseStudy },
       chapter: chapter && {
         create: {
           summary: chapter.summary,
           keyTakeaways: chapter.keyTakeaways,
-          authors: { connect: chapter.authors.map(id => ({id})) }
+          authors: { connect: chapter.authors.map(id => ({ id })) }
         }
       }
     }
@@ -146,14 +184,18 @@ export async function createPage(page: PageRequest) {
 }
 
 async function _searchPages(searchText: string) {
-  const results: { id: number, rank: number, highlights: string }[] =
+  const results: { id: number; rank: number; highlights: string }[] =
     await prisma.$queryRaw`SELECT * FROM search_pages(${searchText})`;
   return results;
 }
 
-export async function searchPages<S extends Prisma.PageFindManyArgs> (searchText: string, fields: S) {
+export async function searchPages<S extends Prisma.PageFindManyArgs>(searchText: string, fields: S) {
   const searchResult = await _searchPages(searchText);
-  const searchLookup = createLookup(searchResult, r => r.id.toString(), r => r);
+  const searchLookup = createLookup(
+    searchResult,
+    r => r.id.toString(),
+    r => r
+  );
 
   const pages = await prisma.page.findMany({
     where: {
@@ -164,7 +206,7 @@ export async function searchPages<S extends Prisma.PageFindManyArgs> (searchText
     select: {
       id: true,
       ...fields.select
-    },
+    }
   });
 
   return pages
@@ -173,44 +215,39 @@ export async function searchPages<S extends Prisma.PageFindManyArgs> (searchText
       return {
         ...p,
         rank: searchResult.rank,
-        highlights: searchResult.highlights,
+        highlights: searchResult.highlights
       };
     })
-    .sort((a, b) => b.rank - a.rank) as Expand<Prisma.PageGetPayload<S> & { rank: number, highlights: string }>[];
+    .sort((a, b) => b.rank - a.rank) as Expand<Prisma.PageGetPayload<S> & { rank: number; highlights: string }>[];
 }
 
 export async function searchTags(searchText: string) {
-  const results: {tagId: number, highlight: string}[] =
+  const results: { tagId: number; highlight: string }[] =
     await prisma.$queryRaw`SELECT * FROM tag_highlights(${searchText})`;
-  const o = Object.fromEntries(
-    results.map(r => [r.tagId, r.highlight])
-  ) as {[tagId: number]: string};
+  const o = Object.fromEntries(results.map(r => [r.tagId, r.highlight])) as { [tagId: number]: string };
   return o;
 }
 
 export async function updateUser(id: number, user: UserRequest) {
-
   validate('user', user);
 
   const { role } = user;
 
   const _user = await prisma.user.update({
     where: { id },
-    data: { role },
+    data: { role }
   });
 
   return _user;
 }
 
 export async function deleteUser(id: number) {
-
   await prisma.user.delete({ where: { id } });
 
   return true;
 }
 
 export async function updateTag(id: number, tag: TagRequest) {
-
   validate('tag', tag);
 
   const { value } = tag;
@@ -224,7 +261,7 @@ export async function updateTag(id: number, tag: TagRequest) {
 
   const updateTagQuery = prisma.tag.update({
     where: { id },
-    data: { value },
+    data: { value }
   });
   //update all tag search indexes from all tagsonpages tags
 
@@ -238,10 +275,9 @@ export async function updateTag(id: number, tag: TagRequest) {
 }
 
 export async function deleteTag(id: number) {
-
   const tag = await prisma.tag.findFirst({ where: { id } });
 
-  if(tag.type !== 'TOPIC') throw new Error('Only topic tags can be deleted');
+  if (tag.type !== 'TOPIC') throw new Error('Only topic tags can be deleted');
 
   const cascade = prisma.tagsOnPages.deleteMany({
     where: { tagId: id }
@@ -257,7 +293,6 @@ export async function deleteTag(id: number) {
 }
 
 export async function createTag(tag: TagRequest) {
-
   validate('tag', tag);
 
   const { value } = tag;
@@ -266,65 +301,62 @@ export async function createTag(tag: TagRequest) {
     data: { value, type: 'TOPIC' }
   });
 
-  const [_tag] = await prisma.$transaction([
-    createTagQuery
-  ]);
+  const [_tag] = await prisma.$transaction([createTagQuery]);
 
   await publishEvent('tag-created', { id: _tag.id });
 
   return _tag;
 }
 
-
 export async function createAuthor(author: AuthorRequest) {
-
   validate('author', author);
 
   const { name, bio, img } = author;
 
   const createAuthorQuery = prisma.author.create({
     data: {
-      name, bio, img
-    }});
+      name,
+      bio,
+      img
+    }
+  });
 
-  const [_author] = await prisma.$transaction([
-    createAuthorQuery
-  ]);
+  const [_author] = await prisma.$transaction([createAuthorQuery]);
 
   return _author;
 }
 
 export async function updateAuthor(id: number, author: AuthorRequest) {
-
   validate('author', author);
 
   const { name, bio, img } = author;
 
   const _author = await prisma.author.update({
     where: { id },
-    data: { name, bio, img },
+    data: { name, bio, img }
   });
 
   return _author;
 }
 
 export async function deleteAuthor(id: number) {
-
   const cascade = prisma.page.updateMany({
-      where: {
-        chapter: {
-          authors: { some: { id } }
+    where: {
+      chapter: {
+        authors: { some: { id } }
+      }
+    },
+    data: {
+      content: {
+        page: {
+          update: {
+            authors: {
+              delete: { id }
+            }
+          }
         }
-
-      },
-      data: {
-        content: {
-          page: {
-            update: {
-              authors: {
-                delete: { id }
-              }
-      }}}}
+      }
+    }
   });
 
   const deleteAuthor = prisma.author.delete({ where: { id } });

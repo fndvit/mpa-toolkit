@@ -1,6 +1,8 @@
 import type { GetSession, Handle, RequestEvent } from '@sveltejs/kit';
-import { auth } from '$lib/auth';
+import * as cookie from 'cookie';
 import { prisma } from '$lib/prisma';
+import { userSession } from '$lib/prisma/queries';
+import { getSessionAndUser } from '$lib/prisma/wrappers';
 
 const RouteCache: { [routeId: string]: string } = {
   '': 's-maxage=604800, max-age=0', // index/homepage route
@@ -33,23 +35,23 @@ function getCacheHeaders(event: RequestEvent): CacheHeaders {
   };
 }
 
-export const getSession: GetSession = async event => {
-  // only get the session on cms routes
-  const re = /^\/cms\b/.exec(event.url.pathname);
-  if (re) {
-    const session = await auth.getSession(event);
-
-    if (session?.user) {
-      const user = await prisma.user.findUnique({
-        where: { id: session.user.id }
-      });
-      return { user };
-    }
+async function attachUserToRequest(sessionId: string, event: RequestEvent) {
+  const session = await getSessionAndUser(sessionId);
+  if (session && session.expires >= new Date()) {
+    event.locals.user = session.user;
   }
-  return { user: undefined };
+}
+
+export const getSession: GetSession = async event => {
+  return event.locals.user ? { user: event.locals.user } : {};
 };
 
 export const handle: Handle = async ({ event, resolve }) => {
+  const cookies = cookie.parse(event.request.headers.get('Cookie') || '');
+  if (cookies.session) {
+    await attachUserToRequest(cookies.session, event);
+  }
+
   event.locals.cacheKeys = new Set();
   const response = await resolve(event);
   if (response.ok) {

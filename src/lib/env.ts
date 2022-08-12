@@ -4,7 +4,7 @@ dotenv.config();
 
 const ENV_REQUIRED = [
   'DATABASE_URL',
-  'GOOGLE_OAUTH_CLIENT_ID',
+  'PUBLIC_GOOGLE_OAUTH_CLIENT_ID',
   'GOOGLE_OAUTH_CLIENT_SECRET',
   'JWT_SECRET_KEY',
   'AWS_S3_UPLOAD_BUCKET',
@@ -33,12 +33,12 @@ const processEnv = ALL_ENV.reduce((acc, key) => {
   return acc;
 }, {} as MpaEnv);
 
-const originURL = new URL(processEnv.ORIGIN);
+// const originURL = new URL(processEnv.ORIGIN);
 
 const env = {
   ...processEnv,
-  host: originURL.host,
-  protocol: originURL.protocol.replace(':', ''),
+  // host: originURL.host,
+  // protocol: originURL.protocol.replace(':', ''),
   isLambda: !!(processEnv.LAMBDA_TASK_ROOT && processEnv.AWS_EXECUTION_ENV)
 };
 

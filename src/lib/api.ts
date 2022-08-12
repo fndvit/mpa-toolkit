@@ -1,3 +1,5 @@
+import { goto } from '$app/navigation';
+import { session } from '$app/stores';
 import type { UserRequest, PageRequest, TagRequest, AuthorRequest, User, Page, Tag, Author } from '$lib/types';
 import ky from 'ky';
 
@@ -92,4 +94,12 @@ export async function updateTag(id: number, data: TagRequest) {
 export async function deleteTag(id: number) {
   const response = await ky.delete(`/api/tags/${id}`);
   return response.ok;
+}
+
+export async function logout() {
+  const res = await ky.post('/api/auth/logout');
+  if (res.ok) {
+    session.set({});
+    goto('/cms/login');
+  } else console.error(`Logout not successful: ${res.statusText} (${res.status})`);
 }

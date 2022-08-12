@@ -1,36 +1,30 @@
 <script lang="ts">
-  import { session } from "$app/stores";
+  import { goto } from '$app/navigation';
+  import { session } from '$app/stores';
+  import { logout } from '$lib/api';
+
+  if (!$session.user) {
+    goto('/cms/login');
+  }
 
 </script>
 
 <div class="cms-homepage">
-
-  {#if $session.user == null}
-
-    <h2>WELCOME</h2>
-
-    <a href="/api/auth/signin/google" class="signin-button">
-      Sign in with Google
-    </a>
-
-  {:else}
-
+  {#if $session.user}
     <h3>WELCOME {$session.user.name}</h3>
 
     <div class="grid-links">
-
       <a href="cms/pages"><span class="material-icons">description</span>Pages</a>
       <a href="cms/tags"><span class="material-icons">sell</span>Tags</a>
       <a href="cms/authors"><span class="material-icons">face</span>Authors</a>
 
-      {#if $session.user.role == "ADMIN"}
+      {#if $session.user.role == 'ADMIN'}
         <a href="cms/users"><span class="material-icons">person</span>Users</a>
       {/if}
-
     </div>
 
     <div style="margin-top: 40px">
-      <a href="/api/auth/signout">Signout</a>
+      <button class="logout-button" on:click={logout}>Signout</button>
     </div>
   {/if}
 </div>
@@ -44,16 +38,10 @@
  .cms-homepage {
 
     position: fixed;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-
-    h2 {
-      typography: h2-responsive;
-      margin-bottom: 30px;
-      text-align: center;
-    }
 
     h3 {
       typography: h3-light-responsive;
@@ -65,18 +53,6 @@
       typography: ui-small;
       color: black;
       text-decoration: none;
-    }
-  }
-
-  .signin-button {
-    display: block;
-    padding: 1.5rem;
-    box-sizing: border-box;
-    width: 275px;
-    background: $colors.neutral-light;
-    border-radius: 24px;
-    &:hover {
-      filter: brightness(105%);
     }
   }
 
@@ -106,6 +82,12 @@
       }
     }
 
+  }
+
+  .logout-button {
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    typography: ui-small;
   }
 
 </style>

@@ -1,5 +1,4 @@
 <script lang="ts">
-
   import { createAuthor, deleteAuthor } from "$lib/api";
   import { getToaster } from "$lib/helpers/utils";
   import DeleteModal from "$lib/components/cms/DeleteModal.svelte";

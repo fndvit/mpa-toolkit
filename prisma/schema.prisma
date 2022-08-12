@@ -31,6 +31,7 @@ model User {
   name      String?
   googleId  String? @unique
   role      Role    @default(USER)
+  session   Session[]
 }
 
 model CaseStudy {
@@ -111,4 +112,12 @@ model Search {
   vector   Unsupported("tsvector")
 
   page     Page     @relation(fields: [pageId], references: [id])
+}
+
+model Session {
+  id      String   @id @default(uuid())
+  userId  Int
+  expires DateTime @db.Timestamptz
+
+  user    User     @relation(fields: [userId], references: [id])
 }

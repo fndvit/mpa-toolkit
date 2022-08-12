@@ -3,7 +3,8 @@ import svg from '@poppanator/sveltekit-svg';
 /** @type {import('vite').UserConfig} */
 const config = {
   server: {
-    port: 3000
+    port: 3000,
+    host: '0.0.0.0'
   },
   plugins: [
     sveltekit(),

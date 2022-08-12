@@ -1,11 +1,10 @@
-import type { RequestHandler } from "@sveltejs/kit";
-import { error404 } from "$lib/errors";
-import { prisma } from "$lib/prisma";
-import { pageForCollectionCard, tag as tagQuery } from "$lib/prisma/queries";
-import { slugify } from "$lib/helpers/utils";
+import type { RequestHandler } from '@sveltejs/kit';
+import { error404 } from '$lib/errors';
+import { prisma } from '$lib/prisma';
+import { pageForCollectionCard, tag as tagQuery } from '$lib/prisma/queries';
+import { slugify } from '$lib/helpers/utils';
 
 async function getTagIdBySlug(slug: string) {
-
   // can't directly query db by slug using prisma
   // so doing the query client-side
 
@@ -18,7 +17,7 @@ async function getTagIdBySlug(slug: string) {
   return tag?.id;
 }
 
-export const get: RequestHandler<{ slug: string }> = async ({ locals, params }) => {
+export const GET: RequestHandler<{ slug: string }> = async ({ locals, params }) => {
   const slug = params.slug.toLowerCase();
   if (slug !== params.slug) return { status: 301, redirect: `/tag/${slug}` };
 
@@ -33,7 +32,7 @@ export const get: RequestHandler<{ slug: string }> = async ({ locals, params }) 
     select: {
       ...tagQuery.select,
       pageTags: {
-        where: { page: {draft: false } },
+        where: { page: { draft: false } },
         select: { page: pageForCollectionCard }
       }
     }
@@ -46,7 +45,5 @@ export const get: RequestHandler<{ slug: string }> = async ({ locals, params }) 
   pages.map(p => p.tags.map(t => locals.cacheKeys.add(`tag-${t.tag.id}`)));
   locals.cacheKeys.add('pages');
 
-  return pages
-    ? { body: { pages, tag } }
-    : error404('Page not found');
+  return pages ? { body: { pages, tag } } : error404('Page not found');
 };

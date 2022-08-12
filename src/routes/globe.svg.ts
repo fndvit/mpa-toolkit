@@ -1,8 +1,7 @@
-import { generateGlobeSvg } from "$lib/globe/globe";
-import type { RequestHandler } from "@sveltejs/kit";
+import { generateGlobeSvg } from '$lib/globe/globe';
+import type { RequestHandler } from '@sveltejs/kit';
 
-export const get: RequestHandler = async evt => {
-
+export const GET: RequestHandler = async evt => {
   const lat = parseFloat(evt.url.searchParams.get('lat'));
   const long = parseFloat(evt.url.searchParams.get('long'));
 

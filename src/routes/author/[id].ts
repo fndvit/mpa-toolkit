@@ -1,9 +1,9 @@
-import type { RequestHandler } from "@sveltejs/kit";
-import { error404 } from "$lib/errors";
-import { prisma } from "$lib/prisma";
-import { author, pageForCollectionCard } from "$lib/prisma/queries";
+import type { RequestHandler } from '@sveltejs/kit';
+import { error404 } from '$lib/errors';
+import { prisma } from '$lib/prisma';
+import { author, pageForCollectionCard } from '$lib/prisma/queries';
 
-export const get: RequestHandler<{ id: string }> = async ({ params }) => {
+export const GET: RequestHandler<{ id: string }> = async ({ params }) => {
   const id = parseInt(params.id);
 
   if (isNaN(id)) return error404('Page not found');
@@ -15,7 +15,7 @@ export const get: RequestHandler<{ id: string }> = async ({ params }) => {
       chapter: {
         where: {
           page: {
-            draft: false,
+            draft: false
           }
         },
         select: {
@@ -29,7 +29,5 @@ export const get: RequestHandler<{ id: string }> = async ({ params }) => {
 
   const pages = _author.chapter.map(c => c.page);
 
-  return pages
-    ? { body: { pages, _author } }
-    : error404('Page not found');
+  return pages ? { body: { pages, _author } } : error404('Page not found');
 };

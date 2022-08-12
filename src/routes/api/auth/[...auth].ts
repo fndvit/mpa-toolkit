@@ -1,3 +1,4 @@
-import { auth } from "$lib/auth";
+import { auth } from '$lib/auth';
 
-export const { get, post } = auth;
+export const GET = auth.get;
+export const POST = auth.post;

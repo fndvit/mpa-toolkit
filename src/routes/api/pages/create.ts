@@ -1,19 +1,14 @@
-import type { PageRequest } from "$lib/types";
-import { authMiddleware } from "$lib/auth";
-import { createPage } from "$lib/prisma/wrappers";
+import type { PageRequest } from '$lib/types';
+import { authMiddleware } from '$lib/auth';
+import { createPage } from '$lib/prisma/wrappers';
 
-export const put = authMiddleware(
-  { role:'CONTENT_MANAGER' },
-  async ({ request }) => {
+export const PUT = authMiddleware({ role: 'CONTENT_MANAGER' }, async ({ request }) => {
+  const body = (await request.json()) as PageRequest;
 
-    const body = await request.json() as PageRequest;
+  const page = await createPage(body);
 
-    const page = await createPage(body);
-
-    return {
-      status: 200,
-      body: page
-    };
-
-  }
-);
+  return {
+    status: 200,
+    body: page
+  };
+});

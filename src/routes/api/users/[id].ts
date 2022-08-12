@@ -2,7 +2,7 @@ import { authMiddleware } from '$lib/auth';
 import { deleteUser, updateUser } from '$lib/prisma/wrappers';
 import type { UserRequest } from '$lib/types';
 
-export const patch = authMiddleware({ role: 'ADMIN' }, async ({ params, request }) => {
+export const PATCH = authMiddleware({ role: 'ADMIN' }, async ({ params, request }) => {
   const body = (await request.json()) as UserRequest;
   const user = await updateUser(parseInt(params.id), body);
 
@@ -12,7 +12,7 @@ export const patch = authMiddleware({ role: 'ADMIN' }, async ({ params, request 
   };
 });
 
-export const del = authMiddleware({ role: 'ADMIN' }, async ({ params }) => {
+export const DELETE = authMiddleware({ role: 'ADMIN' }, async ({ params }) => {
   const userId = parseInt(params.id);
 
   await deleteUser(userId);

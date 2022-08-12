@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE "CaseStudy" ADD COLUMN     "keyLearnings" JSONB NOT NULL;
+ALTER TABLE "CaseStudy" ADD COLUMN     "keyLearnings" JSONB NOT NULL DEFAULT '[]';;

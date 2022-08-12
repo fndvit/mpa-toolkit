@@ -44,7 +44,7 @@ model CaseStudy {
   lat           Float?
   long          Float?
   milestones    Json
-  keyLearnings  Json
+  keyLearnings  Json   @default("[]")
   page          Page   @relation(fields: [pageId], references: [id])
   pageId        Int    @id
 }

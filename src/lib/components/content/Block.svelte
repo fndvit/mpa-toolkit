@@ -17,13 +17,21 @@
     bullet_list: BulletList,
     ordered_list: OrderedList
   };
-
 </script>
 
-  {#if components[block.type]}
-    <svelte:component this={components[block.type]} {block} />
-  {:else}
-    <div class="unknown-block">
-      Unknown block type: {block.type}
-    </div>
-  {/if}
+{#if components[block.type]}
+  <svelte:component this={components[block.type]} {block} />
+{:else}
+  <div class="unknown-block">
+    Unknown block type: {block.type}
+  </div>
+{/if}
+
+<style lang="stylus">
+  .unknown-block {
+    background: $colors.error-red;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem -1rem;
+  }
+</style>

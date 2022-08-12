@@ -67,13 +67,6 @@
     }
   }
 
-  .unknown-block {
-    background: $colors.error-red;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin: 1rem -1rem;
-  }
-
   .menu-container {
     grid-column: menu;
     grid-row: menu / span 100; // can't span -1 through dynamic rows

@@ -80,6 +80,7 @@
     "dotenv": "^16.0.0",
     "fastly": "^3.0.0-beta3",
     "imtool": "^1.1.4",
+    "ky": "^0.31.1",
     "mime-types": "^2.1.34",
     "node-fetch": "^3.2.6",
     "pino": "^7.8.0",

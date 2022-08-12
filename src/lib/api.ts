@@ -1,83 +1,70 @@
-import type { UserRequest, PageRequest, TagRequest, AuthorRequest, User, Page, Tag, Author } from "$lib/types";
+import type { UserRequest, PageRequest, TagRequest, AuthorRequest, User, Page, Tag, Author } from '$lib/types';
+import ky from 'ky';
 
 export async function uploadImage(file: File) {
   const formData = new FormData();
   formData.append('image', file);
-  const response = await fetch('/api/image/upload', {
-    method: 'PUT',
-    body: formData,
+  const response = await ky.put('/api/image/upload', {
+    body: formData
   });
-  const body = await response.json() as { path: string };
+  const body = (await response.json()) as { path: string };
   return body.path;
 }
 
 export async function updateUser(id: number, data: UserRequest) {
-  const response = await fetch(`/api/users/${id}`, {
-    method: 'PATCH',
+  const response = await ky.patch(`/api/users/${id}`, {
     body: JSON.stringify(data)
   });
-  const { user } = await response.json() as { user: User };
+  const { user } = (await response.json()) as { user: User };
   return user;
 }
 
 export async function deleteUser(id: number) {
-  const response = await fetch(`/api/users/${id}`, {
-    method: 'DELETE',
-  });
+  const response = await ky.delete(`/api/users/${id}`);
   return response.ok;
 }
 
 export async function updateAuthor(id: number, data: AuthorRequest) {
-  const response = await fetch(`/api/authors/${id}`, {
-    method: 'PATCH',
+  const response = await ky.patch(`/api/authors/${id}`, {
     body: JSON.stringify(data)
   });
-  const author = await response.json() as Author;
+  const author = (await response.json()) as Author;
   return author;
 }
 
 export async function deleteAuthor(id: number) {
-  const response = await fetch(`/api/authors/${id}`, {
-    method: 'DELETE',
-  });
+  const response = await ky.delete(`/api/authors/${id}`);
   return response.ok;
 }
 
 export async function createAuthor(data: AuthorRequest) {
-  const response = await fetch('/api/authors/create', {
-    method: 'PUT',
+  const response = await ky.put('/api/authors/create', {
     body: JSON.stringify(data)
   });
 
-  const author = await response.json() as Author;
+  const author = (await response.json()) as Author;
   return author;
 }
 
 async function _page(data: PageRequest, id?: number) {
   const newPage = id === undefined;
-  const response = await fetch(
-    newPage ? '/api/pages/create' : `/api/pages/${id}`,
-    {
-      method: newPage ? 'PUT' : 'PATCH',
-      body: JSON.stringify(data)
-    }
-  );
+  const response = await ky(newPage ? '/api/pages/create' : `/api/pages/${id}`, {
+    method: newPage ? 'PUT' : 'PATCH',
+    body: JSON.stringify(data)
+  });
 
-  const page = await response.json() as Page;
+  const page = (await response.json()) as Page;
   return page;
 }
 
 async function _tag(data: TagRequest, id?: number) {
   const newTag = id === undefined;
-  const response = await fetch(
-    newTag ? '/api/tags/create' : `/api/tags/${id}`,
-    {
-      method: newTag ? 'PUT' : 'PATCH',
-      body: JSON.stringify(data)
-    }
-  );
+  const response = await ky(newTag ? '/api/tags/create' : `/api/tags/${id}`, {
+    method: newTag ? 'PUT' : 'PATCH',
+    body: JSON.stringify(data)
+  });
 
-  const page = await response.json() as Tag;
+  const page = (await response.json()) as Tag;
   return page;
 }
 
@@ -90,13 +77,11 @@ export async function updatePage(id: number, data: PageRequest) {
 }
 
 export async function deletePage(id: number) {
-  const response = await fetch(`/api/pages/${id}`, {
-    method: 'DELETE',
-  });
+  const response = await ky.delete(`/api/pages/${id}`);
   return response.ok;
 }
 
-export async function createTag(data: TagRequest){
+export async function createTag(data: TagRequest) {
   return _tag(data);
 }
 
@@ -105,8 +90,6 @@ export async function updateTag(id: number, data: TagRequest) {
 }
 
 export async function deleteTag(id: number) {
-  const response = await fetch(`/api/tags/${id}`, {
-    method: 'DELETE',
-  });
+  const response = await ky.delete(`/api/tags/${id}`);
   return response.ok;
 }

@@ -79,8 +79,7 @@ export default function useAuth(
 
     if (res.ok) {
       session.set({ user: fromEndpoint.user });
-      if (referrer) goto(referrer);
-      else goto('/cms');
+      goto(referrer ?? '/cms', { replaceState: true });
     }
   };
 

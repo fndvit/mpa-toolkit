@@ -9,13 +9,11 @@
   onMount(async () => {
     await loadScript();
     initializeSignInWithGoogle('googleButton');
-  });
-
-  onMount(() => {
     if ($session.user) {
-      goto($page.url.searchParams.get('referrer') ?? '/cms');
+      goto($page.url.searchParams.get('referrer') ?? '/cms', { replaceState: true });
     }
   });
+
 </script>
 
 <svelte:head>

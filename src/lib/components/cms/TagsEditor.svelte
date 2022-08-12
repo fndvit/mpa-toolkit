@@ -1,6 +1,5 @@
 <script lang="ts">
   import IconButton from '$lib/components/generic/IconButton.svelte';
-  import Searchbar from '$lib/components/generic/Searchbar.svelte';
   import TagEditor from '$lib/components/cms/TagEditor.svelte';
   import { openModal } from 'svelte-modals';
   import DeleteModal from '$lib/components/cms/DeleteModal.svelte';
@@ -11,7 +10,6 @@
 
   export let tags: SubTypes.Tag.WithPageCount[];
 
-  let tagSearch = '';
   let loading = false;
 
   let newTag: Pick<SubTypes.Tag, 'id' | 'value'>;
@@ -114,16 +112,6 @@
     width: 100%;
     margin-top: 15px;
     margin-bottom: 30px;
-  }
-  .tool-bar-item {
-    :global(.searchbar){
-      :global(.placeholder){
-        color: $colors.neutral-black;
-      }
-      :global(.input-text){
-        color: $colors.neutral-black;
-      }
-    }
   }
   .spinner {
     display: flex;

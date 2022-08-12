@@ -1,19 +1,20 @@
 import type { GetSession, Handle, RequestEvent } from '@sveltejs/kit';
 import { auth } from '$lib/auth';
-import { prisma } from "$lib/prisma";
+import { prisma } from '$lib/prisma';
 
-
-const RouteCache: {[routeId: string]: string} = {
+const RouteCache: { [routeId: string]: string } = {
   '': 's-maxage=604800, max-age=0', // index/homepage route
   '[slug]': 's-maxage=604800, max-age=0',
-  'search': 's-maxage=604800, max-age=0',
+  search: 's-maxage=604800, max-age=0',
   'globe.svg': 'max-age=604800'
 };
 
 const DEFAULT_CACHE = 'private, max-age=0';
 
 function getCacheControl(event: RequestEvent): string {
-  if (!(event.routeId in RouteCache)) { console.log('missing cache config for', event.routeId); }
+  if (!(event.routeId in RouteCache)) {
+    console.log('missing cache config for', event.routeId);
+  }
   return RouteCache[event.routeId] || DEFAULT_CACHE;
 }
 
@@ -28,11 +29,11 @@ function getCacheHeaders(event: RequestEvent): CacheHeaders {
   return {
     'Cache-Control': getCacheControl(event),
     'Surrogate-Key': event.locals.cacheKeys.size > 0 ? Array.from(event.locals.cacheKeys).join(' ') : undefined,
-    'Surrogate-Control': 'stale-while-revalidate=30, stale-if-error=3600',
+    'Surrogate-Control': 'stale-while-revalidate=30, stale-if-error=3600'
   };
 }
 
-export const getSession: GetSession = async (event) => {
+export const getSession: GetSession = async event => {
   // only get the session on cms routes
   const re = /^\/cms\b/.exec(event.url.pathname);
   if (re) {
@@ -42,7 +43,7 @@ export const getSession: GetSession = async (event) => {
       const user = await prisma.user.findUnique({
         where: { id: session.user.id }
       });
-      return {user};
+      return { user };
     }
   }
   return { user: undefined };

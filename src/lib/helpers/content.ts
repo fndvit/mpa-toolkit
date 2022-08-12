@@ -6,12 +6,12 @@ export const staticUrl = (path: string, fallback = '') => (path ? `${env.PUBLIC_
 
 export function createSections(document: ContentDocument) {
   return document.content.reduce<Section[]>((sections, block, i) => {
-    const isHeading = block.type === 'heading';
-    if (isHeading || i === 0) {
+    const isSectionHeading = block.type === 'heading' && block.attrs.level === 1;
+    if (isSectionHeading || i === 0) {
       sections.push({
-        id: isHeading ? `h${sections.length}-${slugify(block.content[0].text)}` : null,
-        title: isHeading ? block.content[0].text : null,
-        topic: isHeading ? block.attrs.showmore : null,
+        id: isSectionHeading ? `h${sections.length}-${slugify(block.content[0].text)}` : null,
+        title: isSectionHeading ? block.content[0].text : null,
+        topic: isSectionHeading ? block.attrs.showmore : null,
         blocks: [block]
       });
     } else {

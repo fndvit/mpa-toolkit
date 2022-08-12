@@ -29,11 +29,11 @@ export const emptyPlugin = new Plugin<DecorationSet>({
 export const plugins = (schema: Schema): Plugin[] => {
   return [
     history(),
-    keymap(baseKeymap),
     buildInputRules(schema),
     dropCursor(),
     gapCursor(),
     richTextKeyMapPlugin(schema),
+    keymap(baseKeymap),
     emptyPlugin,
     placeholderPlugin
   ];

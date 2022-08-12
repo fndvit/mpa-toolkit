@@ -13,11 +13,13 @@
 
   let expanded = false;
 
+  $: sectionHeading = attrs.level === 1;
   $: sectionTextIsEmpty = attrs.showmore.length === 0;
+  $: needsShowMoreText = sectionTextIsEmpty && sectionHeading;
   $: buttonTooltip = sectionTextIsEmpty && !expanded && "Click to fill the expand button text for this section";
 </script>
 
-<div class="hv" class:no-show-more={sectionTextIsEmpty}>
+<div class="hv" class:section-heading={sectionHeading} class:needs-showmore-text={needsShowMoreText}>
   <svelte:element this={tag}>
     <div class="hv-controls"
       class:expanded contenteditable="false"
@@ -50,7 +52,11 @@
     --ib-color: #aaa;
     --ib-hover-filter: brightness(90%);
 
-    .hv.no-show-more & {
+    .hv:not(.section-heading) & {
+      display: none;
+    }
+
+    .hv.needs-showmore-text & {
       --ib-color: orange;
 
     }

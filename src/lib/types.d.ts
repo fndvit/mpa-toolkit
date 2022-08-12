@@ -100,9 +100,19 @@ export type ImageBlock = {
 //  NESTED COMPONENTS
 // *******************
 
-export type Mark = {
-  type: 'strong' | 'em' | 'underline';
+export type LinkMark = {
+  type: 'link';
+  attrs: {
+    href: string;
+    title?: string;
+  };
 };
+
+export type GenericMark = {
+  type: 'strong' | 'em';
+};
+
+export type Mark = LinkMark | GenericMark;
 
 export type TextBlock = {
   type: 'text';
@@ -110,9 +120,24 @@ export type TextBlock = {
   marks?: Mark[];
 };
 
+export type ListItemBlock = {
+  type: 'list_item';
+  content?: [ParagraphBlock, ...ContentBlock[]];
+};
+
+export type BulletListBlock = {
+  type: 'bullet_list';
+  content: ListItemBlock[];
+};
+
+export type OrderedListBlock = {
+  type: 'ordered_list';
+  content: ListItemBlock[];
+};
+
 export type InlineBlock = TextBlock;
 
-export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock;
+export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock | BulletListBlock | OrderedListBlock | ImageBlock;
 
 export type ContentDocument = {
   type: 'doc';

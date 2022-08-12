@@ -9,13 +9,13 @@ export const simpleSchema = new ProsemirrorSchema({
       parseDOM: [{ tag: 'span' }],
       toDOM: () => ['span', 0]
     },
-    text: { group: 'inline' },
+    text: { group: 'inline' }
   },
   marks: {
     strong: {
-      parseDOM: [ { tag: 'strong' } ],
+      parseDOM: [{ tag: 'strong' }],
       toDOM: () => ['strong', 0]
-    },
+    }
   }
 });
 
@@ -47,7 +47,7 @@ export const schema = new ProsemirrorSchema({
     },
 
     heading: {
-      attrs: { level: { default: 1 }, showmore: {default: ''} },
+      attrs: { level: { default: 1 }, showmore: { default: '' } },
       content: 'text*',
       group: 'block',
       defining: true,
@@ -76,6 +76,35 @@ export const schema = new ProsemirrorSchema({
       toDOM: () => ['pre', ['code', 0]]
     },
 
+    bullet_list: {
+      content: 'list_item+',
+      parseDOM: [{ tag: 'ul' }],
+      toDOM: () => ['ul', 0],
+      group: 'block'
+    },
+
+    ordered_list: {
+      content: 'list_item+',
+      attrs: { order: { default: 1 } },
+      parseDOM: [
+        {
+          tag: 'ol',
+          getAttrs: (dom: HTMLElement) => ({
+            order: dom.hasAttribute('start') ? dom.getAttribute('start') : 1
+          })
+        }
+      ],
+      toDOM: node => (node.attrs.order == 1 ? ['ol', 0] : ['ol', { start: node.attrs.order }, 0]),
+      group: 'block'
+    },
+
+    list_item: {
+      parseDOM: [{ tag: 'li' }],
+      toDOM: () => ['li', 0],
+      defining: true,
+      content: 'paragraph block*'
+    },
+
     text: { group: 'inline' },
 
     hard_break: {
@@ -88,14 +117,13 @@ export const schema = new ProsemirrorSchema({
 
     image: {
       ...svelteSchemaNode('img', { src: null, alt: '', style: 'regular' }),
-      group: 'block',
+      group: 'block'
     },
 
     cards: {
-      ...svelteSchemaNode('cards', { style: 'default', cards: [{ heading: '', body: ''}] } ),
-      group: 'block',
-    },
-
+      ...svelteSchemaNode('cards', { style: 'default', cards: [{ heading: '', body: '' }] }),
+      group: 'block'
+    }
   },
   marks: {
     link: {
@@ -127,7 +155,7 @@ export const schema = new ProsemirrorSchema({
 
     strong: {
       parseDOM: [
-        { tag: 'strong' },
+        { tag: 'strong' }
         // This works around a Google Docs misbehavior where
         // pasted content will be inexplicably wrapped in `<b>`
         // tags with a font-weight normal.
@@ -142,6 +170,6 @@ export const schema = new ProsemirrorSchema({
       toDOM: () => ['code', 0]
     }
   }
- });
+});
 
 export type Schema = typeof schema;

@@ -3,13 +3,22 @@
   import Inline from "./Inline.svelte";
 
   export let block: HeadingBlock;
+  const level = block.attrs.level;
+
+  const cls = `block-h${level}`;
 </script>
-<h2>
+
+<svelte:element this={`h${level}`} class={cls}>
   {#each block.content as child}<Inline block={child}/>{/each}
-</h2>
+
+</svelte:element>
 
 <style lang="stylus">
-  h2 {
+  .block-h1 {
+    typography: h1-responsive;
+    margin: 2rem 0;
+  }
+  .block-h2 {
     typography: h2-responsive;
     margin: 2rem 0;
   }

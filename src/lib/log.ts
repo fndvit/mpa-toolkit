@@ -11,4 +11,4 @@ const TRANSPORTS = {
   }
 };
 
-export const logger = pino({ transport: TRANSPORTS[env.logTransport] });
+export const logger = pino({ transport: TRANSPORTS[env.LOG_TRANSPORT] });

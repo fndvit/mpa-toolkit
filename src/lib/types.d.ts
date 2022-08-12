@@ -5,23 +5,24 @@ export type * as SubTypes from './prisma/queries';
 export type * from '@prisma/client';
 
 export interface Locals {
-	userid: string;
+  userid: string;
 }
 
 export interface UserInfo {
   id: number;
+  role: Role;
   email: string;
   name: string;
 }
 
 export type MilestonesData = {
   [year: string]: string[];
-}
+};
 
 export type KeyLearningsData = {
-  subject: string,
-  body: string[]
-}
+  subject: string;
+  body: string[];
+};
 
 // *******************
 // API REQUEST BODIES
@@ -29,13 +30,13 @@ export type KeyLearningsData = {
 
 export type UserRequest = {
   role?: Role;
-}
+};
 
 export type AuthorRequest = {
   name?: string;
   bio?: string;
   img?: string;
-}
+};
 
 export type PageRequest = {
   title: string;
@@ -44,20 +45,20 @@ export type PageRequest = {
   content: ContentDocument;
   img: string;
   tags: {
-    id: number,
-    category: TagCategory
+    id: number;
+    category: TagCategory;
   }[];
   caseStudy?: SubTypes.CaseStudy.PageHead;
   chapter?: {
     summary: string;
     authors: number[];
     keyTakeaways: string[];
-  }
-}
+  };
+};
 
 export type TagRequest = {
   value: string;
-}
+};
 
 // **********************
 //  TOP LEVEL COMPONENTS
@@ -70,19 +71,19 @@ export type HeadingBlock = {
     showmore: string;
   };
   content: InlineBlock[];
-}
+};
 
 export type ParagraphBlock = {
   type: 'paragraph';
   content?: InlineBlock[];
-}
+};
 
 export type CardsBlock = {
   type: 'cards';
   attrs: {
-    style: 'default' | 'no-heading',
+    style: 'default' | 'no-heading';
     cards: CardData[];
-  }
+  };
 };
 
 export type ImageBlock = {
@@ -93,7 +94,7 @@ export type ImageBlock = {
     title?: string;
     style: 'regular' | 'full';
   };
-}
+};
 
 // *******************
 //  NESTED COMPONENTS
@@ -101,13 +102,13 @@ export type ImageBlock = {
 
 export type Mark = {
   type: 'strong' | 'em' | 'underline';
-}
+};
 
 export type TextBlock = {
   type: 'text';
   text: string;
   marks?: Mark[];
-}
+};
 
 export type InlineBlock = TextBlock;
 
@@ -116,7 +117,7 @@ export type ContentBlock = HeadingBlock | ParagraphBlock | CardsBlock;
 export type ContentDocument = {
   type: 'doc';
   content: ContentBlock[];
-}
+};
 
 export type Section = {
   id: string;

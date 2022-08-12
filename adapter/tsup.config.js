@@ -2,15 +2,13 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   clean: true,
-  entry: ["src"],
-  format: ["esm"],
+  entry: ['src'],
+  format: ['esm'],
   loader: {
-    '.gql': 'text'
+    '.gql': 'text',
+    '.repo': 'text'
   },
-  external: [
-    "../server/index.js",
-    "../server/manifest.js",
-    "./static.js"
-  ],
+
+  external: ['../server/index.js', '../server/manifest.js', './static.js'],
   splitting: false
 });

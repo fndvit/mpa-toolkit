@@ -1,5 +1,6 @@
-import type { ContentDocument, Section, SubTypes } from "../types";
-import { slugify } from "./utils";
+import type { ContentDocument, Section, SubTypes } from '../types';
+import { slugify } from './utils';
+import { env } from '$env/dynamic/public';
 
 export const staticUrl = (path: string, fallback = '') => (path ? `${env.PUBLIC_UPLOAD_BASE_URL}${path}` : fallback);
 
@@ -8,9 +9,7 @@ export function createSections(document: ContentDocument) {
     const isHeading = block.type === 'heading';
     if (isHeading || i === 0) {
       sections.push({
-        id: isHeading
-          ? `h${sections.length}-${slugify(block.content[0].text)}`
-          : null,
+        id: isHeading ? `h${sections.length}-${slugify(block.content[0].text)}` : null,
         title: isHeading ? block.content[0].text : null,
         topic: isHeading ? block.attrs.showmore : null,
         blocks: [block]
@@ -34,35 +33,40 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): SubTypes.Page.Fu
     // editedAt: null,
     // createdAt: null,
     readTime: null,
-    caseStudy: type !== 'caseStudy' ? undefined : {
-      name: '',
-      established: null,
-      size: null,
-      governance: '',
-      staff: '',
-      budget: '',
-      budgetLevel: '',
-      lat: -90,
-      long: 0,
-      milestones: {},
-      keyLearnings: []
-    },
-    chapter: type !== 'chapter' ? undefined : {
-      summary: '',
-      keyTakeaways: [],
-      authors: []
-    },
+    caseStudy:
+      type !== 'caseStudy'
+        ? undefined
+        : {
+            name: '',
+            established: null,
+            size: null,
+            governance: '',
+            staff: '',
+            budget: '',
+            budgetLevel: '',
+            lat: -90,
+            long: 0,
+            milestones: {},
+            keyLearnings: []
+          },
+    chapter:
+      type !== 'chapter'
+        ? undefined
+        : {
+            summary: '',
+            keyTakeaways: [],
+            authors: []
+          }
   };
 }
 
-export function getPageDisplayTitle(page: {title: string, caseStudy?: { name: string } }) {
-  return page.caseStudy ? `${page.caseStudy.name} - ${page.title}` :  page.title;
+export function getPageDisplayTitle(page: { title: string; caseStudy?: { name: string } }) {
+  return page.caseStudy ? `${page.caseStudy.name} - ${page.title}` : page.title;
 }
 
-export function getPageTypeStr (p: SubTypes.Page.Full): string {
+export function getPageTypeStr(p: SubTypes.Page.Full): string {
   if (p.caseStudy) {
     const hasMilestones = p.caseStudy.milestones && Object.keys(p.caseStudy.milestones).length;
-    return hasMilestones ? "casestudy-with-milestones" : "casestudy";
-  }
-  else if (p.chapter) p.chapter.keyTakeaways ? "chapter-with-key-takeaways" : "chapter";
-};
+    return hasMilestones ? 'casestudy-with-milestones' : 'casestudy';
+  } else if (p.chapter) p.chapter.keyTakeaways ? 'chapter-with-key-takeaways' : 'chapter';
+}

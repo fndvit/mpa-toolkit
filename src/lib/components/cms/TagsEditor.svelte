@@ -12,7 +12,6 @@
   export let tags: SubTypes.Tag.WithPageCount[];
 
   let tagSearch = '';
-  let filteredTags: SubTypes.Tag.WithPageCount[] = tags;
   let loading = false;
 
   let newTag: Pick<SubTypes.Tag, 'id' | 'value'>;
@@ -60,30 +59,17 @@
     newTag = undefined;
   }
 
-  $: searchRegex = new RegExp(tagSearch, 'i');
-  $: filteredTags = tags.filter(tag => searchRegex.test(tag.value));
-
 </script>
 
 <div class="tags-container">
   <div class="tool-bar">
-    <div class="tool-bar-item">
-      <IconButton text="Add Tag" icon="add" on:click={onClickAdd} disabled={loading || !!newTag}/>
-    </div>
-    <div class="tool-bar-item">
-      <Searchbar
-        bind:search={tagSearch}
-        type="top"
-        placeholder={"Search a Tag..."}
-        submit={null}
-        />
-    </div>
+    <IconButton text="Add Tag" icon="add" on:click={onClickAdd} disabled={loading || !!newTag}/>
     <div class="spinner p-responsive" class:loading>
       Saving...<Spinner/>
     </div>
   </div>
   <ul class="tags-list">
-    {#each filteredTags as tag (tag.id)}
+    {#each tags as tag (tag.id)}
       <li class="tag-row">
         <TagEditor bind:loading bind:tag />
         <span class="page-count">{tag._count?.pageTags} pages</span>
@@ -102,6 +88,8 @@
 <style lang="stylus">
   .tags-container {
     font-family: var(--font-sans-serif);
+    width: fit-content;
+    margin: auto;
   }
   .tags-list {
     display: grid;
@@ -122,12 +110,10 @@
   }
   .tool-bar {
     display: flex;
-    justify-content: center;
     column-gap: 15px;
-    align-items: center;
     width: 100%;
     margin-top: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
   .tool-bar-item {
     :global(.searchbar){

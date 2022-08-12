@@ -1,7 +1,7 @@
 import type { Event } from '../lib/events';
 import type { DistributiveOmit } from '../lib/helpers/utils';
 import type { APIGatewayProxyResultV2, SQSEvent } from 'aws-lambda';
-import fetch from 'node-fetch';
+import got from 'got';
 
 interface BaseEventOutput {
   event: Event;
@@ -13,7 +13,7 @@ interface SuccessfulEvent extends BaseEventOutput {
 }
 
 interface FailedEvent extends BaseEventOutput {
-  status: 'error'
+  status: 'error';
   error: any;
   event: Event;
 }
@@ -21,16 +21,15 @@ interface FailedEvent extends BaseEventOutput {
 type EventOutput = SuccessfulEvent | FailedEvent;
 
 async function purgeSurrogate(key: string): Promise<DistributiveOmit<EventOutput, 'event'>> {
-  const response = await fetch(`https://api.fastly.com/service/${process.env.FASTLY_SERVICE_ID}/purge/${key}`, {
-    method: "POST",
+  const response = got.post(`https://api.fastly.com/service/${process.env.FASTLY_SERVICE_ID}/purge/${key}`, {
     headers: {
-      "Fastly-Key": process.env.FASTLY_API_KEY,
-      "fastly-soft-purge": "1",
-      "Accept": "application/json",
+      'Fastly-Key': process.env.FASTLY_API_KEY,
+      'fastly-soft-purge': '1',
+      Accept: 'application/json'
     }
   });
 
-  if (response.ok) {
+  if ((await response).ok) {
     return { status: 'ok' };
   } else {
     return { status: 'error', error: await response.json() };
@@ -43,11 +42,9 @@ async function purgePage(id: number): Promise<DistributiveOmit<EventOutput, 'eve
   const response2 = await purgeSurrogate('pages');
   const errors = [
     ...(response1.status === 'error' ? [response1.error] : []),
-    ...(response2.status === 'error' ? [response2.error] : []),
+    ...(response2.status === 'error' ? [response2.error] : [])
   ];
-  return errors.length > 0
-    ? { status: 'error', error: errors }
-    : { status: 'ok' };
+  return errors.length > 0 ? { status: 'error', error: errors } : { status: 'ok' };
 }
 
 async function purgeTag(id: number): Promise<DistributiveOmit<EventOutput, 'event'>> {
@@ -56,11 +53,9 @@ async function purgeTag(id: number): Promise<DistributiveOmit<EventOutput, 'even
   const response2 = await purgeSurrogate('tags');
   const errors = [
     ...(response1.status === 'error' ? [response1.error] : []),
-    ...(response2.status === 'error' ? [response2.error] : []),
+    ...(response2.status === 'error' ? [response2.error] : [])
   ];
-  return errors.length > 0
-    ? { status: 'error', error: errors }
-    : { status: 'ok' };
+  return errors.length > 0 ? { status: 'error', error: errors } : { status: 'ok' };
 }
 
 async function processEvent(event: Event): Promise<EventOutput> {
@@ -68,32 +63,32 @@ async function processEvent(event: Event): Promise<EventOutput> {
     case 'page-deleted':
     case 'page-updated':
       return {
-        ...await purgePage(event.details.id),
+        ...(await purgePage(event.details.id)),
         event
       };
     case 'tag-deleted':
     case 'tag-updated':
       return {
-        ...await purgeTag(event.details.id),
+        ...(await purgeTag(event.details.id)),
         event
       };
     case 'page-created':
-      return { ...await purgeSurrogate('pages'), event };
+      return { ...(await purgeSurrogate('pages')), event };
     case 'tag-created':
-      return { ...await purgeSurrogate('tags'), event };
+      return { ...(await purgeSurrogate('tags')), event };
     default:
       console.error('unknown event type', JSON.stringify(event));
       return {
         status: 'error',
         error: 'unknown event type',
-        event,
+        event
       };
   }
 }
 
 export async function main(event: SQSEvent): Promise<APIGatewayProxyResultV2> {
   const events = event.Records.map(record => {
-    const body = JSON.parse(record.body) as {Message: string};
+    const body = JSON.parse(record.body) as { Message: string };
     console.log('body 👉', body);
     return JSON.parse(body.Message) as Event;
   });
@@ -103,7 +98,7 @@ export async function main(event: SQSEvent): Promise<APIGatewayProxyResultV2> {
   console.log('results 👉', JSON.stringify(results, null, 2));
 
   return {
-    body: JSON.stringify({results}),
-    statusCode: 200,
+    body: JSON.stringify({ results }),
+    statusCode: 200
   };
 }

@@ -231,11 +231,11 @@ export async function searchTags(searchText: string) {
 export async function updateUser(id: number, user: UserRequest) {
   validate('user', user);
 
-  const { role } = user;
+  const { name, role } = user;
 
   const _user = await prisma.user.update({
     where: { id },
-    data: { role }
+    data: { name, role }
   });
 
   return _user;

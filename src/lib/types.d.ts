@@ -29,6 +29,7 @@ export type KeyLearningsData = {
 // *******************
 
 export type UserRequest = {
+  name?: string;
   role?: Role;
 };
 

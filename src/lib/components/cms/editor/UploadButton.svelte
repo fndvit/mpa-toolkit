@@ -17,24 +17,24 @@
   };
 
   async function startImageUpload(view: EditorView, file: File) {
-    let id = {};
+    let key = {};
     let tr = view.state.tr;
     if (!tr.selection.empty) tr.deleteSelection();
-    tr.setMeta(placeholderPlugin, {add: {id, pos: tr.selection.from}});
+    tr.setMeta(placeholderPlugin, {add: {key, pos: tr.selection.from}});
     view.dispatch(tr);
 
     try {
       const url = await uploadImage(file);
-      let pos = findPlaceholder(view.state, id);
+      let pos = findPlaceholder(view.state, key);
       if (pos == null) return;
       view.dispatch(
         view.state.tr
           .replaceWith(pos, pos, schema.nodes.image.create({src: url}))
-          .setMeta(placeholderPlugin, {remove: {id}})
+          .setMeta(placeholderPlugin, {remove: {key}})
       );
     }
     catch (err) {
-      view.dispatch(tr.setMeta(placeholderPlugin, {remove: {id}}));
+      view.dispatch(tr.setMeta(placeholderPlugin, {remove: {key}}));
     }
   }
 

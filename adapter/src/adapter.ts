@@ -1,12 +1,4 @@
-import {
-  copyFileSync,
-  unlinkSync,
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  statSync,
-  writeFileSync,
-} from 'fs';
+import { copyFileSync, unlinkSync, existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'fs';
 import fsextra from 'fs-extra';
 import { join } from 'path';
 import * as esbuild from 'esbuild';
@@ -28,9 +20,7 @@ interface AWSAdapterProps {
   env?: { [key: string]: string };
 }
 
-export default function adapter({
-  artifactPath = 'build'
-}: AWSAdapterProps) {
+export default function adapter({ artifactPath = 'build' }: AWSAdapterProps) {
   /** @type {import('@sveltejs/kit').Adapter} */
   return {
     name: 'adapter-awscdk',
@@ -53,7 +43,6 @@ export default function adapter({
 
       builder.writeClient(static_directory);
       builder.writePrerendered(prerendered_directory);
-      builder.writeStatic(static_directory);
       builder.writeServer(server_directory);
 
       builder.log.minor('Copying server files.');
@@ -70,7 +59,7 @@ export default function adapter({
         outfile: `${edge_directory}/index.js`,
         format: 'cjs',
         bundle: true,
-        platform: 'node',
+        platform: 'node'
       });
 
       unlinkSync(`${edge_directory}/_index.js`);
@@ -78,7 +67,7 @@ export default function adapter({
       builder.log.minor('Deploy using AWS-CDK.');
 
       builder.log.minor('Done.');
-    },
+    }
   };
 }
 

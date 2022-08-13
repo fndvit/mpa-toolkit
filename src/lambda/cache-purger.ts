@@ -2,6 +2,9 @@ import type { Event } from '../lib/events';
 import type { DistributiveOmit } from '../lib/helpers/utils';
 import type { APIGatewayProxyResultV2, SQSEvent } from 'aws-lambda';
 import got from 'got';
+import { checkRequiredEnvVars } from '$lib/env';
+
+checkRequiredEnvVars('CACHE_PURGER');
 
 interface BaseEventOutput {
   event: Event;

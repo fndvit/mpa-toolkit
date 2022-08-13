@@ -1,8 +1,9 @@
 import type { GetSession, Handle, RequestEvent } from '@sveltejs/kit';
 import * as cookie from 'cookie';
-import { prisma } from '$lib/prisma';
-import { userSession } from '$lib/prisma/queries';
 import { getSessionAndUser } from '$lib/prisma/wrappers';
+import env, { checkRequiredEnvVars } from '$lib/env';
+
+checkRequiredEnvVars(env.IS_DEV ? 'DEV_SERVER' : 'SERVER');
 
 const RouteCache: { [routeId: string]: string } = {
   '': 's-maxage=604800, max-age=0', // index/homepage route

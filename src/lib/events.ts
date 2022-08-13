@@ -45,7 +45,7 @@ export type Event =
 export type EventByType<T extends Event['type']> = Extract<Event, { type: T }>;
 
 export async function publishEvent<T extends Event['type']>(type: T, details: EventByType<T>['details']) {
-  if (!env.isLambda || !env.AWS_SNS_CONTENT_TOPIC) return;
+  if (env.IS_DEV || !env.AWS_SNS_CONTENT_TOPIC) return;
 
   const event: Event = { type, details };
   const command = new PublishCommand({

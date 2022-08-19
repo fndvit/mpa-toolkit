@@ -15,9 +15,7 @@
     "chapter": {
       "authors": [13],
       "summary": "The blue economy",
-      "keyTakeaways": [
-        "asdf"
-      ]
+      "keyTakeaways": ["asdf"]
     }
   },
 
@@ -38,9 +36,7 @@
     "chapter": {
       "authors": [13],
       "summary": "The blue economy",
-      "keyTakeaways": [
-        "asdf"
-      ]
+      "keyTakeaways": ["asdf"]
     },
     "extra": 1
   },
@@ -62,9 +58,7 @@
     "chapter": {
       "authors": [13],
       "summary": "The blue economy",
-      "keyTakeaways": [
-        "asdf"
-      ]
+      "keyTakeaways": ["asdf"]
     },
     "caseStudy": {
       "name": "test",
@@ -95,10 +89,7 @@
     },
     "chapter": {
       "summary": "The blue economy",
-      "keyTakeaways": [
-        "asdf"
-      ]
+      "keyTakeaways": ["asdf"]
     }
   }
-
 ]

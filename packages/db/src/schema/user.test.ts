@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, test } from 'vitest';
-import { validate } from './validation';
+import { validate } from '../validation';
 import userValid from './testdata/user.valid.json';
 import userInvalid from './testdata/user.invalid.json';
 import { schemaExpectInvalid } from './testutil';
@@ -14,11 +14,11 @@ describe('User', () => {
   });
 
   test('invalid', () => {
-    userInvalid.forEach((user) => schemaExpectInvalid('user', user));
+    userInvalid.forEach(user => schemaExpectInvalid('user', user));
   });
 
   test('valid', () => {
-    userValid.forEach((user) => {
+    userValid.forEach(user => {
       validate('user', user);
     });
   });

@@ -1,5 +1,6 @@
-import { validate } from "./validation";
-import { expect } from "vitest";
+import { expect } from 'vitest';
+import ValidationError from 'ajv/dist/runtime/validation_error';
+import { validate } from '../validation';
 
 export const logValidationError = (obj: unknown) => {
   const logObj = {
@@ -17,6 +18,14 @@ export const schemaExpectValid = (schema: string, obj: unknown) => {
 export const schemaExpectInvalid = (schema: string, obj: unknown) => {
   validate.errors = undefined;
   const logObj = JSON.stringify(obj);
-  expect(() => validate(schema, obj), `${logObj} no error`).toThrowError();
-  expect(validate.errors?.length, logObj).greaterThanOrEqual(1);
+  try {
+    validate(schema, obj);
+    expect.fail(`Expected ${schema} to be invalid, but it was valid.\n${logObj}`);
+  } catch (e) {
+    if (e instanceof ValidationError) {
+      expect(e.errors.length).greaterThanOrEqual(1);
+    } else {
+      expect.fail(`Expected a ValidationError.\n${logObj}`);
+    }
+  }
 };

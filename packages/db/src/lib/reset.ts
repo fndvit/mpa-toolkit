@@ -1,8 +1,8 @@
-import { prisma } from '../../src/lib/prisma';
 import { execFile } from 'child_process';
 import * as path from 'path';
+import type { PrismaClient } from '@prisma/client';
 
-async function dropAllFunctions() {
+async function dropAllFunctions(prisma: PrismaClient) {
   const functionNames = await prisma.$queryRaw<
     { name: string }[]
   >`SELECT routine_name as name FROM information_schema.routines
@@ -26,12 +26,12 @@ async function prismaCmd(cmd: string) {
   });
 }
 
-export async function reset() {
+export async function reset(prisma: PrismaClient) {
   console.log('Generating prisma client files...');
   await prismaCmd('generate');
 
   console.log('Dropping all functions...');
-  await dropAllFunctions();
+  await dropAllFunctions(prisma);
 
   console.log('Running prisma reset...');
   await prismaCmd('migrate reset --force');

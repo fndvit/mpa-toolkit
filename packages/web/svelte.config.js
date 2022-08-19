@@ -1,8 +1,11 @@
-import adapter from '@mpa-toolkit/adapter';
+import adapter from '@mpa/adapter';
+// import adapter from '@sveltejs/adapter-auto';
 import preprocess from 'svelte-preprocess';
 
+const globalStylePath = new URL('./src/lib/styles/svelte-global', import.meta.url);
+
 const globalStylus = `
-  @require './src/lib/styles/svelte-global'
+  @require '${globalStylePath.pathname}';
 `;
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -17,7 +20,7 @@ const config = {
   }),
 
   kit: {
-    adapter: adapter({})
+    adapter: adapter()
   }
 };
 

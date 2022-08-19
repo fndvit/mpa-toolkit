@@ -1,0 +1,22 @@
+{
+  "name": "@mpa/env",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "env.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "watch": "tsup --watch",
+    "build2": "unbuild"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.5",
+    "unbuild": "^0.8.8"
+  }
+}

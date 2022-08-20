@@ -63,9 +63,6 @@ function getRequiredRole(routeId): Role {
 
 export function checkUserHasRoleForRoute(routeId: string, user: User) {
   const reqRole = getRequiredRole(routeId);
-
-  console.log(`Checking user role for route ${routeId}: ${user?.role} >= ${reqRole}`);
-
   if (!user) return !reqRole;
   if (!reqRole) return true;
   return roleCheck(user.role, reqRole);

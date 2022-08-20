@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Tag } from '@mpa/db';
-  import { groupBy } from '$lib/utils';
+  import { groupBy } from '@mpa/utils';
   import { TagFilter, Searchbar } from '$lib/components';
 
   export let tags: Tag[];

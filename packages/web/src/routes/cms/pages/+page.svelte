@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { groupBy } from '$lib/utils';
+  import { groupBy } from '@mpa/utils';
   import type { PageData } from './$types';
   import { CollectionCards, PageListFilters } from '$lib/components';
 

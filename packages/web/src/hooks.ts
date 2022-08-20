@@ -4,20 +4,25 @@ import { checkUserHasRoleForRoute, getUserFromCookie } from '$lib/auth';
 
 const log = logger('HOOKS');
 
-const RouteCache: { [routeId: string]: string } = {
-  '': 's-maxage=604800, max-age=0', // index/homepage route
-  '[slug]': 's-maxage=604800, max-age=0',
-  search: 's-maxage=604800, max-age=0',
-  'globe.svg': 'max-age=604800'
+const PRIVATE_CACHE = 'private, max-age=0';
+const DEFAULT_CACHE = PRIVATE_CACHE;
+
+const ROUTE_CACHE = {
+  routes: {
+    '': 's-maxage=604800, max-age=0', // index/homepage route
+    '[slug]': 's-maxage=604800, max-age=0',
+    search: 's-maxage=604800, max-age=0',
+    'globe.svg': 'max-age=604800'
+  },
+  regexp: [{ re: /^(api|cms)\b/, cache: PRIVATE_CACHE }]
 };
 
-const DEFAULT_CACHE = 'private, max-age=0';
-
 function getCacheControl(routeId: string): string {
-  if (!(routeId in RouteCache)) {
-    log.info(`missing cache config for ${routeId}`);
+  const caching = ROUTE_CACHE.routes[routeId] || ROUTE_CACHE.regexp.find(r => r.re.test(routeId))?.cache;
+  if (!caching) {
+    log.debug(`missing cache config for ${routeId}`);
   }
-  return RouteCache[routeId] || DEFAULT_CACHE;
+  return caching || DEFAULT_CACHE;
 }
 
 interface CacheHeaders {

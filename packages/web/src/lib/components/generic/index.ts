@@ -12,3 +12,4 @@ export { default as Spinner } from './Spinner.svelte';
 export { toaster } from './Toaster';
 export { default as Toaster } from './Toaster/Toaster.svelte';
 export { default as Tooltip } from './Tooltip.svelte';
+export { default as SortableList } from './SortableList.svelte';

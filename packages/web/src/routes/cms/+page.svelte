@@ -28,6 +28,7 @@
 
       {#if user.role == 'ADMIN'}
         <a href="cms/users"><span class="material-icons">person</span>Users</a>
+        <a href="cms/homepage"><span class="material-icons">sort</span>Page Ordering</a>
       {/if}
     </div>
 

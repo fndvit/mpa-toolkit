@@ -1,7 +1,7 @@
-import env from '@mpa/env';
 import { logger } from '@mpa/log';
 import { Prisma, PrismaClient } from '@prisma/client';
 import expand from 'brace-expansion';
+import { env } from './env';
 import { pageMixin } from './mixins/page';
 import { tagMixin } from './mixins/tag';
 import { authorMixin } from './mixins/author';

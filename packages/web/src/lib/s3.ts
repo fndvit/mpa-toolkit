@@ -2,7 +2,7 @@ import { S3, type PutObjectCommandInput } from '@aws-sdk/client-s3';
 import { logger } from '@mpa/log';
 import mime from 'mime-types';
 import { v4 as uuidv4 } from 'uuid';
-import { env } from '$env/dynamic/private';
+import { env } from '$lib/env';
 
 const log = logger('S3');
 

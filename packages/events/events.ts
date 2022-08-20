@@ -1,9 +1,11 @@
 import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
-import env, { IS_DEV } from '@mpa/env';
+import { getEnv } from '@mpa/env';
 import { logger } from '@mpa/log';
 
+const env = getEnv({ AWS_SNS_CONTENT_TOPIC: false });
+
 const sns = new SNSClient({});
-const log = logger('events');
+const log = logger('EVENTS');
 
 export type PageDeletedEvent = {
   type: 'page-deleted';
@@ -45,7 +47,7 @@ export type Event =
 export type EventByType<T extends Event['type']> = Extract<Event, { type: T }>;
 
 export async function publishEvent<T extends Event['type']>(type: T, details: EventByType<T>['details']) {
-  if (IS_DEV || !env.AWS_SNS_CONTENT_TOPIC) return;
+  if (!env.AWS_SNS_CONTENT_TOPIC) return;
 
   const event: Event = { type, details };
   const command = new PublishCommand({

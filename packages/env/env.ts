@@ -1,85 +1,46 @@
+import './load';
 import path from 'path';
 import fs from 'fs';
 import * as dotenv from 'dotenv';
+import type { Without } from '@mpa/utils';
 
-export const IS_DEV = !(process.env.LAMBDA_TASK_ROOT && process.env.AWS_EXECUTION_ENV);
+type Environment = 'dev' | 'staging' | 'prod';
 
-if (IS_DEV) {
-  const PROJECT_ROOT = path.join(process.cwd(), '../..');
-  dotenv.config({ path: path.join(PROJECT_ROOT, '.env') });
-} else {
-  dotenv.config();
+type EnvConfig = { [key: string]: boolean };
+type ConfigToEnvRequired<C extends EnvConfig> = { [K in keyof C]: C[K] extends true ? string : never };
+type ConfigToEnvOptional<C extends EnvConfig> = { [K in keyof C]?: C[K] extends false ? string : never };
+export type ConfigToEnvClean<C extends EnvConfig> = Expand<
+  Without<never, ConfigToEnvRequired<C>> & Without<never, ConfigToEnvOptional<C>>
+>;
+
+export function processEnv(env: Record<string, string>, config: EnvConfig) {
+  const required = Object.entries(config)
+    .filter(([_, value]) => value)
+    .map(([key]) => key);
+
+  const optional = Object.entries(config)
+    .filter(([_, value]) => !value)
+    .map(([key]) => key);
+
+  const missing = {
+    required: required.filter(k => !env[k]),
+    optional: optional.filter(k => !env[k])
+  };
+
+  if (missing.required.length > 0) {
+    const msg = `Required env vars missing: ${missing.required.join(', ')}`;
+    console.error(msg);
+    throw new Error(msg);
+  }
+
+  return [...required, ...optional].filter(k => env[k]).reduce((acc, k) => ({ ...acc, [k]: env[k] }), {});
 }
 
-const ENV_VARS = [
-  'PUBLIC_GOOGLE_OAUTH_CLIENT_ID',
-  'PUBLIC_UPLOAD_BASE_URL',
-  'DATABASE_URL',
-  'GOOGLE_OAUTH_CLIENT_SECRET',
-  'JWT_SECRET_KEY',
-  'AWS_S3_UPLOAD_BUCKET',
-  'ORIGIN',
-  'AWS_SNS_CONTENT_TOPIC',
-  'AWS_EXECUTION_ENV',
-  'LOG_TRANSPORT',
-  'LOG_DB_QUERIES',
-  'LOG_LEVEL',
-  'LAMBDA_TASK_ROOT',
-  'FASTLY_API_KEY',
-  'FASTLY_SERVICE_ID'
-] as const;
-
-const REQUIRED = {
-  SERVER: [
-    'DATABASE_URL',
-    'PUBLIC_GOOGLE_OAUTH_CLIENT_ID',
-    'PUBLIC_UPLOAD_BASE_URL',
-    'GOOGLE_OAUTH_CLIENT_SECRET',
-    'JWT_SECRET_KEY',
-    'AWS_S3_UPLOAD_BUCKET',
-    'ORIGIN',
-    'AWS_SNS_CONTENT_TOPIC',
-    'FASTLY_API_KEY',
-    'FASTLY_SERVICE_ID'
-  ],
-  DEV_SERVER: [
-    'DATABASE_URL',
-    'PUBLIC_GOOGLE_OAUTH_CLIENT_ID',
-    'GOOGLE_OAUTH_CLIENT_SECRET',
-    'JWT_SECRET_KEY',
-    'AWS_S3_UPLOAD_BUCKET',
-    'ORIGIN'
-  ],
-  MIGRATION_RUNNER: ['DATABASE_URL'],
-  CACHE_PURGER: ['FASTLY_API_KEY', 'FASTLY_SERVICE_ID']
-} as const;
-
-type Environments = keyof typeof REQUIRED;
-
-type MpaEnv = { [K in typeof ENV_VARS[number]]: string };
-
-const processEnv = ENV_VARS.filter(key => process.env[key]).reduce((acc, key) => {
-  acc[key] = process.env[key]!;
-  return acc;
-}, {} as MpaEnv);
-
-function _checkEnvVars(env: MpaEnv, required: readonly (keyof MpaEnv)[]) {
-  const missing = required.filter(key => !env[key]);
-  if (missing.length > 0) throw new Error(`Missing environment variables: ${missing.join(', ')}`);
+export function getEnv<C extends EnvConfig>(config: C) {
+  return processEnv(process.env as Record<string, string>, config) as ConfigToEnvClean<C>;
 }
 
-export function checkRequiredEnvVars(environment: Environments, vars: MpaEnv = processEnv) {
-  _checkEnvVars(vars, REQUIRED[environment]);
+export function getEnvFromFile<C extends EnvConfig>(env: Environment, config: C) {
+  const _env = dotenv.parse(fs.readFileSync(path.join(process.cwd(), '../..', `.env.${env}`), 'utf-8'));
+  return processEnv(_env as Record<string, string>, config) as ConfigToEnvClean<C>;
 }
-
-export function getBaseEnvVars<K extends Environments>(envFilePath: string, environment: K) {
-  const _env = dotenv.parse(fs.readFileSync(envFilePath, 'utf-8'));
-  type KeyUnion = typeof REQUIRED[K][number];
-  const keys = [...REQUIRED[environment]] as KeyUnion[];
-  return keys.reduce((acc, key) => {
-    acc[key] = _env[key];
-    return acc;
-  }, {} as { [K in KeyUnion]: string });
-}
-
-export default processEnv;

@@ -1,7 +1,7 @@
-import '../lib/cli';
-import env from '@mpa/env';
 import chalk from 'chalk';
 import { MpaDatabase } from '../db';
+import { env } from '../env';
+import '../lib/cli';
 import { Seeder } from '../lib/seed';
 
 async function main() {

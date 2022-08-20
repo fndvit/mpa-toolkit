@@ -1,8 +1,8 @@
-import '../lib/cli';
-import env from '@mpa/env';
 import chalk from 'chalk';
 import { MpaDatabase } from '../db';
+import { env } from '../env';
 import { reset } from '../lib';
+import '../lib/cli';
 
 const log = console.log;
 

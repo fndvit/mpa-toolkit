@@ -1,3 +1,3 @@
-import env from '@mpa/env';
+import { env } from '../env';
 
 env.LOG_TRANSPORT = 'silent';

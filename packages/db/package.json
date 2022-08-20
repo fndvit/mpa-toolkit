@@ -5,10 +5,11 @@
   "main": "src/index.ts",
   "scripts": {
     "generate": "prisma generate",
-    "migrate": "dotenv -e ../../.env prisma migrate dev",
+    "migrate": "dotenv -e ../../.env.local prisma migrate dev",
     "nuke": "tsup src/bin/nuke.ts --onSuccess 'node dist/nuke.cjs' && rm -rf ./dist",
     "seed": "tsup src/bin/seed.ts --onSuccess 'node dist/seed.cjs' && rm -rf ./dist",
     "reset": "tsup src/bin/reset.ts --onSuccess 'node dist/reset.cjs' && rm -rf ./dist",
+    "test": "vitest",
     "prepare": "pnpm generate"
   },
   "dependencies": {

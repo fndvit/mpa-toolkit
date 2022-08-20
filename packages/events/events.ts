@@ -37,19 +37,28 @@ export type TagCreatedEvent = {
   details: { id: number };
 };
 
+export type HomepageComponentsUpdatedEvent = {
+  type: 'homepage-components-updated';
+};
+
 export type Event =
   | PageDeletedEvent
   | PageUpdatedEvent
   | PageCreatedEvent
   | TagDeletedEvent
   | TagUpdatedEvent
-  | TagCreatedEvent;
-export type EventByType<T extends Event['type']> = Extract<Event, { type: T }>;
+  | TagCreatedEvent
+  | HomepageComponentsUpdatedEvent;
 
-export async function publishEvent<T extends Event['type']>(type: T, details: EventByType<T>['details']) {
+export type EventByType<T extends Event['type']> = Extract<Event, { type: T }>;
+export type EventDetails<T extends Event['type']> = EventByType<T> extends { details: infer D } ? D : never;
+
+export async function publishEvent(type: HomepageComponentsUpdatedEvent['type']);
+export async function publishEvent<T extends Event['type']>(type: T, details: EventDetails<T>);
+export async function publishEvent<T extends Event['type']>(type: T, details?: EventDetails<T>) {
   if (!env.AWS_SNS_CONTENT_TOPIC) return;
 
-  const event: Event = { type, details };
+  const event = { type, details };
   const command = new PublishCommand({
     Message: JSON.stringify(event),
     TopicArn: env.AWS_SNS_CONTENT_TOPIC

@@ -1,5 +1,4 @@
 import { expect } from 'vitest';
-import ValidationError from 'ajv/dist/runtime/validation_error';
 import { validate } from '../validation';
 
 export const logValidationError = (obj: unknown) => {
@@ -21,11 +20,8 @@ export const schemaExpectInvalid = (schema: string, obj: unknown) => {
   try {
     validate(schema, obj);
     expect.fail(`Expected ${schema} to be invalid, but it was valid.\n${logObj}`);
-  } catch (e) {
-    if (e instanceof ValidationError) {
-      expect(e.errors.length).greaterThanOrEqual(1);
-    } else {
-      expect.fail(`Expected a ValidationError.\n${logObj}`);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    expect(e.errors.length).greaterThanOrEqual(1);
   }
 };

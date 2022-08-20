@@ -1,10 +1,10 @@
-// import { logger } from '../../../web/src/lib/log';
 import Ajv from 'ajv';
 import type { AnyValidateFunction, ErrorObject } from 'ajv/dist/core';
 import * as schemaPage from './schema/page.json';
 import * as schemaUser from './schema/user.json';
 import * as schemaTag from './schema/tag.json';
 import * as schemaAuthor from './schema/author.json';
+import * as schemaHomepageComponents from './schema/homepage-components.json';
 
 export const ajv = new Ajv({ removeAdditional: true });
 
@@ -14,6 +14,7 @@ ajv.addSchema(schemaPage);
 ajv.addSchema(schemaUser);
 ajv.addSchema(schemaTag);
 ajv.addSchema(schemaAuthor);
+ajv.addSchema(schemaHomepageComponents);
 
 interface Validate {
   (schema: string, data: unknown): void;

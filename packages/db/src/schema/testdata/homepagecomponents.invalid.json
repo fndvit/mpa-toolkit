@@ -1,0 +1,6 @@
+[
+  ["not-a-component", "chapters", "search", "madlib", "casestudies"],
+  ["lifecycle", 5, "chapters", "madlib", "casestudies"],
+  ["search", "madlib", "madlib", "casestudies", "lifecycle"],
+  []
+]

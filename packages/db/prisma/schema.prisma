@@ -121,3 +121,8 @@ model Session {
 
   user    User     @relation(fields: [userId], references: [id])
 }
+
+model KeyValue {
+  key   String @id
+  value Json
+}

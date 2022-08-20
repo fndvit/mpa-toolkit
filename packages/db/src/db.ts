@@ -3,6 +3,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
 import expand from 'brace-expansion';
 import { env } from './env';
 import { authorMixin } from './mixins/author';
+import { homepageMixin } from './mixins/homepage';
 import { pageMixin } from './mixins/page';
 import { sessionMixin } from './mixins/session';
 import { tagMixin } from './mixins/tag';
@@ -19,6 +20,7 @@ export class MpaDatabase {
   tag: ReturnType<typeof tagMixin>;
   author: ReturnType<typeof authorMixin>;
   session: ReturnType<typeof sessionMixin>;
+  homepage: ReturnType<typeof homepageMixin>;
 
   constructor(url: string) {
     const LOG_DB_QUERIES = env.LOG_DB_QUERIES === 'true';
@@ -39,6 +41,7 @@ export class MpaDatabase {
     this.author = authorMixin(this);
     this.user = userMixin(this);
     this.session = sessionMixin(this);
+    this.homepage = homepageMixin(this);
 
     this._logWrapFunctions();
   }
@@ -46,6 +49,7 @@ export class MpaDatabase {
   private _logWrapFunctions = () => {
     // this wraps all non-read-only database functions with logging
     const logFunctions = [
+      'homepage.updateComponents',
       ...expand('session.{start,end}'),
       ...expand('{author,page,tag}.{update,create,delete}'),
       ...expand('user.{update,delete}')

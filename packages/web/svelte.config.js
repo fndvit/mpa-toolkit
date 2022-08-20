@@ -1,3 +1,4 @@
+// @ts-check
 import adapter from '@mpa/adapter';
 // import adapter from '@sveltejs/adapter-auto';
 import preprocess from 'svelte-preprocess';
@@ -13,6 +14,7 @@ const config = {
   compilerOptions: {
     cssHash: ({ hash, css }) => `mpa-${hash(css)}`
   },
+
   preprocess: preprocess({
     stylus: {
       prependData: globalStylus

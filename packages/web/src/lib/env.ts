@@ -9,7 +9,6 @@ export const env = getEnv({
   GOOGLE_OAUTH_CLIENT_SECRET: true,
   JWT_SECRET_KEY: true,
   AWS_S3_UPLOAD_BUCKET: true,
-  ORIGIN: true,
   LOG_TRANSPORT: true,
   // optional (prod only)
   AWS_SNS_CONTENT_TOPIC: false,

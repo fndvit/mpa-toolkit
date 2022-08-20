@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "rimraf build && vite build",
+    "clean": "rm -rf .svelte-kit",
+    "build": "svelte-kit sync && vite build",
     "synth": "pnpm build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",

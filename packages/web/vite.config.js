@@ -28,6 +28,20 @@ const config = {
   },
   plugins: [
     sveltekit(),
+
+    // <workaround for https://github.com/sveltejs/kit/issues/5843>
+    {
+      config(config) {
+        const original = config.build.rollupOptions.output.assetFileNames;
+        config.build.rollupOptions.output.assetFileNames = assetInfo => {
+          const match = assetInfo.name.match(/\/\+(.*)\.css$/);
+          return match ? original.replace('[name]', match[1]) : original;
+        };
+        return config;
+      }
+    },
+    // </workaround>
+
     svg({
       includePaths: ['./src/lib/svg/'],
       svgoOptions: false

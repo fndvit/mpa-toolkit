@@ -14,10 +14,12 @@ export const load: PageServerLoad = async ({ locals }) => {
     ...Queries.tag
   });
 
+  const components = await db.homepage.getComponents();
+
   locals.cacheKeys.add(`pages`);
   locals.cacheKeys.add(`tags`);
 
   const groups = groupBy(pages, p => (p.chapter ? 'chapters' : 'caseStudies'));
 
-  return { chapters: groups.chapters || [], caseStudies: groups.caseStudies || [], tags };
+  return { chapters: groups.chapters || [], caseStudies: groups.caseStudies || [], tags, components };
 };

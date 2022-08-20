@@ -40,5 +40,11 @@ export const tagMixin = (db: MpaDatabase) => ({
     const [_tag] = await db.prisma.$transaction([createTagQuery]);
     await publishEvent('tag-created', { id: _tag.id });
     return _tag;
+  },
+  search: async (searchText: string) => {
+    const results: { tagId: number; highlight: string }[] = await db.prisma
+      .$queryRaw`SELECT * FROM tag_highlights(${searchText})`;
+    const o = Object.fromEntries(results.map(r => [r.tagId, r.highlight])) as { [tagId: number]: string };
+    return o;
   }
 });

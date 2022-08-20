@@ -1,9 +1,5 @@
-// import { Prisma, PrismaClient } from '@prisma/client';
 import { execFile } from 'child_process';
 import * as path from 'path';
-
-// Prisma
-// PrismaClient
 
 export async function prismaCmd(cmd: string) {
   return new Promise((resolve, reject) => {

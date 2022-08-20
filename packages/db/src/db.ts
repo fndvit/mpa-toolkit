@@ -2,11 +2,11 @@ import { logger } from '@mpa/log';
 import { Prisma, PrismaClient } from '@prisma/client';
 import expand from 'brace-expansion';
 import { env } from './env';
-import { pageMixin } from './mixins/page';
-import { tagMixin } from './mixins/tag';
 import { authorMixin } from './mixins/author';
-import { userMixin } from './mixins/user';
+import { pageMixin } from './mixins/page';
 import { sessionMixin } from './mixins/session';
+import { tagMixin } from './mixins/tag';
+import { userMixin } from './mixins/user';
 
 const log = logger('DB');
 
@@ -21,7 +21,6 @@ export class MpaDatabase {
   session: ReturnType<typeof sessionMixin>;
 
   constructor(url: string) {
-    /* eslint-disable @typescript-eslint/no-explicit-any */
     const LOG_DB_QUERIES = env.LOG_DB_QUERIES === 'true';
     const QUERY_LOGGING = LOG_DB_QUERIES ? ([{ emit: 'event', level: 'query' }] as const) : [];
     const prisma = new PrismaClient({
@@ -41,42 +40,43 @@ export class MpaDatabase {
     this.user = userMixin(this);
     this.session = sessionMixin(this);
 
-    type _Functions = {
-      [P in keyof MpaDatabase]: MpaDatabase[P] extends (...args: any) => any ? P : never;
-    }[keyof MpaDatabase];
-
-    const logFunctions: _Functions[] = [
-      // ...expand('{update,create,delete}{Author}'),
-      ...expand('searchTags'),
-      'updateUser',
-      'deleteUser'
-    ];
-
-    log.debug(`Log wrapping MpaDatabase fns: ${logFunctions.join(', ')}`);
-    // logFunctions.forEach(fnName => {
-    //   const _fn = this[fnName];
-    //   this[fnName] = async (...args) => {
-    //     if (fnName === 'updatePage') {
-    //       log.debug(`${fnName}(${args[0]})`);
-    //       return (<any>_fn).apply(this, args);
-    //     } else if (fnName === 'createPage') {
-    //       const _page = (await (<any>_fn).apply(this, args)) as Page.DB;
-    //       log.debug(`${fnName}(${_page.id})`);
-    //       return _page;
-    //     } else {
-    //       log.debug(`${fnName}(${args.map(a => JSON.stringify(a)).join(', ')})`);
-    //       return (<any>_fn).apply(this, args);
-    //     }
-    //   };
-    // });
+    this._logWrapFunctions();
   }
+
+  private _logWrapFunctions = () => {
+    // this wraps all non-read-only database functions with logging
+    const logFunctions = [
+      ...expand('session.{start,end}'),
+      ...expand('{author,page,tag}.{update,create,delete}'),
+      ...expand('user.{update,delete}')
+    ];
+    const logArgs = {
+      'page.create': async (_, ret: ReturnType<typeof this.page.create>) => ret.then(p => p.id),
+      'page.update': ([id]: Parameters<typeof this.page.update>) => id,
+      'session.start': ([payload]: Parameters<typeof this.session.start>) => payload.email,
+      default: (args: unknown[]) => args.map(a => JSON.stringify(a)).join(', ')
+    };
+    log.debug(`Log wrapping MpaDatabase fns: ${logFunctions.join(', ')}`);
+    logFunctions
+      .map(fn => fn.split('.'))
+      .filter(([model, action]) => {
+        if (!this[model] || !this[model][action]) {
+          log.warn(`${model}.${action} is not a valid fn to wrap for logging`);
+          return false;
+        }
+        return true;
+      })
+      .map(([model, action]) => {
+        const fnName = `${model}.${action}`;
+        const _fn = this[model][action] as (...args: unknown[]) => unknown;
+        this[model][action] = async (...args) => {
+          const logArgsFn = logArgs[fnName] || logArgs.default;
+          const ret = _fn.apply(this, args);
+          log.debug(`${fnName}(${await logArgsFn(args, ret)})`);
+          return ret;
+        };
+      });
+  };
 
   disconnect = () => this.prisma.$disconnect();
-
-  async searchTags(searchText: string) {
-    const results: { tagId: number; highlight: string }[] = await this.prisma
-      .$queryRaw`SELECT * FROM tag_highlights(${searchText})`;
-    const o = Object.fromEntries(results.map(r => [r.tagId, r.highlight])) as { [tagId: number]: string };
-    return o;
-  }
 }

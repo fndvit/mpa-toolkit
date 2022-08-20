@@ -2,13 +2,9 @@ import './shims.js';
 import Sentry from '@sentry/serverless';
 import type { APIGatewayEvent } from 'aws-lambda';
 import { manifest } from 'MANIFEST';
-import { lambdaRequestTracker } from 'pino-lambda';
 import { Server } from 'SERVER';
 
 // TODO: import config
-
-
-const withRequest = lambdaRequestTracker();
 
 const handler = async (event: APIGatewayEvent) => {
   const server = new Server(manifest);
@@ -74,16 +70,4 @@ function parseQuery(queryParams) {
     }
   }
   return queryString;
-}
-
-async function _getConfig(app, env, cfg) {
-  // TODO: caching
-  try {
-    const url = `http://localhost:2772/applications/${app}/environments/${env}/configurations/${cfg}`;
-    const response = await fetch(url);
-    return await response.json();
-  } catch (e) {
-    console.error(e);
-    return {};
-  }
 }

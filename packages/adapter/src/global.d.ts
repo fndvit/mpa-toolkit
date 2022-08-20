@@ -1,5 +1,3 @@
-// import type { Server } from '@sveltejs/kit';
-
 declare module '*.repo' {
   export default string;
 }

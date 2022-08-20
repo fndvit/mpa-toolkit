@@ -15,11 +15,11 @@ export type ConfigToEnvClean<C extends EnvConfig> = Expand<
 
 export function processEnv(env: Record<string, string>, config: EnvConfig) {
   const required = Object.entries(config)
-    .filter(([_, value]) => value)
+    .filter(([, value]) => value)
     .map(([key]) => key);
 
   const optional = Object.entries(config)
-    .filter(([_, value]) => !value)
+    .filter(([, value]) => !value)
     .map(([key]) => key);
 
   const missing = {

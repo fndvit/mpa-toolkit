@@ -18,6 +18,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 
   locals.cacheKeys.add(`pages`);
   locals.cacheKeys.add(`tags`);
+  locals.cacheKeys.add(`homepage`);
 
   const groups = groupBy(pages, p => (p.chapter ? 'chapters' : 'caseStudies'));
 

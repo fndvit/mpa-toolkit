@@ -1,5 +1,5 @@
 import { Queries } from '@mpa/db';
-import { groupBy } from '@mpa/utils';
+import { groupBy } from '$lib/utils';
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Tag } from '@mpa/db';
-  import { slugify } from '@mpa/utils';
+  import { slugify } from '$lib/utils';
   import { page } from '$app/stores';
 
   type TagStyles = 'PRIMARY' | 'SECONDARY';

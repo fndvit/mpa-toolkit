@@ -1,5 +1,5 @@
 import { Queries } from '@mpa/db';
-import { slugify } from '@mpa/utils';
+import { slugify } from '$lib/utils';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';

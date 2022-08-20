@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { APIRequests, Author, Chapter, Page, PageTag, Tag } from '@mpa/db';
   import clone from 'clone';
-  import { compareDeep, createLookup, slugify, type Unpacked } from '@mpa/utils';
+  import type { Unpacked } from '@mpa/utils';
   import { openModal } from 'svelte-modals';
+  import { createLookup } from '@mpa/utils';
   import { goto } from '$app/navigation';
   import { page as pageStore } from '$app/stores';
   import * as api from '$lib/api';
@@ -22,6 +23,7 @@
   } from '$lib/components';
   import { getPageTypeStr } from '$lib/helpers/content';
   import { insertInTextArea } from '$lib/helpers/utils';
+  import { compareDeep, slugify } from '$lib/utils';
 
   export let authors: Author[];
   export let allTags: Tag[];

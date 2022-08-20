@@ -1,35 +1,3 @@
-export function groupBy<T, K extends string, U = null>(arr: T[], keyFn: (i: T) => K, mapFn?: (i: T) => U) {
-  return arr.reduce<{ [KV in K]?: (U extends null ? T : U)[] }>((acc, item) => {
-    const key = keyFn(item);
-    acc[key] = acc[key] || [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    acc[key]?.push(!mapFn ? (item as any) : mapFn(item));
-    return acc;
-  }, {});
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function compareDeep(a: any, b: any) {
-  if (a === b) return true;
-  if (!(a && typeof a == 'object') || !(b && typeof b == 'object')) return false;
-  const array = Array.isArray(a);
-  if (Array.isArray(b) != array) return false;
-  if (array) {
-    if (a.length != b.length) return false;
-    for (let i = 0; i < a.length; i++) if (!compareDeep(a[i], b[i])) return false;
-  } else {
-    for (const p in a) if (!(p in b) || !compareDeep(a[p], b[p])) return false;
-    for (const p in b) if (!(p in a)) return false;
-  }
-  return true;
-}
-
-export function slugify(text: string, maxLen = 40) {
-  return (text || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .slice(0, maxLen);
-}
 
 export function createLookup<T, U extends string, Y = never>(arr: T[], keyFn: (d: T) => U | U[], valFn?: (d: T) => Y) {
   type R = [Y] extends [never] ? T : Y;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageTag, Tag } from '@mpa/db';
-  import { groupBy } from '@mpa/utils';
+  import { groupBy } from '$lib/utils';
   import { afterUpdate } from 'svelte';
   import MultiSelect, { type Option } from 'svelte-multiselect';
   import textFit from 'textfit';

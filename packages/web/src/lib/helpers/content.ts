@@ -1,5 +1,5 @@
 import type { ContentDocument, Page, Section } from '@mpa/db';
-import { slugify } from '@mpa/utils';
+import { slugify } from '$lib/utils';
 import { env } from '$env/dynamic/public';
 
 export const staticUrl = (path: string, fallback = '') => (path ? `${env.PUBLIC_UPLOAD_BASE_URL}${path}` : fallback);

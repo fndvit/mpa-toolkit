@@ -12,6 +12,7 @@ export const env = getEnv({
   LOG_TRANSPORT: true,
   // optional (prod only)
   AWS_SNS_CONTENT_TOPIC: false,
+  AWS_REGION: false,
   FASTLY_API_KEY: false,
   FASTLY_SERVICE_ID: false
 });

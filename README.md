@@ -7,7 +7,7 @@
 
 ## Getting started
 
-1. Fill out `.env` file (see `.env.example` for keys)
+1. Fill out `.env.local` file (see `.env.example` for keys)
 
 2. Install dependencies
 

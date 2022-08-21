@@ -1,0 +1,7 @@
+{
+  "name": "@mpa/utils",
+  "version": "1.0.0",
+  "private": true,
+  "main": "utils.ts",
+  "scripts": {}
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@mpa/env",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "env.ts",
+  "files": [
+    "env.ts",
+    "load.ts"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "@mpa/utils": "workspace:^1.0.0",
+    "@types/node": "^18.7.5"
+  }
+}

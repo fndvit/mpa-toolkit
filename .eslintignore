@@ -1,0 +1,15 @@
+pnpm-lock.yaml
+pnpm-workspace.yaml
+.DS_Store
+node_modules
+build
+dist
+cdk.out
+.svelte-kit
+.env
+.env.*
+!.env.example
+.vscode/*
+!.vscode/extensions.json
+.tmp
+*.log

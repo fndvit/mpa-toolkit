@@ -1,0 +1,11 @@
+{
+  "$id": "user",
+
+  "type": "object",
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "role": { "type": "string", "enum": ["USER", "CONTENT_MANAGER", "ADMIN"] }
+  },
+  "additionalProperties": false,
+  "minProperties": 1
+}

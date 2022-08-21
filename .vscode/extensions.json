@@ -1,9 +1,9 @@
 {
-    "recommendations": [
-        "editorconfig.editorconfig",
-        "svelte.svelte-vscode",
-        "prisma.prisma",
-        "dbaeumer.vscode-eslint",
-        "sysoev.language-stylus"
-    ]
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "svelte.svelte-vscode",
+    "prisma.prisma",
+    "dbaeumer.vscode-eslint",
+    "sysoev.language-stylus"
+  ]
 }

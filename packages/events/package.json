@@ -1,0 +1,13 @@
+{
+  "name": "@mpa/events",
+  "version": "1.0.0",
+  "private": true,
+  "main": "events.ts",
+  "type": "module",
+  "scripts": {},
+  "dependencies": {
+    "@aws-sdk/client-sns": "^3.145.0",
+    "@mpa/env": "workspace:*",
+    "@mpa/log": "workspace:*"
+  }
+}

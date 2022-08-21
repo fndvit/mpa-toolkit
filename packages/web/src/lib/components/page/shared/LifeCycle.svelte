@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { PageTag, Tag } from '@mpa/db';
-  import { groupBy } from '@mpa/utils';
   import { afterUpdate } from 'svelte';
   import MultiSelect, { type Option } from 'svelte-multiselect';
   import textFit from 'textfit';
+  import { groupBy } from '@mpa/utils';
   import type { MenuElement } from '$lib/components/shared/CircleMenu.svelte';
   import { CircleMenu, HelpPopup, TagContainer } from '$lib/components';
 
@@ -22,7 +22,7 @@
   };
   const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30]; // index matches tag id
   const LIFECYCLE_TEXT = [
-    'Although there is no single recipe, there ways to optimize the <b>design</b> of your MPA based on your specific needs.',
+    'Although there is no single recipe, there ways to optimize the <b>design</b> of your MPA based',
     '<b>Where does this fit in the MPA management lifecycle?</b>',
     '<b>Where does this fit in the MPA management lifecycle?</b>',
     '<b>Where does this fit in the MPA management lifecycle?</b>',
@@ -215,8 +215,8 @@
 
       .info-text {
         position: absolute;
-        width: 50%;
-        height: 50%;
+        width: 45%;
+        height: 45%;
         typography: ui-small;
         color: black;
         top: 0;

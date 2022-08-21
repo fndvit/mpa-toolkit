@@ -96,6 +96,10 @@ export type CardData = {
   body: string;
 };
 
+export type HomepageComponentName = 'lifecycle' | 'chapters' | 'search' | 'madlib' | 'casestudies';
+
+export type HomepageComponents = HomepageComponentName[];
+
 // ***********************
 //   API request bodies
 // ***********************
@@ -133,6 +137,8 @@ export namespace APIRequests {
   export type Tag = {
     value: string;
   };
+
+  export type HomepageComponents = HomepageComponentName[];
 }
 
 // **************************

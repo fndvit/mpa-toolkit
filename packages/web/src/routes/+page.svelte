@@ -1,19 +1,21 @@
 <script lang="ts">
-  import type { PageTag } from '@mpa/db';
+  import type { HomepageComponentName, PageTag } from '@mpa/db';
   import type { PageData } from './$types';
   import landingSplash from '$lib/assets/landing-splash.jpg';
   import {
     Footer,
     InlineSvgLink,
     LandingCarousel,
+    TagContainer,
     LandingMadLib,
     MPAManagementLifecycle,
-    Searchbar,
-    TagContainer
+    Searchbar
   } from '$lib/components';
 
   export let data: PageData;
-  let { chapters, caseStudies, tags } = data;
+  let { chapters, caseStudies, tags, components } = data;
+
+  const getComponentOrder = (name: HomepageComponentName): number => components.indexOf(name);
 
   const tagsForContainer = tags.map<PageTag>(t => ({ tag: t, category: 'PRIMARY' }));
 </script>
@@ -46,16 +48,29 @@
     </div>
   </div>
 
-  <MPAManagementLifecycle />
+  <div class="ordered-components">
+    <div style="order: {getComponentOrder('lifecycle')}">
+      <MPAManagementLifecycle />
+    </div>
 
-  <LandingCarousel pages={chapters} title="Get the <b>answers</b> to all your questions" />
+    <div style="order: {getComponentOrder('chapters')}">
+      <LandingCarousel pages={chapters} title="Get the <b>answers</b> to all your questions" />
+    </div>
 
-  <div class="inline-searchbar">
-    <Searchbar type={'inline'} />
-    <TagContainer tags={tagsForContainer} />
+    <div style="order: {getComponentOrder('search')}" class="ordered-component inline-searchbar">
+      <Searchbar type={'inline'} />
+      <TagContainer tags={tagsForContainer} />
+    </div>
+
+    <div style="order: {getComponentOrder('madlib')}">
+      <LandingMadLib />
+    </div>
+
+    <div style="order: {getComponentOrder('casestudies')}">
+      <LandingCarousel pages={caseStudies} title="Explore what <b>others have done</b>" />
+    </div>
   </div>
-  <LandingMadLib />
-  <LandingCarousel pages={caseStudies} title="Explore what <b>others have done</b>" />
+
   <Footer />
 </div>
 
@@ -64,6 +79,11 @@
   .landing-page {
     background: $colors.neutral-bg;
     --page-padding: 6rem;
+  }
+
+  .ordered-components {
+    display: flex;
+    flex-direction: column;
   }
 
   .inline-searchbar {

@@ -1,4 +1,4 @@
-import type { APIRequests as API, Author, Page, Tag, User } from '@mpa/db';
+import type { APIRequests as API, Author, HomepageComponents, Page, Tag, User } from '@mpa/db';
 import { default as _ky } from 'ky';
 import type { GoogleAuthReturnData } from '../routes/api/auth/google/+server';
 
@@ -17,25 +17,29 @@ export const image = {
 };
 
 export const user = {
-  update: async (id: number, json: API.User) => _createUpdate('user', json, id),
+  update: async (id: number, json: API.User) => _createUpdate('users', json, id),
   delete: async (id: number) => (await ky.delete(`users/${id}`)).ok
 };
 
 export const author = {
-  update: async (id: number, json: API.Author) => _createUpdate('author', json, id),
-  create: async (json: API.Author) => _createUpdate('author', json),
+  update: async (id: number, json: API.Author) => _createUpdate('authors', json, id),
+  create: async (json: API.Author) => _createUpdate('authors', json),
   delete: async (id: number) => (await ky.delete(`authors/${id}`)).ok
 };
 
 export const page = {
-  create: async (data: API.Page) => _createUpdate('page', data),
-  update: async (id: number, data: API.Page) => _createUpdate('page', data, id),
+  create: async (data: API.Page) => _createUpdate('pages', data),
+  update: async (id: number, data: API.Page) => _createUpdate('pages', data, id),
   delete: async (id: number) => (await ky.delete(`pages/${id}`)).ok
 };
 
+export const homepage = {
+  updateComponents: async (data: API.HomepageComponents) => ky.patch('homepage/components', { json: data }).json()
+};
+
 export const tag = {
-  create: async (data: API.Tag) => _createUpdate('tag', data),
-  update: async (id: number, data: API.Tag) => _createUpdate('tag', data, id),
+  create: async (data: API.Tag) => _createUpdate('tags', data),
+  update: async (id: number, data: API.Tag) => _createUpdate('tags', data, id),
   delete: async (id: number) => (await ky.delete(`tags/${id}`)).ok
 };
 
@@ -47,14 +51,14 @@ export const auth = {
   }
 };
 
-function _createUpdate(model: 'page', json: API.Page, id?: number): Promise<Page.DB>;
-function _createUpdate(model: 'tag', json: API.Tag, id?: number): Promise<Tag.DB>;
-function _createUpdate(model: 'user', json: API.User, id?: number): Promise<User.DB>;
-function _createUpdate(model: 'author', json: API.Author, id?: number): Promise<Author.DB>;
+function _createUpdate(model: 'pages', json: API.Page, id?: number): Promise<Page.DB>;
+function _createUpdate(model: 'tags', json: API.Tag, id?: number): Promise<Tag.DB>;
+function _createUpdate(model: 'users', json: API.User, id?: number): Promise<User.DB>;
+function _createUpdate(model: 'authors', json: API.Author, id?: number): Promise<Author.DB>;
 async function _createUpdate(model: string, json: unknown, id?: number) {
   const create = id === undefined;
   const method = create ? 'PUT' : 'PATCH';
-  const url = `${model}s/${create ? 'create' : id}`;
+  const url = `${model}/${create ? 'create' : id}`;
   const response = await ky(url, { method, json });
   return response.json();
 }

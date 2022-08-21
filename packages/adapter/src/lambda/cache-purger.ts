@@ -79,6 +79,8 @@ async function processEvent(event: Event): Promise<EventOutput> {
       return { ...(await purgeSurrogate('pages')), event };
     case 'tag-created':
       return { ...(await purgeSurrogate('tags')), event };
+    case 'homepage-components-updated':
+      return { ...(await purgeSurrogate('homepage')), event };
     default:
       console.error('unknown event type', JSON.stringify(event));
       return {

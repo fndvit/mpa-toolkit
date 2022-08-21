@@ -11,6 +11,7 @@ const REQUIRED_ROLES: { [routeId: string]: Role | null } = {
 
   'cms': 'CONTENT_MANAGER', // prettier-ignore
   'cms/authors': 'CONTENT_MANAGER',
+  'cms/homepage': 'CONTENT_MANAGER',
   'cms/pages': 'CONTENT_MANAGER',
   'cms/pages/[id]': 'CONTENT_MANAGER',
   'cms/pages/create/case-study': 'CONTENT_MANAGER',

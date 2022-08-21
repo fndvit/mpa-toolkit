@@ -168,6 +168,9 @@ export class Seeder {
     console.log('Creating tags...');
     await this.createTags();
 
+    console.log('Creating homepage components...');
+    await this.db.homepage.updateComponents(['lifecycle', 'chapters', 'search', 'madlib', 'casestudies']);
+
     if (dev) {
       console.log('Creating dev data...');
       await this.createDevData();

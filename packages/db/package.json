@@ -27,12 +27,9 @@
   },
   "devDependencies": {
     "@types/brace-expansion": "^1.1.0",
-    "@vercel/ncc": "^0.34.0",
     "dotenv-cli": "^6.0.0",
-    "esno": "^0.16.3",
     "prisma": "^4.2.1",
     "tsup": "^5.12.9",
-    "tsx": "^3.8.2",
     "vitest": "^0.21.1"
   },
   "tsup": {

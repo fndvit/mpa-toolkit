@@ -1,12 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "dev": "pnpm --filter @mpa/web dev",
-    "clean": "pnpm --filter '@mpa/*' clean",
-    "build": "pnpm clean && pnpm --filter @mpa/adapter --filter @mpa/web run build",
-    "synth": "pnpm run build && pnpm --filter @mpa/adapter synth",
-    "deploy": "pnpm run build && pnpm --filter @mpa/adapter run deploy",
-    "migrate": "pnpm --filter @mpa/db run migrate",
+    "dev": "pnpm -F @mpa/web dev",
+    "clean": "pnpm -F '@mpa/*' clean",
+    "build": "pnpm -F '@mpa/*' run build",
+    "synth": "pnpm run clean && pnpm run build && pnpm -F @mpa/adapter synth",
+    "deploy": "pnpm run clean && pnpm run build && pnpm -F @mpa/adapter run deploy",
+    "migrate": "pnpm -F @mpa/db run migrate",
     "gen": "prisma generate",
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
     "format": "prettier --write --plugin-search-dir=. ."

@@ -4,20 +4,16 @@
   "main": "./migration-runner.ts",
   "scripts": {
     "prepack": "tsup",
-    "build": "rm -rf ./dist && tsup && pnpm build:prepare && pnpm build:install && pnpm build:generate",
+    "clean": "rm -rf ./dist",
+    "build": "tsup && pnpm build:prepare && pnpm build:install && pnpm build:generate",
     "build:prepare": "echo '{}' > ./dist/package.json && cp -R ../db/prisma ./dist/",
     "build:install": "PRISMA_CLI_BINARY_TARGETS='rhel-openssl-1.0.x' npm install --prefix ./dist prisma@4.2.1",
-    "build:generate": "(cd ./dist && npm exec prisma generate)",
-    "build2": "pnpm run build:runner && pnpm run build:cli",
-    "build:runner": "ncc build -o dist ./migration-runner.ts",
-    "build:cli": "ncc build -o dist/cli ./node_modules/prisma/build/index.js"
+    "build:generate": "(cd ./dist && npm exec prisma generate)"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.34.0",
     "aws-lambda": "^1.0.7",
     "prisma": "^4.2.1",
-    "tsup": "^5.12.9",
-    "vite": "^3.0.8"
+    "tsup": "^5.12.9"
   },
   "dependencies": {
     "@mpa/db": "workspace:*",
@@ -35,7 +31,8 @@
     "noExternal": [
       "@mpa/db",
       "@mpa/env",
-      "@mpa/log"
+      "@mpa/log",
+      "@mpa/utils"
     ],
     "external": [
       "prisma",

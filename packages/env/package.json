@@ -8,18 +8,12 @@
     "env.ts",
     "load.ts"
   ],
-  "scripts": {
-    "build": "tsup",
-    "watch": "tsup --watch",
-    "build2": "unbuild"
-  },
+  "scripts": {},
   "dependencies": {
-    "@mpa/log": "workspace:^1.0.0",
     "dotenv": "^16.0.0"
   },
   "devDependencies": {
     "@mpa/utils": "workspace:^1.0.0",
-    "@types/node": "^18.7.5",
-    "unbuild": "^0.8.8"
+    "@types/node": "^18.7.5"
   }
 }

@@ -18,14 +18,11 @@
     "@mpa/env": "workspace:*",
     "@mpa/migration-runner": "workspace:*",
     "@sentry/serverless": "^7.10.0",
-    "@sveltejs/kit": "^1.0.0-next.348",
     "@types/aws-lambda": "^8.10.93",
-    "@types/fs-extra": "^9.0.13",
     "aws-cdk-lib": "^2.16.0",
     "constructs": "^10.0.87",
     "dotenv": "^16.0.0",
     "esbuild": "^0.14.28",
-    "fs-extra": "^10.0.1",
     "got": "^12.3.1",
     "pino-lambda": "^4.0.0"
   },
@@ -34,7 +31,6 @@
     "@mpa/events": "workspace:*",
     "@mpa/utils": "workspace:*",
     "aws-cdk": "^2.38.1",
-    "svelte": "^3.49.0",
     "tsup": "^5.12.9"
   },
   "files": [

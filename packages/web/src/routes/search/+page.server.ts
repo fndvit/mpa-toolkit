@@ -9,7 +9,12 @@ export const load: PageServerLoad = async ({ locals, url }) => {
   const tagHighlights = await db.tag.search(search);
 
   locals.cacheKeys.add('pages');
-  locals.cacheKeys.add('tags');
+  locals.cacheKeys.add(`tags`);
+  pages.forEach(p =>
+    p.chapter.authors.forEach(a => {
+      locals.cacheKeys.add(`author-${a.id}`);
+    })
+  );
 
   return {
     search,

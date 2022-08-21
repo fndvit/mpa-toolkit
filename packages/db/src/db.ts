@@ -15,12 +15,12 @@ export const PrismaClientKnownRequestError = Prisma.PrismaClientKnownRequestErro
 
 export class MpaDatabase {
   prisma: PrismaClient;
-  user: ReturnType<typeof userMixin>;
-  page: ReturnType<typeof pageMixin>;
-  tag: ReturnType<typeof tagMixin>;
-  author: ReturnType<typeof authorMixin>;
-  session: ReturnType<typeof sessionMixin>;
-  homepage: ReturnType<typeof homepageMixin>;
+  tag = tagMixin(this);
+  user = userMixin(this);
+  page = pageMixin(this);
+  author = authorMixin(this);
+  session = sessionMixin(this);
+  homepage = homepageMixin(this);
 
   constructor(url: string) {
     const LOG_DB_QUERIES = env.LOG_DB_QUERIES === 'true';
@@ -35,13 +35,6 @@ export class MpaDatabase {
     }
 
     this.prisma = prisma;
-
-    this.tag = tagMixin(this);
-    this.page = pageMixin(this);
-    this.author = authorMixin(this);
-    this.user = userMixin(this);
-    this.session = sessionMixin(this);
-    this.homepage = homepageMixin(this);
 
     this._logWrapFunctions();
   }

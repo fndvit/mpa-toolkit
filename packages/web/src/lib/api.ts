@@ -1,4 +1,4 @@
-import type { APIRequests as API, Author, HomepageComponents, Page, Tag, User } from '@mpa/db';
+import type { APIRequests as API, Author, Page, Tag, User } from '@mpa/db';
 import { default as _ky } from 'ky';
 import type { GoogleAuthReturnData } from '../routes/api/auth/google/+server';
 

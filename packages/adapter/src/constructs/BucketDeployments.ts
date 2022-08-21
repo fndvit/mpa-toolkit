@@ -7,7 +7,7 @@ export interface BucketDeploymentsProps {
   buckets: {
     static: s3.Bucket;
   };
-  distribution: cloudfront.CloudFrontWebDistribution;
+  distribution: cloudfront.IDistribution;
 }
 
 export class BucketDeployments extends Construct {
@@ -30,9 +30,7 @@ export class BucketDeployments extends Construct {
 
     new s3_deployment.BucketDeployment(this, 'Static', {
       destinationBucket: buckets.static,
-      sources: [
-        s3_deployment.Source.asset(assetsDir, { exclude: ['_app/*'] })
-      ],
+      sources: [s3_deployment.Source.asset(assetsDir, { exclude: ['_app/*'] })],
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=3600, public')],
       retainOnDelete: true,
       prune: true,

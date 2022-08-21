@@ -1,6 +1,6 @@
 import { Construct } from 'constructs';
 import type { aws_s3 as s3, aws_lambda as lambda } from 'aws-cdk-lib';
-import { Fn, Duration, aws_cloudfront as cloudfront } from 'aws-cdk-lib';
+import { Fn, aws_cloudfront as cloudfront, aws_cloudfront_origins as cloudfront_origins } from 'aws-cdk-lib';
 import { HttpApi, HttpMethod, PayloadFormatVersion } from '@aws-cdk/aws-apigatewayv2-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
 
@@ -16,7 +16,7 @@ export interface WebDistributionProps {
 }
 
 export class WebDistribution extends Construct {
-  distribution: cloudfront.CloudFrontWebDistribution;
+  distribution: cloudfront.IDistribution;
   httpApi: HttpApi;
 
   constructor(scope: Construct, id: string, props: WebDistributionProps) {
@@ -33,43 +33,32 @@ export class WebDistribution extends Construct {
       })
     });
 
-    this.distribution = new cloudfront.CloudFrontWebDistribution(this, 'CloudFrontWebDistribution', {
+    this.distribution = new cloudfront.Distribution(this, 'Distribution', {
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
-      enabled: true,
       defaultRootObject: '',
-      originConfigs: [
-        {
-          customOriginSource: {
-            domainName: Fn.select(1, Fn.split('://', this.httpApi.apiEndpoint)),
-            originHeaders: {
-              's3-static-host': buckets.static.bucketDomainName,
-              's3-content-host': buckets.upload.bucketDomainName
-            },
-            originProtocolPolicy: cloudfront.OriginProtocolPolicy.HTTPS_ONLY
+      defaultBehavior: {
+        cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+        compress: true,
+        originRequestPolicy: new cloudfront.OriginRequestPolicy(this, 'OriginRequestPolicy', {
+          cookieBehavior: cloudfront.OriginRequestCookieBehavior.all(),
+          queryStringBehavior: cloudfront.OriginRequestQueryStringBehavior.all()
+        }),
+        allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
+        origin: new cloudfront_origins.HttpOrigin(Fn.select(1, Fn.split('://', this.httpApi.apiEndpoint)), {
+          customHeaders: {
+            's3-static-host': buckets.static.bucketDomainName,
+            's3-content-host': buckets.upload.bucketDomainName
           },
-          behaviors: [
-            {
-              defaultTtl: Duration.seconds(0),
-              isDefaultBehavior: true,
-              compress: true,
-              allowedMethods: cloudfront.CloudFrontAllowedMethods.ALL,
-              forwardedValues: {
-                queryString: true,
-                cookies: {
-                  forward: 'all'
-                }
-              },
-              lambdaFunctionAssociations: [
-                {
-                  eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-                  lambdaFunction: server.edgeFn,
-                  includeBody: true
-                }
-              ]
-            }
-          ]
-        }
-      ]
+          protocolPolicy: cloudfront.OriginProtocolPolicy.HTTPS_ONLY
+        }),
+        edgeLambdas: [
+          {
+            eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+            functionVersion: server.edgeFn,
+            includeBody: true
+          }
+        ]
+      }
     });
   }
 }

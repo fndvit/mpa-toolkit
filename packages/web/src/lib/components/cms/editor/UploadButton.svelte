@@ -41,6 +41,7 @@
     const { files } = e.currentTarget;
     if (view.state.selection.$from.parent.inlineContent && files.length) {
       startImageUpload(view, files[0]);
+      inputEl.value = '';
     }
     view.focus();
   };

@@ -64,6 +64,7 @@
     justify-content: center;
     align-items: center;
     pointer-events: none;
+    z-index: $z-index.modal;
   }
 
   .contents {
@@ -75,6 +76,7 @@
     flex-direction: column;
     justify-content: space-between;
     pointer-events: auto;
+    max-height: 90vh;
   }
 
   h2 {
@@ -84,7 +86,6 @@
 
   .crop-container {
     z-index: 1;
-    max-width: 400px;
     display: flex;
     align-items: center;
     flex-direction: column;

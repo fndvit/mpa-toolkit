@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ContentBlock } from '@mpa/db';
-  import { BulletList, Heading, Image, OrderedList, Paragraph, TextSlider } from '$lib/components';
+  import { DiagramComponent, BulletList, Heading, Image, OrderedList, Paragraph, TextSlider } from '$lib/components';
 
   export let block: ContentBlock;
 
@@ -10,7 +10,8 @@
     cards: TextSlider,
     image: Image,
     bullet_list: BulletList,
-    ordered_list: OrderedList
+    ordered_list: OrderedList,
+    diagram: DiagramComponent
   };
 </script>
 

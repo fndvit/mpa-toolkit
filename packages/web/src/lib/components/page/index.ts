@@ -1,5 +1,7 @@
 export { default as Block } from './body/Block.svelte';
 export { default as BulletList } from './body/BulletList.svelte';
+export { default as Diagram } from './body/Diagram.svelte';
+export { default as DiagramComponent } from './body/DiagramComponent.svelte';
 export { default as ContentCarousel } from './body/ContentCarousel.svelte';
 export { default as ContentCarouselCard } from './body/ContentCarouselCard.svelte';
 export { default as ExpandButton } from './body/ExpandButton.svelte';

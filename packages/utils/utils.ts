@@ -27,6 +27,12 @@ export function groupBy<T, K extends string, U = null>(arr: T[], keyFn: (i: T) =
   }, {});
 }
 
+export function range(start: number, end: number) {
+  const length = Math.abs(end - start);
+  const step = start < end ? 1 : -1;
+  return Array.from({ length }, (_, i) => start + i * step);
+}
+
 // ************************
 //     TypeScript util
 // ************************

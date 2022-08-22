@@ -2,6 +2,7 @@
   import type { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
+  import ListControls from './ListControls.svelte';
   import { schema } from '$lib/editor/schema';
   import { BlockButton, IconButton, MarkButton, MenuSeperator, UploadButton } from '$lib/components';
 
@@ -23,6 +24,8 @@
     <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 1 }} text="H1" />
     <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 2 }} text="H2" />
     <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />
+    <MenuSeperator />
+    <ListControls {editorState} />
     <MenuSeperator />
     <IconButton on:click={insertCards} icon="library_books" title="Add cards" />
     <MenuSeperator />

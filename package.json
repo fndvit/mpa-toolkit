@@ -7,6 +7,9 @@
     "synth": "pnpm run clean && pnpm run build && pnpm -F @mpa/adapter synth",
     "deploy": "pnpm run clean && pnpm run build && pnpm -F @mpa/adapter run deploy",
     "migrate": "pnpm -F @mpa/db run migrate",
+    "db:nuke": "pnpm -F @mpa/db run nuke",
+    "db:seed": "pnpm -F @mpa/db run seed",
+    "test": "pnpm -F @mpa/db run test",
     "gen": "prisma generate",
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
     "format": "prettier --write --plugin-search-dir=. ."

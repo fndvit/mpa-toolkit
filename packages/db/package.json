@@ -48,6 +48,9 @@
       "@mpa/log",
       "@mpa/utils"
     ],
+    "external": [
+      "pino"
+    ],
     "splitting": false,
     "clean": true
   }

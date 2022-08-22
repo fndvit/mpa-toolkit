@@ -1,0 +1,64 @@
+<script lang="ts">
+  import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
+  import type { DiagramBlock } from '@mpa/db';
+  import { Diagram } from '$lib/components';
+  import * as api from '$lib/api';
+
+  export let attrs: DiagramBlock['attrs'];
+  export let controls: SvelteNodeViewControls;
+  export let rootDOM: (node: HTMLElement) => void;
+
+  let imageMobile: HTMLInputElement, imageDesktop: HTMLInputElement;
+
+  async function saveBaselayers() {
+    attrs.baselayer.mobile = await api.asset.upload(imageMobile.files[0]);
+    attrs.baselayer.desktop = await api.asset.upload(imageDesktop.files[0]);
+  }
+</script>
+
+<div use:rootDOM contenteditable="false" class="diagram">
+  {#if attrs.baselayer.desktop != ''}
+    <Diagram bind:diagram={attrs} editable {controls} />
+  {:else}
+    <form on:submit|preventDefault={saveBaselayers} class="form">
+      <div>
+        <h5>Mobile version</h5>
+        <input type="file" bind:this={imageMobile} />
+        <h5>Desktop version</h5>
+        <input type="file" bind:this={imageDesktop} />
+      </div>
+
+      <input type="submit" value="upload" />
+    </form>
+  {/if}
+</div>
+
+<style lang="stylus">
+
+  :global(.svelte-node-view--cards.ProseMirror-selectednode .diagram) {
+    filter: brightness(98%);
+    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.20);
+    outline: 1px solid #33333333;
+  }
+
+  .diagram {
+    grid-column: body / -1;
+  }
+
+  .form {
+    padding: 1.5rem 0;
+    display: flex;
+    align-items: center;
+
+    input[type=submit]{
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+
+      &:hover {
+        filter: brightness(105%);
+      }
+    }
+  }
+
+</style>

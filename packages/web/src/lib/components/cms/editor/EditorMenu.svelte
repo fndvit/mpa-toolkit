@@ -13,6 +13,11 @@
     const tr = editorState.tr.replaceSelectionWith(schema.nodes.cards.createAndFill());
     view.dispatch(tr);
   };
+
+  const insertDiagram = () => {
+    const tr = editorState.tr.replaceSelectionWith(schema.nodes.diagram.createAndFill());
+    view.dispatch(tr);
+  };
 </script>
 
 <div class="menu-bar">
@@ -25,6 +30,7 @@
     <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />
     <MenuSeperator />
     <IconButton on:click={insertCards} icon="library_books" title="Add cards" />
+    <IconButton on:click={insertDiagram} icon="donut_small" title="Add diagram" />
     <MenuSeperator />
     <UploadButton title="Add image" />
   </div>

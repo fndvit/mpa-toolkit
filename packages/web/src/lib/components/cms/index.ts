@@ -4,6 +4,7 @@ export { default as CropModal } from './CropModal.svelte';
 export { default as EditableAuthorImage } from './EditableAuthorImage.svelte';
 export { default as BlockButton } from './editor/BlockButton.svelte';
 export { default as CardsView } from './editor/CardsView.svelte';
+export { default as DiagramView } from './editor/DiagramView.svelte';
 export { default as Editor } from './editor/Editor.svelte';
 export { default as EditorMenu } from './editor/EditorMenu.svelte';
 export { default as HeadingView } from './editor/HeadingView.svelte';

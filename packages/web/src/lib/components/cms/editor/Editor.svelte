@@ -6,7 +6,7 @@
   import { onMount, setContext } from 'svelte';
   import { schema } from '$lib/editor/schema';
   import { plugins } from '$lib/editor/plugins';
-  import { CardsView, EditorMenu, HeadingView, ImageView, ProsemirrorEditor } from '$lib/components';
+  import { DiagramView, CardsView, EditorMenu, HeadingView, ImageView, ProsemirrorEditor } from '$lib/components';
 
   let focusEditor: () => void;
   let view: EditorView;
@@ -22,7 +22,8 @@
         nodes: {
           cards: CardsView,
           image: ImageView,
-          heading: HeadingView
+          heading: HeadingView,
+          diagram: DiagramView
         }
       })
     ]

@@ -1,9 +1,8 @@
 // @ts-check
-import path from 'path';
 import adapter from '@mpa/adapter';
 import preprocess from 'svelte-preprocess';
 
-const globalStylePath = path.resolve(process.cwd(), './src/lib/styles/svelte-global');
+const globalStylePath = './src/lib/styles/svelte-global';
 
 const globalStylus = `
   @require '${globalStylePath}';

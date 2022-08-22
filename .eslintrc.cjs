@@ -28,7 +28,7 @@ module.exports = defineConfig({
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: false }],
     'import/no-duplicates': 'error',
-    'import/order': 'error'
+    'import/order': 'warn'
   },
   settings: {
     'svelte3/typescript': () => require('typescript')

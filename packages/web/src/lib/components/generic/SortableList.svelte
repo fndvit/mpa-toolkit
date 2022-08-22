@@ -3,7 +3,8 @@
   import { flip } from 'svelte/animate';
   import { createEventDispatcher } from 'svelte';
 
-  type Item = Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  type Item = Record<string, any>;
 
   export let list: Item[];
   export let key: string;
@@ -16,7 +17,9 @@
 
   type Handler = svelte.JSX.DragEventHandler<HTMLLIElement>;
 
-  const start: Handler = e => e.dataTransfer.setData('source', e.currentTarget.dataset.index);
+  let dragItemIndex: string;
+
+  const start: Handler = e => (dragItemIndex = e.currentTarget.dataset.index);
 
   const over: Handler = e => {
     let dragged = getDraggedParent(e.currentTarget);
@@ -30,9 +33,9 @@
 
   const drop: Handler = e => {
     isOver = false;
-    let dragged = getDraggedParent(e.currentTarget);
-    let from = e.dataTransfer.getData('source');
-    let to = dragged.index;
+    let to = getDraggedParent(e.currentTarget).index;
+    let from = dragItemIndex;
+    dragItemIndex = undefined;
     reorder({ from, to });
   };
 

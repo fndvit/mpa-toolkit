@@ -51,6 +51,69 @@
       ]
     },
     {
+      "type": "diagram",
+      "attrs": {
+        "baselayer":
+          {
+            "mobile": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
+            "desktop": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg"
+          },
+        "layers": [
+          {
+            "image":
+              {
+                "mobile": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
+                "desktop": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg"
+              },
+            "card":
+              {
+                "heading": "Title 1",
+                "body": "some body 1"
+              }
+          },
+          {
+            "image":
+              {
+                "mobile": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
+                "desktop": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg"
+              },
+            "card":
+              {
+                "heading": "Title 2",
+                "body": "some body 2"
+              }
+          },
+          {
+            "image":
+              {
+                "mobile": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg",
+                "desktop": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg"
+              },
+            "card":
+              {
+                "heading": "Title 3",
+                "body": "some body 3"
+              }
+          }
+        ],
+        "caption":
+          {
+            "title": "Business Model Canvas",
+            "body": "helps structure how value will be created and lays the foundation for a business plan. Copyright by Strategyzer AG. Reproduced with permission."
+          },
+        "resources": [
+          {
+            "label": "UNEP",
+            "url": "https://www.unep.org/"
+          },
+          {
+            "label": "WWF",
+            "url": "https://wwf.panda.org/"
+          }
+        ]
+      }
+    },
+    {
       "type": "heading",
       "attrs": {
         "level": 1

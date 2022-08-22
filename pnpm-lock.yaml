@@ -48,6 +48,7 @@ importers:
       esbuild: ^0.14.28
       got: ^12.3.1
       pino-lambda: ^4.0.0
+      rimraf: ^3.0.2
       tsup: ^5.12.9
     dependencies:
       '@aws-cdk/aws-apigatewayv2-alpha': 2.17.0-alpha.0_iv56pbrpxgvxgggqopxwtifoq4
@@ -67,6 +68,7 @@ importers:
       '@mpa/events': link:../events
       '@mpa/utils': link:../utils
       aws-cdk: 2.38.1
+      rimraf: 3.0.2
       tsup: 5.12.9
 
   packages/db:
@@ -85,6 +87,7 @@ importers:
       google-auth-library: ^8.1.1
       lorem-ipsum: ^2.0.8
       prisma: ^4.2.1
+      rimraf: ^3.0.2
       seedrandom: ^3.0.5
       tsup: ^5.12.9
       vitest: ^0.21.1
@@ -105,6 +108,7 @@ importers:
       '@types/brace-expansion': 1.1.0
       dotenv-cli: 6.0.0
       prisma: 4.2.1
+      rimraf: 3.0.2
       tsup: 5.12.9
       vitest: 0.21.1
 
@@ -150,6 +154,7 @@ importers:
       '@mpa/log': workspace:*
       aws-lambda: ^1.0.7
       prisma: ^4.2.1
+      rimraf: ^3.0.2
       tsup: ^5.12.9
     dependencies:
       '@mpa/db': link:../db
@@ -158,6 +163,7 @@ importers:
     devDependencies:
       aws-lambda: 1.0.7
       prisma: 4.2.1
+      rimraf: 3.0.2
       tsup: 5.12.9
 
   packages/utils:
@@ -206,6 +212,7 @@ importers:
       prosemirror-state: ^1.4.1
       prosemirror-svelte-nodeview: ^1.0.1
       prosemirror-view: ^1.27.0
+      rimraf: ^3.0.2
       stylus: ^0.58.1
       svelte: ^3.49.0
       svelte-check: ^2.8.0
@@ -274,6 +281,7 @@ importers:
       '@types/textfit': 2.4.2
       '@types/topojson-client': 3.1.1
       '@types/topojson-simplify': 3.0.1
+      rimraf: 3.0.2
       stylus: 0.58.1
       svelte: 3.49.0
       svelte-check: 2.8.0_zohqgkaofnds6aeokxnkiulsgu

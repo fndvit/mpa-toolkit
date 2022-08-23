@@ -1,10 +1,26 @@
 import { Queries } from '@mpa/db';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { slugify } from '$lib/utils';
 import { db } from '$lib/db';
 
+async function getAuthorBySlug(slug: string) {
+  // can't directly query db by slug using prisma
+  // so doing the query client-side
+  const allAuthors = await db.prisma.author.findMany({
+    select: { id: true, name: true}
+  });
+  const author = allAuthors.find(a => slugify(a.name) === slug);
+  return author?.id;
+}
+
 export const load: PageServerLoad = async ({ params, locals }) => {
-  const id = parseInt(params.id);
+
+  const slug = params.slug.toLowerCase();
+
+  if (slug !== params.slug) throw redirect(301, `/author/${slug}`);
+
+  const id = await getAuthorBySlug(slug);
 
   if (isNaN(id)) throw error(404, 'Page not found');
 

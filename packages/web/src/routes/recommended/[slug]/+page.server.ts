@@ -31,14 +31,14 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 
   if (ids.length === 0) throw error(404, 'Tag not found');
 
-  const pages = await db.prisma.page.findMany({
+  const unorderedPages = await db.prisma.page.findMany({
     where: {
       tags: { some: { tag: { id: { in: ids } } } }
     },
     ...Queries.pageForCollectionCard
   });
 
-  const sortedPages = pages
+  const sortedPages = unorderedPages
     .map(page => ({
       numTags: page.tags.filter(t => ids.includes(t.tag.id)).length,
       page
@@ -51,6 +51,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 
   sortedPages.slice(0, 10).forEach(({ page, numTags }) => console.log(`(${numTags}) ${page.createdAt} `));
 
+  const pages = sortedPages.map(op => op.page);
   pages.map(p => p.tags.map(t => locals.cacheKeys.add(`tag-${t.tag.id}`)));
   locals.cacheKeys.add('pages');
 

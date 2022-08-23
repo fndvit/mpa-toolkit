@@ -2,7 +2,7 @@
   import type { Tag } from '@mpa/db';
   import { toaster } from '../generic/Toaster';
   import * as api from '$lib/api';
-  import { EditableText, IconButton } from '$lib/components';
+  import { EditableText, IconButton } from '$lib/components/generic';
 
   export let tag: Pick<Tag, 'id' | 'value'>;
   export let loading: boolean;

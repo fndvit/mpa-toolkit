@@ -2,7 +2,7 @@
   import type { Page } from '@mpa/db';
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
-  import { TagContainer } from '$lib/components';
+  import { TagContainer } from '$lib/components/shared';
   import { getPageDisplayTitle, staticUrl } from '$lib/helpers/content';
 
   export let page: Page.ContentCard;

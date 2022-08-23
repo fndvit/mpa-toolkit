@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
-  import { CollectionCards, CollectionPageHeader } from '$lib/components';
+  import CollectionPageHeader from './CollectionPageHeader.svelte';
+  import CollectionCards from './CollectionCards.svelte';
 
   export let pages: Page.CollectionCard[];
   export let title: string;

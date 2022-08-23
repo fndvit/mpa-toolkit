@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, Spinner } from '$lib/components';
+  import { Button, Spinner } from '$lib/components/generic';
 
   export let loading = false;
   export let disabled = false;

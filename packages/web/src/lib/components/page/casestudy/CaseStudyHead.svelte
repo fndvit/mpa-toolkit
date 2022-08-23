@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { CaseStudy, PageTag } from '@mpa/db';
-  import { CaseStudyMeta, IconButton, KeyLearnings, LifeCycle, Milestones } from '$lib/components';
+  import KeyLearnings from '../chapter/KeyLearnings.svelte';
+  import LifeCycle from '../shared/LifeCycle.svelte';
+  import CaseStudyMeta from './CaseStudyMeta.svelte';
+  import Milestones from './Milestones.svelte';
+  import { IconButton } from '$lib/components/generic';
 
   export let caseStudy: CaseStudy;
   export let tags: PageTag[];

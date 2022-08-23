@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { HeadingBlock } from '@mpa/db';
-  import { ExpandButtonEditor, IconButton } from '$lib/components';
+  import { IconButton } from '$lib/components/generic';
   import { clickOutside } from '$lib/helpers/utils';
+  import ExpandButtonEditor from '$lib/components/page/body/ExpandButtonEditor.svelte';
 
   export var attrs: HeadingBlock['attrs'];
   export var contentDOM: (node: HTMLElement) => void;

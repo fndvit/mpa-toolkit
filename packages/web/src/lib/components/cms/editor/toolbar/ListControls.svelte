@@ -5,9 +5,9 @@
   import type { Command, EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
-  import { isListNode } from './helpers';
+  import { isListNode } from '../helpers';
   import { schema } from '$lib/editor/schema';
-  import { IconButton } from '$lib/components';
+  import { IconButton } from '$lib/components/generic';
 
   export let editorState: EditorState;
 

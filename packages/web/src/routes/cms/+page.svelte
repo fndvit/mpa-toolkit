@@ -3,7 +3,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import * as api from '$lib/api';
-  import { toaster } from '$lib/components';
+  import { toaster } from '$lib/components/generic';
 
   const { user } = $page.data as LayoutData;
 

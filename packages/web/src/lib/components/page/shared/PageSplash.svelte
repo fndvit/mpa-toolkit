@@ -3,7 +3,7 @@
   import type { Modify } from '@mpa/utils';
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
-  import { EditableText, InlineSvgLink } from '$lib/components';
+  import { EditableText, InlineSvgLink } from '$lib/components/generic';
   import { staticUrl } from '$lib/helpers/content';
 
   type PageForSplash = Modify<Pick<Page, 'title' | 'img'>, { caseStudy?: { name: string } }>;

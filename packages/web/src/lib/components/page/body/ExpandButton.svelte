@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ExpandButtonBase } from '$lib/components';
+  import ExpandButtonBase from './ExpandButtonBase.svelte';
 
   export let content: string;
   export let expanded: boolean;

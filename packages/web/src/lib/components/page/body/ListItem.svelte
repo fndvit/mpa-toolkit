@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ListItemBlock } from '@mpa/db';
-  import { Block } from '$lib/components';
+  import Block from './Block.svelte';
 
   export let block: ListItemBlock;
 </script>

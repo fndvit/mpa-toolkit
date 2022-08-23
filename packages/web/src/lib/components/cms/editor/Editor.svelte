@@ -4,9 +4,11 @@
   import { svelteNodeViewPlugin } from 'prosemirror-svelte-nodeview';
   import type { EditorView } from 'prosemirror-view';
   import { onMount, setContext } from 'svelte';
+  import EditorMenu from './toolbar/EditorMenu.svelte';
+  import { CardsView, ImageView, HeadingView } from './nodeview';
+  import ProsemirrorEditor from './ProsemirrorEditor.svelte';
   import { schema } from '$lib/editor/schema';
   import { plugins } from '$lib/editor/plugins';
-  import { CardsView, EditorMenu, HeadingView, ImageView, ProsemirrorEditor } from '$lib/components';
 
   let focusEditor: () => void;
   let view: EditorView;

@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { EditableText, GlobeViz, IconButton, Spinner } from '$lib/components';
+  import GlobeViz from './GlobeViz.svelte';
+  import { EditableText, IconButton, Spinner } from '$lib/components/generic';
   import { clickOutside, timedBoolean } from '$lib/helpers/utils';
 
   export let lat: number;

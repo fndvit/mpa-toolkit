@@ -1,29 +1,22 @@
 <script lang="ts">
   import type { APIRequests, Author, Chapter, Page, PageTag, Tag } from '@mpa/db';
-  import clone from 'clone';
   import type { Unpacked } from '@mpa/utils';
-  import { openModal } from 'svelte-modals';
   import { createLookup } from '@mpa/utils';
-  import { goto } from '$app/navigation';
-  import { page as pageStore } from '$app/stores';
-  import * as api from '$lib/api';
-  import {
-    Button,
-    CaseStudyHead,
-    ChapterHead,
-    DeleteModal,
-    Editor,
-    IconButton,
-    LifeCycle,
-    LoadingButton,
-    PageContent,
-    PageSplash,
-    Spinner,
-    toaster
-  } from '$lib/components';
-  import { getPageTypeStr } from '$lib/helpers/content';
-  import { insertInTextArea } from '$lib/helpers/utils';
+  import clone from 'clone';
+  import { openModal } from 'svelte-modals';
+  import Editor from '../cms/editor/Editor.svelte';
+  import PageContent from './body/PageContent.svelte';
+  import CaseStudyHead from './casestudy/CaseStudyHead.svelte';
+  import ChapterHead from './chapter/ChapterHead.svelte';
+  import LifeCycle from './shared/LifeCycle.svelte';
+  import PageSplash from './shared/PageSplash.svelte';
   import { compareDeep, slugify } from '$lib/utils';
+  import { insertInTextArea } from '$lib/helpers/utils';
+  import { getPageTypeStr } from '$lib/helpers/content';
+  import { Button, DeleteModal, IconButton, LoadingButton, Spinner, toaster } from '$lib/components/generic';
+  import * as api from '$lib/api';
+  import { page as pageStore } from '$app/stores';
+  import { goto } from '$app/navigation';
 
   export let authors: Author[];
   export let allTags: Tag[];

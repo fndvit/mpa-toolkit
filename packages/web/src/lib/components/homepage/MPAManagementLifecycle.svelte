@@ -1,6 +1,6 @@
 <script lang="ts">
   import landingLifecycle from '$lib/assets/landing-lifecycle.jpg';
-  import { Cards, CircleMenu } from '$lib/components';
+  import { Cards, CircleMenu } from '$lib/components/shared';
   import type { MenuElement } from '$lib/components/shared/CircleMenu.svelte';
 
   const cardBlocks = [

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Dot } from '$lib/components';
+  import { Dot } from '$lib/components/shared';
 
   export let progress = false;
   export let pagesCount = 1;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
-  import { TagContainer } from '$lib/components';
+  import { TagContainer } from '$lib/components/shared';
   import { staticUrl } from '$lib/helpers/content';
 
   export let page: Page.ContentCard;

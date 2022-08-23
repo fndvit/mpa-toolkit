@@ -1,7 +1,11 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
-  import { CaseStudyHead, ChapterHead, Footer, PageContent, PageSplash } from '$lib/components';
+  import PageSplash from './shared/PageSplash.svelte';
+  import ChapterHead from './chapter/ChapterHead.svelte';
+  import CaseStudyHead from './casestudy/CaseStudyHead.svelte';
+  import PageContent from './body/PageContent.svelte';
   import { getPageTypeStr } from '$lib/helpers/content';
+  import { Footer } from '$lib/components/shared';
 
   export let page: Page;
   export let recommendedPages: Page.ContentCard[];

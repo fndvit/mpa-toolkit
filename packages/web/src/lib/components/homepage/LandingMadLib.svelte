@@ -1,6 +1,6 @@
 <script lang="ts">
+  import MadLib from '../shared/MadLib.svelte';
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
-  import { MadLib } from '$lib/components';
 
   let value: string[] = [];
 

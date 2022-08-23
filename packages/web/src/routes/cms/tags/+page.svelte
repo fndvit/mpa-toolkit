@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { TagsEditor } from '$lib/components';
+  import TagsEditor from '$lib/components/cms/TagsEditor.svelte';
 
   export let data: PageData;
 </script>

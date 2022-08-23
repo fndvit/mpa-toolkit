@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Cards, IconButton } from '$lib/components';
+  import { IconButton } from '$lib/components/generic';
+  import { Cards } from '$lib/components/shared';
 
   export let keyTakeaways: string[] = [];
   export let editable = false;

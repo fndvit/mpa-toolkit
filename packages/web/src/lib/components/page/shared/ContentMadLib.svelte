@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MadLib } from '$lib/components';
+  import MadLib from '$lib/components/shared/MadLib.svelte';
 
   let value: string[] = [];
 

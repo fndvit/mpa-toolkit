@@ -7,7 +7,7 @@
 <script lang="ts">
   import { fromImage } from 'imtool';
   import { closeModal } from 'svelte-modals';
-  import { LocalFileCrop } from '$lib/components';
+  import { LocalFileCrop } from '$lib/components/generic';
 
   export let isOpen: boolean;
   export let file: File;

@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { MilestonesData } from '@mpa/db';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
-  import { IconButton, Milestone } from '$lib/components';
+  import Milestone from './Milestone.svelte';
+  import { IconButton } from '$lib/components/generic';
   import { SplideOptions } from '$lib/helpers/splide';
 
   export let milestones: MilestonesData;

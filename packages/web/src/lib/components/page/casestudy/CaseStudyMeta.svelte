@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { CaseStudy } from '@mpa/db';
-  import { EditableNumber, EditableText, GlobeViz, GlobeVizEditor } from '$lib/components';
+  import GlobeVizEditor from './GlobeVizEditor.svelte';
+  import GlobeViz from './GlobeViz.svelte';
+  import { EditableNumber, EditableText } from '$lib/components/generic';
 
   export let caseStudy: CaseStudy;
   export let editable = false;

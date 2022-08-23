@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { ExpandButtonBase, MiniProsemirrorEditor } from '$lib/components';
+  import ExpandButtonBase from './ExpandButtonBase.svelte';
+  import MiniProsemirrorEditor from '$lib/components/cms/editor/MiniProsemirrorEditor.svelte';
 
   export let content: string;
 </script>

@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { Tag } from '@mpa/db';
   import { openModal } from 'svelte-modals';
+  import TagEditor from './TagEditor.svelte';
+  import { DeleteModal, IconButton, Spinner, toaster } from '$lib/components/generic';
   import * as api from '$lib/api';
-  import { DeleteModal, IconButton, Spinner, TagEditor, toaster } from '$lib/components';
 
   export let tags: Tag.WithPageCount[];
 

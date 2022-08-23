@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { CardData } from '@mpa/db';
-  import { Cards } from '$lib/components';
+  import Cards from '$lib/components/shared/Cards.svelte';
 
   export let cards: string[] = [];
   export let isTimerActive = true;

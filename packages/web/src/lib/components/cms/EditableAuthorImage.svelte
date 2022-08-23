@@ -1,8 +1,10 @@
 <script lang="ts">
   import type { Author } from '@mpa/db';
   import { openModal } from 'svelte-modals';
+  import AuthorImage from './AuthorImage.svelte';
+  import CropModal from './CropModal.svelte';
   import * as api from '$lib/api';
-  import { AuthorImage, CropModal, Spinner } from '$lib/components';
+  import { Spinner } from '$lib/components/generic';
 
   export let author: Author.ForCMS;
 

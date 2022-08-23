@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import Spinner from '$lib/components/generic/Spinner.svelte';
-  import { toaster, SortableList } from '$lib/components';
+  import { toaster, SortableList } from '$lib/components/generic';
   import * as api from '$lib/api';
 
   export let data: PageData;

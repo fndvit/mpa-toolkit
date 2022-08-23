@@ -5,7 +5,10 @@
 <script lang="ts">
   import type { CardData } from '@mpa/db';
   import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
-  import { CardBody, CardHeading, CarouselDots, IconButton } from '$lib/components';
+  import CardHeading from './CardHeading.svelte';
+  import CardBody from './CardBody.svelte';
+  import { IconButton } from '$lib/components/generic';
+  import { CarouselDots } from '$lib/components/shared';
   import { SplideOptions } from '$lib/helpers/splide';
 
   export let cards: CardData[];

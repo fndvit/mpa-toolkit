@@ -2,9 +2,13 @@
   import type { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
+  import MarkButton from './MarkButton.svelte';
+  import MenuSeperator from './MenuSeperator.svelte';
+  import BlockButton from './BlockButton.svelte';
   import ListControls from './ListControls.svelte';
+  import ImageButton from './ImageButton.svelte';
+  import { IconButton } from '$lib/components/generic';
   import { schema } from '$lib/editor/schema';
-  import { BlockButton, IconButton, MarkButton, MenuSeperator, UploadButton } from '$lib/components';
 
   export let editorState: EditorState;
 
@@ -29,7 +33,8 @@
     <MenuSeperator />
     <IconButton on:click={insertCards} icon="library_books" title="Add cards" />
     <MenuSeperator />
-    <UploadButton title="Add image" />
+    <ImageButton title="Add image" />
+    <MenuSeperator />
   </div>
 
   <div class="right-section">
@@ -38,6 +43,7 @@
 </div>
 
 <style lang="stylus">
+
   .menu-bar {
     --ib-icon-bg: transparent;
     --ib-hover-border: 1px solid #ddd;

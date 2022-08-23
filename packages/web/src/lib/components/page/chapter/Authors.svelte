@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Chapter } from '@mpa/db';
-  import { AuthorImage, AuthorsEditor } from '$lib/components';
-
+  import AuthorsEditor from './AuthorsEditor.svelte';
+  import AuthorImage from '$lib/components/cms/AuthorImage.svelte';
   export let authors: Chapter['authors'];
   export let editable = false;
 

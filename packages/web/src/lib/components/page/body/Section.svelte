@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Section } from '@mpa/db';
-  import { ExpandButton } from '$lib/components';
-
+  import ExpandButton from './ExpandButton.svelte';
   export let section: Section;
 
   let expanded = false;

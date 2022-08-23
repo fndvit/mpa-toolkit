@@ -6,9 +6,9 @@
   "scripts": {
     "generate": "prisma generate",
     "migrate": "dotenv -e ../../.env.local prisma migrate dev",
-    "nuke": "tsup src/bin/nuke.ts --onSuccess 'node dist/nuke.cjs' && rm -rf ./dist",
-    "seed": "tsup src/bin/seed.ts --onSuccess 'node dist/seed.cjs' && rm -rf ./dist",
-    "reset": "tsup src/bin/reset.ts --onSuccess 'node dist/reset.cjs' && rm -rf ./dist",
+    "nuke": "tsup src/bin/nuke.ts --onSuccess 'node dist/nuke.cjs' && rimraf ./dist",
+    "seed": "tsup src/bin/seed.ts --onSuccess 'node dist/seed.cjs' && rimraf ./dist",
+    "reset": "tsup src/bin/reset.ts --onSuccess 'node dist/reset.cjs' && rimraf ./dist",
     "test": "vitest",
     "prepare": "pnpm generate"
   },

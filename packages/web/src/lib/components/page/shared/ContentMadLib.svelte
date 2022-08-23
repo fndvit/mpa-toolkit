@@ -1,24 +1,51 @@
 <script lang="ts">
   import { MadLib } from '$lib/components';
+  import { slugify } from '$lib/utils';
 
   let value: string[] = [];
 
-  const submit = () => {
-    alert('USER PERSONA: \n1: ' + value[0] + '\n2: ' + value[1] + '\n3: ' + value[2] + '\n4: ' + value[3]);
+  const tagValue = {
+    'an MPA planner': 'MPA planners',
+    'an MPA manager': 'MPA managers',
+    'a community organizer': 'Community organizers',
+    'an LMMA practitioner': 'LMMA practitioners',
+    'answers': 'Identifying solutions',
+    'examples': 'Exploring examples',
+    'case studies': 'Comparing case studies',
+    'tools': 'Discovering tools',
+    'enable': 'Enabling decision-making',
+    'evaluate': 'Evaluating progress',
+    'I need to make': 'Manager decision-making',
+    'my team will make': 'Team decision-making',
+    'my government needs to make': 'Government decision-making'
   };
+
+  $: action =
+    '/recommended/' +
+    slugify(tagValue[value[0]]) +
+    '+' +
+    slugify(tagValue[value[1]]) +
+    '+' +
+    slugify(tagValue[value[2]]) +
+    '+' +
+    slugify(tagValue[value[3]]) +
+    '/';
+
 </script>
 
 <div class="content-madlib">
   <h5>Is this not for you?</h5>
 
-  <MadLib />
+  <MadLib bind:value/>
 
-  <button tabindex="0" on:click={submit}>
-    Let's find what you need
-    <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
-      <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke-width="1.5" />
-    </svg>
-  </button>
+  <form {action}>
+    <button tabindex="0">
+      Let's find what you need
+      <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
+        <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke-width="1.5" />
+      </svg>
+    </button>
+</form>
 </div>
 
 <style lang="stylus">

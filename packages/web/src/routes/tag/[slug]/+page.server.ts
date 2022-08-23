@@ -40,9 +40,9 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 
   if (!tag || tag.pageTags.length === 0) throw error(404, 'Page not found');
 
-  const unorderedPages = tag.pageTags.map(t => t.page);
+  const pages = tag.pageTags.map(t => t.page);
 
-  const pages = unorderedPages.sort((a, b) => {
+  pages.sort((a, b) => {
     return a.createdAt.getTime() - b.createdAt.getTime();
   });
 

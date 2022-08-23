@@ -50,6 +50,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     });
 
   const pages = sortedPages.map(op => op.page);
+
   pages.map(p => p.tags.map(t => locals.cacheKeys.add(`tag-${t.tag.id}`)));
   locals.cacheKeys.add('pages');
 

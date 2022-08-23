@@ -23,6 +23,10 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 
   const pages = author.chapter.map(c => c.page);
 
+  pages.sort((a, b) => {
+    return a.createdAt.getTime() - b.createdAt.getTime();
+  });
+
   pages.map(p => p.chapter.authors.map(a => locals.cacheKeys.add(`author-${a.id}`)));
   locals.cacheKeys.add('pages');
   locals.cacheKeys.add('tags');

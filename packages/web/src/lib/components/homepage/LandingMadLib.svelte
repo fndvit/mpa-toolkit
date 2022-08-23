@@ -31,6 +31,7 @@
     '+' +
     slugify(tagValue[value[3]]) +
     '/';
+
 </script>
 
 <div class="landing-madlib" style="--background-image: url({landingMadlibBg})">

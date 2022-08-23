@@ -49,8 +49,6 @@ export const load: PageServerLoad = async ({ locals, params }) => {
       return a.page.createdAt.getTime() - b.page.createdAt.getTime();
     });
 
-  sortedPages.slice(0, 10).forEach(({ page, numTags }) => console.log(`(${numTags}) ${page.createdAt} `));
-
   const pages = sortedPages.map(op => op.page);
   pages.map(p => p.tags.map(t => locals.cacheKeys.add(`tag-${t.tag.id}`)));
   locals.cacheKeys.add('pages');

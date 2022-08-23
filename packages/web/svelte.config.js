@@ -3,8 +3,6 @@ import { fileURLToPath } from 'url';
 import adapter from '@mpa/adapter';
 import preprocess from 'svelte-preprocess';
 
-const globalStylePath = fileURLToPath(new URL('./src/lib/styles/svelte-global', import.meta.url));
-
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   compilerOptions: {
@@ -13,7 +11,8 @@ const config = {
 
   preprocess: preprocess({
     stylus: {
-      prependData: `@require '${globalStylePath}';\n`
+      prependData: `@require 'svelte-global';\n`,
+      paths: [fileURLToPath(new URL('./src/lib/styles', import.meta.url))]
     }
   }),
 

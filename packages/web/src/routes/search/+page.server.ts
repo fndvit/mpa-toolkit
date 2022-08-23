@@ -23,7 +23,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 
   return {
     search,
-    title: search,
+    title: '"' + search + '"',
     pages,
     tagHighlights
   };

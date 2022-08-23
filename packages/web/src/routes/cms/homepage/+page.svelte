@@ -15,7 +15,7 @@
 
   let saving = false;
 
-  const sortList = ev => (list = ev.detail);
+  const sortList = (ev: CustomEvent) => (list = ev.detail);
 
   const saveList = async () => {
     saving = true;

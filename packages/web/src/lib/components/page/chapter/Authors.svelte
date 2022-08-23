@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Chapter } from '@mpa/db';
   import { AuthorImage, AuthorsEditor } from '$lib/components';
+  import { slugify } from '$lib/utils';
 
   export let authors: Chapter['authors'];
   export let editable = false;
@@ -26,7 +27,7 @@
       {#if i > 0 && i === displayAuthors.length - 1}
         and
       {/if}
-      <a href="/author/{author.id}" rel="external">{author.name}</a>
+      <a href="/author/{slugify(author.name)}" rel="external">{author.name}</a>
     {/each}
   </div>
 {/if}

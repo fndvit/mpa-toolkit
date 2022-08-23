@@ -1,7 +1,7 @@
 /* eslint import/no-duplicates: 0 */
 import type { Role, TagCategory, Prisma } from '@prisma/client';
 import type * as DBTypes from '@prisma/client';
-export { Role, TagCategory } from '@prisma/client';
+export { Role, TagCategory, TagType } from '@prisma/client';
 import type { Modify } from '@mpa/utils/utils';
 import type * as queries from './queries';
 

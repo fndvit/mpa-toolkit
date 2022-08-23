@@ -1,12 +1,36 @@
 <script lang="ts">
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
   import { MadLib } from '$lib/components';
+  import { slugify } from '$lib/utils';
 
   let value: string[] = [];
 
-  const submit = () => {
-    alert('USER PERSONA: \n1: ' + value[0] + '\n2: ' + value[1] + '\n3: ' + value[2] + '\n4: ' + value[3]);
+  const tagValue = {
+    'an MPA planner': 'MPA planners',
+    'an MPA manager': 'MPA managers',
+    'a community organizer': 'Community organizers',
+    'an LMMA practitioner': 'LMMA practitioners',
+    answers: 'Identifying solutions',
+    examples: 'Exploring examples',
+    'case studies': 'Comparing case studies',
+    tools: 'Discovering tools',
+    enable: 'Enabling decision-making',
+    evaluate: 'Evaluating progress',
+    'I need to make': 'Manager decision-making',
+    'my team will make': 'Team decision-making',
+    'my government needs to make': 'Government decision-making'
   };
+
+  $: action =
+    '/recommended/' +
+    slugify(tagValue[value[0]]) +
+    '+' +
+    slugify(tagValue[value[1]]) +
+    '+' +
+    slugify(tagValue[value[2]]) +
+    '+' +
+    slugify(tagValue[value[3]]) +
+    '/';
 </script>
 
 <div class="landing-madlib" style="--background-image: url({landingMadlibBg})">
@@ -14,12 +38,14 @@
 
   <MadLib bind:value />
 
-  <button tabindex="0" on:click={submit}>
-    Start your tour
-    <svg class="arrow" viewBox="0 0 13 22">
-      <path d="M1.44165 20.5881L10.4526 11.0587L1.44165 1.52931" stroke-width="2.4" />
-    </svg>
-  </button>
+  <form {action}>
+    <button tabindex="0">
+      Start your tour
+      <svg class="arrow" viewBox="0 0 13 22">
+        <path d="M1.44165 20.5881L10.4526 11.0587L1.44165 1.52931" stroke-width="2.4" />
+      </svg>
+    </button>
+  </form>
 </div>
 
 <style lang="stylus">

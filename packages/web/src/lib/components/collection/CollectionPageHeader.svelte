@@ -12,8 +12,8 @@
 </script>
 
 <div class="container" style="background-image: url({landingMadlibBg})">
-  <div class="unep-logo">
-    <InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab />
+  <div class="mpath-logo">
+    <InlineSvgLink href="/" svg="MPATH" />
   </div>
 
   <div class="content">
@@ -66,7 +66,7 @@
     }
     background-color: alpha($colors.primary-blue, 0.7)
   }
-  .unep-logo {
+  .mpath-logo {
     position: absolute;
     top: 20px;
     left: 20px;

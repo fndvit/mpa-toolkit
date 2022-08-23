@@ -17,5 +17,10 @@
     "Nature-based solutions",
     "All biomes"
   ],
-  "user": ["MPA managers", "Evaluating", "Finding examples"]
+  "user": [
+    "MPA planners", "MPA managers", "Community organizers", "LMMA practitioners",
+    "Identifying solutions", "Exploring examples", "Comparing case studies", "Discovering tools",
+    "Enabling decision-making", "Evaluating progress",
+    "Manager decision-making", "Team decision-making", "Government decision-making"
+  ]
 }

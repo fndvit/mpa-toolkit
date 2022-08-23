@@ -1,7 +1,7 @@
 import { Queries } from '@mpa/db';
-import { slugify } from '$lib/utils';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { slugify } from '$lib/utils';
 import { db } from '$lib/db';
 
 async function getTagIdBySlug(slug: string) {
@@ -45,5 +45,5 @@ export const load: PageServerLoad = async ({ locals, params }) => {
   pages.map(p => p.tags.map(t => locals.cacheKeys.add(`tag-${t.tag.id}`)));
   locals.cacheKeys.add('pages');
 
-  return { pages, tag, highlightTagId: tag.id };
+  return { pages, tag, highlightTagIds: [tag.id] };
 };

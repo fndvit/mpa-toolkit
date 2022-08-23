@@ -107,10 +107,8 @@ export const pageForCollectionCard = validate<Prisma.PageSelect>()({
   slug: true,
   img: true,
   readTime: true,
-  tags: {
-    ...pageTag,
-    where: { tag: { type: TagType.TOPIC } }
-  },
+  createdAt: true,
+  tags: pageTag,
   chapter: {
     select: {
       authors: {
@@ -122,8 +120,6 @@ export const pageForCollectionCard = validate<Prisma.PageSelect>()({
 });
 
 export const pageForCmsList = clone(pageForCollectionCard);
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-pageForCmsList.select.tags.where = undefined as any;
 
 // ***********************
 //   Typescript helpers

@@ -1,15 +1,16 @@
 <script lang="ts">
-  import type { Page } from '@mpa/db';
+  import type { Page, TagType } from '@mpa/db';
   import { CollectionCard } from '$lib/components';
 
   export let pages: Page.CollectionCard[];
   export let cms = false;
+  export let tagType: TagType = 'TOPIC';
 </script>
 
 <ul class="collection-cards">
   {#each pages as page}
     <li>
-      <CollectionCard {page} {cms} />
+      <CollectionCard {page} {cms} {tagType} />
     </li>
   {/each}
 </ul>

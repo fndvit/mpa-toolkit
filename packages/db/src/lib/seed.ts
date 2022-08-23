@@ -15,7 +15,7 @@ import keyLearnings from './data/keyLearnings.json';
 
 export class Seeder {
   static FIXED_SEED = 'fixed';
-  static NUM_RANDOM_CHAPTERS = 2;
+  static NUM_RANDOM_CHAPTERS = 50;
 
   db: MpaDatabase;
 

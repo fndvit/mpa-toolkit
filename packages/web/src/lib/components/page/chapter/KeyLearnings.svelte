@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { KeyLearningsData } from '@mpa/db';
-  import { EditableText, IconButton, KeyLearningsCards } from '$lib/components';
+  import KeyLearningsCards from './KeyLearningsCards.svelte';
+  import { EditableText, IconButton } from '$lib/components/generic';
 
   export let keyLearnings: KeyLearningsData[] = [];
   export let currentSubject = 0;

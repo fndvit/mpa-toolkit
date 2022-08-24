@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
-  import { ContentCarouselCard } from '$lib/components';
+  import ContentCarouselCard from './ContentCarouselCard.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
 
   export let slides: Page.ContentCard[];

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { InlineSvg } from '$lib/components';
+  import { InlineSvg } from '$lib/components/generic';
   import type * as svgs from '$lib/svg';
 
   export let href: string;

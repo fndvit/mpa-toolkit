@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { MadLib } from '$lib/components';
   import { slugify } from '$lib/utils';
+  import MadLib from '$lib/components/shared/MadLib.svelte';
 
   let value: string[] = [];
 
@@ -9,12 +9,12 @@
     'an MPA manager': 'MPA managers',
     'a community organizer': 'Community organizers',
     'an LMMA practitioner': 'LMMA practitioners',
-    'answers': 'Identifying solutions',
-    'examples': 'Exploring examples',
+    answers: 'Identifying solutions',
+    examples: 'Exploring examples',
     'case studies': 'Comparing case studies',
-    'tools': 'Discovering tools',
-    'enable': 'Enabling decision-making',
-    'evaluate': 'Evaluating progress',
+    tools: 'Discovering tools',
+    enable: 'Enabling decision-making',
+    evaluate: 'Evaluating progress',
     'I need to make': 'Manager decision-making',
     'my team will make': 'Team decision-making',
     'my government needs to make': 'Government decision-making'
@@ -30,13 +30,12 @@
     '+' +
     slugify(tagValue[value[3]]) +
     '/';
-
 </script>
 
 <div class="content-madlib">
   <h5>Is this not for you?</h5>
 
-  <MadLib bind:value/>
+  <MadLib bind:value />
 
   <form {action}>
     <button tabindex="0">
@@ -45,7 +44,7 @@
         <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke-width="1.5" />
       </svg>
     </button>
-</form>
+  </form>
 </div>
 
 <style lang="stylus">

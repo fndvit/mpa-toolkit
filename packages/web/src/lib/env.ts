@@ -11,6 +11,7 @@ export const env = getEnv({
   AWS_S3_UPLOAD_BUCKET: true,
   LOG_TRANSPORT: true,
   // optional (prod only)
+  DISABLE_CACHE: false,
   AWS_SNS_CONTENT_TOPIC: false,
   AWS_REGION: false,
   FASTLY_API_KEY: false,

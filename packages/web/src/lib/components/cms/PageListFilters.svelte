@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { Tag } from '@mpa/db';
   import { groupBy } from '@mpa/utils';
-  import { TagFilter, Searchbar } from '$lib/components';
+  import TagFilter from './TagFilter.svelte';
+  import { Searchbar } from '$lib/components/generic';
 
   export let tags: Tag[];
   export let activeTags: Tag[] = [];

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { InlineSvgLink } from '$lib/components';
+  import { InlineSvgLink } from '$lib/components/generic';
 </script>
 
 <div class="footer">

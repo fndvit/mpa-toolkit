@@ -2,15 +2,11 @@
   import type { HomepageComponentName, PageTag } from '@mpa/db';
   import type { PageData } from './$types';
   import landingSplash from '$lib/assets/landing-splash.jpg';
-  import {
-    Footer,
-    InlineSvgLink,
-    LandingCarousel,
-    TagContainer,
-    LandingMadLib,
-    MPAManagementLifecycle,
-    Searchbar
-  } from '$lib/components';
+  import { InlineSvgLink, Searchbar } from '$lib/components/generic';
+  import { Footer, TagContainer } from '$lib/components/shared';
+  import LandingCarousel from '$lib/components/homepage/LandingCarousel.svelte';
+  import LandingMadLib from '$lib/components/homepage/LandingMadLib.svelte';
+  import MpaManagementLifecycle from '$lib/components/homepage/MPAManagementLifecycle.svelte';
 
   export let data: PageData;
   let { chapters, caseStudies, tags, components } = data;
@@ -51,7 +47,7 @@
 
   <div class="ordered-components">
     <div style="order: {getComponentOrder('lifecycle')}">
-      <MPAManagementLifecycle />
+      <MpaManagementLifecycle />
     </div>
 
     <div style="order: {getComponentOrder('chapters')}">

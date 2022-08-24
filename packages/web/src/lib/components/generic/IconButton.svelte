@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Tooltip } from '$lib/components';
+  import { Tooltip } from '$lib/components/generic';
 
   export let active = false;
   export let disabled = false;

@@ -24,7 +24,7 @@
 <script lang="ts">
   import { setContext } from 'svelte';
   import type { Segment } from './CircularSegment.svelte';
-  import { CircularSegment } from '$lib/components';
+  import { CircularSegment } from '$lib/components/shared';
 
   export let data: MenuElement[];
   export let config = defaultConfig;

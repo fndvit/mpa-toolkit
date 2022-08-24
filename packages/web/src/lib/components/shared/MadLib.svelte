@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MadLibSelector } from '$lib/components';
+  import MadLibSelector from './MadLibSelector.svelte';
 
   const typeUserList = ['an MPA planner', 'an MPA manager', 'a community organizer', 'an LMMA practitioner'];
   const objectiveList = ['answers', 'examples', 'case studies', 'tools'];

@@ -1,6 +1,6 @@
 <script lang="ts">
+  import MadLib from '../shared/MadLib.svelte';
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
-  import { MadLib } from '$lib/components';
   import { slugify } from '$lib/utils';
 
   let value: string[] = [];
@@ -10,12 +10,12 @@
     'an MPA manager': 'MPA managers',
     'a community organizer': 'Community organizers',
     'an LMMA practitioner': 'LMMA practitioners',
-    'answers': 'Identifying solutions',
-    'examples': 'Exploring examples',
+    answers: 'Identifying solutions',
+    examples: 'Exploring examples',
     'case studies': 'Comparing case studies',
-    'tools': 'Discovering tools',
-    'enable': 'Enabling decision-making',
-    'evaluate': 'Evaluating progress',
+    tools: 'Discovering tools',
+    enable: 'Enabling decision-making',
+    evaluate: 'Evaluating progress',
     'I need to make': 'Manager decision-making',
     'my team will make': 'Team decision-making',
     'my government needs to make': 'Government decision-making'
@@ -31,7 +31,6 @@
     '+' +
     slugify(tagValue[value[3]]) +
     '/';
-
 </script>
 
 <div class="landing-madlib" style="--background-image: url({landingMadlibBg})">

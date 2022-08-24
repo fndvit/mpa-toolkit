@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ImageBlock } from '@mpa/db';
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
-  import { IconButton } from '$lib/components';
+  import { IconButton } from '$lib/components/generic';
   import { staticUrl } from '$lib/helpers/content';
 
   export var attrs: ImageBlock['attrs'];

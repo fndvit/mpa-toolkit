@@ -2,8 +2,9 @@
   import type { Page, TagType } from '@mpa/db';
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
-  import { TagContainer } from '$lib/components';
+  import { TagContainer } from '$lib/components/shared';
   import { getPageDisplayTitle, staticUrl } from '$lib/helpers/content';
+  import { fallbackBackgroundImage } from '$lib/helpers/utils';
 
   export let page: Page.CollectionCard;
   export let tagType: TagType = 'TOPIC';
@@ -15,14 +16,17 @@
 
   $: href = cms ? `/cms/pages/${page.id}` : `/${page.slug}`;
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
-  $: img = staticUrl(page.img, fallbackImg);
 
   $: tags = page.tags.filter(t => t.tag.type === tagType);
   $: tagsTitle = tagType === 'TOPIC' ? "What's this about" : tagType === 'USER' ? 'Good for...' : 'MPA lifecycle';
 </script>
 
 <a class="collection-card" {href} rel="external" class:cms-card={cms}>
-  <div class="image" style="background-image: url({img});" />
+  <div
+    class="image"
+    style="background-image: url({staticUrl(page.img) || fallbackImg});"
+    use:fallbackBackgroundImage={fallbackImg}
+  />
   <div class="content">
     <h1 class="title">
       {#if page.highlights}

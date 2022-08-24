@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { ParagraphBlock } from '@mpa/db';
-  import { Inline } from '$lib/components';
-
+  import Inline from './Inline.svelte';
   export let block: ParagraphBlock;
 </script>
 

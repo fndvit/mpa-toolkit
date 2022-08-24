@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Page, TagType } from '@mpa/db';
-  import { CollectionCard } from '$lib/components';
+  import CollectionCard from './CollectionCard.svelte';
 
   export let pages: Page.CollectionCard[];
   export let cms = false;

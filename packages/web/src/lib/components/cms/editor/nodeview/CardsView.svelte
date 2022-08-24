@@ -2,7 +2,7 @@
   import type { CardsBlock } from '@mpa/db';
   import clone from 'clone';
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
-  import { Cards } from '$lib/components';
+  import { Cards } from '$lib/components/shared';
 
   export let attrs: CardsBlock['attrs'];
   export let controls: SvelteNodeViewControls;

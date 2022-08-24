@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { Chapter, PageTag } from '@mpa/db';
-  import { Authors, EditableText, KeyTakeaways, LifeCycle } from '$lib/components';
+  import LifeCycle from '../shared/LifeCycle.svelte';
+  import Authors from './Authors.svelte';
+  import KeyTakeaways from './KeyTakeaways.svelte';
+  import { EditableText } from '$lib/components/generic';
 
   export let chapter: Chapter;
   export let tags: PageTag[];

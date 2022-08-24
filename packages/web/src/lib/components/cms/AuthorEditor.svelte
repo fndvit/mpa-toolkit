@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { Author } from '@mpa/db';
+  import EditableAuthorImage from './EditableAuthorImage.svelte';
   import * as api from '$lib/api';
-  import { EditableAuthorImage, toaster } from '$lib/components';
+  import { toaster } from '$lib/components/generic';
 
   export let author: Author.ForCMS;
 

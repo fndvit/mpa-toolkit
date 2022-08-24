@@ -1,6 +1,6 @@
 <script lang="ts">
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
-  import { InlineSvgLink, Searchbar } from '$lib/components';
+  import { InlineSvgLink, Searchbar } from '$lib/components/generic';
 
   export let title: string;
   export let search: string;

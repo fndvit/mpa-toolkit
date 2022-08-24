@@ -72,8 +72,65 @@ export const imgLoadingStatus = (node: HTMLImageElement, cb: (loading: boolean) 
   new MutationObserver(() => cb(!node.complete)).observe(node, { attributes: true, attributeFilter: ['src'] });
 };
 
+export const fallbackBackgroundImage = (node: HTMLElement, img: string) => {
+  const bg = node.style.backgroundImage;
+  const m = bg && /url\((['"]?)(.*?)\1\)/.exec(bg);
+  if (!m) {
+    console.warn('[use:fallbackBackgroundImage] No background image set');
+    node.style.backgroundImage = `url(${img})`;
+    return;
+  }
+  const imgNode = new Image();
+  imgNode.src = m[2];
+  imgNode.addEventListener('error', () => {
+    node.style.backgroundImage = `url(${img})`;
+  });
+};
+
+export const fallbackImage = (node: HTMLImageElement, img: string) => {
+  addEventListenerOnce(node, 'error', () => (node.src = img));
+};
+
 export function insertInTextArea(text: string, el: HTMLInputElement) {
   const [start, end] = [el.selectionStart!, el.selectionEnd!];
   el.setRangeText(text, start, end, 'select');
   el.setSelectionRange(start + text.length, start + text.length);
 }
+
+export const onHoverEl = (node: HTMLElement, [className, cb]: [string, (el: HTMLElement) => void]) => {
+  let problemEl: HTMLElement;
+  node.addEventListener('mouseover', e => {
+    const isProblemEl = e.target instanceof HTMLElement && e.target.className === className;
+    if (isProblemEl) {
+      problemEl = e.target;
+      cb(problemEl);
+    }
+  });
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(m => {
+      m.removedNodes.forEach(n => {
+        if (n === problemEl) {
+          problemEl = null;
+          cb(null);
+        }
+      });
+    });
+  });
+  observer.observe(node, { childList: true, subtree: true });
+};
+
+export const findAllMatches = (text: string, regex: RegExp) => {
+  const matches: RegExpExecArray[] = [];
+  let match: RegExpExecArray;
+  while ((match = regex.exec(text)) !== null) {
+    matches.push(match);
+  }
+  return matches;
+};
+
+export const addEventListenerOnce = (node: HTMLElement, event: string, fn: (e: Event) => void) => {
+  node.addEventListener(event, function listener(e) {
+    fn(e);
+    node.removeEventListener(event, listener);
+  });
+};

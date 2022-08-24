@@ -11,9 +11,9 @@
   import LifeCycle from './shared/LifeCycle.svelte';
   import PageSplash from './shared/PageSplash.svelte';
   import { compareDeep, slugify } from '$lib/utils';
-  import { insertInTextArea } from '$lib/helpers/utils';
+  import { insertInTextArea, onHoverEl } from '$lib/helpers/utils';
   import { getPageTypeStr } from '$lib/helpers/content';
-  import { Button, DeleteModal, IconButton, LoadingButton, Spinner, toaster } from '$lib/components/generic';
+  import { Button, DeleteModal, IconButton, LoadingButton, Popper, Spinner, toaster } from '$lib/components/generic';
   import * as api from '$lib/api';
   import { page as pageStore } from '$app/stores';
   import { goto } from '$app/navigation';
@@ -158,10 +158,19 @@
     };
   }
 
+  let showElTooltip: (el: HTMLElement) => void;
+
   $: href = `${_page.draft ? '/draft' : ''}/${savedPage.slug}`;
 </script>
 
-<div class="page page-editor" class:preview class:is-new-page={isNewPage} data-pagetype={getPageTypeStr(page)}>
+<Popper bind:load={showElTooltip} />
+<div
+  class="page page-editor"
+  class:preview
+  class:is-new-page={isNewPage}
+  data-pagetype={getPageTypeStr(page)}
+  use:onHoverEl={['problem', el => showElTooltip(el)]}
+>
   <div class="meta">
     <div class="top-controls">
       <input
@@ -327,6 +336,32 @@
     flex-direction: column;
     :global(.prosemirror-container) {
       flex: 1;
+      :global(.problem) {
+        background-color: #fdd;
+        cursor: pointer;
+      }
+      :global(.problem[data-problem-name="leading-space"]) {
+        position: relative;
+        display: inline-block;
+        min-width: 5px;
+        &:before {
+          content: 'arrow_right';
+          font-family: 'Material Icons';
+          font-size: 1.25rem;
+          color: #f55;
+          display: block;
+          position: absolute;
+          right: calc(100% + 10px);
+        }
+        &:after {
+          content: ' ';
+          display: inline-block;
+        }
+      }
+      :global(.problem-highlight) {
+        // highlight this problem
+        background-color: #faa;
+      }
     }
   }
 

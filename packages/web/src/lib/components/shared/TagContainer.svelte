@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageTag } from '@mpa/db';
-  import { Tag } from '$lib/components';
+  import { Tag } from '$lib/components/shared';
 
   export let tags: PageTag[] = [];
   export let currentTagHovered = null;

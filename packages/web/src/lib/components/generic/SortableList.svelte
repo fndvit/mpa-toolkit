@@ -3,13 +3,12 @@
   import { flip } from 'svelte/animate';
   import { createEventDispatcher } from 'svelte';
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  type Item = Record<string, any>;
+  type K = $$Generic<string | number>;
+  type T = $$Generic<{ [Key in K]: string | numeber }>;
+  export let list: T[];
+  export let key: K;
 
-  export let list: Item[];
-  export let key: string;
-
-  const getKey = (item: Item) => (key ? item[key] : item);
+  const getKey = (item: T) => (key ? item[key] : item);
 
   let isOver = false;
   const getDraggedParent = (node: HTMLElement) =>

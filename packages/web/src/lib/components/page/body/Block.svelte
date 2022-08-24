@@ -1,6 +1,12 @@
 <script lang="ts">
   import type { ContentBlock } from '@mpa/db';
-  import { DiagramComponent, BulletList, Heading, Image, OrderedList, Paragraph, TextSlider } from '$lib/components';
+  import Heading from './Heading.svelte';
+  import Paragraph from './Paragraph.svelte';
+  import Image from './Image.svelte';
+  import TextSlider from './TextSlider.svelte';
+  import BulletList from './BulletList.svelte';
+  import OrderedList from './OrderedList.svelte';
+  import DiagramComponent from './DiagramComponent.svelte';
 
   export let block: ContentBlock;
 

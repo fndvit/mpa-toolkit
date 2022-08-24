@@ -1,24 +1,24 @@
 <script lang="ts">
-  import { MadLib } from '$lib/components';
+  import MadLib, { buildTagSlug } from '$lib/components/shared/MadLib.svelte';
 
   let value: string[] = [];
 
-  const submit = () => {
-    alert('USER PERSONA: \n1: ' + value[0] + '\n2: ' + value[1] + '\n3: ' + value[2] + '\n4: ' + value[3]);
-  };
+  $: action = `/recommended/${buildTagSlug(value)}/`;
 </script>
 
 <div class="content-madlib">
   <h5>Is this not for you?</h5>
 
-  <MadLib />
+  <MadLib bind:value />
 
-  <button tabindex="0" on:click={submit}>
-    Let's find what you need
-    <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
-      <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke-width="1.5" />
-    </svg>
-  </button>
+  <form {action}>
+    <button tabindex="0">
+      Let's find what you need
+      <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
+        <path d="M0.630249 1L6.36134 6.5L12.0924 1" stroke-width="1.5" />
+      </svg>
+    </button>
+  </form>
 </div>
 
 <style lang="stylus">

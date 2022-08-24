@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Tag } from '@mpa/db';
-  import { Tag as TagComponent } from '$lib/components';
+  import { Tag as TagComponent } from '$lib/components/shared';
 
   export let tags: Tag[] = [];
   export let activeTags: Tag[] = [];

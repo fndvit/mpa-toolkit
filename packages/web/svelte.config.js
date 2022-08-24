@@ -1,12 +1,7 @@
 // @ts-check
+import { fileURLToPath } from 'url';
 import adapter from '@mpa/adapter';
 import preprocess from 'svelte-preprocess';
-
-const globalStylePath = './src/lib/styles/svelte-global';
-
-const globalStylus = `
-  @require '${globalStylePath}';
-`;
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,7 +11,8 @@ const config = {
 
   preprocess: preprocess({
     stylus: {
-      prependData: globalStylus
+      prependData: `@require 'svelte-global';\n`,
+      paths: [fileURLToPath(new URL('./src/lib/styles', import.meta.url))]
     }
   }),
 

@@ -185,3 +185,5 @@ export const schema = new ProsemirrorSchema({
 });
 
 export type Schema = typeof schema;
+
+export type NodeName = Schema extends ProsemirrorSchema<infer R> ? R : never;

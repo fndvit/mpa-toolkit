@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import { EditableText, IconButton } from '$lib/components';
+  import { EditableText, IconButton } from '$lib/components/generic';
 
   export let year: string;
   export let content: string[];

@@ -1,7 +1,8 @@
 <script lang="ts">
   import { groupBy } from '@mpa/utils';
   import type { PageData } from './$types';
-  import { CollectionCards, PageListFilters } from '$lib/components';
+  import PageListFilters from '$lib/components/cms/PageListFilters.svelte';
+  import CollectionCards from '$lib/components/collection/CollectionCards.svelte';
 
   export let data: PageData;
 

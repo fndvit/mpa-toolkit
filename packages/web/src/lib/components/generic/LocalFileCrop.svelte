@@ -46,7 +46,8 @@
 <style lang="stylus">
   img {
     display: block;
-    max-width: 100%;
+    max-width: 80vw;
+    max-height: 70vh;
   }
 
 </style>

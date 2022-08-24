@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { HeadingBlock } from '@mpa/db';
-  import { ExpandButtonEditor, IconButton } from '$lib/components';
+  import { IconButton } from '$lib/components/generic';
   import { clickOutside } from '$lib/helpers/utils';
+  import ExpandButtonEditor from '$lib/components/page/body/ExpandButtonEditor.svelte';
 
   export var attrs: HeadingBlock['attrs'];
   export var contentDOM: (node: HTMLElement) => void;
@@ -21,7 +22,7 @@
 <div class="hv" class:section-heading={sectionHeading} class:needs-showmore-text={needsShowMoreText}>
   <svelte:element this={tag}>
     <div class="hv-controls" class:expanded contenteditable="false" use:clickOutside={() => (expanded = false)}>
-      <IconButton icon="info" on:click={() => (expanded = !expanded)} title={buttonTooltip} />
+      <IconButton icon="settings" on:click={() => (expanded = !expanded)} title={buttonTooltip} />
       <div>
         <ExpandButtonEditor bind:content={attrs.showmore} on:complete={() => (expanded = false)} />
       </div>
@@ -53,7 +54,7 @@
     }
 
     .hv.needs-showmore-text & {
-      --ib-color: orange;
+      --ib-color: #ffb76d;
 
     }
 

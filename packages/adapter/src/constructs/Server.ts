@@ -16,6 +16,7 @@ export const SERVER_ENV_CONFIG = {
   PUBLIC_GOOGLE_OAUTH_CLIENT_ID: true,
   GOOGLE_OAUTH_CLIENT_SECRET: true,
   SENTRY_DSN: false,
+  DISABLE_CACHE: false,
   LOG_TRANSPORT: true,
   LOG_LEVEL: true
 } as const;

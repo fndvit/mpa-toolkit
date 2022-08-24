@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
-  import { Block, ContentCarousel, ContentMadLib, Section, StickyMenu } from '$lib/components';
+  import ContentMadLib from '../shared/ContentMadLib.svelte';
+  import StickyMenu from './StickyMenu.svelte';
+  import Section from './Section.svelte';
+  import Block from './Block.svelte';
+  import ContentCarousel from './ContentCarousel.svelte';
   import { createSections } from '$lib/helpers/content';
 
   export let page: Page;

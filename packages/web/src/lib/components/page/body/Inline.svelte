@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { InlineBlock } from '@mpa/db';
-  import { Text } from '$lib/components';
+  import Text from './Text.svelte';
   export let block: InlineBlock;
 </script>
 

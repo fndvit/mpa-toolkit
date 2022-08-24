@@ -3,8 +3,9 @@
   import { openModal } from 'svelte-modals';
   import type { PageData } from './$types';
   import * as api from '$lib/api';
-  import { AuthorEditor, DeleteModal, Searchbar } from '$lib/components';
+  import { DeleteModal, Searchbar } from '$lib/components/generic';
   import { toaster } from '$lib/components/generic/Toaster';
+  import AuthorEditor from '$lib/components/cms/AuthorEditor.svelte';
 
   export let data: PageData;
   let { authors } = data;

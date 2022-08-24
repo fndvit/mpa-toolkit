@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { CollectionPage } from '$lib/components';
+  import CollectionPage from '$lib/components/collection/CollectionPage.svelte';
   export let data: PageData;
 </script>
 
-<CollectionPage title={data.tag.value} {...data} />
+<CollectionPage title={data.tag.value} {...data} tagType={data.tag.type} />

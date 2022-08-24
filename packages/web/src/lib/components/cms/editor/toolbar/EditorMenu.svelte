@@ -2,8 +2,14 @@
   import type { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
+  import MarkButton from './MarkButton.svelte';
+  import MenuSeperator from './MenuSeperator.svelte';
+  import BlockButton from './BlockButton.svelte';
+  import ListControls from './ListControls.svelte';
+  import ImageButton from './ImageButton.svelte';
+  import Formatting from './Formatting.svelte';
+  import { IconButton } from '$lib/components/generic';
   import { schema } from '$lib/editor/schema';
-  import { BlockButton, IconButton, MarkButton, MenuSeperator, UploadButton } from '$lib/components';
 
   export let editorState: EditorState;
 
@@ -29,18 +35,23 @@
     <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 2 }} text="H2" />
     <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />
     <MenuSeperator />
+    <ListControls {editorState} />
+    <MenuSeperator />
     <IconButton on:click={insertCards} icon="library_books" title="Add cards" />
     <IconButton on:click={insertDiagram} icon="donut_small" title="Add diagram" />
     <MenuSeperator />
-    <UploadButton title="Add image" />
+    <ImageButton title="Add image" />
+    <MenuSeperator />
   </div>
 
   <div class="right-section">
+    <Formatting {editorState} />
     <slot name="extra-controls" />
   </div>
 </div>
 
 <style lang="stylus">
+
   .menu-bar {
     --ib-icon-bg: transparent;
     --ib-hover-border: 1px solid #ddd;

@@ -2,15 +2,11 @@
   import type { HomepageComponentName, PageTag } from '@mpa/db';
   import type { PageData } from './$types';
   import landingSplash from '$lib/assets/landing-splash.jpg';
-  import {
-    Footer,
-    InlineSvgLink,
-    LandingCarousel,
-    TagContainer,
-    LandingMadLib,
-    MPAManagementLifecycle,
-    Searchbar
-  } from '$lib/components';
+  import { InlineSvgLink, Searchbar } from '$lib/components/generic';
+  import { Footer, TagContainer } from '$lib/components/shared';
+  import LandingCarousel from '$lib/components/homepage/LandingCarousel.svelte';
+  import LandingMadLib from '$lib/components/homepage/LandingMadLib.svelte';
+  import MpaManagementLifecycle from '$lib/components/homepage/MPAManagementLifecycle.svelte';
 
   export let data: PageData;
   let { chapters, caseStudies, tags, components } = data;
@@ -25,8 +21,8 @@
 </svelte:head>
 
 <div class="landing-page">
-  <div class="unep-logo">
-    <InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab />
+  <div class="mpath-logo">
+    <InlineSvgLink href="/" svg="MPATH" />
   </div>
   <div class="top-searchbar">
     <Searchbar type={'top'} />
@@ -39,18 +35,19 @@
     </h4>
     <h5>In partnership with</h5>
     <div class="partners-grid">
+      <InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab />
       <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab />
-      <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
+      <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       <div class="partners-grid-2">
+        <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
         <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab />
-        <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       </div>
     </div>
   </div>
 
   <div class="ordered-components">
     <div style="order: {getComponentOrder('lifecycle')}">
-      <MPAManagementLifecycle />
+      <MpaManagementLifecycle />
     </div>
 
     <div style="order: {getComponentOrder('chapters')}">
@@ -96,16 +93,17 @@
 
   .partners-grid {
     display: grid;
-    grid-template-columns: 108px 185px 1fr;
+    grid-template-columns: 102px 87px 39px 1fr;
     align-items: center;
     gap: 45px;
   }
 
   .partners-grid-2 {
     display: inherit;
-    grid-template-columns: 168px 50px;
+    grid-template-columns: 148px 135px;
     align-items: inherit;
     gap: inherit;
+    color: inherit;
   }
 
   .top-searchbar {
@@ -139,7 +137,7 @@
     }
   }
 
-  .unep-logo {
+  .mpath-logo {
     position: absolute;
     margin: 2rem;
     color: white;
@@ -166,7 +164,7 @@
 
     }
 
-    .unep-logo {
+    .mpath-logo {
       margin-left: 3rem;
     }
 
@@ -217,11 +215,13 @@
     }
 
     .partners-grid {
-      grid-template-columns: 100px 165px;
+      grid-template-columns: 126px 87px 39px;
+      grid-template-rows: auto;
+      margin-top: 1rem;
     }
 
     .partners-grid-2 {
-      grid-template-columns: 146px 42px;
+      grid-template-columns: 148px 135px;
     }
 
     .top-searchbar {
@@ -239,7 +239,7 @@
       }
     }
 
-    .unep-logo {
+    .mpath-logo {
       width: 80px;
       margin-left: 2rem;
     }

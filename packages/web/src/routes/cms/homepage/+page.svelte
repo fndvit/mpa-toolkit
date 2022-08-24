@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import Spinner from '$lib/components/generic/Spinner.svelte';
-  import { toaster, SortableList } from '$lib/components';
+  import { toaster, SortableList } from '$lib/components/generic';
   import * as api from '$lib/api';
 
   export let data: PageData;
@@ -15,7 +15,7 @@
 
   let saving = false;
 
-  const sortList = ev => (list = ev.detail);
+  const sortList = (ev: CustomEvent) => (list = ev.detail);
 
   const saveList = async () => {
     saving = true;

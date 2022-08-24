@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { EditableText } from '$lib/components';
+  import { EditableText } from '$lib/components/generic';
 
   export let text: string;
   export let editable = false;

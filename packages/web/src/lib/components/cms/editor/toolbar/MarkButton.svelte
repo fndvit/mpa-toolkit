@@ -4,7 +4,7 @@
   import type { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
-  import { IconButton } from '$lib/components';
+  import { IconButton } from '$lib/components/generic';
 
   export let editorState: EditorState;
   export let markType: MarkType;

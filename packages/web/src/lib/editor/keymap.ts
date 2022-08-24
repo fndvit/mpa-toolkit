@@ -14,48 +14,73 @@ import { undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import type { Schema } from 'prosemirror-model';
 import { liftListItem, sinkListItem, splitListItem, wrapInList } from 'prosemirror-schema-list';
+import type { Command } from 'prosemirror-state';
 
 const mac = typeof navigator != 'undefined' ? /Mac/.test(navigator.platform) : false;
 
-const addKey = (keyMap, name, combo, command) => {
-  if (!keyMap[name]) keyMap[name] = [];
-  keyMap[name].push({ combo, command });
-};
+type KeyCommand = { name: string; key: string; cmd: Command };
 
-const createKeyMapConfiguration = schema => {
-  const config = {};
+const createKeyMapConfiguration = (schema: Schema) => {
+  const keyMap: KeyCommand[] = [];
+  const names = new Set<string>();
 
-  addKey(config, 'undo', 'Mod-z', undo);
+  const addKey = (name: string, key: string, cmd: Command, swallow = false) => {
+    names.add(name);
+    const _cmd = swallow ? chainCommands(cmd, () => true) : cmd;
+    keyMap.push({ name, key, cmd: _cmd });
+  };
 
-  addKey(config, 'redo', 'Shift-Mod-z', redo);
-  addKey(config, 'undoInputRule', 'Backspace', undoInputRule);
+  // **********************
+  // *      Control       *
+  // **********************
 
-  if (!mac) addKey(config, 'redo', 'Mod-y', redo);
+  addKey('undo', 'Mod-z', undo);
+  addKey('undoInputRule', 'Backspace', undoInputRule);
+  addKey('redo', 'Shift-Mod-z', redo);
+  if (!mac) addKey('redo', 'Mod-y', redo);
 
-  addKey(config, 'joinUp', 'Alt-ArrowUp', joinUp);
-  addKey(config, 'joinDown', 'Alt-ArrowDown', joinDown);
-  addKey(config, 'lift', 'Mod-BracketLeft', lift);
-  addKey(config, 'selectParentNode', 'Escape', selectParentNode);
+  addKey('joinUp', 'Alt-ArrowUp', joinUp);
+  addKey('joinDown', 'Alt-ArrowDown', joinDown);
+  addKey('lift', 'Mod-BracketLeft', lift);
+  addKey('selectParentNode', 'Escape', selectParentNode);
 
-  if (schema.marks.strong) {
-    addKey(config, 'toggleMarkStrong', 'Mod-b', toggleMark(schema.marks.strong));
-    addKey(config, 'toggleMarkStrong', 'Mod-B', toggleMark(schema.marks.strong));
+  // **********************
+  // *       Blocks       *
+  // **********************
+
+  addKey('setBlockTypeParagraph', 'Shift-Ctrl-0', setBlockType(schema.nodes.paragraph));
+  for (let i = 1; i <= 6; i++) {
+    addKey(`setHeading${i}`, `Shift-Ctrl-${i}`, setBlockType(schema.nodes.heading, { level: i }));
   }
 
-  if (schema.marks.em) {
-    addKey(config, 'toggleMarkEm', 'Mod-i', toggleMark(schema.marks.em));
-    addKey(config, 'toggleMarkEm', 'Mod-I', toggleMark(schema.marks.em));
-  }
-  if (schema.marks.code) addKey(config, 'toggleMarkCode', 'Mod-`', toggleMark(schema.marks.code));
+  // **********************
+  // *     Formatting     *
+  // **********************
 
-  if (schema.nodes.bullet_list)
-    addKey(config, 'wrapInListUnordered', 'Shift-Ctrl-8', wrapInList(schema.nodes.bullet_list));
+  addKey('toggleMarkStrong', 'Mod-b', toggleMark(schema.marks.strong));
+  addKey('toggleMarkStrong', 'Mod-B', toggleMark(schema.marks.strong));
+  addKey('toggleMarkEm', 'Mod-i', toggleMark(schema.marks.em));
+  addKey('toggleMarkEm', 'Mod-I', toggleMark(schema.marks.em));
 
-  if (schema.nodes.ordered_list)
-    addKey(config, 'wrapInListOrdered', 'Shift-Ctrl-9', wrapInList(schema.nodes.ordered_list));
+  // **********************
+  // *       Lists        *
+  // **********************
 
-  if (schema.nodes.blockquote) addKey(config, 'wrapInBlockquote', 'Ctrl->', wrapIn(schema.nodes.blockquote));
+  addKey('sinkListItem', 'Tab', sinkListItem(schema.nodes.list_item), true);
+  addKey('liftListItem', 'Shift-Tab', liftListItem(schema.nodes.list_item), true);
+  addKey('liftListItem', 'Mod-[', liftListItem(schema.nodes.list_item));
+  addKey('sinkListItem', 'Mod-]', sinkListItem(schema.nodes.list_item));
+  addKey('splitListItem', 'Enter', splitListItem(schema.nodes.list_item));
+  addKey('wrapInListUnordered', 'Shift-Ctrl-8', wrapInList(schema.nodes.bullet_list));
+  addKey('wrapInListOrdered', 'Shift-Ctrl-9', wrapInList(schema.nodes.ordered_list));
 
+  // **********************
+  // *       Unused?      *
+  // **********************
+
+  if (schema.marks.code) addKey('toggleMarkCode', 'Mod-`', toggleMark(schema.marks.code));
+  if (schema.nodes.code_block) addKey('setBlockTypeCode', 'Shift-Ctrl-\\', setBlockType(schema.nodes.code_block));
+  if (schema.nodes.blockquote) addKey('wrapInBlockquote', 'Ctrl->', wrapIn(schema.nodes.blockquote));
   if (schema.nodes.hard_break) {
     const br = schema.nodes.hard_break;
     const cmd = chainCommands(exitCode, (state, dispatch) => {
@@ -63,46 +88,27 @@ const createKeyMapConfiguration = schema => {
       return true;
     });
 
-    addKey(config, 'hardBreak', 'Mod-Enter', cmd);
-    addKey(config, 'hardBreak', 'Shift-Enter', cmd);
-    if (mac) addKey(config, 'hardBreak', 'Ctrl-Enter', cmd);
+    addKey('hardBreak', 'Mod-Enter', cmd);
+    addKey('hardBreak', 'Shift-Enter', cmd);
+    if (mac) addKey('hardBreak', 'Ctrl-Enter', cmd);
   }
-
-  if (schema.nodes.list_item) {
-    addKey(config, 'splitListItem', 'Enter', splitListItem(schema.nodes.list_item));
-    addKey(config, 'liftListItem', 'Mod-[', liftListItem(schema.nodes.list_item));
-    addKey(config, 'sinkListItem', 'Mod-]', sinkListItem(schema.nodes.list_item));
-  }
-  if (schema.nodes.paragraph)
-    addKey(config, 'setBlockTypeParagraph', 'Shift-Ctrl-0', setBlockType(schema.nodes.paragraph));
-
-  if (schema.nodes.code_block)
-    addKey(config, 'setBlockTypeCode', 'Shift-Ctrl-\\', setBlockType(schema.nodes.code_block));
-
-  if (schema.nodes.heading)
-    for (let i = 1; i <= 6; i++) {
-      addKey(config, `setHeading${i}`, `Shift-Ctrl-${i}`, setBlockType(schema.nodes.heading, { level: i }));
-    }
 
   if (schema.nodes.horizontal_rule) {
-    addKey(config, 'insertHorizontalRuler', 'Mod-_', (state, dispatch) => {
+    addKey('insertHorizontalRuler', 'Mod-_', (state, dispatch) => {
       const hr = schema.nodes.horizontal_rule;
       dispatch(state.tr.replaceSelectionWith(hr.create()).scrollIntoView());
       return true;
     });
   }
 
-  return config;
+  return keyMap;
 };
 
-const getKeyMapFromConfig = config => {
-  const keys = Object.keys(config);
-  const bindings = {};
-  keys.forEach(key => {
-    config[key].forEach(entry => {
-      bindings[entry.combo] = entry.command;
-    });
-  });
+const getKeyMapFromConfig = (keyMap: KeyCommand[]) => {
+  const bindings = keyMap.reduce((acc, { key, cmd }) => {
+    acc[key] = cmd;
+    return acc;
+  }, {} as { [key: string]: Command });
   return keymap(bindings);
 };
 

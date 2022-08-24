@@ -4,8 +4,9 @@
   import MultiSelect, { type Option } from 'svelte-multiselect';
   import textFit from 'textfit';
   import { groupBy } from '@mpa/utils';
+  import HelpPopup from './HelpPopup.svelte';
   import type { MenuElement } from '$lib/components/shared/CircleMenu.svelte';
-  import { CircleMenu, HelpPopup, TagContainer } from '$lib/components';
+  import { CircleMenu, TagContainer } from '$lib/components/shared';
 
   export let allTags: Tag[] = null;
   export let tags: PageTag[]; // binding (updated as tags are changed)

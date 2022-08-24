@@ -2,7 +2,7 @@
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
   import * as api from '$lib/api';
-  import { IconButton } from '$lib/components';
+  import { IconButton } from '$lib/components/generic';
   import { findPlaceholder, placeholderPlugin } from '$lib/editor/placeholder';
   import { schema } from '$lib/editor/schema';
 

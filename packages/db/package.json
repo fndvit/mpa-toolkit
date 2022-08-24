@@ -2,7 +2,14 @@
   "name": "@mpa/db",
   "version": "1.0.0",
   "type": "module",
-  "main": "src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "generate": "prisma generate",
     "migrate": "dotenv -e ../../.env.local prisma migrate dev",
@@ -10,7 +17,10 @@
     "seed": "tsup src/bin/seed.ts --onSuccess 'node dist/seed.cjs' && rimraf ./dist",
     "reset": "tsup src/bin/reset.ts --onSuccess 'node dist/reset.cjs' && rimraf ./dist",
     "test": "vitest",
-    "prepare": "pnpm generate"
+    "prepare": "pnpm run build && prisma generate",
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "clean": "rimraf ./dist"
   },
   "dependencies": {
     "@mpa/env": "workspace:*",
@@ -34,23 +44,13 @@
   },
   "tsup": {
     "entry": [
-      "src/bin"
+      "src/bin",
+      "src/index.ts"
     ],
     "format": [
-      "cjs"
+      "cjs",
+      "esm"
     ],
-    "noExternal": [
-      "@mpa/db",
-      "@mpa/events",
-      "chalk",
-      "@mpa/env",
-      "@mpa/log",
-      "@mpa/utils"
-    ],
-    "external": [
-      "pino"
-    ],
-    "splitting": false,
     "clean": true
   }
 }

@@ -1,12 +1,16 @@
 {
   "name": "@mpa/adapter",
   "version": "1.0.0",
-  "main": "dist/adapter.js",
   "types": "src/adapter.ts",
   "private": true,
   "type": "module",
+  "exports": {
+    "import": "./dist/adapter.js",
+    "require": "./dist/adapter.cjs"
+  },
   "scripts": {
     "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rimraf dist cdk.out",
     "synth": "cdk synth --app ./dist/stack.js --require-approval never --profile mpadev Mpath-dev",
     "deploy": "cdk deploy --app ./dist/stack.js --require-approval never --profile mpadev Mpath-dev",
@@ -16,6 +20,7 @@
     "@aws-cdk/aws-apigatewayv2-alpha": "2.17.0-alpha.0",
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "^2.17.0-alpha.0",
     "@mpa/env": "workspace:*",
+    "@mpa/log": "workspace:*",
     "@mpa/migration-runner": "workspace:*",
     "@sentry/serverless": "^7.10.0",
     "@types/aws-lambda": "^8.10.93",
@@ -30,9 +35,31 @@
     "@mpa/db": "workspace:*",
     "@mpa/events": "workspace:*",
     "@mpa/utils": "workspace:*",
-    "aws-cdk": "^2.38.1",
+    "aws-cdk": "^2.38.1"
   },
   "files": [
     "dist"
-  ]
+  ],
+  "tsup": {
+    "clean": true,
+    "entry": [
+      "src",
+      "!src/lambda/*.js"
+    ],
+    "format": [
+      "esm",
+      "cjs"
+    ],
+    "loader": {
+      ".gql": "text",
+      ".repo": "text"
+    },
+    "noExternal": [],
+    "external": [
+      "SERVER",
+      "MANIFEST",
+      "STATIC"
+    ],
+    "splitting": false
+  }
 }

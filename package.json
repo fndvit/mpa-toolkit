@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "pnpm -F @mpa/web dev",
+    "dev": "pnpm -F '@mpa/*' --parallel dev",
     "clean": "pnpm -F '@mpa/*' clean",
     "build": "pnpm -F '@mpa/*' run build",
     "synth": "pnpm run clean && pnpm run build && pnpm -F @mpa/adapter synth",

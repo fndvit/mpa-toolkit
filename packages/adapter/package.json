@@ -31,8 +31,6 @@
     "@mpa/events": "workspace:*",
     "@mpa/utils": "workspace:*",
     "aws-cdk": "^2.38.1",
-    "rimraf": "^3.0.2",
-    "tsup": "^5.12.9"
   },
   "files": [
     "dist"

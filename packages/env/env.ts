@@ -2,7 +2,7 @@ import './load';
 import path from 'path';
 import fs from 'fs';
 import * as dotenv from 'dotenv';
-import type { Without } from '@mpa/utils';
+import type { Expand, Without } from '@mpa/utils';
 
 type Environment = 'dev' | 'staging' | 'prod';
 

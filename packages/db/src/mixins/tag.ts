@@ -1,4 +1,4 @@
-import { publishEvent } from '@mpa/events/events';
+import { publishEvent } from '@mpa/events';
 import type { MpaDatabase } from '../db';
 import type { APIRequests } from '../types';
 import { validate } from '../validation';

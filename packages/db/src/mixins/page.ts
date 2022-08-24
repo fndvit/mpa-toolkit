@@ -1,7 +1,7 @@
-import { publishEvent } from '@mpa/events/events';
-import { logger } from '@mpa/log/log';
+import { publishEvent } from '@mpa/events';
+import { logger } from '@mpa/log';
 import type { Prisma } from '@prisma/client';
-import { createLookup } from '@mpa/utils';
+import { createLookup, type Expand } from '@mpa/utils';
 import type { MpaDatabase } from '../db';
 import * as Queries from '../queries';
 import { calcReadTime } from '../readtime';

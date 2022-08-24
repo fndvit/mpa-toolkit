@@ -4,6 +4,7 @@ importers:
 
   .:
     specifiers:
+      '@mpa/cli': workspace:^1.0.0
       '@typescript-eslint/eslint-plugin': ^5.33.0
       '@typescript-eslint/parser': ^5.33.0
       eslint: ^7.32.0
@@ -14,9 +15,12 @@ importers:
       prettier: ^2.7.1
       prettier-plugin-svelte: ^2.7.0
       prisma: ^4.2.1
+      rimraf: ^3.0.2
       svelte: ^3.49.0
+      tsup: ^5.12.9
       typescript: ^4.7.4
     devDependencies:
+      '@mpa/cli': link:packages/cli
       '@typescript-eslint/eslint-plugin': 5.33.0_6wykfq3d32hapmjcnmi5tu72oq
       '@typescript-eslint/parser': 5.33.0_hxadhbs2xogijvk7vq4t2azzbu
       eslint: 7.32.0
@@ -27,7 +31,9 @@ importers:
       prettier: 2.7.1
       prettier-plugin-svelte: 2.7.0_o3ioganyptcsrh6x4hnxvjkpqi
       prisma: 4.2.1
+      rimraf: 3.0.2
       svelte: 3.49.0
+      tsup: 5.12.9_typescript@4.7.4
       typescript: 4.7.4
 
   packages/adapter:
@@ -37,6 +43,7 @@ importers:
       '@mpa/db': workspace:*
       '@mpa/env': workspace:*
       '@mpa/events': workspace:*
+      '@mpa/log': workspace:*
       '@mpa/migration-runner': workspace:*
       '@mpa/utils': workspace:*
       '@sentry/serverless': ^7.10.0
@@ -48,12 +55,11 @@ importers:
       esbuild: ^0.14.28
       got: ^12.3.1
       pino-lambda: ^4.0.0
-      rimraf: ^3.0.2
-      tsup: ^5.12.9
     dependencies:
       '@aws-cdk/aws-apigatewayv2-alpha': 2.17.0-alpha.0_iv56pbrpxgvxgggqopxwtifoq4
       '@aws-cdk/aws-apigatewayv2-integrations-alpha': 2.17.0-alpha.0_jbtbfzqhsnuqsxa4edoi4wf2g4
       '@mpa/env': link:../env
+      '@mpa/log': link:../log
       '@mpa/migration-runner': link:../migration-runner
       '@sentry/serverless': 7.10.0
       '@types/aws-lambda': 8.10.102
@@ -68,8 +74,9 @@ importers:
       '@mpa/events': link:../events
       '@mpa/utils': link:../utils
       aws-cdk: 2.38.1
-      rimraf: 3.0.2
-      tsup: 5.12.9
+
+  packages/cli:
+    specifiers: {}
 
   packages/db:
     specifiers:
@@ -87,9 +94,7 @@ importers:
       google-auth-library: ^8.1.1
       lorem-ipsum: ^2.0.8
       prisma: ^4.2.1
-      rimraf: ^3.0.2
       seedrandom: ^3.0.5
-      tsup: ^5.12.9
       vitest: ^0.21.1
     dependencies:
       '@mpa/env': link:../env
@@ -108,8 +113,6 @@ importers:
       '@types/brace-expansion': 1.1.0
       dotenv-cli: 6.0.0
       prisma: 4.2.1
-      rimraf: 3.0.2
-      tsup: 5.12.9
       vitest: 0.21.1
 
   packages/env:
@@ -154,8 +157,6 @@ importers:
       '@mpa/log': workspace:*
       aws-lambda: ^1.0.7
       prisma: ^4.2.1
-      rimraf: ^3.0.2
-      tsup: ^5.12.9
     dependencies:
       '@mpa/db': link:../db
       '@mpa/env': link:../env
@@ -163,8 +164,6 @@ importers:
     devDependencies:
       aws-lambda: 1.0.7
       prisma: 4.2.1
-      rimraf: 3.0.2
-      tsup: 5.12.9
 
   packages/utils:
     specifiers: {}
@@ -214,7 +213,6 @@ importers:
       prosemirror-svelte-nodeview: ^1.0.1
       prosemirror-transform: ^1.7.0
       prosemirror-view: ^1.27.0
-      rimraf: ^3.0.2
       stylus: ^0.58.1
       svelte: ^3.49.0
       svelte-check: ^2.8.0
@@ -285,7 +283,6 @@ importers:
       '@types/textfit': 2.4.2
       '@types/topojson-client': 3.1.1
       '@types/topojson-simplify': 3.0.1
-      rimraf: 3.0.2
       stylus: 0.58.1
       svelte: 3.49.0
       svelte-check: 2.8.0_zohqgkaofnds6aeokxnkiulsgu
@@ -5045,7 +5042,7 @@ packages:
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
 
-  /tsup/5.12.9:
+  /tsup/5.12.9_typescript@4.7.4:
     resolution: {integrity: sha512-dUpuouWZYe40lLufo64qEhDpIDsWhRbr2expv5dHEMjwqeKJS2aXA/FPqs1dxO4T6mBojo7rvo3jP9NNzaKyDg==}
     hasBin: true
     peerDependencies:
@@ -5074,6 +5071,7 @@ packages:
       source-map: 0.8.0-beta.0
       sucrase: 3.25.0
       tree-kill: 1.2.2
+      typescript: 4.7.4
     transitivePeerDependencies:
       - supports-color
       - ts-node

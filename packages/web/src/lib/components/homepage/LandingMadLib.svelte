@@ -1,36 +1,10 @@
 <script lang="ts">
-  import MadLib from '../shared/MadLib.svelte';
+  import MadLib, { buildTagSlug } from '../shared/MadLib.svelte';
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
-  import { slugify } from '$lib/utils';
 
   let value: string[] = [];
 
-  const tagValue = {
-    'an MPA planner': 'MPA planners',
-    'an MPA manager': 'MPA managers',
-    'a community organizer': 'Community organizers',
-    'an LMMA practitioner': 'LMMA practitioners',
-    answers: 'Identifying solutions',
-    examples: 'Exploring examples',
-    'case studies': 'Comparing case studies',
-    tools: 'Discovering tools',
-    enable: 'Enabling decision-making',
-    evaluate: 'Evaluating progress',
-    'I need to make': 'Manager decision-making',
-    'my team will make': 'Team decision-making',
-    'my government needs to make': 'Government decision-making'
-  };
-
-  $: action =
-    '/recommended/' +
-    slugify(tagValue[value[0]]) +
-    '+' +
-    slugify(tagValue[value[1]]) +
-    '+' +
-    slugify(tagValue[value[2]]) +
-    '+' +
-    slugify(tagValue[value[3]]) +
-    '/';
+  $: action = `/recommended/${buildTagSlug(value)}/`;
 </script>
 
 <div class="landing-madlib" style="--background-image: url({landingMadlibBg})">

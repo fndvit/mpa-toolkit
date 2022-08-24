@@ -10,6 +10,12 @@
   export let tagType: TagType = 'TOPIC';
   export let cms = false;
 
+  const TITLES: { [key in TagType]: string } = {
+    TOPIC: "What's this about",
+    USER: 'Good for...',
+    STAGE: 'MPA lifecycle'
+  };
+
   $: authors = page.chapter?.authors?.map(a => a.name);
   $: authorsString =
     authors && (authors.length > 1 ? `${authors.slice(0, -1).join(',')} and ${authors.slice(-1)}` : authors.toString());
@@ -18,7 +24,6 @@
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 
   $: tags = page.tags.filter(t => t.tag.type === tagType);
-  $: tagsTitle = tagType === 'TOPIC' ? "What's this about" : tagType === 'USER' ? 'Good for...' : 'MPA lifecycle';
 </script>
 
 <a class="collection-card" {href} rel="external" class:cms-card={cms}>
@@ -42,7 +47,7 @@
       <div class="read-time">{page.readTime} min read</div>
     </div>
     <div class="tags">
-      <h3>{tagsTitle}</h3>
+      <h3>{TITLES[tagType]}</h3>
       <TagContainer {tags} />
     </div>
   </div>

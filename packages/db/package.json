@@ -13,9 +13,10 @@
   "scripts": {
     "generate": "prisma generate",
     "migrate": "dotenv -e ../../.env.local prisma migrate dev",
-    "nuke": "tsup src/bin/nuke.ts --onSuccess 'node dist/nuke.cjs' && rimraf ./dist",
-    "seed": "tsup src/bin/seed.ts --onSuccess 'node dist/seed.cjs' && rimraf ./dist",
-    "reset": "tsup src/bin/reset.ts --onSuccess 'node dist/reset.cjs' && rimraf ./dist",
+    "nuke": "node dist/bin/nuke.js",
+    "seedmigrate": "node dist/bin/migrate.js",
+    "seed": "node dist/bin/seed.js",
+    "reset": "node dist/bin/reset.js",
     "test": "vitest",
     "prepare": "pnpm run build && prisma generate",
     "dev": "tsup --watch",

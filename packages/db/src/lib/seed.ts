@@ -86,7 +86,8 @@ export class Seeder {
         ...tags.stage.map((value, i) => ({ id: i, value, type: TagType.STAGE })),
         ...tags.topic.map(value => ({ value, type: TagType.TOPIC })),
         ...tags.user.map(value => ({ value, type: TagType.USER }))
-      ]
+      ],
+      skipDuplicates: true
     });
   }
 
@@ -177,6 +178,17 @@ export class Seeder {
     }
 
     console.log('Finished');
+  }
+
+  async migrate() {
+    console.log('Creating tags...');
+    await this.db.prisma.tag.createMany({
+      data: [
+        ...tags.stage.map((value, i) => ({ id: i, value, type: TagType.STAGE })),
+        ...tags.user.map(value => ({ value, type: TagType.USER }))
+      ],
+      skipDuplicates: true
+    });
   }
 
   getRandomTagsForContent(allTags: Tag[]): APIRequests.Page['tags'] {

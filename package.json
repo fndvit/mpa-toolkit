@@ -8,6 +8,7 @@
     "deploy": "pnpm run clean && pnpm run build && pnpm -F @mpa/adapter run deploy",
     "migrate": "pnpm -F @mpa/db run migrate",
     "db:nuke": "pnpm -F @mpa/db run nuke",
+    "db:seedmigrate": "pnpm -F @mpa/db run seedmigrate",
     "db:seed": "pnpm -F @mpa/db run seed",
     "test": "pnpm -F @mpa/db run test",
     "gen": "prisma generate",

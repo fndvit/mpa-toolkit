@@ -22,6 +22,8 @@ export const handler: Handler = async event => {
 
   if (command === 'seed') {
     await seeder.seed(event.seed === 'dev');
+  } else if (command === 'seedmigrate') {
+    await seeder.migrate();
   } else if (command === 'nuke') {
     await reset(db.prisma);
     await seeder.seed(event.seed === 'dev');

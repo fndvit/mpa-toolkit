@@ -10,7 +10,7 @@
   export let cms = false;
 
   $: tagName = cms ? 'button' : 'a';
-  $: highlightTagId = $page.data.highlightTagId as number;
+  $: highlightTagIds = $page.data.highlightTagIds as number[];
   $: tagHighlights = ($page.data.tagHighlights || {}) as { [id: string]: string };
   $: secondary = style === 'SECONDARY';
 </script>
@@ -25,7 +25,7 @@
   on:click
 >
   <span>
-    {#if highlightTagId === tag.id}
+    {#if highlightTagIds && highlightTagIds.includes(tag.id)}
       <b>{tag.value}</b>
     {:else if tagHighlights[tag.id]}
       {@html tagHighlights[tag.id]}

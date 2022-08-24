@@ -4,4 +4,4 @@
   export let data: PageData;
 </script>
 
-<CollectionPage title={data.tag.value} {...data} />
+<CollectionPage title={data.tag.value} {...data} tagType={data.tag.type} />

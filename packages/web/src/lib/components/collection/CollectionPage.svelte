@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Page } from '@mpa/db';
+  import type { Page, TagType } from '@mpa/db';
   import CollectionPageHeader from './CollectionPageHeader.svelte';
   import CollectionCards from './CollectionCards.svelte';
 
@@ -7,6 +7,7 @@
   export let title: string;
   export let bio: string = null;
   export let search: string = null;
+  export let tagType: TagType = 'TOPIC';
 </script>
 
 <div class="collection-page">
@@ -19,7 +20,7 @@
         <h2>No pages</h2>
       {/if}
     {:else}
-      <CollectionCards {pages} />
+      <CollectionCards {pages} {tagType} />
     {/if}
   </div>
 </div>

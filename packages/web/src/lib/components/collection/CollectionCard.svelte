@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Page } from '@mpa/db';
+  import type { Page, TagType } from '@mpa/db';
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import { TagContainer } from '$lib/components/shared';
@@ -7,7 +7,14 @@
   import { fallbackBackgroundImage } from '$lib/helpers/utils';
 
   export let page: Page.CollectionCard;
+  export let tagType: TagType = 'TOPIC';
   export let cms = false;
+
+  const TITLES: { [key in TagType]: string } = {
+    TOPIC: "What's this about",
+    USER: 'Good for...',
+    STAGE: 'MPA lifecycle'
+  };
 
   $: authors = page.chapter?.authors?.map(a => a.name);
   $: authorsString =
@@ -16,7 +23,7 @@
   $: href = cms ? `/cms/pages/${page.id}` : `/${page.slug}`;
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 
-  $: tags = page.tags.filter(t => t.tag.type === 'TOPIC');
+  $: tags = page.tags.filter(t => t.tag.type === tagType);
 </script>
 
 <a class="collection-card" {href} rel="external" class:cms-card={cms}>
@@ -40,7 +47,7 @@
       <div class="read-time">{page.readTime} min read</div>
     </div>
     <div class="tags">
-      <h3>What's this about</h3>
+      <h3>{TITLES[tagType]}</h3>
       <TagContainer {tags} />
     </div>
   </div>

@@ -1,6 +1,32 @@
-<script lang="ts">
+<script lang="ts" context="module">
   import MadLibSelector from './MadLibSelector.svelte';
+  import { slugify } from '$lib/utils';
 
+  const tagValue = {
+    'an MPA planner': 'MPA planners',
+    'an MPA manager': 'MPA managers',
+    'a community organizer': 'Community organizers',
+    'an LMMA practitioner': 'LMMA practitioners',
+    answers: 'Identifying solutions',
+    examples: 'Exploring examples',
+    'case studies': 'Comparing case studies',
+    tools: 'Discovering tools',
+    enable: 'Enabling decision-making',
+    evaluate: 'Evaluating progress',
+    'I need to make': 'Manager decision-making',
+    'my team will make': 'Team decision-making',
+    'my government needs to make': 'Government decision-making'
+  };
+
+  export function buildTagSlug(value: string[]) {
+    return value
+      .map(v => tagValue[v])
+      .map(str => slugify(str))
+      .join('+');
+  }
+</script>
+
+<script lang="ts">
   const typeUserList = ['an MPA planner', 'an MPA manager', 'a community organizer', 'an LMMA practitioner'];
   const objectiveList = ['answers', 'examples', 'case studies', 'tools'];
   const objectiveVerbList = ['enable', 'evaluate'];

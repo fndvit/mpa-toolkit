@@ -8,22 +8,6 @@
   export let bio: string = null;
   export let search: string = null;
   export let tagType: TagType = 'TOPIC';
-
-  // const hasPrimaryStageTag = (page: Page.CollectionCard) => {
-  //   const tag = page.tags.find(p => p.tag.value === title);
-  //   if (tag.category === 'PRIMARY') return -1;
-  //   else return 1;
-  // };
-
-  // pages.sort(function (c: Page.CollectionCard, d: Page.CollectionCard) {
-  //   return c.createdAt.valueOf() - d.createdAt.valueOf();
-  // });
-
-  // if (tagType === 'STAGE') {
-  //   pages.sort(function (a: Page.CollectionCard, b: Page.CollectionCard) {
-  //     return hasPrimaryStageTag(a);
-  //   });
-  // }
 </script>
 
 <div class="collection-page">

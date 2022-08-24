@@ -37,7 +37,7 @@ export class WebDistribution extends Construct {
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
       defaultRootObject: '',
       defaultBehavior: {
-        cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+        cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
         compress: true,
         originRequestPolicy: new cloudfront.OriginRequestPolicy(this, 'OriginRequestPolicy', {
           cookieBehavior: cloudfront.OriginRequestCookieBehavior.all(),

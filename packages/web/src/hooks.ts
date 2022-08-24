@@ -1,8 +1,13 @@
 import { logger } from '@mpa/log';
 import { json, type Handle } from '@sveltejs/kit';
 import { checkUserHasRoleForRoute, getUserFromCookie } from '$lib/auth';
+import { env } from '$lib/env';
 
 const log = logger('HOOKS');
+
+if (env.DISABLE_CACHE === 'true') {
+  log.warn('Caching headers disabled by env var DISABLE_CACHE');
+}
 
 const PRIVATE_CACHE = 'private, max-age=0';
 const DEFAULT_CACHE = PRIVATE_CACHE;
@@ -32,6 +37,7 @@ interface CacheHeaders {
 }
 
 function getCacheHeaders(routeId: string, cacheKeys: App.Locals['cacheKeys']): CacheHeaders {
+  if (env.DISABLE_CACHE === 'true') return { 'Cache-Control': PRIVATE_CACHE };
   if (routeId == null) return {};
   return {
     'Cache-Control': getCacheControl(routeId),

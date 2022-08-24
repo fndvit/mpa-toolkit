@@ -1,0 +1,10 @@
+{
+  "name": "@mpa/cli",
+  "version": "1.0.0",
+  "private": true,
+  "bin": {
+    "path-exists": "path-exists.cjs"
+  },
+  "files": [ "path-exists" ],
+  "scripts": {}
+}

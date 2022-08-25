@@ -104,10 +104,8 @@
   .byline {
     grid-area: byline;
     display: flex;
-    align-items: end;
     column-gap: 0.4rem;
     color: $colors.neutral-dark;
-    white-space: nowrap;
   }
 
   .tags {

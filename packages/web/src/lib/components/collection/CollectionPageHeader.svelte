@@ -30,11 +30,13 @@
 </div>
 
 <style lang="stylus">
+
   .container {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
   }
+
   .content {
     height: 336px;
     padding: 40px var(--page-padding);
@@ -48,24 +50,28 @@
     max-width: var(--page-max-content-width);
     margin: auto;
   }
+
   .text {
     typography: h2-responsive;
     color: #ffffff;
     margin: 0;
   }
+
   .search-bar {
     flex: 1;
     min-width: 500px;
     max-width: 700px;
   }
+
   .biography {
     p {
       color: #ffffff;
       max-width: 825px;
       padding: 40px var(--page-padding);
     }
-    background-color: alpha($colors.primary-blue, 0.7)
+    background-color: alpha($colors.primary-blue, 0.7);
   }
+
   .mpath-logo {
     position: absolute;
     top: 20px;
@@ -75,6 +81,7 @@
   }
 
   @media only screen and (max-width: 1024px) {
+
     .container {
       row-gap: 40px;
     }

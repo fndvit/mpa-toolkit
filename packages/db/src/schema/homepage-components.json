@@ -1,0 +1,14 @@
+{
+  "$id": "homepage-components",
+  "type": "array",
+
+  "uniqueItems": true,
+  "minItems": 5,
+  "maxItems": 5,
+
+  "items": {
+    "type": "string",
+    "enum": ["lifecycle", "chapters", "search", "madlib", "casestudies"]
+  }
+
+}

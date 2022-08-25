@@ -1,0 +1,105 @@
+{
+  "$id": "page",
+
+  "type": "object",
+  "properties": {
+    "title": { "type": "string" },
+    "slug": { "type": "string" },
+    "content": { "type": "object" },
+    "img": { "type": "string" },
+    "tags": { "type": "array", "items": { "$ref": "#/$defs/tag" } },
+    "caseStudy": { "$ref": "#/$defs/caseStudy" },
+    "chapter": { "$ref": "#/$defs/chapter" },
+    "draft": { "type": "boolean" },
+
+    "additionalProperties": false
+  },
+  "required": ["title", "slug", "content", "img", "tags", "draft"],
+  "oneOf": [
+    {
+      "required": ["caseStudy"],
+      "not": { "required": ["chapter"] }
+    },
+    {
+      "required": ["chapter"],
+      "not": { "required": ["caseStudy"] }
+    }
+  ],
+
+  "$defs": {
+    "tag": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "integer" },
+        "category": { "type": "string", "enum": ["PRIMARY", "SECONDARY"] }
+      },
+      "required": ["id", "category"],
+      "additionalProperties": false
+    },
+
+    "milestones": {
+      "type": "object",
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "keyLearnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "subject": { "type": "string" },
+          "body": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+
+    "caseStudy": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "established": { "type": ["integer", "null"] },
+        "size": { "type": ["number", "null"] },
+        "governance": { "type": "string" },
+        "staff": { "type": "string" },
+        "budget": { "type": "string" },
+        "budgetLevel": { "type": "string" },
+        "lat": { "type": ["number", "null"] },
+        "long": { "type": ["number", "null"] },
+        "milestones": { "$ref": "#/$defs/milestones" },
+        "keyLearnings": { "$ref": "#/$defs/keyLearnings" }
+      },
+      "required": [
+        "name",
+        "established",
+        "size",
+        "governance",
+        "staff",
+        "budget",
+        "budgetLevel",
+        "lat",
+        "long",
+        "milestones",
+        "keyLearnings"
+      ],
+      "additionalProperties": false
+    },
+
+    "chapter": {
+      "type": "object",
+      "properties": {
+        "summary": { "type": "string" },
+        "authors": { "type": "array", "items": { "type": "integer" } },
+        "keyTakeaways": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["summary", "authors", "keyTakeaways"],
+      "additionalProperties": false
+    }
+  }
+}

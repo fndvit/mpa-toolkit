@@ -1,0 +1,44 @@
+{
+  "name": "@mpa/migration-runner",
+  "version": "1.0.0",
+  "main": "./migration-runner.ts",
+  "scripts": {
+    "prepack": "tsup",
+    "clean": "rimraf ./dist",
+    "build": "tsup && pnpm build:prepare && pnpm build:install && pnpm build:generate",
+    "build:prepare": "echo '{}' > ./dist/package.json && cp -R ../db/prisma ./dist/",
+    "build:install": "PRISMA_CLI_BINARY_TARGETS='rhel-openssl-1.0.x' npm install --prefix ./dist prisma@4.2.1",
+    "build:generate": "(cd ./dist && npm exec prisma generate)"
+  },
+  "devDependencies": {
+    "aws-lambda": "^1.0.7",
+    "prisma": "^4.2.1"
+  },
+  "dependencies": {
+    "@mpa/db": "workspace:*",
+    "@mpa/env": "workspace:*",
+    "@mpa/log": "workspace:*"
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "tsup": {
+    "entry": [
+      "migration-runner.ts"
+    ],
+    "noExternal": [
+      "@mpa/db",
+      "@mpa/env",
+      "@mpa/log",
+      "@mpa/utils"
+    ],
+    "external": [
+      "prisma",
+      "@prisma/client",
+      ".prisma/client"
+    ],
+    "splitting": false,
+    "clean": true
+  }
+}

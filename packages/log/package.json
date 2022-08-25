@@ -1,0 +1,30 @@
+{
+  "name": "@mpa/log",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "types": "./log.ts",
+  "exports": {
+    "import": "./dist/log.js",
+    "require": "./dist/log.cjs"
+  },
+  "files": [ "dist" ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "clean": "rimraf ./dist",
+    "prepare": "pnpm build"
+  },
+  "dependencies": {
+    "@mpa/env": "workspace:*",
+    "chalk": "^5.0.1",
+    "pino": "^8.4.1",
+    "pino-lambda": "^4.0.0",
+    "pino-pretty": "^9.0.0"
+  },
+  "tsup": {
+    "entry": [ "log.ts" ],
+    "format": [ "cjs", "esm" ],
+    "clean": true
+  }
+}

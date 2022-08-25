@@ -1,0 +1,26 @@
+{
+  "stage": [
+    "Identify the problem",
+    "Understand your system",
+    "Engage stakeholders",
+    "Set goals and objectives",
+    "Designing",
+    "Implementation",
+    "Future proofing and adaptation"
+  ],
+  "topic": [
+    "Blue economy",
+    "MPAs",
+    "Blue growth",
+    "Ocean conservation",
+    "Sustainable development",
+    "Nature-based solutions",
+    "All biomes"
+  ],
+  "user": [
+    "MPA planners", "MPA managers", "Community organizers", "LMMA practitioners",
+    "Identifying solutions", "Exploring examples", "Comparing case studies", "Discovering tools",
+    "Enabling decision-making", "Evaluating progress",
+    "Manager decision-making", "Team decision-making", "Government decision-making"
+  ]
+}

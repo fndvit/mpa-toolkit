@@ -1,0 +1,4473 @@
+{
+  "id": 25,
+  "slug": "sustainable-financing-for-MPAs",
+  "draft": true,
+  "title": "Sustainable financing for MPAs ",
+  "img": "",
+  "content": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Introduction",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "This introductory aims to help MPA practitioners to generate funds, optimize financial management and strategically build financial sustainability.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "We do not intend to provide a thorough review of all suitable finance models. Instead, we outline general points to consider, drawing on practical experience, inputs from MPA practitioners and supporting literature.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "The challenges MPAs face and strategies for financial sustainability can be highly specific to their contexts. MPAs range from locally managed marine areas (LMMAs) in coastal zones to offshore no-fishing areas or extensive marine reserves. Their establishment and operations involve a wide array of stakeholders, including planners, managers, researchers, decision-makers and local communities. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Through this project and our previous experiences, we have come across many questions from MPA practitioners in relation to sustainable financing. Experts offer practical guidance on a selection of these issues in the ",
+            "type": "text"
+          },
+          {
+            "text": "key questions",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " and ",
+            "type": "text"
+          },
+          {
+            "text": "tools and resources ",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": "sections, while practitioners share lessons learned through a selection of case studies. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Background",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Positioning MPAs in the international agenda",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "In discussions around the ",
+            "type": "text"
+          },
+          {
+            "text": "post-2020 global biodiversity framework",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.cbd.int/doc/c/3064/749a/0f65ac7f9def86707f4eaefa/post2020-prep-02-01-en.pdf",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " of the Convention on Biological Diversity (CBD), 60 member countries that comprise the ",
+            "type": "text"
+          },
+          {
+            "text": "High Ambition Coalition",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.hacfornatureandpeople.org/home",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " have proposed a global “30x30” target for conservation areas to cover 30% of the world’s marine and terrestrial surface by 2030 (",
+            "type": "text"
+          },
+          {
+            "text": "Waldron et al., 2020",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.conservation.cam.ac.uk/files/waldron_report_30_by_30_publish.pdf",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). This 30% target has gained increasing support. Some leading members are taking concrete action to foster MPAs as part of wider integrated marine management and to mobilize funding to expand and effectively manage new and existing MPAs (e.g., ",
+            "type": "text"
+          },
+          {
+            "text": "Forever Blue Fund",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://youtu.be/BJndcWz0LpE",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " in Costa Rica).",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "The proposed targets reflect a growing recognition of the importance of MPAs in conserving marine biodiversity, ensuring sustainable human use of the oceans and protecting vital ecosystem services, including: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Food ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Clean water",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Climate change mitigation ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Flood risk reduction ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Coastal protection ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Regulating services that support ecosystem-based adaptation. ",
+            "type": "text"
+          },
+          {
+            "type": "hard_break"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "MPAs can be effective nature-based solutions to address urgent issues, such as climate-related risks, food security and biodiversity loss.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Financing needs to achieve global MPA targets",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Reaching the 30% target for both marine and terrestrial protected areas combined will require an estimated US$103 billion to US$192 billion annually, including protected area establishment (US$35–103 billion) and minimum operations (around US$67 billion) (",
+            "type": "text"
+          },
+          {
+            "text": "Deutz et al., 2020",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.paulsoninstitute.org/key-initiatives/financing-nature-report/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Waldron et al., 2020",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.conservation.cam.ac.uk/files/waldron_report_30_by_30_publish.pdf",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). This compares to around US$24.3 billion spent annually in marine and terrestrial protected areas today (",
+            "type": "text"
+          },
+          {
+            "text": "Waldron et al., 2020",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.conservation.cam.ac.uk/files/waldron_report_30_by_30_publish.pdf",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). Up-to-date estimates of global financing needs to reach the 30% target for MPAs are still to be refined, with previous examples most likely providing underestimated figures due to a lack of complete data. These previous estimates include, for instance:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     US$5–19 billion annually to establish and manage (at a minimum level) a 20-30% coverage of MPAs (",
+            "type": "text"
+          },
+          {
+            "text": "Balmford et al., 2004",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.1073/pnas.0403239101",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ") ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     US$223–228 billion over a 35-year period to set up and manage 30% coverage (",
+            "type": "text"
+          },
+          {
+            "text": "Brander et al., 2015",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://fundingtheocean.org/reports/the-benefits-to-people-of-expanding-marine-protected-areas/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Achieving effective management of MPAs covering 30% of the ocean will require substantial and well-coordinated global efforts to cover structural costs over the coming decade. These costs include:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     ",
+            "type": "text"
+          },
+          {
+            "text": "Establishment costs",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": Research, planning, outreach, training and initial capital for enforcement equipment and other infrastructure (",
+            "type": "text"
+          },
+          {
+            "text": "Bohorquez et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.3389/fmars.2019.00045",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Davis et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.1002/ecs2.2879",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "OECD, 2017",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.oecd.org/env/marine-protected-areas-9789264276208-en.htm",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "McCrea-Strub et al., 2011",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://doi.org/10.1016/j.marpol.2010.07.001",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ").",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     ",
+            "type": "text"
+          },
+          {
+            "text": "Operational costs",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": Enforcement, research, ecosystem management and restoration, monitoring and evaluation, incident response, community development, administration, and all the corresponding costs of equipment, infrastructure, staff, legal fees and contingencies to support MPA operations (",
+            "type": "text"
+          },
+          {
+            "text": "Bohorquez et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.frontiersin.org/articles/10.3389/fmars.2019.00045/full",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Davis et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.1002/ecs2.2879",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Tolisano, 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://digital.ecomagazine.com/publication/frame.php?i=714154&p=&pn=&ver=html5&view=articleBrowser&article_id=4072732",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     Compliance and opportunity costs",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": Transaction costs that MPAs create for their users, and opportunity costs associated with economic benefits that former users of MPA ecosystems forego (",
+            "type": "text"
+          },
+          {
+            "text": "Bohorquez et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.3389/fmars.2019.00045",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Davis et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.1002/ecs2.2879",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). While fishers or other users of marine resources generally bear these costs, they could also become part of MPA operational costs (e.g., community development) as compensation to the affected groups (",
+            "type": "text"
+          },
+          {
+            "text": "Bohorquez et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.3389/fmars.2019.00045",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ").",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "The role of sustainable financing",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "MPAs incur the most substantial costs in their regular operations (",
+            "type": "text"
+          },
+          {
+            "text": "Bohorquez et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.3389/fmars.2019.00045",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Davis et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.1002/ecs2.2879",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). The recurring nature of these costs requires capacity to anticipate future needs and financing sources and mechanisms that deliver reliable, consistent and predictable funding in the long term. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Unfortunately, many MPA managers face challenges to keep track of their needs, implement long-term strategies and/or diversify their financing sources and mechanisms. As a result, they often depend on short-term, restricted or piecemeal funding.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "The enabling environment",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Essential conditions for MPA management entities to build sustainable financing include:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       ",
+            "type": "text"
+          },
+          {
+            "text": "A governance framework",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " that allows funds to be raised and used for MPA management ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Management instruments",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " (e.g., management plans) to guide MPA operations and application of funding",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Management capacity",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " (e.g., staff, processes and systems) that enables MPA operations",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "MPA leaders and champions",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " who create a favourable environment for effective decision-making, collaboration, resource mobilization and efficient use of funds.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "External enabling factors may also determine the success of MPA financing efforts:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Favourable legal framework",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " ",
+            "type": "text"
+          },
+          {
+            "text": "and political environment:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Legislation may regulate issues such as property rights and compensation for opportunity costs, allow specific financing mechanisms, enable revenue collection (e.g., from fees, fines, taxes, etc.), and facilitate private investments, among other aspects. The political environment may in turn facilitate the use of policy instruments or legislative changes to generate funds (e.g., by changing fee levels, promoting investments, endorsing partnerships, etc.) or to improve cost-effectiveness.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Integration with economic development:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Recognizing the benefits MPAs provide to local communities (e.g., preserving cultural practices or livelihoods), key economic sectors (e.g., fisheries, tourism and transportation) or the global community (e.g., research, habitat for migratory species and climate change mitigation) is fundamental to mobilize sustainable financing. Positioning MPAs as tools for sustainable economic development (e.g., as nature-based solutions or pillars of a sustainable blue economy) in national, regional or international policy frameworks and political agendas can also enable new financing streams.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Access to data and know-how:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Ecological and socioeconomic data on the MPA and its context can create transparency and improve exchange and collaboration with governments, donors or partners. Technology (e.g., open-source, free or affordable tools and databases) and digital connectivity can facilitate the gathering, use and communication of data. External capacity-building opportunities can help optimize all these efforts. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Access to intermediaries and facilitators:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " External advisors, facilitators and networking platforms can play critical roles in connecting MPA management with experts, donors or potential partners in a cost-effective manner.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Challenges",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Although increasing global connectivity has made plenty of resources accessible (e.g., digital reports, webinars, websites and other online platforms) to support MPA financing efforts, success stories from MPA sites still seem slow to emerge. “There are many financing mechanisms out there, but none of them works on its own,” says Ramón de León, who managed the Bonaire National Marine Park for more than a decade and currently runs ",
+            "type": "text"
+          },
+          {
+            "text": "Reef Support",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://marineparkfee.com/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", an online payment platform he designed specifically to help MPAs optimize their fee systems. “While a combination of mechanisms and strategies may work best, MPAs still face many challenges to successfully implement them.”",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "The challenges De León mentions can relate to highly context-specific factors. These include the: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Type of management entity ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Management capacities ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Administrative or financial requirements of some mechanisms ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      MPA geography",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Natural resource base ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Socioeconomic conditions around the MPA ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Legal and political system. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Below, we present a selection of persistent challenges we have identified through our work on sustainable financing strategies with MPAs in Latin America and the Caribbean, and workshop inputs from international MPA practitioners. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Administrative and financial challenges",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "The time, technology, infrastructure and management processes required to improve financial health and build sustainable financing can pose administrative and financial challenges. In particular, this can include:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Technical capacity",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": MPAs often have limited staff capacity, financial literacy and relevant in-house skills for financing and management as a result of insufficient budgets or broader socioeconomic challenges. Limited capacity often causes an excessive workload for MPA management staff, which affects their ability to invest time in financing activities. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Planning instruments",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": Unclear or inadequate management planning may lead to ineffective use of funds, create unnecessary transaction costs, limit the use of specific financing mechanisms (e.g., user fees) or hamper the development and maintenance of infrastructure (e.g., buoy and mooring lines, tourism-related infrastructure, research facilities, etc.) for fund generation, among others.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Compliance:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " The aspects mentioned above, and the absence of proper administrative procedures, can make it difficult for the MPA to meet administrative and financial requirements to access specific types of finance (e.g., from private investors or financial institutions). It can be a challenge to meet basic reporting or risk-profile requirements, or to develop projects that generate the expected financial or non-financial outcomes. The knowledge, skills, assistance or processes required for MPAs to identify, design, implement, monitor and assess ",
+            "type": "text"
+          },
+          {
+            "text": "financing mechanisms",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://docs.google.com/document/d/1m3dSKh5KCTlZvSFi5cr1Vyo_CFZgq6ibtqepda65Stg/edit#heading=h.84ruk6xnter5",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " (e.g., blue carbon projects, concessions, tourism-related fees, etc.) can also pose challenges to diversification of financing options. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Adoption and use of technology:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " The lack of relevant capacities and limited funding can prevent MPAs from adapting and using technological tools. Particularly in remote areas, access to new technologies can be severely limited because of poor internet connectivity or higher implementation costs (e.g., shipping, subscriptions, infrastructure, etc.).",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Social and economic challenges",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "The MPA’s social and economic environment can also create challenges:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Stakeholder engagement",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": Implementing financing mechanisms in an MPA usually requires local stakeholders (e.g., sectors, institutions, communities or individuals) to transform processes and activities. Stakeholders may not be willing to engage or adapt without a compelling case that illustrates the socioeconomic, financial and ecological benefits of a financing mechanism or an equitable benefit-sharing structure that gives them an incentive to support its adoption. MPAs may also need to overcome negative perceptions or mistrust, and (cultural) attachment to existing processes and activities.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Attraction and retention of key staff:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " In some contexts, such as in small island developing states, high staff turnover can be a result of political changes, migration or the inability of the conservation sector to offer competitive salaries and career development opportunities. This can make it difficult to develop and maintain a consistent level of staff capacity (technical, managerial, executive, etc.) to provide continuity of administrative and financial processes. Expertise in sustainable financing is also in demand in the private sector, development banks, UN agencies and NGOs, so is especially hard to retain. The difficulties to attract and retain key staff have cross-cutting implications and can create or exacerbate, for example, administrative challenges.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Economic swings:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " The COVID-19 pandemic has emphasized how global trends can greatly affect local economies and the MPAs that financially depend on them. Depending on financing sources that are closely linked to specific economic sectors (e.g., tourism) makes MPAs vulnerable to economic trends outside the control of the site itself. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Legal and political challenges",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Legal challenges can relate to specific rules that hamper MPA financing efforts. Political challenges may emerge from stakeholder interactions and policy implementation.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Limited awareness and support:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Decision-makers and budget-holders may lack awareness of the benefits of MPAs. This can translate into insufficient or variable political will, which can in turn affect:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "           - Support for financing mechanisms such as fee systems, permits or licences",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "          -  Funding for enforcement, particularly where significant economic actors disregard laws and regulations to access resources",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "           - Integration of MPAs with other government budget priorities (e.g., healthcare, education, social programmes, etc.). ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     ",
+            "type": "text"
+          },
+          {
+            "text": "Legal and regulatory restrictions on fund generation",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": Legal systems may not allow MPA management entities to collect or retain fees and fines. For example, public MPA management entities might not be allowed to raise and directly manage funds outside government budget allocations. In other cases, funds collected in the MPA might go to the central government budget and then not be redistributed. Legal and regulatory restrictions on the types of financing that the MPA or its managers can raise also limit their opportunities to generate funds. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Lack of influence on public budget allocations:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Government budget processes and rules can be difficult for MPA managers to navigate and limit their ability to seek increased budget allocations. In addition, MPA managers might not be involved in negotiating budgets for protected areas. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Ineffective policy implementation:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Even if relevant policies and strategies are in place, lack of guidance, slow implementation or difficult institutional and legal reforms can pose challenges to the use of financing mechanisms such as concessions or user fees.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Compliance and enforcement",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": The lack of robust compliance and enforcement frameworks can affect MPAs’ overall effectiveness (",
+            "type": "text"
+          },
+          {
+            "text": "OECD, 2017",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.oecd.org/env/marine-protected-areas-9789264276208-en.htm",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ") and their ability to collect fees or enforce permits and licences.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Property rights:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " The lack of, or uncertainty about, property rights in coastal and marine areas, especially for communities or for marine conservation agreements, can prevent the use of concessions or other private sector management approaches. Unclear or complex shared tenure or resource rights can, for example, create high transaction costs for specific financing mechanisms.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Unclear mandates:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " When there are co-managers, or management is delegated by the government to a private entity, these co-managers or delegated managers usually lack funds and/or support to create a sufficient stream of revenues. Overlapping or conflicting enforcement mandates among agencies, or co-managers, can also affect compliance and enforcement. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Approaches and strategies",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "In this section, we focus on three cross-cutting approaches and strategies approaches to overcome challenges to sustainable financing of MPAs:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "The case for MPA financing",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "MPAs can generate multiple benefits. These include:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Direct market benefits",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " such as increased commercial fish catch or increased tourism revenue ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Indirect market benefits",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " such as protecting coastal infrastructure and property, and research",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Non-market benefits",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " related to the existence value of species or ecosystems (",
+            "type": "text"
+          },
+          {
+            "text": "Davis et al. 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.1002/ecs2.2879",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "They also act as nature-based solutions to wider societal priorities, such as: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Food security, through healthier fisheries (",
+            "type": "text"
+          },
+          {
+            "text": "Johnson et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://openknowledge.worldbank.org/bitstream/handle/10986/35882/A-Global-Earth-Economy-Model-to-Assess-Development-Policy-Pathways.pdf?sequence=1&isAllowed=y",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Sala et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.nature.com/articles/s41586-021-03371-z",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ")",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Economic prosperity, by supporting different sectors of the blue economy (see Module 3 Blue economy/business planning Q&A), particularly in small island developing states and coastal nations",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Inclusive development linked to sustainable livelihoods, ecotourism and other opportunities for local actors, for example in LMMAs (",
+            "type": "text"
+          },
+          {
+            "text": "Jonas et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://parksjournal.com/wp-content/uploads/2021/05/10.2305-IUCN.CH_.2021PARKS-27-1en_Jonas_et_al.pdf",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ").",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Protection against climate-related risks such as floods, coastal erosion and the impacts of extreme events on communities and infrastructure (",
+            "type": "text"
+          },
+          {
+            "text": "Johnson et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://openknowledge.worldbank.org/bitstream/handle/10986/35882/A-Global-Earth-Economy-Model-to-Assess-Development-Policy-Pathways.pdf?sequence=1&isAllowed=y",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Sala et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.nature.com/articles/s41586-021-03371-z",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "McKinnon et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://doi.org/10.2305/IUCN.CH.2021.PARKS-27-1KM.en",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ").",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       - Climate change mitigation by preventing mangrove or seagrass degradation, and supporting carbon storage and sequestration (",
+            "type": "text"
+          },
+          {
+            "text": "Johnson et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://openknowledge.worldbank.org/bitstream/handle/10986/35882/A-Global-Earth-Economy-Model-to-Assess-Development-Policy-Pathways.pdf?sequence=1&isAllowed=y",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ").",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "        - Mitigating risks related to biodiversity loss (e.g., public health risks) and ecosystem collapse (e.g., higher exposure to floods) by protecting key habitats and supporting ecological connectivity (",
+            "type": "text"
+          },
+          {
+            "text": "Johnson et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://openknowledge.worldbank.org/bitstream/handle/10986/35882/A-Global-Earth-Economy-Model-to-Assess-Development-Policy-Pathways.pdf?sequence=1&isAllowed=y",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Sala et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.nature.com/articles/s41586-021-03371-z",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ").",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Although these benefits are usually clearly apparent for MPA practitioners and direct beneficiaries, others may not see their value – like resource users facing restrictions because of an MPA, or decision-makers focused on other topics. Improving the understanding of MPA-related benefits is essential to shift negative perceptions or raise awareness among these types of actors. This can be a strategic step for MPAs to:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Inform and promote the design of favourable policies (e.g., for benefit-sharing or fund generation) (",
+            "type": "text"
+          },
+          {
+            "text": "Davis et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://doi.org/10.1002/ecs2.2879",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ")",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Increase social acceptability of, and compliance with, MPA rules and financing mechanisms (e.g., user fees, entry fees, licences, etc.)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Mobilize additional finance (e.g., philanthropic donations, government budget allocations, bilateral or multilateral cooperation, private sector finance).",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Some MPAs have promoted win–win conservation alliances with local actors by building on their contributions to local economies. For example, Bay Island National Marine Park, managed by Bay Islands Conservation Association (BICA) Roatan in Honduras, offers its ",
+            "type": "text"
+          },
+          {
+            "text": "water monitoring services",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.wolfscompany.com/project/conservation-funding-from-a-water-monitoring-lab-on-roatan-2/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " to local businesses and communities to support coral reef conservation, tourism and sanitation. BICA Roatan’s Program Director, Giselle Brady, says that they are “developing a strategy to offer our water monitoring services to local businesses and communities in support of coral reef conservation, a healthy tourism sector, and adequate sanitation for the local population.” Communicating these types of links between MPAs and the local economy can create wider support for the MPA and generate additional income through providing services.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Building a compelling case for MPA financing will depend on the target audience: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "    - Data about MPA contributions towards national targets and commitments, such as the Sustainable Development Goals (SDGs), could help mobilize political will and government funding. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Outcome and performance indicators could help reach private sector actors.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Information about potential market benefits could be relevant for local communities with a stake in specific financing streams (e.g., blue carbon projects or community-based tourism).",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "At the local level, a clear case for an MPA can also improve acceptance and compliance with regulations among local MPA users, such as fishers or tour operators (",
+            "type": "text"
+          },
+          {
+            "text": "Davis et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://doi.org/10.1002/ecs2.2879",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "), and eventually generate additional funds through fees, licences, permits or similar. As an example, dive operators who benefit from a healthy reef managed by an MPA might be more likely to support fee-sharing agreements if a strong case is presented to them. A convincing case of this kind will most likely include aspects such as: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Cost distribution (i.e., who pays for compliance, administration, monitoring, etc.)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Monetary and non-monetary benefits (e.g., potential increase in fish biomass, increase in visitor numbers, recovery of fish populations or coral cover, etc.) ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Cost-benefit ratios (e.g., monetary benefits exceeding the costs) ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       - Main beneficiaries (i.e., who receives the benefits from an effectively managed MPA)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Timeframes (e.g., short-term versus longer-term costs or benefits).",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "At the international level, a case can be built for increased bilateral or multilateral development financing for countries that carry a disproportionate burden when creating and managing large MPAs or MPA networks in priority sites for the global community (",
+            "type": "text"
+          },
+          {
+            "text": "Sala et al., 2021",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.nature.com/articles/s41586-021-03371-z",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Budgeting, financial planning and cost-effectiveness",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Reliable data on your MPA’s current and projected financial situation is the basis of developing a sustainable financing strategy. Your budget should ideally show how available resources are allocated to different cost categories (e.g., staff, equipment, infrastructure, etc.) and management objectives, activities, programmes or functional areas (e.g., enforcement, site management, research, monitoring, etc.). ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "In addition to short-term budgets (e.g., annual or biannual), financial planning exercises can provide useful projections of future costs over longer periods. These cost projections can be built under specific scenarios that provide a clear indication of the additional financing required to reach specific goals. A “business as usual” scenario showing projected costs under the current level of resources available is often used as the basis for estimating financing gaps. Alternative scenarios can, for example, consider the costs required to guarantee: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - A minimal level of conservation, meeting the most crucial objectives of the MPA management plan ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Effective management – you can find useful guidance in the management plan itself or in external sources that set overall MPA effectiveness standards. These include the ",
+            "type": "text"
+          },
+          {
+            "text": "Management Effectiveness Tracking Tool",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.protectedplanet.net/en/thematic-areas/protected-areas-management-effectiveness-pame?tab=METT",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " or the criteria from ",
+            "type": "text"
+          },
+          {
+            "text": "IUCN Green List Standard",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.iucn.org/theme/protected-areas/our-work/iucn-green-list-protected-and-conserved-areas/global-standard",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " (see the management effectiveness module).",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "You may want to operate a business or enterprise (e.g., camping or glamping, commercial laboratory services, tour packages, etc.) to generate funds. To analyse its viability and cost-effectiveness, a valuable exercise is to map out all required costs (e.g., capital investments, increased operational costs) over a period of several years, and to estimate the expected revenues. For the latter exercise, you’ll typically need to make assumptions using available data on numbers of visitors, willingness-to-pay studies or similar cases from other comparable locations. Once you’ve mapped estimated costs and revenue, you’ll have a clear idea of the potential of the financing mechanism, the level of investment needed and to what extent it can fill the MPA’s financing gap.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Building on budgeting and financial planning exercises, you can identify and adopt cost-effectiveness measures to reduce operational costs. These can include: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Co-management mandates ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Tools or technologies (e.g., payment or monitoring systems)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Partnerships ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Outsourcing of activities ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Organizational or management adjustments",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Aligning expenditure among co-managers.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Sustainable financing strategies",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Designing and implementing a sustainable financing strategy, comprising a set of clear priorities and actions to achieve financial sustainability, can help you optimize the use of the financing mechanisms currently in place, or seize the most promising opportunities to generate funds, align costs or reduce expenses. This type of strategy should respond to estimates of financing needs to achieve MPA management goals and can be integrated into an MPA business plan (see Box 1) for communication to stakeholders or donors (Module 3 Communicating sustainable financing Q&A).",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Box 1.",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Business planning resources",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Conservation Finance Guide: Business Planning for Protected Areas",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.conservationfinance.info/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " (Conservation Finance Alliance, 2002)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Guidebook for the development of simplified business plans of protected areas",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://aires-marines.uqar.ca/id/eprint/41/1/Guide%20business%20plans%20FIBA.pdf",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " (Landreau, 2012) ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Sustainable financing of Marine Protected Areas in the Mediterranean: a guide for MPA managers",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.rac-spa.org/sites/default/files/doc_medmpanet/final_docs_regional/52_management_tool_on_the_sustainable_financing_of_mpas_in_the_mediterranean.pdf",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " (Binet et al., 2015)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Financing mechanisms: A Guide for Mediterranean Marine Protected Areas",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://mava-foundation.org/wp-content/uploads/2021/02/BLUESEEDS_FINANCING_MECHANISMS_GUIDE.pdf",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " (Femmani et al., 2020)",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Sustainable financing strategies may contain a mix of: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "    - Priority financing mechanisms (e.g., user fees, concessions, payment for ecosystem services, etc.) ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Other solutions (e.g., cost-efficiencies, cost-sharing arrangements, partnerships, etc.). ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "These should be identified on the basis of multiple criteria to assess their fund-generation or cost-reduction potential, ease of implementation, likelihood of success, conservation impact or other relevant aspects (",
+            "type": "text"
+          },
+          {
+            "text": "UNDP, 2018",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.biodiversityfinance.net/knowledge-product/biofin-2018-workbook",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Recognizing opportunities and limitations within the governance, socioeconomic, political, legal and ecological context of the MPA is essential for the design of a robust strategy. Any of these aspects can determine the viability of possible financing mechanisms, solutions and actions. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "By definition, a sustainable financing strategy should aim to be future-proof and remain relevant after unforeseen events or changes. In 2019 and 2020, we worked with a group of MPA managers from the Wider Caribbean and learned a few key lessons from the results of their financing strategies in light of the COVID-19 pandemic. Despite facing substantial income losses associated with a decline in international tourism, MPAs with diversified financial strategies secured basic levels of operations thanks to: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Emergency disbursements by conservation trust funds or governments ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       - Supplementary income from partnerships with other economic sectors, memberships, online shops, donation platforms or domestic tourism. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "For some MPAs, however, their dependence on financing mechanisms that generated highly fluctuating funding (e.g. user fees) created substantial unpredictability. Restrictions in the use of grant funding or government budgets also limited the ability of some MPA managers to address urgent needs that did not match the original purpose of these funds. This illustrates the advantages of designing financing strategies with a diverse mix of funding sources, predictable funding streams and mechanisms that allow flexibility to allocate the funds they may generate. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Since these considerations might not be easily addressed in every context, flexibility and adaptation in the face of change play a crucial role in the development of future-proof financing strategies. External facilitators, advisors and mentors can help integrate these aspects into a practical strategy, especially for MPA managers who might perceive this process as complex and intimidating. Although external advisory costs can represent a huge challenge for MPAs that are already underfinanced, conservation trust funds (e.g., ",
+            "type": "text"
+          },
+          {
+            "text": "MAR Fund",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://marfund.org/en/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", ",
+            "type": "text"
+          },
+          {
+            "text": "Micronesia Conservation Trust",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.ourmicronesia.org/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", ",
+            "type": "text"
+          },
+          {
+            "text": "Forever Costa Rica",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://costaricaporsiempre.org/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " and ",
+            "type": "text"
+          },
+          {
+            "text": "The MedFund",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://themedfund.org/en/about-us/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ") and peer-to-peer learning networks (e.g., ",
+            "type": "text"
+          },
+          {
+            "text": "MPAConnect",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.gcfi.org/initiatives/mpa-capacity-program/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", ",
+            "type": "text"
+          },
+          {
+            "text": "MedPAN",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://medpan.org/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " and ",
+            "type": "text"
+          },
+          {
+            "text": "PIMPAC",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://pimpac.org/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ") provide good examples of organizations that catalyse these types of efforts and can link MPA practitioners to sources of advice and support. Some private sector players also offer pro bono support for strategy development.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Emerging trends and innovation",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Traditional financing mechanisms (e.g., user fees, government budgets, grants and concessions) continue to be the most relevant sources of MPA financing. Improving access to these may be the first step towards a sustainable financing strategy for many MPAs. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "But solutions to create financial sustainability for conservation activities have rapidly diversified and evolved over recent years, providing multiple options for MPA management and financing entities.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Emerging MPA financing mechanisms",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Various emerging mechanisms can strengthen financing strategies. The advantages or disadvantages of each mechanism depend on the context of the MPA, so you need to carry out a feasibility assessment, covering legal, political, ecological, socioeconomic, financial, governance and administrative aspects. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "MPA managers have innovated in business models and enterprises that build on highly context-specific opportunities. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Traditional MPA finance providers (e.g., philanthropic donors, development agencies and conservation trust funds) have started to explore more complex and larger-scale arrangements involving climate finance and the private and financial sectors. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Innovative business models and MPA enterprises:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " MPA managers have drawn on their internal capacities and the unique characteristics and context of their site to design their own business models or local enterprises to generate funds. These provide examples of how MPAs can generate funds as part of the blue economy. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "The ",
+            "type": "text"
+          },
+          {
+            "text": "Toledo Institute for Development and Environment (TIDE) Belize",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://tidebelize.org",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", for instance, has built a successful community-based tourism programme that generates funds for the MPA and additional income for local community members. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "In MPAs that are well positioned as world-class destinations, managers have capitalized on high-end markets by implementing more profitable business models than traditional fee systems. As an example, the Belize Audubon Society, manager of the Blue Hole Natural Monument, has established a concessional agreement that generates funds from the operation of a glamping site. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Other MPA managers have invested in their know-how and research facilities to offer commercial tests and analyses to fishing, tourism and other sectors of the blue economy. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       ",
+            "type": "text"
+          },
+          {
+            "text": "Private and financial sector involvement:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Impact investing, blended finance and new types of public-private partnerships are also entering the menu of MPA financing options. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "In impact investing, typically structured through investment funds, private capital is used to finance activities that will generate a financial return that might be lower than the market standard, but deliver a positive environmental and social impact. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "In blended finance, different sources of capital (e.g., philanthropic donations, development funding and private capital) are mixed, to lower the risks of investing in sustainable development goals among private actors seeking to receive a financial return. Examples of these can be seen in debt-for-nature swaps (like the one used for the creation of the ",
+            "type": "text"
+          },
+          {
+            "text": "Seychelles Conservation and Climate Adaptation Trust",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://seyccat.org",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ") and investments into sustainable fisheries (such as the Althelia Sustainable Ocean Fund), or other activities that may stimulate local economies, generate jobs and achieve conservation outcomes. While blended finance models are highly complex, the ",
+            "type": "text"
+          },
+          {
+            "text": "Turneffe Atoll Sustainability Association (TASA)",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.turneffeatollmarinereserve.org",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " in Belize provides an example of an MPA site-level manager that has taken a central role in initiating a partnership of this kind to mobilize private and public finance for MPA management. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Biodiversity offset schemes, where governments or private sector actors compensate for the negative impacts of a development project by investing in positive conservation outcomes elsewhere, could also benefit MPAs. Progress is under way in a growing number of developing countries through collaboration among governments, the private sector and other entities such as conservation trust funds (e.g., ",
+            "type": "text"
+          },
+          {
+            "text": "FAPBM",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.fapbm.org/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " in Madagascar and ",
+            "type": "text"
+          },
+          {
+            "text": "BIOFUND",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.biofund.org.mz/en/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " in Mozambique).",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     ",
+            "type": "text"
+          },
+          {
+            "text": "Climate finance:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " In addition to traditional financing for conservation, climate finance is becoming increasingly important for MPAs. As an example, multilateral pools of funding for adaptation are being provided by the ",
+            "type": "text"
+          },
+          {
+            "text": "Green Climate Fund",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.greenclimate.fund",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " (GCF), the ",
+            "type": "text"
+          },
+          {
+            "text": "Adaptation Fund",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.adaptation-fund.org/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " and the ",
+            "type": "text"
+          },
+          {
+            "text": "Global Environment Facility",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.thegef.org/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " (GEF). While most MPA sites are likely to be too small in scale to receive direct funding from providers such as the GCF, their funding can still reach MPAs through country-wide or region-wide programmes, such as those approved by GCF in the ",
+            "type": "text"
+          },
+          {
+            "text": "Maldives",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.greenclimate.fund/document/building-climate-resilient-safer-islands-maldives",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", ",
+            "type": "text"
+          },
+          {
+            "text": "Cuba",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.greenclimate.fund/document/coastal-resilience-climate-change-cuba-through-ecosystem-based-adaptation-mi-costa",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", the ",
+            "type": "text"
+          },
+          {
+            "text": "Indian Ocean",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.greenclimate.fund/document/ecosystem-based-adaptation-indian-ocean-eba-io",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", and ",
+            "type": "text"
+          },
+          {
+            "text": "Tanzania, Madagascar, South Africa and Mozambique",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.greenclimate.fund/document/blue-action-fund-baf-gcf-ecosystem-based-adaptation-programme-western-indian-ocean",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ".  ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Financing is also being mobilized for nature-based solutions to climate change, recognizing the importance of marine and coastal ecosystems in providing services that support climate change mitigation and adaptation. This offers MPAs an opportunity to participate in global carbon markets through emission reduction projects related to mangroves and seagrasses (blue carbon projects) or risk financing that recognizes the role nature plays in climate resilience (such as the ",
+            "type": "text"
+          },
+          {
+            "text": "insurance scheme",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.nature.org/en-us/what-we-do/our-insights/perspectives/insuring-nature-to-ensure-a-resilient-future/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " developed in Quintana Roo, Mexico).",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Emerging uses of data and technology for MPA sustainable financing",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "As in other areas of MPA management, data and technology are increasingly important to achieve financial sustainability. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "MPA practitioners have been resourceful in finding innovative applications for existing tools, using data to inform new targets and piloting new technologies. The ",
+            "type": "text"
+          },
+          {
+            "text": "Bahamas National Trust",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://bnt.bs/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", for example, has worked on a digital platform that will integrate merchandise sales and membership options, among various tools to interact with visitors and followers. According to development officer Kimberly Knowles, the trust has capitalized on its “young talent to explore and develop new digital apps and tools that might help with reaching a broader audience and customer base”. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "As these applications continue to evolve, here we focus on a selection of emerging trends that can support MPA practitioners in the near future. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       Supporting the case for MPA financing",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": While traditional grant-reporting requirements have focused on management effectiveness indicators (e.g., ",
+            "type": "text"
+          },
+          {
+            "text": "Management Effectiveness Tracking Tool",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.protectedplanet.net/en/thematic-areas/protected-areas-management-effectiveness-pame?tab=METT",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "), impact-oriented reporting has also become increasingly relevant for conservation donors (",
+            "type": "text"
+          },
+          {
+            "text": "Bath et al., 2020",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.conservationfinancealliance.org/10-year-review",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). Ecological indicators have been widely adopted and can mobilize support by communicating the positive impacts of MPAs to donors and governments. Socioeconomic indicators of MPA benefits (e.g., ecosystem services) can also strengthen the position of MPAs in discussions of government budgets, especially if they relate to priorities such as SDG targets or the blue economy. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "As an example, in 2017, the Department of Environment and Coastal Resources of the Turks and Caicos Islands used indicators such as a Reef Health Index built by the Atlantic and Gulf Rapid Reef Assessment Program (AGRRA), in combination with economic indicators of the value of coral reefs for the tourism sector, to ",
+            "type": "text"
+          },
+          {
+            "text": "build a case",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://panorama.solutions/en/solution/stimulating-sustainable-financing-long-term-coral-reef-conservation-turks-and-caicos",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ". This resulted in government action to reinstate a conservation fund to support MPA management.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       ",
+            "type": "text"
+          },
+          {
+            "text": "Optimizing the use of traditional financing mechanisms:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Many MPAs are addressing common challenges associated with revenue collection by implementing online fee payment systems (e.g., ",
+            "type": "text"
+          },
+          {
+            "text": "Reef Support",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://marineparkfee.com/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ") or combined platforms like the one being developed by the Bahamas National Trust. Digital solutions can improve compliance with the fee system, optimize fee collection and offer the opportunity to gather visitor data, which can in turn inform general fundraising, marketing and communication efforts. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       ",
+            "type": "text"
+          },
+          {
+            "text": "Optimizing the use of emerging financing mechanisms:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Rigorous use of output and outcome indicators will become increasingly necessary to gain access to private capital (as in the example of TASA Belize) or implement other emerging financing mechanisms. Blue carbon projects, for example, require baseline data on carbon storage, carbon sequestration rates and shock response of specific mangrove or seagrass sites. Similarly, risk financing mechanisms (as in Quintana Roo, Mexico) require the analysis of indicators of the mitigation potential of specific threats. This could include, for example, data on reef structure and cover, mangrove cover, habitat distribution, and extreme events that may trigger pay-outs (e.g., likelihood of occurrence of hurricanes or floods, and the magnitude of these events and their damage). Remote-sensing technologies and drone monitoring and mapping can support these applications. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       ",
+            "type": "text"
+          },
+          {
+            "text": "Optimizing MPA establishment and management costs:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Software tools such as ",
+            "type": "text"
+          },
+          {
+            "text": "Marxan",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://marxansolutions.org/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ", which helps identify cost-efficient conservation solutions, have been used to inform MPA expansion efforts and could become mainstream as countries adopt new marine protection targets. Technologies such as remote vessel monitoring systems (e.g., automatic identification systems) or software applications to manage patrolling data (e.g., Spatial Monitoring And Reporting Tool, ",
+            "type": "text"
+          },
+          {
+            "text": "SMART",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://smartconservationtools.org/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ") are also being used. These can minimize MPA surveillance and enforcement costs (i.e., fuel and staff time), particularly in large MPAs (",
+            "type": "text"
+          },
+          {
+            "text": "OECD, 2017",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.oecd.org/env/marine-protected-areas-9789264276208-en.htm",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": ").",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Bridging knowledge and data gaps",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "The knowledge and data needed to address challenges to sustainable financing will vary between MPAs and their specific contexts. There are, however, a few persistent gaps and limitations, which we tentatively classify into four groups below. Although we describe possible avenues of further work, this will usually only lead to successful outcomes if you also have (or can obtain) the funding and staff necessary to effectively apply the acquired knowledge and data. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Assistance and best-practice examples to promote effective MPA governance models:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Examples of governance models that offer flexibility to generate, manage and deploy funds, or to share management and financing responsibilities with other entities (e.g., NGOs, civil society organizations, private sector, etc.), are needed to guide and optimize the establishment of new MPAs (see Module 3 MPA governance and sustainable financing Q&A). Guidance to conduct feasibility assessments of governance models is also necessary, for example, for MPA management entities that are part of larger governance structures such as governments. Exploring opportunities for setting up or working with separate legal entities (e.g., conservation trust funds, local NGOs, private businesses, etc.) can enable new partnerships and mobilize resources more effectively.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Content and communications for institutional awareness-raising:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " Integrated socioeconomic and ecological monitoring or research can give insights into the benefits of MPAs to bridge awareness gaps for decision-makers, donors and communities. If your MPA’s budget is limited, research can be funded by other external parties such as development agencies, NGOs or private donors. Connections and champions within government agencies (e.g., finance, environment, tourism, infrastructure, etc.) and the private sector, as well as multi-stakeholder working groups, can help communicate these insights.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      Training, lessons learned and contacts to catalyse sustainable financing efforts:",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": " MPA finance requires a wide array of expertise, from financial administration to marketing, communications and community outreach. NGOs, learning networks and conservation trust funds can help catalyse targeted capacity building efforts and act as intermediaries to access external assistance. Learning networks are also important sources of lessons learned, which are shared through thematic peer-to-peer exchange activities (",
+            "type": "text"
+          },
+          {
+            "text": "Dalton et al., 2020",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://doi.org/10.3389/fmars.2020.595054",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "; ",
+            "type": "text"
+          },
+          {
+            "text": "Bath et al., 2020",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://www.conservationfinancealliance.org/10-year-review",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). Although these initiatives have supported MPA financing across regions, they often focus on very specific target groups (e.g., type of MPA, specific locations, habitats, etc.) and are limited in their available financial support. Further efforts are needed to make this type of assistance, knowledge and contacts accessible to more MPAs.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      ",
+            "type": "text"
+          },
+          {
+            "text": "Basic data and tailored tools to optimize key processes",
+            "type": "text",
+            "marks": [
+              {
+                "type": "strong"
+              }
+            ]
+          },
+          {
+            "text": ": Robust data on the costs of establishment and management of MPAs is critical for their financial sustainability (",
+            "type": "text"
+          },
+          {
+            "text": "Bohorquez et al., 2019",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.3389/fmars.2019.00045",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": "). While future research to establish cost benchmarks and other references can help address this gap at a general level, your budgeting processes and accounting systems need to align with your management functions and phases (e.g., establishment or operational). International standards for financial reporting by MPAs could provide useful orientation. Standardized templates, such as MedPAN’s ",
+            "type": "text"
+          },
+          {
+            "text": "MedPlan",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://medpan.org/business-planning-module-teaching-material-now-available/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " tool, can be helpful to promote systematic financial planning, although these will need to be tailored to your specific needs. Particularly for emerging financing mechanisms, such as impact investment, payment for ecosystem services and compensation schemes, MPAs need data linking ecosystem services to economic and livelihood impacts.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Conclusion",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Given the currently substantial gap in MPA coverage and management effectiveness, meeting new global protection targets in marine areas will require tens of billions of US dollars every year. The regular investments and recurrent expenditure underlying basic MPA operations emphasize the need for long-term, reliable, consistent and predictable funding, as opposed to one-off, short-term, restricted or piecemeal funds MPA managers have traditionally relied upon.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Several context-specific conditions can support building sustainable financing for MPAs, including: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "      - Effective governance models and leadership ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       - Favourable legal frameworks and political environments ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       - Integration within the socioeconomic context ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "        - Access to data and know-how",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "        - Intermediaries and partnerships. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "hard_break"
+          },
+          {
+            "text": "MPA managers, however, face persistent challenges to: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       - Build the internal capacities they need for sustainable financing ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "        - Diversify financing sources and mechanisms ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       - Overcome economic fluctuations ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "        - Operate effectively in restrictive legal systems ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "       - Raise awareness of MPA benefits among stakeholders and decision-makers.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Developing a compelling case for specific MPAs as nature-based solutions that address urgent societal and environmental issues can be an effective approach for promoting collective efforts and help overcome finance challenges. Robust and systematic budgeting and financial planning for MPAs are also necessary to inform collective resource mobilization efforts and promote cost-effective achievement of MPA management goals. Context-specific strategies for sustainable financing are in turn critical for MPAs to tap into the best available opportunities.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "While optimizing traditional financing mechanisms (e.g., user fees, government budgets, grants, etc.) remains essential, innovative business models, climate finance and further collaboration with the private sector are opportunities to help bridge current and future MPA financing gaps.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "MPA practitioners are also exploring a number of emerging technologies and data applications to help build financial sustainability: ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "    - Innovative research and monitoring systems integrating socioeconomic and ecological values are supporting the case for MPA financing ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Digital solutions are optimizing the use of financing mechanisms",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Software tools are helping improve financial management and planning.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Despite the progress made, further efforts are still needed to:",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Mainstream the implementation of MPA governance models that favour MPA financing",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Build and communicate a strong evidence base of MPA benefits and maintain effective channels for institutional awareness-raising",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "     - Expand ongoing efforts into building financing knowledge and know-how among MPA practitioners",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "    - Build and update international datasets and tools that provide insight into MPA costs and future financing needs.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Sustainable financing is a top priority for those who put their passion and efforts into creating and running healthy MPAs throughout the world. As the network of researchers, NGO members, community leaders, government officials and many other groups and individuals working in and for MPAs grows and evolves, you’re not left alone to answer these questions. Although there might be different routes to arrive at the best MPA financing destination, learning from those who have charted a similar course can certainly improve new journeys. This is an ongoing conversation, and we invite you to hear the voices of other practitioners and experts, who share their experience, lessons learned and knowledge throughout this module.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "References",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Balmford, A., Gravestock, P., Hockley, N., McClean, C.J. and Roberts, C.M. (2004). The worldwide costs of marine protected areas. ",
+            "type": "text"
+          },
+          {
+            "text": "Proceedings of the National Academy of Sciences of the United States of America",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ", 101(26), 9694–9697. ",
+            "type": "text"
+          },
+          {
+            "text": "doi.org/10.1073/pnas.0403239101",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.1073/pnas.0403239101",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Bath, P., Guzmán-Valladares, A., Luján-Gallegos, V. and Mathias, K. (2020). ",
+            "type": "text"
+          },
+          {
+            "text": "Conservation Trust Funds 2020: Global Vision, Local Action",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ". Conservation Finance Alliance. ",
+            "type": "text"
+          },
+          {
+            "text": "www.conservationfinancealliance.org/10-year-review",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.conservationfinancealliance.org/10-year-review",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Binet, T., Diazabakana, A., Laustriat, M., Hernandez, S. (2015). ",
+            "type": "text"
+          },
+          {
+            "text": "Sustainable financing of Marine Protected Areas in the Mediterranean: a guide for MPA managers.",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " Vertigo Lab, MedPAN, RAC/SPA, WWF Mediterranean. ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Bohorquez, J., Dvarskas, A. and Pikitch, E. (2019). Filling the Data Gap – A Pressing Need for Advancing MPA Sustainable Finance. ",
+            "type": "text"
+          },
+          {
+            "text": "Frontiers in Marine Science",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " 6: 45. ",
+            "type": "text"
+          },
+          {
+            "text": "doi.org/10.3389/fmars.2019.00045",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.3389/fmars.2019.00045",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Brander, L., Baulcomb, C., van der Lelij, J.A.C., Eppink, F., McVittie, A., Nijsten, L. and van Beukering, P. (2015). ",
+            "type": "text"
+          },
+          {
+            "text": "The benefits to people of expanding Marine Protected Areas.",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " IVM Institute for Environmental Studies Report R-15/05. ",
+            "type": "text"
+          },
+          {
+            "text": "fundingtheocean.org/reports/the-benefits-to-people-of-expanding-marine-protected-areas/",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://fundingtheocean.org/reports/the-benefits-to-people-of-expanding-marine-protected-areas/",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Conservation Finance Alliance (CFA) (2002). ",
+            "type": "text"
+          },
+          {
+            "text": "Conservation Finance Guide: Business Planning for Protected Areas",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ". Available at: ",
+            "type": "text"
+          },
+          {
+            "text": "www.conservationfinance.info",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.conservationfinance.info",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Dalton, K., Skrobe, M., Bell, H., Kantner, B., Berndtson, D., Gerhardinger, L.C. and Christie, P. (2020). Marine-Related Learning Networks: Shifting the Paradigm Toward Collaborative Ocean Governance. ",
+            "type": "text"
+          },
+          {
+            "text": "Frontiers in Marine Science",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " 7: 1–16. ",
+            "type": "text"
+          },
+          {
+            "text": "doi.org/10.3389/fmars.2020.595054",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.3389/fmars.2020.595054",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Davis, K.J., Vianna, G., Meeuwig, J., Meekan, M.G. and Pannell, D.J. (2019). Estimating the Economic Benefits and Costs of Highly Protected Marine Protected Areas. ",
+            "type": "text"
+          },
+          {
+            "text": "Ecosphere",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " 10(10): pp. 1–20. ",
+            "type": "text"
+          },
+          {
+            "text": "doi.org/10.1002/ecs2.2879",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.1002/ecs2.2879",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Deutz, A., Heal, G.M., Nau, R., Swanson, E., Townshend, T., Zhu, L., Delmar, A., Meghji, A., Sethi, S.A., and Tobin-de la Puente, J. (2020). ",
+            "type": "text"
+          },
+          {
+            "text": "Financing Nature: Closing the global biodiversity financing gap",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ". The Paulson Institute, The Nature Conservancy and the Cornell Atkinson Center for Sustainability. Available at: ",
+            "type": "text"
+          },
+          {
+            "text": "www.paulsoninstitute.org/key-initiatives/financing-nature-report",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.paulsoninstitute.org/key-initiatives/financing-nature-report/",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Femmami, N., Le Port, G., Cook, T. and Binet, T. (2020) ",
+            "type": "text"
+          },
+          {
+            "text": "Financing mechanisms: A Guide for Mediterranean Marine Protected Areas",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ". BlueSeeds, MAVA Foundation. ",
+            "type": "text"
+          },
+          {
+            "text": "mava-foundation.org/wp-content/uploads/2021/02/BLUESEEDS_FINANCING_MECHANISMS_GUIDE.pdf",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://mava-foundation.org/wp-content/uploads/2021/02/BLUESEEDS_FINANCING_MECHANISMS_GUIDE.pdf",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Johnson, J.A., Ruta, G., Baldos, U., Cervigni, R., Chonabayashi, S., Corong, E., Gavryliuk, O., Gerber, J., Hertel, T., Nootenboom, C. and Polasky, S. (2021). ",
+            "type": "text"
+          },
+          {
+            "text": "The Economic Case for Nature. A Global Earth-economy model to assess development policy pathways.",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " International Bank for Reconstruction and Development, World Bank. ",
+            "type": "text"
+          },
+          {
+            "text": "hdl.handle.net/10986/35882",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://hdl.handle.net/10986/35882",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Jonas, H.D., Ahmadia, G.N., Bingham, H.C. et al. (2021). Equitable and Effective Area‐based Conservation: Towards the Conserved Areas Paradigm. ",
+            "type": "text"
+          },
+          {
+            "text": "Parks",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " 27(1): 71–84. ",
+            "type": "text"
+          },
+          {
+            "text": "parksjournal.com/wp-content/uploads/2021/05/10.2305-IUCN.CH_.2021PARKS-27-1en_Jonas_et_al.pdf",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://parksjournal.com/wp-content/uploads/2021/05/10.2305-IUCN.CH_.2021PARKS-27-1en_Jonas_et_al.pdf",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Landreau, B. (2012). ",
+            "type": "text"
+          },
+          {
+            "text": "Guidebook for the development of simplified business plans of protected areas",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ". FIBA. ",
+            "type": "text"
+          },
+          {
+            "text": "aires-marines.uqar.ca/id/eprint/41/1/Guide%20business%20plans%20FIBA.pdf",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://aires-marines.uqar.ca/id/eprint/41/1/Guide%20business%20plans%20FIBA.pdf",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "McCrea-Strub, A., Zeller, D., Rashid Sumaila, U., Nelson, J., Balmford, A., and Pauly, D. (2011). Understanding the cost of establishing marine protected areas. ",
+            "type": "text"
+          },
+          {
+            "text": "Marine Policy",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " 35(1): 1–9. ",
+            "type": "text"
+          },
+          {
+            "text": "doi.org/10.1016/j.marpol.2010.07.001",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://doi.org/10.1016/j.marpol.2010.07.001",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "McKinnon, K., Mrema, E.M., Richardson, K., Cooper, D. and Gidda, S.B. (2021). Editorial Essay: Protected and Conserved Areas: Contributing to More Ambitious Conservation Outcomes Post-2020. ",
+            "type": "text"
+          },
+          {
+            "text": "Parks",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " 27(1): 7–12. ",
+            "type": "text"
+          },
+          {
+            "text": "doi.org/10.2305/IUCN.CH.2021.PARKS-27-1KM.en ",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "https://parksjournal.com/wp-content/uploads/2021/05/10.2305-IUCN.CH_.2021PARKS-27-1en_MacKinnon_et_al-.pdf",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "OECD (2017). ",
+            "type": "text"
+          },
+          {
+            "text": "Marine Protected Areas: Economics, Management and Effective Policy Mixes",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ". OECD Publishing. Available at: ",
+            "type": "text"
+          },
+          {
+            "text": "www.oecd.org/env/marine-protected-areas-9789264276208-en.htm",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.oecd.org/env/marine-protected-areas-9789264276208-en.htm",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Sala, E., Mayorga, J., Bradley, D. et al. (2021). Protecting the global ocean for biodiversity, food and climate",
+            "type": "text"
+          },
+          {
+            "text": ". Nature",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": " 592: 397–402. ",
+            "type": "text"
+          },
+          {
+            "text": "www.nature.com/articles/s41586-021-03371-z",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.nature.com/articles/s41586-021-03371-z",
+                  "title": null
+                }
+              }
+            ]
+          },
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Tolisano, J. (2021). The New Wave in Meeting the Cost of Ocean Conservation. ",
+            "type": "text"
+          },
+          {
+            "text": "Eco Magazine",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ", Rising Seas Issue: 85–89. ",
+            "type": "text"
+          },
+          {
+            "text": "digital.ecomagazine.com/publication/frame.php?i=714154&p=&pn=&ver=html5&view=articleBrowser&article_id=4072732",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://digital.ecomagazine.com/publication/frame.php?i=714154&p=&pn=&ver=html5&view=articleBrowser&article_id=4072732",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "UNDP (2018). ",
+            "type": "text"
+          },
+          {
+            "text": "The BIOFIN Workbook 2018: Finance for Nature",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ". The Biodiversity Finance Initiative, United Nations Development Programme, New York. Available at: ",
+            "type": "text"
+          },
+          {
+            "text": "www.biodiversityfinance.net/knowledge-product/biofin-2018-workbook",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.biodiversityfinance.net/knowledge-product/biofin-2018-workbook",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Waldron, A. et al. (2020). ",
+            "type": "text"
+          },
+          {
+            "text": "Protecting 30% of the Planet for Nature: Costs, Benefits and Economic Implications",
+            "type": "text",
+            "marks": [
+              {
+                "type": "em"
+              }
+            ]
+          },
+          {
+            "text": ". Available at: ",
+            "type": "text"
+          },
+          {
+            "text": "www.conservation.cam.ac.uk/files/waldron_report_30_by_30_publish.pdf",
+            "type": "text",
+            "marks": [
+              {
+                "type": "link",
+                "attrs": {
+                  "href": "http://www.conservation.cam.ac.uk/files/waldron_report_30_by_30_publish.pdf",
+                  "title": null
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Author biographies",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Amílcar Guzmán-Valladares ",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "As partner at Wolfs Company, Amílcar provides strategic advice and manages research projects for the public and private sectors, non-governmental organizations, Conservation Trust Funds (CTFs) and protected area managers in Latin America, the Caribbean, Africa and Europe. His background combines knowledge and practical experience in conservation financing strategies, conservation trust funds and environmental economics.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Joris van Pul",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "As a Conservation Finance and Strategy Consultant Joris works towards defining strategies and (financial) planning for (and together with) Nature Protected Areas (NPAs), local governments and NGOs with the eventual goal to ensure long-term — and effective — nature conservation. Furthermore, Joris’ consulting experience includes the identification and analysis of new and innovative financing opportunities for protected area sites.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "Viviana Luján-Gallegos",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Viviana has over 15 years of extensive multidisciplinary and international experience in public-private approaches for environmental finance and biodiversity management. Before joining HSBC Pollination Climate Asset Management in 2021, Viviana was a partner at the Amsterdam based research consultancy Wolfs Company, where she helped developing the conservation finance practice, developed the sustainable financing framework Eco2Fin and co-authored two major reports for the Conservation Finance Alliance: \"Conservation Trust Funds 2020: Global Vision, Local Action\" and \"2020 Practice Standards for Conservation Trust Funds\".",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "From 2015 to 2019 , Viviana was also a legal consultant at the Green Climate Fund (GCF). Prior to becoming a consultant,  she worked seven years as a senior finance associate at two major international law firms in the Netherlands, where  she advised a wide range of actors on project finance, corporate finance, and, mainly climate finance transactions. Viviana holds a law degree from the University of Costa Rica and a MSc. in Environment and Resource Management from the VU University of Amsterdam. She is a Kinship Conservation Fellow (2015) and a member of the Conservation Finance Alliance and Capitals Coalition networks.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 1,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": "About Wolfs Company",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "text": "Wolfs Company brings together a team of dedicated and skilled international consultants who use their experience in business, economics and ecology to assist key actors in maximizing the benefits of sustainable development. In the field of marine conservation, they help managers and policy makers forecast resource needs, design sustainable financing strategies and build evidence-based business cases to motivate the public and private sectors to engage in innovative marine finance partnerships.",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "type": "heading",
+        "attrs": {
+          "level": 2,
+          "showmore": ""
+        },
+        "content": [
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ]
+      }
+    ]
+  },
+  "tags": [],
+  "chapter": {
+    "keyTakeaways": [],
+    "summary": "This chapter explains the role and importance of sustainable financing for marine protected areas (MPAs) and provides an overview of challenges, approaches, emerging trends, persistent limitations and lessons from the field. ",
+    "authors": [1, 2, 3]
+  }
+}

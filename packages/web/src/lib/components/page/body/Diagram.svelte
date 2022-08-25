@@ -1,9 +1,11 @@
 <script lang="ts">
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import type { CardData, DiagramData } from '@mpa/db';
-  import { Cards, SortableList, EditableText, IconButton, InlineSvg } from '$lib/components';
+  import { Cards } from '$lib/components/shared';
+  import { SortableList, EditableText, IconButton, InlineSvg } from '$lib/components/generic';
   import { staticUrl } from '$lib/helpers/content';
   import * as api from '$lib/api';
+  import { toaster } from '$lib/components/generic';
 
   export let diagram: DiagramData;
   export let editable = false;
@@ -11,6 +13,7 @@
 
   let currentPageIndex = 0;
   let cards: CardData[] = [];
+  let list = [];
   let input: HTMLInputElement, imageMobile: HTMLInputElement, imageDesktop: HTMLInputElement;
   let width = null,
     newResource = null,
@@ -27,26 +30,24 @@
     else desktop = false;
   }
 
-  let list = diagram.layers.map((layer, index) => ({
-    id: index,
-    value: layer
-  }));
-
-  console.log('LIST: ', list);
-
-  const sortList = ev => {
-    list = ev.detail;
-    console.log('event: ', ev.detail);
-  };
+  const sortList = ev => { list = ev.detail; };
 
   const updateCardsArray = () => {
-    cards = [];
-    diagram.layers.forEach(obj => {
-      cards.push(obj.card);
-    });
+    cards = diagram.layers.map(item => item.card);
     cards = cards;
   };
+  const updateListArray = () => {
+    list = diagram.layers.map((layer, index) => ({
+      id: index,
+      value: layer
+    }));
+  };
 
+  const onClickSaveList = () => {
+    diagram.layers = list.map(item => item.value);
+    updateCardsArray();
+    toaster.done('Layers saved');
+  };
   const onClickEdit = (index: number) => {
     editLayer = index;
   };
@@ -70,6 +71,7 @@
     diagram.layers.splice(index, 1);
     diagram.layers = diagram.layers;
     updateCardsArray();
+    updateListArray();
   }
 
   async function updateLayer(index: number) {
@@ -96,6 +98,7 @@
     newLayer = null;
 
     updateCardsArray();
+    updateListArray();
   }
 
   async function onImageChange() {
@@ -103,7 +106,10 @@
     else diagram.baselayer.mobile = await api.asset.upload(input.files[0]);
   }
 
-  if (cards.length == 0) updateCardsArray();
+  if (cards.length == 0 && diagram.layers.length != 0) {
+    updateCardsArray();
+    updateListArray();
+  }
 </script>
 
 <svelte:window bind:outerWidth={width} />
@@ -179,29 +185,28 @@
           </form>
         {/if}
 
-        <ul>
-          {#each diagram.layers as layer, i}
-            <li>
-              {#if layer.card.heading === ''}
-                Layer {i}
-              {:else if editLayer === i}
-                <form on:submit|preventDefault={() => updateLayer(editLayer)} class="form">
-                  <div>
-                    <span>Mobile version</span><input type="file" bind:this={imageMobile} />
-                    <span>Desktop version</span><input type="file" bind:this={imageDesktop} />
-                  </div>
-                  <input type="submit" class="button" value="UPDATE" />
-                </form>
-              {:else}
-                {layer.card.heading}
-                <div class="icons">
-                  <IconButton icon="edit" on:click={() => onClickEdit(i)} />
-                  <IconButton icon="delete" on:click={() => onClickDeleteLayer(i)} />
+        <SortableList {list} key="id" on:sort={sortList} let:item let:index>
+          <div class="item">
+            {#if item.value.card.heading === ''}
+              Layer {index}
+            {:else if editLayer === index}
+              <form on:submit|preventDefault={() => updateLayer(editLayer)} class="form">
+                <div>
+                  <span>Mobile version</span><input type="file" bind:this={imageMobile} />
+                  <span>Desktop version</span><input type="file" bind:this={imageDesktop} />
                 </div>
-              {/if}
-            </li>
-          {/each}
-        </ul>
+                <input type="submit" class="button" value="UPDATE" />
+              </form>
+            {:else}
+              {item.value.card.heading}
+              <div class="icons">
+                <IconButton icon="edit" on:click={() => onClickEdit(index)} />
+                <IconButton icon="delete" on:click={() => onClickDeleteLayer(index)} />
+              </div>
+            {/if}
+          </div>
+        </SortableList>
+      <IconButton icon="done" on:click={() => onClickSaveList()} text="Save order"/>
       </div>
       <div class="controls-diagram">
         <IconButton icon="delete" text="Delete diagram" on:click={controls.delete} />
@@ -209,13 +214,6 @@
       </div>
     {/if}
   </div>
-</div>
-<div>
-  <SortableList {list} key="id" on:sort={sortList} let:item>
-    <span>{item.value.card.heading}</span>
-  </SortableList>
-
-  <pre>{JSON.stringify(list)}</pre>
 </div>
 
 <style lang="stylus">
@@ -250,6 +248,10 @@
     position: relative;
   }
 
+  :global(.icon-button::before) {
+    background-color: transparent !important;
+  }
+
   .layer-img {
     position: absolute;
     &:not(.layer-selected) {
@@ -257,25 +259,15 @@
     }
   }
 
-  .layer-list {
-    > ul {
-      padding: 0;
-      list-style-type: none;
-      > li {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-        :global(.icon-button::before) {
-          background-color: transparent;
-        }
-
-        .icons {
-          float: right;
-          display: flex;
-        }
-      }
-    }
+  .icons {
+    float: right;
+    display: flex;
   }
 
   .caption {
@@ -288,14 +280,14 @@
     }
   }
 
-    .resource {
-      padding: 10px 10px 10px 25px;
-      display: inline-grid;
-      typography: ui-small;
+  .resource {
+    padding: 10px 10px 10px 25px;
+    display: inline-grid;
+    typography: ui-small;
 
-      strong {
-        position: absolute;
-        transform: translate(-20px, 13px);
+    strong {
+      position: absolute;
+      transform: translate(-20px, 13px);
     }
   }
 
@@ -327,10 +319,6 @@
   .controls-diagram {
     margin-top: 3rem ;
     align-items: center;
-
-    :global(.icon-button::before) {
-      background-color: transparent;
-    }
   }
 
 </style>

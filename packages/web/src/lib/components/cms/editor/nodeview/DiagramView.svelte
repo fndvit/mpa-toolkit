@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import type { DiagramBlock } from '@mpa/db';
-  import { Diagram } from '$lib/components';
+  import Diagram from '$lib/components/page/body/Diagram.svelte';
   import * as api from '$lib/api';
 
   export let attrs: DiagramBlock['attrs'];

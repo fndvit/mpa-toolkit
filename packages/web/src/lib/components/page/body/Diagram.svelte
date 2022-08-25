@@ -2,10 +2,9 @@
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import type { CardData, DiagramData } from '@mpa/db';
   import { Cards } from '$lib/components/shared';
-  import { SortableList, EditableText, IconButton, InlineSvg } from '$lib/components/generic';
+  import { SortableList, EditableText, IconButton, InlineSvg, toaster } from '$lib/components/generic';
   import { staticUrl } from '$lib/helpers/content';
   import * as api from '$lib/api';
-  import { toaster } from '$lib/components/generic';
 
   export let diagram: DiagramData;
   export let editable = false;
@@ -25,6 +24,7 @@
   $: {
     cards.forEach((obj, i) => {
       diagram.layers[i].card = obj;
+      list[i].value.card = obj;
     });
     if (width > 768) desktop = true;
     else desktop = false;
@@ -34,7 +34,6 @@
 
   const updateCardsArray = () => {
     cards = diagram.layers.map(item => item.card);
-    cards = cards;
   };
   const updateListArray = () => {
     list = diagram.layers.map((layer, index) => ({
@@ -69,17 +68,27 @@
 
   async function onClickDeleteLayer(index: number) {
     diagram.layers.splice(index, 1);
-    diagram.layers = diagram.layers;
+
     updateCardsArray();
     updateListArray();
-  }
+  };
+
+  async function onClickDeleteResource(index: number) {
+    diagram.resources.splice(index, 1);
+    diagram.resources = diagram.resources;
+  };
 
   async function updateLayer(index: number) {
     diagram.layers[index].image.mobile = await api.asset.upload(imageMobile.files[0]);
     diagram.layers[index].image.desktop = await api.asset.upload(imageDesktop.files[0]);
 
     editLayer = null;
-  }
+  };
+
+  async function onImageChange() {
+    if (desktop) diagram.baselayer.desktop = await api.asset.upload(input.files[0]);
+    else diagram.baselayer.mobile = await api.asset.upload(input.files[0]);
+  };
 
   async function addResource() {
     newResource.url = await api.asset.upload(input.files[0]);
@@ -87,29 +96,23 @@
     diagram.resources.push(newResource);
     diagram.resources = diagram.resources;
     newResource = null;
-  }
+  };
 
   async function addLayer() {
     newLayer.image.mobile = await api.asset.upload(imageMobile.files[0]);
     newLayer.image.desktop = await api.asset.upload(imageDesktop.files[0]);
 
     diagram.layers.push(newLayer);
-    diagram.layers = diagram.layers;
     newLayer = null;
 
     updateCardsArray();
     updateListArray();
-  }
-
-  async function onImageChange() {
-    if (desktop) diagram.baselayer.desktop = await api.asset.upload(input.files[0]);
-    else diagram.baselayer.mobile = await api.asset.upload(input.files[0]);
-  }
+  };
 
   if (cards.length == 0 && diagram.layers.length != 0) {
     updateCardsArray();
     updateListArray();
-  }
+  };
 </script>
 
 <svelte:window bind:outerWidth={width} />
@@ -138,7 +141,7 @@
     </div>
   </div>
 
-  <div class="column-2">
+  <div>
     <div class="caption">
       <strong><EditableText bind:value={diagram.caption.title} {editable} placeholder="Title" /></strong>
       <EditableText bind:value={diagram.caption.body} {editable} placeholder="Description" />
@@ -161,10 +164,13 @@
       {/if}
 
       {#if diagram.resources}
-        {#each diagram.resources as resource}
+        {#each diagram.resources as resource, index}
           <div class="resource">
-            <InlineSvg svg="file" />
-            <strong>{resource.label}</strong>
+            <a href={resource.url} download >
+              <InlineSvg svg="file" />
+              <strong>{resource.label}</strong>
+            </a>
+            <IconButton icon="delete" on:click={() => onClickDeleteResource(index)} />
           </div>
         {/each}
       {/if}
@@ -244,10 +250,6 @@
     }
   }
 
-  .column-2 {
-    position: relative;
-  }
-
   :global(.icon-button::before) {
     background-color: transparent !important;
   }
@@ -272,7 +274,6 @@
 
   .caption {
     margin-bottom: 22px;
-    width: 160px;
 
     :global(.editable-text) {
       --outline-color: #d1d1d1;
@@ -281,13 +282,18 @@
   }
 
   .resource {
-    padding: 10px 10px 10px 25px;
+    padding: 0 10px 10px 25px;
     display: inline-grid;
     typography: ui-small;
 
     strong {
       position: absolute;
-      transform: translate(-20px, 13px);
+      transform: translate(-75px, 13px);
+      width: 60px;
+      text-align: end;
+    }
+    a {
+      color: inherit;
     }
   }
 
@@ -318,7 +324,6 @@
 
   .controls-diagram {
     margin-top: 3rem ;
-    align-items: center;
   }
 
 </style>

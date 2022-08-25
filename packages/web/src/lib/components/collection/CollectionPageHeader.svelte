@@ -23,18 +23,22 @@
     </div>
   </div>
   {#if bio != null}
-    <div class="biography">
-      <p>{bio}</p>
+    <div class="biography-container">
+      <div class="content biography-text-area">
+        <p>{bio}</p>
+      </div>
     </div>
   {/if}
 </div>
 
 <style lang="stylus">
+
   .container {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
   }
+
   .content {
     height: 336px;
     padding: 40px var(--page-padding);
@@ -48,24 +52,36 @@
     max-width: var(--page-max-content-width);
     margin: auto;
   }
+
   .text {
     typography: h2-responsive;
     color: #ffffff;
     margin: 0;
   }
+
   .search-bar {
     flex: 1;
     min-width: 500px;
     max-width: 700px;
   }
-  .biography {
+
+  .biography-text-area {
+
+    padding: 20px var(--page-padding);
+    height: auto;
+
     p {
       color: #ffffff;
-      max-width: 825px;
-      padding: 40px var(--page-padding);
+      typography: p-mobile;
+      width: 850px;
     }
-    background-color: alpha($colors.primary-blue, 0.7)
   }
+
+  .biography-container {
+    background-color: alpha($colors.primary-blue, 0.7);
+    box-shadow: inset 0px 3px 16px rgba(0, 0, 0, 0.15);
+  }
+
   .mpath-logo {
     position: absolute;
     top: 20px;
@@ -75,6 +91,7 @@
   }
 
   @media only screen and (max-width: 1024px) {
+
     .container {
       row-gap: 40px;
     }

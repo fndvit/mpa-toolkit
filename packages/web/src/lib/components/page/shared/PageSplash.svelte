@@ -15,8 +15,8 @@
   $: fallbackImg = page.caseStudy ? caseStudyDefaultImage : chapterDefaultImage;
 </script>
 
-<div class="unep-logo">
-  <InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab />
+<div class="mpath-logo">
+  <InlineSvgLink href="/" svg="MPATH" />
 </div>
 <div
   class="splash"
@@ -65,7 +65,7 @@
 
   }
 
-  .unep-logo {
+  .mpath-logo {
     position: absolute;
     margin: 2rem;
     width: 110px;

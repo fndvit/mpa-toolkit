@@ -23,8 +23,10 @@
     </div>
   </div>
   {#if bio != null}
-    <div class="biography">
-      <p>{bio}</p>
+    <div class="biography-container">
+      <div class="content biography-text-area">
+        <p>{bio}</p>
+      </div>
     </div>
   {/if}
 </div>
@@ -63,13 +65,21 @@
     max-width: 700px;
   }
 
-  .biography {
+  .biography-text-area {
+
+    padding: 20px var(--page-padding);
+    height: auto;
+
     p {
       color: #ffffff;
-      max-width: 825px;
-      padding: 40px var(--page-padding);
+      typography: p-mobile;
+      width: 850px;
     }
+  }
+
+  .biography-container {
     background-color: alpha($colors.primary-blue, 0.7);
+    box-shadow: inset 0px 3px 16px rgba(0, 0, 0, 0.15);
   }
 
   .mpath-logo {

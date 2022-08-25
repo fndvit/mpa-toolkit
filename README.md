@@ -4,6 +4,7 @@
 
 - Postgres
 - pnpm
+- AWS credentials setup ([docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html))
 
 ## Getting started
 

@@ -20,4 +20,12 @@
     typography: h2-responsive;
     margin: 2rem 0;
   }
+  .block-h3 {
+    typography: h3-responsive;
+    margin: 2rem 0;
+  }
+  .block-h4 {
+    typography: h4-responsive;
+    margin: 2rem 0;
+  }
 </style>

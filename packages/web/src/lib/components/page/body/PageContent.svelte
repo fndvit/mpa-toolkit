@@ -13,6 +13,19 @@
   const sections = createSections(page.content);
 
   const headings = sections.filter(s => s.id);
+
+  const MAX_LENGTH = 475;
+
+  let blockLength = 0;
+  let sectionMadlib = 0;
+
+  $: sections[0].blocks.forEach(b => {
+      if(b.type === 'paragraph' && b.content)
+        blockLength += b.content?.reduce((blockLength, c) => blockLength + c.text.length, 0);
+    });
+
+  $: if(blockLength < MAX_LENGTH) sectionMadlib = 1;
+
 </script>
 
 <div class="page-content">
@@ -35,7 +48,7 @@
       </Section>
 
       {#if sections.length > 1}
-        {#if i === 0}
+        {#if i === sectionMadlib}
           <div class="madlib-container">
             <ContentMadLib />
           </div>

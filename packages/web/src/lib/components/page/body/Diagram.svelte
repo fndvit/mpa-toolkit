@@ -166,7 +166,7 @@
       {#if diagram.resources}
         {#each diagram.resources as resource, index}
           <div class="resource">
-            <a href={resource.url} download >
+            <a  href={staticUrl(resource.url)} download="file" target="_blank">
               <InlineSvg svg="file" />
               <strong>{resource.label}</strong>
             </a>

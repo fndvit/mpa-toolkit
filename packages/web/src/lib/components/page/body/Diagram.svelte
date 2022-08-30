@@ -170,7 +170,9 @@
               <InlineSvg svg="file" />
               <strong>{resource.label}</strong>
             </a>
-            <IconButton icon="delete" on:click={() => onClickDeleteResource(index)} />
+            {#if editable}
+              <IconButton icon="delete" on:click={() => onClickDeleteResource(index)} />
+            {/if}
           </div>
         {/each}
       {/if}
@@ -248,6 +250,7 @@
     :global(.editor-buttons) {
       display: none;
     }
+    margin-bottom: 22px;
   }
 
   :global(.icon-button::before) {
@@ -274,6 +277,7 @@
 
   .caption {
     margin-bottom: 22px;
+    width: 188px;
 
     :global(.editable-text) {
       --outline-color: #d1d1d1;
@@ -326,4 +330,25 @@
     margin-top: 3rem ;
   }
 
+  @media (max-width: 1024px) {
+    .diagram {
+      grid-template-columns: auto;
+    }
+    .caption {
+      width: auto;
+    }
+    .baselayer-img {
+      img {
+        width: 600px;
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
+    .baselayer-img {
+      img {
+        width: 370px;
+      }
+    }
+  }
 </style>

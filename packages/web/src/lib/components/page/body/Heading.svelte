@@ -13,7 +13,7 @@
 
 <style lang="stylus">
   .block-h1 {
-    typography: h1-responsive;
+    typography: h1-article-responsive;
     margin: 2rem 0;
   }
   .block-h2 {

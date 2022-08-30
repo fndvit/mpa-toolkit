@@ -3,6 +3,7 @@
 
   export let text: string;
   export let editable = false;
+  export let isContent = false;
 
   let hideScroll = false;
   let showGradient = false;
@@ -21,12 +22,15 @@
     node.addEventListener('scroll', updateGradient);
     window.setTimeout(() => updateGradient());
   }
+
+  $: console.log({isContent});
 </script>
 
 <div
   class="content"
   class:hide-scrollbar={hideScroll}
   class:gradient={showGradient}
+  class:content-card={isContent}
   on:mouseenter={showScroll}
   use:gradientAction
   on:scroll={showScroll}
@@ -36,12 +40,19 @@
 
 <style lang="stylus">
 
-  .content {
+  .content-card {
+    typography: content-card-body;
+  }
+
+  :not(content-card){
     typography: summary-card-body;
+  }
+
+  .content {
     margin-top: 15px;
     overflow: auto;
     min-height: 50px;
-    max-height: 170px;
+    max-height: 170px
 
     :global(.no-heading) & {
       margin-top: 0px;

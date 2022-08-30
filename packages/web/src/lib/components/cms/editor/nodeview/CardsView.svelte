@@ -23,7 +23,7 @@
 </script>
 
 <div use:rootDOM contenteditable="false">
-  <Cards bind:cards={attrs.cards} bind:style={attrs.style} editable />
+  <Cards isContent={true} bind:cards={attrs.cards} bind:style={attrs.style} editable />
 </div>
 
 <style lang="stylus">

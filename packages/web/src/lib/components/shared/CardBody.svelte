@@ -23,7 +23,6 @@
     window.setTimeout(() => updateGradient());
   }
 
-  $: console.log({isContent});
 </script>
 
 <div

@@ -29,7 +29,6 @@
     <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 1 }} text="H1" />
     <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 2 }} text="H2" />
     <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 3 }} text="H3" />
-    <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 4 }} text="H4" />
     <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />
     <MenuSeperator />
     <ListControls {editorState} />

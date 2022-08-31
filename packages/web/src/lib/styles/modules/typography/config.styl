@@ -15,6 +15,7 @@ config({
   h4: 20px 700
   h4-light: 24px
   h4-graphic: 20px 700
+  h4-graphic-mobile: 18px 700
   h5: 16px 700
   h5-mobile: 14px/20px 700
   h5-light: 20px
@@ -37,10 +38,6 @@ config({
     default: h1
     small: h1-mobile
 
-  h1-article-responsive
-    default: h2
-    small: h2-mobile
-
   summary-card-body
     default: p-medium
     small: p-mobile
@@ -57,13 +54,17 @@ config({
     default: p-graphic
     small: ui-small
 
-  h2-responsive
+  h2-responsive //here
     default: h2
     small: h2-mobile
 
-  h3-responsive
-    default: h3
+  h3-responsive //here
+    default: h3-light
     small: h3-mobile
+
+  h4-graphic-responsive // here
+    default: h4-graphic
+    small: h4-graphic-mobile
 
   h4-responsive
     default: h4

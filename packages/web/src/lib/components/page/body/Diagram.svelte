@@ -2,7 +2,7 @@
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import type { CardData, DiagramData } from '@mpa/db';
   import { Cards } from '$lib/components/shared';
-  import { SortableList, EditableText, IconButton, InlineSvg, toaster } from '$lib/components/generic';
+  import { SortableList, EditableText, IconButton, InlineSvgLink, toaster } from '$lib/components/generic';
   import { staticUrl } from '$lib/helpers/content';
   import * as api from '$lib/api';
 
@@ -166,10 +166,9 @@
       {#if diagram.resources}
         {#each diagram.resources as resource, index}
           <div class="resource">
-            <a  href={staticUrl(resource.url)} download="file" target="_blank">
-              <InlineSvg svg="file" />
+            <InlineSvgLink href={staticUrl(resource.url)} svg="file" download={diagram.caption.title}>
               <strong>{resource.label}</strong>
-            </a>
+            </InlineSvgLink>
             {#if editable}
               <IconButton icon="delete" on:click={() => onClickDeleteResource(index)} />
             {/if}

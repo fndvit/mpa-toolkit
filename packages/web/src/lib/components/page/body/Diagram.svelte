@@ -30,7 +30,9 @@
     else desktop = false;
   }
 
-  const sortList = ev => { list = ev.detail; };
+  const sortList = ev => {
+    list = ev.detail;
+  };
 
   const updateCardsArray = () => {
     cards = diagram.layers.map(item => item.card);
@@ -71,24 +73,24 @@
 
     updateCardsArray();
     updateListArray();
-  };
+  }
 
   async function onClickDeleteResource(index: number) {
     diagram.resources.splice(index, 1);
     diagram.resources = diagram.resources;
-  };
+  }
 
   async function updateLayer(index: number) {
     diagram.layers[index].image.mobile = await api.asset.upload(imageMobile.files[0]);
     diagram.layers[index].image.desktop = await api.asset.upload(imageDesktop.files[0]);
 
     editLayer = null;
-  };
+  }
 
   async function onImageChange() {
     if (desktop) diagram.baselayer.desktop = await api.asset.upload(input.files[0]);
     else diagram.baselayer.mobile = await api.asset.upload(input.files[0]);
-  };
+  }
 
   async function addResource() {
     newResource.url = await api.asset.upload(input.files[0]);
@@ -96,7 +98,7 @@
     diagram.resources.push(newResource);
     diagram.resources = diagram.resources;
     newResource = null;
-  };
+  }
 
   async function addLayer() {
     newLayer.image.mobile = await api.asset.upload(imageMobile.files[0]);
@@ -107,12 +109,12 @@
 
     updateCardsArray();
     updateListArray();
-  };
+  }
 
   if (cards.length == 0 && diagram.layers.length != 0) {
     updateCardsArray();
     updateListArray();
-  };
+  }
 </script>
 
 <svelte:window bind:outerWidth={width} />
@@ -213,7 +215,7 @@
             {/if}
           </div>
         </SortableList>
-      <IconButton icon="done" on:click={() => onClickSaveList()} text="Save order"/>
+        <IconButton icon="done" on:click={() => onClickSaveList()} text="Save order" />
       </div>
       <div class="controls-diagram">
         <IconButton icon="delete" text="Delete diagram" on:click={controls.delete} />

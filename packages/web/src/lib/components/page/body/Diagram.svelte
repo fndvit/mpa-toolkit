@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
-  import type { CardData, DiagramData } from '@mpa/db';
+  import type { CardData, DiagramData, DiagramImage, DiagramLayer, DiagramResource } from '@mpa/db';
   import { Cards } from '$lib/components/shared';
-  import { SortableList, EditableText, IconButton, InlineSvgLink, toaster } from '$lib/components/generic';
+  import { SortableList, EditableText, IconButton, InlineSvgLink } from '$lib/components/generic';
   import { staticUrl } from '$lib/helpers/content';
-  import * as api from '$lib/api';
+  import DiagramLayerImgEditor from '$lib/components/cms/DiagramLayerImgEditor.svelte';
+  import DiagramResourceEditor from '$lib/components/cms/DiagramResourceEditor.svelte';
 
   export let diagram: DiagramData;
   export let editable = false;
@@ -12,116 +13,52 @@
 
   let currentPageIndex = 0;
   let cards: CardData[] = [];
-  let list = [];
-  let input: HTMLInputElement, imageMobile: HTMLInputElement, imageDesktop: HTMLInputElement;
-  let width = null,
-    newResource = null,
-    newLayer = null,
-    editLayer = null;
-  let desktop = false;
-  let view = 'toggle_on';
+  let input: HTMLInputElement;
+  let width: number;
+  let newResource = false;
+  let newLayer = false;
+  let editLayer: number;
 
-  $: {
-    cards.forEach((obj, i) => {
-      diagram.layers[i].card = obj;
-      list[i].value.card = obj;
-    });
-    if (width > 768) desktop = true;
-    else desktop = false;
-  }
-
-  const sortList = ev => {
-    list = ev.detail;
-  };
-
-  const updateCardsArray = () => {
-    cards = diagram.layers.map(item => item.card);
-  };
-  const updateListArray = () => {
-    list = diagram.layers.map((layer, index) => ({
-      id: index,
-      value: layer
-    }));
-  };
-
-  const onClickSaveList = () => {
-    diagram.layers = list.map(item => item.value);
-    updateCardsArray();
-    toaster.done('Layers saved');
-  };
-  const onClickEdit = (index: number) => {
-    editLayer = index;
-  };
-  const onClickAddResource = () => {
-    newResource = { label: '', url: '' };
-  };
-  const onClickAddLayer = () => {
-    newLayer = {
-      image: { desktop: '', mobile: '' },
-      card: { heading: '', body: '' }
-    };
-  };
-
-  const changeView = () => {
-    desktop = !desktop;
-    if (view == 'toggle_on') view = 'toggle_off';
-    else view = 'toggle_on';
-  };
+  const BASE_LAYER = -1;
 
   async function onClickDeleteLayer(index: number) {
     diagram.layers.splice(index, 1);
-
-    updateCardsArray();
-    updateListArray();
+    diagram.layers = diagram.layers;
   }
 
+  const onClickAddResource = () => (newResource = true);
   async function onClickDeleteResource(index: number) {
     diagram.resources.splice(index, 1);
     diagram.resources = diagram.resources;
   }
 
-  async function updateLayer(index: number) {
-    diagram.layers[index].image.mobile = await api.asset.upload(imageMobile.files[0]);
-    diagram.layers[index].image.desktop = await api.asset.upload(imageDesktop.files[0]);
-
+  async function updateLayer(diagramImage: DiagramImage, urls: { mobile: string; desktop: string }) {
+    diagramImage.mobile = urls.mobile;
+    diagramImage.desktop = urls.desktop;
+    diagram.layers = diagram.layers;
     editLayer = null;
   }
 
-  async function onImageChange() {
-    if (desktop) diagram.baselayer.desktop = await api.asset.upload(input.files[0]);
-    else diagram.baselayer.mobile = await api.asset.upload(input.files[0]);
+  async function addResource(resource: DiagramResource) {
+    diagram.resources = [...diagram.resources, resource];
+    newResource = false;
   }
 
-  async function addResource() {
-    newResource.url = await api.asset.upload(input.files[0]);
-
-    diagram.resources.push(newResource);
-    diagram.resources = diagram.resources;
-    newResource = null;
-  }
-
-  async function addLayer() {
-    newLayer.image.mobile = await api.asset.upload(imageMobile.files[0]);
-    newLayer.image.desktop = await api.asset.upload(imageDesktop.files[0]);
-
-    diagram.layers.push(newLayer);
+  async function addLayer(urls: { mobile: string; desktop: string }) {
+    const _newLayer: DiagramLayer = { card: { heading: `Layer ${diagram.layers.length + 1}`, body: '' }, image: urls };
+    diagram.layers = [...diagram.layers, _newLayer];
     newLayer = null;
-
-    updateCardsArray();
-    updateListArray();
   }
 
-  if (cards.length == 0 && diagram.layers.length != 0) {
-    updateCardsArray();
-    updateListArray();
-  }
+  $: cards = diagram.layers.map(item => item.card);
+  $: desktop = width > 768;
 </script>
 
 <svelte:window bind:outerWidth={width} />
 
 <div class="diagram">
   <div>
-    <div class="baselayer-img">
+    <div class="layer-imgs">
       {#each diagram.layers as layer, i}
         <img
           class="layer-img"
@@ -135,7 +72,6 @@
         alt="diagram"
         on:click={() => input.click()}
       />
-      <input class="image-input" bind:this={input} type="file" on:change={onImageChange} />
     </div>
 
     <div class="cards">
@@ -154,14 +90,8 @@
 
       {#if editable}
         <IconButton icon="add" on:click={onClickAddResource} text="Add resource" />
-        {#if newResource !== null}
-          <form on:submit|preventDefault={addResource} class="form">
-            <div>
-              <input type="text" bind:value={newResource.label} placeholder="Name" />
-              <input type="file" bind:this={input} />
-            </div>
-            <input type="submit" class="button" value="ADD" />
-          </form>
+        {#if newResource}
+          <DiagramResourceEditor on:save={e => addResource(e.detail)} />
         {/if}
       {/if}
 
@@ -183,43 +113,47 @@
       <div class="layer-list">
         <h4>Layers</h4>
 
-        <IconButton icon="add" on:click={onClickAddLayer} text="Add layer" />
-        {#if newLayer !== null}
-          <form on:submit|preventDefault={addLayer} class="form">
-            <div>
-              <span>Mobile version</span><input type="file" bind:this={imageMobile} />
-              <span>Desktop version</span><input type="file" bind:this={imageDesktop} />
-            </div>
-            <input type="submit" class="button" value="ADD" />
-          </form>
+        <IconButton icon="add" on:click={() => (newLayer = true)} text="Add layer" />
+
+        {#if newLayer}
+          <DiagramLayerImgEditor on:save={e => addLayer(e.detail)} />
+        {/if}
+        <div class="layer-list-header">
+          Base layer
+          <div class="icons">
+            <IconButton icon="edit" on:click={() => (editLayer = BASE_LAYER)} />
+            <IconButton icon="delete" disabled />
+          </div>
+        </div>
+
+        {#if editLayer === BASE_LAYER}
+          <DiagramLayerImgEditor on:save={e => updateLayer(diagram.baselayer, e.detail)} image={diagram.baselayer} />
         {/if}
 
-        <SortableList {list} key="id" on:sort={sortList} let:item let:index>
-          <div class="item">
-            {#if item.value.card.heading === ''}
-              Layer {index}
-            {:else if editLayer === index}
-              <form on:submit|preventDefault={() => updateLayer(editLayer)} class="form">
-                <div>
-                  <span>Mobile version</span><input type="file" bind:this={imageMobile} />
-                  <span>Desktop version</span><input type="file" bind:this={imageDesktop} />
-                </div>
-                <input type="submit" class="button" value="UPDATE" />
-              </form>
-            {:else}
-              {item.value.card.heading}
-              <div class="icons">
-                <IconButton icon="edit" on:click={() => onClickEdit(index)} />
-                <IconButton icon="delete" on:click={() => onClickDeleteLayer(index)} />
-              </div>
-            {/if}
+        <SortableList list={diagram.layers} on:sort={e => (diagram.layers = e.detail)} let:item let:index>
+          <div class="layer-list-header">
+            {item.card.heading}
+            <div class="icons">
+              <IconButton icon="edit" on:click={() => (editLayer = index)} />
+              <IconButton icon="delete" on:click={() => onClickDeleteLayer(index)} />
+            </div>
           </div>
+
+          {#if editLayer === index}
+            <DiagramLayerImgEditor
+              on:save={e => updateLayer(diagram.layers[index].image, e.detail)}
+              image={diagram.layers[index].image}
+            />
+          {/if}
         </SortableList>
-        <IconButton icon="done" on:click={() => onClickSaveList()} text="Save order" />
       </div>
       <div class="controls-diagram">
         <IconButton icon="delete" text="Delete diagram" on:click={controls.delete} />
-        <IconButton icon={view} text="Change view" on:click={changeView} />
+        <IconButton
+          icon={desktop ? 'toggle_off' : 'toggle_on'}
+          text="Change view"
+          on:click={() => (desktop = !desktop)}
+        />
       </div>
     {/if}
   </div>
@@ -237,13 +171,10 @@
     margin-bottom: 2rem;
   }
 
-  .baselayer-img {
+  .layer-imgs {
     margin-bottom: 20px;
     img {
       width: 800px;
-    }
-    .image-input {
-      display: none;
     }
   }
 
@@ -265,10 +196,13 @@
     }
   }
 
-  .item {
+  .layer-list-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .item-header {
   }
 
   .icons {
@@ -297,34 +231,6 @@
       width: 60px;
       text-align: end;
     }
-    a {
-      color: inherit;
-    }
-  }
-
-  .form {
-    margin: 10px 0;
-
-    input {
-      border: none;
-      text-decoration: none;
-      margin: 5px;
-
-      &:focus {
-        outline: none;
-        border-bottom: solid 1px;
-      }
-    }
-
-    input[type=submit] {
-      margin: 10px;
-      padding: 10px 15px;
-      border-radius: 5px;
-
-      &:hover {
-        filter: brightness(105%);
-      }
-    }
   }
 
   .controls-diagram {
@@ -338,7 +244,7 @@
     .caption {
       width: auto;
     }
-    .baselayer-img {
+    .layer-imgs {
       img {
         width: 600px;
       }
@@ -346,7 +252,7 @@
   }
 
   @media (max-width: 500px) {
-    .baselayer-img {
+    .layer-imgs {
       img {
         width: 370px;
       }

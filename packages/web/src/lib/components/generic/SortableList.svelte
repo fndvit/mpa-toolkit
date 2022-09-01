@@ -6,7 +6,7 @@
   type K = $$Generic<string | number>;
   type T = $$Generic<{ [Key in K]: string | numeber }>;
   export let list: T[];
-  export let key: K;
+  export let key: K = undefined;
 
   const getKey = (item: T) => (key ? item[key] : item);
 
@@ -38,7 +38,7 @@
     reorder({ from, to });
   };
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ sort: T[] }>();
   const reorder = ({ from, to }) => {
     let newList = [...list];
     newList[from] = [newList[to], (newList[to] = newList[from])][0];

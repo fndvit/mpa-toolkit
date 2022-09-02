@@ -8,6 +8,7 @@
   import ListControls from './ListControls.svelte';
   import ImageButton from './ImageButton.svelte';
   import Formatting from './Formatting.svelte';
+  import HeadingBlockButton from './HeadingBlockButton.svelte';
   import { IconButton } from '$lib/components/generic';
   import { schema } from '$lib/editor/schema';
 
@@ -26,9 +27,7 @@
     <MarkButton {editorState} markType={schema.marks.strong} icon="format_bold" />
     <MarkButton {editorState} markType={schema.marks.em} icon="format_italic" />
     <MenuSeperator />
-    <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 1 }} text="H1" />
-    <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 2 }} text="H2" />
-    <BlockButton {editorState} nodeType={schema.nodes.heading} attrs={{ level: 3 }} text="H3" />
+    <HeadingBlockButton {editorState} />
     <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />
     <MenuSeperator />
     <ListControls {editorState} />

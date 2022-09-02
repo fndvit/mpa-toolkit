@@ -10,6 +10,7 @@
   import Formatting from './Formatting.svelte';
   import { IconButton } from '$lib/components/generic';
   import { schema } from '$lib/editor/schema';
+  import { createEmptyDiagram } from '$lib/helpers/content';
 
   export let editorState: EditorState;
 
@@ -17,6 +18,11 @@
 
   const insertCards = () => {
     const tr = editorState.tr.replaceSelectionWith(schema.nodes.cards.createAndFill());
+    view.dispatch(tr);
+  };
+
+  const insertDiagram = () => {
+    const tr = editorState.tr.replaceSelectionWith(schema.nodes.diagram.createAndFill(createEmptyDiagram()));
     view.dispatch(tr);
   };
 </script>
@@ -33,6 +39,7 @@
     <ListControls {editorState} />
     <MenuSeperator />
     <IconButton on:click={insertCards} icon="library_books" title="Add cards" />
+    <IconButton on:click={insertDiagram} icon="donut_small" title="Add diagram" />
     <MenuSeperator />
     <ImageButton title="Add image" />
     <MenuSeperator />

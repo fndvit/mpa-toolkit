@@ -1,46 +1,38 @@
 <script lang="ts">
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
-  import type { CardData, DiagramData, DiagramImage, DiagramLayer, DiagramResource } from '@mpa/db';
+  import type { CardData, DiagramData, DiagramLayer, DiagramResource } from '@mpa/db';
   import { Cards } from '$lib/components/shared';
   import { SortableList, EditableText, IconButton } from '$lib/components/generic';
   import { staticUrl } from '$lib/helpers/content';
-  import DiagramLayerImgEditor from '$lib/components/cms/DiagramLayerImgEditor.svelte';
   import DownloadableFile from '$lib/components/cms/editor/DownloadableFile.svelte';
   import NewDiagramResourceButton from '$lib/components/cms/NewDiagramResourceButton.svelte';
+  import DiagramLayerListItem from '$lib/components/cms/DiagramLayerListItem.svelte';
 
   export let diagram: DiagramData;
   export let editable = false;
   export let controls: SvelteNodeViewControls = null;
 
+  const BASE_LAYER = -1;
   let currentPageIndex = 0;
   let cards: CardData[] = [];
-  let input: HTMLInputElement;
   let width: number;
-  let newLayer = false;
-  let editLayer: number;
+  let editLayer: DiagramLayer | typeof BASE_LAYER;
 
-  const BASE_LAYER = -1;
-
-  async function onClickDeleteLayer(index: number) {
-    diagram.layers.splice(index, 1);
-    diagram.layers = diagram.layers;
+  function onClickLayerItem(layer: typeof editLayer) {
+    editLayer = editLayer === layer ? null : layer;
+    if (layer !== -1) currentPageIndex = diagram.layers.indexOf(layer);
   }
 
-  async function updateLayer(diagramImage: DiagramImage, urls: { mobile: string; desktop: string }) {
-    diagramImage.mobile = urls.mobile;
-    diagramImage.desktop = urls.desktop;
-    diagram.layers = diagram.layers;
-    editLayer = null;
-  }
-
-  async function addResource(resource: DiagramResource) {
+  function addResource(resource: DiagramResource) {
     diagram.resources = [...diagram.resources, resource];
   }
 
-  async function addLayer(urls: { mobile: string; desktop: string }) {
-    const _newLayer: DiagramLayer = { card: { heading: `Layer ${diagram.layers.length + 1}`, body: '' }, image: urls };
-    diagram.layers = [...diagram.layers, _newLayer];
-    newLayer = null;
+  function addNewLayer() {
+    const newLayer: DiagramLayer = {
+      card: { heading: `Layer ${diagram.layers.length + 1}`, body: '' },
+      image: { mobile: null, desktop: null }
+    };
+    diagram.layers = [...diagram.layers, newLayer];
   }
 
   $: cards = diagram.layers.map(item => item.card);
@@ -48,10 +40,12 @@
 </script>
 
 <svelte:window bind:outerWidth={width} />
+<svelte:body on:click={() => (editLayer = null)} />
 
 <div class="diagram">
   <div>
     <div class="layer-imgs">
+      <img class="base-layer" src={staticUrl(diagram.baselayer[desktop ? 'desktop' : 'mobile'])} alt="diagram" />
       {#each diagram.layers as layer, i}
         <img
           class="layer-img"
@@ -60,11 +54,6 @@
           alt="layer-{i}"
         />
       {/each}
-      <img
-        src={desktop ? staticUrl(diagram.baselayer.desktop) : staticUrl(diagram.baselayer.mobile)}
-        alt="diagram"
-        on:click={() => input.click()}
-      />
     </div>
 
     <div class="cards">
@@ -104,51 +93,40 @@
       <div class="layer-list">
         <h4>Layers</h4>
 
-        <IconButton icon="add" on:click={() => (newLayer = true)} text="Add layer" />
-
-        {#if newLayer}
-          <DiagramLayerImgEditor on:save={e => addLayer(e.detail)} />
-        {/if}
-        <div class="layer-list-header">
-          Base layer
-          <div class="icons">
-            <IconButton
-              icon="edit"
-              on:click={() => (editLayer === null ? (editLayer = BASE_LAYER) : (editLayer = null))}
-            />
-            <IconButton icon="delete" disabled />
-          </div>
-        </div>
-
-        {#if editLayer === BASE_LAYER}
-          <DiagramLayerImgEditor on:save={e => updateLayer(diagram.baselayer, e.detail)} image={diagram.baselayer} />
-        {/if}
+        <DiagramLayerListItem
+          title="Base layer"
+          image={diagram.baselayer}
+          edit={editLayer === BASE_LAYER}
+          highlight={editLayer === BASE_LAYER}
+          deletable={false}
+          on:click={() => onClickLayerItem(BASE_LAYER)}
+          on:update={() => (diagram.layers = diagram.layers)}
+        />
 
         <SortableList list={diagram.layers} on:sort={e => (diagram.layers = e.detail)} let:item let:index>
-          <div class="layer-list-header">
-            {item.card.heading}
-            <div class="icons">
-              <IconButton
-                icon="edit"
-                on:click={() => (editLayer === null ? (editLayer = index) : (editLayer = null))}
-              />
-              <IconButton icon="delete" on:click={() => onClickDeleteLayer(index)} />
-            </div>
-          </div>
-
-          {#if editLayer === index}
-            <DiagramLayerImgEditor
-              on:save={e => updateLayer(diagram.layers[index].image, e.detail)}
-              image={diagram.layers[index].image}
-            />
-          {/if}
+          <DiagramLayerListItem
+            title={item.card.heading}
+            image={item.image}
+            edit={item === editLayer}
+            highlight={index === currentPageIndex}
+            on:click={() => onClickLayerItem(item)}
+            on:delete={() => (diagram.layers = diagram.layers.filter(l => l !== item))}
+            on:update={() => (diagram.layers = diagram.layers)}
+            on:dragstart={() => {
+              console.log('dragstart');
+              // editLayer = null;
+            }}
+          />
         </SortableList>
+
+        <IconButton icon="add" on:click={addNewLayer} text="Add layer" />
       </div>
+
       <div class="controls-diagram">
         <IconButton icon="delete" text="Delete diagram" on:click={controls.delete} />
         <IconButton
           icon={desktop ? 'toggle_off' : 'toggle_on'}
-          text="Change view"
+          text={desktop ? 'Switch to mobile view' : 'Switch to desktop view'}
           on:click={() => (desktop = !desktop)}
         />
       </div>
@@ -169,28 +147,31 @@
   }
 
   .layer-imgs {
+    position: relative;
+    z-index: 1;
     margin-bottom: 20px;
-    img {
-      max-width: 800px;
-    }
+    width: 800px;
+    font-size: 0;
+    overflow: hidden;
+  }
 
-    &::after {
-      content: ' ';
-      display: table;
-      clear: both;
-    }
+  .base-layer {
+    width: 100%;
+
   }
 
   .layer-img {
-      float: left;
-      margin-right: -100%;
-      position: relative;
-      z-index: 1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
 
-      &:not(.layer-selected) {
-        display: none;
-      }
+    &:not(.layer-selected) {
+      display: none;
     }
+  }
 
   .cards {
     :global(.editor-buttons) {
@@ -203,15 +184,12 @@
     background-color: transparent !important;
   }
 
-  .layer-list-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .icons {
-    float: right;
-    display: flex;
+  .layer-list {
+    position: relative;
+    z-index: 2;
+    :global(ul) {
+      margin: 0.5rem 0;
+    }
   }
 
   .caption {
@@ -234,7 +212,7 @@
   }
 
   .controls-diagram {
-    margin-top: 3rem ;
+    margin-top: 1rem ;
   }
 
   @media (max-width: 1024px) {

@@ -26,7 +26,6 @@
     diagram.layers = diagram.layers;
   }
 
-  const onClickAddResource = () => (newResource = true);
   async function onClickDeleteResource(index: number) {
     diagram.resources.splice(index, 1);
     diagram.resources = diagram.resources;
@@ -89,7 +88,7 @@
       <h4>Download this resource</h4>
 
       {#if editable}
-        <IconButton icon="add" on:click={onClickAddResource} text="Add resource" />
+        <IconButton icon="add" on:click={() => (newResource = !newResource)} text="Add resource" />
         {#if newResource}
           <DiagramResourceEditor on:save={e => addResource(e.detail)} />
         {/if}
@@ -121,7 +120,7 @@
         <div class="layer-list-header">
           Base layer
           <div class="icons">
-            <IconButton icon="edit" on:click={() => (editLayer = BASE_LAYER)} />
+            <IconButton icon="edit" on:click={() => ((editLayer === null) ? editLayer = BASE_LAYER : editLayer = null)} />
             <IconButton icon="delete" disabled />
           </div>
         </div>
@@ -134,7 +133,7 @@
           <div class="layer-list-header">
             {item.card.heading}
             <div class="icons">
-              <IconButton icon="edit" on:click={() => (editLayer = index)} />
+              <IconButton icon="edit" on:click={() => ((editLayer === null) ? editLayer = index : editLayer = null)} />
               <IconButton icon="delete" on:click={() => onClickDeleteLayer(index)} />
             </div>
           </div>

@@ -164,19 +164,35 @@
   .diagram {
     flex: 1;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 166px;
     column-gap: 20px;
 
     typography: ui-small;
-    margin-bottom: 2rem;
   }
 
   .layer-imgs {
     margin-bottom: 20px;
     img {
-      width: 800px;
+      max-width: 800px;
+    }
+
+    &::after {
+      content: ' ';
+      display: table;
+      clear: both;
     }
   }
+
+  .layer-img {
+      float: left;
+      margin-right: -100%;
+      position: relative;
+      z-index: 1;
+
+      &:not(.layer-selected) {
+        display: none;
+      }
+    }
 
   .cards {
     :global(.editor-buttons) {
@@ -189,20 +205,10 @@
     background-color: transparent !important;
   }
 
-  .layer-img {
-    position: absolute;
-    &:not(.layer-selected) {
-      display: none;
-    }
-  }
-
   .layer-list-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-
-  .item-header {
   }
 
   .icons {
@@ -212,7 +218,6 @@
 
   .caption {
     margin-bottom: 22px;
-    width: 188px;
 
     :global(.editable-text) {
       --outline-color: #d1d1d1;
@@ -241,21 +246,10 @@
     .diagram {
       grid-template-columns: auto;
     }
-    .caption {
-      width: auto;
-    }
-    .layer-imgs {
-      img {
-        width: 600px;
-      }
-    }
-  }
-
-  @media (max-width: 500px) {
-    .layer-imgs {
-      img {
-        width: 370px;
-      }
+    img {
+      object-fit: cover;
+      width: 100%;
+      max-height: 100%;
     }
   }
 </style>

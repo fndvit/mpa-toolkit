@@ -45,7 +45,7 @@
 <svelte:body on:click={() => (editLayer = null)} />
 
 <div class="diagram">
-  <div>
+  <div class="diagram-body-panel">
     <div class="layer-imgs">
       {#if diagram.baselayer[format]}
         <img class="base-layer" src={staticUrl(diagram.baselayer[format])} alt="diagram" />
@@ -69,7 +69,7 @@
     {/if}
   </div>
 
-  <div>
+  <div class="diagram-info-panel">
     <div class="caption">
       <strong><EditableText bind:value={diagram.caption.title} {editable} placeholder="Title" /></strong>
       <EditableText bind:value={diagram.caption.body} {editable} placeholder="Description" />
@@ -134,7 +134,7 @@
         <IconButton icon="delete" text="Delete diagram" on:click={controls.delete} />
         <IconButton
           icon={desktop ? 'toggle_off' : 'toggle_on'}
-          text={desktop ? 'Switch to mobile view' : 'Switch to desktop view'}
+          text={desktop ? 'Desktop view' : 'Mobile view'}
           on:click={() => (desktop = !desktop)}
         />
       </div>
@@ -145,26 +145,41 @@
 <style lang="stylus">
 
   .diagram {
-    flex: 1;
-    display: grid;
-    grid-template-columns: auto 166px;
+    display: flex;
     column-gap: 20px;
     --ib-hover-bg: $colors.secondary-bg;
-
+    margin-right: calc(-100vw + 950px);
+    max-width: 1050px;
     typography: ui-small;
+
+
+    +breakpoint(page, medium) {
+      margin: 0;
+    }
+    +breakpoint(page, small) {
+      flex-direction: column;
+    }
+  }
+
+  .diagram-body-panel {
+    flex: 1;
+  }
+
+  .diagram-info-panel {
+    flex: 0 0 12rem;
   }
 
   .layer-imgs {
     position: relative;
     z-index: 1;
     margin-bottom: 20px;
-    width: 800px;
     font-size: 0;
     overflow: hidden;
   }
 
   .base-layer {
-    width: 100%;
+    width: max-content;
+    max-width: 100%;
   }
 
   .empty-base-layer {
@@ -234,16 +249,5 @@
 
   .controls-diagram {
     margin-top: 1rem ;
-  }
-
-  @media (max-width: 1024px) {
-    .diagram {
-      grid-template-columns: auto;
-    }
-    img {
-      object-fit: cover;
-      width: 100%;
-      max-height: 100%;
-    }
   }
 </style>

@@ -4,4 +4,4 @@
   export let block: CardsBlock;
 </script>
 
-<Cards isContent={true} cards={block.attrs.cards} style={block.attrs.style} />
+<Cards cards={block.attrs.cards} style={block.attrs.style} />

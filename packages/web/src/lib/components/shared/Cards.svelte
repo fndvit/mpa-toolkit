@@ -20,7 +20,6 @@
   export let progress = true;
   export let canToggleHeading = true;
   export let removable = true;
-  export let isContent = false;
 
   let splide: Splide;
 
@@ -70,7 +69,7 @@
             {#if style !== 'no-heading'}
               <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
             {/if}
-            <CardBody {isContent} bind:text={card.body} editable={editable && currentPageIndex === i} />
+            <CardBody bind:text={card.body} editable={editable && currentPageIndex === i} />
           </div>
         </SplideSlide>
       {/each}

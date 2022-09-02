@@ -26,10 +26,19 @@
   .diagram-resource-editor {
     margin: 10px 0;
 
-    .button {
+    input[type="text"] {
       border: none;
       text-decoration: none;
-      margin: 5px;
+      margin: 10px;
+
+      &:focus {
+        outline: none;
+        border-bottom: solid 1px;
+      }
+    }
+
+    .button {
+      border: none;
 
       margin: 10px;
       padding: 10px 15px;
@@ -38,13 +47,7 @@
       &:hover {
         filter: brightness(105%);
       }
-
-      &:focus {
-        outline: none;
-        border-bottom: solid 1px;
-      }
     }
-
   }
 
 </style>

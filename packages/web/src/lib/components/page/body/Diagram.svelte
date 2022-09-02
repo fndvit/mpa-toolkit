@@ -2,10 +2,11 @@
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import type { CardData, DiagramData, DiagramImage, DiagramLayer, DiagramResource } from '@mpa/db';
   import { Cards } from '$lib/components/shared';
-  import { SortableList, EditableText, IconButton, InlineSvgLink } from '$lib/components/generic';
+  import { SortableList, EditableText, IconButton } from '$lib/components/generic';
   import { staticUrl } from '$lib/helpers/content';
   import DiagramLayerImgEditor from '$lib/components/cms/DiagramLayerImgEditor.svelte';
-  import DiagramResourceEditor from '$lib/components/cms/DiagramResourceEditor.svelte';
+  import DownloadableFile from '$lib/components/cms/editor/DownloadableFile.svelte';
+  import NewDiagramResourceButton from '$lib/components/cms/NewDiagramResourceButton.svelte';
 
   export let diagram: DiagramData;
   export let editable = false;
@@ -15,7 +16,6 @@
   let cards: CardData[] = [];
   let input: HTMLInputElement;
   let width: number;
-  let newResource = false;
   let newLayer = false;
   let editLayer: number;
 
@@ -24,11 +24,6 @@
   async function onClickDeleteLayer(index: number) {
     diagram.layers.splice(index, 1);
     diagram.layers = diagram.layers;
-  }
-
-  async function onClickDeleteResource(index: number) {
-    diagram.resources.splice(index, 1);
-    diagram.resources = diagram.resources;
   }
 
   async function updateLayer(diagramImage: DiagramImage, urls: { mobile: string; desktop: string }) {
@@ -40,7 +35,6 @@
 
   async function addResource(resource: DiagramResource) {
     diagram.resources = [...diagram.resources, resource];
-    newResource = false;
   }
 
   async function addLayer(urls: { mobile: string; desktop: string }) {
@@ -84,29 +78,27 @@
       <EditableText bind:value={diagram.caption.body} {editable} placeholder="Description" />
     </div>
 
-    <div class="resources">
+    {#if editable || diagram.resources}
       <h4>Download this resource</h4>
 
-      {#if editable}
-        <IconButton icon="add" on:click={() => (newResource = !newResource)} text="Add resource" />
-        {#if newResource}
-          <DiagramResourceEditor on:save={e => addResource(e.detail)} />
-        {/if}
-      {/if}
-
-      {#if diagram.resources}
-        {#each diagram.resources as resource, index}
-          <div class="resource">
-            <InlineSvgLink href={staticUrl(resource.url)} svg="file" download={diagram.caption.title}>
-              <strong>{resource.label}</strong>
-            </InlineSvgLink>
-            {#if editable}
-              <IconButton icon="delete" on:click={() => onClickDeleteResource(index)} />
-            {/if}
-          </div>
+      <ul class="resources">
+        {#each diagram.resources as resource (resource)}
+          <li>
+            <DownloadableFile
+              bind:resource
+              {editable}
+              filename={diagram.caption.title}
+              on:delete={() => (diagram.resources = diagram.resources.filter(r => r !== resource))}
+            />
+          </li>
         {/each}
-      {/if}
-    </div>
+        {#if editable}
+          <li class="add-resource">
+            <NewDiagramResourceButton on:save={e => addResource(e.detail)} />
+          </li>
+        {/if}
+      </ul>
+    {/if}
 
     {#if editable}
       <div class="layer-list">
@@ -120,7 +112,10 @@
         <div class="layer-list-header">
           Base layer
           <div class="icons">
-            <IconButton icon="edit" on:click={() => ((editLayer === null) ? editLayer = BASE_LAYER : editLayer = null)} />
+            <IconButton
+              icon="edit"
+              on:click={() => (editLayer === null ? (editLayer = BASE_LAYER) : (editLayer = null))}
+            />
             <IconButton icon="delete" disabled />
           </div>
         </div>
@@ -133,7 +128,10 @@
           <div class="layer-list-header">
             {item.card.heading}
             <div class="icons">
-              <IconButton icon="edit" on:click={() => ((editLayer === null) ? editLayer = index : editLayer = null)} />
+              <IconButton
+                icon="edit"
+                on:click={() => (editLayer === null ? (editLayer = index) : (editLayer = null))}
+              />
               <IconButton icon="delete" on:click={() => onClickDeleteLayer(index)} />
             </div>
           </div>
@@ -165,6 +163,7 @@
     display: grid;
     grid-template-columns: auto 166px;
     column-gap: 20px;
+    --ib-hover-bg: $colors.secondary-bg;
 
     typography: ui-small;
   }
@@ -224,17 +223,14 @@
     }
   }
 
-  .resource {
-    padding: 0 10px 10px 25px;
-    display: inline-grid;
-    typography: ui-small;
-
-    strong {
-      position: absolute;
-      transform: translate(-75px, 13px);
-      width: 60px;
-      text-align: end;
-    }
+  .resources {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    column-gap: 2rem;
+    padding: 0 1rem;
+    flex-wrap: wrap;
   }
 
   .controls-diagram {

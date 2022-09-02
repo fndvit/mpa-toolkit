@@ -103,11 +103,19 @@
           },
         "resources": [
           {
-            "label": "IMG1",
+            "label": "key",
             "url": "img/92a18fa2-b8a3-45ca-8196-0b816644e9d2.jpeg"
           },
           {
-            "label": "IMG2",
+            "label": "pptx",
+            "url": "img/d7631766e592c14c1e950c6427a8a99f84d4f3fa60f6bd3a2b7d30f016bb3b8d.jpeg"
+          },
+          {
+            "label": "pdf",
+            "url": "img/d7631766e592c14c1e950c6427a8a99f84d4f3fa60f6bd3a2b7d30f016bb3b8d.jpeg"
+          },
+          {
+            "label": "gslides",
             "url": "img/d7631766e592c14c1e950c6427a8a99f84d4f3fa60f6bd3a2b7d30f016bb3b8d.jpeg"
           }
         ]

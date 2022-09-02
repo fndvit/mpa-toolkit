@@ -1,4 +1,4 @@
-import type { ContentDocument, DiagramData, Page, Section } from '@mpa/db';
+import type { ContentBlock, ContentDocument, Page, Section, DiagramData } from '@mpa/db';
 import { slugify } from '$lib/utils';
 import { env } from '$env/dynamic/public';
 
@@ -88,4 +88,17 @@ export function createEmptyDiagram(): DiagramData {
     baselayer: { desktop: null, mobile: null },
     caption: { title: 'Caption', body: 'Description' }
   };
+}
+
+export function getSectionSize(section: Section): number {
+  // size = a proxy for visual size for inserting dynamic content
+  return section.blocks.map(getBlockSize).reduce((a, b) => a + b, 0);
+}
+
+export function getBlockSize(b: ContentBlock): number {
+  if (b.type === 'paragraph') {
+    return b.content?.reduce((agg, c) => agg + c.text.length, 0);
+  }
+  // TODO: return est sizes of other block types
+  return 0;
 }

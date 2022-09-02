@@ -10,6 +10,7 @@
   import Formatting from './Formatting.svelte';
   import { IconButton } from '$lib/components/generic';
   import { schema } from '$lib/editor/schema';
+  import { createEmptyDiagram } from '$lib/helpers/content';
 
   export let editorState: EditorState;
 
@@ -21,7 +22,7 @@
   };
 
   const insertDiagram = () => {
-    const tr = editorState.tr.replaceSelectionWith(schema.nodes.diagram.createAndFill());
+    const tr = editorState.tr.replaceSelectionWith(schema.nodes.diagram.createAndFill(createEmptyDiagram()));
     view.dispatch(tr);
   };
 </script>

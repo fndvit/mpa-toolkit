@@ -2,35 +2,14 @@
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import type { DiagramBlock } from '@mpa/db';
   import Diagram from '$lib/components/page/body/Diagram.svelte';
-  import * as api from '$lib/api';
 
   export let attrs: DiagramBlock['attrs'];
   export let controls: SvelteNodeViewControls;
   export let rootDOM: (node: HTMLElement) => void;
-
-  let imageMobile: HTMLInputElement, imageDesktop: HTMLInputElement;
-
-  async function saveBaselayers() {
-    attrs.baselayer.mobile = await api.asset.upload(imageMobile.files[0]);
-    attrs.baselayer.desktop = await api.asset.upload(imageDesktop.files[0]);
-  }
 </script>
 
 <div use:rootDOM contenteditable="false" class="diagram">
-  {#if attrs.baselayer.desktop != ''}
-    <Diagram bind:diagram={attrs} editable {controls} />
-  {:else}
-    <form on:submit|preventDefault={saveBaselayers} class="form">
-      <div>
-        <h5>Mobile version</h5>
-        <input type="file" bind:this={imageMobile} />
-        <h5>Desktop version</h5>
-        <input type="file" bind:this={imageDesktop} />
-      </div>
-
-      <input type="submit" value="upload" />
-    </form>
-  {/if}
+  <Diagram bind:diagram={attrs} editable {controls} />
 </div>
 
 <style lang="stylus">

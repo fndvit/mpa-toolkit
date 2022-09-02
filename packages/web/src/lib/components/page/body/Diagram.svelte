@@ -7,6 +7,8 @@
   import DownloadableFile from '$lib/components/cms/editor/DownloadableFile.svelte';
   import NewDiagramResourceButton from '$lib/components/cms/NewDiagramResourceButton.svelte';
   import DiagramLayerListItem from '$lib/components/cms/DiagramLayerListItem.svelte';
+  import { fallbackImage } from '$lib/helpers/utils';
+  import { BLANK_DATA_GIF } from '$lib/utils';
 
   export let diagram: DiagramData;
   export let editable = false;
@@ -37,6 +39,7 @@
 
   $: cards = diagram.layers.map(item => item.card);
   $: desktop = width > 768;
+  $: format = desktop ? ('desktop' as const) : ('mobile' as const);
 </script>
 
 <svelte:window bind:outerWidth={width} />
@@ -45,20 +48,26 @@
 <div class="diagram">
   <div>
     <div class="layer-imgs">
-      <img class="base-layer" src={staticUrl(diagram.baselayer[desktop ? 'desktop' : 'mobile'])} alt="diagram" />
+      {#if diagram.baselayer[format]}
+        <img class="base-layer" src={staticUrl(diagram.baselayer[format])} alt="diagram" />
+      {:else}
+        <div class="empty-base-layer" />
+      {/if}
       {#each diagram.layers as layer, i}
         <img
           class="layer-img"
           class:layer-selected={i === currentPageIndex}
-          src={desktop ? staticUrl(layer.image.desktop) : staticUrl(layer.image.mobile)}
+          src={layer.image[format] ? staticUrl(layer.image[format]) : BLANK_DATA_GIF}
           alt="layer-{i}"
         />
       {/each}
     </div>
 
-    <div class="cards">
-      <Cards bind:cards {editable} bind:currentPageIndex />
-    </div>
+    {#if diagram.layers.length > 0}
+      <div class="cards">
+        <Cards bind:cards {editable} bind:currentPageIndex />
+      </div>
+    {/if}
   </div>
 
   <div>
@@ -157,7 +166,18 @@
 
   .base-layer {
     width: 100%;
+  }
 
+  .empty-base-layer {
+    &:after {
+      content: '';
+      display: block;
+      padding-bottom: 40%;
+    }
+    width: 100%;
+    box-sizing: border-box;
+    background: white;
+    border: 1px solid $colors.secondary-bg;
   }
 
   .layer-img {

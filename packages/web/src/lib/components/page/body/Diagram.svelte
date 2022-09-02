@@ -7,7 +7,6 @@
   import DownloadableFile from '$lib/components/cms/editor/DownloadableFile.svelte';
   import NewDiagramResourceButton from '$lib/components/cms/NewDiagramResourceButton.svelte';
   import DiagramLayerListItem from '$lib/components/cms/DiagramLayerListItem.svelte';
-  import { fallbackImage } from '$lib/helpers/utils';
   import { BLANK_DATA_GIF } from '$lib/utils';
 
   export let diagram: DiagramData;
@@ -51,7 +50,7 @@
       {#if diagram.baselayer[format]}
         <img class="base-layer" src={staticUrl(diagram.baselayer[format])} alt="diagram" />
       {:else}
-        <div class="empty-base-layer" />
+        <div class="empty-base-layer" on:click|stopPropagation={() => onClickLayerItem(BASE_LAYER)} />
       {/if}
       {#each diagram.layers as layer, i}
         <img
@@ -177,6 +176,7 @@
     width: 100%;
     box-sizing: border-box;
     background: white;
+    cursor: pointer;
     border: 1px solid $colors.secondary-bg;
   }
 
@@ -187,6 +187,7 @@
     z-index: 1;
     width: 100%;
     height: 100%;
+    pointer-events: none;
 
     &:not(.layer-selected) {
       display: none;

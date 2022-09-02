@@ -9,8 +9,9 @@
 
   async function onChange(file: File) {
     const url = await api.asset.upload(file);
+    const ext = url.split('.').pop();
     inputEl.value = '';
-    dispatch('save', { label: '', url });
+    dispatch('save', { label: ext, url });
   }
 </script>
 

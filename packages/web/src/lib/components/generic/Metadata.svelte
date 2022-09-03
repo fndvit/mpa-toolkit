@@ -56,6 +56,8 @@
     'cms/authors': 'CMS - Authors',
     'cms/homepage': 'CMS - Homepage',
     'cms/pages/[id]': data.page ? `Edit page - ${getPageDisplayTitle(data.page)}` : 'Edit page',
+    'cms/pages/create/chapter': 'New chapter',
+    'cms/pages/create/case-study': 'New case study',
     'draft/[slug]': `[DRAFT] ${data.page ? getPageDisplayTitle(data.page) : ''}`
   };
 </script>

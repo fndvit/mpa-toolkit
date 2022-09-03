@@ -151,3 +151,6 @@ export const addEventListenerOnce = (node: HTMLElement, event: string, fn: (e: E
     node.removeEventListener(event, listener);
   });
 };
+
+export const jsonLdTemplate = (o: object) =>
+  `<script type="application/ld+json">\n${JSON.stringify(o, null, 2)}\n</script>`;

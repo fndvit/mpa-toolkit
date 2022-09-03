@@ -213,6 +213,7 @@ importers:
       prosemirror-svelte-nodeview: ^1.0.1
       prosemirror-transform: ^1.7.0
       prosemirror-view: ^1.27.0
+      schema-dts: ^1.1.0
       stylus: ^0.58.1
       svelte: ^3.49.0
       svelte-check: ^2.8.0
@@ -283,6 +284,7 @@ importers:
       '@types/textfit': 2.4.2
       '@types/topojson-client': 3.1.1
       '@types/topojson-simplify': 3.0.1
+      schema-dts: 1.1.0_typescript@4.7.4
       stylus: 0.58.1
       svelte: 3.49.0
       svelte-check: 2.8.0_zohqgkaofnds6aeokxnkiulsgu
@@ -4553,6 +4555,14 @@ packages:
 
   /sax/1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
+    dev: true
+
+  /schema-dts/1.1.0_typescript@4.7.4:
+    resolution: {integrity: sha512-vdmbs/5ycj4zyKpZIDqTcy+IZi4s7c38RVAYuDmRi7zgxUT8wRWPMLzg0jr7FjdVunYu9yZ00F3+XcZTTFcTOQ==}
+    peerDependencies:
+      typescript: '>=4.1.0'
+    dependencies:
+      typescript: 4.7.4
     dev: true
 
   /secure-json-parse/2.5.0:

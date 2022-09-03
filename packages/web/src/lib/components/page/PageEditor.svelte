@@ -358,6 +358,9 @@
           display: inline-block;
         }
       }
+      :global(.problem[data-problem-name="todo"]) {
+        background-color: #aaf;
+      }
       :global(.problem-highlight) {
         // highlight this problem
         background-color: #faa;

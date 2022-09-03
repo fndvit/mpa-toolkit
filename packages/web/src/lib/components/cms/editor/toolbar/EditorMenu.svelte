@@ -26,6 +26,11 @@
     const tr = editorState.tr.replaceSelectionWith(schema.nodes.diagram.createAndFill(createEmptyDiagram()));
     view.dispatch(tr);
   };
+
+  const insertReminder = () => {
+    const tr = editorState.tr.insertText('*TODO: *');
+    view.dispatch(tr);
+  };
 </script>
 
 <div class="menu-bar">
@@ -42,6 +47,8 @@
     <IconButton on:click={insertDiagram} icon="donut_small" title="Add diagram" />
     <MenuSeperator />
     <ImageButton title="Add image" />
+    <MenuSeperator />
+    <IconButton on:click={insertReminder} icon="notifications" title="Add reminder" />
     <MenuSeperator />
   </div>
 

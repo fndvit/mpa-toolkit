@@ -43,7 +43,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     }
   });
 
-  if (!tag || tag.pageTags.length === 0) throw404();
+  if (!tag) throw404();
 
   const pages = tag.pageTags.map(t => t.page);
 

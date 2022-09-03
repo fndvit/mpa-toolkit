@@ -70,11 +70,6 @@
     SECONDARY: new Set(tagsGrouped.STAGE?.SECONDARY?.map(t => t.id))
   };
 
-  $: availableStageTags = {
-    PRIMARY: allTagsGrouped.STAGE?.filter(t => !selectedStageTagIds.SECONDARY?.has(t.id)),
-    SECONDARY: allTagsGrouped.STAGE?.filter(t => !selectedStageTagIds.PRIMARY?.has(t.id))
-  };
-
   $: renderTags = !editable && sortAndGroupTags(tags);
 
   $: menuData = LIFECYCLE_CONFIG.map<MenuElement>((percentage, i) => {
@@ -119,13 +114,15 @@
         <div class="subtitle">Primary Tags</div>
         <LifeCycleTagsSelector
           bind:tags={tagsGrouped.STAGE.PRIMARY}
-          availableTags={availableStageTags.PRIMARY}
+          availableTags={allTagsGrouped.STAGE}
+          hideTagIds={selectedStageTagIds.SECONDARY}
           max={MAX_PRIMARY_TAGS}
         />
         <div class="subtitle">Secondary Tags</div>
         <LifeCycleTagsSelector
           bind:tags={tagsGrouped.STAGE.SECONDARY}
-          availableTags={availableStageTags.SECONDARY}
+          availableTags={allTagsGrouped.STAGE}
+          hideTagIds={selectedStageTagIds.PRIMARY}
           max={MAX_SECONDARY_TAGS}
         />
       {:else}

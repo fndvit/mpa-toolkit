@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Page, TagType } from '@mpa/db';
+  import Metadata from '../generic/Metadata.svelte';
   import CollectionPageHeader from './CollectionPageHeader.svelte';
   import CollectionCards from './CollectionCards.svelte';
 
@@ -9,6 +10,8 @@
   export let search: string = null;
   export let tagType: TagType = 'TOPIC';
 </script>
+
+<Metadata {title} desc={bio} type="WebSite" />
 
 <div class="collection-page">
   <CollectionPageHeader {title} {search} {bio} />

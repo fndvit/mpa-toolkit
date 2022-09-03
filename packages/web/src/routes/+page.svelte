@@ -7,6 +7,7 @@
   import LandingCarousel from '$lib/components/homepage/LandingCarousel.svelte';
   import LandingMadLib from '$lib/components/homepage/LandingMadLib.svelte';
   import MpaManagementLifecycle from '$lib/components/homepage/MPAManagementLifecycle.svelte';
+  import Metadata from '$lib/components/generic/Metadata.svelte';
 
   export let data: PageData;
   let { chapters, caseStudies, tags, components } = data;
@@ -16,9 +17,11 @@
   const tagsForContainer = tags.map<PageTag>(t => ({ tag: t, category: 'PRIMARY' }));
 </script>
 
-<svelte:head>
-  <title>MPA Toolkit</title>
-</svelte:head>
+<Metadata
+  title="MPAth - Marine solutions hub"
+  desc="A brand-new, growing educational platform for the MPA community to share lessons, challenges and sustainable solutions."
+  type="WebSite"
+/>
 
 <div class="landing-page">
   <div class="mpath-logo">

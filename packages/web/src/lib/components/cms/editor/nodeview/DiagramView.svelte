@@ -24,20 +24,4 @@
     width: fit-content;
   }
 
-  .form {
-    padding: 1.5rem 0;
-    display: flex;
-    align-items: center;
-
-    input[type=submit]{
-      border: none;
-      padding: 10px 15px;
-      border-radius: 10px;
-
-      &:hover {
-        filter: brightness(105%);
-      }
-    }
-  }
-
 </style>

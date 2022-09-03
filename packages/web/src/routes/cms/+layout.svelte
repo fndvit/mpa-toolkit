@@ -1,30 +1,10 @@
 <script>
   import { closeModal, Modals } from 'svelte-modals';
-  import UnindexedMetadata from '$lib/components/generic/UnindexedMetadata.svelte';
-  import { page } from '$app/stores';
-  import { getPageDisplayTitle } from '$lib/helpers/content';
-
-  const { data } = $page;
-
-  const titles = {
-    'cms': 'CMS', // prettier-ignore
-    'cms/login': 'Login',
-    'cms/pages': 'CMS - Pages',
-    'cms/tags': 'CMS - Tags',
-    'cms/users': 'CMS - Users',
-    'cms/authors': 'CMS - Authors',
-    'cms/homepage': 'CMS - Homepage',
-    'cms/pages/[id]': 'page' in data ? `Edit page - ${getPageDisplayTitle(data.page)}` : 'Edit page'
-  };
-
-  $: title = titles[$page.routeId] || 'CMS';
 </script>
 
 <svelte:head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </svelte:head>
-
-<UnindexedMetadata {title} />
 
 <slot />
 

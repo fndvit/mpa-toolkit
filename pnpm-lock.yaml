@@ -217,7 +217,7 @@ importers:
       svelte: ^3.49.0
       svelte-check: ^2.8.0
       svelte-modals: ^1.1.0
-      svelte-multiselect: ^4.0.6
+      svelte-multiselect: ^5.0.6
       svelte-preprocess: ^4.10.7
       svelte-scrollto: ^0.2.0
       svgo: ^2.8.0
@@ -262,7 +262,7 @@ importers:
       prosemirror-transform: 1.7.0
       prosemirror-view: 1.27.0
       svelte-modals: 1.1.0
-      svelte-multiselect: 4.0.6
+      svelte-multiselect: 5.0.6
       svelte-scrollto: 0.2.0
       svgo: 2.8.0
       textfit: 2.4.0
@@ -4828,8 +4828,8 @@ packages:
     resolution: {integrity: sha512-AB2BIy13dQExj7l6h6Rrwqx36HgX5ffh3n+rhGy5+xRpgsHHcGZKH0JkjZdKxuAqNeN1bawupQ8Y8IYr/rCVXg==}
     dev: false
 
-  /svelte-multiselect/4.0.6:
-    resolution: {integrity: sha512-YUTzUSY6WkiD4Zyr8mXt0GKdrHeuCPuKjAOudi6BjXCqRoJ3Q/GIv/NR7an65VnJVoVYjUqN4zmIlEAKn4Ehkg==}
+  /svelte-multiselect/5.0.6:
+    resolution: {integrity: sha512-buF8Fokw6RSmNIDyVr5TL3NN+aMyjengcXvswWjOtKmJQf7tvQOlrQ4g42H47kNWfBW532QR5Igug2sZ4I9r0A==}
     dev: false
 
   /svelte-preprocess/4.10.7_dzjnn2tg4xzr5zww5ymuggziny:

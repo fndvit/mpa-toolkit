@@ -50,6 +50,7 @@
   $: unindexedRoutes = {
     'cms': 'CMS', // prettier-ignore
     'cms/login': 'Login',
+    'cms/dump': 'CMS - Dump',
     'cms/pages': 'CMS - Pages',
     'cms/tags': 'CMS - Tags',
     'cms/users': 'CMS - Users',

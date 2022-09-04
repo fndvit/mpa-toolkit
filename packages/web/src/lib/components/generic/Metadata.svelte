@@ -17,7 +17,7 @@
     },
     '[slug]': {
       title: data.page ? getPageDisplayTitle(data.page) : '',
-      desc: data.page?.chapter?.summary || data.page?.caseStudy.name,
+      desc: data.page?.chapter?.summary || data.page?.caseStudy?.name || 'Untitled',
       type: 'Article',
       image: chapterDefaultImage
     },

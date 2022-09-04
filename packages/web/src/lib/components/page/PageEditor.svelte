@@ -255,6 +255,7 @@
 
   .top-controls {
     position: absolute;
+    z-index: 1;
     left: 0;
     right: 0;
     width: fit-content;

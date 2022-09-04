@@ -1,5 +1,5 @@
 import type { ContentBlock, ContentDocument, Page, Section, DiagramData } from '@mpa/db';
-import { slugify } from '$lib/utils';
+import { slugify } from '@mpa/utils';
 import { env } from '$env/dynamic/public';
 
 export const staticUrl = (path: string) => (path ? `${env.PUBLIC_UPLOAD_BASE_URL}${path}` : null);

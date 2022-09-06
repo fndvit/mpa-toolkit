@@ -1,11 +1,15 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+  import { onMount } from 'svelte';
   import ContentCarouselCard from './ContentCarouselCard.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
+  import * as api from '$lib/api';
+  import { userHistory } from '$lib/history';
 
-  export let slides: Page.ContentCard[];
   export let title: string;
+
+  let slides: Page.ContentCard[];
 
   const options = SplideOptions({
     type: 'slide',
@@ -27,17 +31,25 @@
       }
     }
   });
+
+  onMount(async () => {
+    slides = await api.recommendations.get(userHistory.toApiRequest());
+  });
 </script>
 
 <div class="content-carousel">
   <p class="title">{title}</p>
-  <Splide {options}>
-    {#each slides as slide}
-      <SplideSlide>
-        <ContentCarouselCard page={slide} />
-      </SplideSlide>
-    {/each}
-  </Splide>
+  {#if !slides}
+    <div>TODO: Loading state</div>
+  {:else}
+    <Splide {options}>
+      {#each slides as slide}
+        <SplideSlide>
+          <ContentCarouselCard page={slide} />
+        </SplideSlide>
+      {/each}
+    </Splide>
+  {/if}
   <div class="opacity-div" />
 </div>
 

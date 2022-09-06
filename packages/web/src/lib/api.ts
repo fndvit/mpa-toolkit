@@ -47,6 +47,15 @@ export const auth = {
   }
 };
 
+export const recommendations = {
+  get: async (data: API.Recommendations): Promise<Page.ContentCard[]> =>
+    ky
+      .get('recommendations', {
+        searchParams: { madlib: data.madlib?.join(','), pageviews: data.pageviews?.join(',') }
+      })
+      .json()
+};
+
 function _createUpdate(model: 'pages', json: API.Page, id?: number): Promise<Page.DB>;
 function _createUpdate(model: 'tags', json: API.Tag, id?: number): Promise<Tag.DB>;
 function _createUpdate(model: 'users', json: API.User, id?: number): Promise<User.DB>;

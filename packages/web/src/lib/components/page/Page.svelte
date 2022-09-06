@@ -8,7 +8,6 @@
   import { Footer } from '$lib/components/shared';
 
   export let page: Page;
-  export let recommendedPages: Page.ContentCard[];
 </script>
 
 <div class="page page-static" data-pagetype={getPageTypeStr(page)}>
@@ -18,6 +17,6 @@
   {:else if page.caseStudy}
     <CaseStudyHead caseStudy={page.caseStudy} tags={page.tags} />
   {/if}
-  <PageContent {page} {recommendedPages} />
+  <PageContent {page} />
   <Footer />
 </div>

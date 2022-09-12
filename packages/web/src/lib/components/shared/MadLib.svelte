@@ -24,6 +24,11 @@
       .map(str => slugify(str))
       .join('+');
   }
+
+  export function buildTagMadlib(value: string[]) {
+    return value
+      .map(v => tagValue[v])
+  }
 </script>
 
 <script lang="ts">

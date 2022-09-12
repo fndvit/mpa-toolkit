@@ -52,6 +52,14 @@ export const tagMixin = (db: MpaDatabase) => {
         }
       }),
 
+    allForRecommender: () =>
+      db.prisma.tag.findMany({
+        ...Queries.countTags,
+        orderBy: {
+          value: 'asc'
+        }
+      }),
+
     get: <
       {
         // overloads

@@ -1,8 +1,13 @@
 <script lang="ts">
-  import MadLib, { buildTagSlug } from '../shared/MadLib.svelte';
+  import MadLib, { buildTagSlug, buildTagMadlib } from '../shared/MadLib.svelte';
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
+  import { userHistory } from '$lib/history';
 
   let value: string[] = [];
+
+  const setMadlibAnswers = () => {
+    userHistory.setMadlibAnswers(buildTagMadlib(value));
+  };
 
   $: action = `/recommended/${buildTagSlug(value)}/`;
 </script>
@@ -12,7 +17,7 @@
 
   <MadLib bind:value />
 
-  <form {action}>
+  <form {action} on:click={setMadlibAnswers}>
     <button tabindex="0">
       Start your tour
       <svg class="arrow" viewBox="0 0 13 22">

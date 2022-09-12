@@ -1,14 +1,132 @@
 import { publishEvent } from '@mpa/events';
+import similarity from 'compute-cosine-similarity';
 import { logger } from '@mpa/log';
 import type { Prisma } from '@prisma/client';
 import { createLookup, type Expand } from '@mpa/utils';
 import type { MpaDatabase } from '../db';
 import * as Queries from '../queries';
 import { calcReadTime } from '../readtime';
-import type { APIRequests, Page } from '../types';
+import type { APIRequests, Page, Tag } from '../types';
 import { validate } from '../validation';
 
+
 const log = logger('DB');
+
+const NUM_RECOMMENDED_PAGES = 8; //Number of pages to be recommended
+
+const generateGuideVector = (tags: Tag[]) => {
+  return tags.map((tag) => tag.id);
+};
+
+const generateWeightedVector = (tags: Tag[], guideVector: number[], tagsIDF) => {
+  let vector = new Array(guideVector.length);
+  vector = vector.fill(0);
+  tags.forEach(t => {
+    vector[guideVector.indexOf(t.id)] += 1 * tagsIDF.find(tag => tag.id === t.id).idf;
+  });
+  return vector;
+};
+
+const getGuidelines = (userHistory?: APIRequests.Recommendations, referencePageId?: number) => {
+
+  const guideLines = {
+    madlib: 0,
+    pageViews: 0,
+    referencePage: 0,
+    random: 0,
+  };
+
+  if (!userHistory?.madlib && !userHistory?.pageviews && !referencePageId){
+    guideLines.random = 1;
+  } else if (userHistory?.pageviews && !userHistory?.madlib && !referencePageId) {
+    guideLines.pageViews = 1/2; guideLines.random = 1/2;
+  } else if (!userHistory?.pageviews && userHistory?.madlib && !referencePageId) {
+    guideLines.madlib = 2/3; guideLines.random = 1/3;
+  } else if (userHistory?.pageviews && userHistory?.madlib && !referencePageId) {
+    guideLines.pageViews = 1/3; guideLines.madlib = 1/2; guideLines.random = 1/6;
+  } else {
+    guideLines.referencePage = 1;
+  }
+
+  return guideLines;
+};
+
+const compare = function(a, b) {
+  return (parseFloat(a[1]) > parseFloat(b[1])) ? -1 : (parseFloat(a[1]) == parseFloat(b[1])) ? 0 : 1;
+};
+
+const contentBasedFiltering = async (db: MpaDatabase, type: 'chapter' | 'case-study', userHistory?: APIRequests.Recommendations, referencePageId?: number) => {
+  const allPages = await await db.page.getPageByType(type);
+  const allTags = await db.tag.allForRecommender();
+  const guideLines = getGuidelines(userHistory, referencePageId);
+
+  //Calculate IDF for each tag
+  const tagsIDF = allTags.map(tag => {
+    return {
+      id: tag.id,
+      idf: Math.log(allPages.length / tag._count.pageTags),
+    };
+  });
+
+  //Generate guide vector
+  const guideVector = generateGuideVector(allTags);
+
+  let madlibTags: Tag[] = [];
+  let referencePageTags: Tag[] = [];
+  const pagesViewsTags: Tag[] = [];
+
+  //Get tags for all kinds of user history
+  if(userHistory?.madlib && guideLines.madlib > 0) madlibTags = allTags.filter(tag => userHistory?.madlib?.includes(tag.value));
+  if(referencePageId && guideLines.referencePage > 0) referencePageTags = (allPages.find(page => page.id === referencePageId)?.tags)?.map(t => t.tag) || [];
+  if(userHistory?.pageviews && guideLines.pageViews > 0)  userHistory.pageviews.forEach(pageId => allPages.find(p => p.id === pageId)?.tags?.forEach(t => pagesViewsTags.push(t.tag)));
+
+  //Generate weighted vectors for all kinds of user history
+  const referenceMadlibWeightedVector = madlibTags.length > 0 ? generateWeightedVector(madlibTags, guideVector, tagsIDF): null;
+  const referencePageWeightedVector = referencePageTags.length > 0 ? generateWeightedVector(referencePageTags, guideVector, tagsIDF) : null;
+  const referencePageViewsWeigthedVector = pagesViewsTags.length > 0 ? generateWeightedVector(pagesViewsTags, guideVector, tagsIDF) : null;
+
+  let madlibCandidates: [Page.ContentCard, number][] = [];
+  let pageCandidates: [Page.ContentCard, number][] = [];
+  let pageviewsCandidates: [Page.ContentCard, number][] = [];
+
+  //Calculate similarity for all pages
+  allPages.map( page => {
+    //Calculate weighted vector for the current page
+    const vector = generateWeightedVector(page.tags.map(t => t.tag), guideVector, tagsIDF);
+
+    //Calculate similarity for the current page
+    const cosineSimilarityMadlib = referenceMadlibWeightedVector && guideLines.madlib > 0 ? similarity(referenceMadlibWeightedVector, vector) : -1;
+    const cosineSimilarityReferencePage = referencePageWeightedVector && guideLines.referencePage > 0 ? similarity(referencePageWeightedVector, vector) : -1;
+    const cosineSimilarityViewedPages = referencePageViewsWeigthedVector && guideLines.pageViews > 0 ? similarity(referencePageViewsWeigthedVector, vector) : -1;
+
+    //Add the current page to the candidates list
+    if(cosineSimilarityMadlib > 0) madlibCandidates.push([page, isNaN(cosineSimilarityMadlib) ? 0 : cosineSimilarityMadlib]);
+    if(cosineSimilarityReferencePage > 0 ) pageCandidates.push([page, isNaN(cosineSimilarityReferencePage) ? 0 : cosineSimilarityReferencePage]);
+    if(cosineSimilarityViewedPages > 0) pageviewsCandidates.push([page, isNaN(cosineSimilarityViewedPages) ? 0 : cosineSimilarityViewedPages]);
+  });
+
+  //Sort the candidates list
+  madlibCandidates = madlibCandidates.sort(compare);
+  pageCandidates = pageCandidates.sort(compare);
+  pageviewsCandidates = pageviewsCandidates.sort(compare);
+
+  //Get the top 8 pages
+  const topPages = new Set();
+
+  const madlibTop = madlibCandidates.slice(0, NUM_RECOMMENDED_PAGES * guideLines.madlib);
+  madlibTop.forEach(page => topPages.add(page[0]));
+
+  const pageTop = pageCandidates.filter(page => !topPages.has(page[0])).slice(0, NUM_RECOMMENDED_PAGES * guideLines.referencePage);
+  pageTop.forEach(page => topPages.add(page[0]));
+
+  const pageViewsTop = pageviewsCandidates.filter(page => !topPages.has(page[0])).slice(0, NUM_RECOMMENDED_PAGES * guideLines.pageViews);
+  pageViewsTop.forEach(page => topPages.add(page[0]));
+
+  const randomPages = allPages.filter(page => !topPages.has(page)).slice(0, NUM_RECOMMENDED_PAGES - topPages.size);
+  randomPages.forEach(page => topPages.add(page));
+
+  return Array.from(topPages) as Page.ContentCard[];
+};
 
 export const pageMixin = (db: MpaDatabase) => {
   return {
@@ -182,16 +300,20 @@ export const pageMixin = (db: MpaDatabase) => {
       return _page;
     },
 
-    recommended: async (page: Pick<Page, 'id' | 'tags'>) =>
+    getPageByType: async (type?: 'chapter' | 'case-study') =>
       db.prisma.page.findMany({
         where: {
+          ...(type === 'chapter' ? { chapter:  { isNot: null } } : (type === 'case-study' ? { caseStudy: { isNot: null } } :
+              {})),
           draft: false,
-          tags: { some: { OR: page.tags.map(t => ({ tagId: t.tag.id })) } },
-          NOT: { id: page.id }
         },
         orderBy: { tags: { _count: 'asc' } },
         ...Queries.pageForContentCard
       }),
+
+    recommender: async (userHistory: APIRequests.Recommendations, type: 'chapter' | 'case-study', referencePageId?: number) =>
+      await contentBasedFiltering(db, type, userHistory, referencePageId),
+
 
     async search<S extends Prisma.PageFindManyArgs>(searchText: string, fields: S) {
       const searchResult = await db.prisma.$queryRaw<

@@ -6,8 +6,14 @@
   import PageContent from './body/PageContent.svelte';
   import { getPageTypeStr } from '$lib/helpers/content';
   import { Footer } from '$lib/components/shared';
+  import {userHistory} from '$lib/history';
+  import { onMount } from 'svelte';
 
   export let page: Page;
+
+  onMount(() => {
+    userHistory.addPageview(page.id);
+  });
 </script>
 
 <div class="page page-static" data-pagetype={getPageTypeStr(page)}>

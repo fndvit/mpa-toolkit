@@ -54,6 +54,9 @@
         {/if}
       {/if}
     {/each}
+    <div class="content-carousel-container">
+      <ContentCarousel title={'TEXT recommendation'} referencePage={page}/>
+    </div>
   </div>
 </div>
 

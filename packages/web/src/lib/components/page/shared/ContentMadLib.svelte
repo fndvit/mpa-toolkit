@@ -1,7 +1,12 @@
 <script lang="ts">
-  import MadLib, { buildTagSlug } from '$lib/components/shared/MadLib.svelte';
+  import MadLib, { buildTagSlug, buildTagMadlib } from '$lib/components/shared/MadLib.svelte';
+  import {userHistory} from '$lib/history';
 
   let value: string[] = [];
+
+  const setMadlibAnswers = () => {
+    userHistory.setMadlibAnswers(buildTagMadlib(value));
+  };
 
   $: action = `/recommended/${buildTagSlug(value)}/`;
 </script>
@@ -9,9 +14,9 @@
 <div class="content-madlib">
   <h5>Is this not for you?</h5>
 
-  <MadLib bind:value />
+  <MadLib bind:value  />
 
-  <form {action}>
+  <form {action} on:click={setMadlibAnswers}>
     <button tabindex="0">
       Let's find what you need
       <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">

@@ -9,7 +9,7 @@
   import MpaManagementLifecycle from '$lib/components/homepage/MPAManagementLifecycle.svelte';
 
   export let data: PageData;
-  let { chapters, caseStudies, tags, components } = data;
+  let { tags, components } = data;
 
   const getComponentOrder = (name: HomepageComponentName): number => components.indexOf(name);
 
@@ -47,7 +47,7 @@
     </div>
 
     <div style="order: {getComponentOrder('chapters')}">
-      <LandingCarousel pages={chapters} title="Get the <b>answers</b> to all your questions" />
+      <LandingCarousel title="Get the <b>answers</b> to all your questions" type={'chapter'}/>
     </div>
 
     <div style="order: {getComponentOrder('search')}" class="ordered-component inline-searchbar">
@@ -60,7 +60,7 @@
     </div>
 
     <div style="order: {getComponentOrder('casestudies')}">
-      <LandingCarousel pages={caseStudies} title="Explore what <b>others have done</b>" />
+      <LandingCarousel title="Explore what <b>others have done</b>" type={'case-study'}/>
     </div>
   </div>
 

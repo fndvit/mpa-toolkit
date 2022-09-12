@@ -48,12 +48,12 @@ export const auth = {
 };
 
 export const recommendations = {
-  get: async (data: API.Recommendations): Promise<Page.ContentCard[]> =>
-    ky
-      .get('recommendations', {
-        searchParams: { madlib: data.madlib?.join(','), pageviews: data.pageviews?.join(',') }
-      })
-      .json()
+  get: async (data: API.Recommendations, type: 'chapter' | 'case-study', referencePageId?: number): Promise<Page.ContentCard[]> =>
+   ky
+    .get('recommendations', {
+      searchParams: { madlib: data.madlib?.join(','), pageviews: data.pageviews?.join(','), type: type, referencePageId: referencePageId }
+    })
+    .json()
 };
 
 function _createUpdate(model: 'pages', json: API.Page, id?: number): Promise<Page.DB>;

@@ -127,7 +127,7 @@
 
     button {
       typography: h4-responsive;
-      font-weight: 400;
+      font-weight: 400 !important;
       cursor: pointer;
       border: none;
       background: $colors.highlight-1;
@@ -186,6 +186,7 @@
 
       .column1 {
         order: 1;
+        max-width: none;
         margin: auto;
       }
 
@@ -198,36 +199,32 @@
       .column3 {
         order: 2;
       }
-
     }
-
   }
 
   @media(max-width: 625px) {
-
     .landing-lifecycle {
-
       .circle-menu {
         width: 500px;
         height: 500px;
       }
-
     }
-
   }
 
   @media(max-width: 425px) {
-
     .landing-lifecycle {
-
       .circle-menu {
         width: 300px;
         height: 300px;
       }
-
     }
+  }
 
-}
+  +breakpoint(page, medium) {
+    button {
+      padding: 0.55rem 0.95rem 0.45rem 0.85rem;
+    }
+  }
 
 
 </style>

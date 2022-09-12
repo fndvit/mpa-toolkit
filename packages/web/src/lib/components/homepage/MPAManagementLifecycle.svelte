@@ -74,9 +74,9 @@
     <Cards cards={cardBlocks} progress={false} bind:currentPageIndex />
     <a {href}>
       <button tabindex="0">
-        Learn about <b>{tags[currentPageIndex].sentence}</b>
-        <svg class="arrow" viewBox="0 0 13 22">
-          <path d="M1.44165 20.5881L10.4526 11.0587L1.44165 1.52931" stroke-width="2.4" />
+        <div>Learn about <b>{tags[currentPageIndex].sentence}</b></div>
+        <svg width="12" height="21" viewBox="0 0 12 21" fill="none">
+          <path d="M1.39624 19.9412L9.95787 10.4118L1.39624 0.882338" stroke="#2A2A2A" stroke-width="2.4"/>
         </svg>
       </button>
     </a>
@@ -89,23 +89,6 @@
 </div>
 
 <style lang="stylus">
-
-  .arrow {
-    position: relative;
-    vertical-align: middle;
-    padding-left: 0.7rem;
-    transform: rotate(-90deg) scale(1.35) translateX(-0.25rem);
-    overflow: hidden;
-    outline: none;
-    display: inline-block;
-    position: relative;
-    padding-left: 1rem;
-    vertical-align: middle;
-    transform: translateY(-0.15rem);
-    width: 13px;
-    height: 22px;
-    fill: none;
-  }
 
   .landing-lifecycle {
     width: 100%;
@@ -125,14 +108,19 @@
       stroke: $colors.neutral-black;
     }
 
+    a {
+      text-decoration: none;
+    }
+
     button {
       typography: h4-responsive;
       font-weight: 400 !important;
-      cursor: pointer;
+      font-size: 1rem !important;
+      display: flex;
+      gap: 0.75rem;
       border: none;
       background: $colors.highlight-1;
       box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
-      position: relative;
       border-radius: 24px;
       padding: 0.8rem 1.5rem 0.8rem 1.35rem;
       cursor: pointer;

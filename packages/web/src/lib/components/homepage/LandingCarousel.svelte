@@ -4,9 +4,13 @@
   import LandingCarouselCard from './LandingCarouselCard.svelte';
   import { CarouselDots } from '$lib/components/shared';
   import { SplideOptions } from '$lib/helpers/splide';
+  import { onMount } from 'svelte';
+  import * as api from '$lib/api';
+  import { userHistory } from '$lib/history';
 
-  export let pages: Page.ContentCard[];
+  export let pages: Page.ContentCard[] = [];
   export let title: string;
+  export let type: 'chapter' | 'case-study' = 'chapter';
 
   let currentCard = 0;
   let splide: Splide;
@@ -36,6 +40,12 @@
   });
 
   $: if (currentCard >= 0 && splide) splide.go(currentCard);
+
+  onMount(async () => {
+    console.log()
+    pages = await api.recommendations.get(userHistory.toApiRequest(), type);
+    console.log(pages);
+  });
 </script>
 
 <div class="landing-carousel">

@@ -8,6 +8,7 @@
   import { userHistory } from '$lib/history';
 
   export let title: string;
+  export let referencePage: Page = undefined;
 
   let slides: Page.ContentCard[];
 
@@ -33,7 +34,7 @@
   });
 
   onMount(async () => {
-    slides = await api.recommendations.get(userHistory.toApiRequest());
+    slides = await api.recommendations.get(userHistory.toApiRequest(), referencePage?.chapter ? 'chapter' : 'case-study', referencePage?.id);
   });
 </script>
 

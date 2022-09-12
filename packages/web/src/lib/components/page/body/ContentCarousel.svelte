@@ -9,6 +9,7 @@
 
   export let title: string;
   export let referencePage: Page = undefined;
+  export let recommendationType: 'chapter' | 'case-study';
 
   let slides: Page.ContentCard[];
 
@@ -34,7 +35,7 @@
   });
 
   onMount(async () => {
-    slides = await api.recommendations.get(userHistory.toApiRequest(), referencePage?.chapter ? 'chapter' : 'case-study', referencePage?.id);
+    slides = await api.recommendations.get(userHistory.toApiRequest(), recommendationType, referencePage?.id);
   });
 </script>
 

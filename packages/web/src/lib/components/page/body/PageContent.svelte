@@ -49,13 +49,13 @@
           </div>
         {:else if i === 2}
           <div class="content-carousel-container">
-            <ContentCarousel title={'You may also like'} />
+            <ContentCarousel title={'You may also like'} recommendationType={page.chapter ? 'chapter' : 'case-study'}/>
           </div>
         {/if}
       {/if}
     {/each}
     <div class="content-carousel-container">
-      <ContentCarousel title={'TEXT recommendation'} referencePage={page}/>
+      <ContentCarousel title={'TEXT recommendation'} referencePage={page} recommendationType={page.chapter ? 'chapter' : 'case-study'}/>
     </div>
   </div>
 </div>

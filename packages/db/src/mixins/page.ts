@@ -56,7 +56,7 @@ const compare = function(a, b) {
 };
 
 const contentBasedFiltering = async (db: MpaDatabase, type: 'chapter' | 'case-study', userHistory?: APIRequests.Recommendations, referencePageId?: number) => {
-  const allPages = await await db.page.getPageByType(type);
+  const allPages = await db.page.getPageByType(type);
   const allTags = await db.tag.allForRecommender();
   const guideLines = getGuidelines(userHistory, referencePageId);
 
@@ -91,18 +91,20 @@ const contentBasedFiltering = async (db: MpaDatabase, type: 'chapter' | 'case-st
 
   //Calculate similarity for all pages
   allPages.map( page => {
-    //Calculate weighted vector for the current page
-    const vector = generateWeightedVector(page.tags.map(t => t.tag), guideVector, tagsIDF);
+    if(page.id !== referencePageId){
+       //Calculate weighted vector for the current page
+      const vector = generateWeightedVector(page.tags.map(t => t.tag), guideVector, tagsIDF);
 
-    //Calculate similarity for the current page
-    const cosineSimilarityMadlib = referenceMadlibWeightedVector && guideLines.madlib > 0 ? similarity(referenceMadlibWeightedVector, vector) : -1;
-    const cosineSimilarityReferencePage = referencePageWeightedVector && guideLines.referencePage > 0 ? similarity(referencePageWeightedVector, vector) : -1;
-    const cosineSimilarityViewedPages = referencePageViewsWeigthedVector && guideLines.pageViews > 0 ? similarity(referencePageViewsWeigthedVector, vector) : -1;
+      //Calculate similarity for the current page
+      const cosineSimilarityMadlib = referenceMadlibWeightedVector && guideLines.madlib > 0 ? similarity(referenceMadlibWeightedVector, vector) : -1;
+      const cosineSimilarityReferencePage = referencePageWeightedVector && guideLines.referencePage > 0 ? similarity(referencePageWeightedVector, vector) : -1;
+      const cosineSimilarityViewedPages = referencePageViewsWeigthedVector && guideLines.pageViews > 0 ? similarity(referencePageViewsWeigthedVector, vector) : -1;
 
-    //Add the current page to the candidates list
-    if(cosineSimilarityMadlib > 0) madlibCandidates.push([page, isNaN(cosineSimilarityMadlib) ? 0 : cosineSimilarityMadlib]);
-    if(cosineSimilarityReferencePage > 0 ) pageCandidates.push([page, isNaN(cosineSimilarityReferencePage) ? 0 : cosineSimilarityReferencePage]);
-    if(cosineSimilarityViewedPages > 0) pageviewsCandidates.push([page, isNaN(cosineSimilarityViewedPages) ? 0 : cosineSimilarityViewedPages]);
+      //Add the current page to the candidates list
+      if(cosineSimilarityMadlib > 0) madlibCandidates.push([page, isNaN(cosineSimilarityMadlib) ? 0 : cosineSimilarityMadlib]);
+      if(cosineSimilarityReferencePage > 0 ) pageCandidates.push([page, isNaN(cosineSimilarityReferencePage) ? 0 : cosineSimilarityReferencePage]);
+      if(cosineSimilarityViewedPages > 0) pageviewsCandidates.push([page, isNaN(cosineSimilarityViewedPages) ? 0 : cosineSimilarityViewedPages]);
+    }
   });
 
   //Sort the candidates list

@@ -91,12 +91,12 @@ describe('db.page', () => {
 
   test('recommend', async () => {
     const p1 = await db.page.get({ slug: 'a' });
-    const g1 = await db.page.recommended(p1);
-    expect(g1.length).toBe(0);
+    const g1 = await db.page.recommender({madlib: undefined, pageviews: undefined}, "chapter", p1.id);
+    expect(g1.length).toBe(8);
 
     const p2 = await db.page.get({ slug: 'c' });
-    const g2 = await db.page.recommended(p2);
-    expect(g2.length).toBe(1);
+    const g2 = await db.page.recommender({madlib: undefined, pageviews: undefined}, "chapter", p2.id);
+    expect(g2.length).toBe(8);
   });
 });
 

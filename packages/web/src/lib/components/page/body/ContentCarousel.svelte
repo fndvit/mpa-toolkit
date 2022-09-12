@@ -6,12 +6,15 @@
   import { SplideOptions } from '$lib/helpers/splide';
   import * as api from '$lib/api';
   import { userHistory } from '$lib/history';
+import ContentCarouselLoadingCard from './ContentCarouselLoadingCard.svelte';
 
   export let title: string;
   export let referencePage: Page = undefined;
   export let recommendationType: 'chapter' | 'case-study';
 
   let slides: Page.ContentCard[];
+
+  const NUM_RECOMMENDATIONS = 8;
 
   const options = SplideOptions({
     type: 'slide',
@@ -41,17 +44,21 @@
 
 <div class="content-carousel">
   <p class="title">{title}</p>
-  {#if !slides}
-    <div>TODO: Loading state</div>
-  {:else}
     <Splide {options}>
-      {#each slides as slide}
-        <SplideSlide>
-          <ContentCarouselCard page={slide} />
-        </SplideSlide>
-      {/each}
+      {#if !slides}
+        {#each Array(NUM_RECOMMENDATIONS) as _, i}
+          <SplideSlide>
+            <ContentCarouselLoadingCard/>
+          </SplideSlide>
+        {/each}
+      {:else}
+        {#each slides as slide}
+          <SplideSlide>
+            <ContentCarouselCard page={slide} />
+          </SplideSlide>
+        {/each}
+      {/if}
     </Splide>
-  {/if}
   <div class="opacity-div" />
 </div>
 

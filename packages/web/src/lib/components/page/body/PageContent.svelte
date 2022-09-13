@@ -27,7 +27,9 @@
 <div class="page-content">
   <div class="menu-container">
     <div class="menu">
-      <StickyMenu menuOptions={headings} />
+      <div>
+        <StickyMenu menuOptions={headings} />
+      </div>
       <div class="sliding-arrow">
         <svg viewBox="0 0 12 20">
           <path d="M1.1814 19L9.81849 10L1.1814 1" />
@@ -90,7 +92,8 @@
   .menu {
     position: sticky;
     top: 0;
-    flex: 0
+    flex: 0;
+    pointer-events: none;
 
     +breakpoint(page, medium) {
       margin-top: 5px;

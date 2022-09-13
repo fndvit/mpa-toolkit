@@ -80,7 +80,7 @@
   }
 
   .inline-searchbar {
-    width: 766px;
+    max-width: 766px;
     margin: 50px auto;
     :global(.tag-container) {
       margin: 15px 13px 0;

@@ -81,7 +81,7 @@
 
   .inline-searchbar {
     width: 766px;
-    margin: 50px auto;
+    margin: 50px auto 25px auto;
     :global(.tag-container) {
       margin: 15px 13px 0;
     }
@@ -165,8 +165,9 @@
     }
 
     .inline-searchbar {
-      width: auto;
+      width: 700px;
       padding: 0 var(--page-padding);
+      margin-bottom: 0;
 
       > :global(.tag-container) {
         flex-wrap: nowrap;
@@ -191,7 +192,9 @@
   +breakpoint(page, small) {
 
     .inline-searchbar {
+      width: auto;
       margin: 0rem;
+      margin-top: 35px;
     }
 
     .landing-page {

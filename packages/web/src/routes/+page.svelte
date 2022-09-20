@@ -80,7 +80,7 @@
   }
 
   .inline-searchbar {
-    width: 766px;
+    max-width: 766px;
     margin: 50px auto 25px auto;
     :global(.tag-container) {
       margin: 15px 13px 0;
@@ -165,7 +165,7 @@
     }
 
     .inline-searchbar {
-      width: 700px;
+      max-width: 700px;
       padding: 0 var(--page-padding);
       margin-bottom: 0;
 
@@ -192,9 +192,7 @@
   +breakpoint(page, small) {
 
     .inline-searchbar {
-      width: auto;
-      margin: 0rem;
-      margin-top: 35px;
+      margin: 35px 0 0;
     }
 
     .landing-page {

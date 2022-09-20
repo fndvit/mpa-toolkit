@@ -105,7 +105,7 @@
   .top-searchbar {
     position: absolute;
     margin: 2rem;
-    right: 0px;
+    right: 0;
   }
 
   .splash {
@@ -201,12 +201,12 @@
     .splash {
 
       h1 {
-        padding: 1rem 0rem;
+        padding: 1rem 0;
       }
 
       h4 {
         margin-bottom: 1rem;
-        padding: 1rem 0rem;
+        padding: 1rem 0;
       }
 
     }

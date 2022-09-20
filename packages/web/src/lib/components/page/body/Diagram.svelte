@@ -163,6 +163,7 @@
 
   .diagram-body-panel {
     flex: 1;
+    max-width: 50rem;
   }
 
   .diagram-info-panel {

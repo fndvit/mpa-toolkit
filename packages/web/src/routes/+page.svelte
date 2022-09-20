@@ -80,8 +80,8 @@
   }
 
   .inline-searchbar {
-    width: 766px;
-    margin: 50px auto;
+    max-width: 766px;
+    margin: 50px auto 25px auto;
     :global(.tag-container) {
       margin: 15px 13px 0;
     }
@@ -105,7 +105,7 @@
   .top-searchbar {
     position: absolute;
     margin: 2rem;
-    right: 0px;
+    right: 0;
   }
 
   .splash {
@@ -165,8 +165,9 @@
     }
 
     .inline-searchbar {
-      width: auto;
+      max-width: 700px;
       padding: 0 var(--page-padding);
+      margin-bottom: 0;
 
       > :global(.tag-container) {
         flex-wrap: nowrap;
@@ -191,7 +192,7 @@
   +breakpoint(page, small) {
 
     .inline-searchbar {
-      margin: 0rem;
+      margin: 35px 0 0;
     }
 
     .landing-page {
@@ -200,12 +201,12 @@
     .splash {
 
       h1 {
-        padding: 1rem 0rem;
+        padding: 1rem 0;
       }
 
       h4 {
         margin-bottom: 1rem;
-        padding: 1rem 0rem;
+        padding: 1rem 0;
       }
 
     }

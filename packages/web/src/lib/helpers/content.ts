@@ -1,4 +1,4 @@
-import type { ContentBlock, ContentDocument, Page, Section, DiagramData, CardsBlock } from '@mpa/db';
+import type { ContentBlock, ContentDocument, Page, Section, DiagramData, CardsBlock, LinkCardsBlock } from '@mpa/db';
 import { slugify } from '@mpa/utils';
 import { env } from '$env/dynamic/public';
 
@@ -92,6 +92,10 @@ export function createEmptyDiagram(): DiagramData {
 
 export function createEmptyCard(): CardsBlock['attrs'] {
   return { style: 'default', cards: [{ heading: '', body: '' }] };
+}
+
+export function createEmptyLinkCard(): LinkCardsBlock['attrs'] {
+  return { title: '', cards: [{ heading: '', url: '' }] };
 }
 
 export function getSectionSize(section: Section): number {

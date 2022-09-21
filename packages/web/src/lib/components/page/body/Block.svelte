@@ -7,6 +7,7 @@
   import BulletList from './BulletList.svelte';
   import OrderedList from './OrderedList.svelte';
   import DiagramComponent from './DiagramComponent.svelte';
+  import LinkSlider from './LinkSlider.svelte';
 
   export let block: ContentBlock;
 
@@ -14,6 +15,7 @@
     heading: Heading,
     paragraph: Paragraph,
     cards: TextSlider,
+    linkCards: LinkSlider,
     image: Image,
     bullet_list: BulletList,
     ordered_list: OrderedList,

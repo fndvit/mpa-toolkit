@@ -11,7 +11,7 @@
   import HeadingBlockButton from './HeadingBlockButton.svelte';
   import { IconButton } from '$lib/components/generic';
   import { schema } from '$lib/editor/schema';
-  import { createEmptyCard, createEmptyDiagram } from '$lib/helpers/content';
+  import { createEmptyCard, createEmptyLinkCard, createEmptyDiagram } from '$lib/helpers/content';
 
   export let editorState: EditorState;
 
@@ -19,6 +19,11 @@
 
   const insertCards = () => {
     const tr = editorState.tr.replaceSelectionWith(schema.nodes.cards.createAndFill(createEmptyCard()));
+    view.dispatch(tr);
+  };
+
+  const insertLinkCards = () => {
+    const tr = editorState.tr.replaceSelectionWith(schema.nodes.linkCards.createAndFill(createEmptyLinkCard()));
     view.dispatch(tr);
   };
 
@@ -44,6 +49,7 @@
     <ListControls {editorState} />
     <MenuSeperator />
     <IconButton on:click={insertCards} icon="library_books" title="Add cards" />
+    <IconButton on:click={insertLinkCards} icon="library_books" title="Add link cards" />
     <IconButton on:click={insertDiagram} icon="donut_small" title="Add diagram" />
     <MenuSeperator />
     <ImageButton title="Add image" />

@@ -42,6 +42,7 @@
 </nav>
 
 <style lang="stylus">
+
   .sticky-menu {
     background: $colors.neutral-bg;
     box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
@@ -52,18 +53,21 @@
     overflow-y: none;
     width: 189px;
   }
+
   .menuoption {
     typography: ui-small;
     padding: 10px 30px 0px 30px;
     cursor: pointer;
+
     &:hover {
       font-weight: 500;
       letter-spacing: -0.005em; // to keep spacing consistent when bolding
     }
+
   }
+
   .active {
     font-weight: 700;
   }
-
 
 </style>

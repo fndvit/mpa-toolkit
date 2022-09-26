@@ -10,15 +10,10 @@
     {#if content}
       {@html content}
     {:else}
-      <p><span class="unlabeled">Add a label</span></p>
+      Read more
     {/if}
   {:else}
     Read less
   {/if}
 </ExpandButtonBase>
 
-<style lang="stylus">
-  .unlabeled {
-    color: #bbb;
-  }
-</style>

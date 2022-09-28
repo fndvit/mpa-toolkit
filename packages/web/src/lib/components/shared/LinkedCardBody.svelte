@@ -49,10 +49,10 @@
 <style lang="stylus">
 
   .content {
-    typography: content-card-body;
+    typography: p-graphic;
     display: flex;
     flex-direction: row;
-    padding: 1rem;
+    padding: 1rem 0 0.5rem 1rem;
     justify-content: space-between;
     align-items: center;
     border-radius: 20px;
@@ -64,12 +64,10 @@
 
   .on-view{
     cursor: pointer;
-    typography: h4-light-responsive;
-
+    align-items: flex-start;
     &:hover {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     }
-
   }
 
   .content-input-text {
@@ -86,7 +84,7 @@
     width: 83px;
     height: 83px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 5px;
   }
 
   .hide-editable {

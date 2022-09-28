@@ -52,14 +52,14 @@
     --dot-color: $textColor;
     color: $textColor;
   .cards {
-    padding: 0.5rem;
-    background-color: grey;
+    padding: 1rem 0.5rem;
+    background-color: $colors.neutral-light;
     border-radius: 20px;
   }
   .card {
     height: 100%;
 
-    margin: 0 auto;
+    margin-right: 1rem;
     .image {
       height: 156px;
       background-color: green;
@@ -70,6 +70,12 @@
     list-style: none;
     padding: 0;
     margin: 0;
+     li {
+      border-bottom: 1px solid white;
+     }
+     li:last-child {
+      border-bottom: none;
+    }
   }
   .editor-buttons {
     display: flex;
@@ -87,10 +93,10 @@
     }
   }
 
-
   .fixed-title {
     :global(.heading) {
-      padding: 20px;
+      padding: 0.5rem 1rem;
+      typography: h5;
     }
   }
 

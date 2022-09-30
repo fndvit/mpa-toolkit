@@ -1,30 +1,29 @@
 <script lang="ts">
-  import InlineSvgLink from "$lib/components/generic/InlineSvgLink.svelte";
+  import InlineSvgLink from '$lib/components/generic/InlineSvgLink.svelte';
   import staticSplash from '$lib/assets/static-splash.png';
-  import TopNavMenu from "$lib/components/generic/TopNavMenu.svelte";
+  import TopNavMenu from '$lib/components/generic/TopNavMenu.svelte';
 
   export let page: string;
   export let subtitle: string = null;
-
 </script>
 
-  <div class="splash" style="background-image: url({staticSplash})">
-    <div class="upper-container">
-      <div class="left-side">
-        <InlineSvgLink href="/" svg="MPATH_W" />
-      </div>
-      <div class="right-side">
-        <TopNavMenu current={page}/>
-      </div>
+<div class="splash" style="background-image: url({staticSplash})">
+  <div class="upper-container">
+    <div class="left-side">
+      <InlineSvgLink href="/" svg="MPATH_W" />
     </div>
-
-    <div class="title-container">
-      <h1>{page}</h1>
-      {#if subtitle}
-        <h4>{subtitle}</h4>
-      {/if}
+    <div class="right-side">
+      <TopNavMenu current={page} />
     </div>
   </div>
+
+  <div class="title-container">
+    <h1>{page}</h1>
+    {#if subtitle}
+      <h4>{subtitle}</h4>
+    {/if}
+  </div>
+</div>
 
 <style lang="stylus">
 

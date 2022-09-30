@@ -1,7 +1,5 @@
 <script lang="ts">
-
-export let content: string;
-
+  export let content: string;
 </script>
 
 <div class="page-content">

@@ -72,7 +72,7 @@
   </div>
   <div class="column2">
     <Cards cards={cardBlocks} progress={false} bind:currentPageIndex />
-    <a {href}>
+    <a {href} class="cta">
       <button tabindex="0">
         <div>Learn about <b>{tags[currentPageIndex].sentence}</b></div>
         <svg width="12" height="21" viewBox="0 0 12 21" fill="none">
@@ -104,30 +104,31 @@
     padding: 0 var(--page-padding);
     box-sizing: border-box;
 
-    svg path {
-      stroke: $colors.neutral-black;
-    }
 
-    a {
+    .cta {
       text-decoration: none;
-    }
 
-    button {
-      typography: h4-responsive;
-      font-weight: 400 !important;
-      font-size: 1rem !important;
-      display: flex;
-      gap: 0.75rem;
-      border: none;
-      background: $colors.highlight-1;
-      box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
-      border-radius: 24px;
-      padding: 0.8rem 1.5rem 0.8rem 1.35rem;
-      cursor: pointer;
-      margin: 3rem 0rem 2rem;
+      svg path {
+        stroke: $colors.neutral-black;
+      }
 
-      &:hover {
-        filter: brightness(105%);
+      button {
+        typography: h4-responsive;
+        font-weight: 400 !important;
+        font-size: 1rem !important;
+        display: flex;
+        gap: 0.75rem;
+        border: none;
+        background: $colors.highlight-1;
+        box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+        border-radius: 24px;
+        padding: 0.8rem 1.5rem 0.8rem 1.35rem;
+        cursor: pointer;
+        margin: 3rem 0rem 2rem;
+
+        &:hover {
+          filter: brightness(105%);
+        }
       }
     }
 

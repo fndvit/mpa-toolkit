@@ -45,13 +45,13 @@
   const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30];
 
   const tags = [
-    {tag: "Identify the problem", sentence: "identifying the problem"},
-    {tag: "Understand your system", sentence: "understanding your system"},
-    {tag: "Engage stakeholders", sentence: "engaging stakeholders"},
-    {tag: "Set goals and objectives", sentence: "setting goals and objectives"},
-    {tag: "Designing", sentence: "designing MPAs"},
-    {tag: "Implementation", sentence: "implementing MPAs"},
-    {tag: "Future proofing and adaptation", sentence: "future proofing and adapting"}
+    { tag: 'Identify the problem', sentence: 'identifying the problem' },
+    { tag: 'Understand your system', sentence: 'understanding your system' },
+    { tag: 'Engage stakeholders', sentence: 'engaging stakeholders' },
+    { tag: 'Set goals and objectives', sentence: 'setting goals and objectives' },
+    { tag: 'Designing', sentence: 'designing MPAs' },
+    { tag: 'Implementation', sentence: 'implementing MPAs' },
+    { tag: 'Future proofing and adaptation', sentence: 'future proofing and adapting' }
   ];
 
   let currentPageIndex = 0;
@@ -63,7 +63,7 @@
       type: currentPageIndex === i ? 'main' : 'unselected'
     }));
 
-    $: href = `/tag/${slugify(tags[currentPageIndex].tag)}/`;
+  $: href = `/tag/${slugify(tags[currentPageIndex].tag)}/`;
 </script>
 
 <div class="landing-lifecycle" style="background-image: url({landingLifecycle});">
@@ -76,7 +76,7 @@
       <button tabindex="0">
         <div>Learn about <b>{tags[currentPageIndex].sentence}</b></div>
         <svg width="12" height="21" viewBox="0 0 12 21" fill="none">
-          <path d="M1.39624 19.9412L9.95787 10.4118L1.39624 0.882338" stroke="#2A2A2A" stroke-width="2.4"/>
+          <path d="M1.39624 19.9412L9.95787 10.4118L1.39624 0.882338" stroke="#2A2A2A" stroke-width="2.4" />
         </svg>
       </button>
     </a>

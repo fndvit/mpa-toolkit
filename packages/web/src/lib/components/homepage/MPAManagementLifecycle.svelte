@@ -1,8 +1,8 @@
 <script lang="ts">
+  import { slugify } from '@mpa/utils';
   import landingLifecycle from '$lib/assets/landing-lifecycle.jpg';
   import { Cards, CircleMenu } from '$lib/components/shared';
   import type { MenuElement } from '$lib/components/shared/CircleMenu.svelte';
-  import { slugify } from '@mpa/utils';
 
   const cardBlocks = [
     {

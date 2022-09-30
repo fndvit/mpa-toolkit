@@ -125,6 +125,7 @@
         padding: 0.8rem 1.5rem 0.8rem 1.35rem;
         cursor: pointer;
         margin: 3rem 0rem 2rem;
+        align-items: center;
 
         &:hover {
           filter: brightness(105%);

@@ -23,13 +23,13 @@
   };
   const LIFECYCLE_CONFIG = [20, 20, 10, 5, 5, 10, 30]; // index matches tag id
   const LIFECYCLE_TEXT = [
-    'Although there is no single recipe, there ways to optimize the <b>design</b> of your MPA based',
-    '<b>Where does this fit in the MPA management lifecycle?</b>',
-    '<b>Where does this fit in the MPA management lifecycle?</b>',
-    '<b>Where does this fit in the MPA management lifecycle?</b>',
-    '<b>Where does this fit in the MPA management lifecycle?</b>',
-    '<b>Where does this fit in the MPA management lifecycle?</b>',
-    '<b>Where does this fit in the MPA management lifecycle?</b>'
+    'Problem-scoping, or detailing the challenges that an MPA needs to address, allows MPAs to be truly fit-for-purpose',
+    'Gathering information on human / natural ecology, and socio-political conditions, can identify best MPA solutions',
+    'Planning begins with involving stakeholders: those affecting the MPA site, and those to be affected by the MPA',
+    'Visioning, or setting goals and obvjectives unique to each MPA, should be done with stakeholders',
+    'The design of the ‘best fit’ MPA to meet the agreed goals and objectives reflects the unique circumstances of the place',
+    'Implementing requires an institutional, legislative, staff, stakeholder, and financial support',
+    'With changing climate and other pressures, MPAs need constant adaptation to be able to continue to meet their goals'
   ]; // index matches tag id
 
   const MAX_PRIMARY_TAGS = 2;

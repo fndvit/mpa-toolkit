@@ -89,14 +89,4 @@ describe('db.page', () => {
     const g3 = await db.page.getByTag(tags[2].id, 'collection');
     expect(g3.length).toBe(2);
   });
-
-  test('recommend', async () => {
-    const p1 = await db.page.get({ slug: 'a' });
-    const g1 = await db.page.recommender({madlib: undefined, pageviews: undefined}, "chapter", p1.id);
-    expect(g1.length).toBe(8);
-
-    const p2 = await db.page.get({ slug: 'c' });
-    const g2 = await db.page.recommender({madlib: undefined, pageviews: undefined}, "chapter", p2.id);
-    expect(g2.length).toBe(8);
-  });
 });

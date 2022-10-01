@@ -139,13 +139,16 @@
     :global(.body-column) &,
     :global(.editor-content) & {
       card-styles($colors.primary-blue);
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
     }
 
     :global(.key-learnings .card-content) & {
       card-styles($colors.neutral-bg);
       box-shadow: none;
+    }
+
+    :global(.diagram) & {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
     }
   }
 
@@ -155,12 +158,14 @@
     display: flex;
     column-gap: 5px;
     justify-content: right;
+
     :global(.icon-button) {
       --ib-icon-bg: #00000022;
       --ib-hover-bg: #00000022;
       --ib-hover-border-color: #00000022;
       --ib-active-bg: #ffffff77;
     }
+
   }
 
   .carousel-dots {
@@ -191,11 +196,13 @@
   }
 
   .fixed-title {
+
     :global(.heading) {
       margin-left: 32px;
       margin-top: 25px;
       position: absolute;
     }
+
   }
 
   @media(max-width: 425px) {

@@ -52,8 +52,8 @@
 <div
   class="cards"
   class:has-fixed-title={fixedTitle}
+  class:multiple-slides={cards.length > 1}
   data-card-style={style}
-  multiple-slides={cards.length > 1}
   class:selected
 >
   <Splide {options} bind:this={splide} on:move={e => (currentPageIndex = e.detail.index)} hasTrack={false}>
@@ -182,7 +182,7 @@
     padding: var(--content-top-padding) var(--content-right-padding) 10px var(--content-padding);
     margin-bottom: 15px;
 
-    .cards[data-card-style="no-heading"][multiple-slides=true] & {
+    .cards.multiple-slides[data-card-style="no-heading"] & {
       --content-right-padding: 140px;
     }
 

@@ -2,6 +2,7 @@ import { getEnvFromFile } from '@mpa/env';
 import { beforeAll, describe, expect, test } from 'vitest';
 import type { Tag } from '..';
 import { MpaDatabase } from '..';
+import { generateEmptyPage } from '../lib/test-utils';
 
 const env = getEnvFromFile('test', { DATABASE_URL: true });
 
@@ -99,37 +100,3 @@ describe('db.page', () => {
     expect(g2.length).toBe(8);
   });
 });
-
-function generateEmptyPage(type: 'chapter' | 'caseStudy') {
-  return {
-    title: '',
-    slug: '',
-    img: '',
-    content: { type: 'doc' as const, content: [] },
-    tags: [],
-    caseStudy:
-      type !== 'caseStudy'
-        ? undefined
-        : {
-            name: '',
-            established: null,
-            size: null,
-            governance: '',
-            staff: '',
-            budget: '',
-            budgetLevel: '',
-            lat: -90,
-            long: 0,
-            milestones: {},
-            keyLearnings: []
-          },
-    chapter:
-      type !== 'chapter'
-        ? undefined
-        : {
-            summary: '',
-            keyTakeaways: [],
-            authors: []
-          }
-  };
-}

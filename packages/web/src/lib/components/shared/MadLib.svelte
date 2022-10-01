@@ -2,7 +2,7 @@
   import { slugify } from '@mpa/utils';
   import MadLibSelector from './MadLibSelector.svelte';
 
-  const tagValue = {
+  const TAG_VALUES = {
     'an MPA planner': 'MPA planners',
     'an MPA manager': 'MPA managers',
     'a community organizer': 'Community organizers',
@@ -17,18 +17,6 @@
     'my team will make': 'Team decision-making',
     'my government needs to make': 'Government decision-making'
   };
-
-  export function buildTagSlug(value: string[]) {
-    return value
-      .map(v => tagValue[v])
-      .map(str => slugify(str))
-      .join('+');
-  }
-
-  export function buildTagMadlib(value: string[]) {
-    return value
-      .map(v => tagValue[v])
-  }
 </script>
 
 <script lang="ts">
@@ -38,6 +26,11 @@
   const actionSubjectList = ['I need to make', 'my team will make', 'my government needs to make'];
 
   export let value: string[] = [null, null, null, null];
+  export let slug = '';
+  export let tags: string[] = [];
+
+  $: tags = value.map(v => TAG_VALUES[v]);
+  $: slug = tags.map(t => slugify(t)).join('+');
 </script>
 
 <p class="madlib">

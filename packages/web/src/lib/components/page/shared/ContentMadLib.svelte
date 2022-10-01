@@ -1,22 +1,21 @@
 <script lang="ts">
-  import MadLib, { buildTagSlug, buildTagMadlib } from '$lib/components/shared/MadLib.svelte';
-  import {userHistory} from '$lib/history';
+  import MadLib from '$lib/components/shared/MadLib.svelte';
+  import { userHistory } from '$lib/history';
 
-  let value: string[] = [];
+  let slug: string;
+  let tags: string[];
 
-  const setMadlibAnswers = () => {
-    userHistory.setMadlibAnswers(buildTagMadlib(value));
-  };
+  const setMadlibAnswers = () => userHistory.setMadlibAnswers(tags);
 
-  $: action = `/recommended/${buildTagSlug(value)}/`;
+  $: action = slug ? `/recommended/${slug}/` : null;
 </script>
 
 <div class="content-madlib">
   <h5>Is this not for you?</h5>
 
-  <MadLib bind:value  />
+  <MadLib bind:tags bind:slug />
 
-  <form {action} on:click={setMadlibAnswers}>
+  <form {action} on:submit={setMadlibAnswers}>
     <button tabindex="0">
       Let's find what you need
       <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">

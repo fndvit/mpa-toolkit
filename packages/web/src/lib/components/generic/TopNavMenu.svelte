@@ -1,5 +1,7 @@
 <script lang="ts">
   import { slugify } from '@mpa/utils';
+  import Hamburger from './Hamburger.svelte';
+
   export let current = 'Privacy policy';
 
   const options: string[] = ['Partners', 'Team', 'Privacy policy', 'Terms of use', 'Sitemap'];
@@ -9,44 +11,28 @@
   const toggleExpanded = () => (expanded = !expanded);
 </script>
 
-<div class="container">
-  {#if !expanded}
-    <div class="expand-button" on:click={toggleExpanded}>
-      <svg width="20" height="16" viewBox="0 0 20 16" fill="none">
-        <line x1="1" y1="1" x2="19" y2="1" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
-        <line x1="1" y1="8" x2="19" y2="8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
-        <line x1="1" y1="15" x2="19" y2="15" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
-      </svg>
-    </div>
-  {/if}
+<svelte:body on:click={() => (expanded = false)} />
 
-  <div class="options-container" class:expanded on:mouseleave={toggleExpanded}>
+<div class="topnavmenu" on:click|stopPropagation>
+  <div class="hamburger-container">
+    <Hamburger active={expanded} on:click={toggleExpanded} />
+  </div>
+
+  <div class="options-container" class:expanded>
     {#each options as opt}
       <a tabindex="0" on:click={toggleExpanded} class:selected={current === opt} href="/{slugify(opt)}">{opt}</a>
     {/each}
-    {#if expanded}
-      <div class="close-button" on:click={toggleExpanded}>
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-          <path
-            d="M8.9 7.5L14.7 1.7C15.1 1.3 15.1 0.7 14.7 0.3C14.3 -0.1 13.7 -0.1 13.3 0.3L7.5 6.1L1.7 0.3C1.3 -0.1 0.7
-            -0.1 0.3 0.3C-0.1 0.7 -0.1 1.3 0.3 1.7L6.1 7.5L0.3 13.3C-0.1 13.7 -0.1 14.3 0.3 14.7C0.5 14.9 0.7 15 1 15C1.3 15 1.5 14.9 1.7 14.7L7.5
-            8.9L13.3 14.7C13.5 14.9 13.8 15 14 15C14.2 15 14.5 14.9 14.7 14.7C15.1 14.3 15.1 13.7 14.7 13.3L8.9 7.5Z"
-            fill="black"
-          />
-        </svg>
-      </div>
-    {/if}
   </div>
 </div>
 
 <style lang="stylus">
 
-  .close-button {
+  .hamburger-container {
     display: none;
-  }
-
-  .expand-button {
-    display: none;
+    position: absolute;
+    right: 2.5rem;
+    top: 2.5rem;
+    z-index: 100;
   }
 
   .selected {
@@ -104,26 +90,8 @@
   +breakpoint(page, medium) {
 
     .options-container {
-      display: none;
-    }
-
-    .expand-button {
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .close-button {
-      display: block;
-      position: absolute;
-      top: 3.5rem;
-      right: 3.5rem;
-      z-index: 3;
-      transform: scale(1.25, 1.25);
-    }
-
-    .expanded {
       width: 50vw;
-      display: flex;
+      max-width: 350px;
       flex-direction: column;
       position: absolute;
       top: 0px;
@@ -135,7 +103,19 @@
       height: calc(100vh - 5rem);
       justify-content: flex-start;
       position: fixed;
+      transform: translateX(100%);
+      transition: transform 200ms;
+      &.expanded {
+        transform: translateX(0%);
+      }
     }
+
+    .hamburger-container {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+
 
     a {
       color: #2a2a2a
@@ -155,10 +135,8 @@
 
   +breakpoint(page, small) {
 
-    .close-button {
-      top: 3rem;
-      right: 3rem;
-      transform: scale(1, 1);
+    .hamburger-container {
+      transform: scale(0.8);
     }
 
   }

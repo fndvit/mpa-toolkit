@@ -1,4 +1,5 @@
 import type { APIRequests as API, Author, Page, Tag, User } from '@mpa/db';
+import { omitUndefined } from '@mpa/utils';
 import { default as _ky } from 'ky';
 import type { GoogleAuthReturnData } from '../routes/api/auth/google/+server';
 
@@ -55,12 +56,12 @@ export const recommendations = {
   ): Promise<Page.ContentCard[]> =>
     ky
       .get('recommendations', {
-        searchParams: {
+        searchParams: omitUndefined({
           type,
           referencePageId,
           madlib: data.madlib?.join(','),
           pageviews: data.pageviews?.join(',')
-        }
+        })
       })
       .json()
 };

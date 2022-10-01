@@ -10,8 +10,8 @@ export const GET: RequestHandler = async ({ url }) => {
   const referencePageId = parseInt(url.searchParams.get('referencePageId'));
 
   const userHistory: APIRequests.Recommendations = {
-    madlib: madlib !== 'undefined' ? madlib.split(',').map(answer => answer.trim()) : null,
-    pageviews: pageviews !== 'undefined' ? pageviews.split(',').map(pageId => parseInt(pageId.trim())) : null
+    madlib: madlib?.split(',').map(answer => answer.trim()),
+    pageviews: pageviews?.split(',').map(pageId => parseInt(pageId.trim()))
   };
 
   const pageIds = await db.page.recommender(type, userHistory, referencePageId);

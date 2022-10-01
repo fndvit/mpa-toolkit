@@ -52,13 +52,15 @@ export const tagMixin = (db: MpaDatabase) => {
         }
       }),
 
-    allForRecommender: () =>
-      db.prisma.tag.findMany({
+    allForRecommender: async () => {
+      const query = await db.prisma.tag.findMany({
         ...Queries.countTags,
         orderBy: {
           value: 'asc'
         }
-      }),
+      });
+      return query.map(({ id, value, _count }) => ({ id, value, pageCount: _count.pageTags }));
+    },
 
     get: <
       {
@@ -72,7 +74,6 @@ export const tagMixin = (db: MpaDatabase) => {
         return db.prisma.tag.findUnique({ where: { id: val } });
       } else {
         // can't directly query db by slug using prisma
-        // so doing the query clien
         const allTags = await all();
         if (Array.isArray(val)) {
           return allTags.filter(tag => val.includes(slugify(tag.value)));

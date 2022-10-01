@@ -6,7 +6,7 @@
 
   <div class="tags">
     {#each [1, 2, 3] as _}
-      <div class="loading-tag"/>
+      <div class="loading-tag" />
     {/each}
   </div>
 </div>

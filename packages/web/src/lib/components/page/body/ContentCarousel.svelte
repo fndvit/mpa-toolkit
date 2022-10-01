@@ -3,10 +3,10 @@
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import { onMount } from 'svelte';
   import ContentCarouselCard from './ContentCarouselCard.svelte';
+  import ContentCarouselLoadingCard from './ContentCarouselLoadingCard.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
   import * as api from '$lib/api';
   import { userHistory } from '$lib/history';
-import ContentCarouselLoadingCard from './ContentCarouselLoadingCard.svelte';
 
   export let title: string;
   export let referencePage: Page = undefined;
@@ -44,21 +44,21 @@ import ContentCarouselLoadingCard from './ContentCarouselLoadingCard.svelte';
 
 <div class="content-carousel">
   <p class="title">{title}</p>
-    <Splide {options}>
-      {#if !slides}
-        {#each Array(NUM_RECOMMENDATIONS) as _, i}
-          <SplideSlide>
-            <ContentCarouselLoadingCard/>
-          </SplideSlide>
-        {/each}
-      {:else}
-        {#each slides as slide}
-          <SplideSlide>
-            <ContentCarouselCard page={slide} />
-          </SplideSlide>
-        {/each}
-      {/if}
-    </Splide>
+  <Splide {options}>
+    {#if !slides}
+      {#each Array(NUM_RECOMMENDATIONS) as _, i}
+        <SplideSlide>
+          <ContentCarouselLoadingCard />
+        </SplideSlide>
+      {/each}
+    {:else}
+      {#each slides as slide}
+        <SplideSlide>
+          <ContentCarouselCard page={slide} />
+        </SplideSlide>
+      {/each}
+    {/if}
+  </Splide>
   <div class="opacity-div" />
 </div>
 

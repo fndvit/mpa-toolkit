@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+  import { onMount } from 'svelte';
   import LandingCarouselCard from './LandingCarouselCard.svelte';
   import { CarouselDots } from '$lib/components/shared';
   import { SplideOptions } from '$lib/helpers/splide';
-  import { onMount } from 'svelte';
   import * as api from '$lib/api';
   import { userHistory } from '$lib/history';
 
@@ -42,9 +42,7 @@
   $: if (currentCard >= 0 && splide) splide.go(currentCard);
 
   onMount(async () => {
-    console.log()
     pages = await api.recommendations.get(userHistory.toApiRequest(), type);
-    console.log(pages);
   });
 </script>
 

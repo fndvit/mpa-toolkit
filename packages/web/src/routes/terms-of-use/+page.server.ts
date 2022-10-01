@@ -1,11 +1,8 @@
-import { marked } from 'marked';
 import type { PageServerLoad } from './$types';
 import terms from '$lib/about/terms.md?raw';
+import { parseMd } from '$lib/mardown';
 
 export const load: PageServerLoad = async () => {
-  let content = marked.parse(terms);
-  let lastUpdated = content.split('</p>\n').shift();
-  content = content.replace(lastUpdated, '').replace('</p>\n', '');
-  lastUpdated = lastUpdated.replace('<p>', '');
-  return { content, lastUpdated };
+  const { html, metadata } = parseMd(terms);
+  return { content: html, lastUpdated: metadata.updated };
 };

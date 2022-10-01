@@ -55,7 +55,12 @@ export const recommendations = {
   ): Promise<Page.ContentCard[]> =>
     ky
       .get('recommendations', {
-        searchParams: { madlib: data.madlib?.join(','), pageviews: data.pageviews?.join(','), type, referencePageId }
+        searchParams: {
+          type,
+          referencePageId,
+          madlib: data.madlib?.join(','),
+          pageviews: data.pageviews?.join(',')
+        }
       })
       .json()
 };

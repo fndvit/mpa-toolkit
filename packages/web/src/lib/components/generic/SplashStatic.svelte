@@ -1,6 +1,6 @@
 <script lang="ts">
   import InlineSvgLink from '$lib/components/generic/InlineSvgLink.svelte';
-  import staticSplash from '$lib/assets/static-splash.png';
+  import staticSplash from '$lib/assets/static-splash.jpg';
   import TopNavMenu from '$lib/components/generic/TopNavMenu.svelte';
 
   export let page: string;

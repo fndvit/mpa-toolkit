@@ -25,9 +25,7 @@
 
   .tags {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    max-width: 292px;
   }
 
   .loading-tag {
@@ -38,13 +36,11 @@
   }
 
   .loading-card {
-    width: 100%;
     height: 148px;
     border-radius: 5px;
   }
 
   .title {
-    width: 100%;
     height: 30px;
     border-radius: 5px;
   }
@@ -62,7 +58,7 @@
 
 
   @media (max-width: 1320px) {
-    .content-carousel-card, .tags {
+    .content-carousel-card {
       max-width: 210px;
     }
   }

@@ -19,7 +19,7 @@
     "seedmigrate": "node dist/bin/migrate.js",
     "seed": "node dist/bin/seed.js",
     "reset": "node dist/bin/reset.js",
-    "test": "vitest",
+    "test": "vitest --no-threads",
     "prepare": "pnpm run build && prisma generate",
     "dev": "tsup --watch",
     "build": "tsup",

@@ -13,7 +13,9 @@
     "test": "pnpm -F @mpa/db run test",
     "gen": "prisma generate",
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
-    "format": "prettier --write --plugin-search-dir=. ."
+    "format": "prettier --write --plugin-search-dir=. .",
+    "docker:up": "docker-compose -p mpa up -d",
+    "docker:down": "docker-compose -p mpa down"
   },
   "name": "mpa-toolkit",
   "workspaces": [

@@ -1,0 +1,37 @@
+on:
+  push:
+    branches:
+      - "dev"
+jobs:
+  aws_cdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - uses: pnpm/action-setup@v2
+        with:
+          version: "7.14.2"
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: 'eu-west-1'
+      - name: Install dependencies
+        run: pnpm i
+      - name: Build and deploy stack
+        env:
+          PUBLIC_GOOGLE_OAUTH_CLIENT_ID: "829288200910-2s4jvqauhtpplood8o3hqhhrbqg6e9ug"
+          PUBLIC_UPLOAD_BASE_URL: /upload/
+          GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.STAGING_GOOGLE_OAUTH_CLIENT_SECRET }}
+          LOG_LEVEL: debug
+          LOG_DB_QUERIES: false
+          LOG_TRANSPORT: lambda
+          ORIGIN: https://mpath-dev.freetls.fastly.net/
+          FASTLY_SERVICE_ID: ${{ secrets.STAGING_FASTLY_SERVICE_ID }}
+          FASTLY_API_KEY: ${{ secrets.STAGING_FASTLY_API_KEY }}
+          FASTLY_ROUTING_DICTIONARY_ID: ${{ secrets.STAGING_FASTLY_ROUTING_DICTIONARY_ID }}
+        run: pnpm run deploy-staging

@@ -8,7 +8,7 @@ import {
   CfnOutput
 } from 'aws-cdk-lib';
 import type { Construct } from 'constructs';
-import { getEnvFromFile } from '@mpa/env';
+import { getEnv } from '@mpa/env';
 import { AppConfig } from './constructs/AppConfig';
 import { MaintenanceBox } from './constructs/MaintenanceBox';
 import { Database } from './constructs/Database';
@@ -45,7 +45,7 @@ class MpathStack extends Stack {
     const server = new Server(this, 'Server', {
       vpc,
       appConfigLayer: lambdaLayers.appConfig,
-      env: getEnvFromFile(stage, SERVER_ENV_CONFIG)
+      env: getEnv(SERVER_ENV_CONFIG)
     });
 
     server.lambda.addEnvironment('AWS_S3_UPLOAD_BUCKET', buckets.upload.bucketName);
@@ -64,7 +64,7 @@ class MpathStack extends Stack {
 
     const migrationRunner = new MigrationRunner(this, 'MigrationRunner', {
       vpc,
-      env: getEnvFromFile(stage, MIGRATION_RUNNER_ENV_CONFIG)
+      env: getEnv(MIGRATION_RUNNER_ENV_CONFIG)
     });
     migrationRunner.lambda.addEnvironment('DATABASE_URL', db.url);
     db.securityGroup.addIngressRule(migrationRunner.securityGroup, ec2.Port.tcp(DB_PORT));
@@ -76,7 +76,7 @@ class MpathStack extends Stack {
     if (stage !== 'dev') {
       const cachePurger = new CachePurger(this, 'CachePurger', {
         vpc,
-        env: getEnvFromFile(stage, CACHE_PURGER_ENV_CONFIG)
+        env: getEnv(CACHE_PURGER_ENV_CONFIG)
       });
       const eventStack = new EventStack(this, 'EventStack', { vpc });
       cachePurger.lambda.addEventSource(new lambda_event_sources.SqsEventSource(eventStack.queue, { batchSize: 10 }));

@@ -112,15 +112,25 @@ new MpathStack(app, 'AppStack', {
   },
   sentryArn: 'arn:aws:lambda:us-east-1:943013980633:layer:SentryNodeServerlessSDK:71',
   appConfigArn: 'arn:aws:lambda:us-east-1:027255383542:layer:AWS-AppConfig-Extension:69',
-  stage: 'staging'
+  stage: 'prod'
 });
 
-new MpathStack(app, 'Mpath-dev', {
+new MpathStack(app, 'MPAth-production', {
   env: {
-    account: '438148199870',
+    account: '335671600435',
     region: 'eu-west-1'
   },
   sentryArn: 'arn:aws:lambda:eu-west-1:943013980633:layer:SentryNodeServerlessSDK:73',
   appConfigArn: 'arn:aws:lambda:eu-west-1:434848589818:layer:AWS-AppConfig-Extension:69',
-  stage: 'dev'
+  stage: 'prod'
+});
+
+new MpathStack(app, 'MPAth-staging', {
+  env: {
+    account: '335671600435',
+    region: 'eu-west-1'
+  },
+  sentryArn: 'arn:aws:lambda:eu-west-1:943013980633:layer:SentryNodeServerlessSDK:73',
+  appConfigArn: 'arn:aws:lambda:eu-west-1:434848589818:layer:AWS-AppConfig-Extension:69',
+  stage: 'staging'
 });

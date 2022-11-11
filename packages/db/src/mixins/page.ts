@@ -19,7 +19,7 @@ export const pageMixin = (db: MpaDatabase) => {
         (opts: { model: 'content-card' }): Promise<Page.ContentCard[]>;
         (opts: { model: 'cms-list' }): Promise<Page.CmsList[]>;
         (opts: { model: 'recommender'; type: 'chapter' | 'case-study' | 'all' }): Promise<
-          { id: number; tagIds: number[] }[]
+          { id: number; tags: { id: number, category: string}[] }[]
         >;
       }
     >(async (opts: { model: string; type?: 'chapter' | 'case-study' | 'all' }) => {
@@ -34,7 +34,7 @@ export const pageMixin = (db: MpaDatabase) => {
         });
       } else if (opts.model === 'recommender') {
         const query = await db.prisma.page.findMany({
-          select: { id: true, tags: { select: { tagId: true } } },
+          select: { id: true, tags: { select: { tagId: true, category: true } } },
           where: {
             draft: false,
             ...(opts.type === 'chapter'
@@ -44,7 +44,7 @@ export const pageMixin = (db: MpaDatabase) => {
               : {})
           }
         });
-        return query.map(({ id, tags }) => ({ id, tagIds: tags.map(t => t.tagId) }));
+        return query.map(({ id, tags }) => ({ id, tags: tags.map(t => ({id: t.tagId, category: t.category})) }));
       }
     }),
 
@@ -227,16 +227,20 @@ export const pageMixin = (db: MpaDatabase) => {
       numPages = 8
     ) => {
       const allPages = await db.page.all({ model: 'recommender', type });
-      const pageToTagIds = new Map(allPages.map(p => [p.id, p.tagIds]));
+      const pageToTagIds = new Map(allPages.map(p => [p.id, p.tags]));
 
       const madlibTags = userHistory?.madlib ? (await db.tag.get(userHistory.madlib)).map(t => t.id) : [];
-      const referencePageTags = referencePageId ? pageToTagIds.get(referencePageId) ?? [] : [];
+      const referencePageTags = referencePageId ? pageToTagIds.get(referencePageId)?.map(t => t.id) ?? [] : [];
+      const referencePagePrimaryStageTags = referencePageId ? pageToTagIds.get(referencePageId)
+        ?.filter(t => t.category == "PRIMARY"  && t.id < 7)
+        ?.map(t => t.id) ?? [] : [];
+      const referencePagePrimaryNextStageTags = referencePageId ? [Math.max(...referencePagePrimaryStageTags) === 6 ? 0 : Math.max(...referencePagePrimaryStageTags) + 1] ?? [] : [];
       const pageViewTags =
         userHistory?.pageviews
           ?.filter(pageId => pageToTagIds.get(pageId))
-          .flatMap(pageId => pageToTagIds.get(pageId)!) ?? [];
+          .flatMap(pageId => pageToTagIds.get(pageId)!)?.map(t => t.id) ?? [];
 
-      const recommender = new Recommender(allPages);
+      const recommender = new Recommender(allPages.map(p => ({id: p.id, tagIds: p.tags.map(t => t.id)})));
       const topPages = new Set<number>();
       const guideLines = Recommender.getGuidelines(
         !!pageViewTags?.length,
@@ -246,7 +250,9 @@ export const pageMixin = (db: MpaDatabase) => {
       const weights = [
         [guideLines.pageViews, pageViewTags],
         [guideLines.madlib, madlibTags],
-        [guideLines.referencePage, referencePageTags]
+        [guideLines.referencePage, referencePageTags],
+        [guideLines.referencePage, referencePagePrimaryStageTags],
+        [guideLines.referencePage, referencePagePrimaryNextStageTags]
       ] as const;
 
       weights.forEach(([weight, tags]) => {

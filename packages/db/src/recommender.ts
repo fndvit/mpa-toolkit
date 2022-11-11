@@ -49,7 +49,7 @@ export class Recommender {
   }
 
   static getGuidelines(pageviews: boolean, madlib: boolean, referencePage: boolean) {
-    if (referencePage) return { referencePage: 1 };
+    if (referencePage) return { referencePage: 0.33 };
     else if (madlib && pageviews) return { pageViews: 1 / 3, madlib: 1 / 2 };
     else if (pageviews) return { pageViews: 1 / 2 };
     else if (madlib) return { madlib: 2 / 3 };

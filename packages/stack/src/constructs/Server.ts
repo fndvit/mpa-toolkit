@@ -15,7 +15,6 @@ export const SERVER_ENV_CONFIG = {
   PUBLIC_UPLOAD_BASE_URL: true,
   PUBLIC_GOOGLE_OAUTH_CLIENT_ID: true,
   GOOGLE_OAUTH_CLIENT_SECRET: true,
-  SENTRY_DSN: false,
   DISABLE_CACHE: false,
   LOG_TRANSPORT: true,
   LOG_LEVEL: true
@@ -58,7 +57,7 @@ export class Server extends Construct {
       },
       bundling: {
         externalModules: ['@sentry/serverless'],
-        inject: ['./packages/adapter/dist/lambda/shims.js'],
+        inject: ['./packages/stack/dist/lambda/shims.js'],
         commandHooks: {
           beforeInstall: () => [],
           beforeBundling: () => [],

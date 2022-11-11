@@ -22,6 +22,7 @@ export default function (): Adapter {
       builder.rimraf(server);
       builder.rimraf(tmp);
       builder.mkdirp(tmp);
+      builder.mkdirp(server);
 
       builder.writeClient(client);
       builder.writePrerendered(prerendered);

@@ -105,15 +105,15 @@ class MpathStack extends Stack {
 
 const app = new App();
 
-new MpathStack(app, 'AppStack', {
-  env: {
-    account: '616704609253',
-    region: 'us-east-1'
-  },
-  sentryArn: 'arn:aws:lambda:us-east-1:943013980633:layer:SentryNodeServerlessSDK:71',
-  appConfigArn: 'arn:aws:lambda:us-east-1:027255383542:layer:AWS-AppConfig-Extension:69',
-  stage: 'prod'
-});
+// new MpathStack(app, 'AppStack', {
+//   env: {
+//     account: '616704609253',
+//     region: 'us-east-1'
+//   },
+//   sentryArn: 'arn:aws:lambda:us-east-1:943013980633:layer:SentryNodeServerlessSDK:71',
+//   appConfigArn: 'arn:aws:lambda:us-east-1:027255383542:layer:AWS-AppConfig-Extension:69',
+//   stage: 'prod'
+// });
 
 new MpathStack(app, 'MPAth-production', {
   env: {
@@ -132,5 +132,7 @@ new MpathStack(app, 'MPAth-staging', {
   },
   sentryArn: 'arn:aws:lambda:eu-west-1:943013980633:layer:SentryNodeServerlessSDK:73',
   appConfigArn: 'arn:aws:lambda:eu-west-1:434848589818:layer:AWS-AppConfig-Extension:69',
+  // sentryArn: 'arn:aws:lambda:eu-west-3:943013980633:layer:SentryNodeServerlessSDK:88',
+  // appConfigArn: 'arn:aws:lambda:eu-west-3:493207061005:layer:AWS-AppConfig-Extension:60',
   stage: 'staging'
 });

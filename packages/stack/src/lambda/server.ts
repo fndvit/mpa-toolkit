@@ -6,7 +6,7 @@ import { Server } from 'SERVER';
 
 // TODO: import config
 
-const handler = async (event: APIGatewayEvent) => {
+exports.handler = async (event: APIGatewayEvent) => {
   const server = new Server(manifest);
 
   server.init({ env: process.env as Record<string, string> });
@@ -47,15 +47,6 @@ const handler = async (event: APIGatewayEvent) => {
     body: 'Not found.'
   };
 };
-
-if (process.env.SENTRY_DSN) {
-  Sentry.AWSLambda.init({
-    dsn: process.env.SENTRY_DSN,
-    tracesSampleRate: 1.0
-  });
-}
-
-exports.handler = process.env.SENTRY_DSN ? Sentry.AWSLambda.wrapHandler(handler) : handler;
 
 function parseQuery(queryParams) {
   if (!queryParams) return '';

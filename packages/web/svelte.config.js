@@ -1,6 +1,6 @@
 // @ts-check
 import { fileURLToPath } from 'url';
-import adapter from '@mpa/adapter';
+import adapter from '@mpa/stack';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */

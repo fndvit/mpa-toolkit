@@ -22,11 +22,10 @@ export class MpaDatabase {
   session = sessionMixin(this);
   homepage = homepageMixin(this);
 
-  constructor(url: string) {
+  constructor() {
     const LOG_DB_QUERIES = env.LOG_DB_QUERIES === 'true';
     const QUERY_LOGGING = LOG_DB_QUERIES ? ([{ emit: 'event', level: 'query' }] as const) : [];
     const prisma = new PrismaClient({
-      datasources: { db: { url } },
       log: [...QUERY_LOGGING, 'info', 'warn', 'error']
     });
 

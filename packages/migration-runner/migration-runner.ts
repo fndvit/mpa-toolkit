@@ -2,9 +2,9 @@ import type { Handler } from 'aws-lambda';
 import { MpaDatabase } from '@mpa/db';
 import { DevSeeder, ProdSeeder, reset, prismaCmd } from '@mpa/db/src/lib';
 import { logger } from '@mpa/log';
-import { getEnv } from '@mpa/env';
+import { validateEnv } from '@mpa/env';
 
-export const env = getEnv({ DATABASE_URL: true });
+export const env = validateEnv(process.env, { DATABASE_URL: true });
 
 const log = logger('migration-runner');
 // example cmd to invoke using aws cli:
@@ -17,7 +17,7 @@ export const handler: Handler = async event => {
   // If you want to add commands, please refer to: https://www.prisma.io/docs/concepts/components/prisma-migrate
   const command: string = event.command ?? 'deploy';
 
-  const db = new MpaDatabase(env.DATABASE_URL);
+  const db = new MpaDatabase();
 
   log.info(`Running migration command: ${command}`);
 

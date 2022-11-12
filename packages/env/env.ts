@@ -13,7 +13,7 @@ export type ConfigToEnvClean<C extends EnvConfig> = Expand<
   Without<never, ConfigToEnvRequired<C>> & Without<never, ConfigToEnvOptional<C>>
 >;
 
-export function processEnv(env: Record<string, string>, config: EnvConfig) {
+export function validateEnv(env: Record<string, string | undefined>, config: EnvConfig) {
   const required = Object.entries(config)
     .filter(([, value]) => value)
     .map(([key]) => key);
@@ -37,10 +37,12 @@ export function processEnv(env: Record<string, string>, config: EnvConfig) {
 }
 
 export function getEnv<C extends EnvConfig>(config: C) {
-  return processEnv(process.env as Record<string, string>, config) as ConfigToEnvClean<C>;
+  return validateEnv(process.env as Record<string, string>, config) as ConfigToEnvClean<C>;
 }
 
-export function getEnvFromFile<C extends EnvConfig>(env: Environment, config: C) {
-  const _env = dotenv.parse(fs.readFileSync(path.join(process.cwd(), '../..', `.env.${env}`), 'utf-8'));
-  return processEnv(_env as Record<string, string>, config) as ConfigToEnvClean<C>;
+export function loadEnvFromFile<C extends EnvConfig>(env: Environment, config: C) {
+  const _env = dotenv.config({
+    path: fs.readFileSync(path.join(process.cwd(), '../..', `.env.${env}`), 'utf-8')
+  });
+  return validateEnv(_env as Record<string, string>, config) as ConfigToEnvClean<C>;
 }

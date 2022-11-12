@@ -15,7 +15,7 @@ export default function (): Adapter {
       const server = builder.getBuildDirectory('server');
       const client = builder.getBuildDirectory('client');
       const prismaClient = builder.getBuildDirectory('prisma-client');
-      const prerendered = builder.getBuildDirectory('prerendered');
+      // const prerendered = builder.getBuildDirectory('prerendered');
       const router = builder.getBuildDirectory('router');
       const tmp = builder.getBuildDirectory('tmp');
 
@@ -25,7 +25,7 @@ export default function (): Adapter {
       builder.mkdirp(server);
 
       builder.writeClient(client);
-      builder.writePrerendered(prerendered);
+      // builder.writePrerendered(prerendered);
 
       const prismaClientFiles = [
         'index.js',
@@ -50,8 +50,8 @@ export default function (): Adapter {
 
       fs.writeFileSync(
         `${server}/manifest.js`,
-        `export const manifest = ${builder.generateManifest({ relativePath })};\n\n` +
-          `export const prerendered = new Set(${JSON.stringify(builder.prerendered.paths)});\n`
+        `export const manifest = ${builder.generateManifest({ relativePath })};\n\n` //+
+        // `export const prerendered = new Set(${JSON.stringify(builder.prerendered.paths)});\n`
       );
 
       builder.copy(`${lambda}/router.js`, `${tmp}/_router.js`, { replace: { STATIC: './static.js' } });

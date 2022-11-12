@@ -23,6 +23,7 @@ export const SERVER_ENV_CONFIG = {
 export interface ServerProps {
   vpc: ec2.IVpc;
   appConfigLayer?: lambda.ILayerVersion;
+  prismaEngineLayer: lambda.ILayerVersion;
   env: ConfigToEnvClean<typeof SERVER_ENV_CONFIG>;
 }
 
@@ -34,7 +35,7 @@ export class Server extends Construct {
   constructor(scope: Construct, id: string, props: ServerProps) {
     super(scope, id);
 
-    const { vpc, appConfigLayer, env } = props;
+    const { vpc, appConfigLayer, env, prismaEngineLayer } = props;
 
     this.lambdaSg = new ec2.SecurityGroup(this, 'LambdaSG', { vpc });
 
@@ -48,7 +49,7 @@ export class Server extends Construct {
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
       },
-      layers: appConfigLayer ? [appConfigLayer] : undefined,
+      layers: [prismaEngineLayer, appConfigLayer].filter((v): v is lambda.ILayerVersion => !!v),
       runtime: lambda.Runtime.NODEJS_16_X,
       securityGroups: [this.lambdaSg],
       environment: {

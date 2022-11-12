@@ -5,9 +5,8 @@
   "scripts": {
     "prepack": "tsup",
     "clean": "rimraf ./dist",
-    "build": "tsup && pnpm build:prepare && pnpm build:install && pnpm build:generate",
+    "build": "tsup && pnpm build:prepare",
     "build:prepare": "echo '{}' > ./dist/package.json && cp -R ../db/prisma ./dist/",
-    "build:install": "PRISMA_CLI_BINARY_TARGETS='rhel-openssl-1.0.x' npm install --prefix ./dist prisma@4.2.1",
     "build:generate": "(cd ./dist && npm exec prisma generate)"
   },
   "devDependencies": {
@@ -26,17 +25,6 @@
   "tsup": {
     "entry": [
       "migration-runner.ts"
-    ],
-    "noExternal": [
-      "@mpa/db",
-      "@mpa/env",
-      "@mpa/log",
-      "@mpa/utils"
-    ],
-    "external": [
-      "prisma",
-      "@prisma/client",
-      ".prisma/client"
     ],
     "splitting": false,
     "clean": true

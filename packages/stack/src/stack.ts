@@ -42,10 +42,19 @@ class MpathStack extends Stack {
     const lambdaLayers = new LambdaLayers(this, 'LambdaLayers', { sentryArn, appConfigArn });
     new AppConfig(this, 'AppConfig');
 
+    const prismaEnv = {
+      PRISMA_QUERY_ENGINE_BINARY: '/opt/libquery_engine-rhel-openssl-1.0.x.so.node',
+      PRISMA_QUERY_ENGINE_LIBRARY: '/opt/libquery_engine-rhel-openssl-1.0.x.so.node',
+      PRISMA_MIGRATION_ENGINE_BINARY: '/opt/migration_engine-rhel-openssl-1.0.x',
+      PRISMA_INTROSPECTION_ENGINE_BINARY: '/opt/introspection-engine-rhel-openssl-1.0.x',
+      PRISMA_FMT_BINARY: '/opt/prisma-fmt-rhel-openssl-1.0.x'
+    };
+
     const server = new Server(this, 'Server', {
       vpc,
       appConfigLayer: lambdaLayers.appConfig,
-      env: getEnv(SERVER_ENV_CONFIG)
+      prismaEngineLayer: lambdaLayers.prismaEngine,
+      env: { ...getEnv(SERVER_ENV_CONFIG), ...prismaEnv }
     });
 
     server.lambda.addEnvironment('AWS_S3_UPLOAD_BUCKET', buckets.upload.bucketName);
@@ -64,7 +73,8 @@ class MpathStack extends Stack {
 
     const migrationRunner = new MigrationRunner(this, 'MigrationRunner', {
       vpc,
-      env: getEnv(MIGRATION_RUNNER_ENV_CONFIG)
+      prismaEngineLayer: lambdaLayers.prismaEngine,
+      env: { ...getEnv(MIGRATION_RUNNER_ENV_CONFIG), ...prismaEnv }
     });
     migrationRunner.lambda.addEnvironment('DATABASE_URL', db.url);
     db.securityGroup.addIngressRule(migrationRunner.securityGroup, ec2.Port.tcp(DB_PORT));

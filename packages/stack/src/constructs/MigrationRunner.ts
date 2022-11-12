@@ -12,6 +12,7 @@ export const MIGRATION_RUNNER_ENV_CONFIG = {
 export interface MigrationRunnerProps {
   vpc: ec2.IVpc;
   env: ConfigToEnvClean<typeof MIGRATION_RUNNER_ENV_CONFIG>;
+  prismaEngineLayer: lambda.ILayerVersion;
 }
 
 export class MigrationRunner extends Construct {
@@ -21,7 +22,7 @@ export class MigrationRunner extends Construct {
   constructor(scope: Construct, id: string, props: MigrationRunnerProps) {
     super(scope, id);
 
-    const { vpc, env } = props;
+    const { vpc, env, prismaEngineLayer } = props;
 
     this.securityGroup = new ec2.SecurityGroup(this, 'SecurityGroup', { vpc });
 
@@ -29,6 +30,7 @@ export class MigrationRunner extends Construct {
       memorySize: 256,
       timeout: Duration.seconds(20),
       vpc,
+      layers: [prismaEngineLayer],
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_ISOLATED
       },
@@ -37,8 +39,8 @@ export class MigrationRunner extends Construct {
       securityGroups: [this.securityGroup],
 
       code: lambda.Code.fromAsset(getPath('packages/migration-runner/dist'), {
-        followSymlinks: SymlinkFollowMode.ALWAYS,
-        exclude: ['**/*darwin*', '**/.prisma/**/*darwin*']
+        followSymlinks: SymlinkFollowMode.ALWAYS
+        // exclude: ['**/*darwin*', '**/.prisma/**/*darwin*']
       }),
       handler: 'migration-runner.handler'
     });

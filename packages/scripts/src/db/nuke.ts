@@ -1,8 +1,6 @@
 import chalk from 'chalk';
-import { MpaDatabase } from '../db';
-import { env } from '../env';
-import '../lib/cli';
-import { DevSeeder, reset } from '../lib';
+import { MpaDatabase } from '@mpa/db';
+import { DevSeeder, reset } from '@mpa/db/lib';
 
 const log = console.log;
 
@@ -28,7 +26,7 @@ async function nuke(db: MpaDatabase) {
 }
 
 async function main() {
-  const db = new MpaDatabase(env.DATABASE_URL);
+  const db = new MpaDatabase();
   try {
     await nuke(db);
   } finally {

@@ -1,13 +1,11 @@
 import chalk from 'chalk';
-import { MpaDatabase } from '../db';
-import { env } from '../env';
-import { reset } from '../lib';
-import '../lib/cli';
+import { MpaDatabase } from '@mpa/db';
+import { reset } from '@mpa/db/lib';
 
 const log = console.log;
 
 async function main() {
-  const db = new MpaDatabase(env.DATABASE_URL);
+  const db = new MpaDatabase();
 
   log(chalk.green('Resetting database...'));
   try {

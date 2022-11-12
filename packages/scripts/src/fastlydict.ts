@@ -1,12 +1,12 @@
 import path from 'path';
 import got, { HTTPError } from 'got';
-import { getEnvFromFile } from '@mpa/env';
+import { loadEnvFromFile } from '@mpa/env';
 import { logger } from '@mpa/log';
 import glob from 'glob';
 
 const log = logger('SCRIPTS');
 
-const env = getEnvFromFile('staging', {
+const env = loadEnvFromFile('staging', {
   FASTLY_API_KEY: true,
   FASTLY_SERVICE_ID: true,
   FASTLY_ROUTING_DICTIONARY_ID: true

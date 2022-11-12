@@ -1,6 +1,5 @@
 import type { Handler } from 'aws-lambda';
-import { MpaDatabase } from '@mpa/db';
-import { DevSeeder, ProdSeeder, reset, prismaCmd } from '@mpa/db/src/lib';
+import { MpaDatabase, DevSeeder, ProdSeeder, reset, prismaCmd } from '@mpa/db';
 import { logger } from '@mpa/log';
 import { validateEnv } from '@mpa/env';
 

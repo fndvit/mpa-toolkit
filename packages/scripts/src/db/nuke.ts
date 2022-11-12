@@ -1,6 +1,5 @@
 import chalk from 'chalk';
-import { MpaDatabase } from '@mpa/db';
-import { DevSeeder, reset } from '@mpa/db/lib';
+import { MpaDatabase, DevSeeder, reset } from '@mpa/db';
 
 const log = console.log;
 

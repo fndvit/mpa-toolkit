@@ -1,6 +1,5 @@
 import chalk from 'chalk';
-import { MpaDatabase } from '@mpa/db';
-import { ProdSeeder } from '@mpa/db/lib';
+import { MpaDatabase, ProdSeeder } from '@mpa/db';
 
 async function main() {
   const db = new MpaDatabase();

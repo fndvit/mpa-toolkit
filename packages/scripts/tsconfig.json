@@ -3,10 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "./dist",
-    "strict": true,
-    "paths": {
-      "@mpa/db/*": ["../db/src/*"]
-    }
+    "strict": true
   },
   "include": ["src/**/*.ts"]
 }

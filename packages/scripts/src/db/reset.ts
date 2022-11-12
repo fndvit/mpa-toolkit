@@ -1,6 +1,5 @@
 import chalk from 'chalk';
-import { MpaDatabase } from '@mpa/db';
-import { reset } from '@mpa/db/lib';
+import { MpaDatabase, reset } from '@mpa/db';
 
 const log = console.log;
 

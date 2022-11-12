@@ -14,12 +14,13 @@
       "require": "./dist/load.cjs"
     }
   },
-  "files": [ "dist" ],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "clean": "rimraf ./dist",
-    "prepare": "pnpm build"
+    "clean": "rimraf ./dist"
   },
   "dependencies": {
     "dotenv": "^16.0.0"
@@ -29,8 +30,13 @@
     "@types/node": "^18.7.5"
   },
   "tsup": {
-    "entry": [ "env.ts", "load.ts" ],
-    "format": [ "cjs", "esm" ],
-    "clean": true
+    "entry": [
+      "env.ts",
+      "load.ts"
+    ],
+    "format": [
+      "cjs",
+      "esm"
+    ]
   }
 }

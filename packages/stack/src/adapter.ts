@@ -4,10 +4,7 @@ import { posix } from 'path';
 import { fileURLToPath } from 'url';
 import type { Adapter } from '@sveltejs/kit';
 import * as esbuild from 'esbuild';
-import glob from 'glob';
-import shell from 'shelljs';
-
-const PROJECT_ROOT = new URL('../../..', import.meta.url).pathname;
+import { copyPrismaEngineFiles, copyPrismaClientFiles } from '@mpa/utils/prisma/files';
 
 export default function (): Adapter {
   return {
@@ -25,31 +22,11 @@ export default function (): Adapter {
       builder.rimraf(tmp);
       builder.mkdirp(tmp);
       builder.mkdirp(server);
-      builder.mkdirp(prismaEngine);
       builder.mkdirp(router);
-
       builder.writeClient(client);
 
-      // download prisma engine files
-      const dlLocation = `${tmp}/prisma-engine`;
-      shell.mkdir(dlLocation);
-      shell.exec(`PRISMA_CLI_BINARY_TARGETS=rhel-openssl-1.0.x npm install --prefix ${dlLocation} prisma@4.2.1`);
-      const engineFiles = glob.sync(`${dlLocation}/**/engines/*rhel*`);
-      engineFiles.forEach(file => {
-        shell.cp(file, prismaEngine);
-      });
-
-      const prismaClientFiles = [
-        'index.js',
-        'package.json',
-        'schema.prisma',
-        'libquery_engine-rhel-openssl-1.0.x.so.node'
-      ];
-
-      prismaClientFiles.forEach(file =>
-        builder.copy(`${PROJECT_ROOT}/node_modules/.prisma/client/${file}`, `${prismaClient}/${file}`)
-      );
-      builder.copy(`${PROJECT_ROOT}/packages/db/prisma/migrations`, `${prismaClient}/migrations`);
+      await copyPrismaEngineFiles(prismaEngine);
+      await copyPrismaClientFiles(prismaClient);
 
       const relativePath = posix.relative(server, builder.getServerDirectory());
 

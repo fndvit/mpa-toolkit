@@ -20,7 +20,8 @@
     "dev": "tsup --watch",
     "clean": "rimraf dist cdk.out",
     "synth-staging": "cdk synth --app ./dist/stack.js --require-approval never MPAth-staging",
-    "deploy-staging": "cdk deploy --app ./dist/stack.js --require-approval never MPAth-staging"
+    "deploy-staging": "cdk deploy --app ./dist/stack.js --require-approval never MPAth-staging",
+    "prisma-engine-files": "esno ./scripts/prismaengine.ts"
   },
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-alpha": "2.17.0-alpha.0",
@@ -28,6 +29,7 @@
     "@mpa/env": "workspace:*",
     "@mpa/log": "workspace:*",
     "@mpa/migration-runner": "workspace:*",
+    "@mpa/utils": "workspace:^1.0.0",
     "@sentry/serverless": "^7.10.0",
     "@types/aws-lambda": "^8.10.93",
     "aws-cdk-lib": "^2.50.0",
@@ -35,16 +37,19 @@
     "esbuild": "^0.14.28",
     "glob": "^8.0.3",
     "got": "^12.3.1",
-    "shelljs": "^0.8.5"
+    "rimraf": "^3.0.2",
+    "shelljs": "^0.8.5",
+    "temp-dir": "^3.0.0"
   },
   "devDependencies": {
     "@mpa/db": "workspace:*",
     "@mpa/events": "workspace:*",
     "@sveltejs/kit": "1.0.0-next.417",
     "@types/glob": "^8.0.0",
+    "@types/rimraf": "^3.0.2",
     "@types/shelljs": "^0.8.11",
     "aws-cdk": "^2.50.0",
-    "tsup": "^5.12.9"
+    "tsup": "^6.4.0"
   },
   "pnpm": {
     "peerDependencyRules": {
@@ -58,7 +63,6 @@
     "dist"
   ],
   "tsup": {
-    "clean": true,
     "entry": [
       "src/index.ts",
       "src/stack.ts",

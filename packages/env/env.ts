@@ -41,8 +41,12 @@ export function getEnv<C extends EnvConfig>(config: C) {
 }
 
 export function loadEnvFromFile<C extends EnvConfig>(env: Environment, config: C) {
-  const _env = dotenv.config({
-    path: fs.readFileSync(path.join(process.cwd(), '../..', `.env.${env}`), 'utf-8')
+  const output = dotenv.config({
+    path: path.join(process.cwd(), '../..', `.env.${env}`)
   });
+  if (output.error) {
+    throw output.error;
+  }
+  const _env = output.parsed;
   return validateEnv(_env as Record<string, string>, config) as ConfigToEnvClean<C>;
 }

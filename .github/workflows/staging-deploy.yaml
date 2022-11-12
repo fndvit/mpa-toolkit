@@ -58,6 +58,14 @@ jobs:
           FASTLY_ROUTING_DICTIONARY_ID: ${{ secrets.STAGING_FASTLY_ROUTING_DICTIONARY_ID }}
         run: pnpm run clean && pnpm run build && pnpm -F "@mpa/stack" run synth-staging && pnpm -F "@mpa/stack" run deploy-staging
 
+      - name: Update Fastly dictionary
+        env:
+          FASTLY_SERVICE_ID: ${{ secrets.STAGING_FASTLY_SERVICE_ID }}
+          FASTLY_API_KEY: ${{ secrets.STAGING_FASTLY_API_KEY }}
+          FASTLY_ROUTING_DICTIONARY_ID: ${{ secrets.STAGING_FASTLY_ROUTING_DICTIONARY_ID }}
+
+        run: pnpm -F "@mpa/scripts" run deploy-fastly-dictionary
+
       - name: File logging
         if: always()
         run: ls -lRh packages/stack/cdk.out

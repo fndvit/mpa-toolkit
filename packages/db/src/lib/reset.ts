@@ -1,5 +1,5 @@
 import type { PrismaClient } from '@prisma/client';
-import { prismaCmd } from './cmd';
+import { prismaCmd } from '@mpa/utils/prisma/cmd';
 
 async function dropAllFunctions(prisma: PrismaClient) {
   const functionNames = await prisma.$queryRaw<

@@ -1,12 +1,13 @@
 import path from 'path';
 import got, { HTTPError } from 'got';
-import { loadEnvFromFile } from '@mpa/env';
+import { getEnv } from '@mpa/env';
 import { logger } from '@mpa/log';
-import glob from 'glob';
+import { globby } from 'globby';
+import projectRoot from '@mpa/utils/projectRoot';
 
 const log = logger('SCRIPTS');
 
-const env = loadEnvFromFile('staging', {
+const env = getEnv({
   FASTLY_API_KEY: true,
   FASTLY_SERVICE_ID: true,
   FASTLY_ROUTING_DICTIONARY_ID: true
@@ -21,9 +22,12 @@ const client = got.extend({
 });
 
 export async function main() {
-  const cwd = path.resolve('../web/.svelte-kit/client/');
-  log.info(`Globbing ${cwd}/**/*.js`);
-  const files = glob.sync('**/*', { cwd, nodir: true });
+  const root = await projectRoot();
+  const clientDir = path.resolve(root, 'packages/web/.svelte-kit/client');
+  const files = await globby('**/*', { cwd: clientDir });
+  log.info(`Globbing ${clientDir}/**/*`);
+
+  console.log(`Found ${files.length} files`);
 
   const body = {
     items: files.map(file => ({
@@ -42,6 +46,7 @@ export async function main() {
     if (err instanceof HTTPError) {
       const { statusCode, statusMessage } = err.response;
       log.error(err.response.url);
+      log.error(err.response.body);
       log.error(`${statusCode} - ${statusMessage}`);
     } else {
       log.error(err);

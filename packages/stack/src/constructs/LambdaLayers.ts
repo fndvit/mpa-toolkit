@@ -15,13 +15,8 @@ export class LambdaLayers extends Construct {
   constructor(scope: Construct, id: string, props: LambdaLayersProps) {
     super(scope, id);
 
-    if (props.sentryArn) this.sentry = lambda.LayerVersion.fromLayerVersionArn(this, 'Sentry', props.sentryArn);
-
-    if (props.appConfigArn)
-      this.appConfig = lambda.LayerVersion.fromLayerVersionArn(this, 'AppConfig', props.appConfigArn);
-
     this.prismaEngine = new lambda.LayerVersion(this, 'PrismaEngine', {
-      compatibleRuntimes: [lambda.Runtime.NODEJS_14_X, lambda.Runtime.NODEJS_16_X],
+      compatibleRuntimes: [lambda.Runtime.NODEJS_16_X],
       code: lambda.Code.fromAsset(getPath('./packages/web/.svelte-kit/prisma-engine'))
     });
   }

@@ -38,10 +38,7 @@ export class MigrationRunner extends Construct {
       environment: env,
       securityGroups: [this.securityGroup],
 
-      code: lambda.Code.fromAsset(getPath('packages/migration-runner/dist'), {
-        followSymlinks: SymlinkFollowMode.ALWAYS
-        // exclude: ['**/*darwin*', '**/.prisma/**/*darwin*']
-      }),
+      code: lambda.Code.fromAsset(getPath('packages/migration-runner/dist'), {}),
       handler: 'migration-runner.handler'
     });
   }

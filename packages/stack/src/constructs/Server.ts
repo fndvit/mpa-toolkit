@@ -9,7 +9,6 @@ import {
 } from 'aws-cdk-lib';
 import type { ConfigToEnvClean } from '@mpa/env';
 import { getPath } from '../util/dirs';
-import { getPrismaFileCopyCommands } from '../util/prismafiles';
 
 export const SERVER_ENV_CONFIG = {
   PUBLIC_UPLOAD_BASE_URL: true,
@@ -35,7 +34,7 @@ export class Server extends Construct {
   constructor(scope: Construct, id: string, props: ServerProps) {
     super(scope, id);
 
-    const { vpc, appConfigLayer, env, prismaEngineLayer } = props;
+    const { vpc, env, prismaEngineLayer } = props;
 
     this.lambdaSg = new ec2.SecurityGroup(this, 'LambdaSG', { vpc });
 
@@ -49,7 +48,7 @@ export class Server extends Construct {
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
       },
-      layers: [prismaEngineLayer, appConfigLayer].filter((v): v is lambda.ILayerVersion => !!v),
+      layers: [prismaEngineLayer],
       runtime: lambda.Runtime.NODEJS_16_X,
       securityGroups: [this.lambdaSg],
       environment: {

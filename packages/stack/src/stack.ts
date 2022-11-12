@@ -52,7 +52,6 @@ class MpathStack extends Stack {
 
     const server = new Server(this, 'Server', {
       vpc,
-      appConfigLayer: lambdaLayers.appConfig,
       prismaEngineLayer: lambdaLayers.prismaEngine,
       env: { ...getEnv(SERVER_ENV_CONFIG), ...prismaEnv }
     });
@@ -60,10 +59,8 @@ class MpathStack extends Stack {
     server.lambda.addEnvironment('AWS_S3_UPLOAD_BUCKET', buckets.upload.bucketName);
     server.lambda.addEnvironment('DATABASE_URL', db.url);
     db.securityGroup.addIngressRule(server.lambdaSg, ec2.Port.tcp(DB_PORT));
-    if (lambdaLayers.sentry) server.lambda.addLayers(lambdaLayers.sentry);
     server.lambda.addToRolePolicy(
       new iam.PolicyStatement({
-        // arn:aws:appconfig:${Region}:${Account}:application/${ApplicationId}/environment/${EnvironmentId}/configuration/${ConfigurationProfileId}
         resources: ['*'],
         actions: ['appconfig:StartConfigurationSession', 'appconfig:GetLatestConfiguration']
       })
@@ -78,8 +75,6 @@ class MpathStack extends Stack {
     });
     migrationRunner.lambda.addEnvironment('DATABASE_URL', db.url);
     db.securityGroup.addIngressRule(migrationRunner.securityGroup, ec2.Port.tcp(DB_PORT));
-    // migrationRunner.lambda.addLayers(prismaLayers.clientFiles);
-    // migrationRunner.lambda.addLayers(prismaLayers.clientFiles, prismaLayers.migration);
 
     const { distribution, httpApi } = new WebDistribution(this, 'WebDistribution', { server, buckets });
 

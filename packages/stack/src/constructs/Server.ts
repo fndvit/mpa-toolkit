@@ -62,7 +62,7 @@ export class Server extends Construct {
         commandHooks: {
           beforeInstall: () => [],
           beforeBundling: () => [],
-          afterBundling: (i, o) => [...getPrismaFileCopyCommands(i, o), `cp ${i}/packages/db/prisma/schema.prisma ${o}`]
+          afterBundling: (i, o) => [`cp ${i}/packages/db/prisma/schema.prisma ${o}`]
         }
       }
     });

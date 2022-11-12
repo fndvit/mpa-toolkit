@@ -6,7 +6,6 @@ import type { Adapter } from '@sveltejs/kit';
 import * as esbuild from 'esbuild';
 import glob from 'glob';
 import shell from 'shelljs';
-import { getPrismaEngineFiles } from './util/prismaengine';
 
 const PROJECT_ROOT = new URL('../../..', import.meta.url).pathname;
 
@@ -71,8 +70,6 @@ export default function (): Adapter {
       const staticFiles = [...getAllFiles(builder.getClientDirectory()), ...builder.prerendered.paths];
 
       fs.writeFileSync(`${tmp}/static.js`, `export const staticFiles = new Set(${JSON.stringify(staticFiles)});\n`);
-
-      // await getPrismaEngineFiles(prismaEngine, tmp);
 
       esbuild.buildSync({
         entryPoints: [`${tmp}/_router.js`],

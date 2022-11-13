@@ -9,14 +9,22 @@ import AWSXRay from 'aws-xray-sdk-core';
 AWSXRay.captureAWS(AWSSDK);
 
 export async function handler(event: APIGatewayEvent) {
+  const segment = AWSXRay.getSegment();
+  const lambdaSegment = segment?.addNewSubsegment('lambda.handler');
+
   const server = new Server(manifest);
 
   server.init({ env: process.env as Record<string, string> });
 
   const { path, headers, multiValueQueryStringParameters, body, httpMethod, requestContext, isBase64Encoded } = event;
+
+  lambdaSegment?.addMetadata('event', event);
+
   const encoding = isBase64Encoded ? 'base64' : headers['content-encoding'] || 'utf-8';
   const rawBody = typeof body === 'string' ? Buffer.from(body, encoding as BufferEncoding) : body;
   const rawURL = `https://${requestContext.domainName}${path}${parseQuery(multiValueQueryStringParameters)}`;
+
+  const respondSegment = lambdaSegment?.addNewSubsegment('server.respond');
 
   const rendered = await server.respond(
     new Request(rawURL, {
@@ -28,6 +36,8 @@ export async function handler(event: APIGatewayEvent) {
       getClientAddress: () => requestContext.identity.sourceIp
     }
   );
+
+  respondSegment?.close();
 
   if (rendered) {
     const resp = {
@@ -43,6 +53,8 @@ export async function handler(event: APIGatewayEvent) {
     }
     return resp;
   }
+
+  lambdaSegment?.close();
 
   return {
     statusCode: 404,

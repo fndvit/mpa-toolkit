@@ -46,8 +46,8 @@ function getCacheHeaders(routeId: string, cacheKeys: App.Locals['cacheKeys']): C
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
+  const seg = AWSXRay.getSegment()?.addNewSubsegment('handle');
   const { routeId } = event;
-  const seg = AWSXRay.getSegment();
   event.locals.user = await getUserFromCookie(event.request, event.setHeaders);
   seg?.addMetadata('user', event.locals.user);
 
@@ -69,6 +69,8 @@ export const handle: Handle = async ({ event, resolve }) => {
       if (value != null) response.headers.set(key, value);
     }
   }
+
+  seg?.close();
 
   return response;
 };

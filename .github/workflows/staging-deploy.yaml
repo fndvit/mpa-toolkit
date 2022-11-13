@@ -44,9 +44,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: 'eu-west-1'
 
-      - name: Build and deploy
+      - name: Build
+        run: pnpm run clean && pnpm run build
+
+      - name: Deploy
         env:
-          PUBLIC_GOOGLE_OAUTH_CLIENT_ID: "829288200910-2s4jvqauhtpplood8o3hqhhrbqg6e9ug"
+          PUBLIC_GOOGLE_OAUTH_CLIENT_ID: 829288200910-2s4jvqauhtpplood8o3hqhhrbqg6e9ug
           PUBLIC_UPLOAD_BASE_URL: /upload/
           GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.STAGING_GOOGLE_OAUTH_CLIENT_SECRET }}
           LOG_LEVEL: debug
@@ -55,8 +58,7 @@ jobs:
           ORIGIN: https://mpath-dev.freetls.fastly.net/
           FASTLY_SERVICE_ID: ${{ secrets.STAGING_FASTLY_SERVICE_ID }}
           FASTLY_API_KEY: ${{ secrets.STAGING_FASTLY_API_KEY }}
-          FASTLY_ROUTING_DICTIONARY_ID: ${{ secrets.STAGING_FASTLY_ROUTING_DICTIONARY_ID }}
-        run: pnpm run clean && pnpm run build && pnpm -F "@mpa/stack" run synth-staging && pnpm -F "@mpa/stack" run deploy-staging
+        run: cd stack && cdk deploy --app ./dist/stack.js --require-approval never MPAth-staging
 
       - name: Update Fastly dictionary
         env:

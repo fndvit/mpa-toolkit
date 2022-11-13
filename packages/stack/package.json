@@ -19,9 +19,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "clean": "rimraf dist cdk.out",
-    "synth-staging": "cdk synth --app ./dist/stack.js --require-approval never MPAth-staging",
-    "deploy-staging": "cdk deploy --app ./dist/stack.js --require-approval never MPAth-staging",
-    "prisma-engine-files": "esno ./scripts/prismaengine.ts"
+    "synth-staging": "cdk synth --app ./dist/stack.js --require-approval never MPAth-staging"
   },
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-alpha": "2.17.0-alpha.0",

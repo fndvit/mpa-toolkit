@@ -1,6 +1,6 @@
 import { Construct } from 'constructs';
 import { aws_lambda as lambda } from 'aws-cdk-lib';
-import { getPath } from 'src/util/dirs';
+import { getPath } from '../util/dirs';
 
 interface LambdaLayersProps {
   sentryArn?: string;

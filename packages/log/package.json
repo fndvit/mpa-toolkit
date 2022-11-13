@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@mpa/env": "workspace:*",
-    "chalk": "^5.0.1",
     "pino": "^8.4.1",
     "pino-lambda": "^4.0.0",
     "pino-pretty": "^9.0.0"

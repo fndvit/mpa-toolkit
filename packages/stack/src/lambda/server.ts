@@ -1,3 +1,4 @@
+/// <reference path = "../injected.d.ts" />
 import './shims.js';
 import Sentry from '@sentry/serverless';
 import type { APIGatewayEvent } from 'aws-lambda';

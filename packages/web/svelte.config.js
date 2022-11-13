@@ -5,10 +5,6 @@ import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  compilerOptions: {
-    cssHash: ({ hash, css }) => `mpa-${hash(css)}`
-  },
-
   preprocess: preprocess({
     stylus: {
       prependData: `@require 'svelte-global';\n`,

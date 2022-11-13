@@ -58,7 +58,7 @@ jobs:
           ORIGIN: https://mpath-dev.freetls.fastly.net/
           FASTLY_SERVICE_ID: ${{ secrets.STAGING_FASTLY_SERVICE_ID }}
           FASTLY_API_KEY: ${{ secrets.STAGING_FASTLY_API_KEY }}
-        run: cd stack && cdk deploy --app ./dist/stack.js --require-approval never MPAth-staging
+        run: cd packages/stack && pnpm exec cdk deploy --app ./dist/stack.js --require-approval never MPAth-staging
 
       - name: Update Fastly dictionary
         env:

@@ -9,9 +9,9 @@
       "import": "./dist/env.js",
       "require": "./dist/env.cjs"
     },
-    "./load": {
-      "import": "./dist/load.js",
-      "require": "./dist/load.cjs"
+    "./*": {
+      "import": "./dist/*.js",
+      "require": "./dist/*.cjs"
     }
   },
   "files": [
@@ -31,8 +31,7 @@
   },
   "tsup": {
     "entry": [
-      "env.ts",
-      "load.ts"
+      "*.ts"
     ],
     "format": [
       "cjs",

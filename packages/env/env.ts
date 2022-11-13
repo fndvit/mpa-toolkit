@@ -1,6 +1,5 @@
-import './load';
+import './local';
 import path from 'path';
-import fs from 'fs';
 import * as dotenv from 'dotenv';
 import type { Expand, Without } from '@mpa/utils';
 
@@ -8,7 +7,7 @@ type Environment = 'test' | 'dev' | 'staging' | 'prod';
 
 type EnvConfig = { [key: string]: boolean };
 type ConfigToEnvRequired<C extends EnvConfig> = { [K in keyof C]: C[K] extends true ? string : never };
-type ConfigToEnvOptional<C extends EnvConfig> = { [K in keyof C]?: C[K] extends false ? string : never };
+type ConfigToEnvOptional<C extends EnvConfig> = { [K in keyof C]?: C[K] extends boolean ? string : never };
 export type ConfigToEnvClean<C extends EnvConfig> = Expand<
   Without<never, ConfigToEnvRequired<C>> & Without<never, ConfigToEnvOptional<C>>
 >;

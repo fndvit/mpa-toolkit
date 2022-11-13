@@ -41,6 +41,7 @@ export class Server extends Construct {
     const secret = new secretsmanager.Secret(this, 'JWTSecret');
 
     this.lambda = new lambdanode.NodejsFunction(this, 'Lambda', {
+      tracing: lambda.Tracing.ACTIVE,
       entry: getPath('./packages/web/.svelte-kit/server/index.js'),
       memorySize: 256,
       timeout: Duration.seconds(15),

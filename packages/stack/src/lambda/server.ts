@@ -1,13 +1,14 @@
 /// <reference path = "../injected.d.ts" />
 import './shims.js';
-import Sentry from '@sentry/serverless';
 import type { APIGatewayEvent } from 'aws-lambda';
 import { manifest } from 'MANIFEST';
 import { Server } from 'SERVER';
+import AWSSDK from 'aws-sdk';
+import AWSXRay from 'aws-xray-sdk-core';
 
-// TODO: import config
+AWSXRay.captureAWS(AWSSDK);
 
-exports.handler = async (event: APIGatewayEvent) => {
+export async function handler(event: APIGatewayEvent) {
   const server = new Server(manifest);
 
   server.init({ env: process.env as Record<string, string> });
@@ -47,7 +48,7 @@ exports.handler = async (event: APIGatewayEvent) => {
     statusCode: 404,
     body: 'Not found.'
   };
-};
+}
 
 function parseQuery(queryParams) {
   if (!queryParams) return '';

@@ -1,4 +1,8 @@
 import type { APIGatewayProxyResultV2, SQSEvent } from 'aws-lambda';
+import AWSSDK from 'aws-sdk';
+import AWSXRay from 'aws-xray-sdk-core';
+
+AWSXRay.captureAWS(AWSSDK);
 
 export async function main(event: SQSEvent): Promise<APIGatewayProxyResultV2> {
   const messages = event.Records.map(record => {

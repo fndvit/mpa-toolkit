@@ -1,12 +1,13 @@
 import { logger } from '@mpa/log';
 import { json, type Handle } from '@sveltejs/kit';
-import { checkUserHasRoleForRoute, getUserFromCookie } from '$lib/auth';
+import AWSXRay from 'aws-xray-sdk-core';
 import { env } from '$lib/env';
+import { checkUserHasRoleForRoute, getUserFromCookie } from '$lib/auth';
 
 const log = logger('HOOKS');
 
 if (env.DISABLE_CACHE === 'true') {
-  log.warn('Caching headers disabled by env var DISABLE_CACHE');
+  log.debug('Caching headers disabled by env var DISABLE_CACHE');
 }
 
 const PRIVATE_CACHE = 'private, max-age=0';
@@ -46,7 +47,9 @@ function getCacheHeaders(routeId: string, cacheKeys: App.Locals['cacheKeys']): C
 
 export const handle: Handle = async ({ event, resolve }) => {
   const { routeId } = event;
+  const seg = AWSXRay.getSegment();
   event.locals.user = await getUserFromCookie(event.request, event.setHeaders);
+  seg?.addMetadata('user', event.locals.user);
 
   if (/^api\b/.test(routeId) && !checkUserHasRoleForRoute(routeId, event.locals.user)) {
     return json({ error: 'You do not have permission to access this page' }, { status: 400 });
@@ -54,7 +57,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   event.locals.cacheKeys = new Set();
 
-  const response = await resolve(event);
+  const response = await AWSXRay.captureAsyncFunc('resolve', () => resolve(event));
+
+  seg?.addMetadata('cacheKeys', [...event.locals.cacheKeys]);
 
   if (env.DISABLE_CACHE === 'true' || /^50\d$/.test(response.status.toString())) {
     response.headers.set('Cache-Control', PRIVATE_CACHE);

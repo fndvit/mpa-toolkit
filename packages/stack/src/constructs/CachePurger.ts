@@ -24,6 +24,7 @@ export class CachePurger extends Construct {
     const { vpc, env } = props;
 
     this.lambda = new lambda_nodejs.NodejsFunction(this, 'Lambda', {
+      tracing: lambda.Tracing.ACTIVE,
       entry: getLambdaPath('cache-purger.ts'),
       memorySize: 256,
       timeout: Duration.seconds(5),

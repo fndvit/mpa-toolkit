@@ -27,6 +27,7 @@ export class MigrationRunner extends Construct {
     this.securityGroup = new ec2.SecurityGroup(this, 'SecurityGroup', { vpc });
 
     this.lambda = new lambda.Function(this, 'Lambda', {
+      tracing: lambda.Tracing.ACTIVE,
       memorySize: 256,
       timeout: Duration.seconds(20),
       vpc,

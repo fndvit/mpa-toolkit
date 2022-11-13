@@ -32,6 +32,7 @@ export class EventStack extends Construct {
     this.dlq = new sqs.Queue(this, 'DLQ', { retentionPeriod: Duration.minutes(30) });
 
     const dlqLambda = new lambda_nodejs.NodejsFunction(this, 'DLQLambda', {
+      tracing: lambda.Tracing.ACTIVE,
       entry: getLambdaPath('dlq.ts'),
       memorySize: 1024,
       timeout: Duration.seconds(5),

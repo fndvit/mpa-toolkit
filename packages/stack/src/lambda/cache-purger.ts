@@ -1,10 +1,15 @@
+import http from 'http';
 import type { Event } from '@mpa/events';
 import type { APIGatewayProxyResultV2, SQSEvent } from 'aws-lambda';
 import got from 'got';
 import { getEnv } from '@mpa/env';
-import { logger } from '@mpa/log';
+import AWSSDK from 'aws-sdk';
+import AWSXRay from 'aws-xray-sdk-core';
 
-const log = logger('EVENTS');
+AWSXRay.captureAWS(AWSSDK);
+AWSXRay.captureHTTPsGlobal(http);
+
+const log = AWSXRay.getLogger();
 
 const env = getEnv({ FASTLY_API_KEY: true, FASTLY_SERVICE_ID: true });
 
@@ -25,6 +30,7 @@ type EventOutput = PurgeResponse & {
 
 async function purgeSurrogates(keys: string[]): Promise<PurgeResponse> {
   log.info(`purging surrgate keys: '${keys.join(', ')}`);
+
   const response = got.post(`https://api.fastly.com/service/${env.FASTLY_SERVICE_ID}/purge`, {
     headers: {
       'Fastly-Key': env.FASTLY_API_KEY,
@@ -79,11 +85,13 @@ async function processEvent(event: Event): Promise<EventOutput> {
 export async function main(event: SQSEvent): Promise<APIGatewayProxyResultV2> {
   const events = event.Records.map(record => {
     const body = JSON.parse(record.body) as { Message: string };
-    log.info('body 👉', body);
     return JSON.parse(body.Message) as Event;
   });
 
-  const results = await Promise.all(events.map(processEvent));
+  const results = await AWSXRay.captureAsyncFunc('processEvents', subseg => {
+    subseg?.addMetadata('events', events);
+    return Promise.all(events.map(processEvent));
+  });
 
   log.info('results 👉', JSON.stringify(results, null, 2));
 

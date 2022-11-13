@@ -36,6 +36,7 @@
     "@mpa/utils": "workspace:*",
     "@prisma/client": "^4.6.1",
     "ajv": "^8.11.0",
+    "aws-xray-sdk-core": "^3.4.0",
     "brace-expansion": "^2.0.1",
     "chalk": "^5.0.1",
     "clone": "^2.1.2",

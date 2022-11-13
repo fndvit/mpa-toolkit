@@ -68,9 +68,13 @@ jobs:
 
         run: pnpm -F "@mpa/scripts" run deploy-fastly-dictionary
 
+      - name: Soft purge cache
+        run: 'curl -i  -X POST "https://api.fastly.com/service/${{ secrets.STAGING_FASTLY_SERVICE_ID }}/purge/all" -H "Fastly-Key: ${{ secrets.STAGING_FASTLY_API_KEY }}" -H "fastly-soft-purge: 1" -H "Accept: application/json"'
+
       - name: File logging
         if: always()
         run: ls -lRh packages/stack/cdk.out
+        
       - name: Template logging
         if: always()
         run: cat packages/stack/cdk.out/*.json

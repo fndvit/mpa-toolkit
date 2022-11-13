@@ -55,7 +55,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     return json({ error: 'You do not have permission to access this page' }, { status: 400 });
   }
 
-  event.locals.cacheKeys = new Set();
+  event.locals.cacheKeys = new Set(['all']);
 
   const response = await AWSXRay.captureAsyncFunc('resolve', () => resolve(event));
 

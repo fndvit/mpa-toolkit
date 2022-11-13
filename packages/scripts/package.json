@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "deploy-fastly-dictionary": "esno ./src/fastlydict.ts",
+    "depcheck": "esno ./src/depcheck.ts",
     "nuke": "esno ./src/db/nuke.ts",
     "seedmigrate": "esno ./src/db/migrate.ts",
     "seed": "esno ./src/db/seed.ts",
@@ -17,6 +18,7 @@
     "@mpa/utils": "workspace:^1.0.0",
     "@types/glob": "^8.0.0",
     "chalk": "^5.0.1",
+    "depcheck": "^1.4.3",
     "esno": "^0.16.3",
     "find-up": "^6.3.0",
     "fs-extra": "^10.1.0",
@@ -27,6 +29,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13"
+    "listr2": "^5.0.5"
   },
   "prisma": {
     "schema": "../db/prisma/schema.prisma"

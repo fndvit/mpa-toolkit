@@ -16,7 +16,8 @@
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
     "format": "prettier --write --plugin-search-dir=. .",
     "docker:up": "docker-compose -p mpa up -d",
-    "docker:down": "docker-compose -p mpa down"
+    "docker:down": "docker-compose -p mpa down",
+    "depcheck": "pnpm -F '@mpa/scripts' run depcheck"
   },
   "workspaces": [
     "packages/*"

@@ -3,12 +3,10 @@ import type { aws_s3 as s3, aws_lambda as lambda } from 'aws-cdk-lib';
 import { Fn, aws_cloudfront as cloudfront, aws_cloudfront_origins as cloudfront_origins } from 'aws-cdk-lib';
 import { HttpApi, HttpMethod, PayloadFormatVersion } from '@aws-cdk/aws-apigatewayv2-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
+import type { Server } from './Server';
 
 export interface WebDistributionProps {
-  server: {
-    edgeFn: lambda.IVersion;
-    lambda: lambda.IFunction;
-  };
+  server: Server;
   buckets: {
     static: s3.IBucket;
     upload: s3.IBucket;
@@ -28,7 +26,7 @@ export class WebDistribution extends Construct {
     this.httpApi.addRoutes({
       path: '/{proxy+}',
       methods: [HttpMethod.ANY],
-      integration: new HttpLambdaIntegration('LambdaServerIntegration', server.lambda, {
+      integration: new HttpLambdaIntegration('LambdaServerIntegration', server.lambdaAlias, {
         payloadFormatVersion: PayloadFormatVersion.VERSION_1_0
       })
     });

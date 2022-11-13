@@ -29,6 +29,7 @@ export interface ServerProps {
 export class Server extends Construct {
   lambdaSg: ec2.SecurityGroup;
   lambda: lambdanode.NodejsFunction;
+  lambdaAlias: lambda.Alias;
   edgeFn: cloudfront.experimental.EdgeFunction;
 
   constructor(scope: Construct, id: string, props: ServerProps) {
@@ -65,6 +66,17 @@ export class Server extends Construct {
           afterBundling: (i, o) => [`cp ${i}/packages/db/prisma/schema.prisma ${o}`]
         }
       }
+    });
+
+    this.lambdaAlias = this.lambda.addAlias('live');
+
+    const as = this.lambdaAlias.addAutoScaling({
+      minCapacity: 2,
+      maxCapacity: 50
+    });
+
+    as.scaleOnUtilization({
+      utilizationTarget: 0.5
     });
 
     this.edgeFn = new cloudfront.experimental.EdgeFunction(this, 'EdgeRouter', {

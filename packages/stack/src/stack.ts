@@ -59,14 +59,14 @@ class MpathStack extends Stack {
     server.lambda.addEnvironment('AWS_S3_UPLOAD_BUCKET', buckets.upload.bucketName);
     server.lambda.addEnvironment('DATABASE_URL', db.url);
     db.securityGroup.addIngressRule(server.lambdaSg, ec2.Port.tcp(DB_PORT));
-    server.lambda.addToRolePolicy(
+    server.lambdaAlias.addToRolePolicy(
       new iam.PolicyStatement({
         resources: ['*'],
         actions: ['appconfig:StartConfigurationSession', 'appconfig:GetLatestConfiguration']
       })
     );
 
-    buckets.upload.grantPut(server.lambda);
+    buckets.upload.grantPut(server.lambdaAlias);
 
     const migrationRunner = new MigrationRunner(this, 'MigrationRunner', {
       vpc,
@@ -86,7 +86,7 @@ class MpathStack extends Stack {
       const eventStack = new EventStack(this, 'EventStack', { vpc });
       cachePurger.lambda.addEventSource(new lambda_event_sources.SqsEventSource(eventStack.queue, { batchSize: 10 }));
       server.lambda.addEnvironment('AWS_SNS_CONTENT_TOPIC', eventStack.topic.topicArn);
-      eventStack.topic.grantPublish(server.lambda);
+      eventStack.topic.grantPublish(server.lambdaAlias);
 
       const maintananceBox = new MaintenanceBox(this, 'MaintenanceBox', { vpc });
       db.securityGroup.addIngressRule(maintananceBox.securityGroup, ec2.Port.tcp(DB_PORT));

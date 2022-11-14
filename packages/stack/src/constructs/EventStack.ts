@@ -56,7 +56,7 @@ export class EventStack extends Construct {
       }
     });
 
-    this.topic = new sns.Topic(this, 'ContentTopic', { topicName: `${stage}/content` });
+    this.topic = new sns.Topic(this, 'ContentTopic', { topicName: `mpath-${stage}-content` });
 
     this.topic.addSubscription(new subs.SqsSubscription(this.queue));
 

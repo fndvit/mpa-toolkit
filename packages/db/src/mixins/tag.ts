@@ -64,9 +64,7 @@ export const tagMixin = (db: MpaDatabase) => {
 
     get: <
       {
-        // overloads
-        (id: number): Promise<Tag>;
-        (slug: string): Promise<Tag>;
+        (idOrSlug: string | number): Promise<Tag>;
         (slugs: string[]): Promise<Tag[]>;
       }
     >(async (val: number | string | string[]) => {
@@ -81,6 +79,16 @@ export const tagMixin = (db: MpaDatabase) => {
           return allTags.find(t => slugify(t.value) === val);
         }
       }
+    }),
+
+    getIds: <
+      {
+        (idOrSlug: number | string): Promise<number>;
+        (slugs: string[]): Promise<number[]>;
+      }
+    >(async (val: number | string | string[]) => {
+      if (Array.isArray(val)) return db.tag.get(val).then(tags => tags.map(t => t.id));
+      else db.tag.get(val).then(t => t.id);
     }),
 
     delete: async (id: number) => {

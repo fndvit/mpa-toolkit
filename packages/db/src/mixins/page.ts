@@ -1,11 +1,11 @@
 import { publishEvent } from '@mpa/events';
 import { logger } from '@mpa/log';
 import type { Prisma } from '@prisma/client';
-import { createLookup, type Expand } from '@mpa/utils';
+import { createLookup, isTruthy, type Expand } from '@mpa/utils';
 import type { MpaDatabase } from '../db';
 import * as Queries from '../queries';
 import { calcReadTime } from '../readtime';
-import type { APIRequests, Page } from '../types';
+import type { APIRequests, Page, PageTag, Tag } from '../types';
 import { validate } from '../validation';
 import { Recommender } from '../recommender';
 
@@ -26,7 +26,10 @@ export const pageMixin = (db: MpaDatabase) => {
               : {})
           }
         });
-        return query.map(({ id, tags }) => ({ id, tags: tags.map(t => ({ id: t.tagId, category: t.category })) }));
+        return query.map(({ id, tags }) => ({
+          id,
+          tags: tags.map(t => ({ id: t.tagId, category: t.category }))
+        }));
       },
       card: (): Promise<Page.ContentCard[]> =>
         db.prisma.page.findMany({
@@ -219,48 +222,66 @@ export const pageMixin = (db: MpaDatabase) => {
       const allPages = await db.page.all.recommender(type);
       const pageToTagIds = new Map(allPages.map(p => [p.id, p.tags]));
 
-      const madlibTags = userHistory?.madlib ? (await db.tag.get(userHistory.madlib)).map(t => t.id) : [];
-      const referencePageTags = referencePageId ? pageToTagIds.get(referencePageId)?.map(t => t.id) ?? [] : [];
-      const referencePagePrimaryStageTags = referencePageId
-        ? pageToTagIds
-            .get(referencePageId)
-            ?.filter(t => t.category == 'PRIMARY' && t.id < 7)
-            ?.map(t => t.id) ?? []
-        : [];
-      const referencePagePrimaryNextStageTags = referencePageId
-        ? [Math.max(...referencePagePrimaryStageTags) === 6 ? 0 : Math.max(...referencePagePrimaryStageTags) + 1] ?? []
-        : [];
-      const pageViewTags =
-        userHistory?.pageviews
-          ?.filter(pageId => pageToTagIds.get(pageId))
-          .flatMap(pageId => pageToTagIds.get(pageId)!)
-          ?.map(t => t.id) ?? [];
+      const tagFunctions = {
+        // helper functions to get all the required tagIds
+        reference: async (pageId?: number) => {
+          if (!pageId) return { all: [], primaryStage: [], nextStage: [] };
+          const tags = pageToTagIds.get(pageId) || [];
+          const primaryStageTagIds = tags.filter(t => t.category == 'PRIMARY' && t.id < 7).map(t => t.id);
+          const latestStage = Math.max(-1, ...primaryStageTagIds) + 1;
+          return {
+            all: tags.map(t => t.id),
+            primaryStage: primaryStageTagIds,
+            nextStage: [latestStage === 7 ? 0 : latestStage]
+          };
+        },
+
+        madlib: async (madlib?: string[]): Promise<number[]> => (madlib ? db.tag.getIds(madlib) : []),
+
+        pageview: async (pageviews: number[] = []) =>
+          pageviews
+            .map(pageId => pageToTagIds.get(pageId))
+            .filter(isTruthy)
+            .flat()
+            .map(t => t.id)
+      };
+
+      const tagIds = {
+        madlib: await tagFunctions.madlib(userHistory?.madlib),
+        pageview: await tagFunctions.pageview(userHistory?.pageviews),
+        reference: await tagFunctions.reference(referencePageId)
+      };
 
       const recommender = new Recommender(allPages.map(p => ({ id: p.id, tagIds: p.tags.map(t => t.id) })));
-      const topPages = new Set<number>();
-      const guideLines = Recommender.getGuidelines(
-        !!pageViewTags?.length,
-        !!madlibTags?.length,
-        !!referencePageTags?.length
+
+      const guidelines = Recommender.getGuidelines(
+        !!tagIds.pageview.length,
+        !!tagIds.madlib.length,
+        !!tagIds.reference.all.length
       );
+
       const weights = [
-        [guideLines.pageViews, pageViewTags],
-        [guideLines.madlib, madlibTags],
-        [guideLines.referencePage, referencePageTags],
-        [guideLines.referencePage, referencePagePrimaryStageTags],
-        [guideLines.referencePage, referencePagePrimaryNextStageTags]
+        [guidelines.pageViews, tagIds.pageview],
+        [guidelines.madlib, tagIds.madlib],
+        [guidelines.referencePage, tagIds.reference.all],
+        [guidelines.referencePage, tagIds.reference.primaryStage],
+        [guidelines.referencePage, tagIds.reference.nextStage]
       ] as const;
 
-      weights.forEach(([weight, tags]) => {
-        const numRecommendations = weight && Math.round(weight * numPages);
-        if (numRecommendations) {
-          recommender.getRecommendations(tags, numRecommendations, referencePageId).forEach(id => topPages.add(id));
-        }
-      });
+      const topPages = new Set(
+        weights
+          .filter((w): w is [number, number[]] => !!w[0])
+          .flatMap(([weight, tags]) =>
+            recommender.getRecommendations(tags, weight && Math.round(weight * numPages), referencePageId)
+          )
+      );
 
-      recommender.getRandomFill([...topPages], numPages, referencePageId).forEach(pageId => topPages.add(pageId));
+      const filledPages = new Set([
+        ...topPages,
+        ...recommender.getRandomFill([...topPages], numPages, referencePageId)
+      ]);
 
-      return [...topPages];
+      return [...filledPages];
     },
 
     async search<S extends Prisma.PageFindManyArgs>(searchText: string, fields: S) {
@@ -287,7 +308,9 @@ export const pageMixin = (db: MpaDatabase) => {
           const { rank, highlights } = searchLookup[p.id.toString()]!;
           return { ...p, rank, highlights };
         })
-        .sort((a, b) => b.rank - a.rank) as Expand<Prisma.PageGetPayload<S> & { rank: number; highlights: string }>[];
+        .sort((a, b) => b.rank - a.rank) as Expand<
+        Prisma.PageGetPayload<S> & { rank: number; highlights: string }
+      >[];
     }
   };
 };

@@ -64,6 +64,8 @@ export function omitUndefined<T extends Record<string | number, unknown>>(obj: T
   return filtered as { [P in keyof T]?: T[P] };
 }
 
+export const isTruthy = <T>(x: T): x is NonNullable<T> => !!x;
+
 // ************************
 //     TypeScript util
 // ************************

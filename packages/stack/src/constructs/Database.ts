@@ -5,6 +5,7 @@ export interface DatabaseProps {
   vpc: ec2.IVpc;
   port: number;
   databaseName: string;
+  stage: string;
 }
 
 export class Database extends Construct {
@@ -15,9 +16,9 @@ export class Database extends Construct {
   constructor(scope: Construct, id: string, props: DatabaseProps) {
     super(scope, id);
 
-    const { vpc, port, databaseName } = props;
+    const { vpc, port, databaseName, stage } = props;
 
-    const instanceIdentifier = 'postgres-03';
+    const instanceIdentifier = `mpath-${stage}`;
 
     this.securityGroup = new ec2.SecurityGroup(this, 'SecurityGroup', {
       vpc,

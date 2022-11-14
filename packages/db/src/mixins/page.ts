@@ -215,7 +215,8 @@ export const pageMixin = (db: MpaDatabase) => {
 
     recommender: async (
       type: 'chapter' | 'case-study' | 'all',
-      userHistory?: APIRequests.Recommendations,
+      madlib: string[],
+      pageviews: number[],
       referencePageId?: number,
       numPages = 8
     ) => {
@@ -228,11 +229,11 @@ export const pageMixin = (db: MpaDatabase) => {
           if (!pageId) return { all: [], primaryStage: [], nextStage: [] };
           const tags = pageToTagIds.get(pageId) || [];
           const primaryStageTagIds = tags.filter(t => t.category == 'PRIMARY' && t.id < 7).map(t => t.id);
-          const latestStage = Math.max(-1, ...primaryStageTagIds) + 1;
+          const nextStage = Math.max(-1, ...primaryStageTagIds) + 1;
           return {
             all: tags.map(t => t.id),
             primaryStage: primaryStageTagIds,
-            nextStage: [latestStage === 7 ? 0 : latestStage]
+            nextStage: [nextStage === 7 ? 0 : nextStage]
           };
         },
 
@@ -247,8 +248,8 @@ export const pageMixin = (db: MpaDatabase) => {
       };
 
       const tagIds = {
-        madlib: await tagFunctions.madlib(userHistory?.madlib),
-        pageview: await tagFunctions.pageview(userHistory?.pageviews),
+        madlib: await tagFunctions.madlib(madlib),
+        pageview: await tagFunctions.pageview(pageviews),
         reference: await tagFunctions.reference(referencePageId)
       };
 
@@ -308,9 +309,7 @@ export const pageMixin = (db: MpaDatabase) => {
           const { rank, highlights } = searchLookup[p.id.toString()]!;
           return { ...p, rank, highlights };
         })
-        .sort((a, b) => b.rank - a.rank) as Expand<
-        Prisma.PageGetPayload<S> & { rank: number; highlights: string }
-      >[];
+        .sort((a, b) => b.rank - a.rank) as Expand<Prisma.PageGetPayload<S> & { rank: number; highlights: string }>[];
     }
   };
 };

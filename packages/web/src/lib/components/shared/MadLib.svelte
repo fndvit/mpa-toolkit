@@ -4,22 +4,22 @@
 
   const TAG_VALUES = {
     // I am a
-    'MPA planner': 'MPA planners',
+    'MPA planner': 'MPA planner',
     'MPA manager': 'MPA managers',
     'community advocate': 'Community advocates',
     'community practitioner': 'Community practitioners',
 
-    // and amb using MPA to
+    // and am using MPAth to
     'restore areas': 'Restoring areas',
-    'reduce user conflict': 'Reducing user conflict',
+    'reduce user conflict': 'Reducing user conflicts',
     'meet targets': 'Meeting targets',
-    'promote ecotorurism': 'Promoting ecotorurism',
+    'promote ecotourism': 'Promoting ecotourism',
     "(I don't know)": "I don't know",
 
-    // and i need help to
-    'plan new MPAs': 'Planing new MPAs',
+    // and I need help to
+    'plan new MPAs': 'Planning new MPAs',
     'evaluate progress': 'Evaluating progress',
-    'eneble decision-making': 'Enabling decision-making',
+    'enable decision-making': 'Enable decision-making',
 
     // by
     government: 'Government',
@@ -50,7 +50,7 @@
 </script>
 
 <p class="madlib">
-  I am a <MadLibSelector options={typeUserList} bind:selected={value[0]} /> and amb using MPA to <MadLibSelector
+  I am a <MadLibSelector options={typeUserList} bind:selected={value[0]} /> and am using MPAth to <MadLibSelector
     options={objectiveList}
     bind:selected={value[1]}
   /> and i need help to

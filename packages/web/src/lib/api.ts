@@ -1,5 +1,5 @@
 import type { APIRequests as API, Author, Page, Tag, User } from '@mpa/db';
-import { omitUndefined } from '@mpa/utils';
+import { omitUndefined, slugify } from '@mpa/utils';
 import { default as _ky } from 'ky';
 import type { GoogleAuthReturnData } from '../routes/api/auth/google/+server';
 
@@ -59,8 +59,8 @@ export const recommendations = {
         searchParams: omitUndefined({
           type,
           referencePageId,
-          madlib: data.madlib?.join(','),
-          pageviews: data.pageviews?.join(',')
+          madlib: data.madlib?.map(madlib => slugify(madlib)).join('+'),
+          pageviews: data.pageviews?.join('+')
         })
       })
       .json()

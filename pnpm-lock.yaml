@@ -6,7 +6,6 @@ importers:
     specifiers:
       '@typescript-eslint/eslint-plugin': ^5.33.0
       '@typescript-eslint/parser': ^5.33.0
-      compute-cosine-similarity: ^1.0.0
       eslint: ^7.32.0
       eslint-config-prettier: ^8.5.0
       eslint-define-config: ^1.6.0
@@ -47,6 +46,7 @@ importers:
       aws-xray-sdk-core: ^3.4.0
       brace-expansion: ^2.0.1
       clone: ^2.1.2
+      compute-cosine-similarity: ^1.0.0
       dotenv-cli: ^6.0.0
       google-auth-library: ^8.1.1
       lorem-ipsum: ^2.0.8
@@ -63,6 +63,7 @@ importers:
       aws-xray-sdk-core: 3.4.0
       brace-expansion: 2.0.1
       clone: 2.1.2
+      compute-cosine-similarity: 1.0.0
       google-auth-library: 8.1.1
       lorem-ipsum: 2.0.8
       seedrandom: 3.0.5
@@ -3677,10 +3678,6 @@ packages:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
     dev: false
 
-  /fast-sorted-array/1.0.3:
-    resolution: {integrity: sha512-63NMo2M150g07DXuvfUaHt0AEHFRolaUdJxboc6AKL7yuOnqhyYXtXSLxg6aGF+9CR/cW+cAGUw7I4Ah7eM3UQ==}
-    dev: false
-
   /fast-text-encoding/1.0.4:
     resolution: {integrity: sha512-x6lDDm/tBAzX9kmsPcZsNbvDs3Zey3+scsxaZElS8xWLgUMAg/oFLeewfUz0mu1CblHhhsu15jGkraldkFh8KQ==}
     dev: false
@@ -4309,10 +4306,6 @@ packages:
   /joycon/3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
     engines: {node: '>=10'}
-
-  /js-sorted-set/0.7.0:
-    resolution: {integrity: sha512-NGTSMeoLNYR2BoTLhQ6w+u7Ox4PO34omb/0OBCy4gyedWeXolMGv948Ato0/Of6tfxsAjeySDymCkAj93/xkeA==}
-    dev: false
 
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -5427,10 +5420,6 @@ packages:
       sander: 0.5.1
       sourcemap-codec: 1.4.8
     dev: true
-
-  /sortedlist/0.3.1:
-    resolution: {integrity: sha512-qIuu3MQ16DHV1jjbpzBLuZs7OdUEVbYZZYFsjghtJnpj/BSPjkrkoF20uLbVQeHGaW569J4AudGKL92OtZfEZA==}
-    dev: false
 
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}

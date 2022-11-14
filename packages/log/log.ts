@@ -1,4 +1,4 @@
-import '@mpa/env/load';
+import '@mpa/env/local';
 import pino from 'pino';
 import { pinoLambdaDestination } from 'pino-lambda';
 import type PinoPretty from 'pino-pretty';

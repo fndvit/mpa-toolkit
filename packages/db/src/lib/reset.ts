@@ -1,6 +1,5 @@
-import { execFile } from 'child_process';
-import * as path from 'path';
 import type { PrismaClient } from '@prisma/client';
+import { prismaCmd } from '@mpa/utils/prisma/cmd';
 
 async function dropAllFunctions(prisma: PrismaClient) {
   const functionNames = await prisma.$queryRaw<
@@ -11,19 +10,6 @@ async function dropAllFunctions(prisma: PrismaClient) {
   return prisma.$transaction(
     functionNames.map(({ name }) => prisma.$executeRawUnsafe(`DROP FUNCTION IF EXISTS ${name} CASCADE;`))
   );
-}
-
-async function prismaCmd(cmd: string) {
-  return new Promise((resolve, reject) => {
-    execFile('node', [path.resolve('./node_modules/prisma/build/index.js'), ...cmd.split(' ')], (error, stdout) => {
-      if (error != null) {
-        console.log(stdout);
-        reject(error);
-      } else {
-        resolve(0);
-      }
-    });
-  });
 }
 
 export async function reset(prisma: PrismaClient) {

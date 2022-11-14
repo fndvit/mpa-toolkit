@@ -5,7 +5,7 @@ import { createLookup, isTruthy, type Expand } from '@mpa/utils';
 import type { MpaDatabase } from '../db';
 import * as Queries from '../queries';
 import { calcReadTime } from '../readtime';
-import type { APIRequests, Page, PageTag, Tag } from '../types';
+import type { APIRequests, Page } from '../types';
 import { validate } from '../validation';
 import { Recommender } from '../recommender';
 

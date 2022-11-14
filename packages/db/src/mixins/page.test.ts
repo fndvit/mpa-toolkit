@@ -1,11 +1,11 @@
-import { getEnvFromFile } from '@mpa/env';
+import { loadEnvFromFile } from '@mpa/env';
 import { beforeAll, describe, expect, test } from 'vitest';
 import type { Tag } from '..';
 import { MpaDatabase } from '..';
 
-const env = getEnvFromFile('test', { DATABASE_URL: true });
+loadEnvFromFile('test', { DATABASE_URL: true });
 
-const db = new MpaDatabase(env.DATABASE_URL);
+const db = new MpaDatabase();
 
 describe('db.page', () => {
   let tags: Tag[];

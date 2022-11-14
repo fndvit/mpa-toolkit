@@ -5,8 +5,14 @@
   "type": "module",
   "types": "./utils.ts",
   "exports": {
-    "import": "./dist/utils.js",
-    "require": "./dist/utils.cjs"
+    ".": {
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.cjs"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "require": "./dist/*.cjs"
+    }
   },
   "files": [
     "dist"
@@ -14,17 +20,21 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "clean": "rimraf ./dist",
-    "prepare": "pnpm build"
+    "clean": "rimraf ./dist"
   },
   "tsup": {
     "entry": [
-      "utils.ts"
+      "*.ts",
+      "prisma/*.ts"
     ],
     "format": [
       "cjs",
       "esm"
-    ],
-    "clean": true
+    ]
+  },
+  "dependencies": {
+    "fs-extra": "^10.1.0",
+    "globby": "^13.1.2",
+    "shelljs": "^0.8.5"
   }
 }

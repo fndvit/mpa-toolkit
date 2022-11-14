@@ -1,0 +1,19 @@
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  production:
+    uses: ./.github/workflows/build.yml
+    with:
+      STACK_NAME: 'MPAth-production'
+      ORIGIN: https://mpath.freetls.fastly.net/
+      AWS_REGION: eu-west-1
+    secrets:
+      GOOGLE_OAUTH_CLIENT_ID:  ${{ secrets.PROD_GOOGLE_OAUTH_CLIENT_ID }}
+      GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.PROD_GOOGLE_OAUTH_CLIENT_SECRET }}
+      FASTLY_SERVICE_ID: ${{ secrets.PROD_FASTLY_SERVICE_ID }}
+      FASTLY_API_KEY: ${{ secrets.PROD_FASTLY_API_KEY }}
+      FASTLY_ROUTING_DICTIONARY_ID: ${{ secrets.PROD_FASTLY_ROUTING_DICTIONARY_ID }}
+      AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}

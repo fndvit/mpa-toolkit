@@ -53,7 +53,7 @@ describe('db.page', () => {
   });
 
   test("all('content-card')", async () => {
-    const pages = await db.page.all({ model: 'content-card' });
+    const pages = await db.page.all.card();
     expect(pages.length).toBe(2);
     const slugs = pages.map(p => p.slug);
     expect(slugs).toContain('c');
@@ -61,7 +61,7 @@ describe('db.page', () => {
   });
 
   test("all('cms-list')", async () => {
-    const pages = await db.page.all({ model: 'cms-list' });
+    const pages = await db.page.all.cmsList();
     expect(pages.length).toBe(4);
   });
 

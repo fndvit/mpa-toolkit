@@ -1,14 +1,15 @@
-import { getEnvFromFile } from '@mpa/env';
+import { loadEnvFromFile } from '@mpa/env';
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import { createLookup, range } from '@mpa/utils';
 import { MpaDatabase } from '..';
 import type { Page } from '..';
 import { Recommender } from './recommender';
 import { generateEmptyPage } from './lib/test-utils';
+import { t } from 'vitest/dist/index-4a906fa4';
 
-const env = getEnvFromFile('test', { DATABASE_URL: true });
+const env = loadEnvFromFile('test', { DATABASE_URL: true });
 
-const db = new MpaDatabase(env.DATABASE_URL);
+const db = new MpaDatabase();
 
 describe('recommender', () => {
   describe('unittests', () => {
@@ -95,8 +96,8 @@ describe('recommender', () => {
     });
 
     test('calcSimilarities', async () => {
-      const allPages = await db.page.all({ model: 'recommender', type: 'all' });
-      const recommender = new Recommender(allPages);
+      const allPages = await db.page.all.recommender('all');
+      const recommender = new Recommender(allPages.map(p => ({ id: p.id, tagIds: p.tags.map(t => t.id) })));
 
       const sim = recommender.calcSimilarities([4, 6, 8, 10]);
 
@@ -109,8 +110,8 @@ describe('recommender', () => {
     });
 
     test('getRecommendations', async () => {
-      const allPages = await db.page.all({ model: 'recommender', type: 'all' });
-      const recommender = new Recommender(allPages);
+      const allPages = await db.page.all.recommender('all');
+      const recommender = new Recommender(allPages.map(p => ({ id: p.id, tagIds: p.tags.map(t => t.id) })));
 
       const r = recommender.getRecommendations([4, 6, 8, 9], 4);
       expect(r.length).toEqual(4);

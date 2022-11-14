@@ -13,6 +13,7 @@ import { getLambdaPath } from '../util/dirs';
 
 export interface EventStackProps {
   vpc: ec2.IVpc;
+  stage: 'prod' | 'staging';
 }
 
 export class EventStack extends Construct {
@@ -23,7 +24,7 @@ export class EventStack extends Construct {
   constructor(scope: Construct, id: string, props: EventStackProps) {
     super(scope, id);
 
-    const { vpc } = props;
+    const { vpc, stage } = props;
 
     // *********************
     // * Dead letter queue *
@@ -55,7 +56,7 @@ export class EventStack extends Construct {
       }
     });
 
-    this.topic = new sns.Topic(this, 'ContentTopic', { topicName: 'content' });
+    this.topic = new sns.Topic(this, 'ContentTopic', { topicName: `${stage}/content` });
 
     this.topic.addSubscription(new subs.SqsSubscription(this.queue));
 

@@ -9,7 +9,6 @@ import {
 } from 'aws-cdk-lib';
 import type { Construct } from 'constructs';
 import { getEnv } from '@mpa/env';
-import { AppConfig } from './constructs/AppConfig';
 import { MaintenanceBox } from './constructs/MaintenanceBox';
 import { Database } from './constructs/Database';
 import { EventStack } from './constructs/EventStack';
@@ -25,7 +24,7 @@ import { CachePurger, CACHE_PURGER_ENV_CONFIG } from './constructs/CachePurger';
 interface MpathStackProps extends StackProps {
   sentryArn: string;
   appConfigArn: string;
-  stage: 'dev' | 'staging' | 'prod';
+  stage: 'staging' | 'prod';
 }
 
 class MpathStack extends Stack {
@@ -37,10 +36,9 @@ class MpathStack extends Stack {
 
     const buckets = new Buckets(this, 'Buckets');
     const vpc = new Vpc(this, 'Vpc');
-    const db = new Database(this, 'Database', { vpc, port: DB_PORT, databaseName: 'mpa' });
+    const db = new Database(this, 'Database', { vpc, port: DB_PORT, databaseName: 'mpa', stage });
 
     const lambdaLayers = new LambdaLayers(this, 'LambdaLayers', { sentryArn, appConfigArn });
-    new AppConfig(this, 'AppConfig');
 
     const prismaEnv = {
       PRISMA_QUERY_ENGINE_BINARY: '/opt/libquery_engine-rhel-openssl-1.0.x.so.node',
@@ -78,21 +76,24 @@ class MpathStack extends Stack {
 
     const { distribution, httpApi } = new WebDistribution(this, 'WebDistribution', { server, buckets });
 
-    if (stage !== 'dev') {
-      const cachePurger = new CachePurger(this, 'CachePurger', {
-        vpc,
-        env: getEnv(CACHE_PURGER_ENV_CONFIG)
-      });
-      const eventStack = new EventStack(this, 'EventStack', { vpc });
-      cachePurger.lambda.addEventSource(new lambda_event_sources.SqsEventSource(eventStack.queue, { batchSize: 10 }));
-      server.lambda.addEnvironment('AWS_SNS_CONTENT_TOPIC', eventStack.topic.topicArn);
-      eventStack.topic.grantPublish(server.lambdaAlias);
+    const cachePurger = new CachePurger(this, 'CachePurger', {
+      vpc,
+      env: getEnv(CACHE_PURGER_ENV_CONFIG)
+    });
+    const eventStack = new EventStack(this, 'EventStack', { vpc, stage });
+    cachePurger.lambda.addEventSource(
+      new lambda_event_sources.SqsEventSource(eventStack.queue, { batchSize: 10 })
+    );
+    server.lambda.addEnvironment('AWS_SNS_CONTENT_TOPIC', eventStack.topic.topicArn);
+    eventStack.topic.grantPublish(server.lambdaAlias);
 
-      const maintananceBox = new MaintenanceBox(this, 'MaintenanceBox', { vpc });
-      db.securityGroup.addIngressRule(maintananceBox.securityGroup, ec2.Port.tcp(DB_PORT));
+    const maintananceBox = new MaintenanceBox(this, 'MaintenanceBox', { vpc });
+    db.securityGroup.addIngressRule(maintananceBox.securityGroup, ec2.Port.tcp(DB_PORT));
 
-      new CfnOutput(this, 'ContentTopicArn', { value: eventStack.topic.topicArn, description: "SNS topic 'content'" });
-    }
+    new CfnOutput(this, 'ContentTopicArn', {
+      value: eventStack.topic.topicArn,
+      description: "SNS topic 'content'"
+    });
 
     new BucketDeployments(this, 'BucketDeployments', { buckets, distribution });
 

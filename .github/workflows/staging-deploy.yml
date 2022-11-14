@@ -3,7 +3,7 @@ on:
     branches:
       - "dev"
 jobs:
-  staging-ci:
+  staging:
     uses: ./.github/workflows/build.yml
     with:
       STACK_NAME: 'MPAth-staging'

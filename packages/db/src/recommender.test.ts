@@ -1,13 +1,9 @@
-import { loadEnvFromFile } from '@mpa/env';
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import { createLookup, range } from '@mpa/utils';
 import { MpaDatabase } from '..';
 import type { Page } from '..';
 import { Recommender } from './recommender';
 import { generateEmptyPage } from './lib/test-utils';
-import { t } from 'vitest/dist/index-4a906fa4';
-
-const env = loadEnvFromFile('test', { DATABASE_URL: true });
 
 const db = new MpaDatabase();
 

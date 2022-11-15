@@ -12,35 +12,35 @@
 
   const onClickAddCard = () => {
     cards.push({} as LinkCardData);
-    cards = cards
+    cards = cards;
   };
 
   const onClickDeleteCard = (index: number) => {
     cards.splice(index, 1);
-    cards = cards
+    cards = cards;
   };
 </script>
 
 <div class="cards">
-    <div class="fixed-title">
-      <CardHeading bind:text={title} editable/>
-    </div>
+  <div class="fixed-title">
+    <CardHeading bind:text={title} {editable} />
+  </div>
 
-    <ul class="cards-list">
-      {#each cards as card, i}
-        <li class="card">
-          <LinkedCardBody bind:card={card} {editable} on:deleteCard={() => onClickDeleteCard(i)}/>
-        </li>
-      {/each}
-    </ul>
-    {#if editable}
-      <div class="editor-buttons">
-        <div class="cont">
-          {cards.length} / {MAX_CARDS}
-        </div>
-        <IconButton icon="add" on:click={onClickAddCard} disabled={cards.length >= MAX_CARDS} />
+  <ul class="cards-list">
+    {#each cards as card, i}
+      <li class="card">
+        <LinkedCardBody bind:card {editable} on:deleteCard={() => onClickDeleteCard(i)} />
+      </li>
+    {/each}
+  </ul>
+  {#if editable}
+    <div class="editor-buttons">
+      <div class="cont">
+        {cards.length} / {MAX_CARDS}
       </div>
-    {/if}
+      <IconButton icon="add" on:click={onClickAddCard} disabled={cards.length >= MAX_CARDS} />
+    </div>
+  {/if}
 </div>
 
 <style lang="stylus">
@@ -53,7 +53,8 @@
     color: $textColor;
   .cards {
     padding: 1rem 0.5rem;
-    background-color: $colors.neutral-light;
+    background-color: $colors.neutral-bg;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     border-radius: 20px;
   }
   .card {
@@ -71,7 +72,7 @@
     padding: 0;
     margin: 0;
      li {
-      border-bottom: 1px solid white;
+      border-bottom: 1px solid $colors.neutral-light;
      }
      li:last-child {
       border-bottom: none;

@@ -1,50 +1,73 @@
 <script lang="ts">
-  import { EditableText, IconButton } from '$lib/components/generic';
   import type { LinkCardData } from '@mpa/db';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
+  import Spinner from '../generic/Spinner.svelte';
+  import { EditableText, IconButton } from '$lib/components/generic';
+  import defaultImage from '$lib/assets/image-default.png';
 
   export let card: LinkCardData;
   export let editable = false;
 
-  const dispatch = createEventDispatcher<{deleteCard: LinkCardData}>();
+  let image = defaultImage;
+  let loading = false;
+
+  const dispatch = createEventDispatcher<{ deleteCard: LinkCardData }>();
 
   const deleteCard = () => {
     dispatch('deleteCard', card);
-  }
+  };
 
   const onClickRemoveCard = () => {
     deleteCard();
-  }
-
-  const getRandomImage = async () => {
-    const response = await fetch(`https://source.unsplash.com/random/800x600`)
-    return response;
   };
 
-  let img = '';
+  const getMetaImage = async url => {
+    loading = true;
+    try {
+      const response = await fetch(`/api/util/meta-scraper?url=${url}`);
+      const { res } = await response.json();
+      console.log(res);
+      if(res?.image) image = res.image;
+    }
+    catch (e) {
+      console.error(e);
+    }
+    loading = false;
+  };
+
+  $: if (card?.url && !editable) getMetaImage(card.url);
+
 </script>
 
-<div class="content" class:on-view={!editable}>
-
-  <div class="card-space">
-    <div class="content-input-text" class:hide-editable={!editable}>
-      <b>URL: </b>
-      <EditableText bind:value={card.url} {editable} placeholder="URL" />
+{#if editable}
+  <div class="content" >
+    <div class="card-space">
+      <div class="content-input-text">
+        <b>Title: </b>
+        <EditableText bind:value={card.heading} {editable} placeholder="Heading" />
+      </div>
+      <div class="content-input-text">
+        <b>URL: </b>
+        <EditableText bind:value={card.url} {editable} placeholder="URL" />
+      </div>
     </div>
-    <div class="content-input-text">
-      <b class:hide-editable={!editable}>Title: </b>
-      <EditableText bind:value={card.heading} {editable} placeholder="Heading" />
-    </div>
+    <IconButton icon="delete" on:click={onClickRemoveCard} />
   </div>
-  {#if editable}
-  <IconButton icon="delete" on:click={onClickRemoveCard}/>
-  {/if}
-  <img class='card-img' src={img} alt={card.heading} class:hide-editable={editable}/>
+{:else}
+  <a class="content on-view" href="{card?.url}" target="_blank">
+    <div class="card-space">
+      <div class="content-input-text">
+        <p>{card.heading}</p>
+      </div>
+    </div>
+    {#if loading}
+    <Spinner />
+    {:else}
+    <img class="card-img" src={image} alt={card.heading}/>
+    {/if}
 
-
-
-</div>
-
+  </a>
+{/if}
 
 <style lang="stylus">
 
@@ -66,7 +89,13 @@
     cursor: pointer;
     align-items: flex-start;
     &:hover {
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      font-weight: bold;
+      img {
+        transform: scale(1.1);
+        transition: all 0.5s ease;
+      }
+
+
     }
   }
 
@@ -74,9 +103,11 @@
     display: flex;
     flex-direction: row;
     column-gap: 10px;
-    width: 100%;
+    width: inherit;
     :global(.editable-text) {
       overflow: hidden;
+      word-break: break-word;
+      caret-color: var(--color-primary);
     }
   }
 
@@ -85,9 +116,5 @@
     height: 83px;
     object-fit: cover;
     border-radius: 5px;
-  }
-
-  .hide-editable {
-    display: none;
   }
 </style>

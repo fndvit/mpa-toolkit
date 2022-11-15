@@ -226,7 +226,7 @@ importers:
       prosemirror-model: ^1.18.1
       prosemirror-schema-list: ^1.2.1
       prosemirror-state: ^1.4.1
-      prosemirror-svelte-nodeview: ^1.0.1
+      prosemirror-svelte-nodeview: v1.0.2
       prosemirror-transform: ^1.7.0
       prosemirror-view: ^1.27.0
       schema-dts: ^1.1.0
@@ -275,7 +275,7 @@ importers:
       prosemirror-model: 1.18.1
       prosemirror-schema-list: 1.2.1
       prosemirror-state: 1.4.1
-      prosemirror-svelte-nodeview: 1.0.1
+      prosemirror-svelte-nodeview: 1.0.2
       prosemirror-transform: 1.7.0
       prosemirror-view: 1.27.0
       svelte-modals: 1.1.0
@@ -4632,9 +4632,10 @@ packages:
       prosemirror-transform: 1.7.0
     dev: false
 
-  /prosemirror-svelte-nodeview/1.0.1:
-    resolution: {integrity: sha512-6V/KZEhmky6hcomCNnVBOhjipG7W4t7x5b1y3ex9VqUzT9U/ClxpmS9Xe1ok/WsfsoNMRWHhsaD1t2JL6bwaAw==}
+  /prosemirror-svelte-nodeview/1.0.2:
+    resolution: {integrity: sha512-JzNT8q0Sd1u9OFiTz7rt0rSURyTjxuT5Nhvp5F0t7PdQGLGtBBrzfaCDaFXppf2m/IyeDJJyV/IJw5yNiT2OTg==}
     dependencies:
+      clone: 2.1.2
       prosemirror-state: 1.4.1
     dev: false
 

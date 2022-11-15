@@ -4,7 +4,7 @@
 
   const tagValue = {
     //I am a:
-    'MPA planner': 'MPA planners',
+    'MPA planner': 'MPA planner',
     'MPA manager': 'MPA managers',
     'community advocate': 'Community advocates',
     'community practitioner': 'Community practitioners',

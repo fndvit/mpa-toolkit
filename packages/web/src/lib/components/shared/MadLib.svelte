@@ -13,7 +13,7 @@
     'restore areas': 'Restoring areas',
     'reduce user conflict': 'Reducing user conflict',
     'meet targets': 'Meeting targets',
-    'promote ecotorurism': 'Promoting ecotorurism',
+    'promote ecoturism': 'Promoting ecoturism',
     '(I don\'t know)': 'I don\'t know',
 
     //and i need help to
@@ -38,7 +38,7 @@
 
 <script lang="ts">
   const typeUserList = ['MPA planner', 'MPA manager', 'community advocate', 'community practitioner'];
-  const objectiveList = ['restore areas', 'reduce user conflict', 'meet targets', 'promote ecotorurism', '(I don\'t know)'];
+  const objectiveList = ['restore areas', 'reduce user conflict', 'meet targets', 'promote ecoturism', '(I don\'t know)'];
   const objectiveVerbList = ['plan new MPAs', 'evaluate progress', 'eneble decision-making'];
   const actionSubjectList = ['government', 'communities', 'private sector', 'civil society'];
 
@@ -46,10 +46,10 @@
 </script>
 
 <p class="madlib">
-  I am a <MadLibSelector options={typeUserList} bind:selected={value[0]} /> and amb using MPA to <MadLibSelector
+  I am a <MadLibSelector options={typeUserList} bind:selected={value[0]} /> using MPAs to <MadLibSelector
     options={objectiveList}
     bind:selected={value[1]}
-  /> and i need help to
+  /> and I need help to
   <MadLibSelector options={objectiveVerbList} bind:selected={value[2]} /> by
   <MadLibSelector options={actionSubjectList} bind:selected={value[3]} />
 </p>

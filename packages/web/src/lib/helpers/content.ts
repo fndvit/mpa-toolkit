@@ -95,7 +95,7 @@ export function createEmptyCard(): CardsBlock['attrs'] {
 }
 
 export function createEmptyLinkCard(): LinkCardsBlock['attrs'] {
-  return { title: '', cards: [{ heading: '', url: '' }] };
+  return { title: '', cards: [{ title: '', url: '' }] };
 }
 
 export function getSectionSize(section: Section): number {

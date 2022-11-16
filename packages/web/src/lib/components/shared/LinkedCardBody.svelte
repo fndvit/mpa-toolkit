@@ -3,13 +3,14 @@
   import { createEventDispatcher } from 'svelte';
   import Spinner from '../generic/Spinner.svelte';
   import { EditableText, IconButton } from '$lib/components/generic';
-  import defaultImage from '$lib/assets/image-default.png';
 
-  export let card: LinkCardData;
+  export let card: LinkCardData = {url: '', title: ''};
   export let editable = false;
 
-  let image = defaultImage;
+  let image;
   let loading = false;
+  let urlSetted = false;
+  let urlElement;
 
   const dispatch = createEventDispatcher<{ deleteCard: LinkCardData }>();
 
@@ -26,7 +27,6 @@
     try {
       const response = await fetch(`/api/util/meta-scraper?url=${url}`);
       const { res } = await response.json();
-      console.log(res);
       if(res?.image) image = res.image;
     }
     catch (e) {
@@ -34,6 +34,21 @@
     }
     loading = false;
   };
+
+  const getMetaTitle = async () => {
+    urlSetted = true;
+    loading = true;
+    try {
+      const response = await fetch(`/api/util/meta-scraper?url=${card.url}`);
+      const { res } = await response.json();
+      if(res?.title) card.title = res.title;
+    }
+    catch (e) {
+      console.error(e);
+    }
+    loading = false;
+  };
+
 
   $: if (card?.url && !editable) getMetaImage(card.url);
 
@@ -43,13 +58,26 @@
   <div class="content" >
     <div class="card-space">
       <div class="content-input-text">
-        <b>Title: </b>
-        <EditableText bind:value={card.heading} {editable} placeholder="Heading" />
-      </div>
-      <div class="content-input-text">
         <b>URL: </b>
-        <EditableText bind:value={card.url} {editable} placeholder="URL" />
+        <EditableText
+          bind:this={urlElement}
+          bind:value={card.url}
+          {editable}
+          placeholder="URL"
+          on:blur={() => getMetaTitle()}
+          on:keypress={({ key }) => {if(key === 'Enter'){ urlElement.blur(); getMetaTitle();}}}
+        />
       </div>
+      {#if urlSetted}
+      <div class="content-input-text">
+        <b>Title: </b>
+        <EditableText
+          bind:value={card.title}
+          {editable}
+          placeholder={loading ? "Getting metadata title..." : "Heading"}
+          />
+      </div>
+      {/if}
     </div>
     <IconButton icon="delete" on:click={onClickRemoveCard} />
   </div>
@@ -57,13 +85,13 @@
   <a class="content on-view" href="{card?.url}" target="_blank">
     <div class="card-space">
       <div class="content-input-text">
-        <p>{card.heading}</p>
+        <p>{card.title}</p>
       </div>
     </div>
     {#if loading}
     <Spinner />
     {:else}
-    <img class="card-img" src={image} alt={card.heading}/>
+    <img class="card-img" class:opacity={!image} src={image} alt={card.title}/>
     {/if}
 
   </a>
@@ -109,6 +137,10 @@
       word-break: break-word;
       caret-color: var(--color-primary);
     }
+
+    p{
+      word-break: break-word;
+    }
   }
 
   .card-img {
@@ -116,5 +148,9 @@
     height: 83px;
     object-fit: cover;
     border-radius: 5px;
+  }
+
+  .opacity {
+    opacity: 0;
   }
 </style>

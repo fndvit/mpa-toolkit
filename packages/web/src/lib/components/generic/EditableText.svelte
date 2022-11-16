@@ -28,6 +28,7 @@
     on:keypress
     on:keydown
     on:keypress={handleContentEditableKeyPress}
+    on:blur
     contenteditable
     data-placeholder={placeholder}
     bind:textContent={value}

@@ -97,7 +97,7 @@ export type CardData = {
 };
 
 export type LinkCardData = {
-  heading: string;
+  title: string;
   url: string;
 };
 

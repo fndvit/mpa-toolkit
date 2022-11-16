@@ -49,7 +49,7 @@
     <ListControls {editorState} />
     <MenuSeperator />
     <IconButton on:click={insertCards} icon="library_books" title="Add cards" />
-    <IconButton on:click={insertLinkCards} icon="library_books" title="Add link cards" />
+    <IconButton on:click={insertLinkCards} icon="add_link" title="Add link cards" />
     <IconButton on:click={insertDiagram} icon="donut_small" title="Add diagram" />
     <MenuSeperator />
     <ImageButton title="Add image" />

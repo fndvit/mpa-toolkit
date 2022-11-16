@@ -1,12 +1,16 @@
 <script lang="ts">
   import type { LinkCardData } from '@mpa/db';
+  import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import CardHeading from './CardHeading.svelte';
-  import { IconButton } from '$lib/components/generic';
   import LinkedCardBody from './LinkedCardBody.svelte';
+  import { IconButton } from '$lib/components/generic';
+
+
 
   export let cards: LinkCardData[];
-  export let title: string = '';
+  export let title = '';
   export let editable = false;
+  export let controls: SvelteNodeViewControls;
 
   const MAX_CARDS = 5;
 
@@ -18,6 +22,9 @@
   const onClickDeleteCard = (index: number) => {
     cards.splice(index, 1);
     cards = cards;
+    if(cards.length === 0) {
+      controls.delete();
+    }
   };
 </script>
 

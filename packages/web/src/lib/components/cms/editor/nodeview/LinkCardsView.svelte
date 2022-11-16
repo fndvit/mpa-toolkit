@@ -9,7 +9,7 @@
 </script>
 
 <div use:rootDOM contenteditable="false">
-  <LinkCards bind:cards={attrs.cards} bind:title={attrs.title} editable/>
+  <LinkCards bind:cards={attrs.cards} bind:title={attrs.title} editable {controls}/>
 </div>
 
 <style lang="stylus">

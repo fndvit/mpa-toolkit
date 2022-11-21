@@ -5,8 +5,10 @@
 
   let expanded = false;
 
-  const index = section.blocks.findIndex((_, i) => i > 2 && section.blocks[i - 1].type !== 'heading');
+  const index = section.blocks.findIndex((_, i) => i > 0 && section.blocks[i].type === 'collapse');
+  let showmore = index !== -1 ? section.blocks[index]?.attrs?.showmore : '';
   const hideFrom = index !== -1 ? index + 1 : null;
+
 </script>
 
 <section
@@ -17,7 +19,7 @@
 >
   <slot />
   {#if hideFrom != null}
-    <ExpandButton content={section.topic} {expanded} on:click={() => (expanded = !expanded)} />
+    <ExpandButton content={showmore} {expanded} on:click={() => (expanded = !expanded)} />
   {/if}
 </section>
 

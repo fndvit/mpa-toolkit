@@ -10,7 +10,7 @@
     {#if content}
       {@html content}
     {:else}
-      <p><span class="unlabeled">Add a label</span></p>
+      <p><span class="unlabeled">Show more on this topic</span></p>
     {/if}
   {:else}
     Read less

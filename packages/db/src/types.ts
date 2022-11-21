@@ -210,6 +210,13 @@ export type DiagramBlock = {
   attrs: DiagramData;
 };
 
+export type CollapseBlock = {
+  type: 'collapse';
+  attrs: {
+    showmore: string;
+  };
+}
+
 export type ImageBlock = {
   type: 'image';
   attrs: {
@@ -243,7 +250,8 @@ export type ContentBlock =
   | BulletListBlock
   | OrderedListBlock
   | ImageBlock
-  | DiagramBlock;
+  | DiagramBlock
+  | CollapseBlock;
 
 // ***********************
 //          Marks
@@ -283,7 +291,6 @@ export type ContentDocument = {
 export type Section = {
   id: string;
   title: string;
-  topic: string;
   blocks: ContentBlock[];
 };
 

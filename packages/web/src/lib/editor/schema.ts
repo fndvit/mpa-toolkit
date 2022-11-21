@@ -140,6 +140,11 @@ export const schema = new ProsemirrorSchema({
       draggable: false,
       selectable: false,
       group: 'block'
+    },
+
+    collapse: {
+      ...svelteSchemaNode('collapse', { showmore: ''}),
+      group: 'block'
     }
   },
   marks: {

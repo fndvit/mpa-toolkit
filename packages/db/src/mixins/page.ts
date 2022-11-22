@@ -1,36 +1,53 @@
 import { publishEvent } from '@mpa/events';
 import { logger } from '@mpa/log';
 import type { Prisma } from '@prisma/client';
-import { createLookup, type Expand } from '@mpa/utils';
+import { createLookup, isTruthy, type Expand } from '@mpa/utils';
 import type { MpaDatabase } from '../db';
 import * as Queries from '../queries';
 import { calcReadTime } from '../readtime';
 import type { APIRequests, Page } from '../types';
 import { validate } from '../validation';
+import { Recommender } from '../recommender';
 
 const log = logger('DB');
 
+type RecommenderParams = {
+  madlib?: string[];
+  pageviews?: number[];
+  referencePageId?: number;
+  numPages?: number;
+};
+
 export const pageMixin = (db: MpaDatabase) => {
   return {
-    all: <
-      {
-        // overloads
-        (opts: { model: 'content-card' }): Promise<Page.ContentCard[]>;
-        (opts: { model: 'cms-list' }): Promise<Page.CmsList[]>;
-      }
-    >((opts: { model: string }) => {
-      if (opts.model === 'content-card') {
-        return db.prisma.page.findMany({
+    all: {
+      recommender: async (type: 'chapter' | 'case-study' | 'all') => {
+        const query = await db.prisma.page.findMany({
+          select: { id: true, tags: { select: { tagId: true, category: true } } },
+          where: {
+            draft: false,
+            ...(type === 'chapter'
+              ? { chapter: { isNot: null } }
+              : type === 'case-study'
+              ? { caseStudy: { isNot: null } }
+              : {})
+          }
+        });
+        return query.map(({ id, tags }) => ({
+          id,
+          tags: tags.map(t => ({ id: t.tagId, category: t.category }))
+        }));
+      },
+      card: (): Promise<Page.ContentCard[]> =>
+        db.prisma.page.findMany({
           where: { draft: false },
           ...Queries.pageForContentCard
-        });
-      } else if (opts.model === 'cms-list') {
-        return db.prisma.page.findMany({
+        }),
+      cmsList: (): Promise<Page.CmsList[]> =>
+        db.prisma.page.findMany({
           ...Queries.pageForCmsList
-        });
-      }
-    }),
-
+        })
+    },
     collection: <
       {
         // overloads
@@ -50,6 +67,13 @@ export const pageMixin = (db: MpaDatabase) => {
         ...Queries.pageForCollectionCard
       });
     }),
+
+    cards: (pageIds: number[]) =>
+      db.prisma.page.findMany({
+        where: { id: { in: pageIds }, draft: false },
+        orderBy: { tags: { _count: 'asc' } },
+        ...Queries.pageForContentCard
+      }),
 
     get: <
       {
@@ -182,16 +206,88 @@ export const pageMixin = (db: MpaDatabase) => {
       return _page;
     },
 
-    recommended: async (page: Pick<Page, 'id' | 'tags'>) =>
+    getPageByType: async (type?: 'chapter' | 'case-study') =>
       db.prisma.page.findMany({
         where: {
-          draft: false,
-          tags: { some: { OR: page.tags.map(t => ({ tagId: t.tag.id })) } },
-          NOT: { id: page.id }
+          ...(type === 'chapter'
+            ? { chapter: { isNot: null } }
+            : type === 'case-study'
+            ? { caseStudy: { isNot: null } }
+            : {}),
+          draft: false
         },
         orderBy: { tags: { _count: 'asc' } },
         ...Queries.pageForContentCard
       }),
+
+    recommender: async (
+      type: 'chapter' | 'case-study' | 'all',
+      { madlib = [], pageviews = [], referencePageId, numPages = 8 }: RecommenderParams = {}
+    ) => {
+      const allPages = await db.page.all.recommender(type);
+      const pageToTagIds = new Map(allPages.map(p => [p.id, p.tags]));
+
+      const tagFunctions = {
+        // helper functions to get all the required tagIds
+        reference: async (pageId?: number) => {
+          if (!pageId) return { all: [], primaryStage: [], nextStage: [] };
+          const tags = pageToTagIds.get(pageId) || [];
+          const primaryStageTagIds = tags.filter(t => t.category == 'PRIMARY' && t.id < 7).map(t => t.id);
+          const nextStage = Math.max(-1, ...primaryStageTagIds) + 1;
+          return {
+            all: tags.map(t => t.id),
+            primaryStage: primaryStageTagIds,
+            nextStage: [nextStage === 7 ? 0 : nextStage]
+          };
+        },
+
+        madlib: async (madlib?: string[]): Promise<number[]> => (madlib && db.tag.getIds(madlib)) || [],
+
+        pageview: async (pageviews: number[] = []) =>
+          pageviews
+            .map(pageId => pageToTagIds.get(pageId))
+            .filter(isTruthy)
+            .flat()
+            .map(t => t.id)
+      };
+
+      const tagIds = {
+        madlib: await tagFunctions.madlib(madlib),
+        pageview: await tagFunctions.pageview(pageviews),
+        reference: await tagFunctions.reference(referencePageId)
+      };
+
+      const recommender = new Recommender(allPages.map(p => ({ id: p.id, tagIds: p.tags.map(t => t.id) })));
+
+      const guidelines = Recommender.getGuidelines(
+        !!tagIds.pageview.length,
+        !!tagIds.madlib.length,
+        !!tagIds.reference.all.length
+      );
+
+      const weights = [
+        [guidelines.pageViews, tagIds.pageview],
+        [guidelines.madlib, tagIds.madlib],
+        [guidelines.referencePage, tagIds.reference.all],
+        [guidelines.referencePage, tagIds.reference.primaryStage],
+        [guidelines.referencePage, tagIds.reference.nextStage]
+      ] as const;
+
+      const topPages = new Set(
+        weights
+          .filter((w): w is [number, number[]] => !!w[0])
+          .flatMap(([weight, tags]) =>
+            recommender.getRecommendations(tags, weight && Math.round(weight * numPages), referencePageId)
+          )
+      );
+
+      const filledPages = new Set([
+        ...topPages,
+        ...recommender.getRandomFill([...topPages], numPages, referencePageId)
+      ]);
+
+      return [...filledPages];
+    },
 
     async search<S extends Prisma.PageFindManyArgs>(searchText: string, fields: S) {
       const searchResult = await db.prisma.$queryRaw<

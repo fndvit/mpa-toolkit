@@ -1,11 +1,20 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+  import { onMount } from 'svelte';
   import ContentCarouselCard from './ContentCarouselCard.svelte';
+  import ContentCarouselLoadingCard from './ContentCarouselLoadingCard.svelte';
   import { SplideOptions } from '$lib/helpers/splide';
+  import * as api from '$lib/api';
+  import { userHistory } from '$lib/history';
 
-  export let slides: Page.ContentCard[];
   export let title: string;
+  export let referencePage: Page = undefined;
+  export let recommendationType: 'chapter' | 'case-study';
+
+  let slides: Page.ContentCard[];
+
+  const NUM_RECOMMENDATIONS = 8;
 
   const options = SplideOptions({
     type: 'slide',
@@ -27,16 +36,28 @@
       }
     }
   });
+
+  onMount(async () => {
+    slides = await api.recommendations.get(userHistory.toApiRequest(), recommendationType, referencePage?.id);
+  });
 </script>
 
 <div class="content-carousel">
   <p class="title">{title}</p>
   <Splide {options}>
-    {#each slides as slide}
-      <SplideSlide>
-        <ContentCarouselCard page={slide} />
-      </SplideSlide>
-    {/each}
+    {#if !slides}
+      {#each Array(NUM_RECOMMENDATIONS) as _, i}
+        <SplideSlide>
+          <ContentCarouselLoadingCard />
+        </SplideSlide>
+      {/each}
+    {:else}
+      {#each slides as slide}
+        <SplideSlide>
+          <ContentCarouselCard page={slide} />
+        </SplideSlide>
+      {/each}
+    {/if}
   </Splide>
   <div class="opacity-div" />
 </div>

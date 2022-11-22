@@ -2,47 +2,51 @@
   import { slugify } from '@mpa/utils';
   import MadLibSelector from './MadLibSelector.svelte';
 
-  const tagValue = {
-    //I am a:
+  const TAG_VALUES = {
+    // I am a
     'MPA planner': 'MPA planner',
     'MPA manager': 'MPA managers',
     'community advocate': 'Community advocates',
     'community practitioner': 'Community practitioners',
 
-    //and amb using MPA to
+    // and am using MPAth to
     'restore areas': 'Restoring areas',
-    'reduce user conflict': 'Reducing user conflict',
+    'reduce user conflict': 'Reducing user conflicts',
     'meet targets': 'Meeting targets',
-    'promote ecoturism': 'Promoting ecoturism',
-    '(I don\'t know)': 'I don\'t know',
+    'promote ecotourism': 'Promoting ecotourism',
+    "(I don't know)": "I don't know",
 
-    //and i need help to
-    'plan new MPAs': 'Planing new MPAs',
+    // and I need help to
+    'plan new MPAs': 'Planning new MPAs',
     'evaluate progress': 'Evaluating progress',
-    'eneble decision-making': 'Enabling decision-making',
+    'enable decision-making': 'Enable decision-making',
 
-    //by
-    'government': 'Government',
-    'communities': 'Communities',
+    // by
+    government: 'Government',
+    communities: 'Communities',
     'private sector': 'Private sector',
-    'civil society': 'Civil society',
+    'civil society': 'Civil society'
   };
-
-  export function buildTagSlug(value: string[]) {
-    return value
-      .map(v => tagValue[v])
-      .map(str => slugify(str))
-      .join('+');
-  }
 </script>
 
 <script lang="ts">
   const typeUserList = ['MPA planner', 'MPA manager', 'community advocate', 'community practitioner'];
-  const objectiveList = ['restore areas', 'reduce user conflict', 'meet targets', 'promote ecoturism', '(I don\'t know)'];
+  const objectiveList = [
+    'restore areas',
+    'reduce user conflict',
+    'meet targets',
+    'promote ecotorurism',
+    "(I don't know)"
+  ];
   const objectiveVerbList = ['plan new MPAs', 'evaluate progress', 'eneble decision-making'];
   const actionSubjectList = ['government', 'communities', 'private sector', 'civil society'];
 
   export let value: string[] = [null, null, null, null];
+  export let slug = '';
+  export let tags: string[] = [];
+
+  $: tags = value.map(v => TAG_VALUES[v]);
+  $: slug = tags.map(t => slugify(t)).join('+');
 </script>
 
 <p class="madlib">

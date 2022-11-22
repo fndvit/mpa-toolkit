@@ -8,7 +8,6 @@
   import { createSections, getSectionSize } from '$lib/helpers/content';
 
   export let page: Page;
-  export let recommendedPages: Page.ContentCard[] = null;
 
   const sections = createSections(page.content);
 
@@ -48,13 +47,16 @@
           <div class="madlib-container">
             <ContentMadLib />
           </div>
-        {:else if i === 2 && recommendedPages?.length > 0}
+        {:else if i === 2}
           <div class="content-carousel-container">
-            <ContentCarousel slides={recommendedPages} title={'You may also like'} />
+            <ContentCarousel title={'You may also like'} recommendationType={page.chapter ? 'chapter' : 'case-study'}/>
           </div>
         {/if}
       {/if}
     {/each}
+    <div class="content-carousel-container">
+      <ContentCarousel title={'What to read next'} referencePage={page} recommendationType={page.chapter ? 'chapter' : 'case-study'}/>
+    </div>
   </div>
 </div>
 

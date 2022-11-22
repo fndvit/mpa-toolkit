@@ -22,9 +22,9 @@
     "prepare": "prisma generate",
     "generate": "prisma generate",
     "migrate": "pnpm migrate:local && pnpm migrate:test",
-    "migrate:local": "dotenv -e ../../.env.local prisma migrate dev",
-    "migrate:test": "dotenv -e ../../.env.test prisma migrate dev",
-    "test": "vitest",
+    "migrate:local": "dotenv -e ../../.env prisma migrate dev",
+    "migrate:test": "dotenv -e ../../.env prisma migrate dev",
+    "test": "vitest --no-threads",
     "dev": "tsup --watch",
     "build": "tsup",
     "clean": "rimraf ./dist"
@@ -39,6 +39,7 @@
     "aws-xray-sdk-core": "^3.4.0",
     "brace-expansion": "^2.0.1",
     "clone": "^2.1.2",
+    "compute-cosine-similarity": "^1.0.0",
     "google-auth-library": "^8.1.1",
     "lorem-ipsum": "^2.0.8",
     "seedrandom": "^3.0.5"

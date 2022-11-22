@@ -7,10 +7,6 @@ declare namespace App {
   }
 }
 
-declare module 'svelte-scrollto' {
-  export const scrollTo;
-}
-
 interface Window {
   google?: typeof import('google-one-tap');
 }

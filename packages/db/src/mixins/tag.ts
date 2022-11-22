@@ -52,11 +52,19 @@ export const tagMixin = (db: MpaDatabase) => {
         }
       }),
 
+    allForRecommender: async () => {
+      const query = await db.prisma.tag.findMany({
+        ...Queries.countTags,
+        orderBy: {
+          value: 'asc'
+        }
+      });
+      return query.map(({ id, value, _count }) => ({ id, value, pageCount: _count.pageTags }));
+    },
+
     get: <
       {
-        // overloads
-        (id: number): Promise<Tag>;
-        (slug: string): Promise<Tag>;
+        (idOrSlug: string | number): Promise<Tag>;
         (slugs: string[]): Promise<Tag[]>;
       }
     >(async (val: number | string | string[]) => {
@@ -64,7 +72,6 @@ export const tagMixin = (db: MpaDatabase) => {
         return db.prisma.tag.findUnique({ where: { id: val } });
       } else {
         // can't directly query db by slug using prisma
-        // so doing the query clien
         const allTags = await all();
         if (Array.isArray(val)) {
           return allTags.filter(tag => val.includes(slugify(tag.value)));
@@ -72,6 +79,16 @@ export const tagMixin = (db: MpaDatabase) => {
           return allTags.find(t => slugify(t.value) === val);
         }
       }
+    }),
+
+    getIds: <
+      {
+        (idOrSlug: number | string): Promise<number>;
+        (slugs: string[]): Promise<number[]>;
+      }
+    >(async (val: number | string | string[]) => {
+      if (Array.isArray(val)) return db.tag.get(val).then(tags => tags.map(t => t.id));
+      else db.tag.get(val).then(t => t.id);
     }),
 
     delete: async (id: number) => {

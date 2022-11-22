@@ -177,7 +177,7 @@ describe('recommender', () => {
 
     test('chapters', async () => {
       const pageViews = ['casestudy-a', 'chapter-a'].map(slug => pages.find(p => p.slug === slug)!.id);
-      const pageIds = await db.page.recommender('chapter', { pageviews: pageViews }, undefined);
+      const pageIds = await db.page.recommender('chapter', { pageviews: pageViews });
       expect(pageIds.length).toEqual(8);
       const cards = await db.page.cards(pageIds);
       cards.forEach(c => expect(c.chapter).toBeTruthy());
@@ -185,7 +185,7 @@ describe('recommender', () => {
 
     test('casestudy', async () => {
       const pageViews = ['casestudy-a', 'chapter-a'].map(slug => pages.find(p => p.slug === slug)!.id);
-      const pageIds = await db.page.recommender('case-study', { pageviews: pageViews }, undefined);
+      const pageIds = await db.page.recommender('case-study', { pageviews: pageViews });
       const cards = await db.page.cards(pageIds);
       cards.forEach(c => expect(c.caseStudy).toBeTruthy());
     });
@@ -220,7 +220,7 @@ describe('recommender', () => {
       await db.page.create({ ...generateEmptyPage('chapter'), tags: [], slug: 'c', draft: false });
       await db.page.create({ ...generateEmptyPage('chapter'), tags: [], slug: 'd', draft: false });
 
-      const pageIds = await db.page.recommender('all', undefined, refPage.id);
+      const pageIds = await db.page.recommender('all', { referencePageId: refPage.id });
       expect(pageIds).not.toContain(refPage.id);
       expect(pageIds.length).toEqual(3);
     });

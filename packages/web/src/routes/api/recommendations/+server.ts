@@ -8,12 +8,11 @@ export const GET: RequestHandler = async ({ url }) => {
   const type = url.searchParams.get('type') as 'chapter' | 'case-study';
   const referencePageId = parseInt(url.searchParams.get('referencePageId'));
 
-  const pageIds = await db.page.recommender(
-    type,
-    madlib?.split('+') || [],
-    pageviews?.split('+').map(id => parseInt(id)) || [],
+  const pageIds = await db.page.recommender(type, {
+    madlib: madlib?.split('+') || [],
+    pageviews: pageviews?.split('+').map(id => parseInt(id)) || [],
     referencePageId
-  );
+  });
   const cards = await db.page.cards(pageIds);
 
   return json(cards);

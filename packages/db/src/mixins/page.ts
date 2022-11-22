@@ -11,6 +11,13 @@ import { Recommender } from '../recommender';
 
 const log = logger('DB');
 
+type RecommenderParams = {
+  madlib?: string[];
+  pageviews?: number[];
+  referencePageId?: number;
+  numPages?: number;
+};
+
 export const pageMixin = (db: MpaDatabase) => {
   return {
     all: {
@@ -215,10 +222,7 @@ export const pageMixin = (db: MpaDatabase) => {
 
     recommender: async (
       type: 'chapter' | 'case-study' | 'all',
-      madlib: string[],
-      pageviews: number[],
-      referencePageId?: number,
-      numPages = 8
+      { madlib = [], pageviews = [], referencePageId, numPages = 8 }: RecommenderParams = {}
     ) => {
       const allPages = await db.page.all.recommender(type);
       const pageToTagIds = new Map(allPages.map(p => [p.id, p.tags]));
@@ -237,7 +241,7 @@ export const pageMixin = (db: MpaDatabase) => {
           };
         },
 
-        madlib: async (madlib?: string[]): Promise<number[]> => (madlib ? db.tag.getIds(madlib) : []),
+        madlib: async (madlib?: string[]): Promise<number[]> => (madlib && db.tag.getIds(madlib)) || [],
 
         pageview: async (pageviews: number[] = []) =>
           pageviews

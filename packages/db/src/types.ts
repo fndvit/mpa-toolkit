@@ -164,6 +164,11 @@ export namespace APIRequests {
   };
 
   export type HomepageComponents = HomepageComponentName[];
+
+  export type Recommendations = {
+    pageviews?: number[];
+    madlib?: string[];
+  };
 }
 
 // **************************

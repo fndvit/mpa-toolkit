@@ -33,7 +33,8 @@ const REQUIRED_ROLES: { [routeId: string]: Role | null } = {
   'api/tags/[id]': 'CONTENT_MANAGER',
   'api/tags/create': 'CONTENT_MANAGER',
   'api/users/[id]': 'ADMIN',
-  'api/dump': 'ADMIN'
+  'api/dump': 'ADMIN',
+  'api/recommendations': null
 };
 
 export async function getUserFromCookie(request: Request, setHeaders: RequestEvent['setHeaders']) {

@@ -1,12 +1,16 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+  import { onMount } from 'svelte';
   import LandingCarouselCard from './LandingCarouselCard.svelte';
   import { CarouselDots } from '$lib/components/shared';
   import { SplideOptions } from '$lib/helpers/splide';
+  import * as api from '$lib/api';
+  import { userHistory } from '$lib/history';
 
-  export let pages: Page.ContentCard[];
+  export let pages: Page.ContentCard[] = [];
   export let title: string;
+  export let type: 'chapter' | 'case-study' = 'chapter';
 
   let currentCard = 0;
   let splide: Splide;
@@ -36,6 +40,10 @@
   });
 
   $: if (currentCard >= 0 && splide) splide.go(currentCard);
+
+  onMount(async () => {
+    pages = await api.recommendations.get(userHistory.toApiRequest(), type);
+  });
 </script>
 
 <div class="landing-carousel">

@@ -1,18 +1,22 @@
 <script lang="ts">
-  import MadLib, { buildTagSlug } from '../shared/MadLib.svelte';
+  import MadLib from '../shared/MadLib.svelte';
   import landingMadlibBg from '$lib/assets/landing-madlib-bg.jpg';
+  import { userHistory } from '$lib/history';
 
-  let value: string[] = [];
+  let slug: string;
+  let tags: string[];
 
-  $: action = `/recommended/${buildTagSlug(value)}/`;
+  const setMadlibAnswers = () => userHistory.setMadlibAnswers(tags);
+
+  $: action = slug ? `/recommended/${slug}/` : null;
 </script>
 
 <div class="landing-madlib" style="--background-image: url({landingMadlibBg})">
   <h2>Find information <b>relevant to you</b>.</h2>
 
-  <MadLib bind:value />
+  <MadLib bind:tags bind:slug />
 
-  <form {action}>
+  <form {action} on:submit={setMadlibAnswers}>
     <button tabindex="0">
       Start your tour
       <svg class="arrow" viewBox="0 0 13 22">

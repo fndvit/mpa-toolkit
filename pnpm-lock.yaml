@@ -46,6 +46,7 @@ importers:
       aws-xray-sdk-core: ^3.4.0
       brace-expansion: ^2.0.1
       clone: ^2.1.2
+      compute-cosine-similarity: ^1.0.0
       dotenv-cli: ^6.0.0
       google-auth-library: ^8.1.1
       lorem-ipsum: ^2.0.8
@@ -62,6 +63,7 @@ importers:
       aws-xray-sdk-core: 3.4.0
       brace-expansion: 2.0.1
       clone: 2.1.2
+      compute-cosine-similarity: 1.0.0
       google-auth-library: 8.1.1
       lorem-ipsum: 2.0.8
       seedrandom: 3.0.5
@@ -2603,6 +2605,29 @@ packages:
     dependencies:
       '@types/json-buffer': 3.0.0
       json-buffer: 3.0.1
+    dev: false
+
+  /compute-cosine-similarity/1.0.0:
+    resolution: {integrity: sha512-jPdqVMT8Im6jS+THoDBDKZlGg32g7QeXOiBXeuiMXVEV5Tg8z38Qpvg08mt2qRy9j/H0m6w/VDoKBJ7w7F/sKg==}
+    dependencies:
+      compute-dot: 1.1.0
+      compute-l2norm: 1.1.0
+      validate.io-array: 1.0.6
+      validate.io-function: 1.0.2
+    dev: false
+
+  /compute-dot/1.1.0:
+    resolution: {integrity: sha512-L5Ocet4DdMrXboss13K59OK23GXjiSia7+7Ukc7q4Bl+RVpIXK2W9IHMbWDZkh+JUEvJAwOKRaJDiFUa1LTnJg==}
+    dependencies:
+      validate.io-array: 1.0.6
+      validate.io-function: 1.0.2
+    dev: false
+
+  /compute-l2norm/1.1.0:
+    resolution: {integrity: sha512-6EHh1Elj90eU28SXi+h2PLnTQvZmkkHWySpoFz+WOlVNLz3DQoC4ISUHSV9n5jMxPHtKGJ01F4uu2PsXBB8sSg==}
+    dependencies:
+      validate.io-array: 1.0.6
+      validate.io-function: 1.0.2
     dev: false
 
   /concat-map/0.0.1:
@@ -5985,6 +6010,14 @@ packages:
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
+
+  /validate.io-array/1.0.6:
+    resolution: {integrity: sha512-DeOy7CnPEziggrOO5CZhVKJw6S3Yi7e9e65R1Nl/RTN1vTQKnzjfvks0/8kQ40FP/dsjRAOd4hxmJ7uLa6vxkg==}
+    dev: false
+
+  /validate.io-function/1.0.2:
+    resolution: {integrity: sha512-LlFybRJEriSuBnUhQyG5bwglhh50EpTL2ul23MPIuR1odjO7XaMLFV8vHGwp7AZciFxtYOeiSCT5st+XSPONiQ==}
+    dev: false
 
   /vite/2.9.15_stylus@0.58.1:
     resolution: {integrity: sha512-fzMt2jK4vQ3yK56te3Kqpkaeq9DkcZfBbzHwYpobasvgYmP2SoAr6Aic05CsB4CzCZbsDv4sujX3pkEGhLabVQ==}

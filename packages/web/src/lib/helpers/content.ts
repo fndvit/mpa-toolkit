@@ -105,7 +105,7 @@ export function getSectionSize(section: Section): number {
 
 export function getBlockSize(b: ContentBlock): number {
   if (b.type === 'paragraph') {
-    return b.content?.reduce((agg, c) => agg + c.text.length, 0);
+    return b.content?.filter(c => c.text).reduce((agg, c) => agg + c.text.length, 0);
   }
   // TODO: return est sizes of other block types
   return 0;

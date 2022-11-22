@@ -1,0 +1,81 @@
+{
+  "name": "@mpa/stack",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./adapter": {
+      "import": {
+        "default": "./dist/adapter.js",
+        "types": "./dist/adapter.d.ts"
+      }
+    }
+  },
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rimraf dist cdk.out",
+    "synth-staging": "cdk synth --app ./dist/stack.js --require-approval never MPAth-staging"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-apigatewayv2-alpha": "2.17.0-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.17.0-alpha.0",
+    "@mpa/env": "workspace:*",
+    "@mpa/migration-runner": "workspace:*",
+    "@mpa/utils": "workspace:^1.0.0",
+    "@types/aws-lambda": "^8.10.93",
+    "aws-cdk-lib": "^2.50.0",
+    "aws-xray-sdk-core": "^3.4.0",
+    "constructs": "^10.0.87",
+    "esbuild": "^0.14.28",
+    "got": "^12.3.1"
+  },
+  "devDependencies": {
+    "@mpa/db": "workspace:*",
+    "@mpa/events": "workspace:*",
+    "@sveltejs/kit": "1.0.0-next.417",
+    "@types/rimraf": "^3.0.2",
+    "aws-cdk": "^2.50.0",
+    "tsup": "^6.4.0"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "svelte",
+        "vite"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "tsup": {
+    "entry": [
+      "src/index.ts",
+      "src/stack.ts",
+      "src/global.d.ts",
+      "src/lambda"
+    ],
+    "format": [
+      "esm"
+    ],
+    "loader": {
+      ".gql": "text",
+      ".repo": "text"
+    },
+    "noExternal": [],
+    "external": [
+      "SERVER",
+      "MANIFEST",
+      "STATIC"
+    ],
+    "splitting": false
+  },
+  "peerDependencies": {
+    "@sveltejs/kit": "1.0.0-next.417"
+  }
+}

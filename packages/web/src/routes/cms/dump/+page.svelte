@@ -151,9 +151,6 @@
   .controls {
     display: flex;
     column-gap: 10px;
-    > select {
-      padding: 0 5px;
-    }
 
     > input[type=file] {
       display: none;
@@ -171,11 +168,5 @@
       }
     }
   }
-
-  .data-buttons {
-    display: flex;
-    column-gap: 10px;
-  }
-
 
 </style>

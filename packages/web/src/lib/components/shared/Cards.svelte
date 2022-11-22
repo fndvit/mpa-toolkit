@@ -52,8 +52,8 @@
 <div
   class="cards"
   class:has-fixed-title={fixedTitle}
+  class:multiple-slides={cards.length > 1}
   data-card-style={style}
-  multiple-slides={cards.length > 1}
   class:selected
 >
   <Splide {options} bind:this={splide} on:move={e => (currentPageIndex = e.detail.index)} hasTrack={false}>
@@ -139,13 +139,16 @@
     :global(.body-column) &,
     :global(.editor-content) & {
       card-styles($colors.primary-blue);
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
     }
 
     :global(.key-learnings .card-content) & {
       card-styles($colors.neutral-bg);
       box-shadow: none;
+    }
+
+    :global(.diagram) & {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
     }
   }
 
@@ -155,12 +158,14 @@
     display: flex;
     column-gap: 5px;
     justify-content: right;
+
     :global(.icon-button) {
       --ib-icon-bg: #00000022;
       --ib-hover-bg: #00000022;
       --ib-hover-border-color: #00000022;
       --ib-active-bg: #ffffff77;
     }
+
   }
 
   .carousel-dots {
@@ -177,7 +182,7 @@
     padding: var(--content-top-padding) var(--content-right-padding) 10px var(--content-padding);
     margin-bottom: 15px;
 
-    .cards[data-card-style="no-heading"][multiple-slides=true] & {
+    .cards.multiple-slides[data-card-style="no-heading"] & {
       --content-right-padding: 140px;
     }
 
@@ -191,11 +196,13 @@
   }
 
   .fixed-title {
+
     :global(.heading) {
       margin-left: 32px;
       margin-top: 25px;
       position: absolute;
     }
+
   }
 
   @media(max-width: 425px) {

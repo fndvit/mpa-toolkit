@@ -90,26 +90,30 @@
   .menu {
     position: sticky;
     top: 0;
-    flex: 0
+    flex: 0;
 
     +breakpoint(page, medium) {
       margin-top: 5px;
       width: fit-content;
       transform: translateX(-100%);
       transition: transform .5s ease-out;
+      pointer-events: none;
 
       :global(.sticky-menu) {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         width: 220px;
         border-radius: 0px 20px 20px 0px;
       }
 
       .menu-container:hover & {
         transform: translateX(0);
+        pointer-events: all;
+
         .sliding-arrow {
           transform: translateX(-100%);
         }
+
       }
     }
   }
@@ -119,7 +123,7 @@
 
     cursor: pointer;
     position: absolute;
-    z-index: 0;
+    z-index: 1;
     width: 30px;
     left: 100%;
     top: 30px;

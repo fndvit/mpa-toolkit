@@ -27,6 +27,7 @@ module.exports = defineConfig({
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: false }],
+    '@typescript-eslint/triple-slash-reference': 'off',
     'import/no-duplicates': 'error',
     'import/order': 'warn'
   },

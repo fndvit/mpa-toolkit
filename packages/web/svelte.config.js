@@ -1,14 +1,10 @@
 // @ts-check
 import { fileURLToPath } from 'url';
-import adapter from '@mpa/adapter';
+import adapter from '@mpa/stack';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  compilerOptions: {
-    cssHash: ({ hash, css }) => `mpa-${hash(css)}`
-  },
-
   preprocess: preprocess({
     stylus: {
       prependData: `@require 'svelte-global';\n`,
@@ -17,7 +13,10 @@ const config = {
   }),
 
   kit: {
-    adapter: adapter()
+    adapter: adapter(),
+    prerender: {
+      enabled: false
+    }
   }
 };
 

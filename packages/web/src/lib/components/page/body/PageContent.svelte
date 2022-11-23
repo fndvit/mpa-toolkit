@@ -39,7 +39,9 @@
     {#each sections as section, i}
       <Section {section}>
         {#each section.blocks as block}
-          <Block {block} />
+          {#if block.type !== "collapse"}
+            <Block {block} />
+          {/if}
         {/each}
       </Section>
 

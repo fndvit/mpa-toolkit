@@ -10,7 +10,7 @@
   export let cards: LinkCardData[];
   export let title = '';
   export let editable = false;
-  export let controls: SvelteNodeViewControls;
+  export let controls: SvelteNodeViewControls = null;
 
   const MAX_CARDS = 5;
 

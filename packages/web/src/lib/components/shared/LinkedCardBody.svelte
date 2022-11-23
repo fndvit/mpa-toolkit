@@ -3,11 +3,12 @@
   import { createEventDispatcher } from 'svelte';
   import Spinner from '../generic/Spinner.svelte';
   import { EditableText, IconButton } from '$lib/components/generic';
+  import * as api from '$lib/api';
+  import { staticUrl } from '$lib/helpers/content';
 
-  export let card: LinkCardData = {url: '', title: ''};
+  export let card: LinkCardData = {} as LinkCardData;
   export let editable = false;
 
-  let image;
   let loading = false;
   let urlSetted = false;
   let urlElement;
@@ -22,35 +23,27 @@
     deleteCard();
   };
 
-  const getMetaImage = async url => {
-    loading = true;
-    try {
-      const response = await fetch(`/api/util/meta-scraper?url=${url}`);
-      const { res } = await response.json();
-      if(res?.image) image = res.image;
-    }
-    catch (e) {
-      console.error(e);
-    }
-    loading = false;
-  };
-
-  const getMetaTitle = async () => {
+  const getMetaData = async () => {
     urlSetted = true;
     loading = true;
     try {
       const response = await fetch(`/api/util/meta-scraper?url=${card.url}`);
       const { res } = await response.json();
       if(res?.title) card.title = res.title;
+      if(res?.image)
+      {
+        const imgResponse = await fetch(res.image, { method: "GET", headers: { accept: 'application/json'}});
+        const blob = await imgResponse.blob();
+        const file = new File([blob], 'metaImage', {type: blob.type});
+        const path = await api.image.upload(file);
+        card.img = path;
+      }
     }
     catch (e) {
       console.error(e);
     }
     loading = false;
   };
-
-
-  $: if (card?.url && !editable) getMetaImage(card.url);
 
 </script>
 
@@ -64,8 +57,8 @@
           bind:value={card.url}
           {editable}
           placeholder="URL"
-          on:blur={() => getMetaTitle()}
-          on:keypress={({ key }) => {if(key === 'Enter'){ urlElement.blur(); getMetaTitle();}}}
+          on:blur={() => getMetaData()}
+          on:keypress={({ key }) => {if(key === 'Enter'){ urlElement.blur(); getMetaData();}}}
         />
       </div>
       {#if urlSetted}
@@ -91,7 +84,7 @@
     {#if loading}
     <Spinner />
     {:else}
-    <img class="card-img" class:opacity={!image} src={image} alt={card.title}/>
+    <img class="card-img" class:opacity={!card?.img} src={staticUrl(card?.img)} alt={card.title}/>
     {/if}
 
   </a>
@@ -146,7 +139,7 @@
   .card-img {
     width: 83px;
     height: 83px;
-    object-fit: cover;
+    object-fit: scale-down;
     border-radius: 5px;
   }
 

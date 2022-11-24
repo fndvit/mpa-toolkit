@@ -134,6 +134,12 @@ export const formattingPlugin = new FormattingPlugin({
         if (matches[0]?.index === 0 && parent.child(0) === node) matches.shift();
         return matches ? matches.map(m => ({ from: m.index, to: m.index + m[0].length })) : false;
       }
+    },
+    'link-cards-heading': {
+      blocks: ['linkCards'],
+      msg: 'LinkCards heading mandatory',
+
+      check: (node) => node.attrs.title?.length === 0
     }
   }
 });

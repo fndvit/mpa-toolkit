@@ -10,7 +10,7 @@
   export let editable = false;
 
   let loading = false;
-  let urlSetted = false;
+  let showURL = false;
   let urlElement;
 
   const dispatch = createEventDispatcher<{ deleteCard: LinkCardData }>();
@@ -24,86 +24,117 @@
   };
 
   const getMetaData = async () => {
-    urlSetted = true;
-    loading = true;
     try {
+      if (card?.url.trim().length === 0) return;
+      loading = true;
       const response = await fetch(`/api/util/meta-scraper?url=${card.url}`);
       const { res } = await response.json();
-      if(res?.title) card.title = res.title;
-      if(res?.image)
-      {
-        const imgResponse = await fetch(res.image, { method: "GET", headers: { accept: 'application/json'}});
+      if (res?.title) card.title = res.title;
+      if (res?.image) {
+        const imgResponse = await fetch(res.image, { method: 'GET', headers: { accept: 'application/json' } });
         const blob = await imgResponse.blob();
-        const file = new File([blob], 'metaImage', {type: blob.type});
+        const file = new File([blob], 'metaImage', { type: blob.type });
         const path = await api.image.upload(file);
         card.img = path;
-      }
-    }
-    catch (e) {
+      } else card.img = '';
+    } catch (e) {
+      card.img = '';
       console.error(e);
     }
+    showURL = false;
     loading = false;
   };
-
 </script>
 
-{#if editable}
-  <div class="content" >
-    <div class="card-space">
-      <div class="content-input-text">
-        <b>URL: </b>
-        <EditableText
-          bind:this={urlElement}
-          bind:value={card.url}
-          {editable}
-          placeholder="URL"
-          on:blur={() => getMetaData()}
-          on:keypress={({ key }) => {if(key === 'Enter'){ urlElement.blur(); getMetaData();}}}
-        />
+<svelte:element this={editable ? 'div' : 'a'} class="content" href={card?.url} target="_blank" class:on-view={!editable}>
+  <div class="card-space">
+    <div class="left-section">
+      {#if loading}
+        <Spinner />
+      {/if}
+      <EditableText bind:value={card.title} {editable} placeholder={'Title'} />
+    </div>
+    <div class="right-section">
+      <div class="image">
+        {#if loading}
+          <Spinner />
+        {:else if card?.img}
+          <img class:opacity={!card?.img} src={staticUrl(card?.img)} alt={card.title} />
+        {/if}
       </div>
-      {#if urlSetted}
-      <div class="content-input-text">
-        <b>Title: </b>
-        <EditableText
-          bind:value={card.title}
-          {editable}
-          placeholder={loading ? "Getting metadata title..." : "Heading"}
+      {#if editable}
+        <div class="controls">
+          <IconButton icon="delete" on:click={onClickRemoveCard} />
+          <IconButton
+            icon={showURL ? 'visibility_off' : 'add_link'}
+            on:click={() => (showURL ? (showURL = false) : (showURL = true))}
           />
-      </div>
+        </div>
       {/if}
     </div>
-    <IconButton icon="delete" on:click={onClickRemoveCard} />
   </div>
-{:else}
-  <a class="content on-view" href="{card?.url}" target="_blank">
-    <div class="card-space">
-      <div class="content-input-text">
-        <p>{card.title}</p>
-      </div>
+  {#if showURL}
+    <div class="link-space">
+      <b>URL: </b>
+      <input
+        bind:this={urlElement}
+        bind:value={card.url}
+        placeholder="URL"
+        on:blur={() => getMetaData()}
+        on:keypress={({ key }) => {
+          if (key === 'Enter') {
+            urlElement.blur();
+            getMetaData();
+          }
+        }}
+      />
     </div>
-    {#if loading}
-    <Spinner />
-    {:else}
-    <img class="card-img" class:opacity={!card?.img} src={staticUrl(card?.img)} alt={card.title}/>
-    {/if}
-
-  </a>
-{/if}
+  {/if}
+</svelte:element>
 
 <style lang="stylus">
-
   .content {
-    typography: p-graphic;
-    display: flex;
-    flex-direction: row;
-    padding: 1rem 0 0.5rem 1rem;
-    justify-content: space-between;
-    align-items: center;
+    padding: 1rem 0 0.5rem 0;
     border-radius: 20px;
-
-    //remove a tags default styles
+    typography: p-graphic;
     text-decoration: none;
     color: inherit;
+  }
+
+  .card-space{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .image{
+    img{
+      width: 83px;
+      height: 83px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+  }
+  .left-section{
+    :global(.editable-text) {
+      overflow: hidden;
+      word-break: break-word;
+      caret-color: var(--color-primary);
+    }
+  }
+  .right-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .controls{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    column-gap: 10px;
   }
 
   .on-view{
@@ -118,32 +149,5 @@
 
 
     }
-  }
-
-  .content-input-text {
-    display: flex;
-    flex-direction: row;
-    column-gap: 10px;
-    width: inherit;
-    :global(.editable-text) {
-      overflow: hidden;
-      word-break: break-word;
-      caret-color: var(--color-primary);
-    }
-
-    p{
-      word-break: break-word;
-    }
-  }
-
-  .card-img {
-    width: 83px;
-    height: 83px;
-    object-fit: scale-down;
-    border-radius: 5px;
-  }
-
-  .opacity {
-    opacity: 0;
   }
 </style>

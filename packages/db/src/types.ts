@@ -179,7 +179,6 @@ export type HeadingBlock = {
   type: 'heading';
   attrs: {
     level: 1 | 2 | 3 | 4 | 5 | 6;
-    showmore: string;
   };
   content: InlineBlock[];
 };

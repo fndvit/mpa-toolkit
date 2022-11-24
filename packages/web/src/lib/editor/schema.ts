@@ -47,7 +47,7 @@ export const schema = new ProsemirrorSchema({
     },
 
     heading: {
-      attrs: { level: { default: 1 }, showmore: { default: '' } },
+      attrs: { level: { default: 1 } },
       content: 'text*',
       group: 'block',
       defining: true,

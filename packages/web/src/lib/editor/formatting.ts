@@ -101,11 +101,6 @@ export const formattingPlugin = new FormattingPlugin({
         return m ? [{ from: 0, to: m[0].length + 1 }] : false;
       }
     },
-    'heading-readmore': {
-      blocks: ['heading'],
-      msg: 'Main sections need "read more" button text',
-      check: node => (node.attrs.level === 1 && node.attrs.showmore?.length === 0 ? true : false)
-    },
     'custom-bullets': {
       blocks: ['paragraph'],
       msg: 'Use built-in bullet points',

@@ -103,8 +103,8 @@
 
   .fixed-title {
     :global(.heading) {
+      typography: h5-responsive;
       padding: 0.5rem 1rem;
-      typography: h5;
     }
   }
 

@@ -150,4 +150,10 @@
 
     }
   }
+
+  @media (max-width: 768px) {
+    .content {
+      typography: p-graphic-mobile;
+    }
+  }
 </style>

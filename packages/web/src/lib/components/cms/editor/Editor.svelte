@@ -5,7 +5,7 @@
   import type { EditorView } from 'prosemirror-view';
   import { onMount, setContext } from 'svelte';
   import EditorMenu from './toolbar/EditorMenu.svelte';
-  import { DiagramView, CardsView, ImageView, HeadingView, LinkCardsView, ExpandButtonView } from './nodeview';
+  import { DiagramView, CardsView, ImageView, LinkCardsView, ExpandButtonView } from './nodeview';
   import ProsemirrorEditor from './ProsemirrorEditor.svelte';
   import { schema } from '$lib/editor/schema';
   import { plugins } from '$lib/editor/plugins';
@@ -25,7 +25,6 @@
           linkCards: LinkCardsView,
           cards: CardsView,
           image: ImageView,
-          heading: HeadingView,
           diagram: DiagramView,
           collapse: ExpandButtonView
         }

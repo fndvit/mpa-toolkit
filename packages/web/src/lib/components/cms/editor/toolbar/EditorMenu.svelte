@@ -11,7 +11,8 @@
   import HeadingBlockButton from './HeadingBlockButton.svelte';
   import { IconButton } from '$lib/components/generic';
   import { schema } from '$lib/editor/schema';
-  import { createEmptyCard, createEmptyLinkCard, createEmptyDiagram, createEmptyCollapse } from '$lib/helpers/content';
+  import { createEmptyCard, createEmptyLinkCard, createEmptyDiagram } from '$lib/helpers/content';
+  import AddCollapseButton from './AddCollapseButton.svelte';
 
   export let editorState: EditorState;
 
@@ -36,11 +37,6 @@
     const tr = editorState.tr.insertText('*TODO: *');
     view.dispatch(tr);
   };
-
-  const insertCollapse = () => {
-    const tr = editorState.tr.replaceSelectionWith(schema.nodes.collapse.createAndFill(createEmptyCollapse()));
-    view.dispatch(tr);
-  };
 </script>
 
 <div class="menu-bar">
@@ -61,7 +57,7 @@
     <MenuSeperator />
     <IconButton on:click={insertReminder} icon="notifications" title="Add reminder" />
     <MenuSeperator />
-    <IconButton icon="settings" on:click={insertCollapse} title="Add collapse section" />
+    <AddCollapseButton {editorState} />
   </div>
 
   <div class="right-section">

@@ -1,32 +1,33 @@
 <script lang="ts">
-  import type { Section } from '@mpa/db';
+  import type { Section, CollapseBlock } from '@mpa/db';
   import ExpandButton from './ExpandButton.svelte';
   export let section: Section;
 
   let expanded = false;
 
-  const index = section.blocks.findIndex((_, i) => i > 0 && section.blocks[i].type === 'collapse');
-  let showmore = index !== -1 ? section.blocks[index]?.attrs?.showmore : '';
-  const hideFrom = index !== -1 ? index + 1 : null;
+  const totalBlocks = section.blocks.length - 1;
+  const index = section.blocks.findIndex((_, i) => (i > 0 && i < totalBlocks && section.blocks[i].type === 'collapse'));
+  let showmore = index !== -1 ? (section.blocks[index] as CollapseBlock).attrs.showmore : '';
 
 </script>
 
 <section
+  class:collapsed={!expanded}
   class="content-section"
   id={section.id}
-  class:collapsed={hideFrom != null && !expanded}
-  data-hidefrom={hideFrom}
 >
   <slot />
-  {#if hideFrom != null}
-    <ExpandButton content={showmore} {expanded} on:click={() => (expanded = !expanded)} />
+  {#if index !== -1}
+    <div class="expand-button-collapsed">
+      <ExpandButton content={showmore} {expanded} on:click={() => (expanded = !expanded)} />
+    </div>
   {/if}
 </section>
 
 <style lang="stylus">
 
-  for i in 1..10
-    .collapsed[data-hidefrom=\"{i}\"] > :global(:nth-child(n+{i}):not(.expand-button))
-      display: none;
+  .collapsed > :global(.collapse-point ~ *:not(.expand-button-collapsed)) {
+    display: none;
+  }
 
 </style>

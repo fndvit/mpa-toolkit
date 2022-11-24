@@ -5,7 +5,7 @@
   import { IconButton } from '$lib/components/generic';
 
   export let content: string;
-  export let controls: SvelteNodeViewControls;
+  export let controls: SvelteNodeViewControls = undefined;
 </script>
 
 <ExpandButtonBase expanded={false} on:click>

@@ -3,22 +3,33 @@
 
   export let content: string;
   export let expanded: boolean;
+  export let collapsePoint: boolean = undefined;
+
 </script>
 
-<ExpandButtonBase {expanded} on:click>
-  {#if !expanded}
-    {#if content}
-      {@html content}
+<!-- Render a hidden element to be able to know the original position of the ExpandButton -->
+{#if collapsePoint}
+  <div class="collapse-point"/>
+{:else}
+  <ExpandButtonBase {expanded} on:click>
+    {#if !expanded}
+      {#if content}
+        {@html content}
+      {:else}
+        <p><span class="unlabeled">Show more on this topic</span></p>
+      {/if}
     {:else}
-      <p><span class="unlabeled">Show more on this topic</span></p>
+      Read less
     {/if}
-  {:else}
-    Read less
-  {/if}
-</ExpandButtonBase>
+  </ExpandButtonBase>
+{/if}
 
 <style lang="stylus">
   .unlabeled {
     color: #bbb;
+  }
+
+  .collapse-point {
+    display: none;
   }
 </style>

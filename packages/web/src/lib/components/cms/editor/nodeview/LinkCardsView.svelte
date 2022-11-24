@@ -13,7 +13,7 @@
 </div>
 
 <style lang="stylus">
-  :global(.svelte-node-view--cards.ProseMirror-selectednode .cards) {
+  :global(.svelte-node-view--link-cards.ProseMirror-selectednode .link-cards) {
     filter: brightness(98%);
     box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.20);
     outline: 1px solid #33333333;

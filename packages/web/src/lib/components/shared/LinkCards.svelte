@@ -28,7 +28,7 @@
   };
 </script>
 
-<div class="cards">
+<div class="link-cards">
   <div class="fixed-title">
     <CardHeading bind:text={title} {editable} />
   </div>
@@ -58,7 +58,7 @@
     --caret-color: $textColor;
     --dot-color: $textColor;
     color: $textColor;
-  .cards {
+  .link-cards {
     padding: 1rem 0.5rem;
     background-color: $colors.neutral-bg;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
@@ -67,7 +67,7 @@
   .card {
     height: 100%;
 
-    margin-right: 1rem;
+    margin: 0 1rem 0 1rem;
     .image {
       height: 156px;
       background-color: green;

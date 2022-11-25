@@ -1,8 +1,14 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "outDir": "./dist",
-    "strict": true
+    "strict": true,
+    "typeRoots": [
+      "../../node_modules/@types",
+      "../../typings",
+      "./src/types"
+    ],
   },
   "include": ["src/**/*.ts"]
 }

@@ -3,24 +3,28 @@
   "version": "1.0.0",
   "main": "./migration-runner.ts",
   "scripts": {
-    "prepack": "tsup",
     "clean": "rimraf ./dist",
-    "build": "tsup && pnpm build:prepare && pnpm build:install && pnpm build:generate",
-    "build:prepare": "echo '{}' > ./dist/package.json && cp -R ../db/prisma ./dist/",
-    "build:install": "PRISMA_CLI_BINARY_TARGETS='rhel-openssl-1.0.x' npm install --prefix ./dist prisma@4.2.1",
-    "build:generate": "(cd ./dist && npm exec prisma generate)"
+    "build": "esno ./build.ts"
   },
   "devDependencies": {
-    "aws-lambda": "^1.0.7",
-    "prisma": "^4.2.1"
-  },
-  "dependencies": {
     "@mpa/db": "workspace:*",
     "@mpa/env": "workspace:*",
-    "@mpa/log": "workspace:*"
+    "@mpa/log": "workspace:*",
+    "@mpa/utils": "workspace:^1.0.0",
+    "@types/shelljs": "^0.8.11",
+    "aws-lambda": "^1.0.7",
+    "esno": "^0.16.3",
+    "fs-extra": "^10.1.0",
+    "listr2": "^5.0.5",
+    "shelljs": "^0.8.5",
+    "tsup": "^6.4.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.6.1",
+    "pino": "^8.4.1",
+    "prisma": "^4.6.1"
   },
   "files": [
-    "dist",
     "package.json"
   ],
   "tsup": {
@@ -30,15 +34,14 @@
     "noExternal": [
       "@mpa/db",
       "@mpa/env",
-      "@mpa/log",
-      "@mpa/utils"
+      "@mpa/log"
     ],
     "external": [
-      "prisma",
       "@prisma/client",
-      ".prisma/client"
+      "pino",
+      ".prisma",
+      "prisma"
     ],
-    "splitting": false,
-    "clean": true
+    "splitting": false
   }
 }

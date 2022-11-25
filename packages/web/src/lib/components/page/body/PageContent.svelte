@@ -8,7 +8,6 @@
   import { createSections, getSectionSize } from '$lib/helpers/content';
 
   export let page: Page;
-  export let recommendedPages: Page.ContentCard[] = null;
 
   const sections = createSections(page.content);
 
@@ -48,13 +47,16 @@
           <div class="madlib-container">
             <ContentMadLib />
           </div>
-        {:else if i === 2 && recommendedPages?.length > 0}
+        {:else if i === 2}
           <div class="content-carousel-container">
-            <ContentCarousel slides={recommendedPages} title={'You may also like'} />
+            <ContentCarousel title={'You may also like'} recommendationType={page.chapter ? 'chapter' : 'case-study'}/>
           </div>
         {/if}
       {/if}
     {/each}
+    <div class="content-carousel-container">
+      <ContentCarousel title={'What to read next'} referencePage={page} recommendationType={page.chapter ? 'chapter' : 'case-study'}/>
+    </div>
   </div>
 </div>
 
@@ -90,26 +92,30 @@
   .menu {
     position: sticky;
     top: 0;
-    flex: 0
+    flex: 0;
 
     +breakpoint(page, medium) {
       margin-top: 5px;
       width: fit-content;
       transform: translateX(-100%);
       transition: transform .5s ease-out;
+      pointer-events: none;
 
       :global(.sticky-menu) {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         width: 220px;
         border-radius: 0px 20px 20px 0px;
       }
 
       .menu-container:hover & {
         transform: translateX(0);
+        pointer-events: all;
+
         .sliding-arrow {
           transform: translateX(-100%);
         }
+
       }
     }
   }
@@ -119,7 +125,7 @@
 
     cursor: pointer;
     position: absolute;
-    z-index: 0;
+    z-index: 1;
     width: 30px;
     left: 100%;
     top: 30px;

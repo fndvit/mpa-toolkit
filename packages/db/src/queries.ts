@@ -91,7 +91,6 @@ export const pageForContentCard = validate<Prisma.PageSelect>()({
   id: true,
   tags: {
     ...pageTag,
-    where: { tag: { type: TagType.TOPIC } }
   },
   title: true,
   img: true,

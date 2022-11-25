@@ -1,6 +1,7 @@
 import { logger } from '@mpa/log';
 import { Prisma, PrismaClient } from '@prisma/client';
 import expand from 'brace-expansion';
+import AWSXRay from 'aws-xray-sdk-core';
 import { env } from './env';
 import { authorMixin } from './mixins/author';
 import { homepageMixin } from './mixins/homepage';
@@ -10,6 +11,8 @@ import { tagMixin } from './mixins/tag';
 import { userMixin } from './mixins/user';
 
 const log = logger('DB');
+
+const xrayLog = AWSXRay.getLogger();
 
 export const PrismaClientKnownRequestError = Prisma.PrismaClientKnownRequestError;
 
@@ -22,15 +25,14 @@ export class MpaDatabase {
   session = sessionMixin(this);
   homepage = homepageMixin(this);
 
-  constructor(url: string) {
-    const LOG_DB_QUERIES = env.LOG_DB_QUERIES === 'true';
-    const QUERY_LOGGING = LOG_DB_QUERIES ? ([{ emit: 'event', level: 'query' }] as const) : [];
+  constructor() {
     const prisma = new PrismaClient({
-      datasources: { db: { url } },
-      log: [...QUERY_LOGGING, 'info', 'warn', 'error']
+      log: [{ emit: 'event', level: 'query' }, 'info', 'warn', 'error']
     });
 
-    if (LOG_DB_QUERIES) {
+    prisma.$on('query', e => xrayLog.debug(e));
+
+    if (env.LOG_DB_QUERIES === 'true') {
       prisma.$on('query', e => log.debug(e.query));
     }
 

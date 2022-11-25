@@ -34,7 +34,6 @@ const REQUIRED_ROLES: { [routeId: string]: Role | null } = {
   'api/tags/create': 'CONTENT_MANAGER',
   'api/users/[id]': 'ADMIN',
   'api/dump': 'ADMIN',
-
   'api/util/meta-scraper': null,
 };
 

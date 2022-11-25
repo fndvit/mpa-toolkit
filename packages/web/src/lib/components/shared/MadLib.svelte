@@ -2,45 +2,59 @@
   import { slugify } from '@mpa/utils';
   import MadLibSelector from './MadLibSelector.svelte';
 
-  const tagValue = {
-    'an MPA planner': 'MPA planners',
-    'an MPA manager': 'MPA managers',
-    'a community organizer': 'Community organizers',
-    'an LMMA practitioner': 'LMMA practitioners',
-    answers: 'Identifying solutions',
-    examples: 'Exploring examples',
-    'case studies': 'Comparing case studies',
-    tools: 'Discovering tools',
-    enable: 'Enabling decision-making',
-    evaluate: 'Evaluating progress',
-    'I need to make': 'Manager decision-making',
-    'my team will make': 'Team decision-making',
-    'my government needs to make': 'Government decision-making'
-  };
+  const TAG_VALUES = {
+    // I am a
+    'MPA planner': 'MPA planner',
+    'MPA manager': 'MPA managers',
+    'community advocate': 'Community advocates',
+    'community practitioner': 'Community practitioners',
 
-  export function buildTagSlug(value: string[]) {
-    return value
-      .map(v => tagValue[v])
-      .map(str => slugify(str))
-      .join('+');
-  }
+    // and am using MPAth to
+    'restore areas': 'Restoring areas',
+    'reduce user conflict': 'Reducing user conflicts',
+    'meet targets': 'Meeting targets',
+    'promote ecotourism': 'Promoting ecotourism',
+    "(I don't know)": "I don't know",
+
+    // and I need help to
+    'plan new MPAs': 'Planning new MPAs',
+    'evaluate progress': 'Evaluating progress',
+    'enable decision-making': 'Enable decision-making',
+
+    // by
+    government: 'Government',
+    communities: 'Communities',
+    'private sector': 'Private sector',
+    'civil society': 'Civil society'
+  };
 </script>
 
 <script lang="ts">
-  const typeUserList = ['an MPA planner', 'an MPA manager', 'a community organizer', 'an LMMA practitioner'];
-  const objectiveList = ['answers', 'examples', 'case studies', 'tools'];
-  const objectiveVerbList = ['enable', 'evaluate'];
-  const actionSubjectList = ['I need to make', 'my team will make', 'my government needs to make'];
+  const typeUserList = ['MPA planner', 'MPA manager', 'community advocate', 'community practitioner'];
+  const objectiveList = [
+    'restore areas',
+    'reduce user conflict',
+    'meet targets',
+    'promote ecotorurism',
+    "(I don't know)"
+  ];
+  const objectiveVerbList = ['plan new MPAs', 'evaluate progress', 'eneble decision-making'];
+  const actionSubjectList = ['government', 'communities', 'private sector', 'civil society'];
 
   export let value: string[] = [null, null, null, null];
+  export let slug = '';
+  export let tags: string[] = [];
+
+  $: tags = value.map(v => TAG_VALUES[v]);
+  $: slug = tags.map(t => slugify(t)).join('+');
 </script>
 
 <p class="madlib">
-  I am <MadLibSelector options={typeUserList} bind:selected={value[0]} /> and want help finding <MadLibSelector
+  I am a <MadLibSelector options={typeUserList} bind:selected={value[0]} /> and am using MPAth to <MadLibSelector
     options={objectiveList}
     bind:selected={value[1]}
-  /> to
-  <MadLibSelector options={objectiveVerbList} bind:selected={value[2]} /> decisions
+  /> and i need help to
+  <MadLibSelector options={objectiveVerbList} bind:selected={value[2]} /> by
   <MadLibSelector options={actionSubjectList} bind:selected={value[3]} />
 </p>
 

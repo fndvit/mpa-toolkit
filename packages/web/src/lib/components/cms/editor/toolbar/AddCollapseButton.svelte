@@ -18,7 +18,7 @@
       dir: 'both',
       predicate: node => {
         if (node.type.name === 'collapse') return true;
-        if (node.type.name === 'heading') return null; // break the search
+        if (node.type.name === 'heading' && node.attrs.level === 1) return null; // break the search
       }
     });
   };

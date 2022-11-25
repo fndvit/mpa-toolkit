@@ -5,15 +5,9 @@
   import { EditableText, IconButton } from '$lib/components/generic';
   import * as api from '$lib/api';
   import { staticUrl } from '$lib/helpers/content';
-  import CropModal from '../cms/CropModal.svelte';
 
   export let card: LinkCardData = {} as LinkCardData;
   export let editable = false;
-
-  const cropData = {
-    width: 83,
-    height: 83
-  } as Cropper.Data;
 
   let loading = false;
   let showURL = false;
@@ -32,11 +26,11 @@
   const getMetaData = async () => {
     try {
       if (card?.url.trim().length === 0) return;
-      loading = true;
-      const response = await api.metadata.get(card.url, cropData);
-      const { title, image } = await response;
 
-      console.log(response);
+      loading = true;
+
+      const { title, image } = await api.metadata.get(card.url);
+
       if (title) card.title = title;
       if (image) {
         card.img = image;
@@ -56,7 +50,6 @@
   href={card?.url}
   target="_blank"
   class:on-view={!editable}
-  style="--img-width: {cropData.width}px; --img-height: {cropData.height}px;"
 >
   <div class="card-space">
     <div class="left-section">
@@ -130,8 +123,8 @@
 
   .image{
     img{
-      width: var(--img-width);
-      height: var(--img-height);
+      width: 83px;
+      height: 83px;
       object-fit: cover;
       border-radius: 5px;
     }

@@ -1,8 +1,10 @@
 import { json } from '@sveltejs/kit';
 import getMedata from 'metadata-scraper';
 import sharp from 'sharp';
+import sizeOf from 'buffer-image-size';
 import type { RequestHandler } from './$types';
 import { uploadImage } from '$lib/s3';
+
 
 const blobToFile = (theBlob: Blob, fileName:string) => {
   const b: any= theBlob as File;
@@ -16,16 +18,20 @@ const blobToFile = (theBlob: Blob, fileName:string) => {
 export const GET: RequestHandler = async ({ request }) => {
   const urlParams = new URLSearchParams(request?.url?.split('?').slice(1).join('?'));
   const metaURL = urlParams.get('url') as string;
-  const cropData = JSON.parse(urlParams.get('cropData') as string) as Cropper.Data;
 
   const metadata = await getMedata(metaURL);
   const imgResponse = await fetch(metadata.image, { method: 'GET', headers: { accept: 'application/json' } });
 
+  let imgBuffer = Buffer.from(await imgResponse.arrayBuffer());
 
-  const resBuffer = Buffer.from(await imgResponse.arrayBuffer());
-  const cropped = await sharp(resBuffer).resize(cropData.width, cropData.height, { fit: "cover" }).toFormat('png').toBuffer();
-  const croppedFile = blobToFile(new Blob([cropped]), `${encodeURI(metadata?.title)}-cropped.png`);
+  const imgSize = sizeOf(imgBuffer);
 
+  if(imgSize.width > 400){
+    imgBuffer = await sharp(imgBuffer).resize(400, (400 / imgSize.width) * imgSize.height).toBuffer();
+  }
+  imgBuffer = await sharp(imgBuffer).jpeg({ quality: 95 }).toBuffer();
+
+  const croppedFile = blobToFile(new Blob([imgBuffer]), `${encodeURI(metadata?.title)}-cropped.png`);
   const path = await uploadImage(croppedFile as File);
 
   return json({

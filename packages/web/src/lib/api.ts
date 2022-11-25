@@ -6,7 +6,7 @@ import type { GoogleAuthReturnData } from '../routes/api/auth/google/+server';
 const ky = _ky.create({ prefixUrl: '/api', headers: { Accept: 'application/json' } });
 
 export const metadata = {
-  get: async (url: string, cropData: Cropper.Data) => _get(`util/meta-scraper?url=${url}&cropData=${JSON.stringify(cropData)}`),
+  get: async (url: string) => await _get(`util/meta-scraper?url=${url}`) as {title: string, image: string},
 };
 
 export const image = {

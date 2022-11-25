@@ -5,9 +5,15 @@
   import { EditableText, IconButton } from '$lib/components/generic';
   import * as api from '$lib/api';
   import { staticUrl } from '$lib/helpers/content';
+  import CropModal from '../cms/CropModal.svelte';
 
   export let card: LinkCardData = {} as LinkCardData;
   export let editable = false;
+
+  const cropData = {
+    width: 83,
+    height: 83
+  } as Cropper.Data;
 
   let loading = false;
   let showURL = false;
@@ -27,15 +33,13 @@
     try {
       if (card?.url.trim().length === 0) return;
       loading = true;
-      const response = await fetch(`/api/util/meta-scraper?url=${card.url}`);
-      const { res } = await response.json();
-      if (res?.title) card.title = res.title;
-      if (res?.image) {
-        const imgResponse = await fetch(res.image, { method: 'GET', headers: { accept: 'application/json' } });
-        const blob = await imgResponse.blob();
-        const file = new File([blob], 'metaImage', { type: blob.type });
-        const path = await api.image.upload(file);
-        card.img = path;
+      const response = await api.metadata.get(card.url, cropData);
+      const { title, image } = await response;
+
+      console.log(response);
+      if (title) card.title = title;
+      if (image) {
+        card.img = image;
       } else card.img = '';
     } catch (e) {
       card.img = '';
@@ -46,13 +50,21 @@
   };
 </script>
 
-<svelte:element this={editable ? 'div' : 'a'} class="content" href={card?.url} target="_blank" class:on-view={!editable}>
+<svelte:element
+  this={editable ? 'div' : 'a'}
+  class="content"
+  href={card?.url}
+  target="_blank"
+  class:on-view={!editable}
+  style="--img-width: {cropData.width}px; --img-height: {cropData.height}px;"
+>
   <div class="card-space">
     <div class="left-section">
       {#if loading}
         <Spinner />
+      {:else}
+        <EditableText bind:value={card.title} {editable} placeholder={'Title'} />
       {/if}
-      <EditableText bind:value={card.title} {editable} placeholder={'Title'} />
     </div>
     <div class="right-section">
       <div class="image">
@@ -65,10 +77,9 @@
       {#if editable}
         <div class="controls">
           <IconButton icon="delete" on:click={onClickRemoveCard} />
-          <IconButton
-            icon={showURL ? 'visibility_off' : 'add_link'}
-            on:click={() => (showURL ? (showURL = false) : (showURL = true))}
-          />
+          {#if !showURL}
+            <IconButton icon={'add_link'} on:click={() => (showURL ? (showURL = false) : (showURL = true))} />
+          {/if}
         </div>
       {/if}
     </div>
@@ -88,11 +99,13 @@
           }
         }}
       />
+      <IconButton icon={'done'} on:click={() => (showURL ? (showURL = false) : (showURL = true))} />
     </div>
   {/if}
 </svelte:element>
 
 <style lang="stylus">
+
   .content {
     padding: 1rem 0 0.5rem 0;
     border-radius: 20px;
@@ -108,10 +121,17 @@
     align-items: center;
   }
 
+  .link-space{
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+
+  }
+
   .image{
     img{
-      width: 83px;
-      height: 83px;
+      width: var(--img-width);
+      height: var(--img-height);
       object-fit: cover;
       border-radius: 5px;
     }
@@ -142,12 +162,6 @@
     align-items: flex-start;
     &:hover {
       font-weight: bold;
-      img {
-        transform: scale(1.1);
-        transition: all 0.5s ease;
-      }
-
-
     }
   }
 

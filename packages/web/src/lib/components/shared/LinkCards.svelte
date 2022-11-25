@@ -51,7 +51,12 @@
 </div>
 
 <style lang="stylus">
-
+  :global(.icon-button) {
+      --ib-icon-bg: #00000022;
+      --ib-hover-bg: #00000022;
+      --ib-hover-border-color: #00000022;
+      --ib-active-bg: #ffffff77;
+    }
   card-styles($cardColor)
     $textColor = dark($cardColor) ? white : black;
     --card-color: $cardColor;
@@ -66,12 +71,7 @@
   }
   .card {
     height: 100%;
-
     margin: 0 1rem 0 1rem;
-    .image {
-      height: 156px;
-      background-color: green;
-    }
   }
 
   ul {
@@ -92,13 +92,6 @@
     padding: 10px;
     align-items: center;
     column-gap: 1rem;
-
-    :global(.icon-button) {
-      --ib-icon-bg: #00000022;
-      --ib-hover-bg: #00000022;
-      --ib-hover-border-color: #00000022;
-      --ib-active-bg: #ffffff77;
-    }
   }
 
   .fixed-title {

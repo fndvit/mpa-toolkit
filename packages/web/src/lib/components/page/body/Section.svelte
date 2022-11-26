@@ -6,9 +6,7 @@
 
   let expanded = false;
 
-  const totalBlocks = section.blocks.length - 1;
-  const index = section.blocks.findIndex((_, i) => i > 0 && i < totalBlocks && section.blocks[i].type === 'collapse');
-  let showmore = index !== -1 ? (section.blocks[index] as CollapseBlock).attrs.showmore : '';
+  const collapseBlock = section.blocks.find(block => block.type === 'collapse') as CollapseBlock;
 
   const onClickExpand = async (e: Event) => {
     const buttonEl = e.currentTarget as HTMLButtonElement;
@@ -23,9 +21,9 @@
 
 <section class:collapsed={!expanded} class="content-section" id={section.id}>
   <slot />
-  {#if index !== -1}
+  {#if collapseBlock}
     <div class="expand-button-collapsed">
-      <ExpandButton content={showmore} {expanded} on:click={onClickExpand} />
+      <ExpandButton content={collapseBlock.attrs.showmore} {expanded} on:click={onClickExpand} />
     </div>
   {/if}
 </section>

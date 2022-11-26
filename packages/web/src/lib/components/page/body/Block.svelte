@@ -8,7 +8,7 @@
   import OrderedList from './OrderedList.svelte';
   import DiagramComponent from './DiagramComponent.svelte';
   import LinkSlider from './LinkSlider.svelte';
-  import ExpandButtonComponent from './ExpandButtonComponent.svelte';
+  import CollapsePointBlock from './CollapsePointBlock.svelte';
 
   export let block: ContentBlock;
 
@@ -21,7 +21,7 @@
     bullet_list: BulletList,
     ordered_list: OrderedList,
     diagram: DiagramComponent,
-    collapse: ExpandButtonComponent
+    collapse: CollapsePointBlock
   };
 </script>
 

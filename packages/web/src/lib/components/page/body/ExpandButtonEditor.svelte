@@ -1,7 +1,7 @@
 <script lang="ts">
+  import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import ExpandButtonBase from './ExpandButtonBase.svelte';
   import MiniProsemirrorEditor from '$lib/components/cms/editor/MiniProsemirrorEditor.svelte';
-  import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import { IconButton } from '$lib/components/generic';
 
   export let content: string;

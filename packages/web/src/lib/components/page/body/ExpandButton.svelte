@@ -3,32 +3,22 @@
 
   export let content: string;
   export let expanded: boolean;
-  export let collapsePoint: boolean = undefined;
 </script>
 
-<!-- Render a hidden element to be able to know the original position of the ExpandButton -->
-{#if collapsePoint}
-  <div class="collapse-point" />
-{:else}
-  <ExpandButtonBase {expanded} on:click>
-    {#if !expanded}
-      {#if content}
-        {@html content}
-      {:else}
-        <p><span class="unlabeled">Show more on this topic</span></p>
-      {/if}
+<ExpandButtonBase {expanded} on:click>
+  {#if !expanded}
+    {#if content}
+      {@html content}
     {:else}
-      Read less
+      <p><span class="unlabeled">Show more on this topic</span></p>
     {/if}
-  </ExpandButtonBase>
-{/if}
+  {:else}
+    Read less
+  {/if}
+</ExpandButtonBase>
 
 <style lang="postcss">
   .unlabeled {
     color: #bbb;
-  }
-
-  .collapse-point {
-    display: none;
   }
 </style>

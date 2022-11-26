@@ -74,11 +74,13 @@
     list-style: none;
     padding: 0;
   }
+
   li {
     border: 2px dotted transparent;
     transition: border 0.1s linear;
   }
+
   .over {
-    border-color: rgba(48, 12, 200, 0.2);
+    border-color: rgb(48 12 200 / 20%);
   }
 </style>

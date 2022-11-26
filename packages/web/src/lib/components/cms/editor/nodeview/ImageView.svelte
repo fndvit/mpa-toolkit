@@ -24,16 +24,16 @@
   <img use:fallbackImage={imagePlaceholder} src={staticUrl(attrs.src)} alt={attrs.alt} title={attrs.title} />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   :global(.svelte-node-view.ProseMirror-selectednode) .imageview {
-    outline: 1px solid #333333aa;
+    outline: 1px solid #333a;
   }
 
   .imageview {
     font-size: 0;
     position: relative;
-    &.selected:before {
+
+    &.selected::before {
       content: '';
       position: absolute;
       top: 0;
@@ -52,10 +52,10 @@
   }
 
   .image-controls {
-    --ib-icon-bg: #ffffff77;
-    --ib-hover-icon-bg: #ffffffcc;
+    --ib-icon-bg: #fff7;
+    --ib-hover-icon-bg: #fffc;
 
-    .imageview-full & :global([data-id="aspect_ratio"]) {
+    .imageview-full & :global([data-id='aspect_ratio']) {
       --ib-active-bg: white;
     }
 
@@ -67,11 +67,14 @@
     width: 100%;
     box-sizing: border-box;
     justify-content: center;
+
     .imageview:not(:hover) & {
       display: none;
     }
+
     display: flex;
     column-gap: 5px;
+
     input {
       flex: 1;
     }
@@ -80,5 +83,4 @@
   img {
     width: 100%;
   }
-
 </style>

@@ -17,7 +17,7 @@
 
 <div
   class="splash"
-  style="background-image: url({staticUrl(page.img) || fallbackImg});"
+  style={`background-image: url(${staticUrl(page.img) || fallbackImg}) ;`}
   use:fallbackBackgroundImage={fallbackImg}
   class:splash-cs={page.caseStudy}
 >
@@ -33,28 +33,33 @@
   </h1>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .splash {
     position: relative;
-    grid-config(page, splash);
+
+    @mixin grid-config content, splash;
+
     grid-template-rows: 1fr auto;
 
-    --ec-hover-bg: #ffffff22;
-    --ui-color-placeholder: #ffffff55;
+    --ec-hover-bg: #fff2;
+    --ui-color-placeholder: #fff5;
+
     min-height: 60vh;
     padding-bottom: 3rem;
     background-size: cover;
     background-position: center center;
 
     h1 {
+      @mixin font-responsive h1;
+
       grid-area: title;
-      typography: h1-responsive;
       color: white;
-      text-shadow: 0px 2px 12px rgba(0, 0, 0, 0.45);
+      text-shadow: 0 2px 12px rgb(0 0 0 / 45%);
+
       > :global(*) {
         display: inline;
       }
+
       > :global(*:empty) {
         display: inline-block;
       }
@@ -63,7 +68,6 @@
     &.splash-cs h1 > :global(*:first-child) {
       font-weight: 700;
     }
-
   }
 
   .mpath-logo {
@@ -73,23 +77,20 @@
     color: white;
   }
 
-  +breakpoint(page, medium)
+  @mixin breakpoint content, medium {
     .splash {
       h1 {
-        margin-bottom: 0px;
+        margin-bottom: 0;
       }
-
 
       &.splash-cs h1 {
         padding-bottom: 5rem;
       }
     }
-  +breakpoint(page, small)
-      h1 {
-        margin-top: 283px;
-      }
-
-
-
-
+  }
+  @mixin breakpoint content, small {
+    h1 {
+      margin-top: 283px;
+    }
+  }
 </style>

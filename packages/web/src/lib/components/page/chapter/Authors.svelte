@@ -40,7 +40,7 @@
   </div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .author-images {
     height: 66px;
     margin-right: 15px;
@@ -49,7 +49,7 @@
   }
 
   .author-names {
-    typography: h5;
+    font: $f-h5;
     display: inline;
     align-items: center;
     column-gap: 5px;
@@ -65,5 +65,4 @@
       color: #333;
     }
   }
-
 </style>

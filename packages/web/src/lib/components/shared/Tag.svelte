@@ -38,7 +38,7 @@
   {/if}
 </svelte:element>
 
-<style lang="stylus">
+<style lang="postcss">
   .tag {
     cursor: pointer;
     display: inline-block;
@@ -53,21 +53,23 @@
     white-space: nowrap;
     height: fit-content;
     width: fit-content;
-    background: $colors.highlight-1;
+    background: $c-highlight-1;
+
     &.secondary {
-      background: alpha($colors.highlight-1, 0.4);
+      background: color($c-highlight-1 alpha(40%));
     }
 
     :global(.collection-card) &,
     :global(.content-carousel-card) & {
-      background: $colors.tag-bg-cards;
+      background: $c-tag-bg-cards;
+
       &.secondary {
-        background: alpha($colors.tag-bg-cards, 0.4);
+        background: color($c-tag-bg-cards alpha(0.4));
       }
     }
 
     span:first-child {
-      typography: ui-small;
+      font: $f-ui-small;
       position: relative;
     }
 
@@ -76,6 +78,7 @@
       vertical-align: middle;
     }
   }
+
   .tag:hover {
     text-decoration: none;
     filter: brightness(105%);

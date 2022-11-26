@@ -58,8 +58,7 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .menu-bar {
     --ib-icon-bg: transparent;
     --ib-hover-border: 1px solid #ddd;
@@ -70,11 +69,11 @@
     position: sticky;
     display: flex;
     top: 0;
-    z-index: editor-menubar;
+    z-index: $z-editor-menubar;
     width: 100%;
     padding: 0.5rem;
     border-bottom: 1px solid #ccc;
-    background: $colors.neutral-bg;
+    background: $c-neutral-bg;
     box-sizing: border-box;
   }
 

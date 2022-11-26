@@ -58,26 +58,25 @@
   {/if}
 </span>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .madlib-selector {
     display: inline-block;
     border-radius: 20px;
     line-height: 100%;
-    box-shadow: var(--madlib-selector-box-shadow, 0px 1px 8px 0px rgba(0, 0, 0, 0.2));
+    box-shadow: var(--madlib-selector-box-shadow, 0 1px 8px 0 rgb(0 0 0 / 20%));
   }
 
   .option {
     display: block;
     border: none;
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.5rem;
     cursor: pointer;
     border-radius: 10px;
     position: relative;
 
     &.selected,
     &:hover {
-      box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 1px 8px 0 rgb(0 0 0 / 20%);
       background-color: inherit;
     }
 
@@ -85,43 +84,40 @@
       position: relative;
       z-index: 1;
     }
-
   }
 
   .selector-area {
     border: none;
-    padding: 0.25rem 0.7rem 0.25rem 0.7rem;
+    padding: 0.25rem 0.7rem;
     border-radius: inherit;
     cursor: pointer;
     background-blend-mode: soft-light;
-    background: rgba(249, 249, 249, 0.08);
+    background: rgb(249 249 249 / 8%);
     color: inherit;
 
     &:focus {
       outline: 0.1rem solid;
     }
-
   }
 
   .listbox {
     margin-top: 0.5rem;
     position: absolute;
     display: block;
-    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2);
-    padding: 0.35rem 0.7rem 0.35rem 0.7rem;
+    box-shadow: 0 1px 8px 0 rgb(0 0 0 / 20%);
+    padding: 0.35rem 0.7rem;
     border-radius: 20px;
-    background-color: $colors.neutral-bg;
+    background-color: $c-neutral-bg;
     color: black;
     border: none;
-    z-index: tooltip;
+    z-index: $z-tooltip;
   }
 
   .arrow {
     transform: translateY(-0.1rem);
     width: 0.6em;
     fill: none;
-    stroke: currentColor;
+    stroke: currentcolor;
     stroke-width: 1.5;
   }
-
 </style>

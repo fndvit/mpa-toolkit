@@ -15,7 +15,7 @@
   {/each}
 </ul>
 
-<style lang="stylus">
+<style lang="postcss">
   .collection-cards {
     padding: 0;
     margin: 0;

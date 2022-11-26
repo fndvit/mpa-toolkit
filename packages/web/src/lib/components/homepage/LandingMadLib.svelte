@@ -11,7 +11,12 @@
   $: action = slug ? `/recommended/${slug}/` : null;
 </script>
 
-<div class="landing-madlib" style="--background-image: url({landingMadlibBg})">
+<div
+  class="landing-madlib"
+  style="
+
+--background-image: url({landingMadlibBg})"
+>
   <h2>Find information <b>relevant to you</b>.</h2>
 
   <MadLib bind:tags bind:slug />
@@ -26,15 +31,13 @@
   </form>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .landing-madlib {
     color: white;
-    padding-bottom: 0.5rem;
     width: auto;
     margin-top: 35px;
     padding: 0.5rem var(--page-padding) 5rem;
-    background: $colors.primary-blue;
+    background: $c-primary-blue;
     height: 600px;
     background-size: cover;
     background-position: bottom;
@@ -51,40 +54,36 @@
     }
 
     h2 {
-      typography: h2-responsive;
+      @mixin font-responsive h2;
+
       margin-top: 6rem;
-      color: #FFFFFF;
+      color: #fff;
     }
 
     svg path {
-      stroke: $colors.neutral-black;
+      stroke: $c-neutral-black;
     }
-
   }
 
   .landing-madlib button {
-    typography: h4-responsive;
-    cursor: pointer;
+    @mixin font-responsive h4;
+
     border: none;
-    background: $colors.highlight-1;
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+    background: $c-highlight-1;
+    box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
     position: relative;
     border-radius: 24px;
     padding: 0.8rem 1.5rem 0.8rem 1.35rem;
     cursor: pointer;
-    margin: 2rem 0 2rem;
+    margin: 2rem 0;
 
     &:hover {
-      box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 3px 16px rgb(0 0 0 / 30%);
       filter: brightness(95%);
     }
   }
 
   .arrow {
-    position: relative;
-    vertical-align: middle;
-    padding-left: 0.7rem;
-    transform: rotate(-90deg) scale(1.35) translateX(-0.25rem);
     overflow: hidden;
     outline: none;
     display: inline-block;
@@ -97,22 +96,20 @@
     fill: none;
   }
 
-  +breakpoint(page, medium) {
+  @mixin breakpoint content, medium {
     .landing-madlib {
       width: auto;
       height: auto;
       background-position: left;
 
       button {
-        margin: 2rem 0 2rem;
+        margin: 2rem 0;
       }
     }
   }
 
-  +breakpoint(page, small) {
-
+  @mixin breakpoint content, small {
     .landing-madlib {
-
       > :global(.madlib) {
         line-height: 2.5rem;
       }
@@ -124,9 +121,6 @@
       button {
         padding: 0.55rem 0.95rem 0.45rem 0.85rem;
       }
-
     }
   }
-
-
 </style>

@@ -35,20 +35,19 @@
   </div>
 </a>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .landing-carousel-card {
     display: flex;
     flex-direction: column;
     width: 766px;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
     border-radius: 40px;
     border: none;
-    background: $colors.primary-blue;
+    background: $c-primary-blue;
     height: 100%;
 
     &.case-study {
-      background: $colors.deep-blue;
+      background: $c-deep-blue;
     }
 
     &:hover {
@@ -58,7 +57,6 @@
     .tags {
       max-width: 600px;
     }
-
   }
 
   a.landing-carousel-card {
@@ -73,7 +71,7 @@
   }
 
   .arrow-path {
-    stroke:$colors.neutral-black ;
+    stroke: $c-neutral-black;
     stroke-width: 2.4px;
   }
 
@@ -86,48 +84,48 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: $colors.highlight-1;
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+    background: $c-highlight-1;
+    box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
   }
 
-  .circle-button:hover{
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.35);
+  .circle-button:hover {
+    box-shadow: 0 3px 16px rgb(0 0 0 / 35%);
   }
 
   .tags-title {
     margin: 2.5rem 0 1rem;
 
     h5 {
-      typography: h5;
+      font: $f-h5;
       margin: 0;
     }
   }
 
   .title {
-    $max-lines = 4;
     text-overflow: clip;
     word-wrap: break-word;
     display: flex;
     justify-content: space-between;
+
     > span {
       flex: 0 1 570px;
       display: -webkit-box;
-      -webkit-line-clamp: $max-lines;
-      line-clamp: $max-lines;
+      line-clamp: 4;
       overflow: hidden;
       text-overflow: ellipsis;
       -webkit-box-orient: vertical;
     }
 
     h3 {
-      typography: h3-light-responsive;
+      @mixin font-responsive h3-light;
+
       margin: 0;
     }
   }
 
   .preview-content {
-    color: #FFFFFF;
-    padding: 2rem 1.5rem 2rem;
+    color: #fff;
+    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -135,14 +133,13 @@
   }
 
   .image {
-    border-radius: 40px 40px 0px 0px;
+    border-radius: 40px 40px 0 0;
     width: 766px;
     height: 344px;
     object-fit: cover;
   }
 
-  @media(max-width: 1024px) {
-
+  @media (max-width: 1024px) {
     .landing-carousel-card {
       max-width: 500px;
       width: calc(100vw - 120px);
@@ -157,7 +154,8 @@
       }
     }
 
-    .circle-button, .tags-title {
+    .circle-button,
+    .tags-title {
       display: none;
     }
 
@@ -168,20 +166,17 @@
     .tags {
       margin-top: 2rem;
       overflow-x: scroll;
+
       > :global(.tag-container) {
         flex-wrap: nowrap;
       }
     }
-
   }
 
-  @media(max-width: 550px) {
-
+  @media (max-width: 550px) {
     .landing-carousel-card {
       max-width: 500px;
       width: calc(100vw - 80px);
     }
-
   }
-
 </style>

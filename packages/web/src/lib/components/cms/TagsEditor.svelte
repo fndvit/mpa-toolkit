@@ -76,29 +76,32 @@
   </ul>
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .tags-container {
     font-family: var(--font-sans-serif);
     width: fit-content;
     margin: auto;
   }
+
   .tags-list {
     display: grid;
     grid-template-columns: auto auto 1fr;
-    width: 500px;
     row-gap: 15px;
     column-gap: 15px;
     margin: auto;
     width: fit-content;
     padding: 0;
     list-style: none;
-    :global(.icon-button){
+
+    :global(.icon-button) {
       --ib-size: 20px;
     }
   }
+
   .tag-row {
     display: contents;
   }
+
   .tool-bar {
     display: flex;
     column-gap: 15px;
@@ -106,10 +109,12 @@
     margin-top: 15px;
     margin-bottom: 30px;
   }
+
   .spinner {
     display: flex;
     align-items: center;
     column-gap: 15px;
+
     &:not(.loading) {
       visibility: hidden;
     }

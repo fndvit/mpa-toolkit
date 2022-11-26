@@ -10,10 +10,11 @@
   {/each}
 </ol>
 
-<style lang="stylus">
+<style lang="postcss">
   ol {
     > :global(li) {
-      typography: p-responsive;
+      @mixin font-responsive p;
+
       padding-left: 10px;
     }
   }

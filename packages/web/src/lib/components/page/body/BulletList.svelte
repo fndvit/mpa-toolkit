@@ -11,10 +11,11 @@
   {/each}
 </ul>
 
-<style lang="stylus">
+<style lang="postcss">
   ul {
     > :global(li) {
-      typography: p-responsive;
+      @mixin font-responsive p;
+
       padding-left: 5px;
     }
   }

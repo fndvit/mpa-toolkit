@@ -37,11 +37,12 @@
   <input bind:this={inputEl} style="display: none;" type="file" on:change={onChangeFile} accept=".jpg,.png" />
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .editable-user-image {
     position: relative;
     font-size: 0;
   }
+
   .loading {
     position: absolute;
     top: 0;
@@ -50,12 +51,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #22222266;
+    background: #2226;
     border-radius: 50%;
   }
 
   :global(.user-image) {
     cursor: pointer;
+
     &:hover {
       filter: brightness(95%);
     }

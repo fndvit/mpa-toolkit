@@ -1,6 +1,6 @@
 <div />
 
-<style lang="stylus">
+<style lang="postcss">
   div {
     border-left: 1px solid #ccc;
     height: 2rem;

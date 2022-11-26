@@ -10,23 +10,22 @@
   </div>
 </div>
 
-<style lang="stylus">
-
-	.help-popup {
-    typography: ui;
-    color: black;
+<style lang="postcss">
+  .help-popup {
+    font: $f-ui;
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    box-shadow: 0px 0px 5px #000000;
+    box-shadow: 0 0 5px #000;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0,3s;
-    color: #000000;
+    transition: all 0, 3s;
+    color: #000;
+
     &:hover {
-      box-shadow: 0px 0px 10px #000000;
+      box-shadow: 0 0 10px #000;
     }
   }
 
@@ -35,15 +34,15 @@
     right: -9px;
     top: calc(100% + 12px);
     cursor: default;
-    z-index: tooltip;
-    width: "calc(100% + %s)" % (-@right * 2);
+    z-index: $z-tooltip;
+    width: calc(100% - 18px);
     max-width: 600px;
     padding: 1rem 1.5rem;
     box-sizing: border-box;
     border-radius: 15px;
-    background-color: var(--popup-bg-color, alpha($colors.neutral-bg, 0.9));
+    background-color: color($c-neutral-bg alpha(90%));
     color: #000;
-    transition: opacity .4s ease-out;
+    transition: opacity 0.4s ease-out;
 
     :global(a) {
       color: black;
@@ -51,28 +50,23 @@
 
     > :global(a:last-child) {
       float: right;
-      typography: ui-link;
+      font: $f-ui-link;
       padding: 10px 0 10px 10px;
-    }
-
-    .help-popup:not(:hover) & {
-      opacity: 0;
-      pointer-events: none;
     }
   }
 
-  .popup-body:before {
+  .popup-body::before {
     content: '';
     position: absolute;
     bottom: 100%;
     right: 14px;
     width: 0;
-    border-bottom: 10px solid var(--popup-bg-color, alpha($colors.neutral-bg, 0.9));
+    border-bottom: 10px solid alpha($c-neutral-bg, 0.9);
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;
   }
 
-  .popup-body:after {
+  .popup-body::after {
     content: '';
     position: absolute;
     left: 0;
@@ -82,9 +76,14 @@
   }
 
   .popup-body:hover,
-  .popup-body:before {
+  .popup-body::before {
     visibility: visible;
     opacity: 1;
     pointer-events: all;
-   }
+  }
+
+  .help-popup:not(:hover) .popup-body {
+    opacity: 0;
+    pointer-events: none;
+  }
 </style>

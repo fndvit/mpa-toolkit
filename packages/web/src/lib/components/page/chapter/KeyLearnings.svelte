@@ -80,8 +80,7 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .key-learnings {
     display: block;
     position: relative;
@@ -94,11 +93,12 @@
     display: flex;
     column-gap: 5px;
     justify-content: left;
+
     :global(.icon-button) {
-      --ib-icon-bg: #00000022;
-      --ib-hover-bg: #00000022;
-      --ib-hover-border-color: #00000022;
-      --ib-active-bg: #ffffff77;
+      --ib-icon-bg: #0002;
+      --ib-hover-bg: #0002;
+      --ib-hover-border-color: #0002;
+      --ib-active-bg: #fff7;
     }
   }
 
@@ -113,10 +113,10 @@
 
   .line {
     margin: auto;
-    top: 0px;
+    top: 0;
     height: 100%;
     width: 1px;
-    background-color: $colors.neutral-light;
+    background-color: $c-neutral-light;
   }
 
   .circle {
@@ -127,7 +127,7 @@
     opacity: 0.25;
     cursor: pointer;
     z-index: 2;
-    box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 12px rgb(0 0 0 / 15%);
 
     &.selected {
       opacity: 1;
@@ -147,7 +147,7 @@
     row-gap: 7px;
     flex-grow: 0;
     margin: auto;
-    background-color: $colors.neutral-bg;
+    background-color: $c-neutral-bg;
     padding-bottom: 10px;
   }
 
@@ -161,7 +161,7 @@
     padding-top: 35px;
     padding-bottom: 35px;
     width: 155px;
-    typography: ui-small;
+    font: $f-ui-small;
     color: black;
   }
 
@@ -183,22 +183,24 @@
   .card {
     display: flex;
     flex-direction: row;
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
     border-radius: 20px;
-    background-color: $colors.neutral-bg;
+    background-color: $c-neutral-bg;
 
     :global(.editable-text) {
       --outline-color: #d1d1d1;
-      --caret-color: $colors.neutral-black;
+      --caret-color: $c-neutral-black;
     }
   }
 
   .card-content {
     min-width: 0;
     flex: 1;
+
     &:not(.card-content-active) {
       display: none;
     }
+
     :global(.editable-content[contenteditable]) {
       margin: 2px;
     }
@@ -206,23 +208,23 @@
     :global(.cards) {
       height: 100%;
     }
+
     :global(.splide) {
       height: 100%;
       display: flex;
       flex-direction: column;
     }
+
     :global(.splide__track) {
       flex: 1;
     }
+
     :global(.cards .editor-buttons) {
       bottom: 20px;
     }
-
   }
 
-
-  +breakpoint(page, medium) {
-
+  @mixin breakpoint content, medium {
     .navigation-menu {
       flex-direction: column;
       max-width: none;
@@ -230,16 +232,15 @@
 
     .titles-area {
       display: flex;
-      flex-direction: row;
+      flex-flow: row nowrap;
       width: auto;
       column-gap: 15px;
-      padding: 20px 0px 10px 0px;
-      flex-wrap: nowrap;
+      padding: 20px 0 10px;
       overflow-x: scroll;
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
-      border-left: 30px solid $colors.neutral-bg;
-      border-right: 30px solid $colors.neutral-bg;
+      border-left: 30px solid $c-neutral-bg;
+      border-right: 30px solid $c-neutral-bg;
 
       &::-webkit-scrollbar {
         display: none;
@@ -248,8 +249,8 @@
 
     .middle-area {
       flex-direction: row;
-      padding: 15px 0px 0px 0px;
-      margin-right: 0px;
+      padding: 15px 0 0;
+      margin-right: 0;
     }
 
     .vertical-dots {
@@ -268,7 +269,7 @@
 
     .card {
       flex-direction: column;
-      background-color: $colors.neutral-bg;
+      background-color: $c-neutral-bg;
     }
 
     .line {
@@ -277,7 +278,5 @@
       width: 100%;
       transform: translateY(-5px);
     }
-
   }
-
 </style>

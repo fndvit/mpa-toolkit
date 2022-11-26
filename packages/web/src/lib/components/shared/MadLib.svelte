@@ -58,15 +58,14 @@
   <MadLibSelector options={actionSubjectList} bind:selected={value[3]} />
 </p>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .madlib {
-    typography: h4-light-responsive;
+    @mixin font-responsive h4-light;
+
     position: relative;
 
     :global(.content-madlib) & {
-      typography: ui-large-responsive;
+      @mixin font-responsive ui-large;
     }
   }
-
 </style>

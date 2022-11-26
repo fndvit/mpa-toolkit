@@ -245,8 +245,7 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .draft-button {
     :global(.icon-button) {
       column-gap: 0;
@@ -264,16 +263,18 @@
     display: flex;
     column-gap: 10px;
     align-items: center;
+
     :global(.icon-button) {
-      --bg-color: #ffffff99;
+      --bg-color: #fff9;
       --ib-hover-border-color: transparent;
-      --ib-hover-bg: #dddddd99;
+      --ib-hover-bg: #ddd9;
       --ib-font-size: 1rem;
     }
 
     .spinner {
       display: flex;
       align-items: center;
+
       &.hidden {
         visibility: hidden;
       }
@@ -281,20 +282,22 @@
   }
 
   .slug {
-    typography: ui;
+    font: $f-ui;
     width: 550px;
-    background: #ffffff99;
-    border: 1px solid #00000055;
+    background: #fff9;
+    border: 1px solid #0005;
     border-radius: 2px;
     height: 32px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
+
     .url-prefix {
       margin-left: 2px;
       opacity: 0.5;
       margin-right: -2px;
     }
+
     input {
       border: none;
       border-radius: 0;
@@ -313,20 +316,27 @@
     display: flex;
     column-gap: 10px;
     align-items: center;
+
     :global(.message) {
       margin-right: 10px;
       color: #999;
     }
-    @keyframes bgPulse {
-      0% { border-color: #bbb;  }
-      100% { border-color: #999;
-        box-shadow: inset #a0b6e455 0 0 15px 0px, #c5cddf 0 0 2px 1px;
+    @keyframes bg-pulse {
+      0% {
+        border-color: #bbb;
+      }
+
+      100% {
+        border-color: #999;
+        box-shadow: inset #a0b6e455 0 0 15px 0, #c5cddf 0 0 2px 1px;
       }
     }
+
     .save-button :global(.button:not(:disabled)) {
-      animation: 1s ease-in 0s infinite alternate bgPulse;
+      animation: 1s ease-in 0s infinite alternate bg-pulse;
     }
-    .is-new-page & :global(.icon-button[data-icon="open_in_new"]) {
+
+    .is-new-page & :global(.icon-button[data-icon='open_in_new']) {
       display: none;
     }
   }
@@ -335,17 +345,21 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
     :global(.prosemirror-container) {
       flex: 1;
+
       :global(.problem) {
         background-color: #fdd;
         cursor: pointer;
       }
-      :global(.problem[data-problem-name="leading-space"]) {
+
+      :global(.problem[data-problem-name='leading-space']) {
         position: relative;
         display: inline-block;
         min-width: 5px;
-        &:before {
+
+        &::before {
           content: 'arrow_right';
           font-family: 'Material Icons';
           font-size: 1.25rem;
@@ -354,16 +368,18 @@
           position: absolute;
           right: calc(100% + 10px);
         }
-        &:after {
+
+        &::after {
           content: ' ';
           display: inline-block;
         }
       }
-      :global(.problem[data-problem-name="todo"]) {
+
+      :global(.problem[data-problem-name='todo']) {
         background-color: #aaf;
       }
+
       :global(.problem-highlight) {
-        // highlight this problem
         background-color: #faa;
       }
     }
@@ -378,7 +394,6 @@
   }
 
   .preview {
-
     padding-top: 51px;
 
     :global(.menu-bar) {
@@ -393,5 +408,4 @@
       display: none;
     }
   }
-
 </style>

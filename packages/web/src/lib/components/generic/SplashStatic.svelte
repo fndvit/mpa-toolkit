@@ -25,19 +25,21 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .title-container {
     h1 {
-      typography: h1-light-responsive;
+      @mixin font-responsive h1-light;
+
       color: white;
       margin-bottom: 0.5rem;
     }
+
     h4 {
-      typography: h4;
+      font: $f-h4;
       color: white;
       margin-top: 0.5rem;
     }
+
     margin-left: var(--page-padding);
   }
 
@@ -48,9 +50,10 @@
 
   .splash {
     min-height: 70vh;
-    padding: 0rem 0rem 3rem;
+    padding: 0 0 3rem;
     background-size: cover;
     background-position: bottom;
+
     --page-padding: 6rem;
   }
 
@@ -68,16 +71,15 @@
     flex: 1;
   }
 
-  +breakpoint(page, medium) {
+  @mixin breakpoint content, medium {
     .splash {
       --page-padding: 3rem;
     }
   }
 
-  +breakpoint(page, small) {
+  @mixin breakpoint content, small {
     .splash {
       --page-padding: 1.5rem;
     }
   }
-
 </style>

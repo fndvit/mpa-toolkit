@@ -12,7 +12,7 @@
   import { SplideOptions } from '$lib/helpers/splide';
 
   export let cards: CardData[];
-  export let style: CardStackStyle = 'default';
+  export let cardStyle: CardStackStyle = 'default';
   export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;
@@ -43,7 +43,7 @@
   };
 
   const onClickChangeType = () => {
-    style = style === 'default' ? 'no-heading' : 'default';
+    cardStyle = cardStyle === 'default' ? 'no-heading' : 'default';
   };
 
   $: if (currentPageIndex >= 0 && splide) splide.go(currentPageIndex);
@@ -53,7 +53,7 @@
   class="cards"
   class:has-fixed-title={fixedTitle}
   class:multiple-slides={cards.length > 1}
-  data-card-style={style}
+  data-card-style={cardStyle}
   class:selected
 >
   <Splide {options} bind:this={splide} on:move={e => (currentPageIndex = e.detail.index)} hasTrack={false}>
@@ -65,8 +65,8 @@
     <SplideTrack>
       {#each cards as card, i}
         <SplideSlide>
-          <div class="slide" class:no-heading={style === 'no-heading'}>
-            {#if style !== 'no-heading'}
+          <div class="slide" class:no-heading={cardStyle === 'no-heading'}>
+            {#if cardStyle !== 'no-heading'}
               <CardHeading bind:text={card.heading} editable={editable && currentPageIndex === i} />
             {/if}
             <CardBody bind:text={card.body} editable={editable && currentPageIndex === i} />
@@ -79,7 +79,7 @@
         <IconButton icon="add" on:click={onClickAddCard} />
         <IconButton icon="delete" on:click={onClickRemoveCard} disabled={!removable && cards.length === 1} />
         {#if canToggleHeading}
-          <IconButton icon="title" active={style === 'default'} on:click={onClickChangeType} />
+          <IconButton icon="title" active={cardStyle === 'default'} on:click={onClickChangeType} />
         {/if}
       </div>
     {/if}
@@ -91,22 +91,23 @@
   </Splide>
 </div>
 
-<style lang="stylus">
-
-  card-styles($cardColor)
-    $textColor = dark($cardColor) ? white : black;
+<style lang="postcss">
+  @define-mixin card-styles $cardColor, $textColor {
     --card-color: $cardColor;
     --caret-color: $textColor;
     --dot-color: $textColor;
+
     color: $textColor;
+  }
 
   .cards {
     --content-padding: 30px;
     --content-right-padding: 30px;
     --content-top-padding: 30px;
     --scrollbar-width: 5px;
+
     border-radius: 20px;
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
     color: black;
     background-color: var(--card-color);
 
@@ -133,22 +134,23 @@
 
     :global(.key-takeaways) &,
     :global(.landing-lifecycle) & {
-      card-styles($colors.highlight-1)
+      @mixin card-styles $c-highlight-1, black;
     }
 
     :global(.body-column) &,
     :global(.editor-content) & {
-      card-styles($colors.primary-blue);
+      @mixin card-styles $c-primary-blue, white;
     }
 
     :global(.key-learnings .card-content) & {
-      card-styles($colors.neutral-bg);
+      @mixin card-styles $c-neutral-bg, black;
+
       box-shadow: none;
     }
 
     :global(.diagram) & {
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }
   }
 
@@ -160,12 +162,11 @@
     justify-content: right;
 
     :global(.icon-button) {
-      --ib-icon-bg: #00000022;
-      --ib-hover-bg: #00000022;
-      --ib-hover-border-color: #00000022;
-      --ib-active-bg: #ffffff77;
+      --ib-icon-bg: #0002;
+      --ib-hover-bg: #0002;
+      --ib-hover-border-color: #0002;
+      --ib-active-bg: #fff7;
     }
-
   }
 
   .carousel-dots {
@@ -182,7 +183,7 @@
     padding: var(--content-top-padding) var(--content-right-padding) 10px var(--content-padding);
     margin-bottom: 15px;
 
-    .cards.multiple-slides[data-card-style="no-heading"] & {
+    .cards.multiple-slides[data-card-style='no-heading'] & {
       --content-right-padding: 140px;
     }
 
@@ -196,17 +197,14 @@
   }
 
   .fixed-title {
-
     :global(.heading) {
       margin-left: 32px;
       margin-top: 25px;
       position: absolute;
     }
-
   }
 
-  @media(max-width: 425px) {
-
+  @media (max-width: 425px) {
     .cards {
       :global(.splide__arrows) {
         top: 35px;
@@ -223,5 +221,4 @@
       }
     }
   }
-
 </style>

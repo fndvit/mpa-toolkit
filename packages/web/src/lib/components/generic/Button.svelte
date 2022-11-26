@@ -16,10 +16,9 @@
   </button>
 {/if}
 
-<style lang="stylus">
-
+<style lang="postcss">
   .button {
-    typography: p-graphic;
+    font: $f-p-graphic;
     position: relative;
     color: #333;
     background-color: #efefef;
@@ -32,8 +31,9 @@
     padding: 0 15px;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       text-decoration: none;
+
       &:not(:disabled) {
         filter: brightness(95%);
       }
@@ -44,5 +44,4 @@
       color: #aaa;
     }
   }
-
 </style>

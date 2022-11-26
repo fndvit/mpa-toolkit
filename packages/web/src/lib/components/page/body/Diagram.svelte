@@ -142,21 +142,21 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .diagram {
     display: flex;
     column-gap: 20px;
-    --ib-hover-bg: $colors.secondary-bg;
+
+    --ib-hover-bg: $c-secondary-bg;
+
     margin-right: calc(-100vw + 950px);
     max-width: 1050px;
-    typography: ui-small;
+    font: $f-ui-small;
 
-
-    +breakpoint(page, medium) {
+    @mixin breakpoint content, medium {
       margin: 0;
     }
-    +breakpoint(page, small) {
+    @mixin breakpoint content, small {
       flex-direction: column;
     }
   }
@@ -184,16 +184,17 @@
   }
 
   .empty-base-layer {
-    &:after {
+    &::after {
       content: '';
       display: block;
       padding-bottom: 40%;
     }
+
     width: 100%;
     box-sizing: border-box;
     background: white;
     cursor: pointer;
-    border: 1px solid $colors.secondary-bg;
+    border: 1px solid $c-secondary-bg;
   }
 
   .layer-img {
@@ -214,6 +215,7 @@
     :global(.editor-buttons) {
       display: none;
     }
+
     margin-bottom: 22px;
   }
 
@@ -224,6 +226,7 @@
   .layer-list {
     position: relative;
     z-index: 2;
+
     :global(ul) {
       margin: 0.5rem 0;
     }
@@ -234,14 +237,13 @@
 
     :global(.editable-text) {
       --outline-color: #d1d1d1;
-      --caret-color: $colors.neutral-black;
+      --caret-color: $c-neutral-black;
     }
   }
 
   .resources {
     display: flex;
     list-style-type: none;
-    padding: 0;
     margin: 0;
     column-gap: 2rem;
     padding: 0 1rem;
@@ -249,6 +251,6 @@
   }
 
   .controls-diagram {
-    margin-top: 1rem ;
+    margin-top: 1rem;
   }
 </style>

@@ -10,15 +10,9 @@
     {#if content}
       {@html content}
     {:else}
-      <p><span class="unlabeled">Show more on this topic</span></p>
+      <p><span>Show more on this topic</span></p>
     {/if}
   {:else}
     Read less
   {/if}
 </ExpandButtonBase>
-
-<style lang="postcss">
-  .unlabeled {
-    color: #bbb;
-  }
-</style>

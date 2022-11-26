@@ -10,14 +10,26 @@
   export var controls: SvelteNodeViewControls;
   export var selected = false;
 
+  let editing = false;
+
   const toggleStyle = () => {
     attrs.style = attrs.style === 'regular' ? 'full' : 'regular';
   };
 </script>
 
-<div class="imageview imageview-{attrs.style}" class:selected contenteditable="false">
+<div
+  class="imageview imageview-{attrs.style}"
+  class:selected
+  class:imageview--editing={editing}
+  contenteditable="false"
+>
   <div class="image-controls">
-    <input bind:value={attrs.alt} placeholder="alt text..." />
+    <input
+      bind:value={attrs.alt}
+      placeholder="alt text..."
+      on:focus={() => (editing = true)}
+      on:blur={() => (editing = false)}
+    />
     <IconButton icon="aspect_ratio" title="Wide" active={attrs.style === 'full'} on:click={toggleStyle} />
     <IconButton on:click={controls.delete} icon="delete" />
   </div>
@@ -68,7 +80,7 @@
     box-sizing: border-box;
     justify-content: center;
 
-    .imageview:not(:hover) & {
+    .imageview:not(.imageview--editing, :hover) & {
       display: none;
     }
 

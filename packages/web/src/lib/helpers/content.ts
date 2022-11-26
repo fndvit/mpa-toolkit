@@ -1,6 +1,8 @@
-import type { ContentBlock, ContentDocument, Page, Section, DiagramData, CardsBlock } from '@mpa/db';
+import type { ContentBlock, ContentDocument, Page, Section, DiagramData, CardsBlock, LinkCardsBlock } from '@mpa/db';
 import { slugify } from '@mpa/utils';
 import { env } from '$env/dynamic/public';
+
+if (!env.PUBLIC_UPLOAD_BASE_URL) throw new Error('Missing PUBLIC_UPLOAD_BASE_URL');
 
 export const staticUrl = (path: string) => (path ? `${env.PUBLIC_UPLOAD_BASE_URL}${path}` : null);
 
@@ -92,6 +94,10 @@ export function createEmptyDiagram(): DiagramData {
 
 export function createEmptyCard(): CardsBlock['attrs'] {
   return { style: 'default', cards: [{ heading: '', body: '' }] };
+}
+
+export function createEmptyLinkCard(): LinkCardsBlock['attrs'] {
+  return { title: '', cards: [{ title: '', url: '' }] };
 }
 
 export function getSectionSize(section: Section): number {

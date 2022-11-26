@@ -181,16 +181,14 @@
   }
 
   .card {
+    --editable-outline: 2px solid #d1d1d1;
+    --editable-caret: $c-neutral-black;
+
     display: flex;
     flex-direction: row;
     box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
     border-radius: 20px;
     background-color: $c-neutral-bg;
-
-    :global(.editable-text) {
-      --outline-color: #d1d1d1;
-      --caret-color: $c-neutral-black;
-    }
   }
 
   .card-content {

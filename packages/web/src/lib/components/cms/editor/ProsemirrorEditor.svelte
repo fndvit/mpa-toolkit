@@ -61,7 +61,7 @@
 
 <style lang="postcss">
   :global(body) {
-    --ui-color-placeholder: $c-editor-placeholder;
+    --editable-placeholder-color: $c-editor-placeholder;
   }
 
   :global(.ProseMirror) {
@@ -125,7 +125,7 @@
     position: absolute;
     content: attr(data-placeholder);
     pointer-events: none;
-    color: var(--ui-color-placeholder);
+    color: var(--editable-placeholder-color);
   }
 
   .ui-editor {

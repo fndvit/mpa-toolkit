@@ -66,7 +66,7 @@
     }
 
     :global(.editable-content) {
-      --ui-color-placeholder: #0004;
+      --editable-placeholder-color: #0004;
     }
   }
 

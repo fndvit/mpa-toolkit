@@ -8,7 +8,7 @@
   export let list: T[];
   export let key: K = undefined;
 
-  const getKey = (item: T) => (key ? item[key] : item);
+  const getKey = (item: T) => (key ? item[key] : list.indexOf(item));
 
   let isOver = false;
   const getDraggedParent = (node: HTMLElement) =>

@@ -79,7 +79,7 @@
       <h4>Download this resource</h4>
 
       <ul class="resources">
-        {#each diagram.resources as resource (resource)}
+        {#each diagram.resources as resource}
           <li>
             <DownloadableFile
               bind:resource
@@ -120,10 +120,6 @@
             on:click={() => onClickLayerItem(item)}
             on:delete={() => (diagram.layers = diagram.layers.filter(l => l !== item))}
             on:update={() => (diagram.layers = diagram.layers)}
-            on:dragstart={() => {
-              console.log('dragstart');
-              // editLayer = null;
-            }}
           />
         </SortableList>
 
@@ -233,12 +229,10 @@
   }
 
   .caption {
-    margin-bottom: 22px;
+    --editable-outline: 1px solid var(#d1d1d1);
+    --editable-caret: $c-neutral-black;
 
-    :global(.editable-text) {
-      --outline-color: #d1d1d1;
-      --caret-color: $c-neutral-black;
-    }
+    margin-bottom: 22px;
   }
 
   .resources {

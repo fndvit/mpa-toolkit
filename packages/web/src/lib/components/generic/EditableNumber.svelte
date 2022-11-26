@@ -55,7 +55,7 @@
     line-height: inherit;
 
     &::placeholder {
-      color: var(--ui-color-placeholder, #fff4);
+      color: var(--editable-placeholder-color, #fff4);
     }
   }
 

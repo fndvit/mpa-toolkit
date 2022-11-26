@@ -13,8 +13,8 @@ const config = {
 
   kit: {
     adapter: adapter(),
-    prerender: {
-      enabled: false
+    env: {
+      dir: '../..'
     }
   }
 };

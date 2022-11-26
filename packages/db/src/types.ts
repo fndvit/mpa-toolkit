@@ -96,6 +96,12 @@ export type CardData = {
   body: string;
 };
 
+export type LinkCardData = {
+  title: string;
+  url: string;
+  img: string;
+};
+
 export type HomepageComponentName = 'lifecycle' | 'chapters' | 'search' | 'madlib' | 'casestudies';
 
 export type HomepageComponents = HomepageComponentName[];
@@ -192,8 +198,16 @@ export type ParagraphBlock = {
 export type CardsBlock = {
   type: 'cards';
   attrs: {
-    style: 'default' | 'no-heading';
+    style: string;
     cards: CardData[];
+  };
+};
+
+export type LinkCardsBlock = {
+  type: 'linksCards';
+  attrs: {
+    title: string;
+    cards: LinkCardData[];
   };
 };
 
@@ -231,6 +245,7 @@ export type ContentBlock =
   | HeadingBlock
   | ParagraphBlock
   | CardsBlock
+  | LinkCardsBlock
   | BulletListBlock
   | OrderedListBlock
   | ImageBlock

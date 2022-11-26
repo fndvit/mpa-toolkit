@@ -40,7 +40,7 @@
       filter: drop-shadow(0 0 3px #b1b1b1);
       z-index: 1;
 
-      :global(.page-editor) & strong {
+      :global(.page-editor--editing) & strong {
         outline: 1px solid black;
         border-radius: 4px;
         cursor: text;
@@ -53,8 +53,8 @@
       right: 1.15rem;
       top: 0.75rem;
 
-      --caret-color: black;
-      --outline-color: #2a2a2a;
+      --editable-caret: black;
+      --editable-outline: #2a2a2a;
       --outline-width: 1px;
 
       :global(.editable-text) {

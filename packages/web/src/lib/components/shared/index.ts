@@ -10,3 +10,4 @@ export { default as MadLib } from './MadLib.svelte';
 export { default as MadLibSelector } from './MadLibSelector.svelte';
 export { default as Tag } from './Tag.svelte';
 export { default as TagContainer } from './TagContainer.svelte';
+export { default as LinkCards } from './LinkCards.svelte';

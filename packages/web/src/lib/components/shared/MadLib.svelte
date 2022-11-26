@@ -50,10 +50,10 @@
 </script>
 
 <p class="madlib">
-  I am a <MadLibSelector options={typeUserList} bind:selected={value[0]} /> and am using MPAth to <MadLibSelector
+  I am a <MadLibSelector options={typeUserList} bind:selected={value[0]} /> using MPAs to <MadLibSelector
     options={objectiveList}
     bind:selected={value[1]}
-  /> and i need help to
+  /> and I need help to
   <MadLibSelector options={objectiveVerbList} bind:selected={value[2]} /> by
   <MadLibSelector options={actionSubjectList} bind:selected={value[3]} />
 </p>

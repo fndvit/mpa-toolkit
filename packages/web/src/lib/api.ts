@@ -5,6 +5,10 @@ import type { GoogleAuthReturnData } from '../routes/api/auth/google/+server';
 
 const ky = _ky.create({ prefixUrl: '/api', headers: { Accept: 'application/json' } });
 
+export const link = {
+  create: async (url: string) => ky.post(`link`, { json: { url } }).json<{ title: string; image: string }>()
+};
+
 export const image = {
   upload: async (file: File) => _upload('image/upload', file)
 };
@@ -86,4 +90,8 @@ async function _upload(endpoint: string, file: File) {
   });
   const body = (await response.json()) as { path: string };
   return body.path;
+}
+
+async function _get(endpoint: string) {
+  return (await ky.get(endpoint)).json();
 }

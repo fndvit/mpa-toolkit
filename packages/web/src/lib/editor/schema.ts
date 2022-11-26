@@ -125,6 +125,11 @@ export const schema = new ProsemirrorSchema({
       group: 'block'
     },
 
+    linkCards: {
+      ...svelteSchemaNode('linkCards', { title: '', cards: [{ heading: '', url: '' }] }),
+      group: 'block'
+    },
+
     diagram: {
       ...svelteSchemaNode('diagram', {
         layers: [],

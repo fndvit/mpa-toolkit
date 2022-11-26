@@ -4,12 +4,11 @@
   export let content: string;
   export let expanded: boolean;
   export let collapsePoint: boolean = undefined;
-
 </script>
 
 <!-- Render a hidden element to be able to know the original position of the ExpandButton -->
 {#if collapsePoint}
-  <div class="collapse-point"/>
+  <div class="collapse-point" />
 {:else}
   <ExpandButtonBase {expanded} on:click>
     {#if !expanded}
@@ -24,7 +23,7 @@
   </ExpandButtonBase>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .unlabeled {
     color: #bbb;
   }

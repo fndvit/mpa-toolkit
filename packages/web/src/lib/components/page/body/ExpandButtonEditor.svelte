@@ -15,10 +15,12 @@
   <MiniProsemirrorEditor bind:content on:complete placeholder="Show more on this topic..." />
 </ExpandButtonBase>
 
-
-<style lang="stylus">
-
+<style lang="postcss">
   .icons {
+    --ib-icon-size: 1.5rem;
+    --ib-color: #aaa;
+    --ib-hover-filter: brightness(90%);
+
     position: absolute;
     margin-top: 0.15em;
     left: -40px;
@@ -26,8 +28,5 @@
     bottom: 0;
     display: flex;
     align-items: center;
-    --ib-icon-size: 1.5rem;
-    --ib-color: #aaa;
-    --ib-hover-filter: brightness(90%);
   }
 </style>

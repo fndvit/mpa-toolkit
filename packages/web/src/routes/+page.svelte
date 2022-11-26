@@ -14,6 +14,10 @@
   const getComponentOrder = (name: HomepageComponentName): number => components.indexOf(name);
 
   const tagsForContainer = tags.map<PageTag>(t => ({ tag: t, category: 'PRIMARY' }));
+
+  const orderStyle = (el: HTMLElement, name: HomepageComponentName) => {
+    el.style.order = components.indexOf(name).toString();
+  };
 </script>
 
 <div class="landing-page">
@@ -23,7 +27,7 @@
   <div class="top-searchbar">
     <Searchbar type={'top'} />
   </div>
-  <div class="splash" style="background-image: url({landingSplash})">
+  <div class="splash" style={`background-image: url(${landingSplash})`}>
     <h1>Here it is.<br /><b>Your MPA toolkit.</b></h1>
     <h4>
       A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable
@@ -42,35 +46,35 @@
   </div>
 
   <div class="ordered-components">
-    <div style="order: {getComponentOrder('lifecycle')}">
+    <div use:orderStyle={'lifecycle'}>
       <MpaManagementLifecycle />
     </div>
 
-    <div style="order: {getComponentOrder('chapters')}">
-      <LandingCarousel title="Get the <b>answers</b> to all your questions" type={'chapter'}/>
+    <div use:orderStyle={'chapters'}>
+      <LandingCarousel title="Get the <b>answers</b> to all your questions" type={'chapter'} />
     </div>
 
-    <div style="order: {getComponentOrder('search')}" class="ordered-component inline-searchbar">
+    <div use:orderStyle={'search'} class="ordered-component inline-searchbar">
       <Searchbar type={'inline'} />
       <TagContainer tags={tagsForContainer} />
     </div>
 
-    <div style="order: {getComponentOrder('madlib')}">
+    <div use:orderStyle={'madlib'}>
       <LandingMadLib />
     </div>
 
-    <div style="order: {getComponentOrder('casestudies')}">
-      <LandingCarousel title="Explore what <b>others have done</b>" type={'case-study'}/>
+    <div use:orderStyle={'casestudies'}>
+      <LandingCarousel title="Explore what <b>others have done</b>" type={'case-study'} />
     </div>
   </div>
 
   <Footer />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .landing-page {
-    background: $colors.neutral-bg;
+    background: $c-neutral-bg;
+
     --page-padding: 6rem;
   }
 
@@ -81,7 +85,8 @@
 
   .inline-searchbar {
     max-width: 766px;
-    margin: 50px auto 25px auto;
+    margin: 50px auto 25px;
+
     :global(.tag-container) {
       margin: 15px 13px 0;
     }
@@ -115,21 +120,22 @@
     background-position: bottom;
 
     h1 {
-      typography: h1-responsive;
-      color: #FFFFFF;
+      @mixin font-responsive h1;
+
+      color: #fff;
       margin-bottom: 15px;
     }
 
     h4 {
-      typography: h4-light;
+      font: $f-h4-light;
       margin-top: 25px;
       margin-bottom: 80px;
-      color: #FFFFFF;
+      color: #fff;
       max-width: 800px;
     }
 
     h5 {
-      typography: h5;
+      font: $f-h5;
     }
   }
 
@@ -140,8 +146,7 @@
     width: 110px;
   }
 
-  +breakpoint(page, medium) {
-
+  @mixin breakpoint content, medium {
     .landing-page {
       --page-padding: 3rem;
     }
@@ -157,7 +162,6 @@
       h4 {
         padding-bottom: 3rem;
       }
-
     }
 
     .mpath-logo {
@@ -173,11 +177,9 @@
         flex-wrap: nowrap;
         overflow-x: scroll;
       }
-
     }
 
     .top-searchbar {
-
       :global(.placeholder) {
         display: none;
       }
@@ -188,9 +190,7 @@
     }
   }
 
-
-  +breakpoint(page, small) {
-
+  @mixin breakpoint content, small {
     .inline-searchbar {
       margin: 35px 0 0;
     }
@@ -198,8 +198,8 @@
     .landing-page {
       --page-padding: 1.5rem;
     }
-    .splash {
 
+    .splash {
       h1 {
         padding: 1rem 0;
       }
@@ -208,7 +208,6 @@
         margin-bottom: 1rem;
         padding: 1rem 0;
       }
-
     }
 
     .partners-grid {
@@ -222,12 +221,11 @@
     }
 
     .top-searchbar {
-
       margin: 2rem 1rem;
 
       :global(.input-text) {
         max-width: 10px;
-        padding: 7px
+        padding: 7px;
       }
 
       :global(.search-icon) {
@@ -241,5 +239,4 @@
       margin-left: 2rem;
     }
   }
-
 </style>

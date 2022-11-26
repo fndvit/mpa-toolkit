@@ -28,18 +28,20 @@
   </div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .key-takeaways {
-    --ec-hover-bg: #ffffff44;
+    --editable-hover-bg: #fff4;
+
     :global(.button) {
       margin: auto;
     }
   }
+
   .add-key-takeaways {
     margin-bottom: -10px;
-    --ib-color: #ffffffee;
-    --ib-hover-border: 1px solid transparent;
-    --ib-hover-bg: #00000011;
-  }
 
+    --ib-color: #fffe;
+    --ib-hover-border: 1px solid transparent;
+    --ib-hover-bg: #0001;
+  }
 </style>

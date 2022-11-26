@@ -20,18 +20,17 @@
   <input type="file" bind:this={inputEl} on:change={e => onChange(e.currentTarget.files[0])} />
 </div>
 
-<style lang="stylus">
-
-  input[type=file] {
+<style lang="postcss">
+  input[type='file'] {
     display: none;
   }
 
   .add-resource-button {
     :global(.icon-button) {
       height: 50px;
+
       --ib-icon-size: 1.25rem;
       --ib-color: black;
     }
   }
-
 </style>

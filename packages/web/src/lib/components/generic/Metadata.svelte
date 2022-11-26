@@ -9,67 +9,67 @@
   $: data = $page.data as { page?: Page; tag?: Tag; search?: string; title?: string };
 
   $: indexedRoutes = {
-    '': {
+    '/': {
       title: 'MPAth - Marine solutions hub',
       desc: 'A brand-new, growing educational platform for the MPA community to share lessons, challenges and sustainable solutions.',
       type: 'WebSite',
       image: chapterDefaultImage
     },
-    '[slug]': {
+    '/[slug]': {
       title: data.page ? getPageDisplayTitle(data.page) : '',
       desc: data.page?.chapter?.summary || data.page?.caseStudy?.name || 'Untitled',
       type: 'Article',
       image: chapterDefaultImage
     },
-    'tag/[slug]': {
+    '/tag/[slug]': {
       title: data.tag?.value,
       desc: '',
       type: 'WebSite',
       image: chapterDefaultImage
     },
-    search: {
+    '/search': {
       title: `"${data.search}"`,
       desc: '',
       type: 'WebSite',
       image: chapterDefaultImage
     },
-    'author/[slug]': {
+    '/author/[slug]': {
       title: data.title,
       desc: '',
       type: 'WebSite',
       image: chapterDefaultImage
     },
-    'recommended/[slug]': {
+    '/recommended/[slug]': {
       title: 'Recommended for you',
       desc: '',
       type: 'WebSite',
       image: chapterDefaultImage
     },
-    team: {
+    '/team': {
       title: 'MPAth team',
       desc: '',
       type: 'WebSite',
       image: chapterDefaultImage
     },
-    partners: {
+    '/partners': {
       title: 'MPAth partners',
       desc: '',
       type: 'WebSite',
       image: chapterDefaultImage
     },
-    'privacy-policy': {
+    '/privacy-policy': {
       title: `MPAth privacy policy`,
       desc: '',
       type: 'WebSite',
       image: chapterDefaultImage
     },
-    'terms-of-use': {
+    '/terms-of-use': {
       title: `MPAth terms of use`,
       desc: '',
       type: 'WebSite',
       image: chapterDefaultImage
     },
-    sitemap: {
+    '/sitemap': {
       title: `MPAth sitemap`,
       desc: '',
       type: 'WebSite',
@@ -78,35 +78,36 @@
   } as const;
 
   $: unindexedRoutes = {
-    'cms': 'CMS', // prettier-ignore
-    'cms/login': 'Login',
-    'cms/dump': 'CMS - Dump',
-    'cms/pages': 'CMS - Pages',
-    'cms/tags': 'CMS - Tags',
-    'cms/users': 'CMS - Users',
-    'cms/authors': 'CMS - Authors',
-    'cms/homepage': 'CMS - Homepage',
-    'cms/pages/[id]': data.page ? `Edit page - ${getPageDisplayTitle(data.page)}` : 'Edit page',
-    'cms/pages/create/chapter': 'New chapter',
-    'cms/pages/create/case-study': 'New case study',
-    'draft/[slug]': `[DRAFT] ${data.page ? getPageDisplayTitle(data.page) : ''}`
+    '/cms': 'CMS', // prettier-ignore
+    '/cms/login': 'Login',
+    '/cms/dump': 'CMS - Dump',
+    '/cms/pages': 'CMS - Pages',
+    '/cms/tags': 'CMS - Tags',
+    '/cms/users': 'CMS - Users',
+    '/cms/authors': 'CMS - Authors',
+    '/cms/homepage': 'CMS - Homepage',
+    '/cms/pages/[id]': data.page ? `Edit page - ${getPageDisplayTitle(data.page)}` : 'Edit page',
+    '/cms/pages/create/chapter': 'New chapter',
+    '/cms/pages/create/case-study': 'New case study',
+    '/draft/[slug]': `[DRAFT] ${data.page ? getPageDisplayTitle(data.page) : ''}`
   };
 </script>
 
-{#if $page.routeId in indexedRoutes}
-  <MetadataIndexed {...indexedRoutes[$page.routeId]} />
-{:else if $page.routeId in unindexedRoutes}
-  <MetadataUnindexed title={unindexedRoutes[$page.routeId]} />
+{#if $page.route.id in indexedRoutes}
+  <MetadataIndexed {...indexedRoutes[$page.route.id]} />
+{:else if $page.route.id in unindexedRoutes}
+  <MetadataUnindexed title={unindexedRoutes[$page.route.id]} />
 {:else}
-  <div class="metadata-warning">Missing metadata for this route: <span>{$page.routeId}</span></div>
+  <div class="metadata-warning">Missing metadata for this route: <span>{$page.route.id}</span></div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .metadata-warning {
     background: #ff8585;
     padding: 10px;
     text-align: center;
-    typography: ui-small;
+    font: $f-ui-small;
+
     > span {
       margin-left: 5px;
       font-size: 13px;

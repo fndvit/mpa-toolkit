@@ -11,10 +11,10 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .content-carousel-card {
     width: 292px;
+
     .img-container {
       display: flex;
       flex-direction: column;
@@ -45,23 +45,23 @@
     border-radius: 5px;
   }
 
-  .title, .loading-tag, .loading-card {
+  .title,
+  .loading-tag,
+  .loading-card {
     @keyframes shine {
       to {
         background-position-x: -200%;
       }
     }
+
     background: linear-gradient(110deg, #c3c3c3 15%, #cbcbcb 30%, #c3c3c3 40%);
     background-size: 200% 100%;
     animation: 1.5s shine linear infinite;
   }
-
 
   @media (max-width: 1320px) {
     .content-carousel-card {
       max-width: 210px;
     }
   }
-
-
 </style>

@@ -97,7 +97,6 @@ export const formattingPlugin = new FormattingPlugin({
       msg: 'Blocks should not start with a space',
       check: node => {
         const m = /^\s+/.exec(node.textContent);
-        if (/Behavioural changes/g.exec(node.textContent)) console.log(m, node.textContent);
         return m ? [{ from: 0, to: m[0].length + 1 }] : false;
       }
     },
@@ -129,6 +128,12 @@ export const formattingPlugin = new FormattingPlugin({
         if (matches[0]?.index === 0 && parent.child(0) === node) matches.shift();
         return matches ? matches.map(m => ({ from: m.index, to: m.index + m[0].length })) : false;
       }
+    },
+    'link-cards-heading': {
+      blocks: ['linkCards'],
+      msg: 'LinkCards heading mandatory',
+
+      check: node => node.attrs.title?.length === 0
     }
   }
 });

@@ -40,8 +40,7 @@
   <input type="submit" class="button" value="SAVE" disabled={image.desktop == null || image.mobile == null} />
 </form>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .diagram-layer-img-editor {
     margin: 10px 0;
 
@@ -63,18 +62,17 @@
       }
     }
 
-    input[type=file] {
+    input[type='file'] {
       display: none;
     }
-
 
     img {
       max-width: 100px;
       cursor: pointer;
+
       &:hover {
         outline: 1px solid #777;
       }
     }
   }
-
 </style>

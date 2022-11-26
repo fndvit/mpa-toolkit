@@ -17,13 +17,11 @@
   {/each}
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .carousel-dots {
     display: flex;
     align-items: center;
     padding: 10px 30px;
     column-gap: 7px;
   }
-
 </style>

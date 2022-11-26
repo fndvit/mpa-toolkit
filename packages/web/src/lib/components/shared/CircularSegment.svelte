@@ -80,17 +80,23 @@
   on:mouseleave
 />
 
-<style lang="stylus">
+<style lang="postcss">
   .segment {
     cursor: pointer;
   }
 
   .segment__main,
   .segment__secondary {
-    fill: $colors.highlight-1;
+    fill: $c-highlight-1;
   }
-  .segment__secondary { opacity: 0.5;}
-  .segment__unselected { fill: #FFFFFF80; }
+
+  .segment__secondary {
+    opacity: 0.5;
+  }
+
+  .segment__unselected {
+    fill: #ffffff80;
+  }
 
   path {
     transition: all 0.3s;

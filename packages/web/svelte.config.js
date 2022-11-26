@@ -1,21 +1,20 @@
 // @ts-check
-import { fileURLToPath } from 'url';
 import adapter from '@mpa/stack';
 import preprocess from 'svelte-preprocess';
+import { plugins as postcssPlugins } from './src/lib/styles/config.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   preprocess: preprocess({
-    stylus: {
-      prependData: `@require 'svelte-global';\n`,
-      paths: [fileURLToPath(new URL('./src/lib/styles', import.meta.url))]
+    postcss: {
+      plugins: postcssPlugins
     }
   }),
 
   kit: {
     adapter: adapter(),
-    prerender: {
-      enabled: false
+    env: {
+      dir: '../..'
     }
   }
 };

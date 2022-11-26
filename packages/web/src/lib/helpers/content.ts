@@ -2,6 +2,8 @@ import type { ContentBlock, ContentDocument, Page, Section, DiagramData, CardsBl
 import { slugify } from '@mpa/utils';
 import { env } from '$env/dynamic/public';
 
+if (!env.PUBLIC_UPLOAD_BASE_URL) throw new Error('Missing PUBLIC_UPLOAD_BASE_URL');
+
 export const staticUrl = (path: string) => (path ? `${env.PUBLIC_UPLOAD_BASE_URL}${path}` : null);
 
 export function createSections(document: ContentDocument) {

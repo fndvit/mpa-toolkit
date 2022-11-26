@@ -34,23 +34,22 @@
   <EditableText bind:value={text} {editable} placeholder="Body text..." />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .content {
     margin-top: 15px;
     overflow: auto;
     min-height: 50px;
-    max-height: 170px
+    max-height: 170px;
 
-    typography: summary-card-body;
+    @mixin font-responsive summary-card-body;
 
     :global(.body-column) &,
     :global(.editor-content) & {
-      typography: content-card-body;
+      @mixin font-responsive content-card-body;
     }
 
     :global(.no-heading) & {
-      margin-top: 0px;
+      margin-top: 0;
     }
 
     &::-webkit-scrollbar {
@@ -67,13 +66,12 @@
     }
 
     :global(.editable-content) {
-      --ui-color-placeholder: #00000044;
+      --editable-placeholder-color: #0004;
     }
-
   }
 
   .gradient {
-    --gradient-color: $colors.highlight-1;
+    --gradient-color: $c-highlight-1;
   }
 
   .gradient::before {
@@ -83,9 +81,8 @@
     height: 76%;
     left: inherit;
     z-index: 10;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, var(--gradient-color) 95%);
+    background: linear-gradient(180deg, rgb(0 0 0 / 0%) 50%, var(--gradient-color) 95%);
     transition: all 2s;
     pointer-events: none;
   }
-
 </style>

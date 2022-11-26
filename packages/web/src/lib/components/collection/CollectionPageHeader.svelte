@@ -31,8 +31,7 @@
   {/if}
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .container {
     position: relative;
     background-size: cover;
@@ -55,8 +54,9 @@
   }
 
   .text {
-    typography: h2-responsive;
-    color: #ffffff;
+    @mixin font-responsive h2;
+
+    color: #fff;
     margin: 0;
   }
 
@@ -67,20 +67,19 @@
   }
 
   .biography-text-area {
-
     padding: 20px var(--page-padding);
     height: auto;
 
     p {
-      color: #ffffff;
-      typography: p-mobile;
+      color: #fff;
+      font: $f-p-mobile;
       width: 850px;
     }
   }
 
   .biography-container {
-    background-color: alpha($colors.primary-blue, 0.7);
-    box-shadow: inset 0px 3px 16px rgba(0, 0, 0, 0.15);
+    background-color: color($c-primary-blue alpha(0.7));
+    box-shadow: inset 0 3px 16px rgb(0 0 0 / 15%);
   }
 
   .mpath-logo {
@@ -92,7 +91,6 @@
   }
 
   @media only screen and (max-width: 1024px) {
-
     .container {
       row-gap: 40px;
     }

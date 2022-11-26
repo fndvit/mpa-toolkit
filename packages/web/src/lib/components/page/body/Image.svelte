@@ -11,8 +11,7 @@
   <img src={staticUrl(block.attrs.src)} use:fallbackImage={imagePlaceholder} alt={block.attrs.alt} />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .image-full {
     margin-left: calc(-1 * var(--img-full-breakout-l, 200px));
     margin-right: calc(-1 * var(--img-full-breakout-r, 200px));
@@ -21,5 +20,4 @@
   .image img {
     width: 100%;
   }
-
 </style>

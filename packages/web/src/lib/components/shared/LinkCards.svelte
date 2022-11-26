@@ -2,15 +2,13 @@
   import type { LinkCardData } from '@mpa/db';
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import CardHeading from './CardHeading.svelte';
-  import LinkedCardBody from './LinkedCardBody.svelte';
+  import LinkCardLink from './LinkCardLink.svelte';
   import { IconButton } from '$lib/components/generic';
-
-
 
   export let cards: LinkCardData[];
   export let title = '';
   export let editable = false;
-  export let controls: SvelteNodeViewControls;
+  export let controls: SvelteNodeViewControls = null;
 
   const MAX_CARDS = 5;
 
@@ -22,21 +20,19 @@
   const onClickDeleteCard = (index: number) => {
     cards.splice(index, 1);
     cards = cards;
-    if(cards.length === 0) {
+    if (cards.length === 0) {
       controls.delete();
     }
   };
 </script>
 
-<div class="cards">
-  <div class="fixed-title">
-    <CardHeading bind:text={title} {editable} />
-  </div>
+<div class="linkcards">
+  <CardHeading bind:text={title} {editable} />
 
-  <ul class="cards-list">
+  <ul class="linkcards-links">
     {#each cards as card, i}
       <li class="card">
-        <LinkedCardBody bind:card {editable} on:deleteCard={() => onClickDeleteCard(i)} />
+        <LinkCardLink bind:card {editable} on:delete={() => onClickDeleteCard(i)} />
       </li>
     {/each}
   </ul>
@@ -50,27 +46,41 @@
   {/if}
 </div>
 
-<style lang="stylus">
-
-  card-styles($cardColor)
-    $textColor = dark($cardColor) ? white : black;
-    --card-color: $cardColor;
-    --caret-color: $textColor;
-    --dot-color: $textColor;
-    color: $textColor;
-  .cards {
-    padding: 1rem 0.5rem;
-    background-color: $colors.neutral-bg;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+<style lang="postcss">
+  .linkcards {
+    padding: 1.25rem 1.375rem;
+    background-color: $c-neutral-bg;
+    filter: drop-shadow(0 3px 8px rgb(0 0 0 / 15%));
     border-radius: 20px;
-  }
-  .card {
-    height: 100%;
 
-    margin-right: 1rem;
-    .image {
-      height: 156px;
-      background-color: green;
+    --ib-icon-bg: #0002;
+    --ib-hover-bg: #0002;
+    --ib-hover-border-color: #0002;
+    --ib-active-bg: #fff7;
+
+    :global(.heading) {
+      @mixin font-responsive h5;
+    }
+
+    :global(.page-editor--editing) & {
+      --editable-outline: 1px solid #0004;
+
+      &:hover :global(.editable-content),
+      :global(.editable-content.focused) {
+        --editable-bg: white;
+
+        box-shadow: 0 0 0 1px #0001;
+      }
+
+      &::before {
+        /* to make hoverstate bigger for the controls */
+        content: '';
+        position: absolute;
+        left: 100%;
+        top: 0;
+        height: 100%;
+        width: 75px;
+      }
     }
   }
 
@@ -78,34 +88,42 @@
     list-style: none;
     padding: 0;
     margin: 0;
-     li {
-      border-bottom: 1px solid $colors.neutral-light;
-     }
-     li:last-child {
+
+    li {
+      border-bottom: 1px solid $c-neutral-light;
+    }
+
+    li:last-child {
       border-bottom: none;
     }
   }
+
+  .linkcards-links {
+    display: flex;
+    flex-direction: column;
+    column-gap: 1rem;
+    margin-top: 1.8rem;
+  }
+
   .editor-buttons {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    z-index: 1;
+    background: $c-neutral-bg;
     display: flex;
     justify-content: right;
-    margin-right: 1rem;
-    padding: 10px;
+    padding: 0.1rem 1rem 0.4rem 1.8rem;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
     align-items: center;
     column-gap: 1rem;
+    transform: translateX(-50%) scaleY(1);
+    transition: transform 30ms ease-in-out;
+    transform-origin: top center;
 
-    :global(.icon-button) {
-      --ib-icon-bg: #00000022;
-      --ib-hover-bg: #00000022;
-      --ib-hover-border-color: #00000022;
-      --ib-active-bg: #ffffff77;
+    .linkcards:not(:hover) & {
+      transform: translateX(-50%) scaleY(0);
     }
   }
-
-  .fixed-title {
-    :global(.heading) {
-      padding: 0.5rem 1rem;
-      typography: h5;
-    }
-  }
-
 </style>

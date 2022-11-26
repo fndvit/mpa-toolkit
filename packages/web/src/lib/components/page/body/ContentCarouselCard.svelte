@@ -28,20 +28,24 @@
   </div>
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .content-carousel-card {
     width: 292px;
+
     a {
       display: flex;
       flex-direction: column;
       row-gap: 0.6rem;
       padding-bottom: 1rem;
     }
+
     a:hover {
       text-decoration: none;
+
       img {
         filter: brightness(105%);
       }
+
       .title {
         color: #555;
       }
@@ -58,7 +62,7 @@
   }
 
   .title {
-    typography: h5-light;
+    font: $f-h5-light;
     line-height: 1.5rem;
     padding-left: 0.15rem;
     color: black;
@@ -68,16 +72,17 @@
     .content-carousel-card {
       max-width: 210px;
     }
+
     .title {
       line-height: 22px;
     }
 
     .tags {
       overflow-x: scroll;
+
       > :global(.tag-container) {
         flex-wrap: nowrap;
       }
     }
   }
-
 </style>

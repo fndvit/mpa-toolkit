@@ -23,13 +23,13 @@
 </script>
 
 <div use:rootDOM contenteditable="false">
-  <Cards bind:cards={attrs.cards} bind:style={attrs.style} editable />
+  <Cards bind:cards={attrs.cards} bind:cardStyle={attrs.style} editable />
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   :global(.svelte-node-view--cards.ProseMirror-selectednode .cards) {
     filter: brightness(98%);
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.20);
-    outline: 1px solid #33333333;
+    box-shadow: 0 3px 16px rgb(0 0 0 / 20%);
+    outline: 1px solid #3333;
   }
 </style>

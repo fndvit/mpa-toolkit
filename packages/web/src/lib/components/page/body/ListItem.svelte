@@ -10,9 +10,3 @@
     <Block {block} />
   {/each}
 </li>
-
-<style lang="stylus">
-  // p {
-  //   typography: p-responsive;
-  // }
-</style>

@@ -99,6 +99,7 @@ export type CardData = {
 export type LinkCardData = {
   title: string;
   url: string;
+  img: string;
 };
 
 export type HomepageComponentName = 'lifecycle' | 'chapters' | 'search' | 'madlib' | 'casestudies';

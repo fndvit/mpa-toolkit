@@ -24,7 +24,7 @@
   {/if}
 </section>
 
-<style lang="stylus">
+<style lang="postcss">
 
   .collapsed > :global(.collapse-point ~ *:not(.expand-button-collapsed)) {
     display: none;

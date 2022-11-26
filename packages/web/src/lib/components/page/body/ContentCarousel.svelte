@@ -62,43 +62,40 @@
   <div class="opacity-div" />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .content-carousel {
     position: relative;
-    color: #6C767D;
+    color: #6c767d;
     line-height: 40px;
-    background-color: $colors.neutral-bg;
-    box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
-    border-radius: 40px 0px 0px 40px;
+    background-color: $c-neutral-bg;
+    box-shadow: inset 0 2px 12px rgb(0 0 0 / 5%);
+    border-radius: 40px 0 0 40px;
     padding: 0.5rem 0 2rem 1.5rem;
 
     :global(.splide__arrow) {
-      background: #ffffffdd;
+      background: #fffd;
     }
 
-    :global(.splide__arrow:disabled){
+    :global(.splide__arrow:disabled) {
       display: none;
     }
-
   }
 
   .title {
-    typography: h5;
+    font: $f-h5;
     color: black;
   }
 
   .opacity-div {
     height: 100%;
     width: 15%;
-    background: linear-gradient(to right, alpha($colors.neutral-bg, 0), $colors.neutral-bg);
+    background: linear-gradient(to right, color($c-neutral-bg alpha(0)), $c-neutral-bg);
     position: absolute;
     top: 0;
     right: 0;
   }
 
   @media screen and (max-width: 768px) {
-
     .content-carousel {
       :global(.splide__arrow) {
         transform: scale(0.75);
@@ -107,11 +104,8 @@
   }
 
   @media screen and (max-width: 840px) {
-
     .content-carousel {
       border-radius: 0;
     }
   }
-
-
 </style>

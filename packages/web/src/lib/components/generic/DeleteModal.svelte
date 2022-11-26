@@ -41,10 +41,10 @@
   </div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .modal {
     position: fixed;
-    z-index: modal;
+    z-index: $z-modal;
     top: 0;
     bottom: 0;
     right: 0;
@@ -53,8 +53,7 @@
     justify-content: center;
     align-items: center;
     pointer-events: none;
-
-    typography: h4-light;
+    font: $f-h4-light;
   }
 
   .contents {
@@ -99,10 +98,8 @@
       border: none;
 
       &:hover {
-        filter: brightness(105%)
+        filter: brightness(105%);
       }
     }
-
   }
-
 </style>

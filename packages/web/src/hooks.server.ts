@@ -15,10 +15,10 @@ const DEFAULT_CACHE = PRIVATE_CACHE;
 
 const ROUTE_CACHE = {
   routes: {
-    '': 's-maxage=604800, max-age=0', // index/homepage route
-    '[slug]': 's-maxage=604800, max-age=0',
-    search: 's-maxage=604800, max-age=0',
-    'globe.svg': 'max-age=604800'
+    '/': 's-maxage=604800, max-age=0', // index/homepage route
+    '/[slug]': 's-maxage=604800, max-age=0',
+    '/search': 's-maxage=604800, max-age=0',
+    '/globe.svg': 'max-age=604800'
   },
   regexp: [{ re: /^(api|cms)\b/, cache: PRIVATE_CACHE }]
 };
@@ -47,11 +47,11 @@ function getCacheHeaders(routeId: string, cacheKeys: App.Locals['cacheKeys']): C
 
 export const handle: Handle = async ({ event, resolve }) => {
   const seg = AWSXRay.getSegment()?.addNewSubsegment('handle');
-  const { routeId } = event;
+  const { route } = event;
   event.locals.user = await getUserFromCookie(event.request, event.setHeaders);
   seg?.addMetadata('user', event.locals.user);
 
-  if (/^api\b/.test(routeId) && !checkUserHasRoleForRoute(routeId, event.locals.user)) {
+  if (/^api\b/.test(route.id) && !checkUserHasRoleForRoute(route.id, event.locals.user)) {
     return json({ error: 'You do not have permission to access this page' }, { status: 400 });
   }
 
@@ -64,7 +64,7 @@ export const handle: Handle = async ({ event, resolve }) => {
   if (env.DISABLE_CACHE === 'true' || /^50\d$/.test(response.status.toString())) {
     response.headers.set('Cache-Control', PRIVATE_CACHE);
   } else {
-    const cacheHeaders = getCacheHeaders(event.routeId!, event.locals.cacheKeys);
+    const cacheHeaders = getCacheHeaders(route.id!, event.locals.cacheKeys);
     for (const [key, value] of Object.entries(cacheHeaders)) {
       if (value != null) response.headers.set(key, value);
     }

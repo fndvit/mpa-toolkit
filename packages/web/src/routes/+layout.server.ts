@@ -2,8 +2,8 @@ import { error, redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 import { checkUserHasRoleForRoute } from '$lib/auth';
 
-export const load: LayoutServerLoad = async ({ url, locals, routeId }) => {
-  const hasPerms = checkUserHasRoleForRoute(routeId, locals.user);
+export const load: LayoutServerLoad = async ({ url, locals, route }) => {
+  const hasPerms = checkUserHasRoleForRoute(route.id, locals.user);
   if (!hasPerms) {
     if (locals.user) throw error(400, 'You do not have permission to access this page');
     else {

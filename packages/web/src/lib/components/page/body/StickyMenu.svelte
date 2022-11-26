@@ -41,12 +41,11 @@
   {/each}
 </nav>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .sticky-menu {
-    background: $colors.neutral-bg;
-    box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
-    border-radius: 0px 0px 20px 20px;
+    background: $c-neutral-bg;
+    box-shadow: 0 1px 16px rgb(0 0 0 / 10%);
+    border-radius: 0 0 20px 20px;
     padding-top: 31px;
     padding-bottom: 29px;
     max-height: 70vh;
@@ -55,19 +54,17 @@
   }
 
   .menuoption {
-    typography: ui-small;
-    padding: 10px 30px 0px 30px;
+    font: $f-ui-small;
+    padding: 10px 30px 0;
     cursor: pointer;
 
-    &:hover {
+    &:hover:not(.active) {
       font-weight: 500;
-      letter-spacing: -0.005em; // to keep spacing consistent when bolding
+      letter-spacing: -0.005em;
     }
-
   }
 
   .active {
     font-weight: 700;
   }
-
 </style>

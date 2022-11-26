@@ -51,29 +51,31 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .search-path {
     stroke-width: inherit;
-    stroke-linecap:round;
-    stroke-linejoin:round;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 
-    .top &, .collection & {
-      stroke:#FFFFFF;
+    .top &,
+    .collection & {
+      stroke: #fff;
     }
 
     .inline & {
-      stroke:black;
+      stroke: black;
     }
   }
 
   .searchbar {
     position: relative;
-    typography: ui-large-responsive;
-    background: rgba(249, 249, 249, 0.01);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    @mixin font-responsive ui-large;
+
+    background: rgb(249 249 249 / 1%);
+    border: 1px solid rgb(255 255 255 / 30%);
     box-sizing: border-box;
-    box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 2px 8px rgb(0 0 0 / 10%);
     border-radius: 20px;
     padding: 5px 25px;
     overflow: hidden;
@@ -82,13 +84,13 @@
     justify-content: space-between;
 
     &.top {
-      typography: ui;
+      font: $f-ui;
       width: 290px;
-      padding: 0px 25px;
+      padding: 0 25px;
     }
 
     &.collection {
-      background: rgba(9, 110, 174, 0.5);
+      background: rgb(9 110 174 / 50%);
     }
   }
 
@@ -101,14 +103,14 @@
     display: flex;
     align-items: center;
 
-    .top &, .collection & {
-      color:#FFFFFF;
+    .top &,
+    .collection & {
+      color: #fff;
     }
 
     .inline & {
-      color: #000000;
+      color: #000;
     }
-
   }
 
   .search-icon {
@@ -125,26 +127,25 @@
   }
 
   .input-text {
-    padding: 10px 0px;
+    padding: 10px 0;
     display: inline-block;
     background: none;
     border: none;
     outline: none;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     width: 100rem;
 
-    .top &, .collection & {
-      color:#FFFFFF;
+    .top &,
+    .collection & {
+      color: #fff;
     }
 
     .inline & {
-      color: #000000;
+      color: #000;
     }
-
   }
 
-  +breakpoint(page, medium) {
-
+  @mixin breakpoint content, medium {
     .searchbar.top {
       padding: 5px 25px;
       width: fit-content;
@@ -158,14 +159,11 @@
     .search-icon {
       display: flex;
     }
-
   }
 
-
-  +breakpoint(page, small) {
-
+  @mixin breakpoint content, small {
     .searchbar.top {
-      padding: 0px 15px;
+      padding: 0 15px;
       width: fit-content;
 
       :focus {
@@ -176,8 +174,8 @@
 
     .searchbar {
       border-radius: 70px;
-      padding-bottom: 0px;
-      padding-top: 0px;
+      padding-bottom: 0;
+      padding-top: 0;
     }
 
     .placeholder {
@@ -185,7 +183,5 @@
         display: none;
       }
     }
-
   }
-
 </style>

@@ -14,13 +14,11 @@
   <TagsEditor tags={data.tags} />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .container {
-    width: 100%;
     box-sizing: border-box;
     padding: 1rem 6rem;
-    typography: ui;
+    font: $f-ui;
     width: fit-content;
     margin: 0 auto;
   }
@@ -31,13 +29,12 @@
     column-gap: 30px;
 
     h1 {
-      typography: h2-responsive;
+      @mixin font-responsive h2;
     }
 
     .arrow {
-     color: black;
-     font-size: 32px;
+      color: black;
+      font-size: 32px;
     }
   }
-
 </style>

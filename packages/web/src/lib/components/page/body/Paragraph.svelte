@@ -8,8 +8,8 @@
   {#each block.content || [] as child}<Inline block={child} />{/each}
 </p>
 
-<style lang="stylus">
+<style lang="postcss">
   p {
-    typography: p-responsive;
+    @mixin font-responsive p;
   }
 </style>

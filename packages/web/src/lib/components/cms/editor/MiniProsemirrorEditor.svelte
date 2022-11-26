@@ -69,7 +69,7 @@
 
 <style lang="postcss">
   .mini-editor {
-    --ui-color-placeholder: $c-editor-placeholder;
+    --editable-placeholder-color: $c-editor-placeholder;
 
     position: relative;
     word-wrap: break-word;
@@ -102,7 +102,7 @@
       position: absolute;
       content: attr(data-placeholder);
       pointer-events: none;
-      color: var(--ui-color-placeholder);
+      color: var(--editable-placeholder-color);
     }
   }
 </style>

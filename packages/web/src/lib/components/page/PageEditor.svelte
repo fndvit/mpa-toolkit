@@ -166,6 +166,7 @@
 <Popper bind:load={showElTooltip} />
 <div
   class="page page-editor"
+  class:page-editor--editing={!preview}
   class:preview
   class:is-new-page={isNewPage}
   data-pagetype={getPageTypeStr(page)}

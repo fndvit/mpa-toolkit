@@ -92,10 +92,12 @@
 </div>
 
 <style lang="postcss">
-  @define-mixin card-styles $cardColor, $textColor {
+  @define-mixin card-styles $cardColor, $textColor, $arrowButtonColor: $cardColor {
     --card-color: $cardColor;
-    --caret-color: $textColor;
+    --editable-caret: $textColor;
+    --editable-hover-bg: #fff2;
     --dot-color: $textColor;
+    --arrow-button-color: $arrowButtonColor;
 
     color: $textColor;
   }
@@ -121,7 +123,11 @@
 
     :global(.splide__arrow) {
       position: static;
-      background-color: var(--card-color);
+      background-color: var(--arrow-button-color);
+
+      &:hover {
+        filter: grayscale(10%) brightness(105%);
+      }
     }
 
     :global(.splide__arrow:disabled) {
@@ -139,7 +145,7 @@
 
     :global(.body-column) &,
     :global(.editor-content) & {
-      @mixin card-styles $c-primary-blue, white;
+      @mixin card-styles $c-primary-blue, white, color($c-primary-blue lightness(+10%) saturation(-25%));
     }
 
     :global(.key-learnings .card-content) & {

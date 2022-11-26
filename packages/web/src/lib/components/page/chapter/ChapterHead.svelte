@@ -57,7 +57,7 @@
   }
 
   .chapter-head {
-    --ui-color-placeholder: #fff5;
+    --editable-placeholder-color: #fff5;
 
     padding: 2rem 0 0;
     background: $c-primary-blue;
@@ -84,6 +84,8 @@
 
   .summary {
     @mixin font-responsive p-large;
+
+    --editable-hover-bg: #fff1;
 
     font: $f-p-large;
     grid-area: summary;

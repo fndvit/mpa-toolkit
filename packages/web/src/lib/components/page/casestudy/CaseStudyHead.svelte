@@ -60,7 +60,7 @@
   .meta-container {
     padding: 35px 0;
 
-    --ui-color-placeholder: #fff5;
+    --editable-placeholder-color: #fff5;
 
     position: relative;
     background-color: $c-deep-blue;
@@ -96,7 +96,7 @@
     }
   }
 
-  :global(.page-editor) .keylearnings-lifecycle {
+  :global(.page-editor--editing) .keylearnings-lifecycle {
     margin-top: 20px;
   }
 

@@ -7,6 +7,16 @@
   export let focused: boolean = undefined;
 
   let el: HTMLElement;
+  const handleContentEditableKeyDown: svelte.JSX.KeyboardEventHandler<HTMLDivElement> = e => {
+    if (e.key === 'a' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+  };
   const handleContentEditableKeyPress: svelte.JSX.KeyboardEventHandler<HTMLDivElement> = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -22,10 +32,12 @@
 {#if editable}
   <div
     class="editable-content editable-text"
+    class:editable-content--editing={editable}
     bind:this={el}
     use:addFocusClass={f => (focused = f)}
     use:textOnlyPaste
     on:keypress
+    on:keydown={handleContentEditableKeyDown}
     on:keydown
     on:keypress={handleContentEditableKeyPress}
     on:blur
@@ -41,19 +53,21 @@
 <style lang="postcss">
   .editable-text {
     color: inherit;
-    background-color: inherit;
-    caret-color: var(--caret-color, white);
+    background-color: var(--editable-bg, inherit);
+    caret-color: var(--editable-caret, white);
+
+    &.editable-content--editing:hover {
+      background-color: var(--editable-hover-bg, inherit);
+    }
 
     &:focus {
-      outline: var(--outline-width, 2px) solid var(--outline-color, #fff8);
-      border-radius: 4px;
-      background-color: var(--ui-color-focus);
+      outline: var(--editable-outline, 1px solid #fff8);
     }
 
     &[data-placeholder] {
       &::before {
         content: attr(data-placeholder);
-        color: var(--ui-color-placeholder, #fff4);
+        color: var(--editable-placeholder-color, #fff4);
         pointer-events: none;
       }
 

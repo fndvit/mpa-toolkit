@@ -37,7 +37,7 @@
   "devDependencies": {
     "@mpa/db": "workspace:*",
     "@mpa/events": "workspace:*",
-    "@sveltejs/kit": "1.0.0-next.417",
+    "@sveltejs/kit": "1.0.0-next.561",
     "@types/rimraf": "^3.0.2",
     "aws-cdk": "^2.50.0",
     "tsup": "^6.4.0"

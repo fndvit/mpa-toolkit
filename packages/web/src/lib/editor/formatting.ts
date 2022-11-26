@@ -97,7 +97,6 @@ export const formattingPlugin = new FormattingPlugin({
       msg: 'Blocks should not start with a space',
       check: node => {
         const m = /^\s+/.exec(node.textContent);
-        if (/Behavioural changes/g.exec(node.textContent)) console.log(m, node.textContent);
         return m ? [{ from: 0, to: m[0].length + 1 }] : false;
       }
     },
@@ -139,7 +138,7 @@ export const formattingPlugin = new FormattingPlugin({
       blocks: ['linkCards'],
       msg: 'LinkCards heading mandatory',
 
-      check: (node) => node.attrs.title?.length === 0
+      check: node => node.attrs.title?.length === 0
     }
   }
 });

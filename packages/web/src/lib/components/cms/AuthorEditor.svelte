@@ -68,8 +68,8 @@
     }
 
     :global(.editable-text) {
-      --caret-color: $c-neutral-black;
-      --outline-color: none;
+      --editable-caret: $c-neutral-black;
+      --editable-outline: none;
 
       flex: 1;
       margin-right: 15px;

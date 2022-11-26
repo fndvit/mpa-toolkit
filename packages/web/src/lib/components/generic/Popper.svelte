@@ -1,42 +1,46 @@
 <script lang="ts">
   import { createPopper, type Instance as PopperInstance, type Placement } from '@popperjs/core';
 
-  export let hoverEl: HTMLElement = null;
-
   export const load = (el: HTMLElement) => update(el);
 
-  let popper: { instance: PopperInstance; destroy: () => void } = null;
+  let tooltip: { popper: PopperInstance; el: HTMLElement; observer: MutationObserver } = null;
   let message: string;
 
   let tooltipEl: HTMLDivElement;
 
-  function update(el: HTMLElement) {
-    if (el === hoverEl) return;
-    if (popper) {
-      popper && popper.destroy();
-      popper = null;
+  const destroy = () => {
+    tooltipEl.style.visibility = 'hidden';
+    if (tooltip) {
+      tooltip.popper.destroy();
+      tooltip.observer.disconnect();
+      tooltip = null;
     }
+  };
+
+  function update(el: HTMLElement) {
+    if (tooltip?.el === el) return;
+    if (tooltip) destroy();
 
     if (el) {
       message = el.dataset.hoverMsg;
       const targetSelector = el.getAttribute('data-tooltip-target');
       const target = targetSelector ? document.querySelector(targetSelector) : el;
 
-      const instance = createPopper(target, tooltipEl, {
-        placement: (el.getAttribute('data-tooltip-placement') as Placement) || 'auto',
-        onFirstUpdate: () => (tooltipEl.style.visibility = 'visible'),
-        modifiers: [{ name: 'offset', options: { offset: [0, 12] } }]
-      });
-      const destroy = () => {
-        tooltipEl.style.visibility = 'hidden';
-        instance.destroy();
+      tooltip = {
+        popper: createPopper(target, tooltipEl, {
+          placement: (el.getAttribute('data-tooltip-placement') as Placement) || 'auto',
+          onFirstUpdate: () => (tooltipEl.style.visibility = 'visible'),
+          modifiers: [{ name: 'offset', options: { offset: [0, 12] } }]
+        }),
+        el,
+        observer: new MutationObserver(() => {
+          if (!document.body.contains(tooltip.el)) destroy();
+        })
       };
+      tooltip.observer.observe(tooltip.el.parentElement, { childList: true });
       el.addEventListener('mouseleave', destroy);
-      popper = { instance, destroy };
     }
   }
-
-  $: update(hoverEl);
 </script>
 
 <div class="tooltip" bind:this={tooltipEl} role="tooltip">

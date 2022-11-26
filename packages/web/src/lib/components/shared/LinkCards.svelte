@@ -48,15 +48,16 @@
 
 <style lang="postcss">
   .linkcards {
-    padding: 1.25rem 1.375rem;
-    background-color: $c-neutral-bg;
-    filter: drop-shadow(0 3px 8px rgb(0 0 0 / 15%));
-    border-radius: 20px;
-
+    --editable-caret: black;
     --ib-icon-bg: #0002;
     --ib-hover-bg: #0002;
     --ib-hover-border-color: #0002;
     --ib-active-bg: #fff7;
+
+    padding: 1.25rem 1.375rem;
+    background-color: $c-neutral-bg;
+    filter: drop-shadow(0 3px 8px rgb(0 0 0 / 15%));
+    border-radius: 20px;
 
     :global(.heading) {
       @mixin font-responsive h5;

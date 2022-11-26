@@ -52,7 +52,7 @@ export class Generator {
       .map<ContentBlock[]>(() => [
         {
           type: 'heading',
-          attrs: { level: 1, showmore: 'Show more on this topic' },
+          attrs: { level: 1 },
           content: [{ text: this.headingLorem.generateSentences(1), type: 'text' }]
         },
         ...new Array(this.randInt(1, 3)).fill(0).map<ParagraphBlock>(() => ({

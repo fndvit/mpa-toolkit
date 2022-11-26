@@ -14,7 +14,7 @@ export type FormattingError = {
 type NodeRule = {
   blocks: NodeName[];
   name: string;
-  type?: 'error' | 'todo';
+  type: 'error' | 'todo';
   msg: string;
   inline?: boolean;
   tooltipPos?: Placement;
@@ -99,19 +99,16 @@ export const formattingPlugin = new FormattingPlugin({
   rules: {
     'leading-space': {
       blocks: ['paragraph', 'heading'],
+      type: 'error',
       msg: 'Blocks should not start with a space',
       check: node => {
         const m = /^\s+/.exec(node.textContent);
         return m ? [{ from: 0, to: m[0].length + 1 }] : false;
       }
     },
-    'heading-readmore': {
-      blocks: ['heading'],
-      msg: 'Main sections need "read more" button text',
-      check: node => (node.attrs.level === 1 && node.attrs.showmore?.length === 0 ? true : false)
-    },
     'custom-bullets': {
       blocks: ['paragraph'],
+      type: 'error',
       msg: 'Use built-in bullet points',
       check: node => {
         const m = /^ *● */.exec(node.textContent);
@@ -130,6 +127,7 @@ export const formattingPlugin = new FormattingPlugin({
     },
     'double-space': {
       blocks: ['paragraph', 'heading'],
+      type: 'error',
       inline: true,
       msg: 'Multiple spaces',
       check: (node, parent) => {
@@ -141,9 +139,17 @@ export const formattingPlugin = new FormattingPlugin({
     },
     'link-cards-heading': {
       blocks: ['linkcards'],
+      type: 'error',
       msg: 'LinkCards require a heading',
       tooltipPos: 'top',
       check: node => node.attrs.title?.length === 0
+    },
+    'collapse-text': {
+      blocks: ['collapse'],
+      type: 'error',
+      tooltipTarget: '.expand-button button',
+      msg: 'Expand buttons should have a custom label',
+      check: node => (node.attrs.showmore?.length === 0 ? true : false)
     }
   }
 });

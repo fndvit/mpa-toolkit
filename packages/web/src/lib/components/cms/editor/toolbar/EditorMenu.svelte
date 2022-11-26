@@ -12,6 +12,7 @@
   import { IconButton } from '$lib/components/generic';
   import { schema } from '$lib/editor/schema';
   import { createEmptyCard, createEmptyLinkCard, createEmptyDiagram } from '$lib/helpers/content';
+  import AddCollapseButton from './AddCollapseButton.svelte';
 
   export let editorState: EditorState;
 
@@ -56,6 +57,7 @@
     <MenuSeperator />
     <IconButton on:click={insertReminder} icon="notifications" title="Add reminder" />
     <MenuSeperator />
+    <AddCollapseButton {editorState} />
   </div>
 
   <div class="right-section">

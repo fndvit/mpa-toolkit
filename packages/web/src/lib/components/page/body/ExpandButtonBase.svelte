@@ -51,6 +51,10 @@
     svg path {
       stroke: $c-neutral-black;
     }
+
+    :global(.problem) & {
+      outline: 5px solid #f004;
+    }
   }
 
   @media screen and (max-width: 768px) {

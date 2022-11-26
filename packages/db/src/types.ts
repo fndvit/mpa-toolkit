@@ -185,7 +185,6 @@ export type HeadingBlock = {
   type: 'heading';
   attrs: {
     level: 1 | 2 | 3 | 4 | 5 | 6;
-    showmore: string;
   };
   content: InlineBlock[];
 };
@@ -215,6 +214,13 @@ export type DiagramBlock = {
   type: 'diagram';
   attrs: DiagramData;
 };
+
+export type CollapseBlock = {
+  type: 'collapse';
+  attrs: {
+    showmore: string;
+  };
+}
 
 export type ImageBlock = {
   type: 'image';
@@ -249,7 +255,8 @@ export type ContentBlock =
   | BulletListBlock
   | OrderedListBlock
   | ImageBlock
-  | DiagramBlock;
+  | DiagramBlock
+  | CollapseBlock;
 
 // ***********************
 //          Marks
@@ -289,7 +296,6 @@ export type ContentDocument = {
 export type Section = {
   id: string;
   title: string;
-  topic: string;
   blocks: ContentBlock[];
 };
 

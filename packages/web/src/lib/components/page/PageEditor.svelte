@@ -317,6 +317,7 @@
     display: flex;
     column-gap: 10px;
     align-items: center;
+    font: $f-ui-small;
 
     :global(.message) {
       margin-right: 10px;
@@ -350,7 +351,7 @@
     :global(.prosemirror-container) {
       flex: 1;
 
-      :global(.problem) {
+      :global(.problem:not(.svelte-node-view)) {
         background-color: #fdd;
         cursor: pointer;
       }

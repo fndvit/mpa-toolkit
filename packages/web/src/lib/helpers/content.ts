@@ -1,4 +1,4 @@
-import type { ContentBlock, ContentDocument, Page, Section, DiagramData, CardsBlock, LinkCardsBlock } from '@mpa/db';
+import type { ContentBlock, ContentDocument, Page, Section, DiagramData, CardsBlock, LinkCardsBlock, CollapseBlock } from '@mpa/db';
 import { slugify } from '@mpa/utils';
 import { env } from '$env/dynamic/public';
 
@@ -13,7 +13,6 @@ export function createSections(document: ContentDocument) {
       sections.push({
         id: isSectionHeading ? `h${sections.length}-${slugify(block.content[0].text)}` : null,
         title: isSectionHeading ? block.content[0].text : null,
-        topic: isSectionHeading ? block.attrs.showmore : null,
         blocks: [block]
       });
     } else {
@@ -98,6 +97,10 @@ export function createEmptyCard(): CardsBlock['attrs'] {
 
 export function createEmptyLinkCard(): LinkCardsBlock['attrs'] {
   return { title: '', cards: [{ title: '', url: '' }] };
+}
+
+export function createEmptyCollapse(): CollapseBlock['attrs'] {
+  return { showmore: '' };
 }
 
 export function getSectionSize(section: Section): number {

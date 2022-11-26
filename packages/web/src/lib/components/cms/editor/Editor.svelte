@@ -22,7 +22,7 @@
       ...plugins(schema),
       svelteNodeViewPlugin({
         nodes: {
-          linkCards: LinkCardsView,
+          linkcards: LinkCardsView,
           cards: CardsView,
           image: ImageView,
           heading: HeadingView,

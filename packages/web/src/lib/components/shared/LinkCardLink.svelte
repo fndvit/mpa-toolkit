@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { LinkCardData } from '@mpa/db';
-  import { createEventDispatcher, tick } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import Spinner from '../generic/Spinner.svelte';
   import { EditableText, IconButton } from '$lib/components/generic';
   import * as api from '$lib/api';
@@ -38,7 +38,7 @@
     loading = false;
   };
 
-  const onClickCancelUrlEdit = async (e: Event) => {
+  const onClickCancelUrlEdit = async () => {
     editUrl = card.url;
     editingURL = false;
   };
@@ -160,8 +160,7 @@
       display: flex;
       width: 0;
       overflow: hidden;
-      transition: all 100ms ease-in-out;
-      filter: drop-shadow(0 0 0.25rem rgb(0 0 0 / 20%));
+      filter: drop-shadow(0 0 0.25rem rgb(0 0 0 / 10%));
 
       > * {
         flex: 1;
@@ -169,6 +168,12 @@
 
       input {
         font-size: 12px;
+        border: none;
+        outline: 1px solid #ccc;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        margin-right: 1px;
+        padding-left: 5px;
       }
     }
 
@@ -185,6 +190,7 @@
   .linkcard-link--show-url .linkcard-url form,
   .linkcard-link:hover .linkcard-url form {
     width: 400px;
+    overflow: visible;
   }
 
   .linkcard-text {

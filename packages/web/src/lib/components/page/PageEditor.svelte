@@ -170,7 +170,7 @@
   class:preview
   class:is-new-page={isNewPage}
   data-pagetype={getPageTypeStr(page)}
-  use:onHoverEl={['problem', el => showElTooltip(el)]}
+  use:onHoverEl={['.problem', el => showElTooltip(el)]}
 >
   <div class="meta">
     <div class="top-controls">

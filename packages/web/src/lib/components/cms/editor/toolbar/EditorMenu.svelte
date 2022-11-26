@@ -23,7 +23,7 @@
   };
 
   const insertLinkCards = () => {
-    const tr = editorState.tr.replaceSelectionWith(schema.nodes.linkCards.createAndFill(createEmptyLinkCard()));
+    const tr = editorState.tr.replaceSelectionWith(schema.nodes.linkcards.createAndFill(createEmptyLinkCard()));
     view.dispatch(tr);
   };
 

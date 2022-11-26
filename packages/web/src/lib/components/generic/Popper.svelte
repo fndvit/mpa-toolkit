@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createPopper, type Instance as PopperInstance } from '@popperjs/core';
+  import { createPopper, type Instance as PopperInstance, type Placement } from '@popperjs/core';
 
   export let hoverEl: HTMLElement = null;
 
@@ -11,6 +11,7 @@
   let tooltipEl: HTMLDivElement;
 
   function update(el: HTMLElement) {
+    if (el === hoverEl) return;
     if (popper) {
       popper && popper.destroy();
       popper = null;
@@ -18,8 +19,11 @@
 
     if (el) {
       message = el.dataset.hoverMsg;
-      const instance = createPopper(el, tooltipEl, {
-        placement: 'auto',
+      const targetSelector = el.getAttribute('data-tooltip-target');
+      const target = targetSelector ? document.querySelector(targetSelector) : el;
+
+      const instance = createPopper(target, tooltipEl, {
+        placement: (el.getAttribute('data-tooltip-placement') as Placement) || 'auto',
         onFirstUpdate: () => (tooltipEl.style.visibility = 'visible'),
         modifiers: [{ name: 'offset', options: { offset: [0, 12] } }]
       });
@@ -42,6 +46,7 @@
 
 <style lang="postcss">
   .tooltip {
+    pointer-events: none;
     font: $f-ui;
     background: white;
     color: #333;

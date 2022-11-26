@@ -118,12 +118,10 @@
     border-bottom-left-radius: 15px;
     align-items: center;
     column-gap: 1rem;
-    transform: translateX(-50%) scaleY(1);
-    transition: transform 30ms ease-in-out;
-    transform-origin: top center;
+    transform: translateX(-50%);
 
     .linkcards:not(:hover) & {
-      transform: translateX(-50%) scaleY(0);
+      display: none;
     }
   }
 </style>

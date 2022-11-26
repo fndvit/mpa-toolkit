@@ -1,6 +1,7 @@
 import type { Node } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
+import type { Placement } from '@popperjs/core';
 import type { NodeName } from './schema';
 import { findAllMatches } from '$lib/helpers/utils';
 
@@ -16,6 +17,8 @@ type NodeRule = {
   type?: 'error' | 'todo';
   msg: string;
   inline?: boolean;
+  tooltipPos?: Placement;
+  tooltipTarget?: string;
   check: (node: Node, parent: Node) => { from: number; to: number }[] | boolean;
 };
 
@@ -33,21 +36,30 @@ class FormattingPlugin extends Plugin<{ decorations: DecorationSet; problems: Fo
         decorations: state => this.getState(state).decorations
       }
     });
-    Object.entries(options.rules).forEach(([name, rule]) =>
-      this.addNodeRule(name, rule.blocks, rule.type || 'error', rule.inline, rule.msg, rule.check)
-    );
+    Object.entries(options.rules).forEach(([name, rule]) => this.addNodeRule({ name, ...rule }));
   }
 
   runFormatting(doc: Node) {
     const problems = this.checkFormatting(doc);
-    const decos = problems.map(prob =>
-      Decoration.inline(prob.from, prob.to, {
-        class: 'problem',
-        'data-hover-msg': prob.rule.msg,
-        'data-problem-name': prob.rule.name,
-        'data-problem-type': prob.rule.type
+    const decos = problems
+      .map(prob => {
+        // if pos is a prosemirror node
+        const node = doc.nodeAt(prob.from);
+        return {
+          ...prob,
+          decorationFn: node && node.nodeSize === prob.to - prob.from ? 'node' : 'inline'
+        };
       })
-    );
+      .map(prob =>
+        Decoration[prob.decorationFn](prob.from, prob.to, {
+          class: 'problem',
+          'data-hover-msg': prob.rule.msg,
+          'data-problem-name': prob.rule.name,
+          'data-problem-type': prob.rule.type,
+          'data-tooltip-placement': prob.rule.tooltipPos,
+          'data-tooltip-target': prob.rule.tooltipTarget
+        })
+      );
     return { decorations: DecorationSet.create(doc, decos), problems };
   }
 
@@ -71,20 +83,13 @@ class FormattingPlugin extends Plugin<{ decorations: DecorationSet; problems: Fo
     return result;
   }
 
-  addNodeRule(
-    name: string,
-    blocks: NodeName | NodeName[],
-    type: NodeRule['type'],
-    inline: boolean,
-    msg: NodeRule['msg'],
-    check: NodeRule['check']
-  ) {
-    if (!Array.isArray(blocks)) {
-      this.addNodeRule(name, [blocks], type, inline, msg, check);
+  addNodeRule(rule: NodeRule) {
+    if (!Array.isArray(rule.blocks)) {
+      this.addNodeRule({ ...rule, blocks: [rule.blocks] });
     } else {
-      blocks.forEach(nodeType => {
+      rule.blocks.forEach(nodeType => {
         this.rules[nodeType] = this.rules[nodeType] ?? [];
-        this.rules[nodeType].push({ name, type, blocks, msg, inline, check });
+        this.rules[nodeType].push(rule);
       });
     }
   }
@@ -130,9 +135,9 @@ export const formattingPlugin = new FormattingPlugin({
       }
     },
     'link-cards-heading': {
-      blocks: ['linkCards'],
-      msg: 'LinkCards heading mandatory',
-
+      blocks: ['linkcards'],
+      msg: 'LinkCards require a heading',
+      tooltipPos: 'top',
       check: node => node.attrs.title?.length === 0
     }
   }

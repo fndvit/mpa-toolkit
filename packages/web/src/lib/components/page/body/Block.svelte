@@ -16,7 +16,7 @@
     heading: Heading,
     paragraph: Paragraph,
     cards: TextSlider,
-    linkCards: LinkSlider,
+    linkcards: LinkSlider,
     image: Image,
     bullet_list: BulletList,
     ordered_list: OrderedList,

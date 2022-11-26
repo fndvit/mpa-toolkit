@@ -120,14 +120,11 @@ export function insertInTextArea(text: string, el: HTMLInputElement) {
   el.setSelectionRange(start + text.length, start + text.length);
 }
 
-export const onHoverEl = (node: HTMLElement, [className, cb]: [string, (el: HTMLElement) => void]) => {
+export const onHoverEl = (node: HTMLElement, [selector, cb]: [string, (el: HTMLElement) => void]) => {
   let problemEl: HTMLElement;
   node.addEventListener('mouseover', e => {
-    const isProblemEl = e.target instanceof HTMLElement && e.target.className === className;
-    if (isProblemEl) {
-      problemEl = e.target;
-      cb(problemEl);
-    }
+    const problemEl = e.target instanceof HTMLElement && e.target.closest(selector);
+    if (problemEl && problemEl instanceof HTMLElement) cb(problemEl);
   });
   const observer = new MutationObserver(mutations => {
     mutations.forEach(m => {

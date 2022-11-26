@@ -19,6 +19,11 @@
     outline: 1px solid #3333;
   }
 
+  :global(.svelte-node-view--linkcards[data-problem-name='link-cards-heading']) {
+    outline: 5px solid #f004;
+    border-radius: 20px;
+  }
+
   div:hover {
     position: relative;
     z-index: 1;

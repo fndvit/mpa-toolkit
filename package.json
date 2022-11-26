@@ -14,6 +14,7 @@
     "test": "pnpm -F @mpa/db run test",
     "gen": "prisma generate",
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
+    "lint:css": "pnpm -F @mpa/web run lint:css",
     "format": "prettier --write --plugin-search-dir=. .",
     "docker:up": "docker-compose -p mpa up -d",
     "docker:down": "docker-compose -p mpa down",

@@ -66,17 +66,19 @@
   {/if}
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .globe-editor {
     cursor: pointer;
+
     &:hover {
       filter: brightness(105%);
     }
+
     :global(.spinner) {
       --spinner-color: white;
       --spinner-size: 50px;
       --spinner-thickness: 4px;
+
       position: absolute;
       left: 0;
       right: 0;
@@ -103,19 +105,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: $colors.deep-blue;
+    background-color: $c-deep-blue;
     text-align: center;
-    box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 2px 12px rgb(0 0 0 / 10%);
     padding: 0 2px;
     column-gap: 1px;
-    --ib-color: rgb(112, 167, 112);
+
+    --ib-color: rgb(112 167 112);
     --ib-icon-bg: none;
-    --ib-hover-icon-bg: #ffffff22;
+    --ib-hover-icon-bg: #fff2;
     --ib-bg-color: transparent;
 
     :global(.icon-button) {
-      border: 1px solid #ffffff11;
+      border: 1px solid #fff1;
     }
+
     :global(.editable-content) {
       font-size: 12px;
       padding: 0 0.5rem;
@@ -123,18 +127,21 @@
       white-space: nowrap;
       overflow: hidden;
     }
+
     &.wiggle {
       animation: wiggle 100ms ease-in-out infinite;
-      color: rgb(194, 87, 87);
+      color: rgb(194 87 87);
     }
   }
   @keyframes wiggle {
     0% {
       transform: translateX(0);
     }
+
     50% {
       transform: translateX(-2px);
     }
+
     100% {
       transform: translateX(0);
     }
@@ -150,9 +157,9 @@
     width: fit-content;
     height: fit-content;
     font-size: 2rem;
+
     .globe-editor:not(:hover) & {
       display: none;
     }
   }
-
 </style>

@@ -11,17 +11,22 @@
   {#each block.content as child}<Inline block={child} />{/each}
 </svelte:element>
 
-<style lang="stylus">
+<style lang="postcss">
   .block-h1 {
-    typography: h2-responsive;
+    @mixin font-responsive h2;
+
     margin: 2rem 0;
   }
+
   .block-h2 {
-    typography: h3-responsive;
+    @mixin font-responsive h3;
+
     margin: 2rem 0;
   }
+
   .block-h3 {
-    typography: h4-graphic-responsive;
+    @mixin font-responsive h4-graphic;
+
     margin: 2rem 0;
   }
 </style>

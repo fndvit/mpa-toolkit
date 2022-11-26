@@ -16,7 +16,7 @@
   style="background: #b0bec6;"
 />
 
-<style lang="stylus">
+<style lang="postcss">
   img {
     border-radius: 50%;
     width: 66px;

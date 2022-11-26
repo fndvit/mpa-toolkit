@@ -34,12 +34,11 @@
   />
 </div>
 
-<style lang="stylus">
-
-
+<style lang="postcss">
   .icon-button-container {
     position: relative;
   }
+
   .icon-button {
     display: flex;
     align-items: center;
@@ -59,10 +58,6 @@
       width: var(--ib-size, 2rem);
     }
 
-    &:not(:disabled):hover {
-      text-decoration: none;
-    }
-
     &[data-icon][data-text] {
       padding: 0 10px 0 0;
     }
@@ -80,7 +75,7 @@
       font-size: var(--ib-icon-size, 1rem);
       width: var(--ib-size, 2rem);
       height: var(--ib-size, 2rem);
-      background-color: var(--ib-icon-bg, #33333355);
+      background-color: var(--ib-icon-bg, #3335);
       border-radius: 3px;
     }
 
@@ -97,26 +92,25 @@
 
     &:not(:disabled) {
       cursor: pointer;
+
       &:hover {
+        text-decoration: none;
+
         &:not(.active) {
-          &[data-icon]::before {
-            filter: var(--ib-hover-filter);
-          }
           color: var(--ib-hover-color, var(--ib-color));
           background: var(--ib-hover-bg, var(--ib-bg));
           border: var(--ib-hover-border, 1px solid transparent);
+        }
 
-          &[data-icon]::before {
-            background-color: var(--ib-hover-icon-bg, var(--ib-icon-bg));
-          }
+        &[data-icon]::before {
+          filter: var(--ib-hover-filter);
+          background-color: var(--ib-hover-icon-bg, var(--ib-icon-bg));
         }
       }
     }
 
     &:disabled {
       opacity: 0.5;
-
     }
   }
-
 </style>

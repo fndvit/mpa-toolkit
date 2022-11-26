@@ -71,22 +71,22 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .milestones {
     padding-bottom: 40px;
 
-    :global(.splide__arrow:disabled){
+    :global(.splide__arrow:disabled) {
       display: none;
     }
 
-    :global(.splide__arrow--prev){
+    :global(.splide__arrow--prev) {
       transform: translateX(-5rem) scale(0.8);
     }
 
-    :global(.splide__arrow--next){
+    :global(.splide__arrow--next) {
       transform: translateX(5rem) scale(0.8);
     }
+
     &:not(:hover) .milestones-title :global(.icon-button) {
       visibility: hidden;
     }
@@ -98,67 +98,63 @@
     height: 3px;
     width: 100vw;
     transform: translateY(30px);
+
     line {
-      stroke:$colors.highlight-1;
-      stroke-width:3;
+      stroke: $c-highlight-1;
+      stroke-width: 3;
     }
   }
 
   .milestones-title {
-    typography: h4-graphic;
+    font: $f-h4-graphic;
     display: flex;
     column-gap: 20px;
     align-items: center;
-    color: #FFFFFF;
+    color: #fff;
     padding-top: 25px;
     padding-bottom: 15px;
+
     :global(.icon-button) {
-      --ib-color: #ffffffee;
-      --ib-hover-bg: #00000011;
+      --ib-color: #fffe;
+      --ib-hover-bg: #0001;
       --ib-size: 1.5rem;
     }
   }
 
-  +breakpoint(page, medium) {
-
+  @mixin breakpoint content, medium {
     .milestones {
-
-      :global(.splide__arrow--prev){
-        top: 0rem;
+      :global(.splide__arrow--prev) {
+        top: 0;
         left: auto;
         right: 55px;
-        transform: translateY(-50px) scale(0.80) !important;
+        transform: translateY(-50px) scale(0.8) !important;
       }
 
-      :global(.splide__arrow--next){
-        top: 0rem;
+      :global(.splide__arrow--next) {
+        top: 0;
         left: auto;
-        right: 0rem;
-        transform: translateY(-50px) scale(0.80) !important;
+        right: 0;
+        transform: translateY(-50px) scale(0.8) !important;
       }
 
-      :global(.splide__arrow:disabled){
-        display:flex;
+      :global(.splide__arrow:disabled) {
+        display: flex;
         pointer-events: none;
         opacity: 0.3;
       }
     }
-
   }
 
-  +breakpoint(page, small) {
-
+  @mixin breakpoint content, small {
     .milestones {
-
-      :global(.splide__arrow--prev){
+      :global(.splide__arrow--prev) {
         right: 45px;
         transform: translateY(-50px) scale(0.65) !important;
       }
-      :global(.splide__arrow--next){
+
+      :global(.splide__arrow--next) {
         transform: translateY(-50px) scale(0.65) !important;
       }
     }
-
   }
-
 </style>

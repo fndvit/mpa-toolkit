@@ -150,12 +150,11 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .lifecycle {
-    background: $colors.lifecycle-bg;
+    background: $c-lifecycle-bg;
     color: black;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
     border-radius: 20px;
     padding: 20px;
     box-sizing: border-box;
@@ -167,6 +166,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     > :global(.help-popup) {
       flex-shrink: 0;
     }
@@ -174,29 +174,32 @@
 
   .subtitle,
   .title {
-    typography: h5-responsive;
+    @mixin font-responsive h5;
   }
 
   .title {
     margin: 15px 0 10px;
+
     .top-section &:first-child {
       margin: 0;
     }
   }
 
   .tag-container :global(.multiselect) {
-    --sms-border: 1px solid alpha(black, 0.1);
+    --sms-border: 1px solid color(black alpha(0.1));
     --sms-border-radius: 0;
     --sms-padding: 0.1rem;
-    box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.05);
-    typography: ui-small;
+
+    box-shadow: inset 0 2px 8px rgb(0 0 0 / 5%);
+    font: $f-ui-small;
 
     :global(.selected > li[aria-selected]) {
       padding: 3px 12px;
       border-radius: 18px;
-      background: $colors.highlight-1;
+      background: $c-highlight-1;
       line-height: 1em;
     }
+
     :global(.selected > li:last-child:not([aria-selected])) {
       display: none !important;
     }
@@ -226,18 +229,15 @@
         position: absolute;
         width: 45%;
         height: 45%;
-        typography: ui-small;
-        color: black;
+        font: $f-ui-small;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
         margin: auto;
-        animation: fadeIn ease-in-out 0.5s;
-        -webkit-animation: fadeIn ease-in-out 0.5s;
-        -moz-animation: fadeIn ease-in-out 0.5s;
+        animation: fade-in ease-in-out 0.5s;
         z-index: 0;
-        color: #000000;
+        color: #000;
       }
     }
   }
@@ -245,6 +245,7 @@
     .title {
       width: auto;
     }
+
     .bottom-section {
       :global(.tag-container) {
         white-space: nowrap;
@@ -252,6 +253,7 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+
       :global(.tag-container::-webkit-scrollbar) {
         display: none;
       }
@@ -262,12 +264,13 @@
     font-size: 10px;
   }
 
-  @keyframes fadeIn {
+  @keyframes fade-in {
     0% {
-      opacity:0;
+      opacity: 0;
     }
+
     100% {
-      opacity:1;
+      opacity: 1;
     }
   }
 </style>

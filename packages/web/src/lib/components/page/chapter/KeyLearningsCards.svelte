@@ -25,7 +25,7 @@
   canToggleHeading={false}
   progress={isTimerActive}
   removable={false}
-  style="no-heading"
+  cardStyle="no-heading"
   {editable}
   bind:currentPageIndex={currentCard}
 />

@@ -40,11 +40,12 @@
   <div bind:this={buttonEl} />
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .login-page {
     h2 {
-      typography: h2-responsive;
+      @mixin font-responsive h2;
     }
+
     position: fixed;
     top: 30%;
     left: 50%;

@@ -14,8 +14,7 @@
         'Error updating author'
       );
     }
-  };
-
+  }
 
   $: if (author.name != null) {
     if (author.name.length > 30) toaster.info(`The name can have a maximum of 30 letters only`);
@@ -36,8 +35,7 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .author-editor {
     display: grid;
     grid-template-columns: 90px 1fr 2.25fr;
@@ -45,18 +43,19 @@
     margin-top: 20px;
     width: 90%;
 
-    input, textarea {
-
+    input,
+    textarea {
       border: none;
       margin: 1.2rem;
       text-decoration: none;
       width: 100%;
       resize: none;
-      typography: ui;
+      font: $f-ui;
 
       &::-webkit-scrollbar {
         width: 5px;
       }
+
       &::-webkit-scrollbar-thumb {
         background: #333;
         border-radius: 5px;
@@ -68,12 +67,12 @@
       }
     }
 
-    :global(.editable-text){
-
-      --caret-color: $colors.neutral-black;
+    :global(.editable-text) {
+      --caret-color: $c-neutral-black;
       --outline-color: none;
+
       flex: 1;
-      margin-right 15px;
+      margin-right: 15px;
 
       &:focus {
         border-bottom: 1px solid;
@@ -81,8 +80,8 @@
     }
 
     :global(.editable-text[data-placeholder]) {
-      &:before {
-        color: $colors.neutral-black;
+      &::before {
+        color: $c-neutral-black;
       }
     }
   }

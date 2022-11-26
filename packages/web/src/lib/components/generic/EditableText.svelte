@@ -38,28 +38,28 @@
   <div class="editable-content editable-text">{value || ''}</div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .editable-text {
     color: inherit;
     background-color: inherit;
     caret-color: var(--caret-color, white);
 
     &:focus {
-      outline: var(--outline-width, 2px) solid var(--outline-color, #ffffff88);
+      outline: var(--outline-width, 2px) solid var(--outline-color, #fff8);
       border-radius: 4px;
       background-color: var(--ui-color-focus);
     }
 
     &[data-placeholder] {
-      &:before {
+      &::before {
         content: attr(data-placeholder);
-        color: var(--ui-color-placeholder, #ffffff44);
+        color: var(--ui-color-placeholder, #fff4);
         pointer-events: none;
       }
-      &:not(:empty):before {
+
+      &:not(:empty)::before {
         display: none !important;
       }
     }
   }
-
 </style>

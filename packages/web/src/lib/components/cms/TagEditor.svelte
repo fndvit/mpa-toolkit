@@ -42,26 +42,27 @@
   <IconButton icon="close" on:click={onClickCancelTag} disabled={loading} />
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .tag-editor {
-    typography: ui;
+    font: $f-ui;
     align-items: center;
     height: 25px;
     padding-left: 2px;
     display: flex;
 
     &:not(.editing) {
-      :global([data-id="done"]),
-      :global([data-id="close"]) {
+      :global([data-id='done']),
+      :global([data-id='close']) {
         visibility: hidden;
       }
     }
 
-    :global(.editable-text){
-      --caret-color: $colors.neutral-black;
-      --outline-color: $colors.neutral-black;
+    :global(.editable-text) {
+      --caret-color: $c-neutral-black;
+      --outline-color: $c-neutral-black;
+
       flex: 1;
-      margin-right 15px;
+      margin-right: 15px;
     }
   }
 </style>

@@ -23,11 +23,12 @@
   </div>
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .heading-block-button {
     position: relative;
     font-weight: 500;
   }
+
   .heading-block-button-popup {
     position: absolute;
     top: 100%;
@@ -38,9 +39,8 @@
     padding: 5px;
     display: flex;
     column-gap: 5px;
-    background: $colors.neutral-bg;
-    border: 1px solid $colors.secondary-bg;
-
+    background: $c-neutral-bg;
+    border: 1px solid $c-secondary-bg;
 
     .heading-block-button:not(.heading-block-button--active) & {
       display: none;

@@ -31,7 +31,7 @@
   </svelte:element>
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .hv {
     position: relative;
   }
@@ -44,6 +44,7 @@
     bottom: 0;
     display: flex;
     align-items: center;
+
     --ib-icon-size: 1.5rem;
     --ib-icon-bg: transparent;
     --ib-color: #aaa;
@@ -55,7 +56,6 @@
 
     .hv.needs-showmore-text & {
       --ib-color: #ffb76d;
-
     }
 
     &:not(.expanded) :global(.expand-button) {
@@ -66,6 +66,7 @@
       font-size: 12px !important;
       margin: 0;
     }
+
     :global(.mini-editor) {
       min-width: 200px;
       outline: none;
@@ -78,5 +79,4 @@
       margin-bottom: 0;
     }
   }
-
 </style>

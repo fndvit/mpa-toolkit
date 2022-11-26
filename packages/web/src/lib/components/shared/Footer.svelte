@@ -33,17 +33,18 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .footer {
-    grid-config(page, footer);
-    background: $colors.neutral-bg;
+    @mixin grid-config content, footer;
+
+    background: $c-neutral-bg;
   }
 
   .footer-content {
     grid-area: footer;
+
     > h5 {
-      typography: h5-responsive;
+      @mixin font-responsive h5;
     }
   }
 
@@ -52,7 +53,7 @@
     grid-template-columns: 102px 87px 39px 1fr;
     align-items: center;
     gap: 45px;
-    color: $colors.neutral-dark;
+    color: $c-neutral-dark;
   }
 
   .partners-grid-2 {
@@ -64,8 +65,8 @@
   }
 
   .links {
-    typography: ui-small;
-    margin: 40px 0px;
+    font: $f-ui-small;
+    margin: 40px 0;
     display: flex;
     flex-direction: column;
     gap: 0.55em;
@@ -75,13 +76,12 @@
     }
 
     a {
-      color: $colors.neutral-dark;
+      color: $c-neutral-dark;
       margin-right: 15px;
     }
   }
 
-  @media(max-width: 1024px) {
-
+  @media (max-width: 1024px) {
     .partners-grid {
       grid-template-columns: 126px 87px 39px;
       grid-template-rows: auto;
@@ -92,5 +92,4 @@
       grid-template-columns: 148px 135px;
     }
   }
-
 </style>

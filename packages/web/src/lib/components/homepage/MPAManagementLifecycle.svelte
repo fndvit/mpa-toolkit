@@ -88,43 +88,41 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .landing-lifecycle {
     width: 100%;
     height: 900px;
     background-size: cover;
-    grid-template-rows: 30%;
-    grid-template-columns: 50% 50%;
-    grid-template-areas:
-      "title circlemenu"\
-      "textslide circlemenu";
+    grid-template:
+      'title circlemenu' 30%
+      'textslide circlemenu'
+      / 50% 50%;
     display: grid;
     overflow: hidden;
     padding: 0 var(--page-padding);
     box-sizing: border-box;
 
-
     .cta {
       text-decoration: none;
 
       svg path {
-        stroke: $colors.neutral-black;
+        stroke: $c-neutral-black;
       }
 
       button {
-        typography: h4-responsive;
+        @mixin font-responsive h4;
+
         font-weight: 400 !important;
         font-size: 1rem !important;
         display: flex;
         gap: 0.75rem;
         border: none;
-        background: $colors.highlight-1;
-        box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+        background: $c-highlight-1;
+        box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
         border-radius: 24px;
         padding: 0.8rem 1.5rem 0.8rem 1.35rem;
         cursor: pointer;
-        margin: 3rem 0rem 2rem;
+        margin: 3rem 0 2rem;
         align-items: center;
 
         &:hover {
@@ -134,7 +132,7 @@
     }
 
     h2 {
-      typography: h2-responsive;
+      @mixin font-responsive h2;
     }
 
     .column1 {
@@ -167,7 +165,6 @@
   }
 
   @media (max-width: 1280px) {
-
     .landing-lifecycle {
       width: 100%;
       height: auto;
@@ -192,7 +189,7 @@
     }
   }
 
-  @media(max-width: 625px) {
+  @media (max-width: 625px) {
     .landing-lifecycle {
       .circle-menu {
         width: 500px;
@@ -201,7 +198,7 @@
     }
   }
 
-  @media(max-width: 425px) {
+  @media (max-width: 425px) {
     .landing-lifecycle {
       .circle-menu {
         width: 300px;
@@ -210,11 +207,9 @@
     }
   }
 
-  +breakpoint(page, medium) {
+  @mixin breakpoint content, medium {
     button {
       padding: 0.55rem 0.95rem 0.45rem 0.85rem;
     }
   }
-
-
 </style>

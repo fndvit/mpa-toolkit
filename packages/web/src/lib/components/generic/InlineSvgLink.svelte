@@ -15,7 +15,8 @@
 
 <a {href} {...props}><InlineSvg {svg} /><slot /></a>
 
-<style lang="stylus">
-  a
-    color: inherit
+<style lang="postcss">
+  a {
+    color: inherit;
+  }
 </style>

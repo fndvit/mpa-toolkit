@@ -101,12 +101,13 @@
   <div class="metadata-warning">Missing metadata for this route: <span>{$page.routeId}</span></div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .metadata-warning {
     background: #ff8585;
     padding: 10px;
     text-align: center;
-    typography: ui-small;
+    font: $f-ui-small;
+
     > span {
       margin-left: 5px;
       font-size: 13px;

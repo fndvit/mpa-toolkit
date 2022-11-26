@@ -1,10 +1,9 @@
-@require "modules/colors"
-@require "fonts"
-@import '@splidejs/splide/dist/css/splide.min.css'
+@import "./fonts.css";
+@import '@splidejs/splide/dist/css/splide.min.css';
 
-// ****************************
-//    General global CSS
-// ****************************
+/*****************************
+ * General global CSS
+ *****************************/
 
 :root {
 	--font-sans-serif: 'Montserrat', sans-serif;
@@ -29,6 +28,7 @@ body {
 
 a {
 	text-decoration: none;
+
   &:hover {
     text-decoration: underline;
   }
@@ -48,11 +48,12 @@ button {
 }
 
 input[type=number].hide-controls {
-	-moz-appearance: textfield;
+	appearance: textfield;
 }
+
 input[type=number].hide-controls::-webkit-outer-spin-button,
 input[type=number].hide-controls::-webkit-inner-spin-button {
-	-webkit-appearance: none;
+	appearance: none;
 	margin: 0;
 }
 
@@ -65,16 +66,18 @@ button:focus:not(:focus-visible) {
 }
 
 .secret-scrollbars {
-  // TODO: cross browser testing
+  /* TODO: cross browser testing */
 
   &::-webkit-scrollbar-track {
-    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
     background-color: transparent;
   }
+
   &::-webkit-scrollbar {
     width: 3px !important;
     background-color: transparent;
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
   }
@@ -84,7 +87,7 @@ button:focus:not(:focus-visible) {
     -ms-overflow-style: none; /* IE 10+ */
 
     &::-webkit-scrollbar-track {
-      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
       background-color: transparent !important;
     }
 
@@ -101,24 +104,24 @@ button:focus:not(:focus-visible) {
   }
 }
 
-// ****************************
-//    Splide styling
-// ****************************
+/*****************************
+ * Splide styling
+ *****************************/
 
 .splide__arrow {
-  background-color: #FFFFFF77;
-  box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+  background-color: #FFF7;
+  box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
   width: 48px;
   height: 48px;
   opacity: 1;
 }
 
 .splide__arrow:hover {
-  box-shadow: 0px 3px 16px rgb(0 0 0 / 30%);
+  box-shadow: 0 3px 16px rgb(0 0 0 / 30%);
 }
 
 .splide__arrow svg path {
   fill: none;
   stroke-width: 4.4;
-  stroke: $colors.neutral-black;
+  stroke: $c-neutral-black;
 }

@@ -22,32 +22,37 @@
   <MultiSelect placeholder="Add an author" bind:selected={authorOptions} options={allAuthorOptions} {disabled} />
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .author-editor {
     --sms-selected-bg: transparent;
     --sms-border: none;
     --sms-selected-li-padding: 0;
+
     :global(.multiselect > svg) {
       display: none;
     }
+
     :global(button.remove-all) {
       display: none;
     }
+
     :global(div.multiselect > ul.selected > li:nth-last-child(3)::after) {
       content: 'and';
       margin-left: 8px;
       display: block;
     }
+
     :global(div.multiselect > ul.selected > li button) {
       opacity: 0.4;
     }
+
     :global(div.multiselect > ul.selected > li) {
       font-size: 16px;
       font-weight: 700;
     }
+
     :global(div.multiselect) {
-      z-index: authors-list;
+      z-index: $z-authors-list;
     }
   }
-
 </style>

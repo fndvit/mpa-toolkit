@@ -38,14 +38,12 @@
   {/if}
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .material-icons {
     font-size: 77px;
   }
 
- .cms-homepage {
-
+  .cms-homepage {
     position: fixed;
     top: 40%;
     left: 50%;
@@ -53,13 +51,14 @@
     text-align: center;
 
     h3 {
-      typography: h3-light-responsive;
+      @mixin font-responsive h3-light;
+
       margin-bottom: 40px;
       text-align: center;
     }
 
     a {
-      typography: ui-small;
+      font: $f-ui-small;
       color: black;
       text-decoration: none;
     }
@@ -71,7 +70,7 @@
     row-gap: 24px;
 
     > :global(a) {
-      typography: ui-small;
+      font: $f-ui-small;
       text-transform: uppercase;
       display: flex;
       flex-direction: column;
@@ -79,24 +78,22 @@
       justify-content: space-between;
       background: white;
       border-radius: 24px;
-      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 16px rgb(0 0 0 / 10%);
       padding: 20px 10px 10px;
       width: 185px;
       height: 140px;
       box-sizing: border-box;
 
       &:hover {
-        background: $colors.neutral-light;
+        background: $c-neutral-light;
         text-decoration: none;
       }
     }
-
   }
 
   .logout-button {
     cursor: pointer;
     padding: 0.25rem 0.5rem;
-    typography: ui-small;
+    font: $f-ui-small;
   }
-
 </style>

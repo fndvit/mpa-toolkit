@@ -40,26 +40,25 @@
   <div class="arrow" data-popper-arrow />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .tooltip {
-    typography: ui;
+    font: $f-ui;
     background: white;
     color: #333;
     padding: 10px 15px;
     border-radius: 4px;
-    z-index: $z-index.tooltip;
+    z-index: $z-tooltip;
     visibility: hidden;
     position: absolute;
     max-width: 200px;
     text-align: center;
-    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 0 5px rgb(0 0 0 / 20%));
 
     .arrow {
       position: absolute;
     }
 
-    .arrow:before {
+    .arrow::before {
       content: '';
       display: block;
       width: 8px;
@@ -84,5 +83,4 @@
       left: -4px;
     }
   }
-
 </style>

@@ -60,18 +60,17 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .container {
     width: 100%;
     box-sizing: border-box;
     padding: 1rem 6rem;
-    margin: 0px auto;
+    margin: 0 auto;
   }
 
   .users {
     margin-top: 80px;
-    typography: ui;
+    font: $f-ui;
     display: grid;
     font-size: 20px;
     grid-template-columns: 1.25fr 1.25fr 1.25fr 0.25fr;
@@ -80,17 +79,17 @@
     > * {
       display: flex;
       align-items: center;
-      border-bottom: solid 3px #F5F5F5;
+      border-bottom: solid 3px #f5f5f5;
       padding-bottom: 10px;
     }
 
     select {
       padding: 1rem;
       width: 249px;
-      background-color: $colors.neutral-bg;
+      background-color: $c-neutral-bg;
       border: none;
       border-radius: 10px;
-      typography: ui;
+      font: $f-ui;
 
       &:focus {
         outline: none;
@@ -111,7 +110,6 @@
 
     input {
       border: none;
-
       margin: 1.5rem;
       text-decoration: none;
       width: 300px;
@@ -124,7 +122,7 @@
   }
 
   h1 {
-    typography: h2-responsive;
+    @mixin font-responsive h2;
   }
 
   .title {
@@ -132,11 +130,12 @@
     align-items: center;
     column-gap: 30px;
     margin-bottom: 20px;
+
     --ib-hover-border: 1px solid #ddd;
 
     .arrow {
-     color: black;
-     font-size: 32px;
+      color: black;
+      font-size: 32px;
     }
   }
 </style>

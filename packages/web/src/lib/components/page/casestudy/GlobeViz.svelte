@@ -18,9 +18,9 @@
   <div class="globe" />
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .globe {
-    background: $colors.dark-blue;
+    background: $c-dark-blue;
     border-radius: 50%;
     width: 245px;
     height: 245px;

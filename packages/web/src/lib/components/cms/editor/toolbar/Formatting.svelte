@@ -45,19 +45,19 @@
   </div>
 {/if}
 
-<style lang="stylus">
-
+<style lang="postcss">
   .formatting-notifications {
     position: relative;
     cursor: pointer;
-    typography: ui-small;
+    font: $f-ui-small;
     display: flex;
     align-items: center;
     justify-content: center;
     column-gap: 0.4rem;
     padding: 0 10px;
+
     > span {
-      font-family: "Material Icons";
+      font-family: 'Material Icons';
       color: #933;
       font-size: 14px;
     }
@@ -68,10 +68,10 @@
     }
 
     border: 1px solid transparent;
+
     &:hover {
       border: var(--ib-hover-border);
       border-radius: 3px;
     }
   }
-
 </style>

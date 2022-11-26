@@ -51,51 +51,54 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .searchbar {
     max-width: 530px;
     margin-top: 100px;
 
-    :global(.searchbar){
-      :global(.placeholder){
-        color: $colors.neutral-black;
+    :global(.searchbar) {
+      :global(.placeholder) {
+        color: $c-neutral-black;
       }
-      :global(.input-text){
-        color: $colors.neutral-black;
+
+      :global(.input-text) {
+        color: $c-neutral-black;
       }
     }
   }
 
   .filters {
     box-sizing: border-box;
-    box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 2px 8px rgb(0 0 0 / 10%);
     border-radius: 20px;
-    padding: 0px 0px 15px 25px;
+    padding: 0 0 15px 25px;
     margin-top: 26px;
 
     .type-topic {
       :global(.tag-filter .tag.secondary) {
-        background: alpha($colors.lifecycle-bg, 0.4);
+        background: color($c-lifecycle-bg alpha(0.4));
       }
+
       :global(.tag-filter .tag) {
-        background: $colors.lifecycle-bg;
+        background: $c-lifecycle-bg;
       }
     }
 
     .type-user {
       :global(.tag-filter .tag.secondary) {
-        background: alpha($colors.tag-bg-cards, 0.4);
+        background: color($c-tag-bg-cards alpha(0.4));
       }
+
       :global(.tag-filter .tag) {
-        background: $colors.tag-bg-cards;
+        background: $c-tag-bg-cards;
       }
     }
 
     h1 {
-      typography: h5;
+      font: $f-h5;
       margin: 36px 10px;
     }
+
     p {
       font-size: 12px;
       font-weight: 700;

@@ -20,11 +20,3 @@
     <ExpandButton content={section.topic} {expanded} on:click={() => (expanded = !expanded)} />
   {/if}
 </section>
-
-<style lang="stylus">
-
-  for i in 1..10
-    .collapsed[data-hidefrom=\"{i}\"] > :global(:nth-child(n+{i}):not(.expand-button))
-      display: none;
-
-</style>

@@ -67,21 +67,20 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .container {
     width: 100%;
     box-sizing: border-box;
     padding: 20px;
-    margin: 0px auto;
-    typography: ui;
+    margin: 0 auto;
+    font: $f-ui;
 
     h2 {
-      typography: h2-responsive;
+      @mixin font-responsive h2;
     }
 
     h4 {
-      typography: h4-light;
+      font: $f-h4-light;
     }
   }
 
@@ -90,10 +89,10 @@
     align-items: center;
     column-gap: 30px;
     margin-bottom: 20px;
+
     --ib-hover-border: 1px solid #ddd;
 
     .grid-links {
-
       display: grid;
       grid-template-columns: auto auto auto;
       grid-gap: 24px;
@@ -104,7 +103,7 @@
 
       p {
         margin: 0;
-        typography: h4-light;
+        font: $f-h4-light;
         color: black;
       }
 
@@ -121,12 +120,12 @@
     .cms-links {
       background: white;
       border-radius: 24px;
-      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 16px rgb(0 0 0 / 10%);
       width: 185px;
       height: 140px;
 
-      &:hover{
-        background: $colors.neutral-light;
+      &:hover {
+        background: $c-neutral-light;
       }
 
       .icon-links {

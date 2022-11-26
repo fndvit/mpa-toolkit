@@ -17,13 +17,15 @@
   {/each}
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .tag-container {
     --tag-spacing: 0.5rem;
+
     display: flex;
     flex-wrap: wrap;
     column-gap: var(--tag-spacing);
     row-gap: var(--tag-spacing);
+
     > :global(*) {
       flex: 0 0 auto;
     }
@@ -35,12 +37,12 @@
 
   @media (max-width: 1024px) {
     :global(.collection-card) .tag-container {
-        flex-wrap: nowrap;
-        overflow-x: scroll;
-        &::-webkit-scrollbar {
-          display: none;
-        }
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
-
 </style>

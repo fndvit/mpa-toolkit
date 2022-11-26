@@ -4,6 +4,6 @@
     "svelte.svelte-vscode",
     "prisma.prisma",
     "dbaeumer.vscode-eslint",
-    "sysoev.language-stylus"
+    "stylelint.vscode-stylelint"
   ]
 }

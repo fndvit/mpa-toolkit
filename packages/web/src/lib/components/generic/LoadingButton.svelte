@@ -16,8 +16,7 @@
   </div>
 </Button>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .contents {
     display: flex;
     align-items: center;
@@ -25,6 +24,7 @@
 
     > :global(.spinner) {
       position: absolute;
+
       --spinner-size: 1.5rem;
       --spinner-thickness: 2px;
       --spinner-color: #333;
@@ -34,5 +34,4 @@
   .hidden {
     visibility: hidden;
   }
-
 </style>

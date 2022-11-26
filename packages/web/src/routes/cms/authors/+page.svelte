@@ -102,8 +102,7 @@
   {/if}
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .container {
     width: 100%;
     box-sizing: border-box;
@@ -119,14 +118,15 @@
   }
 
   .searchbar {
-
-    :global(.searchbar){
+    :global(.searchbar) {
       width: 530px;
-      :global(.placeholder){
-        color: $colors.neutral-black;
+
+      :global(.placeholder) {
+        color: $c-neutral-black;
       }
-      :global(.input-text){
-        color: $colors.neutral-black;
+
+      :global(.input-text) {
+        color: $c-neutral-black;
       }
     }
   }
@@ -137,18 +137,16 @@
     width: 252px;
     padding: 5px 20px;
     cursor: pointer;
-
-    typography: h5-light;
+    font: $f-h5-light;
     text-transform: uppercase;
     background: white;
-
     border: none;
     border-radius: 10px;
-    box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 16px rgb(0 0 0 / 10%);
     box-sizing: border-box;
 
     &:hover {
-      background: $colors.neutral-light;
+      background: $c-neutral-light;
       text-decoration: none;
     }
 
@@ -158,14 +156,15 @@
   }
 
   .no-authors {
-    typography: ui;
+    font: $f-ui;
   }
 
   .authors {
     padding: 0;
+
     > * {
       display: flex;
-      border-bottom: solid 3px #F5F5F5;
+      border-bottom: solid 3px #f5f5f5;
     }
 
     .icon-author {
@@ -182,7 +181,7 @@
   }
 
   h1 {
-    typography: h2-responsive;
+    @mixin font-responsive h2;
   }
 
   .title {
@@ -191,8 +190,8 @@
     column-gap: 30px;
 
     .arrow {
-     color: black;
-     font-size: 32px;
+      color: black;
+      font-size: 32px;
     }
   }
 </style>

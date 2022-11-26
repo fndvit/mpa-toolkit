@@ -43,11 +43,10 @@
 
 <img src={imgSrc} alt="crop" bind:this={imgEl} on:load={initCropper} />
 
-<style lang="stylus">
+<style lang="postcss">
   img {
     display: block;
     max-width: 80vw;
     max-height: 70vh;
   }
-
 </style>

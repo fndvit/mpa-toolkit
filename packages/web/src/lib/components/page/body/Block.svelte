@@ -29,9 +29,9 @@
   </div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .unknown-block {
-    background: $colors.error-red;
+    background: $c-error-red;
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1rem -1rem;

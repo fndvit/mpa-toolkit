@@ -228,6 +228,7 @@ export type ImageBlock = {
     src: string;
     alt?: string;
     title?: string;
+    credits?: string;
     style: 'regular' | 'full';
   };
 };

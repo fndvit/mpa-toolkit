@@ -30,6 +30,12 @@
       on:focus={() => (editing = true)}
       on:blur={() => (editing = false)}
     />
+    <input
+      bind:value={attrs.credits}
+      placeholder="pciture credits..."
+      on:focus={() => (editing = true)}
+      on:blur={() => (editing = false)}
+    />
     <IconButton icon="aspect_ratio" title="Wide" active={attrs.style === 'full'} on:click={toggleStyle} />
     <IconButton on:click={controls.delete} icon="delete" />
   </div>

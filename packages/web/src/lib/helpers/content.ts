@@ -96,7 +96,7 @@ export function createEmptyCard(): CardsBlock['attrs'] {
 }
 
 export function createEmptyLinkCard(): LinkCardsBlock['attrs'] {
-  return { title: '', cards: [{ title: '', url: '' }] };
+  return { title: '', cards: [{ title: '', url: '', img: '' }] };
 }
 
 export function createEmptyCollapse(): CollapseBlock['attrs'] {

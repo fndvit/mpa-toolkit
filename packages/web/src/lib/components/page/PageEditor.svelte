@@ -18,6 +18,8 @@
   import { page as pageStore } from '$app/stores';
   import { goto } from '$app/navigation';
   import { editorStore } from '../cms/editor/editorStore';
+  import { schema } from '$lib/editor/schema';
+  import { onMount } from 'svelte';
 
   export let authors: Author[];
   export let allTags: Tag[];
@@ -111,6 +113,13 @@
     } else if (e.data && !validChars.exec(e.data)) return e.preventDefault();
     else autoPopulateSlug = false;
   };
+
+  onMount(async () => {
+    if (!compareDeep(schema.nodeFromJSON(page.content).toJSON(), page.content)) {
+      // this means the schema is altering the content (presumably in response to a schema change)
+      toaster.warn('Content has been altered to match the latest schema. Save to persist changes.', 10000);
+    }
+  });
 
   $: if (autoPopulateSlug) {
     _page.slug = pageType === 'Case Study' ? slugify(_page.caseStudy!.name) : slugify(_page.title);

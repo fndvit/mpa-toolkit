@@ -1,9 +1,10 @@
 import { range } from '@mpa/utils';
-import type { Node, NodeType, ResolvedPos } from 'prosemirror-model';
+import type { MarkType, Node, NodeType, ResolvedPos } from 'prosemirror-model';
+import type { EditorState } from 'prosemirror-state';
 import { schema } from '$lib/editor/schema';
 
 export function getPath($resolved: ResolvedPos) {
-  return range(0, $resolved.depth).map(i => $resolved.node(i));
+  return range(0, $resolved.depth + 1).map(i => $resolved.node(i));
 }
 
 export function isListNode(node: NodeType) {
@@ -33,3 +34,9 @@ export const searchSiblings = ({ parent, childIndex, dir, predicate }: SearchSib
   const delta = dir === 'forwards' ? 1 : -1;
   return searchSiblings({ parent, childIndex: childIndex + delta, dir, predicate });
 };
+
+export function isMarkActive(state: EditorState, type: MarkType) {
+  const { from, to, empty } = state.selection;
+  if (empty) return !!type.isInSet(state.storedMarks || state.selection.$from.marks());
+  else return state.doc.rangeHasMark(from, to, type);
+}

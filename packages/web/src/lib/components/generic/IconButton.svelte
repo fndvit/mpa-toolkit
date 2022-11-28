@@ -10,9 +10,10 @@
   export let rel: string = null;
   export let target: string = null;
   export let square = false;
+  export let theme: 'toolbar' = undefined;
 </script>
 
-<div class="icon-button-container tooltip-hover-el" data-id={icon}>
+<div class="icon-button-container tooltip-hover-el" data-id={icon} data-theme={theme}>
   {#if title}
     <Tooltip text={title} />
   {/if}
@@ -37,6 +38,14 @@
 <style lang="postcss">
   .icon-button-container {
     position: relative;
+
+    &[data-theme='toolbar'] {
+      --ib-icon-bg: transparent;
+      --ib-hover-border: 1px solid #ddd;
+      --ib-hover-bg: transparent;
+      --ib-active-bg: white;
+      --ib-active-border: 1px solid #ccc;
+    }
   }
 
   .icon-button {

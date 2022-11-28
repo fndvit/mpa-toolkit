@@ -9,10 +9,11 @@
   import ImageButton from './ImageButton.svelte';
   import Formatting from './Formatting.svelte';
   import HeadingBlockButton from './HeadingBlockButton.svelte';
+  import AddCollapseButton from './AddCollapseButton.svelte';
+  import LinkButton from './LinkButton.svelte';
   import { IconButton } from '$lib/components/generic';
   import { schema } from '$lib/editor/schema';
   import { createEmptyCard, createEmptyLinkCard, createEmptyDiagram } from '$lib/helpers/content';
-  import AddCollapseButton from './AddCollapseButton.svelte';
 
   export let editorState: EditorState;
 
@@ -43,6 +44,7 @@
   <div class="left-section">
     <MarkButton {editorState} markType={schema.marks.strong} icon="format_bold" />
     <MarkButton {editorState} markType={schema.marks.em} icon="format_italic" />
+    <LinkButton {editorState} />
     <MenuSeperator />
     <HeadingBlockButton {editorState} />
     <BlockButton {editorState} nodeType={schema.nodes.paragraph} text="¶" />

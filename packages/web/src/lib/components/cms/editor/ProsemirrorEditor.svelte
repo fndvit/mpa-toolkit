@@ -60,15 +60,17 @@
 />
 
 <style lang="postcss">
-  :global(body) {
-    --editable-placeholder-color: $c-editor-placeholder;
-  }
-
   :global(.ProseMirror) {
+    --editable-placeholder-color: $c-editor-placeholder;
+
     position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;
     font-variant-ligatures: none;
+
+    :global(a) {
+      cursor: pointer;
+    }
   }
 
   :global(.ProseMirror pre) {

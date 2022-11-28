@@ -7,19 +7,25 @@
   import EditorMenu from './toolbar/EditorMenu.svelte';
   import { DiagramView, CardsView, ImageView, LinkCardsView, ExpandButtonView } from './nodeview';
   import ProsemirrorEditor from './ProsemirrorEditor.svelte';
+  import FormattingTooltip from './FormattingTooltip.svelte';
+  import LinkTooltip from './LinkTooltip.svelte';
   import { schema } from '$lib/editor/schema';
   import { plugins } from '$lib/editor/plugins';
+  import { LinkPlugin, type SelectedLink } from './linkTooltip';
 
   let focusEditor: () => void;
   let view: EditorView;
 
   export let content: ContentDocument = null;
 
+  const linkPlugin = new LinkPlugin();
+
   let editorState = EditorState.create({
     schema,
     doc: content ? schema.nodeFromJSON(content) : undefined,
     plugins: [
       ...plugins(schema),
+      linkPlugin,
       svelteNodeViewPlugin({
         nodes: {
           linkcards: LinkCardsView,
@@ -32,11 +38,10 @@
     ]
   });
 
-  $: content = editorState.doc.toJSON() as ContentDocument;
-
-  $: setContext('editorView', view);
-
   onMount(() => focusEditor());
+
+  $: content = editorState.doc.toJSON() as ContentDocument;
+  $: setContext('editorView', view);
 </script>
 
 {#if view}
@@ -47,6 +52,10 @@
 <div class="editor-content">
   <div class="prosemirror-container">
     <ProsemirrorEditor bind:editorState bind:view bind:focus={focusEditor} />
+    {#if view}
+      <FormattingTooltip {editorState} />
+      <LinkTooltip {view} plugin={linkPlugin} />
+    {/if}
   </div>
 </div>
 
@@ -58,6 +67,7 @@
   }
 
   .prosemirror-container {
+    position: relative;
     width: 40rem;
     margin: 0 auto;
     text-align: left;

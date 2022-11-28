@@ -5,7 +5,10 @@
   import type { EditorView } from 'prosemirror-view';
   import type { LinkPlugin, SelectedLink } from './linkTooltip';
   import { schema } from '$lib/editor/schema';
+  import type { EditorState } from 'prosemirror-state';
+  import { getTextNodeAtPos, selectNode } from './helpers';
 
+  export let editorState: EditorState;
   export let view: EditorView;
   export let plugin: LinkPlugin;
 
@@ -52,14 +55,29 @@
   };
 
   const update = async (link: SelectedLink, prev: SelectedLink) => {
-    if (!link && prev) {
+    if (!link) {
+      if (prev) {
+        const node = editorState.doc.nodeAt(prev.from);
+        const isEmpty = node?.marks?.find(mark => mark.type === schema.marks.link)?.attrs?.href === '';
+        if (isEmpty) {
+          const tr = editorState.tr.removeMark(prev.from, prev.to, schema.marks.link);
+          view.dispatch(tr);
+        }
+      }
       plugin.setDecoration(view, null);
-      const node = view.state.doc.nodeAt(prev.from);
-      const isEmpty = node?.marks?.find(mark => mark.type === schema.marks.link)?.attrs?.href === '';
-      if (isEmpty) {
-        // remove the link if it's empty
-        const tr = view.state.tr.removeMark(prev.from, prev.to, schema.marks.link);
-        view.dispatch(tr);
+
+      // prosemirror destroys the select when removing decorations
+      // so this attempts to rectify it
+      const { from, to } = editorState.selection;
+      const textNode = getTextNodeAtPos(view, from);
+      if (from >= textNode.from && to <= textNode.to) {
+        if (from === to) {
+          const { node, offset } = view.domAtPos(from);
+          const selection = window.getSelection();
+          selection.setPosition(node, offset);
+        } else if (from === textNode.from && to === textNode.to) {
+          selectNode(view.domAtPos(textNode.from + 1).node);
+        }
       }
       return destroy();
     }
@@ -84,16 +102,22 @@
     };
   };
 
-  const onSubmit = () => {
-    const tr = view.state.tr.addMark(selected.from, selected.to, schema.marks.link.create({ href: url }));
+  const onSubmit = async () => {
+    const { from, to } = selected;
+    const href = url;
+    const tr = view.state.tr.addMark(from, to, schema.marks.link.create({ href }));
     view.dispatch(tr);
+
+    await tick();
     selected = null;
   };
 
-  const onClickDelete = () => {
-    const tr = view.state.tr.removeMark(selected.from, selected.to, schema.marks.link);
-    view.dispatch(tr);
+  const onClickDelete = async () => {
+    const { from, to } = selected;
     selected = null;
+    await tick();
+    const tr = editorState.tr.removeMark(from, to, schema.marks.link);
+    view.dispatch(tr);
   };
 
   const documentClickHandler = (e: Event) => {

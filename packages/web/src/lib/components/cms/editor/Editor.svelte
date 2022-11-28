@@ -11,7 +11,7 @@
   import LinkTooltip from './LinkTooltip.svelte';
   import { schema } from '$lib/editor/schema';
   import { plugins } from '$lib/editor/plugins';
-  import { LinkPlugin, type SelectedLink } from './linkTooltip';
+  import { LinkPlugin } from './linkTooltip';
 
   let focusEditor: () => void;
   let view: EditorView;
@@ -45,16 +45,14 @@
 </script>
 
 {#if view}
-  <EditorMenu {editorState}>
-    <slot name="menu-extra" slot="extra-controls" />
-  </EditorMenu>
+  <EditorMenu {editorState} on:save on:delete />
 {/if}
 <div class="editor-content">
   <div class="prosemirror-container">
     <ProsemirrorEditor bind:editorState bind:view bind:focus={focusEditor} />
     {#if view}
       <FormattingTooltip {editorState} />
-      <LinkTooltip {view} plugin={linkPlugin} />
+      <LinkTooltip {view} plugin={linkPlugin} {editorState} />
     {/if}
   </div>
 </div>

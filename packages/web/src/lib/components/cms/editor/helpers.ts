@@ -1,7 +1,8 @@
 import { range } from '@mpa/utils';
-import type { MarkType, Node, NodeType, ResolvedPos } from 'prosemirror-model';
+import type { MarkType, Node as ProsemirrorNode, NodeType, ResolvedPos } from 'prosemirror-model';
 import type { EditorState } from 'prosemirror-state';
 import { schema } from '$lib/editor/schema';
+import type { EditorView } from 'prosemirror-view';
 
 export function getPath($resolved: ResolvedPos) {
   return range(0, $resolved.depth + 1).map(i => $resolved.node(i));
@@ -12,13 +13,13 @@ export function isListNode(node: NodeType) {
 }
 
 interface SearchSiblingsOpts {
-  parent: Node;
+  parent: ProsemirrorNode;
   childIndex: number;
   dir: 'forwards' | 'backwards' | 'both';
-  predicate: (node: Node) => boolean;
+  predicate: (node: ProsemirrorNode) => boolean;
 }
 
-export const searchSiblings = ({ parent, childIndex, dir, predicate }: SearchSiblingsOpts): Node | null => {
+export const searchSiblings = ({ parent, childIndex, dir, predicate }: SearchSiblingsOpts): ProsemirrorNode | null => {
   if (dir === 'both') {
     return (
       searchSiblings({ parent, childIndex: childIndex + 1, dir: 'forwards', predicate }) ||
@@ -40,3 +41,21 @@ export function isMarkActive(state: EditorState, type: MarkType) {
   if (empty) return !!type.isInSet(state.storedMarks || state.selection.$from.marks());
   else return state.doc.rangeHasMark(from, to, type);
 }
+
+export const getTextNodeAtPos = (view: EditorView, pos: number) => {
+  const node = view.state.doc.nodeAt(pos);
+  if (node && node.isText) {
+    const resolved = view.state.doc.resolve(pos);
+    const from = pos - resolved.textOffset;
+    const to = from + node.nodeSize;
+    return { node, from, to };
+  }
+};
+
+export const selectNode = (node: Node) => {
+  const selection = window.getSelection();
+  const range = document.createRange();
+  range.selectNode(node);
+  selection.removeAllRanges();
+  selection.addRange(range);
+};

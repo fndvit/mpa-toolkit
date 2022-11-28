@@ -21,8 +21,12 @@ export class LinkPlugin extends Plugin<{ decorations: DecorationSet }> {
         init: () => ({ decorations: DecorationSet.empty }),
         apply: (tr, old) => {
           if (tr.steps.length === 1 && tr.steps[0] instanceof AddMarkStep) {
+            // here we emulate a click when a new link is added to the document
+            // so the tooltip shows
             const { mark, from, to } = tr.steps[0];
-            if (mark.type === schema.marks.link) {
+            const node = tr.before.nodeAt(from);
+            const hasMark = !!node.marks.find(m => m.type === schema.marks.link);
+            if (mark.type === schema.marks.link && !hasMark) {
               const link = { from, to, mark: mark, node: tr.doc.nodeAt(from) };
               this.ee.emit('click', link);
             }

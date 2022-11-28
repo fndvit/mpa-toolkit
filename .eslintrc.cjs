@@ -29,7 +29,7 @@ module.exports = defineConfig({
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: false }],
     '@typescript-eslint/triple-slash-reference': 'off',
     'import/no-duplicates': 'error',
-    'import/order': 'warn'
+    'import/order': 'off'
   },
   settings: {
     'svelte3/typescript': () => require('typescript')

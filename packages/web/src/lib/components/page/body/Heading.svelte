@@ -8,7 +8,7 @@
 </script>
 
 <svelte:element this={`h${level}`} class={cls}>
-  {#each block.content as child}<Inline block={child} />{/each}
+  {#each block.content || [] as child}<Inline block={child} />{/each}
 </svelte:element>
 
 <style lang="postcss">

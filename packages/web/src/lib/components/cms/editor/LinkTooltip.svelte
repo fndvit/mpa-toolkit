@@ -70,7 +70,7 @@
       // so this attempts to rectify it
       const { from, to } = editorState.selection;
       const textNode = getTextNodeAtPos(view, from);
-      if (from >= textNode.from && to <= textNode.to) {
+      if (textNode && from >= textNode.from && to <= textNode.to) {
         if (from === to) {
           const { node, offset } = view.domAtPos(from);
           const selection = window.getSelection();

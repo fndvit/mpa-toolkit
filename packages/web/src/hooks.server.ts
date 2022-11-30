@@ -48,7 +48,7 @@ function getCacheHeaders(routeId: string, cacheKeys: App.Locals['cacheKeys']): C
 export const handle: Handle = async ({ event, resolve }) => {
   const seg = AWSXRay.getSegment()?.addNewSubsegment('handle');
   const { route } = event;
-  event.locals.user = await getUserFromCookie(event.request, event.setHeaders);
+  event.locals.user = await getUserFromCookie(event.cookies);
   seg?.addMetadata('user', event.locals.user);
 
   if (/^api\b/.test(route.id) && !checkUserHasRoleForRoute(route.id, event.locals.user)) {

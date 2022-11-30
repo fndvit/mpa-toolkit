@@ -1,53 +1,49 @@
 import type { Role, User } from '@mpa/db';
 import { logger } from '@mpa/log';
 import type { RequestEvent } from '@sveltejs/kit';
-import { parse as parseCookie } from 'cookie';
 import { db } from '$lib/db';
 
 const log = logger('AUTH');
 
 const REQUIRED_ROLES: { [routeId: string]: Role | null } = {
-  'cms/login': null,
+  '/cms/login': null,
 
-  'cms': 'CONTENT_MANAGER', // prettier-ignore
-  'cms/authors': 'CONTENT_MANAGER',
-  'cms/homepage': 'CONTENT_MANAGER',
-  'cms/pages': 'CONTENT_MANAGER',
-  'cms/pages/[id]': 'CONTENT_MANAGER',
-  'cms/pages/create/case-study': 'CONTENT_MANAGER',
-  'cms/pages/create/chapter': 'CONTENT_MANAGER',
-  'cms/tags': 'CONTENT_MANAGER',
-  'cms/users': 'CONTENT_MANAGER',
-  'cms/dump': 'ADMIN',
+  '/cms': 'CONTENT_MANAGER', // prettier-ignore
+  '/cms/authors': 'CONTENT_MANAGER',
+  '/cms/homepage': 'CONTENT_MANAGER',
+  '/cms/pages': 'CONTENT_MANAGER',
+  '/cms/pages/[id]': 'CONTENT_MANAGER',
+  '/cms/pages/create/case-study': 'CONTENT_MANAGER',
+  '/cms/pages/create/chapter': 'CONTENT_MANAGER',
+  '/cms/tags': 'CONTENT_MANAGER',
+  '/cms/users': 'CONTENT_MANAGER',
+  '/cms/dump': 'ADMIN',
 
-  'draft/[slug]': 'CONTENT_MANAGER',
+  '/draft/[slug]': 'CONTENT_MANAGER',
 
-  'api': null, // prettier-ignore
-  'api/auth/google': null,
-  'api/auth/logout': 'CONTENT_MANAGER',
-  'api/authors/[id]': 'CONTENT_MANAGER',
-  'api/authors/create': 'CONTENT_MANAGER',
-  'api/image/upload': 'CONTENT_MANAGER',
-  'api/pages/[id]': 'CONTENT_MANAGER',
-  'api/pages/create': 'CONTENT_MANAGER',
-  'api/tags/[id]': 'CONTENT_MANAGER',
-  'api/tags/create': 'CONTENT_MANAGER',
-  'api/users/[id]': 'ADMIN',
-  'api/dump': 'ADMIN',
-  'api/link': 'CONTENT_MANAGER',
-  'api/recommendations': null
+  '/api': null, // prettier-ignore
+  '/api/auth/google': null,
+  '/api/auth/logout': 'CONTENT_MANAGER',
+  '/api/authors/[id]': 'CONTENT_MANAGER',
+  '/api/authors/create': 'CONTENT_MANAGER',
+  '/api/image/upload': 'CONTENT_MANAGER',
+  '/api/pages/[id]': 'CONTENT_MANAGER',
+  '/api/pages/create': 'CONTENT_MANAGER',
+  '/api/tags/[id]': 'CONTENT_MANAGER',
+  '/api/tags/create': 'CONTENT_MANAGER',
+  '/api/users/[id]': 'ADMIN',
+  '/api/dump': 'ADMIN',
+  '/api/link': 'CONTENT_MANAGER',
+  '/api/recommendations': null
 };
 
-export async function getUserFromCookie(request: Request, setHeaders: RequestEvent['setHeaders']) {
-  const cookie = request.headers.get('cookie');
-  if (cookie == null) return null;
-
-  const cookies = parseCookie(cookie);
-  if (cookies.session) {
-    const session = await db.session.get(cookies.session);
+export async function getUserFromCookie(cookies: RequestEvent['cookies']) {
+  const sessionCookie = cookies.get('session');
+  if (sessionCookie) {
+    const session = await db.session.get(sessionCookie);
     if (!session || session.expires < new Date()) {
       // invalid session cookie
-      setHeaders({ 'set-cookie': `session=; Path=/; SameSite=Lax; HttpOnly; Expires=${new Date().toUTCString()}` });
+      cookies.delete('session');
     } else {
       return session.user;
     }

@@ -30,8 +30,8 @@
     position: relative;
   }
   .image-credits {
-    font-family: var(--font-sans-serif);
     background-color: #FFFFFF95;
+    font: $f-ui;
     padding: 5px;
     border-radius: 10px;
     position: absolute;

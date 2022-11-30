@@ -52,7 +52,12 @@
     const changed = !lastState || !lastState.selection.eq(state.selection);
     lastState = state;
     if (!changed) return;
-    show = !state.selection.empty;
+
+    const canFormat = [state.selection.$from.parent.type, state.selection.$to.parent.type].every(type =>
+      type.allowsMarkType(schema.marks.strong)
+    );
+
+    show = !state.selection.empty && canFormat;
     if (!show) return destroy();
 
     if (show) {

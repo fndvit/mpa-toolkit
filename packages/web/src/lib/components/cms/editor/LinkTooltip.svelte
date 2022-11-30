@@ -90,7 +90,6 @@
       popper: createPopper({ getBoundingClientRect }, tooltipEl, {
         placement: 'bottom',
         onFirstUpdate: () => {
-          tooltipEl.style.opacity = '1';
           const input = tooltipEl.querySelector('input');
           if (!input.hasAttribute(':focus')) {
             input.focus();
@@ -138,16 +137,20 @@
 </script>
 
 <svelte:window on:click|capture={documentClickHandler} />
-{#if true}
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div bind:this={tooltipEl} class="link-tooltip" role="tooltip" on:click|stopPropagation>
-    <form on:submit|preventDefault={onSubmit}>
-      <input type="url" bind:value={url} />
-      <IconButton icon="done" disabled={!dirty} theme="toolbar" />
-    </form>
-    <IconButton icon="delete" theme="toolbar" on:click={onClickDelete} />
-  </div>
-{/if}
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div
+  bind:this={tooltipEl}
+  class="link-tooltip"
+  role="tooltip"
+  on:click|stopPropagation
+  class:link-tooltip--show={tooltip}
+>
+  <form on:submit|preventDefault={onSubmit}>
+    <input type="url" bind:value={url} />
+    <IconButton icon="done" disabled={!dirty} theme="toolbar" />
+  </form>
+  <IconButton icon="delete" theme="toolbar" on:click={onClickDelete} />
+</div>
 
 <style lang="postcss">
   :global(.link-decoration) {
@@ -167,9 +170,15 @@
     position: absolute;
     text-align: center;
     filter: drop-shadow(0 0 10px rgb(0 0 0 / 20%));
-    opacity: 0;
     display: flex;
     outline: 1px solid #ccc;
+
+    &:not(.link-tooltip--show) {
+      visibility: hidden;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+    }
 
     form {
       display: contents;

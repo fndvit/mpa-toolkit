@@ -38,7 +38,7 @@ export class LinkPlugin extends Plugin<{ decorations: DecorationSet }> {
         decorations: state => this.getState(state).decorations,
         handleClick: (view, pos) => {
           const textNode = view.state.doc.nodeAt(pos);
-          if (textNode.type === schema.nodes.text) {
+          if (textNode && textNode.type === schema.nodes.text) {
             const linkMark = textNode.marks.find(m => m.type === schema.marks.link);
             if (linkMark) {
               const resolved = view.state.doc.resolve(pos);

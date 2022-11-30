@@ -115,7 +115,7 @@
   };
 
   onMount(async () => {
-    if (!compareDeep(schema.nodeFromJSON(page.content).toJSON(), page.content)) {
+    if (page.content && !compareDeep(schema.nodeFromJSON(page.content).toJSON(), page.content)) {
       // this means the schema is altering the content (presumably in response to a schema change)
       toaster.warn('Content has been altered to match the latest schema. Save to persist changes.', 10000);
     }

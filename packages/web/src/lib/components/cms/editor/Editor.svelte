@@ -65,30 +65,12 @@
   }
 
   .prosemirror-container {
+    --heading-color: #000;
+
     position: relative;
     width: 40rem;
     margin: 0 auto;
     text-align: left;
     font-family: var(--font-sans-serif);
-
-    --heading-color: #000;
-
-    :global(h1),
-    :global(h2) {
-      font-weight: 300;
-    }
-
-    :global(h1) {
-      font-size: 3rem;
-    }
-
-    :global(h2) {
-      font-size: 2rem;
-    }
-
-    :global(p) {
-      font-weight: 400;
-      font-size: 1.125rem;
-    }
   }
 </style>

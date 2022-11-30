@@ -9,7 +9,8 @@
 </p>
 
 <style lang="postcss">
-  p {
+  p,
+  :global(.ui-editor > p) {
     @mixin font-responsive p;
   }
 </style>

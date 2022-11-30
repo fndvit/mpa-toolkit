@@ -12,19 +12,22 @@
 </svelte:element>
 
 <style lang="postcss">
-  .block-h1 {
+  .block-h1,
+  :global(.ui-editor > h1) {
     @mixin font-responsive h2;
 
     margin: 2rem 0;
   }
 
-  .block-h2 {
+  .block-h2,
+  :global(.ui-editor > h2) {
     @mixin font-responsive h3;
 
     margin: 2rem 0;
   }
 
-  .block-h3 {
+  .block-h3,
+  :global(.ui-editor > h3) {
     @mixin font-responsive h4-graphic;
 
     margin: 2rem 0;

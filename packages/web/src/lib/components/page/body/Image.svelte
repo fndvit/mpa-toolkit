@@ -9,6 +9,11 @@
 
 <div class="image image-{block.attrs.style || 'regular'}">
   <img src={staticUrl(block.attrs.src)} use:fallbackImage={imagePlaceholder} alt={block.attrs.alt} />
+  {#if block?.attrs?.credits}
+    <div class="image-credits">
+      Credits: {block.attrs.credits}
+    </div>
+  {/if}
 </div>
 
 <style lang="postcss">
@@ -19,5 +24,19 @@
 
   .image img {
     width: 100%;
+  }
+
+  .image {
+    position: relative;
+  }
+
+  .image-credits {
+    font: $f-ui;
+    background-color: #ffffff95;
+    padding: 5px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
   }
 </style>

@@ -116,7 +116,7 @@ export const schema = new ProsemirrorSchema({
     },
 
     image: {
-      ...svelteSchemaNode('img', { src: null, alt: '', style: 'regular' }),
+      ...svelteSchemaNode('img', { src: null, alt: '', credits: '', style: 'regular' }),
       group: 'block'
     },
 

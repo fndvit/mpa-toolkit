@@ -23,13 +23,9 @@
   class:imageview--editing={editing}
   contenteditable="false"
 >
-  <div class="image-controls">
-    <input
-      bind:value={attrs.alt}
-      placeholder="alt text..."
-      on:focus={() => (editing = true)}
-      on:blur={() => (editing = false)}
-    />
+  <div class="image-controls" on:focusin={() => (editing = true)} on:focusout={() => (editing = false)}>
+    <input bind:value={attrs.alt} placeholder="alt text..." />
+    <input bind:value={attrs.credits} placeholder="pciture credits..." />
     <IconButton icon="aspect_ratio" title="Wide" active={attrs.style === 'full'} on:click={toggleStyle} />
     <IconButton on:click={controls.delete} icon="delete" />
   </div>

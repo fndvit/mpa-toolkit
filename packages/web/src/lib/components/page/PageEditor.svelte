@@ -274,6 +274,10 @@
     display: flex;
     flex-direction: column;
 
+    :global(.page-content .menu) {
+      top: calc(3rem + 1px);
+    }
+
     :global(.prosemirror-container) {
       flex: 1;
 

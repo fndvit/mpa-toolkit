@@ -49,7 +49,7 @@
     padding-top: 31px;
     padding-bottom: 29px;
     max-height: 70vh;
-    overflow-y: none;
+    overflow-y: hidden;
     width: 189px;
   }
 

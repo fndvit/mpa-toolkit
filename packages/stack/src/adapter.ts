@@ -5,6 +5,21 @@ import { fileURLToPath } from 'url';
 import type { Adapter } from '@sveltejs/kit';
 import * as esbuild from 'esbuild';
 import { copyPrismaEngineFiles, copyPrismaClientFiles } from '@mpa/utils/prisma/files';
+import { findUp } from 'find-up';
+import * as yaml from 'yaml';
+
+const writeLockFile = async (outdir: string) => {
+  const lockfilePath = await findUp('pnpm-lock.yaml');
+  if (!lockfilePath) throw new Error('pnpm-lock.yaml not found');
+
+  const lockfile = yaml.parse(fs.readFileSync(lockfilePath, 'utf8'));
+  const relativePath = path.relative(path.dirname(lockfilePath), process.cwd());
+  const outputLockfile = {
+    ...lockfile,
+    importers: { '.': lockfile.importers[relativePath] }
+  };
+  fs.writeFileSync(path.join(outdir, 'pnpm-lock.yaml'), yaml.stringify(outputLockfile));
+};
 
 export default function (): Adapter {
   return {
@@ -17,6 +32,7 @@ export default function (): Adapter {
       const prismaEngine = builder.getBuildDirectory('prisma-engine');
       const router = builder.getBuildDirectory('router');
       const tmp = builder.getBuildDirectory('tmp');
+      // const serverTest = builder.getBuildDirectory('server-test');
 
       builder.rimraf(server);
       builder.rimraf(tmp);
@@ -36,6 +52,8 @@ export default function (): Adapter {
           MANIFEST: './manifest.js'
         }
       });
+
+      await writeLockFile(server);
 
       fs.writeFileSync(
         `${server}/manifest.js`,

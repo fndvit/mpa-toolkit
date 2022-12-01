@@ -57,13 +57,15 @@ export class Server extends Construct {
         ...env,
         JWT_SECRET_KEY: secret.secretValue.toString() // TODO: move to appConfig
       },
+      depsLockFilePath: getPath('./packages/web/.svelte-kit/server/pnpm-lock.yaml'),
+      projectRoot: getPath('./packages/web'),
       bundling: {
-        externalModules: ['@sentry/serverless'],
-        inject: ['./packages/stack/dist/lambda/shims.js'],
+        nodeModules: ['sharp'],
+        inject: ['../../packages/stack/dist/lambda/shims.js'],
         commandHooks: {
           beforeInstall: () => [],
           beforeBundling: () => [],
-          afterBundling: (i, o) => [`cp ${i}/packages/db/prisma/schema.prisma ${o}`]
+          afterBundling: (i, o) => [`cp ${i}/../../packages/db/prisma/schema.prisma ${o}`]
         }
       }
     });

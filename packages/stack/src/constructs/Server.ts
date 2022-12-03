@@ -11,6 +11,7 @@ import { Construct } from 'constructs';
 
 import type { ConfigToEnvClean } from '@mpa/env';
 import { getPath } from '../util/dirs';
+import type { MpathStackProps } from 'src/stack';
 
 export const SERVER_ENV_CONFIG = {
   PUBLIC_UPLOAD_BASE_URL: true,
@@ -18,8 +19,7 @@ export const SERVER_ENV_CONFIG = {
   GOOGLE_OAUTH_CLIENT_SECRET: true,
   DISABLE_CACHE: false,
   LOG_TRANSPORT: true,
-  LOG_LEVEL: true,
-  ENABLE_SOURCE_MAPS: false
+  LOG_LEVEL: true
 } as const;
 
 export interface ServerProps {
@@ -27,6 +27,7 @@ export interface ServerProps {
   appConfigLayer?: lambda.ILayerVersion;
   env: ConfigToEnvClean<typeof SERVER_ENV_CONFIG>;
   buckets: { static: s3.Bucket };
+  stage: MpathStackProps['stage'];
 }
 
 type LambdaReferences = {
@@ -46,7 +47,9 @@ export class Server extends Construct {
   constructor(scope: Construct, id: string, props: ServerProps) {
     super(scope, id);
 
-    const { vpc, env, buckets } = props;
+    const { vpc, env, buckets, stage } = props;
+
+    const ENABLE_SOURCE_MAPS = stage === 'staging';
 
     this.lambdaSg = new ec2.SecurityGroup(this, 'LambdaSG', { vpc });
 
@@ -55,26 +58,31 @@ export class Server extends Construct {
     const createNewServerFunction = (name: string) => {
       const fn = new lambda.Function(this, `Lambda-${name}`, {
         code: lambda.Code.fromAsset(getPath(`packages/web/.svelte-kit/lambda/${name}`), {
-          exclude: env.ENABLE_SOURCE_MAPS ? [] : ['*.map']
+          exclude: ENABLE_SOURCE_MAPS ? [] : ['*.map']
         }),
         handler: 'index.handler',
         tracing: lambda.Tracing.ACTIVE,
-        memorySize: 256,
+        memorySize: 1024,
         timeout: Duration.seconds(15),
         vpc,
         vpcSubnets: {
           subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
         },
+
         runtime: lambda.Runtime.NODEJS_16_X,
         securityGroups: [this.lambdaSg],
         environment: {
           ...env,
           JWT_SECRET_KEY: secret.secretValue.toString(), // TODO: move to appConfig,
-          ...(env.ENABLE_SOURCE_MAPS ? { NODE_OPTIONS: '--enable-source-maps' } : {})
+          ...(ENABLE_SOURCE_MAPS ? { NODE_OPTIONS: '--enable-source-maps' } : {})
         }
       });
-      const alias = fn.addAlias(name);
-      alias.addAutoScaling({ minCapacity: 1, maxCapacity: 50 }).scaleOnUtilization({ utilizationTarget: 0.5 });
+
+      const alias = new lambda.Alias(this, `LambdaAlias-${name}`, {
+        aliasName: `${stage}-${name}`,
+        version: fn.currentVersion,
+        provisionedConcurrentExecutions: 1
+      });
 
       return { fn, alias };
     };

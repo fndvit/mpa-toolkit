@@ -21,7 +21,7 @@ import { Vpc } from './constructs/Vpc';
 import { BucketDeployments } from './constructs/BucketDeployments';
 import { CachePurger, CACHE_PURGER_ENV_CONFIG } from './constructs/CachePurger';
 
-interface MpathStackProps extends StackProps {
+export interface MpathStackProps extends StackProps {
   stage: 'staging' | 'prod';
 }
 
@@ -49,6 +49,7 @@ class MpathStack extends Stack {
     const server = new Server(this, 'Server', {
       vpc,
       buckets,
+      stage,
       env: { ...getEnv(SERVER_ENV_CONFIG), ...prismaEnv }
     });
 

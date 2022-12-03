@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { S3 } from '@aws-sdk/client-s3';
+import S3 from 'aws-sdk/clients/s3';
 import { logger } from '@mpa/log';
 import mime from 'mime-types';
 import AWSXRay from 'aws-xray-sdk-core';
@@ -17,7 +17,7 @@ if (!env.AWS_REGION) {
 
 const s3 = new S3({ region });
 
-AWSXRay.captureAWSv3Client(s3);
+AWSXRay.captureAWSClient(s3);
 
 const bufToHash = async (buf: Buffer): Promise<string> => {
   const hash = crypto.createHash('sha256');

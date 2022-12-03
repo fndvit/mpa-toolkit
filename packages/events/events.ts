@@ -1,4 +1,4 @@
-import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
+import SNSClient, { type PublishInput } from 'aws-sdk/clients/sns';
 import { getEnv } from '@mpa/env';
 import { logger } from '@mpa/log';
 
@@ -77,16 +77,18 @@ export async function publishEvent<T extends Event['type']>(type: T, details?: E
   if (!env.AWS_SNS_CONTENT_TOPIC) return;
 
   const event = { type, details };
-  const command = new PublishCommand({
+
+  const params: PublishInput = {
     Message: JSON.stringify(event),
     TopicArn: env.AWS_SNS_CONTENT_TOPIC
-  });
+  };
 
   try {
-    await sns.send(command);
-    log.info({ command }, 'Published event');
+    const request = sns.publish(params);
+    await request.promise();
+    log.info({ params }, 'Published event');
   } catch (error) {
-    log.error({ error, command }, 'Failed to publish object');
+    log.error({ error, params }, 'Failed to publish object');
     // TODO: need notifications here
     // as broken cache purging is critical
   } finally {

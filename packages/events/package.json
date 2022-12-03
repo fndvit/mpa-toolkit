@@ -17,9 +17,9 @@
     "clean": "rimraf ./dist"
   },
   "dependencies": {
-    "@aws-sdk/client-sns": "^3.145.0",
     "@mpa/env": "workspace:*",
-    "@mpa/log": "workspace:*"
+    "@mpa/log": "workspace:*",
+    "aws-sdk": "^2.1266.0"
   },
   "tsup": {
     "entry": [

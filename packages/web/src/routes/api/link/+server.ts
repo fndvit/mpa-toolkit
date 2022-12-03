@@ -1,5 +1,4 @@
 import { error, json } from '@sveltejs/kit';
-import getMedata from 'metadata-scraper';
 import sharp from 'sharp';
 import type { RequestHandler } from './$types';
 import { uploadImage } from '$lib/s3';

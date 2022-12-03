@@ -1,12 +1,14 @@
-import { Construct } from 'constructs';
-import type { aws_lambda_nodejs as lambdanode } from 'aws-cdk-lib';
+import type { aws_s3 as s3, aws_lambda_nodejs as lambdanode } from 'aws-cdk-lib';
 import {
+  aws_s3_deployment as s3_deployment,
   aws_ec2 as ec2,
   aws_lambda as lambda,
   aws_cloudfront as cloudfront,
   aws_secretsmanager as secretsmanager,
   Duration
 } from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+
 import type { ConfigToEnvClean } from '@mpa/env';
 import { getPath } from '../util/dirs';
 
@@ -24,6 +26,7 @@ export interface ServerProps {
   vpc: ec2.IVpc;
   appConfigLayer?: lambda.ILayerVersion;
   env: ConfigToEnvClean<typeof SERVER_ENV_CONFIG>;
+  buckets: { static: s3.Bucket };
 }
 
 type LambdaReferences = {
@@ -43,7 +46,7 @@ export class Server extends Construct {
   constructor(scope: Construct, id: string, props: ServerProps) {
     super(scope, id);
 
-    const { vpc, env } = props;
+    const { vpc, env, buckets } = props;
 
     this.lambdaSg = new ec2.SecurityGroup(this, 'LambdaSG', { vpc });
 
@@ -72,6 +75,7 @@ export class Server extends Construct {
       });
       const alias = fn.addAlias(name);
       alias.addAutoScaling({ minCapacity: 1, maxCapacity: 50 }).scaleOnUtilization({ utilizationTarget: 0.5 });
+
       return { fn, alias };
     };
 
@@ -80,6 +84,19 @@ export class Server extends Construct {
       cms: createNewServerFunction('cms'),
       rest: createNewServerFunction('rest')
     };
+
+    new s3_deployment.BucketDeployment(this, 'SourceMaps', {
+      destinationBucket: buckets.static,
+      sources: [
+        s3_deployment.Source.asset(getPath('packages/web/.svelte-kit/lambda'), {
+          exclude: ['**/*.js', '**/node_modules', '**/*.prisma']
+        })
+      ],
+      destinationKeyPrefix: 'sourcemaps/',
+      cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
+      retainOnDelete: false,
+      prune: false
+    });
 
     this.edgeFn = new cloudfront.experimental.EdgeFunction(this, 'EdgeRouter', {
       code: new lambda.AssetCode(getPath('./packages/web/.svelte-kit/router')),

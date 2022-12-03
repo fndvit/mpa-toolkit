@@ -48,6 +48,7 @@ class MpathStack extends Stack {
 
     const server = new Server(this, 'Server', {
       vpc,
+      buckets,
       env: { ...getEnv(SERVER_ENV_CONFIG), ...prismaEnv }
     });
 

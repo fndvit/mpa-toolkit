@@ -1,5 +1,8 @@
 lockfileVersion: 5.4
 
+overrides:
+  metadata-scraper@0.2.61>domino: npm:domino-ext@2.1.4
+
 importers:
 
   .:
@@ -2256,8 +2259,8 @@ packages:
       domelementtype: 2.3.0
     dev: true
 
-  /domino/2.1.6:
-    resolution: {integrity: sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ==}
+  /domino-ext/2.1.4:
+    resolution: {integrity: sha512-t8piRI9Qahd4V/NqnCcqdBWsQ4OYeOvcTuoHl38Pzk9OJJ/UiCYHA2jX2fACmBtDlSMiWa0uR524KuLEAMc/3Q==}
     dev: false
 
   /domutils/2.8.0:
@@ -4381,7 +4384,7 @@ packages:
   /metadata-scraper/0.2.61:
     resolution: {integrity: sha512-ECV8r10nIVgn7Y5vY8lnlvi9vF1YgYBJjn2R1zrOcKRe47ra9Yg25ZE1ejL3Equqi8u2Mp346KHqIcR4PLdyTA==}
     dependencies:
-      domino: 2.1.6
+      domino: /domino-ext/2.1.4
       got: 11.8.5
     dev: false
 

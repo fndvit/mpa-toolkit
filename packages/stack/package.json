@@ -16,7 +16,9 @@
   },
   "types": "src/index.ts",
   "scripts": {
-    "build": "tsup",
+    "build": "pnpm run build:stack && pnpm run build:lambda",
+    "build:stack": "tsup --config tsup.config.stack.js",
+    "build:lambda": "tsup --config tsup.config.lambda.js",
     "dev": "tsup --watch",
     "clean": "rimraf dist cdk.out",
     "synth-staging": "cdk synth --app ./dist/stack.js --require-approval never MPAth-staging"
@@ -55,29 +57,7 @@
   "files": [
     "dist"
   ],
-  "tsup": {
-    "entry": [
-      "src/index.ts",
-      "src/stack.ts",
-      "src/global.d.ts",
-      "src/lambda"
-    ],
-    "format": [
-      "esm"
-    ],
-    "loader": {
-      ".gql": "text",
-      ".repo": "text"
-    },
-    "noExternal": [],
-    "external": [
-      "SERVER",
-      "MANIFEST",
-      "STATIC"
-    ],
-    "splitting": false
-  },
   "peerDependencies": {
-    "@sveltejs/kit": "1.0.0-next.417"
+    "@sveltejs/kit": "1.0.0-next.561"
   }
 }

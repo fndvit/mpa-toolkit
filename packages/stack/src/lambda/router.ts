@@ -1,4 +1,4 @@
-/// <reference path = "../injected.d.ts" />
+/// <reference path = "./injected.d.ts" />
 import { staticFiles } from 'STATIC';
 
 export function handler(event, ctx, callback) {

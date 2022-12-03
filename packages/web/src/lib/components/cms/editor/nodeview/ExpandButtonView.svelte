@@ -7,11 +7,10 @@
   export let controls: SvelteNodeViewControls;
   export var rootDOM: (node: HTMLElement) => void;
 
-  let expanded = false;
 </script>
 
 <div use:rootDOM contenteditable="false">
-  <ExpandButtonEditor bind:content={attrs.showmore} on:complete={() => (expanded = false)} {controls} />
+  <ExpandButtonEditor bind:content={attrs.showmore} {controls} />
 </div>
 
 <style lang="postcss">

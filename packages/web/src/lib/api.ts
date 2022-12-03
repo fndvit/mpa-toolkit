@@ -91,7 +91,3 @@ async function _upload(endpoint: string, file: File) {
   const body = (await response.json()) as { path: string };
   return body.path;
 }
-
-async function _get(endpoint: string) {
-  return (await ky.get(endpoint)).json();
-}

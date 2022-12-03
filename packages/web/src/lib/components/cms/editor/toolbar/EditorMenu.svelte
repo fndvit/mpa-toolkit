@@ -155,10 +155,6 @@
       animation: 1s ease-in 0s infinite alternate bg-pulse;
     }
 
-    .is-new-page & :global(.icon-button[data-icon='open_in_new']) {
-      display: none;
-    }
-
     .draft-button {
       :global(.icon-button) {
         column-gap: 0;

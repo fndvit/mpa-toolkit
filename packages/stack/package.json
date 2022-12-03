@@ -21,7 +21,7 @@
     "build:lambda": "tsup --config tsup.config.lambda.js",
     "dev": "tsup --config tsup.config.stack.js --watch",
     "clean": "rimraf dist cdk.out",
-    "synth-staging": "cdk synth --app ./dist/stack.js --require-approval never MPAth-staging"
+    "synth-test": "FASTLY_API_KEY='a' FASTLY_SERVICE_ID='a' cdk synth --app ./dist/stack.js --require-approval never MPAth-staging"
   },
   "dependencies": {
     "@aws-cdk/aws-apigatewayv2-alpha": "2.17.0-alpha.0",

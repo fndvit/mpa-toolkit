@@ -13,7 +13,7 @@ importers:
       eslint-plugin-import: ^2.26.0
       eslint-plugin-svelte3: ^4.0.0
       prettier: ^2.7.1
-      prisma: ^4.6.1
+      prisma: ^4.7.1
       rimraf: ^3.0.2
       svelte: ^3.53.1
       tsup: ^6.5.0
@@ -28,7 +28,7 @@ importers:
       eslint-plugin-import: 2.26.0_vfrilbydaxalswvos6uuh4sxs4
       eslint-plugin-svelte3: 4.0.0_xgu65rlhscpnxffotiaicv6m5i
       prettier: 2.7.1
-      prisma: 4.6.1
+      prisma: 4.7.1
       rimraf: 3.0.2
       svelte: 3.53.1
       tsup: 6.5.0_typescript@4.9.3
@@ -40,17 +40,17 @@ importers:
       '@mpa/events': workspace:*
       '@mpa/log': workspace:*
       '@mpa/utils': workspace:*
-      '@prisma/client': ^4.6.1
+      '@prisma/client': ^4.7.1
       '@types/brace-expansion': ^1.1.0
-      ajv: ^8.11.0
+      ajv: ^8.11.2
       aws-xray-sdk-core: ^3.4.0
       brace-expansion: ^2.0.1
       clone: ^2.1.2
       compute-cosine-similarity: ^1.0.0
       dotenv-cli: ^6.0.0
-      google-auth-library: ^8.1.1
+      google-auth-library: ^8.7.0
       lorem-ipsum: ^2.0.8
-      prisma: ^4.6.1
+      prisma: ^4.7.1
       seedrandom: ^3.0.5
       vitest: ^0.21.1
     dependencies:
@@ -58,19 +58,19 @@ importers:
       '@mpa/events': link:../events
       '@mpa/log': link:../log
       '@mpa/utils': link:../utils
-      '@prisma/client': 4.6.1_prisma@4.6.1
-      ajv: 8.11.0
+      '@prisma/client': 4.7.1_prisma@4.7.1
+      ajv: 8.11.2
       aws-xray-sdk-core: 3.4.0
       brace-expansion: 2.0.1
       clone: 2.1.2
       compute-cosine-similarity: 1.0.0
-      google-auth-library: 8.1.1
+      google-auth-library: 8.7.0
       lorem-ipsum: 2.0.8
       seedrandom: 3.0.5
     devDependencies:
       '@types/brace-expansion': 1.1.0
       dotenv-cli: 6.0.0
-      prisma: 4.6.1
+      prisma: 4.7.1
       vitest: 0.21.1
 
   packages/env:
@@ -119,12 +119,12 @@ importers:
       fs-extra: ^10.1.0
       listr2: ^5.0.5
       pino: ^8.4.1
-      prisma: ^4.6.1
+      prisma: ^4.7.1
       shelljs: ^0.8.5
     dependencies:
-      '@prisma/client': 4.6.1_prisma@4.6.1
+      '@prisma/client': 4.6.1_prisma@4.7.1
       pino: 8.4.1
-      prisma: 4.6.1
+      prisma: 4.7.1
     devDependencies:
       '@mpa/db': link:../db
       '@mpa/env': link:../env
@@ -744,7 +744,7 @@ packages:
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
     dev: false
 
-  /@prisma/client/4.6.1_prisma@4.6.1:
+  /@prisma/client/4.6.1_prisma@4.7.1:
     resolution: {integrity: sha512-M1+NNrMzqaOIxT7PBGcTs3IZo7d1EW/+gVQd4C4gUgWBDGgD9AcIeZnUSidgWClmpMSgVUdnVORjsWWGUameYA==}
     engines: {node: '>=14.17'}
     requiresBuild: true
@@ -755,15 +755,33 @@ packages:
         optional: true
     dependencies:
       '@prisma/engines-version': 4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32
-      prisma: 4.6.1
+      prisma: 4.7.1
+    dev: false
+
+  /@prisma/client/4.7.1_prisma@4.7.1:
+    resolution: {integrity: sha512-/GbnOwIPtjiveZNUzGXOdp7RxTEkHL4DZP3vBaFNadfr6Sf0RshU5EULFzVaSi9i9PIK9PYd+1Rn7z2B2npb9w==}
+    engines: {node: '>=14.17'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+    dependencies:
+      '@prisma/engines-version': 4.7.1-1.272861e07ab64f234d3ffc4094e32bd61775599c
+      prisma: 4.7.1
     dev: false
 
   /@prisma/engines-version/4.6.1-3.694eea289a8462c80264df36757e4fdc129b1b32:
     resolution: {integrity: sha512-HUCmkXAU2jqp2O1RvNtbE+seLGLyJGEABZS/R38rZjSAafAy0WzBuHq+tbZMnD+b5OSCsTVtIPVcuvx1ySxcWQ==}
     dev: false
 
-  /@prisma/engines/4.6.1:
-    resolution: {integrity: sha512-3u2/XxvxB+Q7cMXHnKU0CpBiUK1QWqpgiBv28YDo1zOIJE3FCF8DI2vrp6vuwjGt5h0JGXDSvmSf4D4maVjJdw==}
+  /@prisma/engines-version/4.7.1-1.272861e07ab64f234d3ffc4094e32bd61775599c:
+    resolution: {integrity: sha512-Bd4LZ+WAnUHOq31e9X/ihi5zPlr4SzTRwUZZYxvWOxlerIZ7HJlVa9zXpuKTKLpI9O1l8Ec4OYCKsivWCs5a3Q==}
+    dev: false
+
+  /@prisma/engines/4.7.1:
+    resolution: {integrity: sha512-zWabHosTdLpXXlMefHmnouhXMoTB1+SCbUU3t4FCmdrtIOZcarPKU3Alto7gm/pZ9vHlGOXHCfVZ1G7OIrSbog==}
     requiresBuild: true
 
   /@sindresorhus/is/4.6.0:
@@ -1351,8 +1369,8 @@ packages:
       uri-js: 4.4.1
     dev: true
 
-  /ajv/8.11.0:
-    resolution: {integrity: sha512-wGgprdCvMalC0BztXvitD2hC04YffAvtsUn93JbGXYLAtCUO4xd17mCCZQxUOItiBwZvJScWo8NIvQMQ71rdpg==}
+  /ajv/8.11.2:
+    resolution: {integrity: sha512-E4bfmKAhGiSTvMfL1Myyycaub+cUEU2/IvpylXkUu7CHBkBj1f/ikdzbD7YQ6FKUbixDxeYvB/xY4fvyroDlQg==}
     dependencies:
       fast-deep-equal: 3.1.3
       json-schema-traverse: 1.0.0
@@ -3621,6 +3639,24 @@ packages:
       - supports-color
     dev: false
 
+  /google-auth-library/8.7.0:
+    resolution: {integrity: sha512-1M0NG5VDIvJZEnstHbRdckLZESoJwguinwN8Dhae0j2ZKIQFIV63zxm6Fo6nM4xkgqUr2bbMtV5Dgo+Hy6oo0Q==}
+    engines: {node: '>=12'}
+    dependencies:
+      arrify: 2.0.1
+      base64-js: 1.5.1
+      ecdsa-sig-formatter: 1.0.11
+      fast-text-encoding: 1.0.4
+      gaxios: 5.0.1
+      gcp-metadata: 5.0.0
+      gtoken: 6.1.0
+      jws: 4.0.0
+      lru-cache: 6.0.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
+
   /google-p12-pem/4.0.0:
     resolution: {integrity: sha512-lRTMn5ElBdDixv4a86bixejPSRk1boRtUowNepeKEVvYiFlkLuAJUVpEz6PfObDHYEKnZWq/9a2zC98xu62A9w==}
     engines: {node: '>=12.0.0'}
@@ -5043,13 +5079,13 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     dev: false
 
-  /prisma/4.6.1:
-    resolution: {integrity: sha512-BR4itMCuzrDV4tn3e2TF+nh1zIX/RVU0isKtKoN28ADeoJ9nYaMhiuRRkFd2TZN8+l/XfYzoRKyHzUFXLQhmBQ==}
+  /prisma/4.7.1:
+    resolution: {integrity: sha512-CCQP+m+1qZOGIZlvnL6T3ZwaU0LAleIHYFPN9tFSzjs/KL6vH9rlYbGOkTuG9Q1s6Ki5D0LJlYlW18Z9EBUpGg==}
     engines: {node: '>=14.17'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 4.6.1
+      '@prisma/engines': 4.7.1
 
   /process-warning/2.0.0:
     resolution: {integrity: sha512-+MmoAXoUX+VTHAlwns0h+kFUWFs/3FZy+ZuchkgjyOu3oioLAo2LB5aCfKPh2+P9O18i3m43tUEv3YqttSy0Ww==}
@@ -6009,7 +6045,7 @@ packages:
     resolution: {integrity: sha512-Y4X9zqrCftUhMeH2EptSSERdVKt/nEdijTOacGD/97EKjhQ/Qs8RTlEGABSJNNN8lac9kheH+af7yAkEWlgneA==}
     engines: {node: '>=10.0.0'}
     dependencies:
-      ajv: 8.11.0
+      ajv: 8.11.2
       lodash.truncate: 4.4.2
       slice-ansi: 4.0.0
       string-width: 4.2.3

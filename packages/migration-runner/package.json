@@ -21,7 +21,7 @@
   "dependencies": {
     "@prisma/client": "^4.6.1",
     "pino": "^8.4.1",
-    "prisma": "^4.6.1"
+    "prisma": "^4.7.1"
   },
   "files": [
     "package.json"

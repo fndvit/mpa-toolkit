@@ -9,6 +9,7 @@ jobs:
       STACK_NAME: 'MPAth-staging'
       ORIGIN: https://mpath-dev.freetls.fastly.net/
       AWS_REGION: eu-west-1
+      ENABLE_SOURCE_MAPS: true
     secrets:
       GOOGLE_OAUTH_CLIENT_ID:  ${{ secrets.STAGING_GOOGLE_OAUTH_CLIENT_ID }}
       GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.STAGING_GOOGLE_OAUTH_CLIENT_SECRET }}

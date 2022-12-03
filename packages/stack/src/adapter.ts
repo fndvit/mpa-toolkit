@@ -90,6 +90,7 @@ export default function (): Adapter {
               bundle: true,
               target: 'node16',
               platform: 'node',
+              sourcemap: 'linked',
               minify: true,
               external: ['aws-sdk']
             });

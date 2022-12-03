@@ -16,7 +16,8 @@ export const SERVER_ENV_CONFIG = {
   GOOGLE_OAUTH_CLIENT_SECRET: true,
   DISABLE_CACHE: false,
   LOG_TRANSPORT: true,
-  LOG_LEVEL: true
+  LOG_LEVEL: true,
+  ENABLE_SOURCE_MAPS: false
 } as const;
 
 export interface ServerProps {
@@ -50,7 +51,9 @@ export class Server extends Construct {
 
     const createNewServerFunction = (name: string) => {
       const fn = new lambda.Function(this, `Lambda-${name}`, {
-        code: lambda.Code.fromAsset(getPath(`packages/web/.svelte-kit/lambda/${name}`)),
+        code: lambda.Code.fromAsset(getPath(`packages/web/.svelte-kit/lambda/${name}`), {
+          exclude: env.ENABLE_SOURCE_MAPS ? [] : ['*.map']
+        }),
         handler: 'index.handler',
         tracing: lambda.Tracing.ACTIVE,
         memorySize: 256,
@@ -63,7 +66,8 @@ export class Server extends Construct {
         securityGroups: [this.lambdaSg],
         environment: {
           ...env,
-          JWT_SECRET_KEY: secret.secretValue.toString() // TODO: move to appConfig
+          JWT_SECRET_KEY: secret.secretValue.toString(), // TODO: move to appConfig,
+          ...(env.ENABLE_SOURCE_MAPS ? { NODE_OPTIONS: '--enable-source-maps' } : {})
         }
       });
       const alias = fn.addAlias(name);

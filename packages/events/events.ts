@@ -85,7 +85,8 @@ export async function publishEvent<T extends Event['type']>(type: T, details?: E
 
   try {
     const request = sns.publish(params);
-    await request.promise();
+    const response = await request.promise();
+    if (response.$response.error) throw response.$response.error;
     log.info({ params }, 'Published event');
   } catch (error) {
     log.error({ error, params }, 'Failed to publish object');

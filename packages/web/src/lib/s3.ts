@@ -38,13 +38,15 @@ async function uploadFile({ body, type, name, dir }: UploadFileOpts): Promise<st
   const _name = name || (await bufToHash(body));
   const key = `${dir}/${_name}.${ext}`;
   log.info(`Uploading file to s3: ${env.AWS_S3_UPLOAD_BUCKET} ${key} (${pretty(body.byteLength)} KB)`);
-  await s3.putObject({
+  const request = s3.putObject({
     Bucket: env.AWS_S3_UPLOAD_BUCKET,
     Key: `upload/${key}`,
     Body: body,
     CacheControl: 'max-age=31536000',
     ContentType: type
   });
+  const resp = await request.promise();
+  if (resp.$response.error) throw resp.$response.error;
   return key;
 }
 

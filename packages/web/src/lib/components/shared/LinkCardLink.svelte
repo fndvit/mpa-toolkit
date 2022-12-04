@@ -2,53 +2,41 @@
   import type { LinkCardData } from '@mpa/db';
   import { createEventDispatcher } from 'svelte';
   import Spinner from '../generic/Spinner.svelte';
-  import { EditableText, IconButton } from '$lib/components/generic';
+  import { EditableText, IconButton, toaster } from '$lib/components/generic';
   import * as api from '$lib/api';
   import { staticUrl } from '$lib/helpers/content';
   import imagePlaceholder from '$lib/assets/image-placeholder.svg';
+  import ImageEditButton from '../cms/editor/toolbar/ImageEditButton.svelte';
+  import { imgLoadingStatus } from '$lib/helpers/utils';
+  import { HTTPError } from 'ky';
 
   export let card: LinkCardData = {} as LinkCardData;
   export let editable = false;
 
-  let loading = false;
+  let loadingText = false;
+  let loadingImage = !!card.url;
+  let uploadingImage = false;
   let editingURL = false;
   let editUrl = card.url;
-  let urlElement;
 
   const dispatch = createEventDispatcher<{ delete: LinkCardData }>();
-  const deleteCard = () => dispatch('delete', card);
 
   const getMetaData = async () => {
+    if ((card.title && card.img) || card?.url.trim().length === 0) return;
     try {
-      if (card?.url.trim().length === 0) return;
-
-      loading = true;
-
+      loadingText = !card.title;
+      uploadingImage = !card.img;
       const { title, image } = await api.link.create(card.url);
-
-      if (title) card.title = title;
-      if (image) {
-        card.img = image;
-      } else card.img = '';
+      if (title && !card.title) card.title = title;
+      if (image && !card.img) card.img = image;
     } catch (e) {
-      card.img = '';
-      console.error(e);
+      const msg = e instanceof HTTPError && (await e.response.json()).message;
+      toaster.error('Error fetching URL' + (msg ? `: ${msg}` : ''));
     }
-    editingURL = false;
-    loading = false;
+    loadingText = false;
+    uploadingImage = false;
   };
 
-  const onClickCancelUrlEdit = async () => {
-    editUrl = card.url;
-    editingURL = false;
-  };
-
-  const onSubmitURL = () => {
-    card.url = editUrl;
-    editingURL = false;
-    getMetaData();
-  };
-  $: editingURL = card.url !== editUrl;
   const isURLValid = (url: string) => {
     try {
       return ['http:', 'https:'].includes(new URL(url).protocol);
@@ -56,7 +44,9 @@
       return false;
     }
   };
+
   $: validURL = isURLValid(editUrl);
+  $: editingURL = editingURL || (editable && !card.url);
 </script>
 
 <svelte:element
@@ -64,41 +54,89 @@
   class="linkcard-link"
   href={card?.url}
   target="_blank"
-  class:linkcard-link--show-url={editingURL}
+  class:linkcard-link--edit-url={editingURL}
 >
+  <!-- svelte-ignore a11y-click-events-have-key-events /* TODO */ -->
   <div class="linkcard-text">
-    {#if loading}
+    {#if loadingText}
       <Spinner />
+    {:else if editingURL}
+      <form
+        class="linkcard-url"
+        on:submit={() => {
+          card.url = editUrl;
+          editingURL = false;
+          getMetaData();
+        }}
+      >
+        <div class="linkcard-url-input-wrapper">
+          <input bind:value={editUrl} placeholder="Enter URL…" on:focus={() => (editingURL = true)} />
+        </div>
+        <IconButton
+          icon={'done'}
+          disabled={!validURL || editUrl === card.url}
+          title={!validURL && 'Invalid URL'}
+          square
+          type="submit"
+        />
+        <IconButton
+          href={validURL ? editUrl : undefined}
+          disabled={!validURL}
+          rel="external"
+          target="_blank"
+          icon="open_in_new"
+          square
+          on:click={() => window.open(editUrl, '_blank')}
+        />
+      </form>
     {:else}
       <EditableText bind:value={card.title} {editable} placeholder={'Title'} />
     {/if}
   </div>
-  <div class="linkcard-image" class:linkcard-image--empty={loading || !card?.img}>
-    {#if loading}
+  <div class="linkcard-image">
+    {#if uploadingImage || loadingImage}
       <Spinner />
     {/if}
-    <img src={!loading && card?.img ? staticUrl(card.img) : imagePlaceholder} alt={card.title} />
+    {#if editable}
+      <ImageEditButton
+        title="Edit image"
+        on:uploaded={e => {
+          card.img = e.detail;
+          uploadingImage = false;
+        }}
+        on:uploading={() => {
+          card.img = null;
+          uploadingImage = true;
+        }}
+      />
+    {/if}
+    <img
+      src={card?.img ? staticUrl(card.img) : imagePlaceholder}
+      alt={card.title}
+      use:imgLoadingStatus={v => (loadingImage = v)}
+      on:error={() => (card.img = null)}
+    />
   </div>
   {#if editable}
     <div class="linkcard-controls">
-      <IconButton icon="delete" on:click={deleteCard} square />
-      <div class="linkcard-url">
-        <form on:submit|preventDefault|stopPropagation={onSubmitURL}>
-          <input
-            bind:this={urlElement}
-            bind:value={editUrl}
-            placeholder="Enter URL…"
-            on:focus={() => (editingURL = true)}
-            on:blur={() => (editingURL = editUrl !== card.url)}
-          />
-          <IconButton href={card.url} rel="external" target="_blank" icon="open_in_new" square />
-          <IconButton icon={'done'} disabled={!editingURL || !validURL} title={!validURL && 'Invalid URL'} square />
-        </form>
+      <IconButton icon="delete" on:click={() => dispatch('delete', card)} square />
+      <div class="linkcard-controls--url">
         <IconButton
-          icon={editingURL ? 'close' : 'link'}
-          disabled={!editingURL}
-          on:click={onClickCancelUrlEdit}
+          icon="link"
+          on:click={() => {
+            editUrl = card.url;
+            editingURL = true;
+          }}
           square
+        />
+        <IconButton
+          icon="close"
+          on:click={() => {
+            editUrl = card.url;
+            editingURL = false;
+          }}
+          square
+          disabled={!card.url}
         />
       </div>
     </div>
@@ -116,7 +154,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     column-gap: 1.5rem;
 
     :global(.editable-text) {
@@ -138,11 +175,11 @@
     text-decoration: underline;
   }
 
-  :global(.page-editor--editing .linkcards) {
-    &:not(:hover) .linkcard-link:not(.linkcard-link--show-url) .linkcard-controls {
-      visibility: hidden;
-    }
+  .linkcard-link:not(.linkcard-link--edit-url, :hover) .linkcard-controls {
+    visibility: hidden;
+  }
 
+  :global(.page-editor--editing .linkcards) {
     :global(.editable-content):hover {
       cursor: text;
     }
@@ -152,29 +189,61 @@
     }
   }
 
+  .linkcard-controls--url {
+    display: flex;
+    flex-direction: row;
+
+    .linkcard-link--edit-url & :global([data-id='link']) {
+      display: none;
+    }
+
+    .linkcard-link:not(.linkcard-link--edit-url) & {
+      :global([data-id='done']),
+      :global([data-id='close']) {
+        display: none;
+      }
+    }
+  }
+
   .linkcard-url {
-    form {
+    align-items: center;
+    height: 24px;
+    background: $c-neutral-bg;
+    display: flex;
+
+    > * {
+      flex: 1;
+    }
+
+    input {
+      font-size: 12px;
+      height: 22px;
+      border: none;
+      box-shadow: 0 0 0 1px #0007;
+      outline: none;
+      width: 100%;
+      padding-right: 1.6rem;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: 1px solid #0001;
+      }
+    }
+
+    .linkcard-url-input-wrapper {
+      position: relative;
+    }
+
+    .linkcard-url-input-wrapper::after {
+      content: 'link';
+      font-family: 'Material Icons';
+      display: block;
       position: absolute;
-      background: $c-neutral-bg;
-      right: 2rem;
-      display: flex;
-      width: 0;
-      overflow: hidden;
-      filter: drop-shadow(0 0 0.25rem rgb(0 0 0 / 10%));
-
-      > * {
-        flex: 1;
-      }
-
-      input {
-        font-size: 12px;
-        border: none;
-        outline: 1px solid #ccc;
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
-        margin-right: 1px;
-        padding-left: 5px;
-      }
+      top: 1px;
+      right: 5px;
+      bottom: 0;
+      color: #bbb;
+      pointer-events: none;
     }
 
     :global(.icon-button-container) {
@@ -185,12 +254,6 @@
         opacity: initial;
       }
     }
-  }
-
-  .linkcard-link--show-url .linkcard-url form,
-  .linkcard-link:hover .linkcard-url form {
-    width: 400px;
-    overflow: visible;
   }
 
   .linkcard-text {
@@ -207,6 +270,7 @@
     width: 83px;
     height: 83px;
     flex: 0 0 auto;
+    overflow: hidden;
 
     img {
       height: 100%;
@@ -222,26 +286,44 @@
       background: #fff9;
     }
 
-    &.linkcard-image--empty img {
-      background: #d0d0d0;
-      object-fit: contain;
+    :global(.icon-button-container) {
+      --ib-color: black;
+
+      background: #fff9;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+
+      > :global(.icon-button) {
+        height: 100%;
+        width: 100%;
+        border-radius: 0;
+      }
+
+      .linkcard-image:not(:hover)& {
+        display: none;
+      }
+
+      z-index: 10;
     }
   }
 
   .linkcard-controls {
+    --ib-size: 32px;
+
+    box-shadow: 0 0 5px 1px #0002;
+    border-radius: 5px;
     position: absolute;
     background: $c-neutral-bg;
+    padding: 3px;
     right: calc(-2rem - 1.37rem);
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    transform: translateX(15px);
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     align-self: flex-start;
-
-    :global(.icon-button-container) {
-      background: $c-neutral-bg;
-    }
   }
 
   @media (max-width: 768px) {

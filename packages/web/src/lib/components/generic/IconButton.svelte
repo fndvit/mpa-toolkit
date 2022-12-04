@@ -9,6 +9,7 @@
   export let href: string = null;
   export let rel: string = null;
   export let target: string = null;
+  export let type: HTMLButtonElement['type'] = 'button';
   export let square = false;
   export let theme: 'toolbar' = undefined;
 </script>
@@ -32,6 +33,7 @@
     data-icon={icon}
     data-text={text}
     data-title={title}
+    type={href ? undefined : type}
   />
 </div>
 

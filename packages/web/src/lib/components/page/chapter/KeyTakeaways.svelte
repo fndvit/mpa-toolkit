@@ -30,7 +30,7 @@
 
 <style lang="postcss">
   .key-takeaways {
-    --editable-hover-bg: #fff4;
+    --editable-bg-active: #fff4;
 
     :global(.button) {
       margin: auto;

@@ -85,7 +85,7 @@
   .summary {
     @mixin font-responsive p-large;
 
-    --editable-hover-bg: #fff1;
+    --editable-bg-active: #fff1;
 
     font: $f-p-large;
     grid-area: summary;

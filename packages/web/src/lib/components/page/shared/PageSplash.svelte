@@ -41,7 +41,7 @@
 
     grid-template-rows: 1fr auto;
 
-    --editable-hover-bg: #fff2;
+    --editable-bg-active: #fff2;
     --editable-placeholder-color: #fff5;
 
     min-height: 60vh;

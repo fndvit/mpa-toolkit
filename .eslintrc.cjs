@@ -3,10 +3,10 @@ const { defineConfig } = require('eslint-define-config');
 
 module.exports = defineConfig({
   root: true,
+  ignorePatterns: ['build', 'dist', 'cdk.out', '*.cjs'],
   parser: '@typescript-eslint/parser',
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   plugins: ['svelte3', '@typescript-eslint', 'import'],
-  ignorePatterns: ['*.cjs'],
   overrides: [
     {
       files: ['*.svelte'],

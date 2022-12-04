@@ -1,25 +1,30 @@
 <script lang="ts">
   import type { Author } from '@mpa/db';
   import userNoProfileImage from '$lib/assets/default-profile-img.png';
-  import { staticUrl } from '$lib/helpers/content';
-  import { fallbackImage } from '$lib/helpers/utils';
-
+  import Picture from '../generic/Picture.svelte';
   export let author: Pick<Author.DB, 'img' | 'name'>;
 </script>
 
-<img
-  class="user-image"
+<Picture
+  className="author-image"
   on:click
-  src={staticUrl(author.img) || userNoProfileImage}
-  use:fallbackImage={userNoProfileImage}
+  src={author.img}
+  fallback={userNoProfileImage}
   alt={author.name}
-  style="background: #b0bec6;"
+  config={{ width: 70, width2x: 140 }}
 />
 
 <style lang="postcss">
-  img {
+  :global(.author-image) {
     border-radius: 50%;
     width: 66px;
     height: 66px;
+    background: #b0bec6;
+    overflow: hidden;
+
+    :global(img) {
+      flex: 1;
+      width: 100%;
+    }
   }
 </style>

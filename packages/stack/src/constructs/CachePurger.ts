@@ -33,7 +33,7 @@ export class CachePurger extends Construct {
       environment: env,
       vpc,
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
+        subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS
       },
       events: []
     });

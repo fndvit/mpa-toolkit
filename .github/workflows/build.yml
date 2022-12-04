@@ -10,6 +10,9 @@ on:
       AWS_REGION:
         required: true
         type: string
+      SVELTEKIT_APP_DIR:
+        required: true
+        type: string
     secrets:
       GOOGLE_OAUTH_CLIENT_ID:
         required: true
@@ -39,6 +42,7 @@ jobs:
       ORIGIN: ${{ inputs.ORIGIN }}
       FASTLY_SERVICE_ID: ${{ secrets.FASTLY_SERVICE_ID }}
       FASTLY_API_KEY: ${{ secrets.FASTLY_API_KEY }}
+      SVELTEKIT_APP_DIR: ${{ inputs.SVELTEKIT_APP_DIR }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -83,7 +87,7 @@ jobs:
           aws-region: ${{ inputs.AWS_REGION }}
           
       - name: Deploy to S3
-        run: cd packages/stack && pnpm exec cdk deploy --app ./dist/stack.js --require-approval never ${{ inputs.STACK_NAME }}
+        run: cd packages/stack && pnpm exec cdk deploy --app ./dist/stack.js --require-approval never MPAth-shared ${{ inputs.STACK_NAME }}
 
       - name: Update Fastly dictionary
         env:

@@ -1,6 +1,6 @@
 import { Construct } from 'constructs';
 import { aws_lambda as lambda } from 'aws-cdk-lib';
-import { getPath } from '../util/dirs';
+import projectRoot from '@mpa/utils/projectRoot';
 
 export class LambdaLayers extends Construct {
   sentry?: lambda.ILayerVersion;
@@ -13,12 +13,12 @@ export class LambdaLayers extends Construct {
 
     this.prismaEngineQuery = new lambda.LayerVersion(this, 'PrismaEngine-Query', {
       compatibleRuntimes: [lambda.Runtime.NODEJS_16_X],
-      code: lambda.Code.fromAsset(getPath('./packages/web/.svelte-kit/prisma-engine/query'))
+      code: lambda.Code.fromAsset(projectRoot('packages/web/build/prisma-engine/query'))
     });
 
     this.prismaEngineOther = new lambda.LayerVersion(this, 'PrismaEngine-Layers', {
       compatibleRuntimes: [lambda.Runtime.NODEJS_16_X],
-      code: lambda.Code.fromAsset(getPath('./packages/web/.svelte-kit/prisma-engine/other'))
+      code: lambda.Code.fromAsset(projectRoot('packages/web/build/prisma-engine/other'))
     });
   }
 }

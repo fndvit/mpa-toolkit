@@ -1,25 +1,29 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
   import { TagContainer } from '$lib/components/shared';
-  import { staticUrl } from '$lib/helpers/content';
-  import { fallbackImage } from '$lib/helpers/utils';
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
+  import Picture from '$lib/components/generic/Picture.svelte';
+  import type { PictureSource } from '$lib/components/generic/PictureSources.svelte';
 
   export let page: Page.ContentCard;
 
   const { slug, img, title, tags } = page;
+
+  const config: PictureSource[] = [
+    { width: 300, width2x: 500, minWidth: 1320 },
+    { width: 210, width2x: 400 }
+  ];
+
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 </script>
 
+<!-- TODO a11y -->
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div class="content-carousel-card" tabindex="0">
   <a href={'/' + slug}>
-    <img
-      use:fallbackImage={fallbackImg}
-      src={staticUrl(img) || fallbackImg}
-      alt="interesting-chapters"
-      href={'/' + slug}
-    />
+    <Picture src={img} fallback={fallbackImg} alt={title} {config} />
+
     <div class="title">{title}</div>
   </a>
 
@@ -30,7 +34,9 @@
 
 <style lang="postcss">
   .content-carousel-card {
-    width: 292px;
+    --ccc-width: 292px;
+
+    width: var(--ccc-width);
 
     a {
       display: flex;
@@ -39,10 +45,20 @@
       padding-bottom: 1rem;
     }
 
+    :global(picture) {
+      height: calc(var(--ccc-width) * (9 / 16));
+
+      :global(img) {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
     a:hover {
       text-decoration: none;
 
-      img {
+      :global(img) {
         filter: brightness(105%);
       }
 
@@ -54,11 +70,7 @@
 
   .tags {
     line-height: 18px;
-    max-width: 292px;
-  }
-
-  img {
-    width: 100%;
+    max-width: var(--ccc-width);
   }
 
   .title {
@@ -70,7 +82,7 @@
 
   @media (max-width: 1320px) {
     .content-carousel-card {
-      max-width: 210px;
+      --ccc-width: 210px;
     }
 
     .title {

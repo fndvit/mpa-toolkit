@@ -143,7 +143,7 @@ export const schema = new ProsemirrorSchema({
     },
 
     collapse: {
-      ...svelteSchemaNode('collapse', { showmore: ''}),
+      ...svelteSchemaNode('collapse', { showmore: '' }),
       group: 'block'
     }
   },

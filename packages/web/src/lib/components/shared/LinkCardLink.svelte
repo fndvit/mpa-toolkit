@@ -4,11 +4,10 @@
   import Spinner from '../generic/Spinner.svelte';
   import { EditableText, IconButton, toaster } from '$lib/components/generic';
   import * as api from '$lib/api';
-  import { staticUrl } from '$lib/helpers/content';
   import imagePlaceholder from '$lib/assets/image-placeholder.svg';
   import ImageEditButton from '../cms/editor/toolbar/ImageEditButton.svelte';
-  import { imgLoadingStatus } from '$lib/helpers/utils';
   import { HTTPError } from 'ky';
+  import Picture from '../generic/Picture.svelte';
 
   export let card: LinkCardData = {} as LinkCardData;
   export let editable = false;
@@ -56,7 +55,8 @@
   target="_blank"
   class:linkcard-link--edit-url={editingURL}
 >
-  <!-- svelte-ignore a11y-click-events-have-key-events /* TODO */ -->
+  <!-- TODO a11y -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="linkcard-text">
     {#if loadingText}
       <Spinner />
@@ -110,11 +110,12 @@
         }}
       />
     {/if}
-    <img
-      src={card?.img ? staticUrl(card.img) : imagePlaceholder}
+    <Picture
+      src={card?.img}
+      fallback={imagePlaceholder}
       alt={card.title}
-      use:imgLoadingStatus={v => (loadingImage = v)}
-      on:error={() => (card.img = null)}
+      config={[{ width: 100, width2x: 170 }]}
+      bind:loading={loadingImage}
     />
   </div>
   {#if editable}
@@ -272,7 +273,7 @@
     flex: 0 0 auto;
     overflow: hidden;
 
-    img {
+    :global(img) {
       height: 100%;
       width: 100%;
       object-fit: cover;

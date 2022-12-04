@@ -13,6 +13,8 @@ const config = {
 
   kit: {
     adapter: adapter(),
+    appDir: process.env.SVELTEKIT_APP_DIR || '_app',
+    outDir: 'build',
     env: {
       dir: '../..'
     }

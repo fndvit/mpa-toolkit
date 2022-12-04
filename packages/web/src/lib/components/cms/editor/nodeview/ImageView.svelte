@@ -3,8 +3,8 @@
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import imagePlaceholder from '$lib/assets/image-placeholder.svg';
   import { IconButton } from '$lib/components/generic';
-  import { staticUrl } from '$lib/helpers/content';
-  import { fallbackImage } from '$lib/helpers/utils';
+  import Picture from '$lib/components/generic/Picture.svelte';
+  import { IMAGE_CONFIG } from '$lib/components/page/body/Image.svelte';
 
   export var attrs: ImageBlock['attrs'];
   export var controls: SvelteNodeViewControls;
@@ -29,7 +29,13 @@
     <IconButton icon="aspect_ratio" title="Wide" active={attrs.style === 'full'} on:click={toggleStyle} />
     <IconButton on:click={controls.delete} icon="delete" />
   </div>
-  <img use:fallbackImage={imagePlaceholder} src={staticUrl(attrs.src)} alt={attrs.alt} title={attrs.title} />
+  <Picture
+    src={attrs.src}
+    fallback={imagePlaceholder}
+    alt={attrs.alt}
+    title={attrs.title}
+    config={IMAGE_CONFIG[attrs.style || 'regular']}
+  />
 </div>
 
 <style lang="postcss">
@@ -51,6 +57,10 @@
       border: 1px solid #777;
       margin: -1px;
       pointer-events: none;
+    }
+
+    :global(img) {
+      width: 100%;
     }
   }
 
@@ -86,9 +96,5 @@
     input {
       flex: 1;
     }
-  }
-
-  img {
-    width: 100%;
   }
 </style>

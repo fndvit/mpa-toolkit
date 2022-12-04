@@ -10,11 +10,11 @@
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
     "format": "prettier --write --plugin-search-dir=. .",
     "depcheck": "pnpm -F '@mpa/scripts' run depcheck",
-    "web": "pnpm -F @mpa/web --",
-    "db": "pnpm -F @mpa/db --",
-    "stack": "pnpm -F @mpa/stack --",
-    "scripts": "pnpm -F @mpa/scripts --",
-    "log": "pnpm -F @mpa/log --"
+    "web": "pnpm -F @mpa/web",
+    "db": "pnpm -F @mpa/db",
+    "stack": "pnpm -F @mpa/stack",
+    "scripts": "pnpm -F @mpa/scripts",
+    "log": "pnpm -F @mpa/log"
   },
   "workspaces": [
     "packages/*"

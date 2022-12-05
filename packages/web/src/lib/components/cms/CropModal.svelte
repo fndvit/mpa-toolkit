@@ -20,7 +20,7 @@
   async function onClickCrop() {
     const imtool = await fromImage(file);
     const { x, y, width, height } = cropData;
-    const cropped = imtool.crop(x, y, width, height).thumbnail(66);
+    const cropped = imtool.crop(x, y, width, height);
     croppedImg = await cropped.toBlobURL();
     croppedFile = await cropped.toFile('cropped.jpg');
   }

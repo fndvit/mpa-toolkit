@@ -25,6 +25,7 @@ const DEFAULT_IMAGE_OPTIONS: Partial<ImageUrlOptions> = { format: 'jpeg', qualit
 
 export const imageUrl = (path: string | null, opts?: ImageUrlOptions | null) => {
   if (!path) return null;
+  if (path.startsWith('data:')) return path;
   const baseUrl = /^https?:\/\//.test(path)
     ? ''
     : process.env.NODE_ENV === 'development' && path.startsWith('/src')

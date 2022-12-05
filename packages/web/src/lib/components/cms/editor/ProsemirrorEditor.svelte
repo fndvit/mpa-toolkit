@@ -71,18 +71,28 @@
     :global(a) {
       cursor: pointer;
     }
-  }
 
-  :global(.ProseMirror pre) {
-    white-space: pre-wrap;
-  }
+    :global(pre) {
+      white-space: pre-wrap;
+    }
 
-  :global(.ProseMirror li) {
-    position: relative;
-  }
+    :global(li) {
+      position: relative;
+    }
 
-  :global(.ProseMirror h1) {
-    text-align: left;
+    :global(h1) {
+      text-align: left;
+    }
+
+    :global(.empty-node::before) {
+      position: absolute;
+      color: #aaa;
+      cursor: text;
+    }
+
+    :global(.empty-node:hover::before) {
+      color: #777;
+    }
   }
 
   :global(.ProseMirror-hideselection *::selection) {
@@ -111,16 +121,6 @@
     bottom: -2px;
     border: 2px solid #8cf;
     pointer-events: none;
-  }
-
-  :global(.ProseMirror .empty-node::before) {
-    position: absolute;
-    color: #aaa;
-    cursor: text;
-  }
-
-  :global(.ProseMirror .empty-node:hover::before) {
-    color: #777;
   }
 
   :global(.ProseMirror.editor_empty::before) {

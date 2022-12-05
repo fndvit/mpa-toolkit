@@ -10,8 +10,8 @@ import {
 import { Construct } from 'constructs';
 
 import type { ConfigToEnvClean } from '@mpa/env';
-import { getPath } from '../util/dirs';
 import type { MpathStackProps } from 'src/stack';
+import projectRoot from '@mpa/utils/projectRoot';
 
 export const SERVER_ENV_CONFIG = {
   PUBLIC_UPLOAD_BASE_URL: true,
@@ -26,7 +26,7 @@ export interface ServerProps {
   vpc: ec2.IVpc;
   appConfigLayer?: lambda.ILayerVersion;
   env: ConfigToEnvClean<typeof SERVER_ENV_CONFIG>;
-  buckets: { static: s3.Bucket };
+  bucket: s3.IBucket;
   stage: MpathStackProps['stage'];
 }
 
@@ -47,7 +47,7 @@ export class Server extends Construct {
   constructor(scope: Construct, id: string, props: ServerProps) {
     super(scope, id);
 
-    const { vpc, env, buckets, stage } = props;
+    const { vpc, env, stage, bucket } = props;
 
     const ENABLE_SOURCE_MAPS = stage === 'staging';
 
@@ -57,7 +57,7 @@ export class Server extends Construct {
 
     const createNewServerFunction = (name: string) => {
       const fn = new lambda.Function(this, `Lambda-${name}`, {
-        code: lambda.Code.fromAsset(getPath(`packages/web/.svelte-kit/lambda/${name}`), {
+        code: lambda.Code.fromAsset(projectRoot(`packages/web/build/lambda/${name}`), {
           exclude: ENABLE_SOURCE_MAPS ? [] : ['*.map']
         }),
         handler: 'index.handler',
@@ -66,7 +66,7 @@ export class Server extends Construct {
         timeout: Duration.seconds(15),
         vpc,
         vpcSubnets: {
-          subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS
         },
 
         runtime: lambda.Runtime.NODEJS_16_X,
@@ -94,9 +94,9 @@ export class Server extends Construct {
     };
 
     new s3_deployment.BucketDeployment(this, 'SourceMaps', {
-      destinationBucket: buckets.static,
+      destinationBucket: bucket,
       sources: [
-        s3_deployment.Source.asset(getPath('packages/web/.svelte-kit/lambda'), {
+        s3_deployment.Source.asset(projectRoot('packages/web/build/lambda'), {
           exclude: ['**/*.js', '**/node_modules', '**/*.prisma']
         })
       ],
@@ -107,7 +107,7 @@ export class Server extends Construct {
     });
 
     this.edgeFn = new cloudfront.experimental.EdgeFunction(this, 'EdgeRouter', {
-      code: new lambda.AssetCode(getPath('./packages/web/.svelte-kit/router')),
+      code: new lambda.AssetCode(projectRoot('packages/web/build/router')),
       handler: 'index.handler',
       runtime: lambda.Runtime.NODEJS_14_X,
       memorySize: 128,

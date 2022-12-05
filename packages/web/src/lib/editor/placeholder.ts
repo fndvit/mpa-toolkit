@@ -1,6 +1,7 @@
 import type { EditorState } from 'prosemirror-state';
 import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
+import imagePlaceholder from '$lib/assets/image-placeholder.svg';
 
 export const placeholderPlugin = new Plugin<DecorationSet>({
   state: {
@@ -14,6 +15,9 @@ export const placeholderPlugin = new Plugin<DecorationSet>({
       const action = tr.getMeta(this);
       if (action && action.add) {
         const widget = document.createElement('placeholder');
+        widget.innerHTML = '<div class="spinner"></div>';
+        widget.classList.add('img-placeholder');
+        widget.style.backgroundImage = `url(${imagePlaceholder})`;
         const deco = Decoration.widget(action.add.pos, widget, { key: action.add.key });
         set = set.add(tr.doc, [deco]);
       } else if (action && action.remove) {

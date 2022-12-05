@@ -13,7 +13,6 @@
     "@mpa/utils": "workspace:^1.0.0",
     "@types/shelljs": "^0.8.11",
     "aws-lambda": "^1.0.7",
-    "esno": "^0.16.3",
     "fs-extra": "^10.1.0",
     "listr2": "^5.0.5",
     "shelljs": "^0.8.5"

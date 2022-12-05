@@ -5,6 +5,7 @@
   import { TagContainer } from '$lib/components/shared';
   import { getPageDisplayTitle, staticUrl } from '$lib/helpers/content';
   import { fallbackBackgroundImage } from '$lib/helpers/utils';
+  import Picture from '../generic/Picture.svelte';
 
   export let page: Page.CollectionCard;
   export let tagType: TagType = 'TOPIC';
@@ -28,6 +29,7 @@
 </script>
 
 <a class="collection-card" {href} rel="external" class:cms-card={cms}>
+  <!-- TODO img to picture -->
   <div
     class="image"
     style={`background-image: url(${staticUrl(page.img) || fallbackImg});`}

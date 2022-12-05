@@ -1,4 +1,3 @@
-import path from 'path';
 import got, { HTTPError } from 'got';
 import { getEnv } from '@mpa/env';
 import { logger } from '@mpa/log';
@@ -22,8 +21,7 @@ const client = got.extend({
 });
 
 export async function main() {
-  const root = await projectRoot();
-  const clientDir = path.resolve(root, 'packages/web/.svelte-kit/client');
+  const clientDir = projectRoot('packages/web/build/client');
   const files = await globby('**/*', { cwd: clientDir });
   log.info(`Globbing ${clientDir}/**/*`);
 

@@ -220,7 +220,7 @@ export type CollapseBlock = {
   attrs: {
     showmore: string;
   };
-}
+};
 
 export type ImageBlock = {
   type: 'image';

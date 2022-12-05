@@ -1,5 +1,4 @@
 import mapValues from 'lodash/mapValues.js';
-// import mapKeys from 'lodash/mapKeys.js';
 import postcss from 'postcss';
 
 // prettier-ignore

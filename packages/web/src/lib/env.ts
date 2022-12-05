@@ -14,7 +14,6 @@ export const env = getEnv({
   FASTLY_API_KEY: false,
   FASTLY_SERVICE_ID: false,
   PUBLIC_DB_RESTORE: false,
-  ENVIRONMENT: false,
   // not avail in build
   DATABASE_URL: !process.env.CI,
   JWT_SECRET_KEY: !process.env.CI,

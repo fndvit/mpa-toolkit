@@ -4,6 +4,7 @@
     "svelte.svelte-vscode",
     "prisma.prisma",
     "dbaeumer.vscode-eslint",
-    "stylelint.vscode-stylelint"
+    "stylelint.vscode-stylelint",
+    "esbenp.prettier-vscode"
   ]
 }

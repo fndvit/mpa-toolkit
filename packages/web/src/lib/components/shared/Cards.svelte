@@ -95,7 +95,7 @@
   @define-mixin card-styles $cardColor, $textColor, $arrowButtonColor: $cardColor {
     --card-color: $cardColor;
     --editable-caret: $textColor;
-    --editable-hover-bg: #fff2;
+    --editable-bg-active: #fff2;
     --dot-color: $textColor;
     --arrow-button-color: $arrowButtonColor;
 

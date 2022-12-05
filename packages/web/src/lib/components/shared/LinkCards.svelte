@@ -64,11 +64,11 @@
     }
 
     :global(.page-editor--editing) & {
-      --editable-outline: 1px solid #0004;
+      --editable-outline: 1px solid #0001;
 
       &:hover :global(.editable-content),
       :global(.editable-content.focused) {
-        --editable-bg: white;
+        --editable-bg-active: white;
 
         box-shadow: 0 0 0 1px #0001;
       }

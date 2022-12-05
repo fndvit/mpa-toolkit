@@ -5,23 +5,23 @@
     "dev": "pnpm -F '@mpa/*' --parallel dev",
     "clean": "pnpm -F '@mpa/*' clean",
     "build": "pnpm -F '@mpa/*' run build",
-    "synth": "pnpm run clean && pnpm run build && pnpm stack synth-test",
     "test": "pnpm -F @mpa/* run test",
     "lint": "prettier --check --plugin-search-dir=. . && eslint .",
     "format": "prettier --write --plugin-search-dir=. .",
     "depcheck": "pnpm -F '@mpa/scripts' run depcheck",
-    "web": "pnpm -F @mpa/web --",
-    "db": "pnpm -F @mpa/db --",
-    "stack": "pnpm -F @mpa/stack --",
-    "scripts": "pnpm -F @mpa/scripts --",
-    "log": "pnpm -F @mpa/log --"
+    "web": "pnpm -F @mpa/web",
+    "db": "pnpm -F @mpa/db",
+    "stack": "pnpm -F @mpa/stack",
+    "scripts": "pnpm -F @mpa/scripts",
+    "log": "pnpm -F @mpa/log",
+    "utils": "pnpm -F @mpa/utils"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.44.0",
-    "@typescript-eslint/parser": "^5.44.0",
+    "@typescript-eslint/eslint-plugin": "5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
     "esbuild": "^0.15.16",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
@@ -38,6 +38,62 @@
   "pnpm": {
     "overrides": {
       "metadata-scraper@0.2.61>domino": "npm:domino-ext@2.1.4"
+    }
+  },
+  "dependencies": {
+    "esno": "^0.16.3"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "printWidth": 120,
+    "semi": true,
+    "arrowParens": "avoid"
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-standard",
+      "stylelint-config-html/svelte",
+      "stylelint-config-prettier"
+    ],
+    "rules": {
+      "import-notation": null,
+      "no-descending-specificity": null,
+      "selector-class-pattern": null,
+      "function-no-unknown": [
+        true,
+        {
+          "ignoreFunctions": [
+            "alpha"
+          ]
+        }
+      ],
+      "at-rule-no-unknown": [
+        true,
+        {
+          "ignoreAtRules": [
+            "mixin",
+            "define-mixin"
+          ]
+        }
+      ],
+      "font-family-no-missing-generic-family-keyword": [
+        true,
+        {
+          "ignoreFontFamilies": [
+            "Material Icons"
+          ]
+        }
+      ],
+      "selector-pseudo-class-no-unknown": [
+        true,
+        {
+          "ignorePseudoClasses": [
+            "global"
+          ]
+        }
+      ]
     }
   }
 }

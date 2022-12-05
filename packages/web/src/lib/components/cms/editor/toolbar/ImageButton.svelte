@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+  let id = 0;
+</script>
+
 <script lang="ts">
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
@@ -5,6 +9,7 @@
   import { IconButton } from '$lib/components/generic';
   import { findPlaceholder, placeholderPlugin } from '$lib/editor/placeholder';
   import { schema } from '$lib/editor/schema';
+  import { imageUrl } from '$lib/helpers/content';
 
   export let title: string;
 
@@ -16,8 +21,20 @@
     inputEl.click();
   };
 
+  async function preloadImage(url: string) {
+    return new Promise<{ width; height }>((resolve, reject) => {
+      const img = new Image();
+      img.src = imageUrl(url, { format: 'jpeg' });
+      img.onload = () => {
+        const { width, height } = img;
+        resolve({ width, height });
+      };
+      img.onerror = (event, source, lineno, colno, error) => reject({ error, event, source, lineno, colno });
+    });
+  }
+
   async function startImageUpload(view: EditorView, file: File) {
-    let key = {};
+    let key = id++;
     let tr = view.state.tr;
     if (!tr.selection.empty) tr.deleteSelection();
     tr.setMeta(placeholderPlugin, { add: { key, pos: tr.selection.from } });
@@ -25,6 +42,7 @@
 
     try {
       const url = await api.image.upload(file);
+      await preloadImage(url);
       let pos = findPlaceholder(view.state, key);
       if (pos == null) return;
       view.dispatch(
@@ -33,6 +51,7 @@
           .setMeta(placeholderPlugin, { remove: { key } })
       );
     } catch (err) {
+      console.error(err);
       view.dispatch(tr.setMeta(placeholderPlugin, { remove: { key } }));
     }
   }
@@ -49,4 +68,10 @@
 
 <IconButton on:click={onClick} icon="image" {title} />
 
-<input bind:this={inputEl} style="display: none;" type="file" on:change={onChangeFile} accept=".jpg,.png" />
+<input
+  bind:this={inputEl}
+  style="display: none;"
+  type="file"
+  on:change={onChangeFile}
+  accept=".jpg,.png,.webp,.svg,.avif,.gif"
+/>

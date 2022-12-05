@@ -84,9 +84,15 @@ export const hoverTimer = (ms: number) => {
 };
 
 export const imgLoadingStatus = (node: HTMLImageElement, cb: (loading: boolean) => void) => {
+  node.addEventListener('error', () => cb(false));
   node.addEventListener('load', () => cb(false));
+
   cb(!node.complete);
-  new MutationObserver(() => cb(!node.complete)).observe(node, { attributes: true, attributeFilter: ['src'] });
+
+  const observer = new MutationObserver(() => cb(!node.complete));
+  observer.observe(node, { attributes: true, attributeFilter: ['src'] });
+
+  return { destroy: () => observer.disconnect() };
 };
 
 export const fallbackBackgroundImage = (node: HTMLElement, img: string) => {

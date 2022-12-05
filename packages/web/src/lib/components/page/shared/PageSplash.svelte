@@ -4,8 +4,7 @@
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import { EditableText, InlineSvgLink } from '$lib/components/generic';
-  import { staticUrl } from '$lib/helpers/content';
-  import { fallbackBackgroundImage } from '$lib/helpers/utils';
+  import { backgroundImage } from '$lib/helpers/content';
 
   type PageForSplash = Modify<Pick<Page, 'title' | 'img'>, { caseStudy?: { name: string } }>;
 
@@ -17,9 +16,11 @@
 
 <div
   class="splash"
-  style={`background-image: url(${staticUrl(page.img) || fallbackImg}) ;`}
-  use:fallbackBackgroundImage={fallbackImg}
   class:splash-cs={page.caseStudy}
+  style:--bg-small={backgroundImage(page.img || fallbackImg, { width: 600 })}
+  style:--bg-medium={backgroundImage(page.img || fallbackImg, { width: 1000 })}
+  style:--bg-large={backgroundImage(page.img || fallbackImg, { width: 1440 })}
+  style:--bg-fallback={backgroundImage(fallbackImg, { width: 1440 })}
 >
   <div class="mpath-logo">
     <InlineSvgLink href="/" svg="MPATH" />
@@ -35,19 +36,18 @@
 
 <style lang="postcss">
   .splash {
-    position: relative;
+    --editable-bg-active: #fff2;
+    --editable-placeholder-color: #fff5;
 
     @mixin grid-config content, splash;
 
+    position: relative;
     grid-template-rows: 1fr auto;
-
-    --editable-hover-bg: #fff2;
-    --editable-placeholder-color: #fff5;
-
     min-height: 60vh;
     padding-bottom: 3rem;
     background-size: cover;
     background-position: center center;
+    background-image: var(--bg-large), var(--bg-fallback);
 
     h1 {
       @mixin font-responsive h1;
@@ -79,6 +79,8 @@
 
   @mixin breakpoint content, medium {
     .splash {
+      background-image: var(--bg-medium), var(--bg-fallback);
+
       h1 {
         margin-bottom: 0;
       }
@@ -89,8 +91,12 @@
     }
   }
   @mixin breakpoint content, small {
-    h1 {
-      margin-top: 283px;
+    .splash {
+      background-image: var(--bg-small), var(--bg-fallback);
+
+      h1 {
+        margin-top: 283px;
+      }
     }
   }
 </style>

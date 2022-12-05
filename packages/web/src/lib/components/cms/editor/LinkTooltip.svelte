@@ -147,7 +147,7 @@
 >
   <form on:submit|preventDefault={onSubmit}>
     <input type="url" bind:value={url} />
-    <IconButton icon="done" disabled={!dirty} theme="toolbar" />
+    <IconButton type="submit" icon="done" disabled={!dirty} theme="toolbar" />
   </form>
   <IconButton icon="delete" theme="toolbar" on:click={onClickDelete} />
 </div>

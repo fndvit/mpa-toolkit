@@ -56,8 +56,9 @@
     background-color: var(--editable-bg, inherit);
     caret-color: var(--editable-caret, white);
 
-    &.editable-content--editing:hover {
-      background-color: var(--editable-hover-bg, inherit);
+    &.editable-content--editing:hover,
+    &.editable-content--editing:focus {
+      background-color: var(--editable-bg-active, var(--editable-bg, inherit));
     }
 
     &:focus {

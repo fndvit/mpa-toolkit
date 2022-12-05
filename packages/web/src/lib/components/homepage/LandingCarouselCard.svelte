@@ -3,16 +3,22 @@
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import { TagContainer } from '$lib/components/shared';
-  import { getPageDisplayTitle, staticUrl } from '$lib/helpers/content';
-  import { fallbackImage } from '$lib/helpers/utils';
+  import { getPageDisplayTitle } from '$lib/helpers/content';
+  import type { PictureSource } from '../generic/PictureSources.svelte';
+  import Picture from '../generic/Picture.svelte';
 
   export let page: Page.ContentCard;
+
+  const config: PictureSource[] = [
+    { width: 300, width2x: 500, minWidth: 1320 },
+    { width: 210, width2x: 400 }
+  ];
 
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 </script>
 
 <a class="landing-carousel-card" href="/{page.slug}" class:case-study={!!page.caseStudy} tabindex="0" rel="external">
-  <img use:fallbackImage={fallbackImg} class="image" src={staticUrl(page.img) || fallbackImg} alt="preview" />
+  <Picture src={page.img} fallback={fallbackImg} alt={page.title} {config} />
 
   <div class="preview-content">
     <div class="title">
@@ -37,9 +43,11 @@
 
 <style lang="postcss">
   .landing-carousel-card {
+    --lcc-width: 766px;
+
     display: flex;
     flex-direction: column;
-    width: 766px;
+    width: var(--lcc-width);
     box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
     border-radius: 40px;
     border: none;
@@ -56,6 +64,21 @@
 
     .tags {
       max-width: 600px;
+    }
+
+    :global(picture) {
+      border-radius: 40px 40px 0 0;
+      width: var(--lcc-width);
+      height: calc(var(--lcc-width) * 0.45);
+      object-fit: cover;
+      overflow: hidden;
+
+      :global(img) {
+        width: 100%;
+        margin: auto;
+        object-position: center;
+        object-fit: cover;
+      }
     }
   }
 
@@ -132,25 +155,18 @@
     flex: 1;
   }
 
-  .image {
-    border-radius: 40px 40px 0 0;
-    width: 766px;
-    height: 344px;
-    object-fit: cover;
-  }
-
   @media (max-width: 1024px) {
     .landing-carousel-card {
       max-width: 500px;
       width: calc(100vw - 120px);
-    }
 
-    .image {
-      width: 100%;
-      aspect-ratio: 1.5 / 1;
-      @supports (aspect-ratio: 1.25 / 1) {
-        height: auto;
-        min-height: 240px;
+      :global(picture) {
+        width: 100%;
+        aspect-ratio: 1.5 / 1;
+        @supports (aspect-ratio: 1.25 / 1) {
+          height: auto;
+          min-height: 240px;
+        }
       }
     }
 

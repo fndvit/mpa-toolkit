@@ -13,5 +13,9 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/adapter.ts", "src/stack.ts"]
+  "include": ["src/adapter.ts", "src/stack.ts"],
+  "exclude": [
+    "node_modules",
+    "cdk.out"
+  ]
 }

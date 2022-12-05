@@ -24,6 +24,7 @@
     "migrate": "pnpm migrate:local && pnpm migrate:test",
     "migrate:local": "dotenv -e ../../.env prisma migrate dev",
     "migrate:test": "dotenv -e ../../.env prisma migrate dev",
+    "reset": "pnpm -F @mpa/scripts run reset",
     "nuke": "pnpm -F @mpa/scripts run nuke",
     "seed": "pnpm -F @mpa/scripts run seed",
     "seedmigrate": "pnpm -F @mpa/scripts run seedmigrate",

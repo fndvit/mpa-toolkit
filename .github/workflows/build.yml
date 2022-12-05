@@ -13,6 +13,9 @@ on:
       SVELTEKIT_APP_DIR:
         required: true
         type: string
+      PUBLIC_DB_RESTORE:
+        required: false
+        type: boolean
     secrets:
       GOOGLE_OAUTH_CLIENT_ID:
         required: true
@@ -43,6 +46,7 @@ jobs:
       FASTLY_SERVICE_ID: ${{ secrets.FASTLY_SERVICE_ID }}
       FASTLY_API_KEY: ${{ secrets.FASTLY_API_KEY }}
       SVELTEKIT_APP_DIR: ${{ inputs.SVELTEKIT_APP_DIR }}
+      PUBLIC_DB_RESTORE: ${{ inputs.PUBLIC_DB_RESTORE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3

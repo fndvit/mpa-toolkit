@@ -19,7 +19,8 @@ export const SERVER_ENV_CONFIG = {
   GOOGLE_OAUTH_CLIENT_SECRET: true,
   DISABLE_CACHE: false,
   LOG_TRANSPORT: true,
-  LOG_LEVEL: true
+  LOG_LEVEL: true,
+  PUBLIC_DB_RESTORE: false
 } as const;
 
 export interface ServerProps {

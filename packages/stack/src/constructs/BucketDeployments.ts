@@ -29,7 +29,7 @@ export class BucketDeployments extends Construct {
       sources: [s3_deployment.Source.asset(assetsDir, { exclude: ['_app/*'] })],
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=3600, public')],
       retainOnDelete: true,
-      prune: true,
+      prune: false,
       exclude: ['_app', '_app/', '_app/*']
     });
   }

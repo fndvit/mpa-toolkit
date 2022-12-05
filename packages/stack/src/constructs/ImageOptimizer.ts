@@ -1,3 +1,4 @@
+import type { Stack } from 'aws-cdk-lib';
 import {
   Fn,
   RemovalPolicy,
@@ -17,7 +18,7 @@ interface ImageOptimizerProps {
 }
 
 export class ImageOptimizer extends Construct {
-  constructor(scope: Construct, id: string, props: ImageOptimizerProps) {
+  constructor(scope: Stack, id: string, props: ImageOptimizerProps) {
     super(scope, id);
 
     const { imageBucket } = props;
@@ -57,8 +58,15 @@ export class ImageOptimizer extends Construct {
     });
 
     const imageOrigin = new origins.OriginGroup({
-      primaryOrigin: new origins.S3Origin(transformedImageBucket),
-      fallbackOrigin: new origins.HttpOrigin(Fn.select(2, Fn.split('/', imageProcessingURL.url))),
+      primaryOrigin: new origins.S3Origin(transformedImageBucket, {
+        originShieldRegion: scope.region
+      }),
+      fallbackOrigin: new origins.HttpOrigin(Fn.select(2, Fn.split('/', imageProcessingURL.url)), {
+        originShieldRegion: scope.region,
+        customHeaders: {
+          'x-origin-secret-header': SECRET_KEY
+        }
+      }),
       fallbackStatusCodes: [403]
     });
 
@@ -88,7 +96,6 @@ export class ImageOptimizer extends Construct {
           }
         ],
         responseHeadersPolicy: new cloudfront.ResponseHeadersPolicy(this, `ResponseHeadersPolicy${this.node.addr}`, {
-          responseHeadersPolicyName: 'ImageResponsePolicy',
           corsBehavior: {
             accessControlAllowCredentials: false,
             accessControlAllowHeaders: ['*'],

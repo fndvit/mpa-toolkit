@@ -93,6 +93,7 @@ class MpathStack extends Stack {
 
     Object.values(server.lambdas).forEach(({ fn, alias }) => {
       fn.addLayers(lambdaLayers.prismaEngineQuery);
+      fn.addEnvironment('AWS_S3_UPLOAD_BUCKET', bucket.bucketName);
       fn.addEnvironment('DATABASE_URL', db.url);
       alias.addToRolePolicy(
         new iam.PolicyStatement({

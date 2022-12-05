@@ -25,10 +25,11 @@ const DEFAULT_IMAGE_OPTIONS: Partial<ImageUrlOptions> = { format: 'jpeg', qualit
 
 export const imageUrl = (path: string | null, opts?: ImageUrlOptions | null) => {
   if (!path) return null;
-  const baseUrl =
-    process.env.NODE_ENV === 'development' && path.startsWith('/src')
-      ? `http://localhost:3000`
-      : env.PUBLIC_UPLOAD_BASE_URL;
+  const baseUrl = /^https?:\/\//.test(path)
+    ? ''
+    : process.env.NODE_ENV === 'development' && path.startsWith('/src')
+    ? 'http://localhost:3000'
+    : env.PUBLIC_UPLOAD_BASE_URL;
 
   if (opts === null) return `${baseUrl}${path}`;
 

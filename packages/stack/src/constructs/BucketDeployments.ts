@@ -20,7 +20,7 @@ export class BucketDeployments extends Construct {
       sources: [s3_deployment.Source.asset(`${assetsDir}/_app`)],
       destinationKeyPrefix: '_app/',
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
-      retainOnDelete: false,
+      retainOnDelete: true,
       prune: false // TODO: delayed pruning ?
     });
 

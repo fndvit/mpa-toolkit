@@ -4,7 +4,6 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "deploy-fastly-dictionary": "esno ./src/fastlydict.ts",
     "depcheck": "esno ./src/depcheck.ts",
     "nuke": "esno ./src/db/nuke.ts",
     "seedmigrate": "esno ./src/db/migrate.ts",

@@ -10,10 +10,7 @@
 
   const { slug, img, title, tags } = page;
 
-  const config: PictureSource[] = [
-    { width: 300, width2x: 500, minWidth: 1320 },
-    { width: 210, width2x: 400 }
-  ];
+  const config: PictureSource[] = [{ width: [300, 500], minWidth: 1320 }, { width: [210, 400] }];
 
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 </script>

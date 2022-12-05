@@ -11,7 +11,7 @@
   src={author.img}
   fallback={userNoProfileImage}
   alt={author.name}
-  config={{ width: 70, width2x: 140 }}
+  config={{ width: [70, 140] }}
 />
 
 <style lang="postcss">

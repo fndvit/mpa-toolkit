@@ -17,6 +17,7 @@ export const staticUrl = (path: string) => (path ? `${env.PUBLIC_UPLOAD_BASE_URL
 
 export interface ImageUrlOptions {
   width?: number;
+  height?: number;
   format?: 'jpeg' | 'png' | 'webp' | 'avif';
   quality?: number;
 }
@@ -35,7 +36,7 @@ export const imageUrl = (path: string | null, opts?: ImageUrlOptions | null) => 
   if (opts === null) return `${baseUrl}${path}`;
 
   const o = Object.assign({ ...DEFAULT_IMAGE_OPTIONS }, opts);
-  const params = ['format', 'width', 'quality']
+  const params = ['format', 'width', 'height', 'quality']
     .filter(key => o[key])
     .map(k => `${k}=${o[k]}`)
     .join('&');

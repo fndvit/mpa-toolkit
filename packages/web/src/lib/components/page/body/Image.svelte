@@ -2,14 +2,14 @@
 
   export const IMAGE_CONFIG = {
       regular: [
-        { width: 600, width2x: 1000, minWidth: 1250 },
-        { width: 840, width2x: 1200, minWidth: 820 },
-        { width: 600, width2x: 1000 }
+        { width: [600, 1000], minWidth: 1250 },
+        { width: [840, 1200], minWidth: 820 },
+        { width: [600, 1000] }
       ],
       full: [
-        { width: 1000, width2x: 1500, minWidth: 1250 },
-        { width: 840, width2x: 1200, minWidth: 820 },
-        { width: 600, width2x: 1000 }
+        { width: [1000, 1500], minWidth: 1250 },
+        { width: [840, 1200], minWidth: 820 },
+        { width: [600, 1000] }
       ]
     } satisfies Record<string, PictureSource[]>;
 

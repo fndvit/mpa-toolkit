@@ -114,7 +114,7 @@
       src={card?.img}
       fallback={imagePlaceholder}
       alt={card.title}
-      config={[{ width: 100, width2x: 170 }]}
+      config={{ width: [100, 170] }}
       bind:loading={loadingImage}
     />
   </div>

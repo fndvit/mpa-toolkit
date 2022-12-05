@@ -3,8 +3,7 @@
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import { TagContainer } from '$lib/components/shared';
-  import { getPageDisplayTitle, staticUrl } from '$lib/helpers/content';
-  import { fallbackBackgroundImage } from '$lib/helpers/utils';
+  import { getPageDisplayTitle } from '$lib/helpers/content';
   import Picture from '../generic/Picture.svelte';
 
   export let page: Page.CollectionCard;
@@ -30,11 +29,7 @@
 
 <a class="collection-card" {href} rel="external" class:cms-card={cms}>
   <!-- TODO img to picture -->
-  <div
-    class="image"
-    style={`background-image: url(${staticUrl(page.img) || fallbackImg});`}
-    use:fallbackBackgroundImage={fallbackImg}
-  />
+  <Picture src={page.img} fallback={fallbackImg} alt={page.title} title={page.title} config={{ height: [200, 400] }} />
   <div class="collection-card-content">
     <h1 class="title">
       {#if page.highlights}
@@ -74,6 +69,21 @@
 
     &.cms-card {
       --cc-height: 160px;
+    }
+
+    :global(picture) {
+      flex: 0 0 12rem;
+      object-fit: cover;
+      border-radius: 12px 0 0 12px;
+      background-size: cover;
+      background-position: center center;
+      overflow: hidden;
+
+      :global(img) {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
     }
   }
 
@@ -135,21 +145,13 @@
     font: $f-ui;
   }
 
-  .image {
-    flex: 0 0 12rem;
-    object-fit: cover;
-    border-radius: 12px 0 0 12px;
-    background-size: cover;
-    background-position: center center;
-  }
-
   @media (max-width: 1024px) {
     .collection-card {
       height: auto;
-    }
 
-    .image {
-      flex-basis: 7rem;
+      :global(picture) {
+        flex-basis: 7rem;
+      }
     }
 
     .collection-card-content {

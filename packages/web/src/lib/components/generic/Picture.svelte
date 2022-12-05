@@ -28,7 +28,7 @@
   $: sources = Array.isArray(config) ? config : [config];
 </script>
 
-<picture class={className}>
+<picture class={className} data-original-src={src}>
   {#if _src || (fallback && error)}
     <PictureSources config={sources} {formats} src={error ? fallback : _src} />
   {/if}

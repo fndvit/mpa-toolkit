@@ -9,10 +9,7 @@
 
   export let page: Page.ContentCard;
 
-  const config: PictureSource[] = [
-    { width: 300, width2x: 500, minWidth: 1320 },
-    { width: 210, width2x: 400 }
-  ];
+  const config: PictureSource[] = [{ width: [300, 500], minWidth: 1320 }, { width: [210, 400] }];
 
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 </script>
@@ -23,6 +20,8 @@
   <div class="preview-content">
     <div class="title">
       <span><h3>{getPageDisplayTitle(page)}</h3></span>
+      <!-- TODO: a11y -->
+      <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <div class="circle-button" tabindex="0">
         <svg class="arrow-svg" viewBox="0 0 12 20">
           <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />

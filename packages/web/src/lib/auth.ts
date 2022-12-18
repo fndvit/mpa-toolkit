@@ -55,7 +55,7 @@ function roleCheck(userRole: Role, requiredRole: Role) {
   return ROLE_VALUES[userRole] >= ROLE_VALUES[requiredRole];
 }
 
-function getRequiredRole(routeId): Role {
+function getRequiredRole(routeId: string): Role {
   if (REQUIRED_ROLES[routeId] === undefined && /^(api\b|cms\b)/g.test(routeId)) {
     log.warn(`No explicit role defined for route '/${routeId}'. Defaulting to 'ADMIN'.`);
     return 'ADMIN';

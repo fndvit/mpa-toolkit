@@ -6,7 +6,7 @@
 </script>
 
 <li>
-  {#each block.content as block}
-    <Block {block} />
+  {#each block.content as childBlock}
+    <Block block={childBlock} />
   {/each}
 </li>

@@ -1,9 +1,5 @@
-<script lang="ts" context="module">
-  export type CardStackStyle = 'no-heading' | 'default';
-</script>
-
 <script lang="ts">
-  import type { CardData } from '@mpa/db';
+  import type { CardData, CardsBlock } from '@mpa/db';
   import { Splide, SplideSlide, SplideTrack } from '@splidejs/svelte-splide';
   import CardHeading from './CardHeading.svelte';
   import CardBody from './CardBody.svelte';
@@ -12,7 +8,7 @@
   import { SplideOptions } from '$lib/helpers/splide';
 
   export let cards: CardData[];
-  export let cardStyle: CardStackStyle = 'default';
+  export let cardStyle: CardsBlock['attrs']['style'] = 'default';
   export let currentPageIndex = 0;
   export let editable = false;
   export let fixedTitle: string = null;

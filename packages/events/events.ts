@@ -71,8 +71,8 @@ export type Event =
 export type EventByType<T extends Event['type']> = Extract<Event, { type: T }>;
 export type EventDetails<T extends Event['type']> = EventByType<T> extends { details: infer D } ? D : never;
 
-export async function publishEvent(type: HomepageComponentsUpdatedEvent['type']);
-export async function publishEvent<T extends Event['type']>(type: T, details: EventDetails<T>);
+export async function publishEvent(type: HomepageComponentsUpdatedEvent['type']): Promise<void>;
+export async function publishEvent<T extends Event['type']>(type: T, details: EventDetails<T>): Promise<void>;
 export async function publishEvent<T extends Event['type']>(type: T, details?: EventDetails<T>) {
   if (!env.AWS_SNS_CONTENT_TOPIC) return;
 

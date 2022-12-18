@@ -135,7 +135,7 @@ const normalize = style => {
   if (!m || !m.groups) throw new Error(`Invalid font style: ${style}`);
   const { size: sizePx, weight = config.defaults.weight, height: heightPx } = m.groups;
   const height = heightPx ? Number(heightPx) / Number(sizePx) : config.defaults.height;
-  const pxToRem = px => (parseFloat(px) / parseFloat(config.htmlFontSize)).toPrecision(3);
+  const pxToRem = (/** @type {string} */ px) => (parseFloat(px) / parseFloat(config.htmlFontSize)).toPrecision(3);
   return `${weight} ${pxToRem(sizePx)}rem / ${height.toPrecision(3)}`;
 };
 

@@ -119,6 +119,21 @@ export const gridConfig = mapValues(_gridConfig, v => {
   };
 });
 
+/**
+ * @typedef Page
+ * @type {'content'}
+ *
+ * @typedef Grid
+ * @type {'splash' | 'chapter' | 'chapter-no-keytakeaways' | 'case-study' | 'content' | 'footer'}
+ *
+ * @typedef Size
+ * @type {'small' | 'medium' | 'large'}
+ *
+ * @param {Page} page
+ * @param {Grid} grid
+ * @param {Size} size
+ * @returns
+ */
 const gridCss = (page, grid, size) => {
   return `
     display: grid;
@@ -127,28 +142,41 @@ const gridCss = (page, grid, size) => {
   `;
 };
 
+/**
+ * @param {import('postcss').Container} mixin
+ * @param {Page} page
+ * @param {Grid} grid
+ */
+function gridConfigMixin(mixin, page, grid) {
+  mixin.replaceWith(
+    postcss.parse(`
+        ${gridCss(page, grid, 'large')}
+        @mixin breakpoint ${page}, medium {
+          ${gridCss(page, grid, 'medium')}
+        }
+        @mixin breakpoint ${page}, small {
+          ${gridCss(page, grid, 'small')}
+        }
+    `)
+  );
+}
+/**
+ * @param {import('postcss').Container} mixin
+ * @param {Page} page
+ * @param {Size} size
+ */
+function breakpointMixin(mixin, page, size) {
+  mixin.replaceWith(
+    postcss.atRule({
+      name: 'media',
+      params: `(max-width: ${gridConfig[page].widths[size].max}px)`,
+      nodes: mixin.nodes
+    })
+  );
+}
+
 /** @type {Record<string, import('postcss-mixins').Mixin>} */
 export const gridMixins = {
-  'grid-config': (mixin, page, grid) => {
-    mixin.replaceWith(
-      postcss.parse(`
-          ${gridCss(page, grid, 'large')}
-          @mixin breakpoint ${page}, medium {
-            ${gridCss(page, grid, 'medium')}
-          }
-          @mixin breakpoint ${page}, small {
-            ${gridCss(page, grid, 'small')}
-          }
-      `)
-    );
-  },
-  breakpoint: (mixin, page, size) => {
-    mixin.replaceWith(
-      postcss.atRule({
-        name: 'media',
-        params: `(max-width: ${gridConfig[page].widths[size].max}px)`,
-        nodes: mixin.nodes
-      })
-    );
-  }
+  'grid-config': gridConfigMixin,
+  breakpoint: breakpointMixin
 };

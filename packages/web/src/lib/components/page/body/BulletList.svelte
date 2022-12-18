@@ -6,8 +6,8 @@
 </script>
 
 <ul>
-  {#each block.content as block}
-    <ListItem {block} />
+  {#each block.content as listItemBlock}
+    <ListItem block={listItemBlock} />
   {/each}
 </ul>
 

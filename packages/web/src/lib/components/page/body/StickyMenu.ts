@@ -192,7 +192,7 @@ const utils = {
     }
   },
 
-  addClass(el: ParentNode, className) {
+  addClass(el: ParentNode, className: string) {
     if ((el as HTMLElement).classList) {
       (el as HTMLElement).classList.add(className);
     } else {

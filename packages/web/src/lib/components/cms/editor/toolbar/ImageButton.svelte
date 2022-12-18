@@ -22,7 +22,7 @@
   };
 
   async function preloadImage(url: string) {
-    return new Promise<{ width; height }>((resolve, reject) => {
+    return new Promise<{ width: number; height: number }>((resolve, reject) => {
       const img = new Image();
       img.src = imageUrl(url, { format: 'jpeg' });
       img.onload = () => {
@@ -43,7 +43,7 @@
     try {
       const url = await api.image.upload(file);
       await preloadImage(url);
-      let pos = findPlaceholder(view.state, key);
+      let pos = findPlaceholder(view.state, key.toString());
       if (pos == null) return;
       view.dispatch(
         view.state.tr

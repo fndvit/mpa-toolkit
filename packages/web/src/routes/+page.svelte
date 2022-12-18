@@ -11,8 +11,6 @@
   export let data: PageData;
   let { tags, components } = data;
 
-  const getComponentOrder = (name: HomepageComponentName): number => components.indexOf(name);
-
   const tagsForContainer = tags.map<PageTag>(t => ({ tag: t, category: 'PRIMARY' }));
 
   const orderStyle = (el: HTMLElement, name: HomepageComponentName) => {

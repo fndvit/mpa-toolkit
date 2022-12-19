@@ -1,5 +1,5 @@
 import type { ExpandRecursively, Exact, Expand } from '@mpa/utils';
-import { type Prisma, TagType } from '@prisma/client';
+import type { Prisma } from '@prisma/client';
 import clone from 'clone';
 
 export const tag = validate<Prisma.TagSelect>()({
@@ -68,9 +68,7 @@ export const countTags = validate<Prisma.TagSelect>()({
   value: true,
   type: true,
   _count: {
-    select: {
-      pageTags: true
-    }
+    select: { pageTags: true }
   }
 });
 
@@ -89,9 +87,7 @@ export const pageFull = validate<Prisma.PageSelect>()({
 
 export const pageForContentCard = validate<Prisma.PageSelect>()({
   id: true,
-  tags: {
-    ...pageTag,
-  },
+  tags: pageTag,
   title: true,
   img: true,
   slug: true,

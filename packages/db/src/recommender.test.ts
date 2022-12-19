@@ -92,7 +92,7 @@ describe('recommender', () => {
     });
 
     test('calcSimilarities', async () => {
-      const allPages = await db.page.all.recommender('all');
+      const allPages = await db.page.allForRecommender('all');
       const recommender = new Recommender(allPages.map(p => ({ id: p.id, tagIds: p.tags.map(t => t.id) })));
 
       const sim = recommender.calcSimilarities([4, 6, 8, 10]);
@@ -106,7 +106,7 @@ describe('recommender', () => {
     });
 
     test('getRecommendations', async () => {
-      const allPages = await db.page.all.recommender('all');
+      const allPages = await db.page.allForRecommender('all');
       const recommender = new Recommender(allPages.map(p => ({ id: p.id, tagIds: p.tags.map(t => t.id) })));
 
       const r = recommender.getRecommendations([4, 6, 8, 9], 4);

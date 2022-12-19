@@ -50,7 +50,7 @@ describe('db.page', () => {
   });
 
   test("all('content-card')", async () => {
-    const pages = await db.page.all.card();
+    const pages = await db.page.allContentCards();
     expect(pages.length).toBe(2);
     const slugs = pages.map(p => p.slug);
     expect(slugs).toContain('c');
@@ -58,7 +58,7 @@ describe('db.page', () => {
   });
 
   test("all('cms-list')", async () => {
-    const pages = await db.page.all.cmsList();
+    const pages = await db.page.allForCms();
     expect(pages.length).toBe(4);
   });
 
@@ -79,11 +79,11 @@ describe('db.page', () => {
   });
 
   test('getByTag', async () => {
-    const g1 = await db.page.getByTag(tags[0].id, 'collection');
+    const g1 = await db.page.getByTag(tags[0].id);
     expect(g1.length).toBe(0);
-    const g2 = await db.page.getByTag(tags[1].id, 'collection');
+    const g2 = await db.page.getByTag(tags[1].id);
     expect(g2.length).toBe(1);
-    const g3 = await db.page.getByTag(tags[2].id, 'collection');
+    const g3 = await db.page.getByTag(tags[2].id);
     expect(g3.length).toBe(2);
   });
 });

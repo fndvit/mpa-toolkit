@@ -65,6 +65,7 @@ export function omitUndefined<T extends Record<string | number, unknown>>(obj: T
 }
 
 export const isTruthy = <T>(x: T): x is NonNullable<T> => !!x;
+export const isFunction = (x: unknown): x is (...args: unknown[]) => unknown => typeof x === 'function';
 
 export const debounce = <T extends any[]>(fn: (...args: T) => void, delay: number) => {
   let timeout: number | NodeJS.Timeout;

@@ -2,8 +2,8 @@
   import type { Tag } from '@mpa/db';
   import MultiSelect, { type Option } from 'svelte-multiselect';
 
-  export let tags: Tag[];
-  export let availableTags: Tag[];
+  export let tags: Tag[] = [];
+  export let availableTags: Tag[] = [];
   export let hideTagIds: Set<number> = undefined;
   export let max: number = undefined;
 

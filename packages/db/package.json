@@ -23,6 +23,8 @@
     "seedmigrate": "pnpm -F @mpa/scripts run seedmigrate",
     "docker:up": "docker-compose -p mpa up -d",
     "docker:down": "docker-compose -p mpa down",
+    "testdb:dump": "docker-compose -p mpa exec db-test /data/dump.sh",
+    "testdb:load": "docker-compose -p mpa exec db-test /data/load.sh",
     "test": "vitest --no-threads",
     "dev": "tsup --watch",
     "build": "tsup",

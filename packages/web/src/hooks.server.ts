@@ -59,7 +59,7 @@ export const handle: Handle = async ({ event, resolve }) => {
   event.locals.cacheKeys = new Set(['all']);
   event.locals.withMetadata = data => ({
     ...data,
-    metadata: getPageMetadata(event.route.id, data)
+    metadata: getPageMetadata(route.id, data)
   });
 
   const response = await AWSXRay.captureAsyncFunc('resolve', () => resolve(event));

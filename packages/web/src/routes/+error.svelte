@@ -9,7 +9,7 @@
       Erm ...<br />
       That's a bit awkward ...<br />
       But ...<br />
-      We couldn't find that page<br />
+      We couldn't find that {$page.error?.model ?? 'page'}<br />
       Try going to <a href="/">MPAth's home page</a>.
     </p>
   {:else}
@@ -23,6 +23,11 @@
     </div>
   {/if}
 </div>
+
+<svelte:head>
+  <meta name="robots" content="noindex, nofollow" />
+  <title>{$page.error.message}</title>
+</svelte:head>
 
 <style lang="postcss">
   .container {

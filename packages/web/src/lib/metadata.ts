@@ -161,5 +161,10 @@ export const METADATA: Record<string, PageMetadataConfig> = {
   '/draft/[slug]': (data: PageDataDraft) => ({
     indexed: false,
     title: `[DRAFT] ${data.page ? getPageDisplayTitle(data.page) : ''}`
-  })
+  }),
+
+  ERROR: {
+    indexed: false,
+    title: 'Error'
+  }
 };

@@ -1,11 +1,16 @@
 <script lang="ts">
+  import { page } from '$app/stores';
   import { Toaster } from '$lib/components/generic';
   import Metadata from '$lib/components/metadata/Metadata.svelte';
   import '$lib/styles/app.css';
 </script>
 
-<Metadata />
+{#if !$page.error}
+  <Metadata />
+{/if}
 
 <slot />
 
-<Toaster />
+{#if !$page.error}
+  <Toaster />
+{/if}

@@ -1,6 +1,6 @@
 import { Construct } from 'constructs';
 import type { aws_lambda_nodejs as lambdanode } from 'aws-cdk-lib';
-import { aws_ec2 as ec2, Duration, aws_lambda as lambda, SymlinkFollowMode } from 'aws-cdk-lib';
+import { aws_ec2 as ec2, Duration, aws_lambda as lambda } from 'aws-cdk-lib';
 import type { ConfigToEnvClean } from '@mpa/env/env';
 import { getPath } from '../util/dirs';
 

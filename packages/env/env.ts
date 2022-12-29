@@ -8,7 +8,7 @@ export type ConfigToEnvClean<C extends EnvConfig> = Expand<
   Without<never, ConfigToEnvRequired<C>> & Without<never, ConfigToEnvOptional<C>>
 >;
 
-export function validateEnv(env: Record<string, string | undefined>, config: EnvConfig) {
+function validateEnv(env: Record<string, string | undefined>, config: EnvConfig) {
   const required = Object.entries(config)
     .filter(([, value]) => value)
     .map(([key]) => key);

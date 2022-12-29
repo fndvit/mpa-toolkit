@@ -2,9 +2,10 @@ import type { Handler } from 'aws-lambda';
 import { DevSeeder, ProdSeeder, reset, initDatabase } from '@mpa/db';
 import { prismaCmd } from '@mpa/utils/prisma/cmd';
 import { logger } from '@mpa/log';
-import { validateEnv } from '@mpa/env';
+import { getEnv } from '@mpa/env';
+import { execFileSync } from 'child_process';
 
-export const env = validateEnv(process.env, { DATABASE_URL: true });
+export const env = getEnv({ DATABASE_URL: true });
 
 const log = logger('migration-runner');
 // example cmd to invoke using aws cli:
@@ -35,6 +36,8 @@ export const handler: Handler = async event => {
     await prismaCmd('migrate reset --force --skip-generate');
   } else if (command === 'deploy') {
     await prismaCmd('migrate deploy');
+  } else if (command === 'sql_dump') {
+    execFileSync('pg_dump', [env.DATABASE_URL]);
   }
 
   log.info(`Finished`);

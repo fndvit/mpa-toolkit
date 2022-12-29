@@ -3,6 +3,7 @@ import { json, type Handle } from '@sveltejs/kit';
 import AWSXRay from 'aws-xray-sdk-core';
 import { env } from '$lib/env';
 import { checkUserHasRoleForRoute, getUserFromCookie } from '$lib/auth';
+import { getPageMetadata } from '$lib/metadata';
 
 const log = logger('HOOKS');
 
@@ -56,6 +57,10 @@ export const handle: Handle = async ({ event, resolve }) => {
   }
 
   event.locals.cacheKeys = new Set(['all']);
+  event.locals.withMetadata = data => ({
+    ...data,
+    metadata: getPageMetadata(event.route.id, data)
+  });
 
   const response = await AWSXRay.captureAsyncFunc('resolve', () => resolve(event));
 

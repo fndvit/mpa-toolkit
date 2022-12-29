@@ -1,6 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 import { checkUserHasRoleForRoute } from '$lib/auth';
+import { getPageMetadata } from '$lib/metadata';
 
 export const load: LayoutServerLoad = async ({ url, locals, route }) => {
   const hasPerms = checkUserHasRoleForRoute(route.id, locals.user);
@@ -12,5 +13,5 @@ export const load: LayoutServerLoad = async ({ url, locals, route }) => {
     }
   }
 
-  return { user: locals.user };
+  return { user: locals.user, metadata: getPageMetadata(route.id) };
 };

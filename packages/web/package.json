@@ -13,14 +13,14 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "test": "vitest",
     "lint:css": "stylelint \"src/**/*.svelte\"",
-    "build:e2e": "TEST=1 pnpm -F '@mpa/web'^... -F=!'@mpa/migration-runner' build",
-    "test:e2e": "pnpm -F @mpa/db testdb:load && pnpm dlx playwright test"
+    "prepare:e2e": "TEST=1 pnpm -F '@mpa/web'... -F=!'@mpa/migration-runner' build && svelte-kit sync && pnpm -F @mpa/db testdb:load",
+    "test:e2e": "npx playwright test"
   },
   "devDependencies": {
     "@mpa/stack": "workspace:*",
     "@playwright/test": "^1.29.1",
     "@poppanator/sveltekit-svg": "^0.3.4",
-    "@sveltejs/kit": "1.0.0-next.561",
+    "@sveltejs/kit": "1.0.1",
     "@types/clone": "^2.1.1",
     "@types/d3-geo": "^3.0.2",
     "@types/google-one-tap": "^1.2.1",
@@ -51,11 +51,11 @@
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-prettier": "^9.0.4",
     "stylelint-config-standard": "^29.0.0",
-    "svelte": "^3.49.0",
+    "svelte": "^3.55.0",
     "svelte-check": "^2.8.0",
     "svelte-preprocess": "^4.10.7",
     "typescript": "^4.9.3",
-    "vite": "^3.2.3",
+    "vite": "^4.0.3",
     "vitest": "^0.10.5"
   },
   "dependencies": {

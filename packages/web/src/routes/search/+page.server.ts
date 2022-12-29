@@ -2,7 +2,7 @@ import { Queries } from '@mpa/db';
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';
 
-export const load: PageServerLoad = async ({ locals, url }) => {
+export const load: PageServerLoad = async ({ locals: { withMetadata, cacheKeys }, url }) => {
   const search = url.searchParams.get('q') || '';
 
   const pages = await db.page.search(search, Queries.pageForCollectionCard);
@@ -13,18 +13,18 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 
   const tagHighlights = await db.tag.search(search);
 
-  locals.cacheKeys.add('pages');
-  locals.cacheKeys.add(`tags`);
+  cacheKeys.add('pages');
+  cacheKeys.add(`tags`);
   pages.forEach(p =>
     p.chapter?.authors.forEach(a => {
-      locals.cacheKeys.add(`author-${a.id}`);
+      cacheKeys.add(`author-${a.id}`);
     })
   );
 
-  return {
+  return withMetadata({
     search,
     title: `"${search}"`,
     pages,
     tagHighlights
-  };
+  });
 };

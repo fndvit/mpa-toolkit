@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Tests
 on:
   push:
     branches: [ main, dev ]
@@ -54,11 +54,27 @@ jobs:
     - name: Install dependencies
       run: pnpm install
 
-    - name: Install Playwright Browsers
-      run: pnpm dlx playwright install --with-deps
+    - name: Get installed Playwright version
+      id: playwright-version
+      run: echo "PLAYWRIGHT_VERSION=$(pnpm -F @mpa/web ls @playwright/test | grep '@playwright/test' | awk '{print $2}')" >> $GITHUB_ENV
+    - name: Cache playwright binaries
+      uses: actions/cache@v3
+      id: playwright-cache
+      with:
+        path: |
+          ~/.cache/ms-playwright
+        key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
 
-    - name: Build project
-      run: pnpm web build:e2e
+    - name: Install playwright
+      run: pnpm dlx playwright install --with-deps
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
+      
+    - name: Install playwright dependencies
+      run: pnpm dlx playwright install-deps
+      if: steps.playwright-cache.outputs.cache-hit == 'true'
+
+    - name: Build and set up db
+      run: pnpm web prepare:e2e
 
     - name: Run Playwright tests
       run: pnpm web test:e2e
@@ -67,7 +83,7 @@ jobs:
       if: always()
       with:
         name: playwright-report
-        path: playwright-report/
+        path: packages/web/playwright-report/
         retention-days: 30
   check:
     timeout-minutes: 60
@@ -109,4 +125,11 @@ jobs:
       run: pnpm web exec svelte-kit sync
 
     - name: Run Svelte check
-      run: pnpm web check
+      run: pnpm web check > packages/web/svelte-check.txt
+
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: svelte-check
+        path: packages/web/svelte-check.txt
+        retention-days: 30

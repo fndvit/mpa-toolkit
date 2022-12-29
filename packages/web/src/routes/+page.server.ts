@@ -1,14 +1,14 @@
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';
 
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals: { cacheKeys } }) => {
   const tagsForSearch = await db.tag.searchBarTags();
 
   const components = await db.homepage.getComponents();
 
-  locals.cacheKeys.add(`pages`);
-  locals.cacheKeys.add(`tags`);
-  locals.cacheKeys.add(`homepage`);
+  cacheKeys.add(`pages`);
+  cacheKeys.add(`tags`);
+  cacheKeys.add(`homepage`);
 
   return {
     tags: tagsForSearch,

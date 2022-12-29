@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ locals: { withMetadata }, params }) => {
   const { id } = params;
   const authors = await db.author.all();
   const allTags = await db.tag.all();
@@ -11,5 +11,5 @@ export const load: PageServerLoad = async ({ params }) => {
 
   if (!page) throw error(404, 'Page not found');
 
-  return { authors, page, allTags };
+  return withMetadata({ authors, page, allTags });
 };

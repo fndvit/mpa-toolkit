@@ -1,4 +1,4 @@
-import type { APIRequests } from '@mpa/db/src';
+import type { APIRequests } from '@mpa/db';
 import { writable } from 'svelte/store';
 
 export const editorStore = writable({

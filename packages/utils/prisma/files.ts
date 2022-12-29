@@ -4,14 +4,22 @@ import fs from 'fs-extra';
 import { globby } from 'globby';
 import projectRoot from '../projectRoot';
 
+const getPrismaVersion = () => {
+  const match = shell.exec('pnpm -w ls -p', { silent: true }).stdout.match(/prisma@(?<version>\d.*?)\//);
+  if (!match?.groups?.version) throw new Error(`Could not find prisma version`);
+  return match.groups.version;
+};
+
 export async function copyPrismaEngineFiles(outdir: string, matchers: Record<string, RegExp>) {
-  const cache = `${await projectRoot()}/node_modules/.cache/prisma@4.2.1`;
+  const prismaVer = getPrismaVersion();
+
+  const cache = `${await projectRoot()}/node_modules/.cache/prisma@${prismaVer}`;
 
   fs.mkdirpSync(outdir);
 
   if (!fs.pathExistsSync(cache)) {
     fs.mkdirpSync(cache);
-    shell.exec(`PRISMA_CLI_BINARY_TARGETS=rhel-openssl-1.0.x npm install --prefix ${cache} prisma@4.2.1`, {
+    shell.exec(`PRISMA_CLI_BINARY_TARGETS=rhel-openssl-1.0.x npm install --prefix ${cache} prisma@${prismaVer}`, {
       silent: true
     });
   }

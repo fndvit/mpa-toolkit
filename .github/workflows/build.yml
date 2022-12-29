@@ -32,7 +32,7 @@ on:
 jobs:
   build:
     permissions: write-all
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       PUBLIC_GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
       PUBLIC_UPLOAD_BASE_URL: /upload/

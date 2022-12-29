@@ -1,4 +1,3 @@
-/// <reference path="../../types/modules.d.ts" />
 import nested from 'postcss-nested';
 import postcssMixins from 'postcss-mixins';
 import postcssImport from 'postcss-import';

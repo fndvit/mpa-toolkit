@@ -119,6 +119,7 @@ class MpathStack extends Stack {
 
     new BucketDeployments(this, 'BucketDeployments', { bucket });
 
+    new CfnOutput(this, `DatabaseURL`, { value: db.url });
     new CfnOutput(this, `MigrationRunnerLambdaArn`, { value: migrationRunner.lambda.functionArn });
     new CfnOutput(this, 'HttpApiEndpoint', {
       value: httpApi.apiEndpoint,

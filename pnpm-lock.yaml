@@ -51,6 +51,7 @@ importers:
       aws-xray-sdk-core: ^3.4.0
       clone: ^2.1.2
       compute-cosine-similarity: ^1.0.0
+      docker-compose: ^0.23.17
       dotenv-cli: ^6.0.0
       google-auth-library: ^8.7.0
       lorem-ipsum: ^2.0.8
@@ -72,6 +73,7 @@ importers:
       lorem-ipsum: 2.0.8
       seedrandom: 3.0.5
     devDependencies:
+      docker-compose: 0.23.17
       dotenv-cli: 6.0.0
       prisma: 4.7.1
       type-fest: 3.5.0
@@ -2237,6 +2239,13 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       path-type: 4.0.0
+
+  /docker-compose/0.23.17:
+    resolution: {integrity: sha512-YJV18YoYIcxOdJKeFcCFihE6F4M2NExWM/d4S1ITcS9samHKnNUihz9kjggr0dNtsrbpFNc7/Yzd19DWs+m1xg==}
+    engines: {node: '>= 6.0.0'}
+    dependencies:
+      yaml: 1.10.2
+    dev: true
 
   /doctrine/2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}

@@ -7,20 +7,20 @@ on:
 jobs:
   test:
     env:
-      DATABASE_URL: postgresql://prisma:prisma@localhost:5434/mpathtest
+      DATABASE_URL: postgresql://prisma:prisma@localhost:5434/mpa
       AWS_S3_UPLOAD_BUCKET: test
       JWT_SECRET_KEY: test
       PUBLIC_GOOGLE_OAUTH_CLIENT_ID: test
       GOOGLE_OAUTH_CLIENT_SECRET: test
-      PUBLIC_UPLOAD_BASE_URL: /upload/
+      PUBLIC_UPLOAD_BASE_URL: https://mpath.freetls.fastly.net/upload/
       LOG_TRANSPORT: lambda
       LOG_LEVEL: info
       LOG_DB_QUERIES: false
       ORIGIN: http://127.0.0.1:4173
       FASTLY_SERVICE_ID: test
       FASTLY_API_KEY: test
-      SVELTEKIT_APP_DIR: _app/test
       PUBLIC_DB_RESTORE: test
+      AWS_XRAY_CONTEXT_MISSING: IGNORE_ERROR
 
     timeout-minutes: 60
     runs-on: ubuntu-latest
@@ -30,20 +30,35 @@ jobs:
       with:
         node-version: 16
 
+    - uses: pnpm/action-setup@v2
+      name: Install pnpm
+      id: pnpm-install
+      with:
+        version: 7
+        run_install: false
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+    - name: Setup pnpm cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
     - name: Install dependencies
       run: pnpm install
-
-    - uses: isbang/compose-action@v1.4.1
-      with:
-        compose-file: "./packages/db/docker-compose.yml"
-        down-flags: "--volumes"
-        services: db-test
 
     - name: Install Playwright Browsers
       run: pnpm dlx playwright install --with-deps
 
     - name: Build project
-      run: pnpm web build:e2e-ci
+      run: pnpm web build:e2e
 
     - name: Run Playwright tests
       run: pnpm web test:e2e
@@ -62,12 +77,30 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16
+        
+    - uses: pnpm/action-setup@v2
+      name: Install pnpm
+      id: pnpm-install
+      with:
+        version: 7
+        run_install: false
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+    - name: Setup pnpm cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
 
     - name: Install dependencies
       run: pnpm install
-
-    - name: Install Playwright Browsers
-      run: pnpm dlx playwright install --with-deps
 
     - name: Build project
       run: pnpm -F "@mpa/web"^... -F !'@mpa/migration-runner' build

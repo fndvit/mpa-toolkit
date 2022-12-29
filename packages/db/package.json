@@ -26,7 +26,7 @@
     "docker:up": "docker-compose -p mpa up -d",
     "docker:down": "docker-compose -p mpa down",
     "testdb:dump": "docker-compose -p mpa exec db-test /data/dump.sh",
-    "testdb:load": "docker-compose -p mpa exec db-test /data/load.sh",
+    "testdb:load": "node ./test/db/up.js",
     "test": "vitest --no-threads",
     "dev": "tsup --watch",
     "build": "tsup",
@@ -47,6 +47,7 @@
     "seedrandom": "^3.0.5"
   },
   "devDependencies": {
+    "docker-compose": "^0.23.17",
     "dotenv-cli": "^6.0.0",
     "prisma": "^4.7.1",
     "type-fest": "^3.5.0",

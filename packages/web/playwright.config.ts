@@ -67,7 +67,7 @@ const config: PlaywrightTestConfig = {
   ],
 
   webServer: {
-    command: process.env.CI ? 'TEST=1 pnpm preview' : 'TEST=1 pnpm exec vite dev --port 4173',
+    command: 'TEST=1 pnpm exec vite dev --port 4173',
     port: 4173
   }
 };

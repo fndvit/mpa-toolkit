@@ -16,8 +16,6 @@ import type { Schema } from 'prosemirror-model';
 import { liftListItem, sinkListItem, splitListItem, wrapInList } from 'prosemirror-schema-list';
 import type { Command } from 'prosemirror-state';
 
-const mac = typeof navigator != 'undefined' ? /Mac/.test(navigator.platform) : false;
-
 type KeyCommand = { name: string; key: string; cmd: Command };
 
 const createKeyMapConfiguration = (schema: Schema) => {
@@ -37,7 +35,7 @@ const createKeyMapConfiguration = (schema: Schema) => {
   addKey('undo', 'Mod-z', undo);
   addKey('undoInputRule', 'Backspace', undoInputRule);
   addKey('redo', 'Shift-Mod-z', redo);
-  if (!mac) addKey('redo', 'Mod-y', redo);
+  addKey('redo', 'Mod-y', redo);
 
   addKey('joinUp', 'Alt-ArrowUp', joinUp);
   addKey('joinDown', 'Alt-ArrowDown', joinDown);
@@ -88,9 +86,9 @@ const createKeyMapConfiguration = (schema: Schema) => {
       return true;
     });
 
-    addKey('hardBreak', 'Mod-Enter', cmd);
+    addKey('hardBreak', 'Cmd-Enter', cmd);
+    addKey('hardBreak', 'Ctrl-Enter', cmd);
     addKey('hardBreak', 'Shift-Enter', cmd);
-    if (mac) addKey('hardBreak', 'Ctrl-Enter', cmd);
   }
 
   if (schema.nodes.horizontal_rule) {

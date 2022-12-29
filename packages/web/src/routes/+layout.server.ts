@@ -5,7 +5,7 @@ import { checkUserHasRoleForRoute } from '$lib/auth';
 export const load: LayoutServerLoad = async ({ url, locals, route }) => {
   const hasPerms = checkUserHasRoleForRoute(route.id, locals.user);
   if (!hasPerms) {
-    if (locals.user) throw error(400, 'You do not have permission to access this page');
+    if (locals.user) throw error(403, 'You do not have permission to access this page');
     else {
       const referrer = url.pathname + url.search;
       throw redirect(302, `/cms/login?referrer=${referrer}`);

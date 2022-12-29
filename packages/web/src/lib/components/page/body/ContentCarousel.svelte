@@ -46,7 +46,7 @@
   <p class="title">{title}</p>
   <Splide {options}>
     {#if !slides}
-      {#each Array(NUM_RECOMMENDATIONS) as _, i}
+      {#each Array(NUM_RECOMMENDATIONS) as _}
         <SplideSlide>
           <ContentCarouselLoadingCard />
         </SplideSlide>

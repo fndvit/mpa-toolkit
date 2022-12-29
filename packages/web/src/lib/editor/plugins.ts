@@ -5,7 +5,7 @@ import { history } from 'prosemirror-history';
 import { keymap } from 'prosemirror-keymap';
 import type { Schema } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
-import type { DecorationSet } from 'prosemirror-view';
+import type { DecorationSet, EditorView } from 'prosemirror-view';
 import { formattingPlugin } from './formatting';
 import { buildInputRules } from './inputRules';
 import { richTextKeyMapPlugin } from './keymap';
@@ -15,7 +15,7 @@ export { dropCursor, gapCursor };
 
 export const emptyPlugin = new Plugin<DecorationSet>({
   view: _view => {
-    const update = view => {
+    const update = (view: EditorView) => {
       const isEmpty =
         view.state.doc.content.size === 0 || (view.state.doc.textContent === '' && view.state.doc.content.size < 3);
 

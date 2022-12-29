@@ -1,12 +1,10 @@
-# Set the version of docker compose to use
 version: '3.9'
-
-# The containers that compose the project
 services:
+
   db:
     image: postgres:13
     restart: always
-    container_name: mpath-dev-database
+    container_name: dev-database
     ports:
       - '5433:5432'
     environment:
@@ -17,10 +15,12 @@ services:
   db-test:
     image: postgres:13
     restart: always
-    container_name: mpath-test-database
+    container_name: test-database
     ports:
       - '5434:5432'
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
-      POSTGRES_DB: mpathtest
+      POSTGRES_DB: mpa
+    volumes:
+      - ./test/db:/data

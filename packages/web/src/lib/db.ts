@@ -1,3 +1,3 @@
-import { MpaDatabase } from '@mpa/db';
+import { initDatabase } from '@mpa/db';
 
-export const db = new MpaDatabase();
+export const db = initDatabase();

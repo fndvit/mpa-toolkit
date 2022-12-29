@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node16",
+    "baseUrl": ".", // This must be specified if "paths" is.
+    "paths": {
+      "@util": ["./util.ts"] // This mapping is relative to "baseUrl".
+    }
+  }
+}

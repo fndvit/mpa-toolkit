@@ -33,7 +33,7 @@ export const placeholderPlugin = new Plugin<DecorationSet>({
   }
 });
 
-export function findPlaceholder(state: EditorState, key) {
+export function findPlaceholder(state: EditorState, key: string) {
   const decos = placeholderPlugin.getState(state);
   const found = decos.find(null, null, spec => spec.key == key);
   return found.length ? found[0].from : null;

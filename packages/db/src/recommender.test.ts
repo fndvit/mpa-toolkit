@@ -1,11 +1,11 @@
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import { createLookup, range } from '@mpa/utils';
-import { MpaDatabase } from '..';
 import type { Page } from '..';
 import { Recommender } from './recommender';
 import { generateEmptyPage } from './lib/test-utils';
+import { initDatabase } from './db';
 
-const db = new MpaDatabase();
+const db = initDatabase();
 
 describe('recommender', () => {
   describe('unittests', () => {
@@ -92,7 +92,7 @@ describe('recommender', () => {
     });
 
     test('calcSimilarities', async () => {
-      const allPages = await db.page.all.recommender('all');
+      const allPages = await db.page.allForRecommender('all');
       const recommender = new Recommender(allPages.map(p => ({ id: p.id, tagIds: p.tags.map(t => t.id) })));
 
       const sim = recommender.calcSimilarities([4, 6, 8, 10]);
@@ -106,7 +106,7 @@ describe('recommender', () => {
     });
 
     test('getRecommendations', async () => {
-      const allPages = await db.page.all.recommender('all');
+      const allPages = await db.page.allForRecommender('all');
       const recommender = new Recommender(allPages.map(p => ({ id: p.id, tagIds: p.tags.map(t => t.id) })));
 
       const r = recommender.getRecommendations([4, 6, 8, 9], 4);

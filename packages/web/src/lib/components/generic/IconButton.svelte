@@ -18,6 +18,7 @@
   {#if title}
     <Tooltip text={title} />
   {/if}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <svelte:element
     this={href ? 'a' : 'button'}
     class:material-icons={icon}
@@ -27,7 +28,7 @@
     {rel}
     {target}
     on:click
-    on:mousedown={e => e.preventDefault()}
+    on:mousedown|preventDefault
     {disabled}
     class:active
     data-icon={icon}

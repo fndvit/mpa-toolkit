@@ -3,7 +3,6 @@ import postcssMixins from 'postcss-mixins';
 import postcssImport from 'postcss-import';
 import postcssColorFunction from 'postcss-color-function';
 import postcssSimpleVars from 'postcss-simple-vars';
-// import colorGuard from 'colorguard';
 import { gridMixins } from './grid.js';
 import { colors } from './colors.js';
 import { fontMixins, fontVars } from './fonts.js';

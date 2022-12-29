@@ -21,15 +21,20 @@ export function createLookup<T, U extends string | number, Y = never>(
   return lookup;
 }
 
-export function groupBy<T, K extends string | number, U = null>(arr: T[], keyFn: (i: T) => K, mapFn?: (i: T) => U) {
-  return arr.reduce<{ [KV in K]?: (U extends null ? T : U)[] }>((acc, item) => {
+type GroupBy = <T, KeyFn extends (i: T) => string | number, MapFn extends undefined | ((i: T) => any) = undefined>(
+  arr: T[],
+  keyFn: KeyFn,
+  mapFn?: MapFn
+) => { [KV in ReturnType<KeyFn>]?: (MapFn extends undefined ? T : ReturnType<MapFn>)[] };
+
+export const groupBy: GroupBy = (arr, keyFn, mapFn) => {
+  return arr.reduce((acc, item) => {
     const key = keyFn(item);
     acc[key] = acc[key] || [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    acc[key]?.push(!mapFn ? (item as any) : mapFn(item));
+    acc[key].push(mapFn ? mapFn(item) : item);
     return acc;
-  }, {});
-}
+  }, {} as any);
+};
 
 export function range(start: number, end: number) {
   const length = Math.abs(end - start);
@@ -65,11 +70,12 @@ export function omitUndefined<T extends Record<string | number, unknown>>(obj: T
 }
 
 export const isTruthy = <T>(x: T): x is NonNullable<T> => !!x;
+export const isFunction = (x: unknown): x is (...args: unknown[]) => unknown => typeof x === 'function';
 
 export const debounce = <T extends any[]>(fn: (...args: T) => void, delay: number) => {
   let timeout: number | NodeJS.Timeout;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const ret = (...args: T) => {
+  const ret = (..._: T) => {
     clearTimeout(timeout);
     timeout = setTimeout(fn, delay);
   };

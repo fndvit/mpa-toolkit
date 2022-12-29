@@ -19,9 +19,9 @@
 
   $: searchRegex = new RegExp(tagSearch, 'i');
 
-  $: filteredTagsStage = groupedOptions.STAGE.filter(p => searchRegex.test(p.value));
-  $: filteredTagsTopic = groupedOptions.TOPIC.filter(p => searchRegex.test(p.value));
-  $: filteredTagsUser = groupedOptions.USER.filter(p => searchRegex.test(p.value));
+  $: filteredTagsStage = groupedOptions.STAGE?.filter(p => searchRegex.test(p.value)) || [];
+  $: filteredTagsTopic = groupedOptions.TOPIC?.filter(p => searchRegex.test(p.value)) || [];
+  $: filteredTagsUser = groupedOptions.USER?.filter(p => searchRegex.test(p.value)) || [];
 </script>
 
 <div class="searchbar">

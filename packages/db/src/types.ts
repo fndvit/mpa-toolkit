@@ -5,8 +5,6 @@ export { Role, TagCategory, TagType } from '@prisma/client';
 import type { Modify } from '@mpa/utils';
 import type * as queries from './queries';
 
-// type Prisma = DBTypes.Prisma;
-
 // ************************
 //   Extended model types
 // ************************
@@ -197,7 +195,7 @@ export type ParagraphBlock = {
 export type CardsBlock = {
   type: 'cards';
   attrs: {
-    style: string;
+    style: 'no-heading' | 'default';
     cards: CardData[];
   };
 };

@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     throw error(404, 'Page not found');
   }
 
-  const pages = await db.page.getByTag(tag.id, 'collection');
+  const pages = await db.page.getByTag(tag.id);
 
   pages.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
 

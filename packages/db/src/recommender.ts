@@ -1,3 +1,4 @@
+/// <reference path="./types/modules.d.ts" />
 import { getXRandItems, groupBy } from '@mpa/utils';
 import similarity from 'compute-cosine-similarity';
 

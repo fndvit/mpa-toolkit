@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ locals: { withMetadata, cacheKeys }
   const tag = await db.tag.get(slug);
   if (!tag) {
     cacheKeys.add('tags');
-    throw error(404, 'Page not found');
+    throw error(404, { message: 'Tag not found', model: 'tag' });
   }
 
   const pages = await db.page.getByTag(tag.id);

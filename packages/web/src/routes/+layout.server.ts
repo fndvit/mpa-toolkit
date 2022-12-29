@@ -13,5 +13,5 @@ export const load: LayoutServerLoad = async ({ url, locals, route }) => {
     }
   }
 
-  return { user: locals.user, metadata: getPageMetadata(route.id) };
+  return { user: locals.user, metadata: getPageMetadata(route.id), routeId: route.id };
 };

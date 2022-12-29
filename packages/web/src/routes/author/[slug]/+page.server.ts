@@ -23,7 +23,7 @@ export const load: PageServerLoad = async ({ params, locals: { cacheKeys, withMe
 
   const throw404 = () => {
     cacheKeys.add('authors');
-    throw error(404, 'Page not found');
+    throw error(404, { message: 'Author not found', model: 'author' });
   };
 
   if (isNaN(id)) throw404();

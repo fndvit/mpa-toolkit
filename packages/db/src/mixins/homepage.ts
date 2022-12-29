@@ -1,21 +1,19 @@
 import { publishEvent } from '@mpa/events';
-import type { MpaDatabase } from '../db';
+import type { LogConfig } from '../base';
+import { DBMixin } from '../base';
 import { createKeyValueAccessor } from '../lib/kvaccessor';
 import type { APIRequests, HomepageComponents } from '../types';
 import { validate } from '../validation';
-import type { LogConfig } from './mixin';
-import { DBMixin } from './mixin';
 
 export class HomepageMixin extends DBMixin {
+  readonly name = 'homepage';
+
+  logConfig: LogConfig<HomepageMixin> = {
+    updateComponents: ([val], result) => [val, !!result]
+  };
+
   homepageAccessor = createKeyValueAccessor<HomepageComponents>('homepage-components', this.db);
   static DEFAULT_ORDERING: HomepageComponents = ['lifecycle', 'chapters', 'search', 'madlib', 'casestudies'];
-
-  constructor(db: MpaDatabase) {
-    const logCfg: LogConfig<HomepageMixin> = {
-      updateComponents: ([val], result) => [val, !!result]
-    };
-    super('homepage', db, logCfg);
-  }
 
   async updateComponents(value: APIRequests.HomepageComponents) {
     validate('homepage-components', value);

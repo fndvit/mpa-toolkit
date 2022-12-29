@@ -1,15 +1,14 @@
 import { publishEvent } from '@mpa/events';
 import { logger } from '@mpa/log';
-import type { Prisma } from '@prisma/client';
 import { createLookup, isTruthy, type Expand } from '@mpa/utils';
-import type { MpaDatabase } from '../db';
+import type { Prisma } from '@prisma/client';
+import { DBMixin, type LogConfig } from '../base';
 import * as Queries from '../queries';
 import { calcReadTime } from '../readtime';
+import { Recommender } from '../recommender';
 import type { APIRequests, Page } from '../types';
 import { validate } from '../validation';
-import { Recommender } from '../recommender';
-import type { LogConfig } from './mixin';
-import { DBMixin } from './mixin';
+import type { TagMixin } from './tag';
 
 const _log = logger('DB');
 
@@ -20,15 +19,14 @@ type RecommenderParams = {
   numPages?: number;
 };
 
-export class PageMixin extends DBMixin {
-  constructor(db: MpaDatabase) {
-    const logCfg: LogConfig<PageMixin> = {
-      create: ([page], result) => [page.title, result?.id],
-      update: ([id], result) => [id, !!result],
-      delete: ([id], result) => [id, result]
-    };
-    super('page', db, logCfg);
-  }
+export class PageMixin extends DBMixin<[TagMixin]> {
+  readonly name = 'page';
+
+  logConfig: LogConfig<PageMixin> = {
+    create: ([page], result) => [page.title, result?.id],
+    update: ([id], result) => [id, !!result],
+    delete: ([id], result) => [id, result]
+  };
 
   async allForRecommender(type: 'chapter' | 'case-study' | 'all') {
     const query = await this.db.prisma.page.findMany({

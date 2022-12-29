@@ -1,5 +1,5 @@
 import type { Handler } from 'aws-lambda';
-import { MpaDatabase, DevSeeder, ProdSeeder, reset } from '@mpa/db';
+import { DevSeeder, ProdSeeder, reset, initDatabase } from '@mpa/db';
 import { prismaCmd } from '@mpa/utils/prisma/cmd';
 import { logger } from '@mpa/log';
 import { validateEnv } from '@mpa/env';
@@ -17,7 +17,7 @@ export const handler: Handler = async event => {
   // If you want to add commands, please refer to: https://www.prisma.io/docs/concepts/components/prisma-migrate
   const command: string = event.command ?? 'deploy';
 
-  const db = new MpaDatabase();
+  const db = initDatabase();
 
   log.info(`Running migration command: ${command}`);
 

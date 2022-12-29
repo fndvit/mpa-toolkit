@@ -1,11 +1,11 @@
 import { beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import { createLookup, range } from '@mpa/utils';
-import { MpaDatabase } from '..';
 import type { Page } from '..';
 import { Recommender } from './recommender';
 import { generateEmptyPage } from './lib/test-utils';
+import { initDatabase } from './db';
 
-const db = new MpaDatabase();
+const db = initDatabase();
 
 describe('recommender', () => {
   describe('unittests', () => {

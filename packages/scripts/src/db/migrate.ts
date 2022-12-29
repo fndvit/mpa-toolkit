@@ -1,8 +1,8 @@
 import chalk from 'chalk';
-import { MpaDatabase, ProdSeeder } from '@mpa/db';
+import { initDatabase, ProdSeeder } from '@mpa/db';
 
 async function main() {
-  const db = new MpaDatabase();
+  const db = initDatabase();
   const seeder = new ProdSeeder(db);
   try {
     console.log(chalk.green('Migrating seeded data...'));

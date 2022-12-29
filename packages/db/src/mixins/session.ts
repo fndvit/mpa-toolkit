@@ -1,17 +1,15 @@
 import type { TokenPayload } from 'google-auth-library';
-import type { MpaDatabase } from 'src';
+import type { LogConfig } from '../base';
+import { DBMixin } from '../base';
 import * as Queries from '../queries';
-import type { LogConfig } from './mixin';
-import { DBMixin } from './mixin';
 
 export class SessionMixin extends DBMixin {
-  constructor(db: MpaDatabase) {
-    const logCfg: LogConfig<SessionMixin> = {
-      start: ([payload], result) => [payload.email, !!result],
-      end: ([userId], result) => [userId, result]
-    };
-    super('session', db, logCfg);
-  }
+  readonly name = 'session';
+
+  logConfig: LogConfig<SessionMixin> = {
+    start: ([payload], result) => [payload.email, !!result],
+    end: ([userId], result) => [userId, result]
+  };
 
   async start(payload: TokenPayload) {
     const firstUser = (await this.db.prisma.user.count()) === 0;

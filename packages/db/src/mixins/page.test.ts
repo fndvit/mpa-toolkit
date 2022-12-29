@@ -1,9 +1,9 @@
+import { initDatabase } from 'src/db';
 import { beforeAll, describe, expect, test } from 'vitest';
 import type { Tag } from '..';
-import { MpaDatabase } from '..';
 import { generateEmptyPage } from '../lib/test-utils';
 
-const db = new MpaDatabase();
+const db = initDatabase();
 
 describe('db.page', () => {
   let tags: Tag[];

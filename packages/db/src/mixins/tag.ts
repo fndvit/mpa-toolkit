@@ -1,21 +1,18 @@
 import { publishEvent } from '@mpa/events';
 import { slugify } from '@mpa/utils';
-import type { MpaDatabase } from '..';
+import type { LogConfig } from '../base';
+import { DBMixin } from '../base';
 import * as Queries from '../queries';
 import type { APIRequests, Tag, TagType } from '../types';
 import { validate } from '../validation';
-import type { LogConfig } from './mixin';
-import { DBMixin } from './mixin';
 
 export class TagMixin extends DBMixin {
-  constructor(db: MpaDatabase) {
-    const logCfg: LogConfig<TagMixin> = {
-      create: ([tag], result) => [tag.value, result?.id],
-      update: ([id, tag], result) => [[id, tag.value], !!result],
-      delete: ([id], result) => [id, result]
-    };
-    super('tag', db, logCfg);
-  }
+  readonly name = 'tag';
+  logConfig: LogConfig<TagMixin> = {
+    create: ([tag], result) => [tag.value, result?.id],
+    update: ([id, tag], result) => [[id, tag.value], !!result],
+    delete: ([id], result) => [id, result]
+  };
 
   all = async (tagType?: TagType): Promise<Tag[]> =>
     tagType ? this.db.prisma.tag.findMany({ where: { type: tagType } }) : this.db.prisma.tag.findMany();
@@ -44,7 +41,7 @@ export class TagMixin extends DBMixin {
     else return this.get(val).then(t => t.id);
   }
 
-  searchBarTags() {
+  searchBarTags(): Promise<Tag[]> {
     return this.db.prisma.tag.findMany({
       ...Queries.tag,
       where: {

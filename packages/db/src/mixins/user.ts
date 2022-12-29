@@ -1,17 +1,14 @@
-import type { MpaDatabase } from '../db';
+import { type LogConfig, DBMixin } from '../base';
 import type { APIRequests } from '../types';
 import { validate } from '../validation';
-import type { LogConfig } from './mixin';
-import { DBMixin } from './mixin';
 
 export class UserMixin extends DBMixin {
-  constructor(db: MpaDatabase) {
-    const logCfg: LogConfig<UserMixin> = {
-      update: ([id, user], result) => [[id, JSON.stringify(user)], !!result],
-      delete: ([id], result) => [id, result]
-    };
-    super('user', db, logCfg);
-  }
+  readonly name = 'user';
+
+  logConfig: LogConfig<UserMixin> = {
+    update: ([id, user], result) => [[id, JSON.stringify(user)], !!result],
+    delete: ([id], result) => [id, result]
+  };
 
   async update(id: number, user: APIRequests.User) {
     validate('user', user);

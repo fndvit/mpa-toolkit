@@ -1,19 +1,17 @@
 import { publishEvent } from '@mpa/events';
-import type { MpaDatabase } from '../db';
+import type { LogConfig } from '../base';
+import { DBMixin } from '../base';
 import type { APIRequests } from '../types';
 import { validate } from '../validation';
-import type { LogConfig } from './mixin';
-import { DBMixin } from './mixin';
 
 export class AuthorMixin extends DBMixin {
-  constructor(db: MpaDatabase) {
-    const logCfg: LogConfig<AuthorMixin> = {
-      create: ([author], result) => [author.name, result?.id],
-      update: ([id], result) => [id, !!result],
-      delete: ([id], result) => [id, result]
-    };
-    super('author', db, logCfg);
-  }
+  readonly name = 'author';
+
+  logConfig: LogConfig<AuthorMixin> = {
+    create: ([author], result) => [author.name, result?.id],
+    update: ([id], result) => [id, !!result],
+    delete: ([id], result) => [id, result]
+  };
 
   async all() {
     return this.db.prisma.author.findMany();

@@ -56,6 +56,7 @@ importers:
       lorem-ipsum: ^2.0.8
       prisma: ^4.7.1
       seedrandom: ^3.0.5
+      type-fest: ^3.5.0
       vitest: ^0.21.1
     dependencies:
       '@mpa/env': link:../env
@@ -73,6 +74,7 @@ importers:
     devDependencies:
       dotenv-cli: 6.0.0
       prisma: 4.7.1
+      type-fest: 3.5.0
       vitest: 0.21.1
 
   packages/env:
@@ -6336,6 +6338,11 @@ packages:
   /type-fest/0.8.1:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
+    dev: true
+
+  /type-fest/3.5.0:
+    resolution: {integrity: sha512-bI3zRmZC8K0tUz1HjbIOAGQwR2CoPQG68N5IF7gm0LBl8QSNXzkmaWnkWccCUL5uG9mCsp4sBwC8SBrNSISWew==}
+    engines: {node: '>=14.16'}
     dev: true
 
   /typescript/4.9.3:

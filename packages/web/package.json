@@ -13,7 +13,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "test": "vitest",
     "lint:css": "stylelint \"src/**/*.svelte\"",
-    "build:e2e": "TEST=1 pnpm -F '@mpa/web'^... -F=!'@mpa/migration-runner' build",
+    "build:e2e": "TEST=1 pnpm -F '@mpa/web'... -F=!'@mpa/migration-runner' build && svelte-kit sync",
     "test:e2e": "pnpm -F @mpa/db testdb:load && pnpm dlx playwright test"
   },
   "devDependencies": {

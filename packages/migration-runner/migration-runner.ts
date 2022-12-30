@@ -3,7 +3,7 @@ import { DevSeeder, ProdSeeder, reset, initDatabase } from '@mpa/db';
 import { prismaCmd } from '@mpa/utils/prisma/cmd';
 import { logger } from '@mpa/log';
 import { getEnv } from '@mpa/env';
-import { execFileSync } from 'child_process';
+import { execSync } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
@@ -61,11 +61,8 @@ export const handler: Handler = async event => {
     const [, user, pass, host, port, database] =
       env.DATABASE_URL.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/) || [];
     if (!user || !pass || !host || !port || !database) throw new Error('Invalid DATABASE_URL');
-    execFileSync('./pg/pg_dump', ['-h', host, '-p', port, '-U', user, '-d', database], {
-      env: {
-        PGPASSWORD: pass,
-        LD_LIBRARY_PATH: path.resolve('./pg')
-      }
+    execSync(`/usr/bin/pg_dump -h ${host} -p ${port} -U ${user} -d ${database}`, {
+      env: { PGPASSWORD: pass }
     });
   } else if (payload.command === 'sql_load') {
     throw new Error('Not implemented');

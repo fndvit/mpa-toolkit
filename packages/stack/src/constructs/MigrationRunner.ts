@@ -28,6 +28,7 @@ export class MigrationRunner extends Construct {
     this.lambda = new lambda.Function(this, 'Lambda', {
       tracing: lambda.Tracing.ACTIVE,
       memorySize: 256,
+      architecture: lambda.Architecture.X86_64,
       timeout: Duration.seconds(60),
       vpc,
       vpcSubnets: {
@@ -36,8 +37,9 @@ export class MigrationRunner extends Construct {
       runtime: lambda.Runtime.NODEJS_16_X,
       environment: env,
       securityGroups: [this.securityGroup],
-
-      code: lambda.Code.fromAsset(getPath('packages/migration-runner/dist'), {}),
+      code: lambda.Code.fromDockerBuild(getPath('packages/migration-runner'), {
+        platform: 'linux/x86_64'
+      }),
       handler: 'migration-runner.handler'
     });
   }

@@ -28,7 +28,7 @@ export class MigrationRunner extends Construct {
     this.lambda = new lambda.Function(this, 'Lambda', {
       tracing: lambda.Tracing.ACTIVE,
       memorySize: 256,
-      timeout: Duration.seconds(20),
+      timeout: Duration.seconds(60),
       vpc,
       vpcSubnets: {
         subnetType: ec2.SubnetType.PRIVATE_ISOLATED

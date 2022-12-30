@@ -18,9 +18,9 @@
     "shelljs": "^0.8.5"
   },
   "dependencies": {
-    "@prisma/client": "^4.7.1",
+    "@prisma/client": "^4.8.0",
     "pino": "^8.4.1",
-    "prisma": "^4.7.1"
+    "prisma": "^4.8.0"
   },
   "files": [
     "package.json"

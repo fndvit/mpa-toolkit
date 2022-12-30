@@ -29,7 +29,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-svelte3": "^4.0.0",
     "prettier": "2.8.1",
-    "prisma": "^4.7.1",
+    "prisma": "^4.8.0",
     "rimraf": "^3.0.2",
     "svelte": "^3.53.1",
     "tsup": "^6.5.0",

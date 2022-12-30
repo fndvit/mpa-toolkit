@@ -24,7 +24,6 @@ import { CachePurger, CACHE_PURGER_ENV_CONFIG } from './constructs/CachePurger';
 import { ImageOptimizer } from './constructs/ImageOptimizer';
 
 const PRISMA_ENV = {
-  PRISMA_QUERY_ENGINE_BINARY: '/opt/libquery_engine-rhel-openssl-1.0.x.so.node',
   PRISMA_QUERY_ENGINE_LIBRARY: '/opt/libquery_engine-rhel-openssl-1.0.x.so.node',
   PRISMA_MIGRATION_ENGINE_BINARY: '/opt/migration-engine-rhel-openssl-1.0.x',
   PRISMA_INTROSPECTION_ENGINE_BINARY: '/opt/introspection-engine-rhel-openssl-1.0.x',

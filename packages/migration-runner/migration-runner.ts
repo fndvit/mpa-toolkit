@@ -59,7 +59,7 @@ export const handler: Handler = async event => {
     await prismaCmd('migrate deploy');
   } else if (payload.command === 'sql_dump') {
     const [, user, pass, host, port, database] =
-      env.DATABASE_URL.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/) || [];
+      env.DATABASE_URL.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/) || [];
     if (!user || !pass || !host || !port || !database) throw new Error('Invalid DATABASE_URL');
     execFileSync('./pg/pg_dump', ['-h', host, '-p', port, '-U', user, '-d', database], {
       env: {

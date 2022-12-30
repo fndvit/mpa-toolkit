@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+
+  psql:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+      POSTGRES_DB: mpa
+    volumes:
+      - ../pg_binaries:/pg_binaries
+      - ./copy.sh:/scripts/copy.sh

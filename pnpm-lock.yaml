@@ -124,6 +124,7 @@ importers:
       '@types/shelljs': ^0.8.11
       aws-lambda: ^1.0.7
       decompress: ^4.2.1
+      docker-compose: ^0.23.17
       fs-extra: ^10.1.0
       listr2: ^5.0.5
       node-fetch: ^3.3.0
@@ -144,6 +145,7 @@ importers:
       '@types/shelljs': 0.8.11
       aws-lambda: 1.0.7
       decompress: 4.2.1
+      docker-compose: 0.23.17
       fs-extra: 10.1.0
       listr2: 5.0.5
       node-fetch: 3.3.0

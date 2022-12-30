@@ -5,6 +5,8 @@ import { logger } from '@mpa/log';
 import { getEnv } from '@mpa/env';
 import { execFileSync } from 'child_process';
 import path from 'path';
+import fs from 'fs';
+import os from 'os';
 
 export const env = getEnv({ DATABASE_URL: true });
 
@@ -56,17 +58,17 @@ export const handler: Handler = async event => {
   } else if (payload.command === 'deploy') {
     await prismaCmd('migrate deploy');
   } else if (payload.command === 'sql_dump') {
-    execFileSync('./pg/pg_dump', [env.DATABASE_URL], {
+    const [, user, pass, host, port, database] =
+      env.DATABASE_URL.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/) || [];
+    if (!user || !pass || !host || !port || !database) throw new Error('Invalid DATABASE_URL');
+    execFileSync('./pg/pg_dump', ['-h', host, '-p', port, '-U', user, '-d', database], {
       env: {
+        PGPASSWORD: pass,
         LD_LIBRARY_PATH: path.resolve('./pg')
       }
     });
   } else if (payload.command === 'sql_load') {
-    execFileSync('./pg/psql', [env.DATABASE_URL], {
-      env: {
-        LD_LIBRARY_PATH: path.resolve('./pg')
-      }
-    });
+    throw new Error('Not implemented');
   }
 
   log.info(`Finished`);

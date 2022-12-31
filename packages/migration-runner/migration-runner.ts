@@ -37,6 +37,7 @@ const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
   const [, user, pass, host, port, database] =
     env.DATABASE_URL.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/) || [];
   if (!user || !pass || !host || !port || !database) throw new Error('Invalid DATABASE_URL');
+  log.info(`Dumping database: ${database}`);
   const output = execSync(`./pg/pg_dump -h ${host} -p ${port} -U ${user} -d ${database}`, {
     env: {
       PGPASSWORD: pass,
@@ -47,7 +48,9 @@ const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
 
   const timestamp = new Date().toISOString().replace(/[:.-]/g, '');
   const timestampedKey = `dumps/${dumpType}/${env.STACK_NAME}-${timestamp}.sql`;
+  const location = `s3://${env.AWS_S3_ADMIN_BUCKET}/${timestampedKey}`;
 
+  log.info(`Uploading dump to ${location}`);
   const request = s3.putObject({
     Bucket: env.AWS_S3_ADMIN_BUCKET,
     Key: timestampedKey,
@@ -57,7 +60,6 @@ const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
   const resp = await request.promise();
 
   const bytes = Buffer.byteLength(output).toLocaleString();
-  const location = `s3://${env.AWS_S3_ADMIN_BUCKET}/${timestampedKey}`;
 
   if (!resp.$response.error) log.info(`Uploaded ${bytes} bytes to ${location}`);
   else log.error(resp.$response.error);

@@ -40,6 +40,29 @@ const tasks = new Listr([
   {
     title: 'Copying prisma client files',
     task: () => copyPrismaClientFiles(`${dist}/node_modules/.prisma/client`)
+  },
+  {
+    title: 'Copying PostgreSQL files',
+    task: async (_, task) => {
+      const steps = [
+        ['Cleanup', 'docker rm -f migrationrunnerbuild'],
+        ['Building Docker image', 'docker build -t migrationrunnerbuild --platform linux/amd64 .'],
+        ['Creating container', 'docker create --platform linux/amd64 --name migrationrunnerbuild migrationrunnerbuild'],
+        ['Copying files', 'docker cp migrationrunnerbuild:/pg_binaries dist/pg'],
+        ['Removing container', 'docker rm -f migrationrunnerbuild']
+      ];
+
+      for (const [title, command] of steps) {
+        task.output = title;
+        const output = shell.exec(command, { silent: true });
+        if (output.code !== 0) {
+          throw new Error(`Error at step ${title}\n\nCommand: ${command}\n\n${output.stderr}`);
+        }
+      }
+
+      task.output = '';
+    },
+    options: { persistentOutput: true }
   }
 ]);
 

@@ -37,9 +37,7 @@ export class MigrationRunner extends Construct {
       runtime: lambda.Runtime.NODEJS_16_X,
       environment: env,
       securityGroups: [this.securityGroup],
-      code: lambda.Code.fromDockerBuild(getPath('packages/migration-runner'), {
-        platform: 'linux/x86_64'
-      }),
+      code: lambda.Code.fromAsset(getPath('packages/migration-runner/dist')),
       handler: 'migration-runner.handler'
     });
   }

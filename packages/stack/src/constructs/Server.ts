@@ -103,7 +103,7 @@ export class Server extends Construct {
       ],
       destinationKeyPrefix: 'sourcemaps/',
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
-      retainOnDelete: false,
+      retainOnDelete: true,
       prune: false
     });
 

@@ -59,8 +59,12 @@ class SharedInfraStack extends Stack {
 
     // tmp to avoid circular dependency
     new CfnOutput(this, `ExportsOutputFnGetAttStaticBucket92253581Arn56757641`, {
-      value: 'tmp',
+      value: 'arn:aws:s3:::mpath-shared-staticbucket92253581-8cywkyyjvpp8',
       exportName: 'MPAth-shared:ExportsOutputFnGetAttStaticBucket92253581Arn56757641'
+    });
+    new CfnOutput(this, `ExportsOutputRefStaticBucket922535810CC9CA19`, {
+      value: 'mpath-shared-staticbucket92253581-8cywkyyjvpp8',
+      exportName: 'MPAth-shared:ExportsOutputRefStaticBucket922535810CC9CA19'
     });
   }
 }

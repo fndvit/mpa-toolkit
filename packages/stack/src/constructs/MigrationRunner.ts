@@ -1,7 +1,7 @@
 import { Construct } from 'constructs';
 import type { aws_lambda_nodejs as lambdanode } from 'aws-cdk-lib';
 import { aws_ec2 as ec2, Duration, aws_lambda as lambda } from 'aws-cdk-lib';
-import type { ConfigToEnvClean } from '@mpa/env/env';
+import { getEnv } from '@mpa/env/env';
 import { getPath } from '../util/dirs';
 
 export const MIGRATION_RUNNER_ENV_CONFIG = {
@@ -11,7 +11,7 @@ export const MIGRATION_RUNNER_ENV_CONFIG = {
 
 export interface MigrationRunnerProps {
   vpc: ec2.IVpc;
-  env: ConfigToEnvClean<typeof MIGRATION_RUNNER_ENV_CONFIG>;
+  env: Record<string, string>;
 }
 
 export class MigrationRunner extends Construct {
@@ -35,7 +35,10 @@ export class MigrationRunner extends Construct {
         subnetType: ec2.SubnetType.PRIVATE_ISOLATED
       },
       runtime: lambda.Runtime.NODEJS_16_X,
-      environment: env,
+      environment: {
+        ...env,
+        ...getEnv(MIGRATION_RUNNER_ENV_CONFIG)
+      },
       securityGroups: [this.securityGroup],
       code: lambda.Code.fromAsset(getPath('packages/migration-runner/dist')),
       handler: 'index.handler'

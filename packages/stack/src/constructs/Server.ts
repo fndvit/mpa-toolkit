@@ -8,8 +8,7 @@ import {
   Duration
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-
-import type { ConfigToEnvClean } from '@mpa/env';
+import { getEnv } from '@mpa/env';
 import type { MpathStackProps } from 'src/stack';
 import projectRoot from '@mpa/utils/projectRoot';
 
@@ -26,8 +25,8 @@ export const SERVER_ENV_CONFIG = {
 export interface ServerProps {
   vpc: ec2.IVpc;
   appConfigLayer?: lambda.ILayerVersion;
-  env: ConfigToEnvClean<typeof SERVER_ENV_CONFIG>;
-  bucket: s3.IBucket;
+  env: Record<string, string>;
+  assetBucket: s3.IBucket;
   stage: MpathStackProps['stage'];
 }
 
@@ -48,7 +47,7 @@ export class Server extends Construct {
   constructor(scope: Construct, id: string, props: ServerProps) {
     super(scope, id);
 
-    const { vpc, env, stage, bucket } = props;
+    const { vpc, env, stage, assetBucket } = props;
 
     const ENABLE_SOURCE_MAPS = stage === 'staging';
 
@@ -74,6 +73,7 @@ export class Server extends Construct {
         securityGroups: [this.lambdaSg],
         environment: {
           ...env,
+          ...getEnv(SERVER_ENV_CONFIG),
           JWT_SECRET_KEY: secret.secretValue.toString(), // TODO: move to appConfig,
           ...(ENABLE_SOURCE_MAPS ? { NODE_OPTIONS: '--enable-source-maps' } : {})
         }
@@ -95,7 +95,7 @@ export class Server extends Construct {
     };
 
     new s3_deployment.BucketDeployment(this, 'SourceMaps', {
-      destinationBucket: bucket,
+      destinationBucket: assetBucket,
       sources: [
         s3_deployment.Source.asset(projectRoot('packages/web/build/lambda'), {
           exclude: ['**/*.js', '**/node_modules', '**/*.prisma']

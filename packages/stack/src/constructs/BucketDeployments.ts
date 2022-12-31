@@ -4,19 +4,19 @@ import { aws_s3_deployment as s3_deployment } from 'aws-cdk-lib';
 import projectRoot from '@mpa/utils/projectRoot';
 
 export interface BucketDeploymentsProps {
-  bucket: s3.IBucket;
+  assetBucket: s3.IBucket;
 }
 
 export class BucketDeployments extends Construct {
   constructor(scope: Construct, id: string, props: BucketDeploymentsProps) {
     super(scope, id);
 
-    const { bucket } = props;
+    const { assetBucket } = props;
 
     const assetsDir = projectRoot('packages/web/build/client');
 
     new s3_deployment.BucketDeployment(this, 'Immutable', {
-      destinationBucket: bucket,
+      destinationBucket: assetBucket,
       sources: [s3_deployment.Source.asset(`${assetsDir}/_app`)],
       destinationKeyPrefix: '_app/',
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
@@ -25,7 +25,7 @@ export class BucketDeployments extends Construct {
     });
 
     new s3_deployment.BucketDeployment(this, 'Static', {
-      destinationBucket: bucket,
+      destinationBucket: assetBucket,
       sources: [s3_deployment.Source.asset(assetsDir, { exclude: ['_app/*'] })],
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=3600, public')],
       retainOnDelete: true,

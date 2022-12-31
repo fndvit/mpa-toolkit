@@ -10,17 +10,16 @@ import {
   CfnOutput
 } from 'aws-cdk-lib';
 import type { Construct } from 'constructs';
-import { getEnv } from '@mpa/env';
 import { MaintenanceBox } from './constructs/MaintenanceBox';
 import { Database } from './constructs/Database';
 import { EventStack } from './constructs/EventStack';
 import { LambdaLayers } from './constructs/LambdaLayers';
-import { Server, SERVER_ENV_CONFIG } from './constructs/Server';
-import { MigrationRunner, MIGRATION_RUNNER_ENV_CONFIG } from './constructs/MigrationRunner';
+import { Server } from './constructs/Server';
+import { MigrationRunner } from './constructs/MigrationRunner';
 import { HttpApi } from './constructs/HttpApi';
 import { Vpc } from './constructs/Vpc';
 import { BucketDeployments } from './constructs/BucketDeployments';
-import { CachePurger, CACHE_PURGER_ENV_CONFIG } from './constructs/CachePurger';
+import { CachePurger } from './constructs/CachePurger';
 import { ImageOptimizer } from './constructs/ImageOptimizer';
 
 const PRISMA_ENV = {
@@ -33,15 +32,30 @@ const PRISMA_ENV = {
 const DB_PORT = 5432;
 
 class SharedInfraStack extends Stack {
-  staticBucket: s3.IBucket;
+  assetBucket: s3.IBucket;
+  adminBucket: s3.IBucket;
 
   constructor(scope: Construct, id: string, props: StackProps) {
     super(scope, id, props);
 
-    this.staticBucket = new s3.Bucket(this, 'StaticBucket', {
+    const tmpStaticBucket = new s3.Bucket(this, 'StaticBucket', {
       removalPolicy: RemovalPolicy.RETAIN,
       publicReadAccess: true
     });
+
+    this.assetBucket = new s3.Bucket(this, 'AssetBucket', {
+      removalPolicy: RemovalPolicy.RETAIN,
+      publicReadAccess: true
+    });
+
+    this.adminBucket = new s3.Bucket(this, 'AdminBucket', {
+      removalPolicy: RemovalPolicy.RETAIN,
+      publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL
+    });
+
+    new CfnOutput(this, `AssetBucketName`, { value: this.assetBucket.bucketName });
+    new CfnOutput(this, `AdminBucketName`, { value: this.adminBucket.bucketName });
   }
 }
 
@@ -56,7 +70,7 @@ class MpathStack extends Stack {
 
     const { stage, shared } = props;
 
-    const bucket = shared.staticBucket;
+    const { assetBucket, adminBucket } = shared;
 
     const vpc = new Vpc(this, 'Vpc');
 
@@ -64,35 +78,30 @@ class MpathStack extends Stack {
 
     const lambdaLayers = new LambdaLayers(this, 'LambdaLayers');
 
-    const server = new Server(this, 'Server', {
-      vpc,
-      bucket,
-      stage,
-      env: { ...getEnv(SERVER_ENV_CONFIG), ...PRISMA_ENV }
-    });
+    const server = new Server(this, 'Server', { vpc, assetBucket, stage, env: PRISMA_ENV });
 
     db.securityGroup.addIngressRule(server.lambdaSg, ec2.Port.tcp(DB_PORT));
 
     const migrationRunner = new MigrationRunner(this, 'MigrationRunner', {
       vpc,
-      env: { ...getEnv(MIGRATION_RUNNER_ENV_CONFIG), ...PRISMA_ENV }
+      env: { ...PRISMA_ENV, STACK_NAME: this.stackName }
     });
     migrationRunner.lambda.addLayers(lambdaLayers.prismaEngineQuery, lambdaLayers.prismaEngineOther);
     migrationRunner.lambda.addEnvironment('DATABASE_URL', db.url);
     db.securityGroup.addIngressRule(migrationRunner.securityGroup, ec2.Port.tcp(DB_PORT));
+    adminBucket.grantRead(migrationRunner.lambda);
+    adminBucket.grantPut(migrationRunner.lambda);
+    migrationRunner.lambda.addEnvironment('AWS_S3_ADMIN_BUCKET', adminBucket.bucketName);
 
     const { httpApi } = new HttpApi(this, 'HttpApi', { server });
 
-    const cachePurger = new CachePurger(this, 'CachePurger', {
-      vpc,
-      env: getEnv(CACHE_PURGER_ENV_CONFIG)
-    });
+    const cachePurger = new CachePurger(this, 'CachePurger', { vpc });
     const eventStack = new EventStack(this, 'EventStack', { vpc, stage });
     cachePurger.lambda.addEventSource(new lambda_event_sources.SqsEventSource(eventStack.queue, { batchSize: 10 }));
 
     Object.values(server.lambdas).forEach(({ fn, alias }) => {
       fn.addLayers(lambdaLayers.prismaEngineQuery);
-      fn.addEnvironment('AWS_S3_UPLOAD_BUCKET', bucket.bucketName);
+      fn.addEnvironment('AWS_S3_UPLOAD_BUCKET', assetBucket.bucketName);
       fn.addEnvironment('DATABASE_URL', db.url);
       alias.addToRolePolicy(
         new iam.PolicyStatement({
@@ -100,23 +109,25 @@ class MpathStack extends Stack {
           actions: ['appconfig:StartConfigurationSession', 'appconfig:GetLatestConfiguration']
         })
       );
-      bucket.grantRead(alias);
-      bucket.grantPut(alias, 'upload/*');
+      assetBucket.grantRead(alias);
+      assetBucket.grantPut(alias, 'upload/*');
       eventStack.topic.grantPublish(alias);
       fn.addEnvironment('AWS_SNS_CONTENT_TOPIC', eventStack.topic.topicArn);
     });
 
-    new ImageOptimizer(this, 'ImageOptimizer', { imageBucket: bucket });
+    new ImageOptimizer(this, 'ImageOptimizer', { imageBucket: assetBucket });
 
     const maintananceBox = new MaintenanceBox(this, 'MaintenanceBox', { vpc });
     db.securityGroup.addIngressRule(maintananceBox.securityGroup, ec2.Port.tcp(DB_PORT));
+    adminBucket.grantRead(maintananceBox.instance);
+    adminBucket.grantPut(maintananceBox.instance);
 
     new CfnOutput(this, 'ContentTopicArn', {
       value: eventStack.topic.topicArn,
       description: "SNS topic 'content'"
     });
 
-    new BucketDeployments(this, 'BucketDeployments', { bucket });
+    new BucketDeployments(this, 'BucketDeployments', { assetBucket });
 
     new CfnOutput(this, `DatabaseURL`, { value: db.url });
     new CfnOutput(this, `MigrationRunnerLambdaArn`, { value: migrationRunner.lambda.functionArn });
@@ -138,6 +149,10 @@ const sharedInfra = new SharedInfraStack(app, 'MPAth-shared', {
   env: {
     account: '335671600435',
     region: 'eu-west-1'
+  },
+  tags: {
+    Project: 'mpath',
+    Environment: 'shared'
   }
 });
 
@@ -147,7 +162,11 @@ new MpathStack(app, 'MPAth-production', {
     region: 'eu-west-1'
   },
   shared: sharedInfra,
-  stage: 'prod'
+  stage: 'prod',
+  tags: {
+    Project: 'mpath',
+    Environment: 'production'
+  }
 });
 
 new MpathStack(app, 'MPAth-staging', {
@@ -156,5 +175,9 @@ new MpathStack(app, 'MPAth-staging', {
     region: 'eu-west-1'
   },
   shared: sharedInfra,
-  stage: 'staging'
+  stage: 'staging',
+  tags: {
+    Project: 'mpath',
+    Environment: 'staging'
+  }
 });

@@ -1,7 +1,7 @@
 {
   "name": "@mpa/migration-runner",
   "version": "1.0.0",
-  "main": "./migration-runner.ts",
+  "main": "./index.ts",
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "esno ./scripts/build.ts"
@@ -32,7 +32,7 @@
   ],
   "tsup": {
     "entry": [
-      "migration-runner.ts"
+      "index.ts"
     ],
     "noExternal": [
       "@mpa/db",

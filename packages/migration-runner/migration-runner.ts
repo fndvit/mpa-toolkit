@@ -58,12 +58,14 @@ export const handler: Handler = async event => {
     const [, user, pass, host, port, database] =
       env.DATABASE_URL.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/) || [];
     if (!user || !pass || !host || !port || !database) throw new Error('Invalid DATABASE_URL');
-    execSync(`./pg/pg_dump -h ${host} -p ${port} -U ${user} -d ${database}`, {
+    const output = execSync(`./pg/pg_dump -h ${host} -p ${port} -U ${user} -d ${database}`, {
       env: {
         PGPASSWORD: pass,
         LD_LIBRARY_PATH: './pg'
-      }
+      },
+      encoding: 'utf-8'
     });
+    console.log(output);
   } else if (payload.command === 'sql_load') {
     throw new Error('Not implemented');
   }

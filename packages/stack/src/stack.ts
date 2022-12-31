@@ -56,6 +56,12 @@ class SharedInfraStack extends Stack {
 
     new CfnOutput(this, `AssetBucketName`, { value: this.assetBucket.bucketName });
     new CfnOutput(this, `AdminBucketName`, { value: this.adminBucket.bucketName });
+
+    // tmp to avoid circular dependency
+    new CfnOutput(this, `ExportsOutputFnGetAttStaticBucket92253581Arn56757641`, {
+      value: 'tmp',
+      exportName: 'MPAth-shared:ExportsOutputFnGetAttStaticBucket92253581Arn56757641'
+    });
   }
 }
 

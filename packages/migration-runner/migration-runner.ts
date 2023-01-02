@@ -16,7 +16,7 @@ const VALID_COMMANDS = ['seed', 'seed:dev', 'reset', 'deploy', 'sql_dump', 'sql_
 
 interface SqlLoadPayload {
   command: 'sql_load';
-  sql: string;
+  dumpKey: string;
 }
 interface SqlDumpPayload {
   command: 'sql_dump';
@@ -31,12 +31,17 @@ interface CommandPayload {
 
 export type Payload = CommandPayload | SqlLoadPayload | SqlDumpPayload;
 
-const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
-  if (!dumpType) throw new Error('dumpType is required');
-
+const getDatabaseParams = () => {
   const [, user, pass, host, port, database] =
     env.DATABASE_URL.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/) || [];
   if (!user || !pass || !host || !port || !database) throw new Error('Invalid DATABASE_URL');
+  return { user, pass, host, port, database };
+};
+
+const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
+  if (!dumpType) throw new Error('dumpType is required');
+
+  const { user, pass, host, port, database } = getDatabaseParams();
   log.info(`Dumping database: ${database}`);
   const output = execSync(`./pg/pg_dump -h ${host} -p ${port} -U ${user} -d ${database}`, {
     env: {
@@ -51,22 +56,58 @@ const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
   const location = `s3://${env.AWS_S3_ADMIN_BUCKET}/${timestampedKey}`;
 
   log.info(`Uploading dump to ${location}`);
-  const request = s3.putObject({
-    Bucket: env.AWS_S3_ADMIN_BUCKET,
-    Key: timestampedKey,
-    Body: output,
-    ContentType: 'text/plain'
-  });
-  const resp = await request.promise();
+  const response = await s3
+    .putObject({
+      Bucket: env.AWS_S3_ADMIN_BUCKET,
+      Key: timestampedKey,
+      Body: output,
+      ContentType: 'text/plain'
+    })
+    .promise();
 
   const bytes = Buffer.byteLength(output).toLocaleString();
 
-  if (!resp.$response.error) log.info(`Uploaded ${bytes} bytes to ${location}`);
-  else log.error(resp.$response.error);
+  if (!response.$response.error) log.info(`Uploaded ${bytes} bytes to ${location}`);
+  else log.error(response.$response.error);
 
   return {
     location,
     bytes
+  };
+};
+
+const sqlLoad = async ({ dumpKey }: SqlLoadPayload) => {
+  const { user, pass, host, port, database } = getDatabaseParams();
+
+  log.info(`Loading dump from s3://${env.AWS_S3_ADMIN_BUCKET}/${dumpKey}`);
+  const { Body } = await s3.getObject({ Bucket: env.AWS_S3_ADMIN_BUCKET, Key: dumpKey }).promise();
+  if (!Body) throw new Error(`Could not find dump with key: ${dumpKey}`);
+
+  log.info('Cleaning database');
+  const cleanOutput = execSync(`./pg/psql -h ${host} -p ${port} -U ${user} -d ${database}`, {
+    input: 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;',
+    env: {
+      PGPASSWORD: pass,
+      LD_LIBRARY_PATH: './pg'
+    },
+    encoding: 'utf-8'
+  });
+  log.info(cleanOutput);
+
+  log.info(`Loading dump into database: ${database}`);
+  const output = execSync(`./pg/psql -h ${host} -p ${port} -U ${user} -d ${database}`, {
+    input: Body.toString(),
+    env: {
+      PGPASSWORD: pass,
+      LD_LIBRARY_PATH: './pg'
+    },
+    encoding: 'utf-8'
+  });
+
+  log.info(output);
+
+  return {
+    output
   };
 };
 
@@ -82,5 +123,5 @@ export const handler: Handler = async event => {
   else if (payload.command === 'reset') return prismaCmd('migrate reset --force --skip-generate');
   else if (payload.command === 'deploy') return prismaCmd('migrate deploy');
   else if (payload.command === 'sql_dump') return sqlDump(payload);
-  else if (payload.command === 'sql_load') throw new Error('Not implemented');
+  else if (payload.command === 'sql_load') return sqlLoad(payload);
 };

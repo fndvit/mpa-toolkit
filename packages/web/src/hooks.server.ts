@@ -1,5 +1,5 @@
 import { logger } from '@mpa/log';
-import { json, type Handle } from '@sveltejs/kit';
+import { json, type Handle, type HandleServerError } from '@sveltejs/kit';
 import AWSXRay from 'aws-xray-sdk-core';
 import { env } from '$lib/env';
 import { checkUserHasRoleForRoute, getUserFromCookie } from '$lib/auth';
@@ -78,4 +78,11 @@ export const handle: Handle = async ({ event, resolve }) => {
   seg?.close();
 
   return response;
+};
+
+export const handleError: HandleServerError = ({ error }) => {
+  log.error(error);
+  return {
+    message: 'Unhandled error'
+  };
 };

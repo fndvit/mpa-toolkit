@@ -7,6 +7,8 @@
   import BulletList from './BulletList.svelte';
   import OrderedList from './OrderedList.svelte';
   import DiagramComponent from './DiagramComponent.svelte';
+  import LinkSlider from './LinkSlider.svelte';
+  import CollapsePointBlock from './CollapsePointBlock.svelte';
 
   export let block: ContentBlock;
 
@@ -14,10 +16,12 @@
     heading: Heading,
     paragraph: Paragraph,
     cards: TextSlider,
+    linkcards: LinkSlider,
     image: Image,
     bullet_list: BulletList,
     ordered_list: OrderedList,
-    diagram: DiagramComponent
+    diagram: DiagramComponent,
+    collapse: CollapsePointBlock
   };
 </script>
 
@@ -29,9 +33,9 @@
   </div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .unknown-block {
-    background: $colors.error-red;
+    background: $c-error-red;
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 1rem -1rem;

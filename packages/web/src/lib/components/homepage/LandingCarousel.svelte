@@ -1,12 +1,16 @@
 <script lang="ts">
   import type { Page } from '@mpa/db';
   import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+  import { onMount } from 'svelte';
   import LandingCarouselCard from './LandingCarouselCard.svelte';
   import { CarouselDots } from '$lib/components/shared';
   import { SplideOptions } from '$lib/helpers/splide';
+  import * as api from '$lib/api';
+  import { userHistory } from '$lib/history';
 
-  export let pages: Page.ContentCard[];
+  export let pages: Page.ContentCard[] = [];
   export let title: string;
+  export let type: 'chapter' | 'case-study' = 'chapter';
 
   let currentCard = 0;
   let splide: Splide;
@@ -36,6 +40,10 @@
   });
 
   $: if (currentCard >= 0 && splide) splide.go(currentCard);
+
+  onMount(async () => {
+    pages = await api.recommendations.get(userHistory.toApiRequest(), type);
+  });
 </script>
 
 <div class="landing-carousel">
@@ -59,20 +67,18 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .landing-carousel {
-
-    :global(.splide__arrow--prev){
+    :global(.splide__arrow--prev) {
       left: 2rem;
     }
 
-    :global(.splide__arrow--next){
+    :global(.splide__arrow--next) {
       right: 2rem;
     }
 
     :global(.splide__arrow) {
-      background-color: $colors.neutral-bg;
+      background-color: $c-neutral-bg;
       opacity: 0.5;
     }
 
@@ -80,30 +86,31 @@
       opacity: 0.8;
     }
 
-    :global(.carousel-dots){
-      padding: 10px 0px !important;
+    :global(.carousel-dots) {
+      padding: 10px 0 !important;
       margin-top: 15px;
       margin-bottom: 60px;
     }
 
-    :global(.splide__slide){
-      opacity: 50%;
+    :global(.splide__slide) {
+      opacity: 0.5;
       pointer-events: none;
-      margin-bottom: 25px; // spacing for box shadow
+      margin-bottom: 25px;
     }
 
     :global(.splide__slide.is-active) {
-      opacity: 100%;
+      opacity: 1;
       pointer-events: all;
     }
   }
 
   .title-container {
-    color: $colors.neutral-black;
+    color: $c-neutral-black;
     max-width: 600px;
     padding: 0 var(--page-padding) 0;
+
     > h2 {
-      typography: h2-responsive;
+      @mixin font-responsive h2;
     }
   }
 
@@ -112,8 +119,7 @@
     position: relative;
   }
 
-  @media(max-width: 1024px) {
-
+  @media (max-width: 1024px) {
     .title-container {
       max-width: auto;
     }
@@ -125,16 +131,11 @@
     }
   }
 
-  @media(max-width: 425px) {
-
+  @media (max-width: 425px) {
     .landing-carousel {
-
       :global(.carousel-dots) {
-          --dot-size: 7px;
-        }
+        --dot-size: 7px;
+      }
     }
-
   }
-
-
 </style>

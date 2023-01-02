@@ -3,10 +3,10 @@ const { defineConfig } = require('eslint-define-config');
 
 module.exports = defineConfig({
   root: true,
+  ignorePatterns: ['build', 'dist', 'cdk.out', '*.cjs'],
   parser: '@typescript-eslint/parser',
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   plugins: ['svelte3', '@typescript-eslint', 'import'],
-  ignorePatterns: ['*.cjs'],
   overrides: [
     {
       files: ['*.svelte'],
@@ -29,7 +29,7 @@ module.exports = defineConfig({
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: false }],
     '@typescript-eslint/triple-slash-reference': 'off',
     'import/no-duplicates': 'error',
-    'import/order': 'warn'
+    'import/order': 'off'
   },
   settings: {
     'svelte3/typescript': () => require('typescript')

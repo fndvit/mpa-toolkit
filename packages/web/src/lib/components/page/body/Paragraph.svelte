@@ -8,8 +8,9 @@
   {#each block.content || [] as child}<Inline block={child} />{/each}
 </p>
 
-<style lang="stylus">
-  p {
-    typography: p-responsive;
+<style lang="postcss">
+  p,
+  :global(.ui-editor > p) {
+    @mixin font-responsive p;
   }
 </style>

@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 import { db } from '$lib/db';
 import { env } from '$lib/env';
 
-export const GET: RequestHandler = async () => {
+async function createDump() {
   const authors = await db.prisma.author.findMany();
   const tags = await db.prisma.tag.findMany();
   const pages = await db.prisma.page.findMany({
@@ -17,17 +17,22 @@ export const GET: RequestHandler = async () => {
       tags: true
     }
   });
-  return json({
+  return {
     authors,
     tags,
     pages
-  });
+  };
+}
+
+export const GET: RequestHandler = async () => {
+  const dump = await createDump();
+  return json(dump);
 };
 
 export const POST: RequestHandler = async ({ request }) => {
   if (env.PUBLIC_DB_RESTORE !== 'true') return json({ error: 'Not allowed' }, { status: 403 });
 
-  const data = await request.json();
+  const data = (await request.json()) as Awaited<ReturnType<typeof createDump>>;
 
   await db.prisma.tagsOnPages.deleteMany();
   await db.prisma.tag.deleteMany();

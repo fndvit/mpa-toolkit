@@ -1,8 +1,8 @@
 import chalk from 'chalk';
-import { MpaDatabase, DevSeeder } from '@mpa/db';
+import { DevSeeder, initDatabase } from '@mpa/db';
 
 async function main() {
-  const db = new MpaDatabase();
+  const db = initDatabase();
   const seeder = new DevSeeder(db);
   try {
     console.log(chalk.green('Seeding database...'));

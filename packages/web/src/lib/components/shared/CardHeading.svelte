@@ -8,9 +8,10 @@
   <EditableText bind:value={text} {editable} placeholder="Heading..." />
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .heading {
-    typography: h4-responsive;
+    @mixin font-responsive h4;
+
     margin-top: 5px;
   }
 </style>

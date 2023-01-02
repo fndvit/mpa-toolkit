@@ -3,7 +3,7 @@ import { db } from '$lib/db';
 
 export const load: PageServerLoad = async () => {
   return {
-    pages: await db.page.all({ model: 'cms-list' }),
+    pages: await db.page.allForCms(),
     allTags: await db.tag.all()
   };
 };

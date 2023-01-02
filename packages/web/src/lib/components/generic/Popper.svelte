@@ -1,38 +1,46 @@
 <script lang="ts">
-  import { createPopper, type Instance as PopperInstance } from '@popperjs/core';
-
-  export let hoverEl: HTMLElement = null;
+  import { createPopper, type Instance as PopperInstance, type Placement } from '@popperjs/core';
 
   export const load = (el: HTMLElement) => update(el);
 
-  let popper: { instance: PopperInstance; destroy: () => void } = null;
+  let tooltip: { popper: PopperInstance; el: HTMLElement; observer: MutationObserver } = null;
   let message: string;
 
   let tooltipEl: HTMLDivElement;
 
-  function update(el: HTMLElement) {
-    if (popper) {
-      popper && popper.destroy();
-      popper = null;
+  const destroy = () => {
+    tooltipEl.style.visibility = 'hidden';
+    if (tooltip) {
+      tooltip.popper.destroy();
+      tooltip.observer.disconnect();
+      tooltip = null;
     }
+  };
+
+  function update(el: HTMLElement) {
+    if (tooltip?.el === el) return;
+    if (tooltip) destroy();
 
     if (el) {
       message = el.dataset.hoverMsg;
-      const instance = createPopper(el, tooltipEl, {
-        placement: 'auto',
-        onFirstUpdate: () => (tooltipEl.style.visibility = 'visible'),
-        modifiers: [{ name: 'offset', options: { offset: [0, 12] } }]
-      });
-      const destroy = () => {
-        tooltipEl.style.visibility = 'hidden';
-        instance.destroy();
+      const targetSelector = el.getAttribute('data-tooltip-target');
+      const target = targetSelector ? document.querySelector(targetSelector) : el;
+
+      tooltip = {
+        popper: createPopper(target, tooltipEl, {
+          placement: (el.getAttribute('data-tooltip-placement') as Placement) || 'auto',
+          onFirstUpdate: () => (tooltipEl.style.visibility = 'visible'),
+          modifiers: [{ name: 'offset', options: { offset: [0, 12] } }]
+        }),
+        el,
+        observer: new MutationObserver(() => {
+          if (!document.body.contains(tooltip.el)) destroy();
+        })
       };
+      tooltip.observer.observe(tooltip.el.parentElement, { childList: true });
       el.addEventListener('mouseleave', destroy);
-      popper = { instance, destroy };
     }
   }
-
-  $: update(hoverEl);
 </script>
 
 <div class="tooltip" bind:this={tooltipEl} role="tooltip">
@@ -40,26 +48,26 @@
   <div class="arrow" data-popper-arrow />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .tooltip {
-    typography: ui;
+    pointer-events: none;
+    font: $f-ui;
     background: white;
     color: #333;
     padding: 10px 15px;
     border-radius: 4px;
-    z-index: $z-index.tooltip;
+    z-index: $z-tooltip;
     visibility: hidden;
     position: absolute;
     max-width: 200px;
     text-align: center;
-    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 0 5px rgb(0 0 0 / 20%));
 
     .arrow {
       position: absolute;
     }
 
-    .arrow:before {
+    .arrow::before {
       content: '';
       display: block;
       width: 8px;
@@ -84,5 +92,4 @@
       left: -4px;
     }
   }
-
 </style>

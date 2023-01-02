@@ -87,36 +87,36 @@
   <input type="file" bind:this={inputEls.desktop} on:change={e => changeImage('desktop', e.currentTarget)} />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .layer-list-item {
     position: relative;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    typography: ui;
+    font: $f-ui;
     align-items: center;
     padding-left: 5px;
     margin-left: -5px;
 
     &:hover {
-      outline: 1px solid $colors.secondary-bg;
+      outline: 1px solid $c-secondary-bg;
     }
 
     &.layer-list-item--higlight {
-      background: $colors.neutral-bg;
-      outline: 1px solid $colors.secondary-bg;
+      background: $c-neutral-bg;
+      outline: 1px solid $c-secondary-bg;
     }
 
-    input[type=file] {
+    input[type='file'] {
       display: none;
     }
 
     &:not(:hover) .icons {
       visibility: hidden;
     }
+
     --ib-hover-bg: white;
-    --ib-hover-border: 1px solid $colors.secondary-bg;
+    --ib-hover-border: 1px solid $c-secondary-bg;
   }
 
   .layer-title {
@@ -124,13 +124,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
   .edit-popup {
     position: absolute;
     top: 50%;
     right: calc(100% + 12px);
     background: white;
     border-radius: 4px;
-    z-index: $z-index.tooltip;
+    z-index: $z-tooltip;
     padding: 10px;
     filter: drop-shadow(0 0 5px #2a2a2a66);
     transform: translateY(-50%);
@@ -145,7 +146,7 @@
       cursor: pointer;
     }
 
-    &:after {
+    &::after {
       content: '';
       display: block;
       position: absolute;
@@ -161,16 +162,17 @@
       margin: 0 0 10px;
       text-transform: capitalize;
     }
-
   }
+
   .layer-preview {
     cursor: pointer;
     padding: 10px;
     width: 100px;
     position: relative;
+
     img {
       max-width: 100%;
-      outline: 1px solid $colors.secondary-bg;
+      outline: 1px solid $c-secondary-bg;
     }
 
     :global(.spinner) {
@@ -182,7 +184,7 @@
 
     &:hover {
       background: white;
-      outline: 1px solid $colors.secondary-bg;
+      outline: 1px solid $c-secondary-bg;
       filter: drop-shadow(0 0 2px #2a2a2a33);
     }
   }

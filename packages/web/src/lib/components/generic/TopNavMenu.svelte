@@ -25,8 +25,7 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .hamburger-container {
     display: none;
     position: absolute;
@@ -36,18 +35,18 @@
   }
 
   .selected {
-    text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.25);
-    background-color: rgba(255, 255, 255, 0.2);
+    text-shadow: 0 0 7px rgb(0 0 0 / 25%);
+    background-color: rgb(255 255 255 / 20%);
     border-radius: 20px;
-    box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 13px rgb(0 0 0 / 5%);
   }
 
   .selected:hover {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgb(255 255 255 / 25%);
   }
 
   .selected::after {
-    height: 0px;
+    height: 0;
   }
 
   .options-container {
@@ -59,8 +58,10 @@
 
   a {
     text-decoration: none;
-    typography: ui-large-responsive;
-    color: #ffffff;
+
+    @mixin font-responsive ui-large;
+
+    color: #fff;
     padding: 0;
     position: relative;
     overflow: hidden;
@@ -75,7 +76,7 @@
     left: 0;
     width: 100%;
     height: 3px;
-    background-color: #FFFFFF;
+    background-color: #fff;
     transition: opacity 300ms, transform 300ms;
     opacity: 0;
     transform: translate3d(-100%, 0, 0);
@@ -87,17 +88,15 @@
     transform: translate3d(0, 0, 0);
   }
 
-  +breakpoint(page, medium) {
-
+  @mixin breakpoint content, medium {
     .options-container {
       width: 50vw;
       max-width: 350px;
       flex-direction: column;
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      background: $colors.neutral-bg;
-      box-shadow: -5px 0px 15px 1px rgba(0, 0, 0, 0.25);
+      top: 0;
+      right: 0;
+      background: $c-neutral-bg;
+      box-shadow: -5px 0 15px 1px rgb(0 0 0 / 25%);
       padding: 3rem;
       padding-left: 1.5rem;
       height: calc(100vh - 5rem);
@@ -105,6 +104,7 @@
       position: fixed;
       transform: translateX(100%);
       transition: transform 200ms;
+
       &.expanded {
         transform: translateX(0%);
       }
@@ -115,31 +115,23 @@
       justify-content: flex-end;
     }
 
-
-
     a {
-      color: #2a2a2a
+      color: #2a2a2a;
     }
 
     .selected {
-      color: #2A2A2A;
-      typography: h4;
-      background-color: $colors.neutral-bg;
+      color: #2a2a2a;
+      font: $f-h4;
+      background-color: $c-neutral-bg;
       border-radius: none;
       box-shadow: none;
       text-shadow: none;
     }
-
   }
 
-
-  +breakpoint(page, small) {
-
+  @mixin breakpoint content, small {
     .hamburger-container {
       transform: scale(0.8);
     }
-
   }
-
-
 </style>

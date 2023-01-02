@@ -1,4 +1,4 @@
-/// <reference path = "../injected.d.ts" />
+/// <reference path = "./injected.d.ts" />
 import './shims.js';
 import type { APIGatewayEvent } from 'aws-lambda';
 import { manifest } from 'MANIFEST';

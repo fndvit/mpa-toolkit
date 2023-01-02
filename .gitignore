@@ -11,3 +11,6 @@ cdk.out
 !.vscode/extensions.json
 .tmp
 *.log
+test-results
+playwright-report
+playwright/.cache/

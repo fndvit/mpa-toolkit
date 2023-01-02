@@ -29,20 +29,21 @@
   {/if}
 </a>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .downloadable-file {
     display: block;
     position: relative;
-    typography: ui-small;
+    font: $f-ui-small;
     color: black;
+
     &:hover {
       filter: drop-shadow(0 0 3px #b1b1b1);
       z-index: 1;
-      :global(.page-editor) & strong {
+
+      :global(.page-editor--editing) & strong {
         outline: 1px solid black;
         border-radius: 4px;
-        cursor: text
+        cursor: text;
       }
     }
 
@@ -51,9 +52,11 @@
       text-align: right;
       right: 1.15rem;
       top: 0.75rem;
-      --caret-color: black;
-      --outline-color: #2a2a2a;
+
+      --editable-caret: black;
+      --editable-outline: #2a2a2a;
       --outline-width: 1px;
+
       :global(.editable-text) {
         min-width: 20px;
       }
@@ -70,11 +73,12 @@
       transform: translateX(10px);
       display: flex;
       justify-content: center;
+
       --ib-size: 1.25rem;
       --ib-bg: white;
-      --ib-hover-bg: $colors.secondary-bg;
-      filter: drop-shadow(0 0 2px #b1b1b1) ;
-    }
+      --ib-hover-bg: $c-secondary-bg;
 
+      filter: drop-shadow(0 0 2px #b1b1b1);
+    }
   }
 </style>

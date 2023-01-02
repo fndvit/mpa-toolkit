@@ -8,7 +8,6 @@
   import { createSections, getSectionSize } from '$lib/helpers/content';
 
   export let page: Page;
-  export let recommendedPages: Page.ContentCard[] = null;
 
   const sections = createSections(page.content);
 
@@ -48,29 +47,36 @@
           <div class="madlib-container">
             <ContentMadLib />
           </div>
-        {:else if i === 2 && recommendedPages?.length > 0}
+        {:else if i === 2}
           <div class="content-carousel-container">
-            <ContentCarousel slides={recommendedPages} title={'You may also like'} />
+            <ContentCarousel title={'You may also like'} recommendationType={page.chapter ? 'chapter' : 'case-study'} />
           </div>
         {/if}
       {/if}
     {/each}
+    <div class="content-carousel-container">
+      <ContentCarousel
+        title={'What to read next'}
+        referencePage={page}
+        recommendationType={page.chapter ? 'chapter' : 'case-study'}
+      />
+    </div>
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .page-content {
-    grid-config(page, content);
+    @mixin grid-config content, content;
 
     position: relative;
-    min-height: 800px // so empty pages don't collapse
+    min-height: 800px;
     grid-auto-rows: min-content;
     padding-bottom: 2rem;
   }
 
   .body-column {
     display: contents;
+
     > :global(*) {
       grid-column: body;
     }
@@ -78,11 +84,11 @@
 
   .menu-container {
     grid-column: menu;
-    grid-row: menu / span 100; // can't span -1 through dynamic rows
+    grid-row: menu / span 100;
     margin: 0 1rem 0 -30px;
-    z-index: sticky-menu;
+    z-index: $z-sticky-menu;
 
-    +breakpoint(page, medium) {
+    @mixin breakpoint content, medium {
       margin: 0 1rem 0 0;
     }
   }
@@ -92,18 +98,18 @@
     top: 0;
     flex: 0;
 
-    +breakpoint(page, medium) {
+    @mixin breakpoint content, medium {
       margin-top: 5px;
       width: fit-content;
       transform: translateX(-100%);
-      transition: transform .5s ease-out;
+      transition: transform 0.5s ease-out;
       pointer-events: none;
 
       :global(.sticky-menu) {
         position: relative;
         z-index: 2;
         width: 220px;
-        border-radius: 0px 20px 20px 0px;
+        border-radius: 0 20px 20px 0;
       }
 
       .menu-container:hover & {
@@ -113,14 +119,12 @@
         .sliding-arrow {
           transform: translateX(-100%);
         }
-
       }
     }
   }
 
   .sliding-arrow {
     display: none;
-
     cursor: pointer;
     position: absolute;
     z-index: 1;
@@ -130,27 +134,29 @@
     bottom: 30px;
     max-height: 80px;
     transform-origin: 0% 0%;
-    background: alpha($colors.neutral-dark, 0.2);
-    box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
-    border-radius: 0px 10px 10px 0px;
+    background: color($c-neutral-dark alpha(0.2));
+    box-shadow: 0 1px 16px rgb(0 0 0 / 10%);
+    border-radius: 0 10px 10px 0;
     transition: transform 0.1s ease-out;
 
     svg {
       width: 10px;
       fill: none;
       margin: auto;
+
       path {
-        stroke: $colors.neutral-black ;
+        stroke: $c-neutral-black;
         stroke-width: 2.4px;
       }
     }
 
-    +breakpoint(page, medium) {
+    @mixin breakpoint content, medium {
       display: flex;
     }
 
-    +breakpoint(page, small) {
+    @mixin breakpoint content, small {
       width: 18px;
+
       svg {
         width: 6px;
       }
@@ -166,5 +172,4 @@
     margin-left: -25px;
     grid-column: body / -1;
   }
-
 </style>

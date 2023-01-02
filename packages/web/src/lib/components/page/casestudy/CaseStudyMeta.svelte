@@ -68,8 +68,7 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .meta-grid {
     display: grid;
     grid-template-rows: auto auto;
@@ -96,30 +95,30 @@
   }
 
   .meta-grid-1 :global(.editable-content) {
-    typography: p-large-responsive;
+    @mixin font-responsive p-large;
   }
 
   .meta-grid-2 :global(.editable-content) {
-    typography: p-responsive;
+    @mixin font-responsive p;
   }
 
   .meta-title {
-    typography: h5-graphic;
-    color: #F9F9F9;
-    color: $colors.neutral-bg;
+    font: $f-h5-graphic;
+    color: #f9f9f9;
+    color: $c-neutral-bg;
     margin: 0;
   }
 
   .globe-cell {
     position: relative;
+
     > :global(*) {
       position: absolute;
       transform: translateY(-55%);
     }
   }
 
-
-  +breakpoint(page, medium) {
+  @mixin breakpoint content, medium {
     .meta-grid {
       &.meta-grid-1 {
         grid-template-columns: 22.5% 15% 22.5% 30%;
@@ -128,9 +127,7 @@
     }
   }
 
-
-  +breakpoint(page, small) {
-
+  @mixin breakpoint content, small {
     .grid-cell {
       margin-bottom: 2rem;
     }
@@ -150,26 +147,25 @@
 
       &.meta-grid-1 {
         min-height: 110px;
-        margin-bottom: 0px;
+        margin-bottom: 0;
       }
 
       &.meta-grid-2 {
-        margin-bottom: 0px;
+        margin-bottom: 0;
       }
     }
 
     .globe-cell {
       position: absolute;
-      top: 0px;
+      top: 0;
       left: 50%;
       transform: translate(-50%, -100px);
-    > :global(.globe) {
+
+      > :global(.globe) {
         position: absolute;
         left: 50%;
         transform: translate(-50%);
       }
     }
-
   }
-
 </style>

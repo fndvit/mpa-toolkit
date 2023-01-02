@@ -1,14 +1,16 @@
-import { Construct } from 'constructs';
+import type { aws_s3 as s3, aws_lambda_nodejs as lambdanode } from 'aws-cdk-lib';
 import {
+  aws_s3_deployment as s3_deployment,
   aws_ec2 as ec2,
   aws_lambda as lambda,
-  aws_lambda_nodejs as lambdanode,
   aws_cloudfront as cloudfront,
   aws_secretsmanager as secretsmanager,
   Duration
 } from 'aws-cdk-lib';
-import type { ConfigToEnvClean } from '@mpa/env';
-import { getPath } from '../util/dirs';
+import { Construct } from 'constructs';
+import { getEnv } from '@mpa/env';
+import type { MpathStackProps } from 'src/stack';
+import projectRoot from '@mpa/utils/projectRoot';
 
 export const SERVER_ENV_CONFIG = {
   PUBLIC_UPLOAD_BASE_URL: true,
@@ -16,71 +18,97 @@ export const SERVER_ENV_CONFIG = {
   GOOGLE_OAUTH_CLIENT_SECRET: true,
   DISABLE_CACHE: false,
   LOG_TRANSPORT: true,
-  LOG_LEVEL: true
+  LOG_LEVEL: true,
+  PUBLIC_DB_RESTORE: false
 } as const;
 
 export interface ServerProps {
   vpc: ec2.IVpc;
   appConfigLayer?: lambda.ILayerVersion;
-  prismaEngineLayer: lambda.ILayerVersion;
-  env: ConfigToEnvClean<typeof SERVER_ENV_CONFIG>;
+  env: Record<string, string>;
+  assetBucket: s3.IBucket;
+  stage: MpathStackProps['stage'];
 }
+
+type LambdaReferences = {
+  fn: lambdanode.NodejsFunction;
+  alias: lambda.Alias;
+};
 
 export class Server extends Construct {
   lambdaSg: ec2.SecurityGroup;
-  lambda: lambdanode.NodejsFunction;
-  lambdaAlias: lambda.Alias;
+  lambdas: {
+    api: LambdaReferences;
+    cms: LambdaReferences;
+    rest: LambdaReferences;
+  };
   edgeFn: cloudfront.experimental.EdgeFunction;
 
   constructor(scope: Construct, id: string, props: ServerProps) {
     super(scope, id);
 
-    const { vpc, env, prismaEngineLayer } = props;
+    const { vpc, env, stage, assetBucket } = props;
+
+    const ENABLE_SOURCE_MAPS = stage === 'staging';
 
     this.lambdaSg = new ec2.SecurityGroup(this, 'LambdaSG', { vpc });
 
     const secret = new secretsmanager.Secret(this, 'JWTSecret');
 
-    this.lambda = new lambdanode.NodejsFunction(this, 'Lambda', {
-      tracing: lambda.Tracing.ACTIVE,
-      entry: getPath('./packages/web/.svelte-kit/server/index.js'),
-      memorySize: 256,
-      timeout: Duration.seconds(15),
-      vpc,
-      vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
-      },
-      layers: [prismaEngineLayer],
-      runtime: lambda.Runtime.NODEJS_16_X,
-      securityGroups: [this.lambdaSg],
-      environment: {
-        ...env,
-        JWT_SECRET_KEY: secret.secretValue.toString() // TODO: move to appConfig
-      },
-      bundling: {
-        externalModules: ['@sentry/serverless'],
-        inject: ['./packages/stack/dist/lambda/shims.js'],
-        commandHooks: {
-          beforeInstall: () => [],
-          beforeBundling: () => [],
-          afterBundling: (i, o) => [`cp ${i}/packages/db/prisma/schema.prisma ${o}`]
+    const createNewServerFunction = (name: string) => {
+      const fn = new lambda.Function(this, `Lambda-${name}`, {
+        code: lambda.Code.fromAsset(projectRoot(`packages/web/build/lambda/${name}`), {
+          exclude: ENABLE_SOURCE_MAPS ? [] : ['*.map']
+        }),
+        handler: 'index.handler',
+        tracing: lambda.Tracing.ACTIVE,
+        memorySize: 1024,
+        timeout: Duration.seconds(15),
+        vpc,
+        vpcSubnets: {
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS
+        },
+
+        runtime: lambda.Runtime.NODEJS_16_X,
+        securityGroups: [this.lambdaSg],
+        environment: {
+          ...env,
+          ...getEnv(SERVER_ENV_CONFIG),
+          JWT_SECRET_KEY: secret.secretValue.toString(), // TODO: move to appConfig,
+          ...(ENABLE_SOURCE_MAPS ? { NODE_OPTIONS: '--enable-source-maps' } : {})
         }
-      }
-    });
+      });
 
-    this.lambdaAlias = this.lambda.addAlias('live');
+      const alias = new lambda.Alias(this, `LambdaAlias-${name}`, {
+        aliasName: `${stage}-${name}`,
+        version: fn.currentVersion,
+        provisionedConcurrentExecutions: 1
+      });
 
-    const as = this.lambdaAlias.addAutoScaling({
-      minCapacity: 2,
-      maxCapacity: 50
-    });
+      return { fn, alias };
+    };
 
-    as.scaleOnUtilization({
-      utilizationTarget: 0.5
+    this.lambdas = {
+      api: createNewServerFunction('api'),
+      cms: createNewServerFunction('cms'),
+      rest: createNewServerFunction('rest')
+    };
+
+    new s3_deployment.BucketDeployment(this, 'SourceMaps', {
+      destinationBucket: assetBucket,
+      sources: [
+        s3_deployment.Source.asset(projectRoot('packages/web/build/lambda'), {
+          exclude: ['**/*.js', '**/node_modules', '**/*.prisma']
+        })
+      ],
+      destinationKeyPrefix: 'sourcemaps/',
+      cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
+      retainOnDelete: true,
+      prune: false
     });
 
     this.edgeFn = new cloudfront.experimental.EdgeFunction(this, 'EdgeRouter', {
-      code: new lambda.AssetCode(getPath('./packages/web/.svelte-kit/router')),
+      code: new lambda.AssetCode(projectRoot('packages/web/build/router')),
       handler: 'index.handler',
       runtime: lambda.Runtime.NODEJS_14_X,
       memorySize: 128,

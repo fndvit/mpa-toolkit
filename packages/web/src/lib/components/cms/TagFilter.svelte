@@ -28,15 +28,17 @@
   {/each}
 </div>
 
-<style lang="stylus">
+<style lang="postcss">
   .tag-filter {
     --tag-spacing: 0.5rem;
+
     display: flex;
     flex-wrap: wrap;
     column-gap: var(--tag-spacing);
     row-gap: var(--tag-spacing);
+
     > :global(*) {
-    flex: 0 0 auto;
+      flex: 0 0 auto;
     }
   }
 </style>

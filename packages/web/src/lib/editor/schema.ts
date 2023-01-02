@@ -47,7 +47,7 @@ export const schema = new ProsemirrorSchema({
     },
 
     heading: {
-      attrs: { level: { default: 1 }, showmore: { default: '' } },
+      attrs: { level: { default: 1 } },
       content: 'text*',
       group: 'block',
       defining: true,
@@ -116,12 +116,17 @@ export const schema = new ProsemirrorSchema({
     },
 
     image: {
-      ...svelteSchemaNode('img', { src: null, alt: '', style: 'regular' }),
+      ...svelteSchemaNode('img', { src: null, alt: '', credits: '', style: 'regular' }),
       group: 'block'
     },
 
     cards: {
       ...svelteSchemaNode('cards', { style: 'default', cards: [{ heading: '', body: '' }] }),
+      group: 'block'
+    },
+
+    linkcards: {
+      ...svelteSchemaNode('linkcards', { title: '', cards: [{ heading: '', url: '' }] }),
       group: 'block'
     },
 
@@ -134,6 +139,11 @@ export const schema = new ProsemirrorSchema({
       }),
       draggable: false,
       selectable: false,
+      group: 'block'
+    },
+
+    collapse: {
+      ...svelteSchemaNode('collapse', { showmore: '' }),
       group: 'block'
     }
   },

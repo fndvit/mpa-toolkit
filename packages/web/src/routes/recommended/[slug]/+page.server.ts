@@ -2,7 +2,7 @@ import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';
 
-export const load: PageServerLoad = async ({ locals, params }) => {
+export const load: PageServerLoad = async ({ locals: { cacheKeys }, params }) => {
   const slug = params.slug.toLowerCase();
 
   if (slug !== params.slug) throw redirect(301, `/recommended/${slug}`);
@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ locals, params }) => {
   const ids = tags.map(t => t.id);
 
   if (ids.length === 0) {
-    locals.cacheKeys.add('tags');
+    cacheKeys.add('tags');
     throw error(404, 'Tag not found');
   }
 
@@ -29,8 +29,8 @@ export const load: PageServerLoad = async ({ locals, params }) => {
     })
     .map(p => p.page);
 
-  pages.map(p => p.tags.map(t => locals.cacheKeys.add(`tag-${t.tag.id}`)));
-  locals.cacheKeys.add('pages');
+  pages.map(p => p.tags.map(t => cacheKeys.add(`tag-${t.tag.id}`)));
+  cacheKeys.add('pages');
 
   return { pages, highlightTagIds: ids };
 };

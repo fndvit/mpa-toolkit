@@ -27,20 +27,15 @@ export type GoogleAuthReturnData = {
   user: import('@mpa/db').User.Session;
 };
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, cookies }) => {
   const { token } = await request.json();
   const payload = await getPayloadFromJWT(token);
   const userSession = await db.session.start(payload);
 
-  return json(
-    {
-      message: 'Successful Google Sign-In.',
-      user: userSession.user
-    } as GoogleAuthReturnData,
-    {
-      headers: {
-        'set-cookie': `session=${userSession.id}; Path=/; SameSite=Lax; HttpOnly;`
-      }
-    }
-  );
+  cookies.set('session', userSession.id, { path: '/', sameSite: 'lax', httpOnly: true });
+
+  return json({
+    message: 'Successful Google Sign-In.',
+    user: userSession.user
+  } as GoogleAuthReturnData);
 };

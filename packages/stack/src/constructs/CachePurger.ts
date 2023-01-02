@@ -1,6 +1,6 @@
 import { Construct } from 'constructs';
 import { aws_ec2 as ec2, aws_lambda as lambda, aws_lambda_nodejs as lambda_nodejs, Duration } from 'aws-cdk-lib';
-import type { ConfigToEnvClean } from '@mpa/env';
+import { getEnv } from '@mpa/env';
 import { getLambdaPath } from '../util/dirs';
 
 export const CACHE_PURGER_ENV_CONFIG = {
@@ -12,7 +12,7 @@ export const CACHE_PURGER_ENV_CONFIG = {
 
 export interface CachePurgerProps {
   vpc: ec2.IVpc;
-  env: ConfigToEnvClean<typeof CACHE_PURGER_ENV_CONFIG>;
+  env?: Record<string, string>;
 }
 
 export class CachePurger extends Construct {
@@ -30,10 +30,13 @@ export class CachePurger extends Construct {
       timeout: Duration.seconds(5),
       runtime: lambda.Runtime.NODEJS_16_X,
       handler: 'main',
-      environment: env,
+      environment: {
+        ...env,
+        ...getEnv(CACHE_PURGER_ENV_CONFIG)
+      },
       vpc,
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_WITH_NAT
+        subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS
       },
       events: []
     });

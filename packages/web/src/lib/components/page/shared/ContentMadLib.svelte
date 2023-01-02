@@ -1,17 +1,21 @@
 <script lang="ts">
-  import MadLib, { buildTagSlug } from '$lib/components/shared/MadLib.svelte';
+  import MadLib from '$lib/components/shared/MadLib.svelte';
+  import { userHistory } from '$lib/history';
 
-  let value: string[] = [];
+  let slug: string;
+  let tags: string[];
 
-  $: action = `/recommended/${buildTagSlug(value)}/`;
+  const setMadlibAnswers = () => userHistory.setMadlibAnswers(tags);
+
+  $: action = slug ? `/recommended/${slug}/` : null;
 </script>
 
 <div class="content-madlib">
   <h5>Is this not for you?</h5>
 
-  <MadLib bind:value />
+  <MadLib bind:tags bind:slug />
 
-  <form {action}>
+  <form {action} on:submit={setMadlibAnswers}>
     <button tabindex="0">
       Let's find what you need
       <svg class="arrow" width="13" height="8" viewBox="0 0 13 8" fill="none">
@@ -21,20 +25,19 @@
   </form>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .content-madlib {
     position: relative;
-    box-shadow: inset 0px 2px 12px rgba(0, 0, 0, 0.05);
-    border-radius: 40px 0px 0px 40px;
-    color: $colors.neutral-dark;
-    background: $colors.neutral-bg;
+    box-shadow: inset 0 2px 12px rgb(0 0 0 / 5%);
+    border-radius: 40px 0 0 40px;
+    color: $c-neutral-dark;
+    background: $c-neutral-bg;
     padding: 0.75rem 1.5rem 2rem;
 
     h5 {
-      typography: h5;
+      font: $f-h5;
       color: black;
-      margin: 5px 0px 0px 0px;
+      margin: 5px 0 0;
     }
 
     :global(.madlib) {
@@ -45,26 +48,26 @@
     :global(.madlib-selector) {
       color: #333;
     }
-
   }
 
   .content-madlib button {
-    typography: h5;
+    font: $f-h5;
     display: inline-block;
     cursor: pointer;
     vertical-align: middle;
     border: none;
     position: absolute;
-    right:0;
+    right: 0;
     bottom: 0;
     align-content: center;
-    background: $colors.highlight-1;
-    color: $colors.neutral-black;
+    background: $c-highlight-1;
+    color: $c-neutral-black;
     padding: 0.5rem 0.2rem 0.5rem 1.25rem;
-    border-radius: 20px 0px 0px 0px;
-    box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 20px 0 0;
+    box-shadow: 0 -2px 8px 0 rgb(0 0 0 / 10%);
+
     &:hover {
-      box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 -2px 8px 0 rgb(0 0 0 / 15%);
       filter: brightness(105%);
     }
 
@@ -78,20 +81,17 @@
     }
 
     svg path {
-      stroke: $colors.neutral-black;
+      stroke: $c-neutral-black;
     }
-
   }
 
-  +breakpoint(page, small) {
-
+  @mixin breakpoint content, small {
     .content-madlib {
-      border-radius: 0px 50px 0px 0px;
+      border-radius: 0 50px 0 0;
 
       :global(.madlib) {
         line-height: 2rem;
       }
     }
   }
-
 </style>

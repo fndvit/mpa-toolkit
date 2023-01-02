@@ -59,46 +59,60 @@
   on:keydown
 />
 
-<style lang="stylus">
-  :global(body) {
-    --ui-color-placeholder: $colors.editor-placeholder;
-  }
+<style lang="postcss">
   :global(.ProseMirror) {
+    --editable-placeholder-color: $c-editor-placeholder;
+
     position: relative;
-  }
-  :global(.ProseMirror) {
     word-wrap: break-word;
     white-space: pre-wrap;
-    -webkit-font-variant-ligatures: none;
     font-variant-ligatures: none;
-  }
-  :global(.ProseMirror pre) {
-    white-space: pre-wrap;
-  }
-  :global(.ProseMirror li) {
-    position: relative;
-  }
-  :global(.ProseMirror h1) {
-    text-align: left;
+
+    :global(a) {
+      cursor: pointer;
+    }
+
+    :global(pre) {
+      white-space: pre-wrap;
+    }
+
+    :global(li) {
+      position: relative;
+    }
+
+    :global(h1) {
+      text-align: left;
+    }
+
+    :global(.empty-node::before) {
+      position: absolute;
+      color: #aaa;
+      cursor: text;
+    }
+
+    :global(.empty-node:hover::before) {
+      color: #777;
+    }
   }
 
   :global(.ProseMirror-hideselection *::selection) {
     background: transparent;
   }
-  :global(.ProseMirror-hideselection *::-moz-selection) {
-    background: transparent;
-  }
+
   :global(.ProseMirror-hideselection) {
     caret-color: transparent;
   }
+
   :global(.ProseMirror-selectednode) {
     outline: 2px solid #8cf;
   }
+
   /* Make sure li selections wrap around markers */
   :global(li.ProseMirror-selectednode) {
     outline: none;
   }
-  :global(li.ProseMirror-selectednode:after) {
+
+  :global(li.ProseMirror-selectednode::after) {
     content: '';
     position: absolute;
     left: -32px;
@@ -108,29 +122,21 @@
     border: 2px solid #8cf;
     pointer-events: none;
   }
-  :global(.ProseMirror .empty-node::before) {
-    position: absolute;
-    color: #aaa;
-    cursor: text;
-  }
-  :global(.ProseMirror .empty-node:hover::before) {
-    color: #777;
-  }
+
   :global(.ProseMirror.editor_empty::before) {
     position: absolute;
     content: attr(data-placeholder);
     pointer-events: none;
-    color: var(--ui-color-placeholder);
+    color: var(--editable-placeholder-color);
   }
 
   .ui-editor {
     box-sizing: border-box;
-    background-color: transparent;
     padding: 1em;
     background: white;
     display: inline-block;
     font: inherit;
-    text-rendering: optimizeLegibility;
+    text-rendering: optimizelegibility;
     white-space: pre-line;
     overflow-wrap: break-spaces;
     vertical-align: top;

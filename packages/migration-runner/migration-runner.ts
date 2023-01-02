@@ -1,41 +1,127 @@
 import type { Handler } from 'aws-lambda';
-import { MpaDatabase, DevSeeder, ProdSeeder, reset } from '@mpa/db';
+import { DevSeeder, ProdSeeder, initDatabase } from '@mpa/db';
 import { prismaCmd } from '@mpa/utils/prisma/cmd';
 import { logger } from '@mpa/log';
-import { validateEnv } from '@mpa/env';
+import { getEnv } from '@mpa/env';
+import { execSync } from 'child_process';
+import AWS from 'aws-sdk';
 
-export const env = validateEnv(process.env, { DATABASE_URL: true });
+const s3 = new AWS.S3();
+
+export const env = getEnv({ DATABASE_URL: true, STACK_NAME: true, AWS_S3_ADMIN_BUCKET: true });
 
 const log = logger('migration-runner');
-// example cmd to invoke using aws cli:
-// aws lambda invoke --function-name AppStack-MigrationRunner07C61515-63HtCcSdD3K6 response.json
+
+const VALID_COMMANDS = ['seed', 'seed:dev', 'reset', 'deploy', 'sql_dump', 'sql_load'] as const;
+
+interface SqlLoadPayload {
+  command: 'sql_load';
+  dumpKey: string;
+}
+interface SqlDumpPayload {
+  command: 'sql_dump';
+  dumpType: 'manual' | 'scheduled';
+}
+
+type CmdWithArguments = (SqlLoadPayload | SqlDumpPayload)['command'];
+
+interface CommandPayload {
+  command: Exclude<typeof VALID_COMMANDS[number], CmdWithArguments>;
+}
+
+export type Payload = CommandPayload | SqlLoadPayload | SqlDumpPayload;
+
+const getDatabaseParams = () => {
+  const [, user, pass, host, port, database] =
+    env.DATABASE_URL.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/) || [];
+  if (!user || !pass || !host || !port || !database) throw new Error('Invalid DATABASE_URL');
+  return { user, pass, host, port, database };
+};
+
+const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
+  if (!dumpType) throw new Error('dumpType is required');
+
+  const { user, pass, host, port, database } = getDatabaseParams();
+  log.info(`Dumping database: ${database}`);
+  const output = execSync(`./pg/pg_dump -h ${host} -p ${port} -U ${user} -d ${database}`, {
+    env: {
+      PGPASSWORD: pass,
+      LD_LIBRARY_PATH: './pg'
+    },
+    encoding: 'utf-8'
+  });
+
+  const timestamp = new Date().toISOString().replace(/[:.-]/g, '');
+  const timestampedKey = `dumps/${dumpType}/${env.STACK_NAME}-${timestamp}.sql`;
+  const location = `s3://${env.AWS_S3_ADMIN_BUCKET}/${timestampedKey}`;
+
+  log.info(`Uploading dump to ${location}`);
+  const response = await s3
+    .putObject({
+      Bucket: env.AWS_S3_ADMIN_BUCKET,
+      Key: timestampedKey,
+      Body: output,
+      ContentType: 'text/plain'
+    })
+    .promise();
+
+  const bytes = Buffer.byteLength(output).toLocaleString();
+
+  if (!response.$response.error) log.info(`Uploaded ${bytes} bytes to ${location}`);
+  else log.error(response.$response.error);
+
+  return {
+    location,
+    bytes
+  };
+};
+
+const sqlLoad = async ({ dumpKey }: SqlLoadPayload) => {
+  const { user, pass, host, port, database } = getDatabaseParams();
+
+  log.info(`Loading dump from s3://${env.AWS_S3_ADMIN_BUCKET}/${dumpKey}`);
+  const { Body } = await s3.getObject({ Bucket: env.AWS_S3_ADMIN_BUCKET, Key: dumpKey }).promise();
+  if (!Body) throw new Error(`Could not find dump with key: ${dumpKey}`);
+
+  log.info('Cleaning database');
+  const cleanOutput = execSync(`./pg/psql -h ${host} -p ${port} -U ${user} -d ${database}`, {
+    input: 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;',
+    env: {
+      PGPASSWORD: pass,
+      LD_LIBRARY_PATH: './pg'
+    },
+    encoding: 'utf-8'
+  });
+  log.info(cleanOutput);
+
+  log.info(`Loading dump into database: ${database}`);
+  const output = execSync(`./pg/psql -h ${host} -p ${port} -U ${user} -d ${database}`, {
+    input: Body.toString(),
+    env: {
+      PGPASSWORD: pass,
+      LD_LIBRARY_PATH: './pg'
+    },
+    encoding: 'utf-8'
+  });
+
+  log.info(output);
+
+  return {
+    output
+  };
+};
 
 export const handler: Handler = async event => {
-  // Available commands are:
-  //   deploy: create new database if absent and apply all migrations to the existing database.
-  //   reset: delete existing database, create new one, and apply all migrations. NOT for production environment.
-  // If you want to add commands, please refer to: https://www.prisma.io/docs/concepts/components/prisma-migrate
-  const command: string = event.command ?? 'deploy';
+  const payload = event as Payload;
+  if (!payload.command) throw new Error('No command specified');
+  if (!VALID_COMMANDS.includes(payload.command)) throw new Error(`Invalid command: ${payload.command}`);
 
-  const db = new MpaDatabase();
+  log.info(`Running migration command: ${payload.command}`);
 
-  log.info(`Running migration command: ${command}`);
-
-  if (command === 'seed') {
-    const seeder = new ProdSeeder(db);
-    await seeder.migrate();
-  } else if (command === 'seed:dev') {
-    const seeder = new DevSeeder(db);
-    await seeder.seed();
-  } else if (command === 'nuke') {
-    const seeder = new ProdSeeder(db);
-    await reset(db.prisma);
-    await seeder.migrate();
-  } else if (command === 'reset') {
-    await prismaCmd('migrate reset --force --skip-generate');
-  } else if (command === 'deploy') {
-    await prismaCmd('migrate deploy');
-  }
-
-  log.info(`Finished`);
+  if (payload.command === 'seed') await new ProdSeeder(initDatabase()).migrate();
+  else if (payload.command === 'seed:dev') await new DevSeeder(initDatabase()).seed();
+  else if (payload.command === 'reset') return prismaCmd('migrate reset --force --skip-generate');
+  else if (payload.command === 'deploy') return prismaCmd('migrate deploy');
+  else if (payload.command === 'sql_dump') return sqlDump(payload);
+  else if (payload.command === 'sql_load') return sqlLoad(payload);
 };

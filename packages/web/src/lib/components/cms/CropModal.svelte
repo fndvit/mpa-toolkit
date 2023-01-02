@@ -20,7 +20,7 @@
   async function onClickCrop() {
     const imtool = await fromImage(file);
     const { x, y, width, height } = cropData;
-    const cropped = imtool.crop(x, y, width, height).thumbnail(66);
+    const cropped = imtool.crop(x, y, width, height);
     croppedImg = await cropped.toBlobURL();
     croppedFile = await cropped.toFile('cropped.jpg');
   }
@@ -53,7 +53,7 @@
   </div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .modal {
     position: fixed;
     top: 0;
@@ -64,7 +64,7 @@
     justify-content: center;
     align-items: center;
     pointer-events: none;
-    z-index: $z-index.modal;
+    z-index: $z-modal;
   }
 
   .contents {
@@ -91,10 +91,12 @@
     flex-direction: column;
     row-gap: 20px;
   }
+
   .buttons {
     display: flex;
     width: 100%;
     column-gap: 5px;
+
     > * {
       flex: 1;
       padding: 10px;

@@ -44,11 +44,9 @@
   <div class="editable-content">{value || ''} {unitSuffix || ''}</div>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   input {
     caret-color: white;
-    color: inherit;
-    background-color: inherit;
     border: none;
     font-size: inherit;
     color: inherit;
@@ -57,7 +55,7 @@
     line-height: inherit;
 
     &::placeholder {
-      color: var(--ui-color-placeholder, #ffffff44);
+      color: var(--editable-placeholder-color, #fff4);
     }
   }
 
@@ -78,5 +76,4 @@
   .unit {
     margin-left: 6px;
   }
-
 </style>

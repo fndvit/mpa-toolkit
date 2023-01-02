@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export function createLookup<T, U extends string, Y = never>(arr: T[], keyFn: (d: T) => U | U[], valFn?: (d: T) => Y) {
+export function createLookup<T, U extends string | number, Y = never>(
+  arr: T[],
+  keyFn: (d: T) => U | U[],
+  valFn?: (d: T) => Y
+) {
   type R = [Y] extends [never] ? T : Y;
   const lookup: { [key in U]?: R } = {};
   const _valFn = (valFn ?? (d => d)) as (d: T) => R;
 
   arr.forEach(d => {
     const key = keyFn(d);
-    if (typeof key === 'string') {
+    if (typeof key === 'string' || typeof key === 'number') {
       lookup[key] = _valFn(d);
     } else {
       key.forEach(k => (lookup[k] = _valFn(d)));
@@ -17,15 +21,20 @@ export function createLookup<T, U extends string, Y = never>(arr: T[], keyFn: (d
   return lookup;
 }
 
-export function groupBy<T, K extends string, U = null>(arr: T[], keyFn: (i: T) => K, mapFn?: (i: T) => U) {
-  return arr.reduce<{ [KV in K]?: (U extends null ? T : U)[] }>((acc, item) => {
+type GroupBy = <T, KeyFn extends (i: T) => string | number, MapFn extends undefined | ((i: T) => any) = undefined>(
+  arr: T[],
+  keyFn: KeyFn,
+  mapFn?: MapFn
+) => { [KV in ReturnType<KeyFn>]?: (MapFn extends undefined ? T : ReturnType<MapFn>)[] };
+
+export const groupBy: GroupBy = (arr, keyFn, mapFn) => {
+  return arr.reduce((acc, item) => {
     const key = keyFn(item);
     acc[key] = acc[key] || [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    acc[key]?.push(!mapFn ? (item as any) : mapFn(item));
+    acc[key].push(mapFn ? mapFn(item) : item);
     return acc;
-  }, {});
-}
+  }, {} as any);
+};
 
 export function range(start: number, end: number) {
   const length = Math.abs(end - start);
@@ -40,6 +49,39 @@ export function slugify(text: string, maxLen = 40) {
     .replace(/[^a-z0-9]+/g, '-')
     .slice(0, maxLen);
 }
+
+export function getXRandItems<T>(items: T[], x: number): T[] {
+  const _items = [...items];
+  const result: T[] = [];
+  for (let i = 0; i < Math.min(x, items.length); i++) {
+    const index = Math.floor(Math.random() * _items.length);
+    result.push(_items[index]);
+    _items.splice(index, 1);
+  }
+  return result;
+}
+
+export function omitUndefined<T extends Record<string | number, unknown>>(obj: T) {
+  const filtered = Object.keys(obj).reduce((acc, key) => {
+    if (obj[key] !== undefined) acc[key] = obj[key]!;
+    return acc;
+  }, {} as Record<string | number, unknown>);
+  return filtered as { [P in keyof T]?: T[P] };
+}
+
+export const isTruthy = <T>(x: T): x is NonNullable<T> => !!x;
+export const isFunction = (x: unknown): x is (...args: unknown[]) => unknown => typeof x === 'function';
+
+export const debounce = <T extends any[]>(fn: (...args: T) => void, delay: number) => {
+  let timeout: number | NodeJS.Timeout;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const ret = (..._: T) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(fn, delay);
+  };
+  ret.cancel = () => clearTimeout(timeout);
+  return ret;
+};
 
 // ************************
 //     TypeScript util

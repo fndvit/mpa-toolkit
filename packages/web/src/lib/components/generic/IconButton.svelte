@@ -9,13 +9,16 @@
   export let href: string = null;
   export let rel: string = null;
   export let target: string = null;
+  export let type: HTMLButtonElement['type'] = 'button';
   export let square = false;
+  export let theme: 'toolbar' = undefined;
 </script>
 
-<div class="icon-button-container tooltip-hover-el" data-id={icon}>
+<div class="icon-button-container tooltip-hover-el" data-id={icon} data-theme={theme}>
   {#if title}
     <Tooltip text={title} />
   {/if}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <svelte:element
     this={href ? 'a' : 'button'}
     class:material-icons={icon}
@@ -25,21 +28,29 @@
     {rel}
     {target}
     on:click
-    on:mousedown={e => e.preventDefault()}
+    on:mousedown|preventDefault
     {disabled}
     class:active
     data-icon={icon}
     data-text={text}
     data-title={title}
+    type={href ? undefined : type}
   />
 </div>
 
-<style lang="stylus">
-
-
+<style lang="postcss">
   .icon-button-container {
     position: relative;
+
+    &[data-theme='toolbar'] {
+      --ib-icon-bg: transparent;
+      --ib-hover-border: 1px solid #ddd;
+      --ib-hover-bg: transparent;
+      --ib-active-bg: white;
+      --ib-active-border: 1px solid #ccc;
+    }
   }
+
   .icon-button {
     display: flex;
     align-items: center;
@@ -59,10 +70,6 @@
       width: var(--ib-size, 2rem);
     }
 
-    &:not(:disabled):hover {
-      text-decoration: none;
-    }
-
     &[data-icon][data-text] {
       padding: 0 10px 0 0;
     }
@@ -80,7 +87,7 @@
       font-size: var(--ib-icon-size, 1rem);
       width: var(--ib-size, 2rem);
       height: var(--ib-size, 2rem);
-      background-color: var(--ib-icon-bg, #33333355);
+      background-color: var(--ib-icon-bg, #3335);
       border-radius: 3px;
     }
 
@@ -97,26 +104,25 @@
 
     &:not(:disabled) {
       cursor: pointer;
+
       &:hover {
+        text-decoration: none;
+
         &:not(.active) {
-          &[data-icon]::before {
-            filter: var(--ib-hover-filter);
-          }
           color: var(--ib-hover-color, var(--ib-color));
           background: var(--ib-hover-bg, var(--ib-bg));
           border: var(--ib-hover-border, 1px solid transparent);
+        }
 
-          &[data-icon]::before {
-            background-color: var(--ib-hover-icon-bg, var(--ib-icon-bg));
-          }
+        &[data-icon]::before {
+          filter: var(--ib-hover-filter);
+          background-color: var(--ib-hover-icon-bg, var(--ib-icon-bg));
         }
       }
     }
 
     &:disabled {
       opacity: 0.5;
-
     }
   }
-
 </style>

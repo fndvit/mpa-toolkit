@@ -46,30 +46,29 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .casestudy-head {
-    background: $colors.secondary-bg;
+    background: $c-secondary-bg;
   }
 
   .meta-container,
   .milestones-container,
   .keylearnings-lifecycle {
-    grid-config(page, case-study);
+    @mixin grid-config content, case-study;
   }
 
   .meta-container {
-    background-color: $colors.deep-blue;
-    padding: 35px 0px;
-    --ui-color-placeholder: #ffffff55;
+    padding: 35px 0;
+
+    --editable-placeholder-color: #fff5;
+
     position: relative;
-    background-color: $colors.deep-blue;
-    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2);
+    background-color: $c-deep-blue;
+    box-shadow: 0 1px 8px rgb(0 0 0 / 20%);
 
     > :global(.casestudy-meta) {
       grid-area: meta;
     }
-
   }
 
   .lifecycle-container {
@@ -82,14 +81,14 @@
 
     > :global(.lifecycle) {
       position: absolute;
-      z-index: lifecycle;
+      z-index: $z-lifecycle;
       margin-right: -30px;
       margin-left: 20px;
       margin-top: 40px;
       max-width: 300px;
       box-sizing: border-box;
 
-      +breakpoint(page, medium) {
+      @mixin breakpoint content, medium {
         position: static;
         margin: 0;
         max-width: none;
@@ -97,7 +96,7 @@
     }
   }
 
-  :global(.page-editor) .keylearnings-lifecycle {
+  :global(.page-editor--editing) .keylearnings-lifecycle {
     margin-top: 20px;
   }
 
@@ -115,15 +114,17 @@
 
   .milestones-container {
     grid-column: 1 / -1;
+
     > :global(.milestones) {
       grid-area: meta;
     }
-    background: $colors.dark-blue;
-    box-shadow: inset 0px 0px 16px rgba(0, 0, 0, 0.15);
 
-    +breakpoint(page, medium) {
-        margin-bottom: $lifecycle-y-overlap * -1;
-        padding-bottom: $lifecycle-y-overlap;
+    background: $c-dark-blue;
+    box-shadow: inset 0 0 16px rgb(0 0 0 / 15%);
+
+    @mixin breakpoint content, medium {
+      margin-bottom: calc($lifecycle-overlap * -1);
+      padding-bottom: $lifecycle-overlap;
     }
   }
 
@@ -132,15 +133,15 @@
     grid-row: 2;
     margin-bottom: -20px;
     margin-top: 10px;
-    --ib-color: #ffffffee;
+
+    --ib-color: #fffe;
     --ib-hover-border: 1px solid transparent;
-    --ib-hover-bg: #00000011;
+    --ib-hover-bg: #0001;
   }
 
-  +breakpoint(page, medium) {
-
+  @mixin breakpoint content, medium {
     .keylearnings-card {
-      margin-left: 0px;
+      margin-left: 0;
     }
 
     .lifecycle-container {
@@ -148,13 +149,13 @@
     }
 
     .keylearnings-container {
-      padding-top: 0px;
+      padding-top: 0;
     }
   }
 
-  +breakpoint(page, small) {
+  @mixin breakpoint content, small {
     .meta-container {
-      margin-left:0px;
+      margin-left: 0;
       padding-top: 150px;
       width: fit-content;
     }

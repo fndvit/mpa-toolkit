@@ -47,37 +47,35 @@
   {/if}
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .chapter-head:not(.has-keytakeaways) {
-    grid-config(page, chapter-no-keytakeaways);
+    @mixin grid-config content, chapter-no-keytakeaways;
   }
 
   .chapter-head.has-keytakeaways {
-    grid-config(page, chapter);
+    @mixin grid-config content, chapter;
   }
 
   .chapter-head {
-    --ui-color-placeholder: #ffffff55;
+    --editable-placeholder-color: #fff5;
 
     padding: 2rem 0 0;
-    background: $colors.primary-blue;
-    color: $colors.neutral-bg;
+    background: $c-primary-blue;
+    color: $c-neutral-bg;
 
-    +breakpoint(page, medium) {
-      &:before {
+    @mixin breakpoint content, medium {
+      &::before {
         content: '';
         grid-column: 1 / -1;
         grid-row: -2 / -1;
-        background: linear-gradient(180deg, transparent $lifecycle-y-overlap, white $lifecycle-y-overlap);
-
+        background: linear-gradient(180deg, transparent $lifecycle-overlap, white $lifecycle-overlap);
       }
     }
   }
 
   .byline {
     grid-area: byline;
-    typography: ui;
+    font: $f-ui;
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
@@ -85,16 +83,21 @@
   }
 
   .summary {
-    typography: p-large-responsive;
+    @mixin font-responsive p-large;
+
+    --editable-bg-active: #fff1;
+
+    font: $f-p-large;
     grid-area: summary;
     max-width: 800px;
     margin-bottom: 40px;
   }
+
   .keytakeaways-container {
     grid-area: keytakeaways;
     margin: 0 0 2rem -30px;
 
-    +breakpoint(page, medium) {
+    @mixin breakpoint content, medium {
       margin-left: 0;
     }
   }
@@ -102,25 +105,25 @@
   .lifecycle-container {
     grid-area: lifecycle;
     position: relative;
+
     > :global(.lifecycle) {
       position: absolute;
-      z-index: lifecycle;
+      z-index: $z-lifecycle;
       margin-right: -30px;
       margin-left: 20px;
       max-width: 300px;
       box-sizing: border-box;
 
-      +breakpoint(page, medium) {
+      @mixin breakpoint content, medium {
         position: static;
         margin: 0;
         max-width: none;
       }
     }
-
   }
-  .readtime{
+
+  .readtime {
     display: inline;
     font-weight: 300;
   }
-
 </style>

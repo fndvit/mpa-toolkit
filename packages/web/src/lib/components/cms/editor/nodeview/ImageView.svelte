@@ -3,37 +3,51 @@
   import type { SvelteNodeViewControls } from 'prosemirror-svelte-nodeview';
   import imagePlaceholder from '$lib/assets/image-placeholder.svg';
   import { IconButton } from '$lib/components/generic';
-  import { staticUrl } from '$lib/helpers/content';
-  import { fallbackImage } from '$lib/helpers/utils';
+  import Picture from '$lib/components/generic/Picture.svelte';
+  import { IMAGE_CONFIG } from '$lib/components/page/body/Image.svelte';
 
   export var attrs: ImageBlock['attrs'];
   export var controls: SvelteNodeViewControls;
   export var selected = false;
+
+  let editing = false;
 
   const toggleStyle = () => {
     attrs.style = attrs.style === 'regular' ? 'full' : 'regular';
   };
 </script>
 
-<div class="imageview imageview-{attrs.style}" class:selected contenteditable="false">
-  <div class="image-controls">
+<div
+  class="imageview imageview-{attrs.style}"
+  class:selected
+  class:imageview--editing={editing}
+  contenteditable="false"
+>
+  <div class="image-controls" on:focusin={() => (editing = true)} on:focusout={() => (editing = false)}>
     <input bind:value={attrs.alt} placeholder="alt text..." />
+    <input bind:value={attrs.credits} placeholder="pciture credits..." />
     <IconButton icon="aspect_ratio" title="Wide" active={attrs.style === 'full'} on:click={toggleStyle} />
     <IconButton on:click={controls.delete} icon="delete" />
   </div>
-  <img use:fallbackImage={imagePlaceholder} src={staticUrl(attrs.src)} alt={attrs.alt} title={attrs.title} />
+  <Picture
+    src={attrs.src}
+    fallback={imagePlaceholder}
+    alt={attrs.alt}
+    title={attrs.title}
+    config={IMAGE_CONFIG[attrs.style || 'regular']}
+  />
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   :global(.svelte-node-view.ProseMirror-selectednode) .imageview {
-    outline: 1px solid #333333aa;
+    outline: 1px solid #333a;
   }
 
   .imageview {
     font-size: 0;
     position: relative;
-    &.selected:before {
+
+    &.selected::before {
       content: '';
       position: absolute;
       top: 0;
@@ -44,6 +58,10 @@
       margin: -1px;
       pointer-events: none;
     }
+
+    :global(img) {
+      width: 100%;
+    }
   }
 
   .imageview-full {
@@ -52,10 +70,10 @@
   }
 
   .image-controls {
-    --ib-icon-bg: #ffffff77;
-    --ib-hover-icon-bg: #ffffffcc;
+    --ib-icon-bg: #fff7;
+    --ib-hover-icon-bg: #fffc;
 
-    .imageview-full & :global([data-id="aspect_ratio"]) {
+    .imageview-full & :global([data-id='aspect_ratio']) {
       --ib-active-bg: white;
     }
 
@@ -67,18 +85,16 @@
     width: 100%;
     box-sizing: border-box;
     justify-content: center;
-    .imageview:not(:hover) & {
+
+    .imageview:not(.imageview--editing, :hover) & {
       display: none;
     }
+
     display: flex;
     column-gap: 5px;
+
     input {
       flex: 1;
     }
   }
-
-  img {
-    width: 100%;
-  }
-
 </style>

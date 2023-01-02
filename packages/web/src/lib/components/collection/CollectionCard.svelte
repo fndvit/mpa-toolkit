@@ -3,8 +3,8 @@
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import { TagContainer } from '$lib/components/shared';
-  import { getPageDisplayTitle, staticUrl } from '$lib/helpers/content';
-  import { fallbackBackgroundImage } from '$lib/helpers/utils';
+  import { getPageDisplayTitle } from '$lib/helpers/content';
+  import Picture from '../generic/Picture.svelte';
 
   export let page: Page.CollectionCard;
   export let tagType: TagType = 'TOPIC';
@@ -28,12 +28,9 @@
 </script>
 
 <a class="collection-card" {href} rel="external" class:cms-card={cms}>
-  <div
-    class="image"
-    style="background-image: url({staticUrl(page.img) || fallbackImg});"
-    use:fallbackBackgroundImage={fallbackImg}
-  />
-  <div class="content">
+  <!-- TODO img to picture -->
+  <Picture src={page.img} fallback={fallbackImg} alt={page.title} title={page.title} config={{ height: [200, 400] }} />
+  <div class="collection-card-content">
     <h1 class="title">
       {#if page.highlights}
         {@html page.highlights}
@@ -54,12 +51,13 @@
   </div>
 </a>
 
-<style lang="stylus">
+<style lang="postcss">
   .collection-card {
     --cc-height: 200px;
+
     display: flex;
-    background: $colors.neutral-bg;
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.1);
+    background: $c-neutral-bg;
+    box-shadow: 0 3px 16px rgb(0 0 0 / 10%);
     border-radius: 12px;
     height: var(--cc-height);
     margin: 0;
@@ -72,27 +70,43 @@
     &.cms-card {
       --cc-height: 160px;
     }
+
+    :global(picture) {
+      flex: 0 0 12rem;
+      object-fit: cover;
+      border-radius: 12px 0 0 12px;
+      background-size: cover;
+      background-position: center center;
+      overflow: hidden;
+
+      :global(img) {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
   }
 
   a.collection-card {
     color: inherit;
   }
 
-  .content {
+  .collection-card-content {
     padding: 0.75rem 1rem 1rem 1.5rem;
     flex: 1;
     display: grid;
-    grid-template-areas:
-      "title  tags"\
-      "byline tags";
-    grid-template-columns: 1fr 300px;
-    grid-template-rows: 1fr auto;
+    grid-template:
+      'title  tags' 1fr
+      'byline tags' auto
+      / 1fr 300px;
     column-gap: 1rem;
   }
 
   .title {
     grid-area: title;
-    typography: h4-light-responsive;
+
+    @mixin font-responsive h4-light;
+
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4;
@@ -100,13 +114,14 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     max-width: 800px;
+    margin: 0;
   }
 
   .byline {
     grid-area: byline;
     display: flex;
     column-gap: 0.4rem;
-    color: $colors.neutral-dark;
+    color: $c-neutral-dark;
   }
 
   .tags {
@@ -114,68 +129,63 @@
     display: flex;
     flex-direction: column;
     row-gap: 0.6rem;
+
     h3 {
-      typography: h5;
+      font: $f-h5;
       margin: 0;
       margin-top: 0.3rem;
     }
   }
 
-  .title {
-    margin: 0px;
-  }
-
   .authors {
-    typography: h5-responsive;
+    @mixin font-responsive h5;
   }
 
   .read-time {
-    typography: ui;
-  }
-
-  .image {
-    flex: 0 0 12rem;
-    object-fit: cover;
-    border-radius: 12px 0px 0px 12px;
-    background-size: cover;
-    background-position: center center;
+    font: $f-ui;
   }
 
   @media (max-width: 1024px) {
-
     .collection-card {
       height: auto;
+
+      :global(picture) {
+        flex-basis: 7rem;
+      }
     }
 
-    .image {
-      flex-basis: 7rem;
-    }
-    .content {
+    .collection-card-content {
       padding: 0.5rem 0.75rem 1rem 1rem;
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr auto auto;
-      grid-template-areas: "title" "byline" "tags";
+      grid-template:
+        'title' 1fr
+        'byline' auto
+        'tags' auto
+        / 1fr;
       row-gap: 1rem;
     }
+
     .title {
       -webkit-line-clamp: 5;
       line-clamp: 5;
     }
+
     .byline {
       flex-direction: column;
       align-items: initial;
       row-gap: 0.4rem;
     }
+
     .tags {
       overflow: hidden;
+
       h3 {
         display: none;
       }
+
       > :global(.tag-container) {
         flex-wrap: nowrap;
         overflow-x: scroll;
       }
-
     }
   }
 </style>

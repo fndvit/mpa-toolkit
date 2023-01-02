@@ -1,35 +1,38 @@
 {
   "name": "@mpa/migration-runner",
   "version": "1.0.0",
-  "main": "./migration-runner.ts",
+  "main": "./index.ts",
   "scripts": {
     "clean": "rimraf ./dist",
-    "build": "esno ./build.ts"
+    "build": "esno ./scripts/build.ts"
   },
   "devDependencies": {
     "@mpa/db": "workspace:*",
     "@mpa/env": "workspace:*",
     "@mpa/log": "workspace:*",
     "@mpa/utils": "workspace:^1.0.0",
+    "@types/decompress": "^4.2.4",
+    "@types/fs-extra": "^9.0.13",
     "@types/shelljs": "^0.8.11",
     "aws-lambda": "^1.0.7",
-    "esno": "^0.16.3",
+    "decompress": "^4.2.1",
+    "docker-compose": "^0.23.17",
     "fs-extra": "^10.1.0",
     "listr2": "^5.0.5",
-    "shelljs": "^0.8.5",
-    "tsup": "^6.4.0"
+    "node-fetch": "^3.3.0",
+    "shelljs": "^0.8.5"
   },
   "dependencies": {
-    "@prisma/client": "^4.6.1",
+    "@prisma/client": "^4.8.0",
     "pino": "^8.4.1",
-    "prisma": "^4.6.1"
+    "prisma": "^4.8.0"
   },
   "files": [
     "package.json"
   ],
   "tsup": {
     "entry": [
-      "migration-runner.ts"
+      "index.ts"
     ],
     "noExternal": [
       "@mpa/db",

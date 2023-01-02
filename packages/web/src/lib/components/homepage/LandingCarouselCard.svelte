@@ -3,20 +3,25 @@
   import caseStudyDefaultImage from '$lib/assets/casestudy-default-image.jpg';
   import chapterDefaultImage from '$lib/assets/chapter-default-image.jpg';
   import { TagContainer } from '$lib/components/shared';
-  import { getPageDisplayTitle, staticUrl } from '$lib/helpers/content';
-  import { fallbackImage } from '$lib/helpers/utils';
+  import { getPageDisplayTitle } from '$lib/helpers/content';
+  import type { PictureSource } from '../generic/PictureSources.svelte';
+  import Picture from '../generic/Picture.svelte';
 
   export let page: Page.ContentCard;
+
+  const config: PictureSource[] = [{ width: [300, 500], minWidth: 1320 }, { width: [210, 400] }];
 
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 </script>
 
 <a class="landing-carousel-card" href="/{page.slug}" class:case-study={!!page.caseStudy} tabindex="0" rel="external">
-  <img use:fallbackImage={fallbackImg} class="image" src={staticUrl(page.img) || fallbackImg} alt="preview" />
+  <Picture src={page.img} fallback={fallbackImg} alt={page.title} {config} />
 
   <div class="preview-content">
     <div class="title">
       <span><h3>{getPageDisplayTitle(page)}</h3></span>
+      <!-- TODO: a11y -->
+      <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <div class="circle-button" tabindex="0">
         <svg class="arrow-svg" viewBox="0 0 12 20">
           <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
@@ -35,20 +40,21 @@
   </div>
 </a>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .landing-carousel-card {
+    --lcc-width: 766px;
+
     display: flex;
     flex-direction: column;
-    width: 766px;
-    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+    width: var(--lcc-width);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 20%);
     border-radius: 40px;
     border: none;
-    background: $colors.primary-blue;
+    background: $c-primary-blue;
     height: 100%;
 
     &.case-study {
-      background: $colors.deep-blue;
+      background: $c-deep-blue;
     }
 
     &:hover {
@@ -59,6 +65,20 @@
       max-width: 600px;
     }
 
+    :global(picture) {
+      border-radius: 40px 40px 0 0;
+      width: var(--lcc-width);
+      height: calc(var(--lcc-width) * 0.45);
+      object-fit: cover;
+      overflow: hidden;
+
+      :global(img) {
+        width: 100%;
+        margin: auto;
+        object-position: center;
+        object-fit: cover;
+      }
+    }
   }
 
   a.landing-carousel-card {
@@ -73,7 +93,7 @@
   }
 
   .arrow-path {
-    stroke:$colors.neutral-black ;
+    stroke: $c-neutral-black;
     stroke-width: 2.4px;
   }
 
@@ -86,78 +106,71 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: $colors.highlight-1;
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
+    background: $c-highlight-1;
+    box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
   }
 
-  .circle-button:hover{
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.35);
+  .circle-button:hover {
+    box-shadow: 0 3px 16px rgb(0 0 0 / 35%);
   }
 
   .tags-title {
     margin: 2.5rem 0 1rem;
 
     h5 {
-      typography: h5;
+      font: $f-h5;
       margin: 0;
     }
   }
 
   .title {
-    $max-lines = 4;
     text-overflow: clip;
     word-wrap: break-word;
     display: flex;
     justify-content: space-between;
+
     > span {
       flex: 0 1 570px;
       display: -webkit-box;
-      -webkit-line-clamp: $max-lines;
-      line-clamp: $max-lines;
+      line-clamp: 4;
       overflow: hidden;
       text-overflow: ellipsis;
       -webkit-box-orient: vertical;
     }
 
     h3 {
-      typography: h3-light-responsive;
+      @mixin font-responsive h3-light;
+
       margin: 0;
     }
   }
 
   .preview-content {
-    color: #FFFFFF;
-    padding: 2rem 1.5rem 2rem;
+    color: #fff;
+    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 1;
   }
 
-  .image {
-    border-radius: 40px 40px 0px 0px;
-    width: 766px;
-    height: 344px;
-    object-fit: cover;
-  }
-
-  @media(max-width: 1024px) {
-
+  @media (max-width: 1024px) {
     .landing-carousel-card {
       max-width: 500px;
       width: calc(100vw - 120px);
-    }
 
-    .image {
-      width: 100%;
-      aspect-ratio: 1.5 / 1;
-      @supports (aspect-ratio: 1.25 / 1) {
-        height: auto;
-        min-height: 240px;
+      :global(picture) {
+        width: 100%;
+        aspect-ratio: 1.5 / 1;
+        @supports (aspect-ratio: 1.25 / 1) {
+          height: auto;
+          min-height: 240px;
+        }
       }
     }
 
-    .circle-button, .tags-title {
+    .circle-button,
+    .tags-title {
       display: none;
     }
 
@@ -168,20 +181,17 @@
     .tags {
       margin-top: 2rem;
       overflow-x: scroll;
+
       > :global(.tag-container) {
         flex-wrap: nowrap;
       }
     }
-
   }
 
-  @media(max-width: 550px) {
-
+  @media (max-width: 550px) {
     .landing-carousel-card {
       max-width: 500px;
       width: calc(100vw - 80px);
     }
-
   }
-
 </style>

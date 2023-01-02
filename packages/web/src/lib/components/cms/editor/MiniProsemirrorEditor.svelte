@@ -67,43 +67,42 @@
 
 <div class="mini-editor" class:ProseMirror={true} data-placeholder={placeholder} bind:this={editor} />
 
-<style lang="stylus">
-
+<style lang="postcss">
   .mini-editor {
-    --ui-color-placeholder: $colors.editor-placeholder;
+    --editable-placeholder-color: $c-editor-placeholder;
+
     position: relative;
     word-wrap: break-word;
     white-space: pre-wrap;
-    -webkit-font-variant-ligatures: none;
     font-variant-ligatures: none;
 
     &:global(.ProseMirror-hideselection *::selection) {
       background: transparent;
     }
-    &:global(.ProseMirror-hideselection *::-moz-selection) {
-      background: transparent;
-    }
+
     &:global(.ProseMirror-hideselection) {
       caret-color: transparent;
     }
+
     &:global(.ProseMirror-selectednode) {
       outline: 2px solid #8cf;
     }
+
     &:global(.ProseMirror .empty-node::before) {
       position: absolute;
       color: #aaa;
       cursor: text;
     }
+
     &:global(.ProseMirror .empty-node:hover::before) {
       color: #777;
     }
+
     &:global(.ProseMirror-empty::before) {
       position: absolute;
       content: attr(data-placeholder);
       pointer-events: none;
-      color: var(--ui-color-placeholder);
+      color: var(--editable-placeholder-color);
     }
   }
-
-
 </style>

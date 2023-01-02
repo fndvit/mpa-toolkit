@@ -13,38 +13,23 @@
   import { compareDeep } from '$lib/utils';
   import { insertInTextArea, onHoverEl } from '$lib/helpers/utils';
   import { getPageTypeStr } from '$lib/helpers/content';
-  import { Button, DeleteModal, IconButton, LoadingButton, Popper, Spinner, toaster } from '$lib/components/generic';
+  import { DeleteModal, IconButton, Popper, Spinner, toaster } from '$lib/components/generic';
   import * as api from '$lib/api';
   import { page as pageStore } from '$app/stores';
   import { goto } from '$app/navigation';
+  import { editorStore } from '../cms/editor/editorStore';
+  import { schema } from '$lib/editor/schema';
+  import { onMount } from 'svelte';
 
   export let authors: Author[];
   export let allTags: Tag[];
   export let page: Page;
 
-  const { protocol, hostname, port } = $pageStore.url;
-  const URL_PREFIX = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;
-
-  const authorLookup = createLookup(
-    authors,
-    a => a.id.toString(),
-    u => u
-  );
-  const tagLookup = createLookup(
-    allTags,
-    t => t.id.toString(),
-    t => t
-  );
-
-  const pageId = page.id;
-  const isNewPage = !page.id;
-
-  let pageType: 'Case Study' | 'Chapter' = page.caseStudy ? 'Case Study' : 'Chapter';
-
   const pageTagToRequestTag = (t: PageTag): Unpacked<APIRequests.Page['tags']> => ({
     id: t.tag.id,
     category: t.category
   });
+
   const chapterToRequest = (c: Chapter): APIRequests.Page['chapter'] => ({
     ...c,
     authors: c.authors.map(a => a.id)
@@ -60,31 +45,37 @@
     };
   };
 
+  const { protocol, hostname, port } = $pageStore.url;
+  const URL_PREFIX = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;
+  const authorLookup = createLookup(authors, a => a.id.toString());
+  const tagLookup = createLookup(allTags, t => t.id.toString());
+  const pageId = page.id;
+  let showElTooltip: (el: HTMLElement) => void;
+  let pageType: 'Case Study' | 'Chapter' = page.caseStudy ? 'Case Study' : 'Chapter';
   let _page = convertPageToPageRequest(page);
-
   let chapter = clone(page.chapter);
   let tags: PageTag[] = page.tags || [];
 
-  let savedPage = clone(_page);
+  $editorStore.isNewPage = !page.id;
+  $editorStore.savedPage = clone(_page);
   let uploadingImage = false;
-  let saving = false;
   let deleting = false;
   let autoPopulateSlug = !_page.slug;
   let imageInput: HTMLInputElement;
-  let preview = false;
+  let previewPage: Page;
 
-  async function onClickSave() {
-    saving = true;
+  async function onSave() {
+    $editorStore.saving = true;
 
-    if (isNewPage) {
+    if ($editorStore.isNewPage) {
       const { id } = await api.page.create(_page);
       window.location.href = `/cms/pages/${id}`;
     } else {
       await api.page.update(pageId, _page);
     }
-    saving = false;
+    $editorStore.saving = false;
     toaster.done('Saved');
-    savedPage = clone(_page);
+    $editorStore.savedPage = clone(_page);
   }
 
   async function onDeleteModalYes() {
@@ -94,7 +85,7 @@
     else goto('/cms/pages');
   }
 
-  async function onClickDelete() {
+  async function onDelete() {
     openModal(DeleteModal, {
       onYes: onDeleteModalYes,
       title: 'Delete page',
@@ -123,24 +114,25 @@
     else autoPopulateSlug = false;
   };
 
-  $: _page.tags = tags.map(pageTagToRequestTag);
-
-  $: dirty = !compareDeep(_page, savedPage);
+  onMount(async () => {
+    if (page.content && !compareDeep(schema.nodeFromJSON(page.content).toJSON(), page.content)) {
+      // this means the schema is altering the content (presumably in response to a schema change)
+      toaster.warn('Content has been altered to match the latest schema. Save to persist changes.', 10000);
+    }
+  });
 
   $: if (autoPopulateSlug) {
     _page.slug = pageType === 'Case Study' ? slugify(_page.caseStudy!.name) : slugify(_page.title);
   }
 
+  $: _page.tags = tags.map(pageTagToRequestTag);
   $: sharedFieldsComplete = !!(_page.title && _page.slug);
-
-  $: disabled = saving || deleting;
-
-  $: saveable = dirty && !saving && !deleting && sharedFieldsComplete;
-
+  $: disabled = $editorStore.saving || deleting;
   $: _page.chapter = chapter ? chapterToRequest(chapter) : undefined;
-
-  let previewPage: Page;
-  $: if (preview) {
+  $: $editorStore.page = _page;
+  $: $editorStore.dirty = !compareDeep(_page, $editorStore.savedPage);
+  $: $editorStore.saveable = $editorStore.dirty && !$editorStore.saving && !deleting && sharedFieldsComplete;
+  $: if ($editorStore.preview) {
     previewPage = {
       ..._page,
       id: null,
@@ -157,19 +149,16 @@
           }
     };
   }
-
-  let showElTooltip: (el: HTMLElement) => void;
-
-  $: href = `${_page.draft ? '/draft' : ''}/${savedPage.slug}`;
 </script>
 
 <Popper bind:load={showElTooltip} />
 <div
   class="page page-editor"
-  class:preview
-  class:is-new-page={isNewPage}
+  class:page-editor--editing={!$editorStore.preview}
+  class:preview={$editorStore.preview}
+  class:is-new-page={$editorStore.isNewPage}
   data-pagetype={getPageTypeStr(page)}
-  use:onHoverEl={['problem', el => showElTooltip(el)]}
+  use:onHoverEl={['.problem', el => showElTooltip(el)]}
 >
   <div class="meta">
     <div class="top-controls">
@@ -200,11 +189,11 @@
       </div>
     </div>
 
-    <PageSplash bind:page={_page} editable={!preview} />
+    <PageSplash bind:page={_page} editable={!$editorStore.preview} />
     {#if pageType === 'Case Study'}
-      <CaseStudyHead bind:caseStudy={_page.caseStudy} editable={!preview} tags={page.tags} />
+      <CaseStudyHead bind:caseStudy={_page.caseStudy} editable={!$editorStore.preview} tags={page.tags} />
     {:else}
-      <ChapterHead bind:chapter editable={!preview} tags={page.tags} />
+      <ChapterHead bind:chapter editable={!$editorStore.preview} tags={page.tags} />
     {/if}
   </div>
 
@@ -212,47 +201,14 @@
     <div class="life-cycle-editor">
       <LifeCycle {allTags} bind:tags editable />
     </div>
-
-    <Editor bind:content={_page.content}>
-      <div slot="menu-extra" class="page-controls">
-        {#if saving}Saving...{/if}
-        <IconButton {href} rel="external" target="_blank" icon="open_in_new" title="Open link in new page" />
-        <div class="draft-button">
-          <IconButton
-            on:click={() => (_page.draft = !_page.draft)}
-            title={_page.draft ? 'Click to publish' : 'Click to make draft'}
-            icon={_page.draft ? 'article' : 'public'}
-            text={_page.draft ? 'Draft' : 'Live'}
-          />
-        </div>
-        <Button on:click={() => (preview = !preview)}>{preview ? 'Close preview' : 'Preview'}</Button>
-        <div class="save-button">
-          <LoadingButton on:click={onClickSave} loading={saving} disabled={!saveable}>
-            {dirty ? 'Save' : 'Saved'}
-          </LoadingButton>
-        </div>
-        {#if !isNewPage}
-          <div class="delete-button">
-            <Button on:click={onClickDelete}>Delete</Button>
-          </div>
-        {/if}
-      </div>
-    </Editor>
-
-    {#if preview}
+    <Editor bind:content={_page.content} on:save={onSave} on:delete={onDelete} />
+    {#if $editorStore.preview}
       <PageContent page={previewPage} />
     {/if}
   </div>
 </div>
 
-<style lang="stylus">
-
-  .draft-button {
-    :global(.icon-button) {
-      column-gap: 0;
-    }
-  }
-
+<style lang="postcss">
   .top-controls {
     position: absolute;
     z-index: 1;
@@ -264,16 +220,18 @@
     display: flex;
     column-gap: 10px;
     align-items: center;
+
     :global(.icon-button) {
-      --bg-color: #ffffff99;
+      --bg-color: #fff9;
       --ib-hover-border-color: transparent;
-      --ib-hover-bg: #dddddd99;
+      --ib-hover-bg: #ddd9;
       --ib-font-size: 1rem;
     }
 
     .spinner {
       display: flex;
       align-items: center;
+
       &.hidden {
         visibility: hidden;
       }
@@ -281,20 +239,22 @@
   }
 
   .slug {
-    typography: ui;
+    font: $f-ui;
     width: 550px;
-    background: #ffffff99;
-    border: 1px solid #00000055;
+    background: #fff9;
+    border: 1px solid #0005;
     border-radius: 2px;
     height: 32px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
+
     .url-prefix {
       margin-left: 2px;
       opacity: 0.5;
       margin-right: -2px;
     }
+
     input {
       border: none;
       border-radius: 0;
@@ -309,43 +269,29 @@
     display: none;
   }
 
-  .page-controls {
-    display: flex;
-    column-gap: 10px;
-    align-items: center;
-    :global(.message) {
-      margin-right: 10px;
-      color: #999;
-    }
-    @keyframes bgPulse {
-      0% { border-color: #bbb;  }
-      100% { border-color: #999;
-        box-shadow: inset #a0b6e455 0 0 15px 0px, #c5cddf 0 0 2px 1px;
-      }
-    }
-    .save-button :global(.button:not(:disabled)) {
-      animation: 1s ease-in 0s infinite alternate bgPulse;
-    }
-    .is-new-page & :global(.icon-button[data-icon="open_in_new"]) {
-      display: none;
-    }
-  }
-
   .page-editor {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
+    :global(.page-content .menu) {
+      top: calc(3rem + 1px);
+    }
+
     :global(.prosemirror-container) {
       flex: 1;
-      :global(.problem) {
+
+      :global(.problem:not(.svelte-node-view)) {
         background-color: #fdd;
         cursor: pointer;
       }
-      :global(.problem[data-problem-name="leading-space"]) {
+
+      :global(.problem[data-problem-name='leading-space']) {
         position: relative;
         display: inline-block;
         min-width: 5px;
-        &:before {
+
+        &::before {
           content: 'arrow_right';
           font-family: 'Material Icons';
           font-size: 1.25rem;
@@ -354,16 +300,18 @@
           position: absolute;
           right: calc(100% + 10px);
         }
-        &:after {
+
+        &::after {
           content: ' ';
           display: inline-block;
         }
       }
-      :global(.problem[data-problem-name="todo"]) {
+
+      :global(.problem[data-problem-name='todo']) {
         background-color: #aaf;
       }
+
       :global(.problem-highlight) {
-        // highlight this problem
         background-color: #faa;
       }
     }
@@ -378,7 +326,6 @@
   }
 
   .preview {
-
     padding-top: 51px;
 
     :global(.menu-bar) {
@@ -389,9 +336,8 @@
     .life-cycle-editor,
     :global(.editor-content),
     :global(.menu-bar .left-section),
-    .draft-button {
+    :global(.draft-button) {
       display: none;
     }
   }
-
 </style>

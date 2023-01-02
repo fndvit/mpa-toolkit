@@ -5,15 +5,16 @@
 </script>
 
 <ol>
-  {#each block.content as block}
-    <ListItem {block} />
+  {#each block.content as listItemBlock}
+    <ListItem block={listItemBlock} />
   {/each}
 </ol>
 
-<style lang="stylus">
+<style lang="postcss">
   ol {
     > :global(li) {
-      typography: p-responsive;
+      @mixin font-responsive p;
+
       padding-left: 10px;
     }
   }

@@ -14,12 +14,11 @@
   </button>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   hr {
     margin: 0;
     border: 0;
-    border-bottom: 0.5px solid $colors.neutral-light;
+    border-bottom: 0.5px solid $c-neutral-light;
   }
 
   .arrow {
@@ -39,23 +38,28 @@
     font-size: 0.75rem;
     display: flex;
     text-align: left;
-    background: $colors.neutral-bg;
-    box-shadow: 0px 3px 16px rgba(0, 0, 0, 0.15);
-    border-radius: 0px 0px 20px 20px;
+    background: $c-neutral-bg;
+    box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
+    border-radius: 0 0 20px 20px;
+
     &:hover {
       filter: brightness(95%);
     }
+
     margin-bottom: 2rem;
+
     svg path {
-      stroke: $colors.neutral-black;
+      stroke: $c-neutral-black;
+    }
+
+    :global(.problem) & {
+      outline: 5px solid #f004;
     }
   }
-
 
   @media screen and (max-width: 768px) {
     .expand-button {
       width: auto;
     }
   }
-
 </style>

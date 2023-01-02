@@ -1,41 +1,36 @@
 import { Construct } from 'constructs';
-import type { aws_cloudfront as cloudfront, aws_s3 as s3 } from 'aws-cdk-lib';
+import type { aws_s3 as s3 } from 'aws-cdk-lib';
 import { aws_s3_deployment as s3_deployment } from 'aws-cdk-lib';
-import { getPath } from '../util/dirs';
+import projectRoot from '@mpa/utils/projectRoot';
 
 export interface BucketDeploymentsProps {
-  buckets: {
-    static: s3.Bucket;
-  };
-  distribution: cloudfront.IDistribution;
+  assetBucket: s3.IBucket;
 }
 
 export class BucketDeployments extends Construct {
   constructor(scope: Construct, id: string, props: BucketDeploymentsProps) {
     super(scope, id);
 
-    const { buckets, distribution } = props;
+    const { assetBucket } = props;
 
-    const assetsDir = getPath('packages/web/.svelte-kit/client');
+    const assetsDir = projectRoot('packages/web/build/client');
 
     new s3_deployment.BucketDeployment(this, 'Immutable', {
-      destinationBucket: buckets.static,
+      destinationBucket: assetBucket,
       sources: [s3_deployment.Source.asset(`${assetsDir}/_app`)],
       destinationKeyPrefix: '_app/',
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
-      retainOnDelete: false,
-      prune: false, // TODO: delayed pruning (for seamless deployments)
-      distribution
+      retainOnDelete: true,
+      prune: false // TODO: delayed pruning ?
     });
 
     new s3_deployment.BucketDeployment(this, 'Static', {
-      destinationBucket: buckets.static,
+      destinationBucket: assetBucket,
       sources: [s3_deployment.Source.asset(assetsDir, { exclude: ['_app/*'] })],
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=3600, public')],
       retainOnDelete: true,
-      prune: true,
-      exclude: ['_app', '_app/', '_app/*'],
-      distribution
+      prune: false,
+      exclude: ['_app', '_app/', '_app/*']
     });
   }
 }

@@ -10,10 +10,9 @@
     {#if content}
       {@html content}
     {:else}
-      Read more
+      <p><span>Show more on this topic</span></p>
     {/if}
   {:else}
     Read less
   {/if}
 </ExpandButtonBase>
-

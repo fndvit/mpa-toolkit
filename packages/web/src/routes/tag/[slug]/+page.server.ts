@@ -2,23 +2,23 @@ import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { db } from '$lib/db';
 
-export const load: PageServerLoad = async ({ locals, params }) => {
+export const load: PageServerLoad = async ({ locals: { withMetadata, cacheKeys }, params }) => {
   const slug = params.slug.toLowerCase();
   if (slug !== params.slug) throw redirect(301, `/tag/${slug}`);
 
   const tag = await db.tag.get(slug);
   if (!tag) {
-    locals.cacheKeys.add('tags');
-    throw error(404, 'Page not found');
+    cacheKeys.add('tags');
+    throw error(404, { message: 'Tag not found', model: 'tag' });
   }
 
-  const pages = await db.page.getByTag(tag.id, 'collection');
+  const pages = await db.page.getByTag(tag.id);
 
   pages.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
 
-  pages.flatMap(p => p.tags).forEach(t => locals.cacheKeys.add(`tag-${t.tag.id}`));
+  pages.flatMap(p => p.tags).forEach(t => cacheKeys.add(`tag-${t.tag.id}`));
 
-  locals.cacheKeys.add('pages');
+  cacheKeys.add('pages');
 
-  return { pages, tag, highlightTagIds: [tag.id] };
+  return withMetadata({ pages, tag, highlightTagIds: [tag.id] });
 };

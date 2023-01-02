@@ -1,3 +1,4 @@
+name: Staging deployment
 on:
   push:
     branches:
@@ -9,11 +10,12 @@ jobs:
       STACK_NAME: 'MPAth-staging'
       ORIGIN: https://mpath-dev.freetls.fastly.net/
       AWS_REGION: eu-west-1
+      SVELTEKIT_APP_DIR: '_app/staging'
+      PUBLIC_DB_RESTORE: true
     secrets:
       GOOGLE_OAUTH_CLIENT_ID:  ${{ secrets.STAGING_GOOGLE_OAUTH_CLIENT_ID }}
       GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.STAGING_GOOGLE_OAUTH_CLIENT_SECRET }}
       FASTLY_SERVICE_ID: ${{ secrets.STAGING_FASTLY_SERVICE_ID }}
       FASTLY_API_KEY: ${{ secrets.STAGING_FASTLY_API_KEY }}
-      FASTLY_ROUTING_DICTIONARY_ID: ${{ secrets.STAGING_FASTLY_ROUTING_DICTIONARY_ID }}
       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}

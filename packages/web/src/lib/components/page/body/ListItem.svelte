@@ -6,13 +6,7 @@
 </script>
 
 <li>
-  {#each block.content as block}
-    <Block {block} />
+  {#each block.content as childBlock}
+    <Block block={childBlock} />
   {/each}
 </li>
-
-<style lang="stylus">
-  // p {
-  //   typography: p-responsive;
-  // }
-</style>

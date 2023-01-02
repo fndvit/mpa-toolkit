@@ -84,9 +84,15 @@ export const hoverTimer = (ms: number) => {
 };
 
 export const imgLoadingStatus = (node: HTMLImageElement, cb: (loading: boolean) => void) => {
+  node.addEventListener('error', () => cb(false));
   node.addEventListener('load', () => cb(false));
+
   cb(!node.complete);
-  new MutationObserver(() => cb(!node.complete)).observe(node, { attributes: true, attributeFilter: ['src'] });
+
+  const observer = new MutationObserver(() => cb(!node.complete));
+  observer.observe(node, { attributes: true, attributeFilter: ['src'] });
+
+  return { destroy: () => observer.disconnect() };
 };
 
 export const fallbackBackgroundImage = (node: HTMLElement, img: string) => {
@@ -120,14 +126,11 @@ export function insertInTextArea(text: string, el: HTMLInputElement) {
   el.setSelectionRange(start + text.length, start + text.length);
 }
 
-export const onHoverEl = (node: HTMLElement, [className, cb]: [string, (el: HTMLElement) => void]) => {
+export const onHoverEl = (node: HTMLElement, [selector, cb]: [string, (el: HTMLElement) => void]) => {
   let problemEl: HTMLElement;
   node.addEventListener('mouseover', e => {
-    const isProblemEl = e.target instanceof HTMLElement && e.target.className === className;
-    if (isProblemEl) {
-      problemEl = e.target;
-      cb(problemEl);
-    }
+    const problemEl = e.target instanceof HTMLElement && e.target.closest(selector);
+    if (problemEl && problemEl instanceof HTMLElement) cb(problemEl);
   });
   const observer = new MutationObserver(mutations => {
     mutations.forEach(m => {

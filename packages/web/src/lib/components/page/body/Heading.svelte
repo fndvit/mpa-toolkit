@@ -8,20 +8,28 @@
 </script>
 
 <svelte:element this={`h${level}`} class={cls}>
-  {#each block.content as child}<Inline block={child} />{/each}
+  {#each block.content || [] as child}<Inline block={child} />{/each}
 </svelte:element>
 
-<style lang="stylus">
-  .block-h1 {
-    typography: h2-responsive;
+<style lang="postcss">
+  .block-h1,
+  :global(.ui-editor > h1) {
+    @mixin font-responsive h2;
+
     margin: 2rem 0;
   }
-  .block-h2 {
-    typography: h3-responsive;
+
+  .block-h2,
+  :global(.ui-editor > h2) {
+    @mixin font-responsive h3;
+
     margin: 2rem 0;
   }
-  .block-h3 {
-    typography: h4-graphic-responsive;
+
+  .block-h3,
+  :global(.ui-editor > h3) {
+    @mixin font-responsive h4-graphic;
+
     margin: 2rem 0;
   }
 </style>

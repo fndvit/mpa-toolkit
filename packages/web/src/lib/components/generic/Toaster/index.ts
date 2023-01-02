@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 interface Options {
   durationMs: number;
-  type: 'info' | 'error' | 'done';
+  type: 'info' | 'error' | 'done' | 'warning';
 }
 
 export type Toast = {
@@ -34,7 +34,9 @@ function createToastStore() {
     window.setTimeout(() => _removeToast(toast), durationMs);
   };
 
-  const info = (msg: string) => _addToast(msg, { type: 'info' });
+  const info = (msg: string, durationMs = DEFAULT_OPTIONS.durationMs) => _addToast(msg, { type: 'info', durationMs });
+  const warn = (msg: string, durationMs = DEFAULT_OPTIONS.durationMs) =>
+    _addToast(msg, { type: 'warning', durationMs });
   const error = (msg: string) => _addToast(msg, { type: 'error' });
   const done = (msg: string) => _addToast(msg, { type: 'done' });
   const report = async (fn: () => unknown, doneMsg: string, errorMsg: string) => {
@@ -47,7 +49,7 @@ function createToastStore() {
     }
   };
 
-  return { subscribe, info, error, done, report };
+  return { subscribe, info, warn, error, done, report };
 }
 
 export const toaster = createToastStore();

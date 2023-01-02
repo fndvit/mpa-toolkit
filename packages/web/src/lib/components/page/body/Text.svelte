@@ -12,7 +12,7 @@
   <span class={markClasses.join(' ')}>{block.text}</span>
 {/if}
 
-<style lang="stylus">
+<style lang="postcss">
   .mark--strong {
     font-weight: 700;
   }
@@ -20,5 +20,4 @@
   .mark--em {
     font-style: italic;
   }
-
 </style>

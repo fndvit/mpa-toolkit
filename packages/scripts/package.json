@@ -4,7 +4,6 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "deploy-fastly-dictionary": "esno ./src/fastlydict.ts",
     "depcheck": "esno ./src/depcheck.ts",
     "nuke": "esno ./src/db/nuke.ts",
     "seedmigrate": "esno ./src/db/migrate.ts",
@@ -18,7 +17,6 @@
     "@mpa/utils": "workspace:^1.0.0",
     "chalk": "^5.0.1",
     "depcheck": "^1.4.3",
-    "esno": "^0.16.3",
     "globby": "^13.1.2",
     "got": "^12.3.1",
     "listr2": "^5.0.5"

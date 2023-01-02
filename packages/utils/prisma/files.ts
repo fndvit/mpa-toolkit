@@ -4,20 +4,34 @@ import fs from 'fs-extra';
 import { globby } from 'globby';
 import projectRoot from '../projectRoot';
 
-export async function copyPrismaEngineFiles(dest: string) {
-  const cache = `${await projectRoot()}/node_modules/.cache/prisma@4.2.1`;
+const getPrismaVersion = () => {
+  const match = shell.exec('pnpm -w ls -p', { silent: true }).stdout.match(/prisma@(?<version>\d.*?)\//);
+  if (!match?.groups?.version) throw new Error(`Could not find prisma version`);
+  return match.groups.version;
+};
 
-  fs.mkdirpSync(dest);
+export async function copyPrismaEngineFiles(outdir: string, matchers: Record<string, RegExp>) {
+  const prismaVer = getPrismaVersion();
+
+  const cache = `${await projectRoot()}/node_modules/.cache/prisma@${prismaVer}`;
+
+  fs.mkdirpSync(outdir);
 
   if (!fs.pathExistsSync(cache)) {
     fs.mkdirpSync(cache);
-    shell.exec(`PRISMA_CLI_BINARY_TARGETS=rhel-openssl-1.0.x npm install --prefix ${cache} prisma@4.2.1`, {
+    shell.exec(`PRISMA_CLI_BINARY_TARGETS=rhel-openssl-1.0.x npm install --prefix ${cache} prisma@${prismaVer}`, {
       silent: true
     });
   }
 
   const engineFiles = await globby(`${cache}/**/engines/*rhel*`);
-  engineFiles.forEach(file => shell.cp(file, dest));
+  engineFiles.forEach(file => {
+    const dir = Object.keys(matchers).find(key => matchers[key].test(file));
+    if (!dir) return;
+    const destPath = path.join(outdir, dir);
+    fs.mkdirpSync(destPath);
+    shell.cp(file, destPath);
+  });
 }
 
 export async function copyPrismaClientFiles(dest: string) {

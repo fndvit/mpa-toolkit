@@ -5,8 +5,6 @@ export { Role, TagCategory, TagType } from '@prisma/client';
 import type { Modify } from '@mpa/utils';
 import type * as queries from './queries';
 
-// type Prisma = DBTypes.Prisma;
-
 // ************************
 //   Extended model types
 // ************************
@@ -96,6 +94,12 @@ export type CardData = {
   body: string;
 };
 
+export type LinkCardData = {
+  title: string;
+  url: string;
+  img: string;
+};
+
 export type HomepageComponentName = 'lifecycle' | 'chapters' | 'search' | 'madlib' | 'casestudies';
 
 export type HomepageComponents = HomepageComponentName[];
@@ -164,6 +168,11 @@ export namespace APIRequests {
   };
 
   export type HomepageComponents = HomepageComponentName[];
+
+  export type Recommendations = {
+    pageviews?: number[];
+    madlib?: string[];
+  };
 }
 
 // **************************
@@ -174,7 +183,6 @@ export type HeadingBlock = {
   type: 'heading';
   attrs: {
     level: 1 | 2 | 3 | 4 | 5 | 6;
-    showmore: string;
   };
   content: InlineBlock[];
 };
@@ -187,8 +195,16 @@ export type ParagraphBlock = {
 export type CardsBlock = {
   type: 'cards';
   attrs: {
-    style: 'default' | 'no-heading';
+    style: 'no-heading' | 'default';
     cards: CardData[];
+  };
+};
+
+export type LinkCardsBlock = {
+  type: 'linksCards';
+  attrs: {
+    title: string;
+    cards: LinkCardData[];
   };
 };
 
@@ -197,12 +213,20 @@ export type DiagramBlock = {
   attrs: DiagramData;
 };
 
+export type CollapseBlock = {
+  type: 'collapse';
+  attrs: {
+    showmore: string;
+  };
+};
+
 export type ImageBlock = {
   type: 'image';
   attrs: {
     src: string;
     alt?: string;
     title?: string;
+    credits?: string;
     style: 'regular' | 'full';
   };
 };
@@ -226,10 +250,12 @@ export type ContentBlock =
   | HeadingBlock
   | ParagraphBlock
   | CardsBlock
+  | LinkCardsBlock
   | BulletListBlock
   | OrderedListBlock
   | ImageBlock
-  | DiagramBlock;
+  | DiagramBlock
+  | CollapseBlock;
 
 // ***********************
 //          Marks
@@ -269,7 +295,6 @@ export type ContentDocument = {
 export type Section = {
   id: string;
   title: string;
-  topic: string;
   blocks: ContentBlock[];
 };
 

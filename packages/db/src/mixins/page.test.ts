@@ -1,11 +1,9 @@
-import { loadEnvFromFile } from '@mpa/env';
+import { initDatabase } from 'src/db';
 import { beforeAll, describe, expect, test } from 'vitest';
 import type { Tag } from '..';
-import { MpaDatabase } from '..';
+import { generateEmptyPage } from '../lib/test-utils';
 
-loadEnvFromFile('test', { DATABASE_URL: true });
-
-const db = new MpaDatabase();
+const db = initDatabase();
 
 describe('db.page', () => {
   let tags: Tag[];
@@ -52,7 +50,7 @@ describe('db.page', () => {
   });
 
   test("all('content-card')", async () => {
-    const pages = await db.page.all({ model: 'content-card' });
+    const pages = await db.page.allContentCards();
     expect(pages.length).toBe(2);
     const slugs = pages.map(p => p.slug);
     expect(slugs).toContain('c');
@@ -60,7 +58,7 @@ describe('db.page', () => {
   });
 
   test("all('cms-list')", async () => {
-    const pages = await db.page.all({ model: 'cms-list' });
+    const pages = await db.page.allForCms();
     expect(pages.length).toBe(4);
   });
 
@@ -81,55 +79,11 @@ describe('db.page', () => {
   });
 
   test('getByTag', async () => {
-    const g1 = await db.page.getByTag(tags[0].id, 'collection');
+    const g1 = await db.page.getByTag(tags[0].id);
     expect(g1.length).toBe(0);
-    const g2 = await db.page.getByTag(tags[1].id, 'collection');
+    const g2 = await db.page.getByTag(tags[1].id);
     expect(g2.length).toBe(1);
-    const g3 = await db.page.getByTag(tags[2].id, 'collection');
+    const g3 = await db.page.getByTag(tags[2].id);
     expect(g3.length).toBe(2);
   });
-
-  test('recommend', async () => {
-    const p1 = await db.page.get({ slug: 'a' });
-    const g1 = await db.page.recommended(p1);
-    expect(g1.length).toBe(0);
-
-    const p2 = await db.page.get({ slug: 'c' });
-    const g2 = await db.page.recommended(p2);
-    expect(g2.length).toBe(1);
-  });
 });
-
-function generateEmptyPage(type: 'chapter' | 'caseStudy') {
-  return {
-    title: '',
-    slug: '',
-    img: '',
-    content: { type: 'doc' as const, content: [] },
-    tags: [],
-    caseStudy:
-      type !== 'caseStudy'
-        ? undefined
-        : {
-            name: '',
-            established: null,
-            size: null,
-            governance: '',
-            staff: '',
-            budget: '',
-            budgetLevel: '',
-            lat: -90,
-            long: 0,
-            milestones: {},
-            keyLearnings: []
-          },
-    chapter:
-      type !== 'chapter'
-        ? undefined
-        : {
-            summary: '',
-            keyTakeaways: [],
-            authors: []
-          }
-  };
-}

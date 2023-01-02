@@ -1,8 +1,52 @@
-import type { ContentBlock, ContentDocument, Page, Section, DiagramData, CardsBlock } from '@mpa/db';
+import type {
+  ContentBlock,
+  ContentDocument,
+  Page,
+  Section,
+  DiagramData,
+  CardsBlock,
+  LinkCardsBlock,
+  CollapseBlock
+} from '@mpa/db';
 import { slugify } from '@mpa/utils';
 import { env } from '$env/dynamic/public';
 
+if (!env.PUBLIC_UPLOAD_BASE_URL) throw new Error('Missing PUBLIC_UPLOAD_BASE_URL');
+
 export const staticUrl = (path: string) => (path ? `${env.PUBLIC_UPLOAD_BASE_URL}${path}` : null);
+
+export interface ImageUrlOptions {
+  width?: number;
+  height?: number;
+  format?: 'jpeg' | 'png' | 'webp' | 'avif';
+  quality?: number;
+}
+
+const DEFAULT_IMAGE_OPTIONS: Partial<ImageUrlOptions> = { format: 'jpeg', quality: 75 };
+
+export const imageUrl = (path: string | null, opts?: ImageUrlOptions | null) => {
+  if (!path) return null;
+  if (path.startsWith('data:')) return path;
+  const baseUrl = /^https?:\/\//.test(path)
+    ? ''
+    : process.env.NODE_ENV === 'development' && path.startsWith('/src')
+    ? 'http://localhost:3000'
+    : env.PUBLIC_UPLOAD_BASE_URL;
+
+  if (opts === null) return `${baseUrl}${path}`;
+
+  const o = Object.assign({ ...DEFAULT_IMAGE_OPTIONS }, opts);
+  const params = ['format', 'width', 'height', 'quality']
+    .filter(key => o[key])
+    .map(k => `${k}=${o[k]}`)
+    .join('&');
+  return `${baseUrl}${path}?${params}`;
+};
+
+export const backgroundImage = (path: string | null, opts?: ImageUrlOptions) => {
+  if (!path) return null;
+  return `url('${imageUrl(path, opts)}')`;
+};
 
 export function createSections(document: ContentDocument) {
   return document.content.reduce<Section[]>((sections, block, i) => {
@@ -11,7 +55,6 @@ export function createSections(document: ContentDocument) {
       sections.push({
         id: isSectionHeading ? `h${sections.length}-${slugify(block.content[0].text)}` : null,
         title: isSectionHeading ? block.content[0].text : null,
-        topic: isSectionHeading ? block.attrs.showmore : null,
         blocks: [block]
       });
     } else {
@@ -30,8 +73,6 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): Page {
     content: null,
     draft: true,
     tags: [],
-    // editedAt: null,
-    // createdAt: null,
     readTime: null,
     caseStudy:
       type !== 'caseStudy'
@@ -92,6 +133,14 @@ export function createEmptyDiagram(): DiagramData {
 
 export function createEmptyCard(): CardsBlock['attrs'] {
   return { style: 'default', cards: [{ heading: '', body: '' }] };
+}
+
+export function createEmptyLinkCard(): LinkCardsBlock['attrs'] {
+  return { title: '', cards: [{ title: '', url: '', img: '' }] };
+}
+
+export function createEmptyCollapse(): CollapseBlock['attrs'] {
+  return { showmore: '' };
 }
 
 export function getSectionSize(section: Section): number {

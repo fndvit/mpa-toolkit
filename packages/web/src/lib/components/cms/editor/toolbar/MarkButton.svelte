@@ -4,6 +4,7 @@
   import type { EditorState } from 'prosemirror-state';
   import type { EditorView } from 'prosemirror-view';
   import { getContext } from 'svelte';
+  import { isMarkActive } from '../helpers';
   import { IconButton } from '$lib/components/generic';
 
   export let editorState: EditorState;
@@ -19,13 +20,7 @@
     toggle(editorState, view.dispatch);
   }
 
-  function markActive(state: EditorState, type: MarkType) {
-    let { from, to, empty } = state.selection;
-    if (empty) return !!type.isInSet(state.storedMarks || state.selection.$from.marks());
-    else return state.doc.rangeHasMark(from, to, type);
-  }
-
-  $: active = markActive(editorState, markType);
+  $: active = isMarkActive(editorState, markType);
 </script>
 
-<IconButton on:click={onClick} {icon} {text} {active} />
+<IconButton on:click={onClick} {icon} {text} {active} theme="toolbar" />

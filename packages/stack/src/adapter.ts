@@ -5,6 +5,32 @@ import { fileURLToPath } from 'url';
 import type { Adapter } from '@sveltejs/kit';
 import * as esbuild from 'esbuild';
 import { copyPrismaEngineFiles, copyPrismaClientFiles } from '@mpa/utils/prisma/files';
+import type { RouteDefinition } from '@sveltejs/kit/types/private';
+import replace from 'replace-in-file';
+import * as os from 'os';
+import shell from 'shelljs';
+import { globbySync as glob } from 'globby';
+import { getPath } from './util/dirs';
+
+const writeSharpBinaries = async (outDir: string) => {
+  const tmpDir = path.resolve(os.tmpdir(), 'sharp-binaries');
+  fs.mkdirSync(tmpDir, { recursive: true });
+  const version = shell.exec('pnpm -w list sharp -pl', { silent: true }).stdout.match(/sharp@(?<version>\d.*?)\//)
+    ?.groups?.version;
+  if (!version) throw new Error('Could not find sharp version');
+  shell.exec('SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm install --arch=x64 --platform=linux --libc=glibc sharp@' + version, {
+    cwd: tmpDir,
+    silent: true
+  });
+  const filesToCopy = glob('**/sharp/(build|vendor)/**/*', { cwd: tmpDir });
+  if (filesToCopy.length === 0) throw new Error('Could not find sharp binary');
+  filesToCopy.forEach(file => {
+    const src = path.join(tmpDir, file);
+    const dest = path.join(outDir, file);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.copyFileSync(src, dest);
+  });
+};
 
 export default function (): Adapter {
   return {
@@ -12,6 +38,7 @@ export default function (): Adapter {
     async adapt(builder) {
       const lambda = fileURLToPath(new URL('./lambda', import.meta.url).href);
       const server = builder.getBuildDirectory('server');
+      const lambdaOut = builder.getBuildDirectory('lambda');
       const client = builder.getBuildDirectory('client');
       const prismaClient = builder.getBuildDirectory('prisma-client');
       const prismaEngine = builder.getBuildDirectory('prisma-engine');
@@ -25,36 +52,87 @@ export default function (): Adapter {
       builder.mkdirp(router);
       builder.writeClient(client);
 
-      await copyPrismaEngineFiles(prismaEngine);
+      await builder.createEntries(route => {
+        const getId = (route: RouteDefinition) => {
+          if (route.id.startsWith('/api') || route.id === '/globe.svg') return 'api';
+          if (route.id.startsWith('/cms')) return 'cms';
+          return 'rest';
+        };
+        const id = getId(route);
+        return {
+          id,
+          filter: other => id === getId(other),
+          complete: entry => {
+            const tmpFnDir = path.join(tmp, 'lambda', id);
+            builder.mkdirp(tmpFnDir);
+            const relativePath = posix.relative(tmpFnDir, builder.getServerDirectory());
+
+            // write the lambda entrypoint
+            builder.copy(`${lambda}/server.js`, `${tmpFnDir}/index.js`, {
+              replace: {
+                SERVER: `${relativePath}/index.js`,
+                MANIFEST: './manifest.js'
+              }
+            });
+
+            // write the manifest
+            fs.writeFileSync(
+              `${tmpFnDir}/manifest.js`,
+              `export const manifest = ${entry.generateManifest({ relativePath })};\n\n`
+            );
+
+            const outDir = path.join(lambdaOut, id);
+            // build
+            esbuild.buildSync({
+              entryPoints: [`${tmpFnDir}/index.js`],
+              outfile: `${outDir}/index.js`,
+              format: 'cjs',
+              bundle: true,
+              target: 'node16',
+              platform: 'node',
+              sourcemap: 'linked',
+              minify: true,
+              external: ['aws-sdk']
+            });
+
+            builder.copy(getPath('packages/db/prisma/schema.prisma'), `${outDir}/schema.prisma`);
+
+            // replaces relative paths to binary files in `sharp` so the bundle links correctly
+            const results = replace.sync({
+              files: `${outDir}/index.js`,
+              from: /\.\.(","|\/)(?<name>vendor|build)/g,
+              to: './node_modules/sharp/$<name>'
+            });
+
+            if (results[0].hasChanged) writeSharpBinaries(outDir);
+          }
+        };
+      });
+
+      await copyPrismaEngineFiles(prismaEngine, {
+        query: /libquery_engine/,
+        other: /(migration|prisma-fmt|introspection)/
+      });
+
       await copyPrismaClientFiles(prismaClient);
 
-      const relativePath = posix.relative(server, builder.getServerDirectory());
+      const buildRouter = async () => {
+        builder.copy(`${lambda}/router.js`, `${tmp}/_router.js`, { replace: { STATIC: './static.js' } });
 
-      builder.copy(`${lambda}/server.js`, `${server}/index.js`, {
-        replace: {
-          SERVER: `${relativePath}/index.js`,
-          MANIFEST: './manifest.js'
-        }
-      });
+        const staticFiles = [...getAllFiles(builder.getClientDirectory()), ...builder.prerendered.paths];
 
-      fs.writeFileSync(
-        `${server}/manifest.js`,
-        `export const manifest = ${builder.generateManifest({ relativePath })};\n\n`
-      );
+        fs.writeFileSync(`${tmp}/static.js`, `export const staticFiles = new Set(${JSON.stringify(staticFiles)});\n`);
 
-      builder.copy(`${lambda}/router.js`, `${tmp}/_router.js`, { replace: { STATIC: './static.js' } });
+        esbuild.buildSync({
+          entryPoints: [`${tmp}/_router.js`],
+          outfile: `${router}/index.js`,
+          format: 'cjs',
+          bundle: true,
+          platform: 'node'
+        });
+      };
 
-      const staticFiles = [...getAllFiles(builder.getClientDirectory()), ...builder.prerendered.paths];
-
-      fs.writeFileSync(`${tmp}/static.js`, `export const staticFiles = new Set(${JSON.stringify(staticFiles)});\n`);
-
-      esbuild.buildSync({
-        entryPoints: [`${tmp}/_router.js`],
-        outfile: `${router}/index.js`,
-        format: 'cjs',
-        bundle: true,
-        platform: 'node'
-      });
+      await buildRouter();
 
       builder.log.minor('Done.');
     }

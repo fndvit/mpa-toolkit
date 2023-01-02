@@ -25,19 +25,20 @@
   </div>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .collection-page {
     --page-padding: 90px;
     --page-max-content-width: 1450px;
   }
+
   .content {
-    background: #ffffff;
+    background: #fff;
     padding: 30px var(--page-padding);
     max-width: var(--page-max-content-width);
     margin: auto;
+
     h2 {
-      typography: h3-light-responsive;
+      @mixin font-responsive h3-light;
     }
   }
   @media (max-width: 1024px) {

@@ -127,15 +127,14 @@
   {/if}
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .container {
-    width: 100%;
     box-sizing: border-box;
     padding: 20px;
-    margin: 0px auto;
+    margin: 0 auto;
     width: fit-content;
-    typography: ui;
+    font: $f-ui;
+
     > .title {
       display: flex;
       align-items: center;
@@ -144,29 +143,32 @@
     }
 
     h2 {
-      typography: h2-responsive;
+      @mixin font-responsive h2;
+
       margin: 10px 0;
     }
   }
+
   .controls {
     display: flex;
     column-gap: 10px;
 
-    > input[type=file] {
+    > input[type='file'] {
       display: none;
     }
   }
 
   .fetched-data {
     margin-top: 20px;
+
     > ul {
       margin: 10px 0 20px;
       padding: 0;
       list-style: none;
+
       > li {
         margin: 5px 0;
       }
     }
   }
-
 </style>

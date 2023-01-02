@@ -14,7 +14,7 @@ async function getAuthorBySlug(slug: string) {
   return author?.id;
 }
 
-export const load: PageServerLoad = async ({ params, locals }) => {
+export const load: PageServerLoad = async ({ params, locals: { cacheKeys, withMetadata } }) => {
   const slug = params.slug.toLowerCase();
 
   if (slug !== params.slug) throw redirect(301, `/author/${slug}`);
@@ -22,8 +22,8 @@ export const load: PageServerLoad = async ({ params, locals }) => {
   const id = await getAuthorBySlug(slug);
 
   const throw404 = () => {
-    locals.cacheKeys.add('authors');
-    throw error(404, 'Page not found');
+    cacheKeys.add('authors');
+    throw error(404, { message: 'Author not found', model: 'author' });
   };
 
   if (isNaN(id)) throw404();
@@ -47,11 +47,11 @@ export const load: PageServerLoad = async ({ params, locals }) => {
     return a.createdAt.getTime() - b.createdAt.getTime();
   });
 
-  pages.map(p => p.chapter.authors.map(a => locals.cacheKeys.add(`author-${a.id}`)));
-  locals.cacheKeys.add('pages');
-  locals.cacheKeys.add('tags');
+  pages.map(p => p.chapter.authors.map(a => cacheKeys.add(`author-${a.id}`)));
+  cacheKeys.add('pages');
+  cacheKeys.add('tags');
 
   if (!pages) throw404();
 
-  return { pages, title: author.name, bio: author.bio };
+  return withMetadata({ pages, title: author.name, bio: author.bio });
 };

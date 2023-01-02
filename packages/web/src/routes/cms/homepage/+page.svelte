@@ -59,32 +59,28 @@
   </button>
 </div>
 
-<style lang="stylus">
-
+<style lang="postcss">
   .material-icons {
     font-size: 60px;
   }
 
- .cms-pageordering {
+  .cms-pageordering {
+    margin-top: 40px;
+    text-align: center;
 
-
-  margin-top: 40px;
-
-  text-align: center;
-
-    button{
+    button {
       height: 50px;
       width: 150px;
       text-align: center;
-      typography: ui-large;
+      font: $f-ui-large;
     }
 
     h3 {
-      typography: h3-light-responsive;
+      @mixin font-responsive h3-light;
+
       margin-bottom: 40px;
       text-align: center;
     }
-
   }
 
   .grid-links {
@@ -94,25 +90,23 @@
     justify-content: center;
 
     .item {
-      typography: ui;
+      font: $f-ui;
       color: black;
       cursor: pointer;
       text-transform: uppercase;
       display: flex;
-      // flex-direction: column;
       text-decoration: none;
       align-items: center;
-      // justify-content: space-between;
       column-gap: 40px;
       background: white;
       border-radius: 24px;
-      box-shadow: 0px 1px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 16px rgb(0 0 0 / 10%);
       padding: 20px 40px;
       width: 300px;
       box-sizing: border-box;
 
       &:hover {
-        background: $colors.neutral-bg;
+        background: $c-neutral-bg;
         text-decoration: none;
       }
     }
@@ -123,10 +117,10 @@
     align-items: center;
     justify-content: center;
     column-gap: 15px;
+
     &:not(.saving) {
       visibility: hidden;
       display: none;
     }
   }
-
 </style>

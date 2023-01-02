@@ -101,7 +101,7 @@ export class Server extends Construct {
           exclude: ['**/*.js', '**/node_modules', '**/*.prisma']
         })
       ],
-      destinationKeyPrefix: 'sourcemaps/',
+      destinationKeyPrefix: `${stage}/sourcemaps/`,
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
       retainOnDelete: true,
       prune: false

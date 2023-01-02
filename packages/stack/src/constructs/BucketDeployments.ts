@@ -20,7 +20,7 @@ export class BucketDeployments extends Construct {
     new s3_deployment.BucketDeployment(this, 'Immutable', {
       destinationBucket: assetBucket,
       sources: [s3_deployment.Source.asset(`${assetsDir}/_app`)],
-      destinationKeyPrefix: `${stage}/_app/`,
+      destinationKeyPrefix: `_app/`,
       cacheControl: [s3_deployment.CacheControl.fromString('max-age=31536000, public, immutable')],
       retainOnDelete: true,
       prune: false

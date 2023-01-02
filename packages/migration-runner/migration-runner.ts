@@ -72,6 +72,7 @@ const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
 
   return {
     location,
+    key: timestampedKey,
     bytes
   };
 };

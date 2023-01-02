@@ -32,7 +32,7 @@ export class MigrationRunner extends Construct {
       timeout: Duration.seconds(60),
       vpc,
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_ISOLATED
+        subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS
       },
       runtime: lambda.Runtime.NODEJS_16_X,
       environment: {

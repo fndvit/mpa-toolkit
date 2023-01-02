@@ -122,7 +122,7 @@ class MpathStack extends Stack {
       description: "SNS topic 'content'"
     });
 
-    new BucketDeployments(this, 'BucketDeployments', { assetBucket });
+    new BucketDeployments(this, 'BucketDeployments', { assetBucket, stage });
 
     new CfnOutput(this, `DatabaseURL`, { value: db.url });
     new CfnOutput(this, `MigrationRunnerLambdaArn`, { value: migrationRunner.lambda.functionArn });

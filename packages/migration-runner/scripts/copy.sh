@@ -4,7 +4,7 @@ target_dir="/pg_binaries/"
 rm -rf /pg_binaries/*
 mkdir -p "$target_dir"
 
-SHARED_LIBS="libcrypt.so.1 liblber-2.4.so.2 libldap_r-2.4.so.2 libnss3.so libsasl2.so.3 libsmime3.so libssl3.so"
+SHARED_LIBS="libcrypt.so.1 liblber-2.4.so.2 libldap_r-2.4.so.2 libnss3.so libsasl2.so.3 libsmime3.so libssl3.so libreadline.so.6"
 PG_BINARIES="pg_dump psql"
 PG_LIBS="libpq.so.5"
 

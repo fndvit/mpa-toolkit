@@ -40,18 +40,6 @@ export async function getStackOutputs(stackName: string) {
 const isShared = (shared: boolean) => (s: AWS.ResourceGroupsTaggingAPI.ResourceTagMapping) =>
   !!s.Tags?.find(t => t.Key === 'Environment' && (t.Value === 'shared') === shared);
 
-const isAdminBucket = (r: AWS.CloudFormation.StackResourceSummary) =>
-  r.LogicalResourceId.startsWith('AdminBucket') && r.ResourceType === 'AWS::S3::Bucket';
-
-export const getStackResources = async (stackName: string) =>
-  cf
-    .listStackResources({ StackName: stackName })
-    .promise()
-    .then(({ StackResourceSummaries }) => {
-      if (!StackResourceSummaries) throw new Error('No shared resources found');
-      return StackResourceSummaries;
-    });
-
 export const getStacks = async () => {
   const resources = await tag
     .getResources({
@@ -82,10 +70,9 @@ export const getStacks = async () => {
 };
 
 export async function getAdminBucket(stackName: string) {
-  const sharedStackResources = await getStackResources(stackName);
-  const adminBucketName = sharedStackResources.find(isAdminBucket)?.PhysicalResourceId;
-  if (!adminBucketName) throw new Error(`No admin bucket found\n\n${JSON.stringify(sharedStackResources, null, 2)}}`);
-  return adminBucketName;
+  const stackOutputs = await getStackOutputs(stackName);
+  if (!stackOutputs.AdminBucketName) throw new Error(`No admin bucket found in stack outputs (AdminBucketName)`);
+  return stackOutputs.AdminBucketName;
 }
 
 export async function getMigrationRunnerArn(stackName: string) {

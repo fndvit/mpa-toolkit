@@ -15,5 +15,5 @@
       "@mpa/*": ["packages/*"]
     }
   },
-  "exclude": ["node_modules", "dist", "build"]
+  "exclude": ["node_modules", "packages/*/dist", "packages/*/build", "packages/*/cdk.out", "packages/*/node_modules"]
 }

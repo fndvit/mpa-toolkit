@@ -1,5 +1,5 @@
 import type { Handler } from 'aws-lambda';
-import { DevSeeder, ProdSeeder, initDatabase } from '@mpa/db';
+import { DbSeeder, initDatabase } from '@mpa/db';
 import { prismaCmd } from '@mpa/utils/prisma/cmd';
 import { logger } from '@mpa/log';
 import { getEnv } from '@mpa/env';
@@ -38,6 +38,7 @@ const getDatabaseParams = () => {
   return { user, pass, host, port, database };
 };
 
+export type SqlDump = Awaited<ReturnType<typeof sqlDump>>;
 const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
   if (!dumpType) throw new Error('dumpType is required');
 
@@ -69,9 +70,9 @@ const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
     })
     .promise();
 
-  const bytes = Buffer.byteLength(output).toLocaleString();
+  const bytes = Buffer.byteLength(output);
 
-  if (!response.$response.error) log.info(`Uploaded ${bytes} bytes to ${location}`);
+  if (!response.$response.error) log.info(`Uploaded ${bytes.toLocaleString()} bytes to ${location}`);
   else log.error(response.$response.error);
 
   return {
@@ -123,8 +124,7 @@ export const handler: Handler = async event => {
 
   log.info(`Running migration command: ${payload.command}`);
 
-  if (payload.command === 'seed') await new ProdSeeder(initDatabase()).migrate();
-  else if (payload.command === 'seed:dev') await new DevSeeder(initDatabase()).seed();
+  if (payload.command === 'seed') await new DbSeeder(initDatabase()).migrate();
   else if (payload.command === 'reset') return prismaCmd('migrate reset --force --skip-generate');
   else if (payload.command === 'deploy') return prismaCmd('migrate deploy');
   else if (payload.command === 'sql_dump') return sqlDump(payload);

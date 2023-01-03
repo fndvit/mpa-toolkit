@@ -1,4 +1,4 @@
-import SNSClient, { type PublishInput } from 'aws-sdk/clients/sns';
+import SNSClient, { type PublishInput } from 'aws-sdk/clients/sns.js';
 import { getEnv } from '@mpa/env';
 import { logger } from '@mpa/log';
 

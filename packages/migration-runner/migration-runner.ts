@@ -20,7 +20,7 @@ interface SqlLoadPayload {
 }
 interface SqlDumpPayload {
   command: 'sql_dump';
-  dumpType: 'manual' | 'scheduled';
+  dumpType: 'manual' | 'scheduled' | 'pipe';
 }
 
 type CmdWithArguments = (SqlLoadPayload | SqlDumpPayload)['command'];
@@ -50,6 +50,10 @@ const sqlDump = async ({ dumpType }: SqlDumpPayload) => {
     },
     encoding: 'utf-8'
   });
+
+  if (dumpType === 'pipe') {
+    return { output } as { output: string };
+  }
 
   const timestamp = new Date().toISOString().replace(/[:.-]/g, '');
   const timestampedKey = `dumps/${dumpType}/${env.STACK_NAME}-${timestamp}.sql`;

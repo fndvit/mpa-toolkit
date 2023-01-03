@@ -14,7 +14,8 @@
     "stack": "pnpm -F @mpa/stack",
     "scripts": "pnpm -F @mpa/scripts",
     "log": "pnpm -F @mpa/log",
-    "utils": "pnpm -F @mpa/utils"
+    "utils": "pnpm -F @mpa/utils",
+    "setup": "pnpm -F @mpa/scripts i && pnpm scripts run setup"
   },
   "workspaces": [
     "packages/*"

@@ -6,6 +6,8 @@
   "scripts": {
     "depcheck": "esno ./src/depcheck.ts",
     "seed": "esno ./src/seed.ts",
+    "db": "esno ./src/db.ts",
+    "setup": "esno ./src/setup.ts"
   },
   "dependencies": {
     "@mpa/db": "workspace:^1.0.0",
@@ -15,10 +17,19 @@
     "chalk": "^5.0.1",
     "depcheck": "^1.4.3",
     "globby": "^13.1.2",
-    "got": "^12.3.1",
-    "listr2": "^5.0.5"
+    "got": "^12.3.1"
   },
   "prisma": {
     "schema": "../db/prisma/schema.prisma"
+  },
+  "devDependencies": {
+    "@mpa/migration-runner": "workspace:^1.0.0",
+    "@types/prompts": "^2.4.2",
+    "colorette": "^2.0.19",
+    "esno": "^0.16.3",
+    "listr2": "^5.0.6",
+    "prompts": "^2.4.2",
+    "s-ago": "^2.2.0",
+    "shelljs": "^0.8.5"
   }
 }

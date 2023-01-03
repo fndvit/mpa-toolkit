@@ -4,9 +4,11 @@ build
 dist
 cdk.out
 .svelte-kit
+.dumps
 .env
 .env.*
-!.env.example
+!.env.local.base
+!.env.test
 .vscode/*
 !.vscode/extensions.json
 .tmp
@@ -14,3 +16,4 @@ cdk.out
 test-results
 playwright-report
 playwright/.cache/
+packages/migration-runner/pg_binaries

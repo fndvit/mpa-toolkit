@@ -11,7 +11,7 @@
     "synth": "pnpm build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
-    "test": "vitest",
+    "test": "pnpm prepare:e2e && pnpm test:e2e",
     "lint:css": "stylelint \"src/**/*.svelte\"",
     "prepare:e2e": "TEST=1 pnpm -F '@mpa/web'... -F=!'@mpa/migration-runner' build && svelte-kit sync && pnpm -F @mpa/db testdb:load",
     "test:e2e": "npx playwright test"

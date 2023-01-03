@@ -5,10 +5,7 @@
   "type": "module",
   "scripts": {
     "depcheck": "esno ./src/depcheck.ts",
-    "nuke": "esno ./src/db/nuke.ts",
-    "seedmigrate": "esno ./src/db/migrate.ts",
-    "seed": "esno ./src/db/seed.ts",
-    "reset": "esno ./src/db/reset.ts"
+    "seed": "esno ./src/seed.ts",
   },
   "dependencies": {
     "@mpa/db": "workspace:^1.0.0",

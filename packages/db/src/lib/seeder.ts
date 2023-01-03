@@ -1,21 +1,9 @@
 import { TagType } from '@prisma/client';
-import type { MpaDatabase } from '../../db';
-import tags from '../data/tags.json';
+import type { MpaDatabase } from '../db';
+import tags from './data/tags.json';
 
-export class BaseSeeder {
-  db: MpaDatabase;
-
-  constructor(db: MpaDatabase) {
-    this.db = db;
-  }
-
-  async clearContent() {
-    const tables = ['search', 'caseStudy', 'chapter', 'tagsOnPages', 'page', 'tag', 'author', 'keyValue'];
-    for (const table of tables) {
-      console.log(`Clearing table "${table}"...`);
-      await this.db.prisma[table].deleteMany();
-    }
-  }
+export class DbSeeder {
+  constructor(public db: MpaDatabase) {}
 
   createBaseTags = async () => {
     const invalidTags = await this.db.prisma.tag.findMany({
@@ -52,4 +40,9 @@ export class BaseSeeder {
 
   createHomepageComponents = () =>
     this.db.homepage.updateComponents(['lifecycle', 'chapters', 'search', 'madlib', 'casestudies']);
+
+  async migrate() {
+    console.log('Creating base tags...');
+    await this.createBaseTags();
+  }
 }

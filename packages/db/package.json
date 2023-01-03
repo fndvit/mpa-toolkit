@@ -14,19 +14,14 @@
     "dist"
   ],
   "scripts": {
-    "prepare": "prisma generate",
     "generate": "prisma generate",
     "migrate": "pnpm migrate:local && pnpm migrate:test",
-    "migrate:local": "dotenv -e ../../.env prisma migrate dev",
-    "migrate:test": "dotenv -e ../../.env prisma migrate dev",
-    "reset": "pnpm -F @mpa/scripts run reset",
-    "nuke": "pnpm -F @mpa/scripts run nuke",
-    "seed": "pnpm -F @mpa/scripts run seed",
-    "seedmigrate": "pnpm -F @mpa/scripts run seedmigrate",
+    "migrate:local": "dotenv -e ../../.env.local.base prisma migrate dev",
+    "migrate:test": "dotenv -e ../../.env.test prisma migrate dev",
     "docker:up": "docker-compose -p mpa up -d",
     "docker:down": "docker-compose -p mpa down",
     "testdb:dump": "docker-compose -p mpa exec db-test /data/dump.sh",
-    "testdb:load": "node ./test/db/up.js",
+    "testdb:load": "esno ./test/db/up.ts",
     "test": "vitest --no-threads",
     "dev": "tsup --watch",
     "build": "tsup",
@@ -42,13 +37,12 @@
     "aws-xray-sdk-core": "^3.4.0",
     "clone": "^2.1.2",
     "compute-cosine-similarity": "^1.0.0",
-    "google-auth-library": "^8.7.0",
-    "lorem-ipsum": "^2.0.8",
-    "seedrandom": "^3.0.5"
+    "google-auth-library": "^8.7.0"
   },
   "devDependencies": {
     "docker-compose": "^0.23.17",
     "dotenv-cli": "^6.0.0",
+    "esno": "^0.16.3",
     "prisma": "^4.8.0",
     "type-fest": "^3.5.0",
     "vitest": "^0.21.1"

@@ -13,7 +13,7 @@
 
 <div class="container" style="background-image: url({landingMadlibBg})">
   <div class="mpath-logo">
-    <InlineSvgLink href="/" svg="MPATH" />
+    <InlineSvgLink href="/" svg="UNEP" />
   </div>
 
   <div class="content">
@@ -84,8 +84,7 @@
 
   .mpath-logo {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    margin: 2rem;
     width: 110px;
     color: white;
   }

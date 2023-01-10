@@ -18,7 +18,7 @@
   const options = SplideOptions({
     type: 'loop',
     perMove: 1,
-    gap: '100px',
+    gap: '60px',
     autoWidth: true,
     width: '100%',
     focus: 'center',
@@ -79,7 +79,7 @@
 
     :global(.splide__arrow) {
       background-color: $c-neutral-bg;
-      opacity: 0.5;
+      opacity: 0.7;
     }
 
     :global(.splide__arrow:hover) {

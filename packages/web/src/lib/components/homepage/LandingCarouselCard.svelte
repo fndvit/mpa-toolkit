@@ -22,11 +22,11 @@
       <span><h3>{getPageDisplayTitle(page)}</h3></span>
       <!-- TODO: a11y -->
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-      <div class="circle-button" tabindex="0">
+      <!-- <div class="circle-button" tabindex="0">
         <svg class="arrow-svg" viewBox="0 0 12 20">
           <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
         </svg>
-      </div>
+      </div> -->
     </div>
 
     <div>
@@ -42,7 +42,7 @@
 
 <style lang="postcss">
   .landing-carousel-card {
-    --lcc-width: 766px;
+    --lcc-width: 600px;
 
     display: flex;
     flex-direction: column;
@@ -97,7 +97,7 @@
     stroke-width: 2.4px;
   }
 
-  .circle-button {
+  /* .circle-button {
     display: flex;
     flex: 0 0 72px;
     justify-content: center;
@@ -112,7 +112,7 @@
 
   .circle-button:hover {
     box-shadow: 0 3px 16px rgb(0 0 0 / 35%);
-  }
+  } */
 
   .tags-title {
     margin: 2.5rem 0 1rem;
@@ -169,7 +169,7 @@
       }
     }
 
-    .circle-button,
+    /* .circle-button, */
     .tags-title {
       display: none;
     }

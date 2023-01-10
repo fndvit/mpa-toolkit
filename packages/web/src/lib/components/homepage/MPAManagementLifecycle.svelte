@@ -64,6 +64,8 @@
     }));
 
   $: href = `/tag/${slugify(tags[currentPageIndex].tag)}/`;
+
+  let currentTagHovered;
 </script>
 
 <div class="landing-lifecycle" style="background-image: url({landingLifecycle});">
@@ -83,12 +85,34 @@
   </div>
   <div class="column3">
     <div class="circle-menu">
-      <CircleMenu data={menuData} bind:currentPageIndex />
+      {#if currentTagHovered != null}
+        <div class="info-text">
+          {currentTagHovered}
+        </div>
+      {/if}
+      <CircleMenu data={menuData} bind:currentSegmentHovered={currentTagHovered} bind:currentPageIndex />
     </div>
   </div>
 </div>
 
 <style lang="postcss">
+
+  .info-text {
+    position: absolute;
+    width: 45%;
+    height: 45%;
+    font: $f-ui-small;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    animation: fade-in ease-in-out 0.5s;
+    z-index: 5;
+    color: #000;
+  }
+
+
   .landing-lifecycle {
     width: 100%;
     height: 900px;
@@ -152,19 +176,19 @@
     }
 
     .circle-menu {
-      width: 800px;
-      height: 800px;
+      width: 700px;
+      height: 700px;
     }
 
-    @media (max-width: 1575px) {
+    @media (max-width: 1280px) {
       .circle-menu {
-        width: 700px;
-        height: 700px;
+        width: 600px;
+        height: 600px;
       }
     }
   }
 
-  @media (max-width: 1280px) {
+  @media (max-width: 1024px) {
     .landing-lifecycle {
       width: 100%;
       height: auto;
@@ -185,6 +209,11 @@
 
       .column3 {
         order: 2;
+      }
+
+      .circle-menu {
+        width: 600px;
+        height: 600px;
       }
     }
   }

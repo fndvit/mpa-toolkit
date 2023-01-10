@@ -7,7 +7,7 @@
     <h5>A partnership between</h5>
 
     <div class="partners-grid">
-      <InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab />
+      <!--<InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab />-->
       <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab />
       <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       <div class="partners-grid-2">
@@ -50,7 +50,7 @@
 
   .partners-grid {
     display: grid;
-    grid-template-columns: 102px 87px 39px 1fr;
+    grid-template-columns: 87px 39px 1fr;
     align-items: center;
     gap: 45px;
     color: $c-neutral-dark;
@@ -83,7 +83,7 @@
 
   @media (max-width: 1024px) {
     .partners-grid {
-      grid-template-columns: 126px 87px 39px;
+      grid-template-columns: 87px 39px;
       grid-template-rows: auto;
       margin-top: 1rem;
     }

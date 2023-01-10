@@ -41,12 +41,13 @@
   const objectiveVerbList = ['plan new MPAs', 'evaluate progress', 'eneble decision-making'];
   const actionSubjectList = ['government', 'communities', 'private sector', 'civil society'];
 
-  export let value: string[] = [null, null, null, null];
+  export let value: string[] = ['MPA planner', 'restore areas', 'plan new MPAs', 'government'];
   export let slug = '';
   export let tags: string[] = [];
 
   $: tags = value.map(v => TAG_VALUES[v]);
   $: slug = tags.map(t => slugify(t)).join('+');
+  $: console.log({tags}, {value});
 </script>
 
 <p class="madlib">

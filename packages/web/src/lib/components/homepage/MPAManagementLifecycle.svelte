@@ -65,10 +65,29 @@
 
   $: href = `/tag/${slugify(tags[currentPageIndex].tag)}/`;
 
-  let currentTagHovered;
+  let currentTagHovered: number;
+
+  let mx, my;
+
+  function handleMousemove(event) {
+		mx = event.pageX;
+		my = event.pageY;
+	}
+
 </script>
 
+<svelte:window on:mousemove={handleMousemove} />
+
 <div class="landing-lifecycle" style="background-image: url({landingLifecycle});">
+
+  {#if (currentTagHovered != null)}
+    <div class="tooltip-area" style="--x-position: {mx}px; --y-position: {my}px;" >
+      <div class="tooltip-text">
+        {tags[currentTagHovered].tag}
+      </div>
+    </div>
+  {/if}
+
   <div class="column1">
     <h2>What's the <b>MPA life cycle</b></h2>
   </div>
@@ -85,31 +104,40 @@
   </div>
   <div class="column3">
     <div class="circle-menu">
-      {#if currentTagHovered != null}
-        <div class="info-text">
-          {currentTagHovered}
-        </div>
-      {/if}
       <CircleMenu data={menuData} bind:currentSegmentHovered={currentTagHovered} bind:currentPageIndex />
     </div>
   </div>
 </div>
 
+
 <style lang="postcss">
 
-  .info-text {
+  .tooltip-area {
+    display: block;
     position: absolute;
-    width: 45%;
-    height: 45%;
-    font: $f-ui-small;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+    pointer-events: none;
+    top: calc(var(--y-position) - 4.5rem);
+    left: var(--x-position);
     animation: fade-in ease-in-out 0.5s;
-    z-index: 5;
-    color: #000;
+  }
+
+  .tooltip-text {
+    @mixin font-responsive h4;
+    transform: translateX(-47.5%);
+    background-color: $c-highlight-1;
+    padding: 15px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
 
 

@@ -47,7 +47,6 @@
 
   $: tags = value.map(v => TAG_VALUES[v]);
   $: slug = tags.map(t => slugify(t)).join('+');
-  $: console.log({tags}, {value});
 </script>
 
 <p class="madlib">

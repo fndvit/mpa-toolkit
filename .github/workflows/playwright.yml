@@ -72,11 +72,11 @@ jobs:
         key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
 
     - name: Install playwright
-      run: pnpm dlx playwright install --with-deps
+      run: pnpm dlx playwright@1.29.2 install --with-deps
       if: steps.playwright-cache.outputs.cache-hit != 'true'
       
     - name: Install playwright dependencies
-      run: pnpm dlx playwright install-deps
+      run: pnpm dlx playwright@1.29.2 install-deps
       if: steps.playwright-cache.outputs.cache-hit == 'true'
 
     - name: Build and set up db

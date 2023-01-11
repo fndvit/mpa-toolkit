@@ -54,7 +54,15 @@
     { tag: 'Future proofing and adaptation', sentence: 'future proofing and adapting' }
   ];
 
+  function handleMousemove(event) {
+		xCoord = event.pageX;
+		yCoord = event.pageY;
+	}
+
   let currentPageIndex = 0;
+  let currentTagHovered: number;
+  let xCoord: number;
+  let yCoord: number;
 
   $: menuData =
     currentPageIndex >= 0 &&
@@ -65,29 +73,18 @@
 
   $: href = `/tag/${slugify(tags[currentPageIndex].tag)}/`;
 
-  let currentTagHovered: number;
-
-  let mx, my;
-
-  function handleMousemove(event) {
-		mx = event.pageX;
-		my = event.pageY;
-	}
-
 </script>
 
 <svelte:window on:mousemove={handleMousemove} />
 
 <div class="landing-lifecycle" style="background-image: url({landingLifecycle});">
-
   {#if (currentTagHovered != null)}
-    <div class="tooltip-area" style="--x-position: {mx}px; --y-position: {my}px;" >
+    <div class="tooltip-area" style="--x-position: {xCoord}px; --y-position: {yCoord}px;" >
       <div class="tooltip-text">
         {tags[currentTagHovered].tag}
       </div>
     </div>
   {/if}
-
   <div class="column1">
     <h2>What's the <b>MPA life cycle</b></h2>
   </div>
@@ -134,12 +131,10 @@
     0% {
       opacity: 0;
     }
-
     100% {
       opacity: 1;
     }
   }
-
 
   .landing-lifecycle {
     width: 100%;

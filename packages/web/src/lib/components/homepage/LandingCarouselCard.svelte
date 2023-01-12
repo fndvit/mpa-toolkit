@@ -36,9 +36,9 @@
 </a>
 
 <style lang="postcss">
+
   .landing-carousel-card {
     --lcc-width: 600px;
-
     display: flex;
     flex-direction: column;
     width: var(--lcc-width);
@@ -80,18 +80,6 @@
     text-decoration: none;
   }
 
-  .arrow-svg {
-    width: 12px;
-    height: 20px;
-    fill: none;
-    transform: translateX(2px);
-  }
-
-  .arrow-path {
-    stroke: $c-neutral-black;
-    stroke-width: 2.4px;
-  }
-
   .tags-title {
     margin: 2.5rem 0 1rem;
 
@@ -118,7 +106,6 @@
 
     h3 {
       @mixin font-responsive h3-light;
-
       margin: 0;
     }
   }

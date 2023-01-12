@@ -33,7 +33,6 @@
     </h4>
     <h5>In partnership with</h5>
     <div class="partners-grid">
-      <!-- <InlineSvgLink href="https://www.unep.org" svg="UNEP" newTab /> -->
       <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab />
       <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       <div class="partners-grid-2">

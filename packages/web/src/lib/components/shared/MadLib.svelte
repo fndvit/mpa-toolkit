@@ -38,7 +38,7 @@
     'promote ecotorurism',
     "(I don't know)"
   ];
-  const objectiveVerbList = ['plan new MPAs', 'evaluate progress', 'eneble decision-making'];
+  const objectiveVerbList = ['plan new MPAs', 'evaluate progress', 'enable decision-making'];
   const actionSubjectList = ['government', 'communities', 'private sector', 'civil society'];
 
   export let value: string[] = ['MPA planner', 'restore areas', 'plan new MPAs', 'government'];

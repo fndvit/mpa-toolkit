@@ -20,8 +20,6 @@
   <div class="preview-content">
     <div class="title">
       <span><h3>{getPageDisplayTitle(page)}</h3></span>
-      <!-- TODO: a11y -->
-      <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
     </div>
 
     <div>

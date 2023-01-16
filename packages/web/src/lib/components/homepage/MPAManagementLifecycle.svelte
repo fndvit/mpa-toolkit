@@ -54,15 +54,15 @@
     { tag: 'Future proofing and adaptation', sentence: 'future proofing and adapting' }
   ];
 
-  function handleMousemove(event) {
-		xCoord = event.pageX;
-		yCoord = event.pageY;
-	}
-
   let currentPageIndex = 0;
   let currentTagHovered: number;
   let xCoord: number;
   let yCoord: number;
+
+  function handleMousemove(event: MouseEvent) {
+		xCoord = event.pageX;
+		yCoord = event.pageY;
+	}
 
   $: menuData =
     currentPageIndex >= 0 &&
@@ -78,13 +78,6 @@
 <svelte:window on:mousemove={handleMousemove} />
 
 <div class="landing-lifecycle" style="background-image: url({landingLifecycle});">
-  {#if (currentTagHovered != null)}
-    <div class="tooltip-area" style="--x-position: {xCoord}px; --y-position: {yCoord}px;" >
-      <div class="tooltip-text">
-        {tags[currentTagHovered].tag}
-      </div>
-    </div>
-  {/if}
   <div class="column1">
     <h2>What's the <b>MPA life cycle</b></h2>
   </div>
@@ -101,30 +94,36 @@
   </div>
   <div class="column3">
     <div class="circle-menu">
+      {#if (currentTagHovered != null)}
+        <div class="tooltip" style="--x-position: {xCoord}px; --y-position: {yCoord}px;">
+          {tags[currentTagHovered].tag}
+        </div>
+      {/if}
       <CircleMenu data={menuData} bind:currentSegmentHovered={currentTagHovered} bind:currentPageIndex />
     </div>
   </div>
+
 </div>
 
 
 <style lang="postcss">
 
-  .tooltip-area {
+  .tooltip {
+    --horizontal-tooltip-offset: 175px;
     display: block;
     position: absolute;
     pointer-events: none;
-    top: calc(var(--y-position) - 4.5rem);
-    left: var(--x-position);
-    animation: fade-in ease-in-out 0.5s;
-  }
-
-  .tooltip-text {
-    @mixin font-responsive h4;
+    top: calc(var(--y-position) - 4.25rem);
+    left: clamp(var(--horizontal-tooltip-offset), var(--x-position), calc(100% - var(--horizontal-tooltip-offset)));
     transform: translateX(-47.5%);
+    z-index: 10;
     background-color: $c-highlight-1;
     padding: 15px;
     border-radius: 25px;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+    @mixin font-responsive h4;
+    animation: fade-in ease-in-out 0.5s;
   }
 
   @keyframes fade-in {
@@ -158,7 +157,6 @@
 
       button {
         @mixin font-responsive h4;
-
         font-weight: 400 !important;
         font-size: 1rem !important;
         display: flex;
@@ -212,6 +210,11 @@
   }
 
   @media (max-width: 1024px) {
+
+    .tooltip {
+      display: none;
+    }
+
     .landing-lifecycle {
       width: 100%;
       height: auto;

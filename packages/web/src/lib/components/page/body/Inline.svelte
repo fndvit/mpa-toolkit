@@ -4,4 +4,4 @@
   export let block: InlineBlock;
 </script>
 
-{#if block.type === 'text'}<Text {block} />{:else}UNKNOWN BLOCK{/if}
+{#if block.type === 'text'}<Text {block} />{:else}UNKNOWN BLOCK ({block.type}){/if}

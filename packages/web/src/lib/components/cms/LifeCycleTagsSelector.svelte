@@ -12,7 +12,7 @@
   let selectedTagOptions = tags.map(tagToOption);
 
   $: filterFunc = (op: TagOption) => (hideTagIds ? !hideTagIds.has(op.tag.id) : true);
-  $: availableTagOptions = availableTags.map(tagToOption);
+  $: availableTagOptions = availableTags.map(tagToOption).sort((a, b) => a.tag.value.localeCompare(b.tag.value));
   $: tags = selectedTagOptions.map(o => o.tag);
 </script>
 

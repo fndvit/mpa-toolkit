@@ -8,6 +8,8 @@
 
   let selected: (Option & { value: Tag })[] = [];
 
+  $: options = tags.map(t => ({ label: t.value, value: t })).sort((a, b) => a.label.localeCompare(b.label));
+
   $: activeTags = selected.map(o => o.value);
 </script>
 
@@ -17,7 +19,7 @@
     liSelectedClass="tag-multiselect__option--selected"
     placeholder="Select a tag"
     bind:selected
-    options={tags.map(t => ({ label: t.value, value: t }))}
+    {options}
   />
 </div>
 

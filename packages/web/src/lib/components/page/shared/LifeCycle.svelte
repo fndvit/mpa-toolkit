@@ -58,11 +58,14 @@
     return groupBy(sortedTags, t => t.tag.type);
   }
 
+  const mapTags = (tags: Tag[], category: PageTag['category']): PageTag[] =>
+    tags?.map(tag => ({ tag, category })) || [];
+
   $: tags = [
-    ...tagsGrouped.STAGE?.PRIMARY?.map<PageTag>(tag => ({ tag, category: 'PRIMARY' })),
-    ...tagsGrouped.STAGE?.SECONDARY?.map<PageTag>(tag => ({ tag, category: 'SECONDARY' })),
-    ...tagsGrouped.TOPIC?.map<PageTag>(tag => ({ tag, category: 'PRIMARY' })),
-    ...tagsGrouped.USER?.map<PageTag>(tag => ({ tag, category: 'PRIMARY' }))
+    ...mapTags(tagsGrouped.STAGE?.PRIMARY, 'PRIMARY'),
+    ...mapTags(tagsGrouped.STAGE?.SECONDARY, 'SECONDARY'),
+    ...mapTags(tagsGrouped.TOPIC, 'PRIMARY'),
+    ...mapTags(tagsGrouped.USER, 'PRIMARY')
   ];
 
   $: selectedStageTagIds = {

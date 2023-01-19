@@ -8,8 +8,6 @@ import * as schemaHomepageComponents from './schema/homepage-components.json';
 
 export const ajv = new Ajv({ removeAdditional: true });
 
-// const log = logger.child({ scope: 'validate' });
-
 ajv.addSchema(schemaPage);
 ajv.addSchema(schemaUser);
 ajv.addSchema(schemaTag);
@@ -21,11 +19,12 @@ interface Validate {
   errors?: AnyValidateFunction<unknown>['errors'];
 }
 
-class ValidationError {
+export class ValidationError extends Error {
   errors: ErrorObject[];
   data: unknown;
 
   constructor(data: unknown, errors: ErrorObject[]) {
+    super(`Validation failed: ${errors.map(e => `${e.instancePath}`).join(', ')}`);
     this.data = data;
     this.errors = errors;
   }

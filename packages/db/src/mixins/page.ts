@@ -212,6 +212,13 @@ export class PageMixin extends DBMixin<[TagMixin]> {
     return _page;
   }
 
+  async rebuildSearchIndex() {
+    const [{ count }] = await this.db.prisma.$queryRaw<
+      [{ count: bigint }]
+    >`SELECT count(create_page_search_index(p.id)) from "Page" p`;
+    return Number(count);
+  }
+
   async getPageByType(type?: 'chapter' | 'case-study') {
     return this.db.prisma.page.findMany({
       where: {

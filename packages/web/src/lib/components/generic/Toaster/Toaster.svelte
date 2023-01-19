@@ -6,7 +6,13 @@
   {#each $toaster as toast (toast.id)}
     <div class="toast" data-type={toast.type}>
       <div class="material-icons">{toast.type}</div>
-      {toast.text}
+      <div>
+        {#each toast.text.split('\n') as line (line)}
+          <p>
+            {line}
+          </p>
+        {/each}
+      </div>
     </div>
   {/each}
 </div>
@@ -23,6 +29,10 @@
     flex-direction: column;
     row-gap: 10px;
     max-width: 400px;
+
+    p {
+      margin: 0;
+    }
   }
 
   @keyframes animate-toast {

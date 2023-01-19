@@ -63,10 +63,11 @@
     {:else if editingURL}
       <form
         class="linkcard-url"
-        on:submit={() => {
+        on:submit={e => {
           card.url = editUrl;
           editingURL = false;
           getMetaData();
+          e.preventDefault();
         }}
       >
         <div class="linkcard-url-input-wrapper">

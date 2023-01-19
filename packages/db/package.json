@@ -16,7 +16,7 @@
   "scripts": {
     "generate": "prisma generate",
     "migrate": "pnpm migrate:local && pnpm migrate:test",
-    "migrate:local": "dotenv -e ../../.env.base prisma migrate dev",
+    "migrate:local": "pnpm prisma migrate dev",
     "migrate:test": "dotenv -e ../../.env.test prisma migrate dev",
     "docker:up": "docker-compose -p mpa up -d",
     "docker:down": "docker-compose -p mpa down",
@@ -25,7 +25,8 @@
     "test": "vitest --no-threads",
     "dev": "tsup --watch",
     "build": "prisma generate && tsup",
-    "clean": "rimraf ./dist"
+    "clean": "rimraf ./dist",
+    "prisma": "dotenv -e ../../.env.base prisma --"
   },
   "dependencies": {
     "@mpa/env": "workspace:*",

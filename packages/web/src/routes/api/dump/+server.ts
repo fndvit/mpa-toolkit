@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { db } from '$lib/db';
 import { env } from '$lib/env';
+import { apiEndpoint } from '$lib/helpers/endpoints';
 
 async function createDump() {
   const authors = await db.prisma.author.findMany();
@@ -24,12 +25,12 @@ async function createDump() {
   };
 }
 
-export const GET: RequestHandler = async () => {
+export const GET = apiEndpoint<RequestHandler>(async () => {
   const dump = await createDump();
   return json(dump);
-};
+});
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST = apiEndpoint<RequestHandler>(async ({ request }) => {
   if (env.PUBLIC_DB_RESTORE !== 'true') return json({ error: 'Not allowed' }, { status: 403 });
 
   const data = (await request.json()) as Awaited<ReturnType<typeof createDump>>;
@@ -66,4 +67,4 @@ export const POST: RequestHandler = async ({ request }) => {
   }
 
   return json({ status: 'ok' });
-};
+});

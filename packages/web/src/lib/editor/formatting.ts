@@ -131,7 +131,7 @@ export const formattingPlugin = new FormattingPlugin({
       inline: true,
       msg: 'Multiple spaces',
       check: (node, parent) => {
-        const matches = findAllMatches(node.textContent.replace(/\*TODO.*?\*/g, ''), /\s\s+/g);
+        const matches = findAllMatches(node.textContent, /(?<!(\*TODO:[^*]*))\s\s+/g);
         // pop first match if it's at the start of a block (handled by leading-space rule)
         if (matches[0]?.index === 0 && parent.child(0) === node) matches.shift();
         return matches ? matches.map(m => ({ from: m.index, to: m.index + m[0].length })) : false;

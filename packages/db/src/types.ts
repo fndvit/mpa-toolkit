@@ -184,7 +184,7 @@ export type HeadingBlock = {
   attrs: {
     level: 1 | 2 | 3 | 4 | 5 | 6;
   };
-  content: InlineBlock[];
+  content?: InlineBlock[];
 };
 
 export type ParagraphBlock = {
@@ -231,19 +231,14 @@ export type ImageBlock = {
   };
 };
 
-export type ListItemBlock = {
-  type: 'list_item';
-  content?: [ParagraphBlock, ...ContentBlock[]];
-};
-
 export type BulletListBlock = {
   type: 'bullet_list';
-  content: ListItemBlock[];
+  content?: ListItemBlock[];
 };
 
 export type OrderedListBlock = {
   type: 'ordered_list';
-  content: ListItemBlock[];
+  content?: ListItemBlock[];
 };
 
 export type ContentBlock =
@@ -276,8 +271,13 @@ export type GenericMark = {
 export type Mark = LinkMark | GenericMark;
 
 // ***********************
-//    Nested Components
+//    Nested Blocks
 // ***********************
+
+export type ListItemBlock = {
+  type: 'list_item';
+  content?: [ParagraphBlock, ...ContentBlock[]];
+};
 
 export type TextBlock = {
   type: 'text';
@@ -289,7 +289,7 @@ export type InlineBlock = TextBlock;
 
 export type ContentDocument = {
   type: 'doc';
-  content: ContentBlock[];
+  content?: ContentBlock[];
 };
 
 export type Section = {
@@ -298,6 +298,4 @@ export type Section = {
   blocks: ContentBlock[];
 };
 
-type UnwrapContent<T> = T extends { content: (infer U)[] } ? U | UnwrapContent<U> : T;
-
-export type Block = UnwrapContent<ContentDocument>;
+export type Block = ContentBlock | InlineBlock | ListItemBlock;

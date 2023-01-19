@@ -4,6 +4,7 @@ import type { RequestHandler } from './$types';
 import { uploadImage } from '$lib/s3';
 import getMetaData from 'metadata-scraper';
 import { RequestError } from 'got';
+import { apiEndpoint } from '$lib/helpers/endpoints';
 
 const fetchAndUploadMetadataImage = async (url: string) => {
   const imgResponse = await fetch(url, {
@@ -24,7 +25,7 @@ const fetchAndUploadMetadataImage = async (url: string) => {
   return uploadImage(imgBuf);
 };
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST = apiEndpoint<RequestHandler>(async ({ request }) => {
   const { url } = await request.json();
   if (!url) throw error(400, 'Missing url');
 
@@ -42,4 +43,4 @@ export const POST: RequestHandler = async ({ request }) => {
     }
     throw error(500, 'Failed to get metadata');
   }
-};
+});

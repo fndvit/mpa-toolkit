@@ -16,4 +16,10 @@
   $: tags = selectedTagOptions.map(o => o.tag);
 </script>
 
-<MultiSelect bind:selected={selectedTagOptions} options={availableTagOptions} maxSelect={max} {filterFunc} />
+<MultiSelect
+  outerDivClass="tag-multiselect tag-multiselect-editor"
+  bind:selected={selectedTagOptions}
+  options={availableTagOptions}
+  maxSelect={max}
+  {filterFunc}
+/>

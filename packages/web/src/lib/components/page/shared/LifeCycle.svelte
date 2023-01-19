@@ -185,26 +185,6 @@
     }
   }
 
-  .tag-container :global(.multiselect) {
-    --sms-border: 1px solid color(black alpha(0.1));
-    --sms-border-radius: 0;
-    --sms-padding: 0.1rem;
-
-    box-shadow: inset 0 2px 8px rgb(0 0 0 / 5%);
-    font: $f-ui-small;
-
-    :global(.selected > li[aria-selected]) {
-      padding: 3px 12px;
-      border-radius: 18px;
-      background: $c-highlight-1;
-      line-height: 1em;
-    }
-
-    :global(.selected > li:last-child:not([aria-selected])) {
-      display: none !important;
-    }
-  }
-
   .circle-menu-section {
     display: flex;
     flex-wrap: wrap;

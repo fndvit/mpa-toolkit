@@ -3,6 +3,7 @@
   import type { PageData } from './$types';
   import PageListFilters from '$lib/components/cms/PageListFilters.svelte';
   import CollectionCards from '$lib/components/collection/CollectionCards.svelte';
+  import { ky } from '$lib/api';
 
   export let data: PageData;
 
@@ -10,12 +11,20 @@
   $: pages = data.pages;
 
   let activeTags: typeof allTags = [];
-  let pageSearch: string;
+  let searchFilterPageIds: Set<number>;
 
-  $: searchRegex = new RegExp(pageSearch, 'i');
+  const onSearch = async (text: string) => {
+    if (text) {
+      const result = await ky.get('search', { searchParams: { q: text } });
+      const data = await result.json<{ pages: number[] }>();
+      searchFilterPageIds = new Set(data.pages);
+    } else {
+      searchFilterPageIds = undefined;
+    }
+  };
 
   $: filteredPages = pages
-    .filter(p => searchRegex.test(p.title))
+    .filter(p => (searchFilterPageIds ? searchFilterPageIds.has(p.id) : true))
     .filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
 
   $: grouped = groupBy(filteredPages, p => (p.draft ? 'draft' : 'live'));
@@ -46,7 +55,7 @@
   </div>
 
   <div class="filters">
-    <PageListFilters tags={allTags} bind:activeTags bind:pageSearch />
+    <PageListFilters tags={allTags} bind:activeTags on:search={e => onSearch(e.detail)} />
   </div>
 
   <div class="pages">

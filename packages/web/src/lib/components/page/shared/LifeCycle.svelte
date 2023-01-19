@@ -58,11 +58,14 @@
     return groupBy(sortedTags, t => t.tag.type);
   }
 
+  const mapTags = (tags: Tag[], category: PageTag['category']): PageTag[] =>
+    tags?.map(tag => ({ tag, category })) || [];
+
   $: tags = [
-    ...tagsGrouped.STAGE?.PRIMARY?.map<PageTag>(tag => ({ tag, category: 'PRIMARY' })),
-    ...tagsGrouped.STAGE?.SECONDARY?.map<PageTag>(tag => ({ tag, category: 'SECONDARY' })),
-    ...tagsGrouped.TOPIC?.map<PageTag>(tag => ({ tag, category: 'PRIMARY' })),
-    ...tagsGrouped.USER?.map<PageTag>(tag => ({ tag, category: 'PRIMARY' }))
+    ...mapTags(tagsGrouped.STAGE?.PRIMARY, 'PRIMARY'),
+    ...mapTags(tagsGrouped.STAGE?.SECONDARY, 'SECONDARY'),
+    ...mapTags(tagsGrouped.TOPIC, 'PRIMARY'),
+    ...mapTags(tagsGrouped.USER, 'PRIMARY')
   ];
 
   $: selectedStageTagIds = {
@@ -182,26 +185,6 @@
 
     .top-section &:first-child {
       margin: 0;
-    }
-  }
-
-  .tag-container :global(.multiselect) {
-    --sms-border: 1px solid color(black alpha(0.1));
-    --sms-border-radius: 0;
-    --sms-padding: 0.1rem;
-
-    box-shadow: inset 0 2px 8px rgb(0 0 0 / 5%);
-    font: $f-ui-small;
-
-    :global(.selected > li[aria-selected]) {
-      padding: 3px 12px;
-      border-radius: 18px;
-      background: $c-highlight-1;
-      line-height: 1em;
-    }
-
-    :global(.selected > li:last-child:not([aria-selected])) {
-      display: none !important;
     }
   }
 

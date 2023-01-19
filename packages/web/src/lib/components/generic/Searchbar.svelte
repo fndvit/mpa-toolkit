@@ -39,7 +39,7 @@
     spellcheck="false"
     on:keypress={({ key }) => key === 'Enter' && submit && submit()}
   />
-
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="search-icon" on:click={submit}>
     <svg class="search-icon" viewBox="0 0 24 24">
       <path class="search-path" d="M15.5 15.5L19 19" />

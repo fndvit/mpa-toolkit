@@ -90,7 +90,7 @@ export abstract class DBMixin<Deps extends [...DBMixin[]] = []> {
             try {
               const result = await fn.apply(this, args);
               const [logArgs, logResult] = logFn(args, result);
-              log.debug(`${fnName}(${logArgs}) => ${logResult}`);
+              log.info(`${fnName}(${logArgs}) => ${logResult}`);
               return result;
             } catch (e) {
               const [logArgs] = logFn(args);

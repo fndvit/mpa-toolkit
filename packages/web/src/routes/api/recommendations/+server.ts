@@ -1,8 +1,9 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { db } from '$lib/db';
+import { apiEndpoint } from '$lib/helpers/endpoints';
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET = apiEndpoint<RequestHandler>(async ({ url }) => {
   const madlib = url.searchParams.get('madlib');
   const pageviews = url.searchParams.get('pageviews');
   const type = url.searchParams.get('type') as 'chapter' | 'case-study';
@@ -16,4 +17,4 @@ export const GET: RequestHandler = async ({ url }) => {
   const cards = await db.page.cards(pageIds);
 
   return json(cards);
-};
+});

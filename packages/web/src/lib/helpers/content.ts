@@ -70,7 +70,7 @@ export function createEmptyPage(type: 'chapter' | 'caseStudy'): Page {
     title: '',
     slug: '',
     img: '',
-    content: null,
+    content: { type: 'doc' },
     draft: true,
     tags: [],
     readTime: null,

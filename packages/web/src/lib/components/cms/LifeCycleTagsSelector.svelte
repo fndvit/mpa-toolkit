@@ -12,8 +12,14 @@
   let selectedTagOptions = tags.map(tagToOption);
 
   $: filterFunc = (op: TagOption) => (hideTagIds ? !hideTagIds.has(op.tag.id) : true);
-  $: availableTagOptions = availableTags.map(tagToOption);
+  $: availableTagOptions = availableTags.map(tagToOption).sort((a, b) => a.tag.value.localeCompare(b.tag.value));
   $: tags = selectedTagOptions.map(o => o.tag);
 </script>
 
-<MultiSelect bind:selected={selectedTagOptions} options={availableTagOptions} maxSelect={max} {filterFunc} />
+<MultiSelect
+  outerDivClass="tag-multiselect tag-multiselect-editor"
+  bind:selected={selectedTagOptions}
+  options={availableTagOptions}
+  maxSelect={max}
+  {filterFunc}
+/>

@@ -10,7 +10,7 @@ const CONSTANT_READ_TIMES_IN_S = {
 };
 
 export function calcReadTime(doc: ContentDocument): number {
-  const floatTime = doc.content.map(calcBlockReadTime).reduce((a, b) => a + b, 0);
+  const floatTime = doc.content?.map(calcBlockReadTime).reduce((a, b) => a + b, 0) || 0;
   return Math.ceil(floatTime);
 }
 
@@ -25,7 +25,7 @@ export function calcBlockReadTime(block: Block): number {
   } else if ('text' in block) {
     return calcStrReadTime(block.text);
   } else if ('content' in block && block.content) {
-    return block.content.map(calcBlockReadTime).reduce((a, b) => a + b, 0);
+    return block.content?.map(calcBlockReadTime).reduce((a, b) => a + b, 0) || 0;
   } else if (block.type === 'cards') {
     const allCardText = block.attrs.cards.map(({ heading, body }) => `${heading} ${body}`).join(' ');
     return calcStrReadTime(allCardText);

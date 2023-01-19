@@ -20,6 +20,7 @@
   import { editorStore } from '../cms/editor/editorStore';
   import { schema } from '$lib/editor/schema';
   import { onMount } from 'svelte';
+  import { HTTPError } from 'ky';
 
   export let authors: Author[];
   export let allTags: Tag[];
@@ -66,16 +67,22 @@
 
   async function onSave() {
     $editorStore.saving = true;
-
-    if ($editorStore.isNewPage) {
-      const { id } = await api.page.create(_page);
-      window.location.href = `/cms/pages/${id}`;
-    } else {
-      await api.page.update(pageId, _page);
+    try {
+      if (!$editorStore.isNewPage) await api.page.update(pageId, _page);
+      else {
+        const { id } = await api.page.create(_page);
+        window.location.href = `/cms/pages/${id}`;
+      }
+      $editorStore.savedPage = clone(_page);
+      toaster.done('Saved');
+    } catch (err) {
+      const errBody = err instanceof HTTPError ? await err.response.json() : undefined;
+      console.error(err, errBody);
+      if (errBody && 'message' in errBody) toaster.error(`Save failed\n${errBody.message}`);
+      else toaster.error(`Save Failed\n${err.message}`);
+    } finally {
+      $editorStore.saving = false;
     }
-    $editorStore.saving = false;
-    toaster.done('Saved');
-    $editorStore.savedPage = clone(_page);
   }
 
   async function onDeleteModalYes() {

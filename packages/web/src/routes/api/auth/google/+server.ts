@@ -3,6 +3,7 @@ import { OAuth2Client } from 'google-auth-library';
 import type { RequestHandler } from './$types';
 import { db } from '$lib/db';
 import { env } from '$env/dynamic/public';
+import { apiEndpoint } from '$lib/helpers/endpoints';
 
 async function getPayloadFromJWT(token: string) {
   try {
@@ -27,7 +28,7 @@ export type GoogleAuthReturnData = {
   user: import('@mpa/db').User.Session;
 };
 
-export const POST: RequestHandler = async ({ request, cookies }) => {
+export const POST = apiEndpoint<RequestHandler>(async ({ request, cookies }) => {
   const { token } = await request.json();
   const payload = await getPayloadFromJWT(token);
   const userSession = await db.session.start(payload);
@@ -38,4 +39,4 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     message: 'Successful Google Sign-In.',
     user: userSession.user
   } as GoogleAuthReturnData);
-};
+});

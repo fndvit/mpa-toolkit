@@ -8,13 +8,13 @@ import AWSXRay from 'aws-xray-sdk-core';
 
 AWSXRay.captureAWS(AWSSDK);
 
+const server = new Server(manifest);
+const initialized = server.init({ env: process.env as Record<string, string> });
+
 export async function handler(event: APIGatewayEvent) {
+  await initialized;
   const segment = AWSXRay.getSegment();
   const lambdaSegment = segment?.addNewSubsegment('lambda.handler');
-
-  const server = new Server(manifest);
-
-  server.init({ env: process.env as Record<string, string> });
 
   const { path, headers, multiValueQueryStringParameters, body, httpMethod, requestContext, isBase64Encoded } = event;
 

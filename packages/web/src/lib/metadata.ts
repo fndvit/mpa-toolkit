@@ -122,6 +122,10 @@ export const METADATA: Record<string, PageMetadataConfig> = {
     indexed: false,
     title: 'Login'
   },
+  '/cms/admin': {
+    indexed: false,
+    title: 'Admin'
+  },
   '/cms/dump': {
     indexed: false,
     title: 'CMS - Dump'

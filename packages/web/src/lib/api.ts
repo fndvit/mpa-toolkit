@@ -3,7 +3,7 @@ import { omitUndefined, slugify } from '@mpa/utils';
 import { default as _ky } from 'ky';
 import type { GoogleAuthReturnData } from '../routes/api/auth/google/+server';
 
-const ky = _ky.create({ prefixUrl: '/api', headers: { Accept: 'application/json' }, timeout: 10000 });
+export const ky = _ky.create({ prefixUrl: '/api', headers: { Accept: 'application/json' }, timeout: 10000 });
 
 export const link = {
   create: async (url: string) => ky.post(`link`, { json: { url } }).json<{ title: string; image: string }>()

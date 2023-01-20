@@ -59,6 +59,7 @@
       "stylelint-config-prettier"
     ],
     "rules": {
+      "custom-property-empty-line-before": "never",
       "import-notation": null,
       "no-descending-specificity": null,
       "selector-class-pattern": null,

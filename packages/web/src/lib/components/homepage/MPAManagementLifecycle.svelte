@@ -55,6 +55,9 @@
   ];
 
   let currentPageIndex = 0;
+  let currentTagHovered: number;
+  let xCoord: number;
+  let yCoord: number;
 
   $: menuData =
     currentPageIndex >= 0 &&
@@ -82,13 +85,51 @@
     </a>
   </div>
   <div class="column3">
-    <div class="circle-menu">
-      <CircleMenu data={menuData} bind:currentPageIndex />
+    <div class="circle-menu" on:mousemove={e => ([xCoord, yCoord] = [e.offsetX, e.offsetY])}>
+      {#if currentTagHovered != null}
+        <div class="tooltip" style="--x-position: {xCoord}px; --y-position: {yCoord}px;">
+          {tags[currentTagHovered].tag}
+        </div>
+      {/if}
+      <CircleMenu data={menuData} bind:currentSegmentHovered={currentTagHovered} bind:currentPageIndex />
     </div>
   </div>
 </div>
 
 <style lang="postcss">
+  .tooltip {
+    --tooltip-clamp-width: 175px;
+    @mixin font-responsive h4;
+
+    display: block;
+    position: absolute;
+    pointer-events: none;
+    top: var(--y-position);
+    left: clamp(var(--tooltip-clamp-width), var(--x-position), calc(100% - var(--tooltip-clamp-width)));
+    transform: translateX(-50%);
+    z-index: 10;
+    background-color: $c-highlight-1;
+    padding: 15px;
+    border-radius: 25px;
+    box-shadow: 0 0 8px rgba(0 / 0 / 0 / 25%);
+    white-space: nowrap;
+    animation: fade-in ease-in-out 0.5s;
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .circle-menu {
+    position: relative;
+  }
+
   .landing-lifecycle {
     width: 100%;
     height: 900px;
@@ -152,19 +193,23 @@
     }
 
     .circle-menu {
-      width: 800px;
-      height: 800px;
+      width: 700px;
+      height: 700px;
     }
 
-    @media (max-width: 1575px) {
+    @media (max-width: 1280px) {
       .circle-menu {
-        width: 700px;
-        height: 700px;
+        width: 600px;
+        height: 600px;
       }
     }
   }
 
-  @media (max-width: 1280px) {
+  @media (max-width: 1024px) {
+    .tooltip {
+      display: none;
+    }
+
     .landing-lifecycle {
       width: 100%;
       height: auto;
@@ -185,6 +230,11 @@
 
       .column3 {
         order: 2;
+      }
+
+      .circle-menu {
+        width: 600px;
+        height: 600px;
       }
     }
   }

@@ -28,7 +28,6 @@
 </script>
 
 <a class="collection-card" {href} rel="external" class:cms-card={cms}>
-  <!-- TODO img to picture -->
   <Picture src={page.img} fallback={fallbackImg} alt={page.title} title={page.title} config={{ height: [200, 400] }} />
   <div class="collection-card-content">
     <h1 class="title">

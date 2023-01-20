@@ -169,7 +169,7 @@
 
   .madlib-container,
   .content-carousel-container {
-    margin-left: -25px;
+    margin: 25px 0px 25px -25px;
     grid-column: body / -1;
   }
 </style>

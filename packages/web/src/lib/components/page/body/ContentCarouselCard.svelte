@@ -15,12 +15,10 @@
   $: fallbackImg = page.chapter ? chapterDefaultImage : caseStudyDefaultImage;
 </script>
 
-<!-- TODO a11y -->
 <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 <div class="content-carousel-card" tabindex="0">
   <a href={'/' + slug}>
     <Picture src={img} fallback={fallbackImg} alt={title} {config} />
-
     <div class="title">{title}</div>
   </a>
 

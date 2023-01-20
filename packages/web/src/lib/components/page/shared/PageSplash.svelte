@@ -23,7 +23,7 @@
   style:--bg-fallback={backgroundImage(fallbackImg, { width: 1440 })}
 >
   <div class="mpath-logo">
-    <InlineSvgLink href="/" svg="MPATH" />
+    <InlineSvgLink href="/" svg="UNEP" />
   </div>
   <h1>
     {#if page.caseStudy}

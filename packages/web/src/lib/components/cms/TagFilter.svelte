@@ -1,31 +1,26 @@
 <script lang="ts">
   import type { Tag } from '@mpa/db';
-  import { Tag as TagComponent } from '$lib/components/shared';
+  import MultiSelect from 'svelte-multiselect/MultiSelect.svelte';
+  import type { Option } from 'svelte-multiselect';
 
   export let tags: Tag[] = [];
   export let activeTags: Tag[] = [];
 
-  let activeTagSet = new Set<Tag>();
+  let selected: (Option & { value: Tag })[] = [];
 
-  $: unselectedTags = tags.filter(tag => !activeTags.includes(tag));
+  $: options = tags.map(t => ({ label: t.value, value: t })).sort((a, b) => a.label.localeCompare(b.label));
 
-  function onClickTag(tag: Tag) {
-    if (activeTagSet.has(tag)) activeTagSet.delete(tag);
-    else activeTagSet.add(tag);
-
-    activeTags = Array.from(activeTagSet);
-  }
+  $: activeTags = selected.map(o => o.value);
 </script>
 
 <div class="tag-filter">
-  {#if activeTags.length > 0}
-    {#each activeTags as tag}
-      <TagComponent {tag} style={'PRIMARY'} on:click={() => onClickTag(tag)} cms />
-    {/each}
-  {/if}
-  {#each unselectedTags as tag}
-    <TagComponent {tag} style={'SECONDARY'} on:click={() => onClickTag(tag)} cms />
-  {/each}
+  <MultiSelect
+    outerDivClass="tag-multiselect"
+    liSelectedClass="tag-multiselect__option--selected"
+    placeholder="Select a tag"
+    bind:selected
+    {options}
+  />
 </div>
 
 <style lang="postcss">
@@ -37,8 +32,10 @@
     column-gap: var(--tag-spacing);
     row-gap: var(--tag-spacing);
 
-    > :global(*) {
-      flex: 0 0 auto;
+    :global(.tag-multiselect) {
+      font-size: 0.75rem;
+      width: 100%;
+      max-width: 600px;
     }
   }
 </style>

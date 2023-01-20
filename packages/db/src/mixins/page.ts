@@ -212,6 +212,13 @@ export class PageMixin extends DBMixin<[TagMixin]> {
     return _page;
   }
 
+  async rebuildSearchIndex() {
+    const [{ count }] = await this.db.prisma.$queryRaw<
+      [{ count: bigint }]
+    >`SELECT count(create_page_search_index(p.id)) from "Page" p`;
+    return Number(count);
+  }
+
   async getPageByType(type?: 'chapter' | 'case-study') {
     return this.db.prisma.page.findMany({
       where: {
@@ -293,7 +300,7 @@ export class PageMixin extends DBMixin<[TagMixin]> {
     return [...filledPages];
   }
 
-  async search<S extends Prisma.PageFindManyArgs>(searchText: string, fields: S) {
+  async search<S extends Prisma.PageFindManyArgs>(searchText: string, fields: S, hideDrafts = true) {
     const searchResult = await this.db.prisma.$queryRaw<
       { id: number; rank: number; highlights: string }[]
     >`SELECT * FROM search_pages(${searchText})`;
@@ -305,7 +312,7 @@ export class PageMixin extends DBMixin<[TagMixin]> {
 
     const pages = await this.db.prisma.page.findMany({
       where: {
-        draft: false,
+        ...(hideDrafts ? { draft: false } : {}),
         id: { in: searchResult.map(r => r.id) },
         ...fields.where
       },

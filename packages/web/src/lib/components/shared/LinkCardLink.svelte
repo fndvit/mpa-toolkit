@@ -29,6 +29,7 @@
       if (title && !card.title) card.title = title;
       if (image && !card.img) card.img = image;
     } catch (e) {
+      console.error(e);
       const msg = e instanceof HTTPError && (await e.response.json()).message;
       toaster.error('Error fetching URL' + (msg ? `: ${msg}` : ''));
     }
@@ -61,10 +62,11 @@
     {:else if editingURL}
       <form
         class="linkcard-url"
-        on:submit={() => {
+        on:submit={e => {
           card.url = editUrl;
           editingURL = false;
           getMetaData();
+          e.preventDefault();
         }}
       >
         <div class="linkcard-url-input-wrapper">

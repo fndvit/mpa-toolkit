@@ -3,6 +3,9 @@
   import type { PageData } from './$types';
   import PageListFilters from '$lib/components/cms/PageListFilters.svelte';
   import CollectionCards from '$lib/components/collection/CollectionCards.svelte';
+  import { ky } from '$lib/api';
+  import { toaster } from '$lib/components/generic';
+  import Spinner from '$lib/components/generic/Spinner.svelte';
 
   export let data: PageData;
 
@@ -10,18 +13,34 @@
   $: pages = data.pages;
 
   let activeTags: typeof allTags = [];
-  let pageSearch: string;
+  let searchFilterPageIds: Set<number>;
 
-  $: searchRegex = new RegExp(pageSearch, 'i');
+  let searching = false;
+  const onSearch = async (text: string) => {
+    if (text) {
+      searching = true;
+      try {
+        const result = await ky.get('search', { searchParams: { q: text } });
+        const data = await result.json<{ pages: number[] }>();
+        searchFilterPageIds = new Set(data.pages);
+      } catch (err) {
+        toaster.error(`Search failed:\n${err.message}`);
+      } finally {
+        searching = false;
+      }
+    } else {
+      searchFilterPageIds = undefined;
+    }
+  };
 
   $: filteredPages = pages
-    .filter(p => searchRegex.test(p.title))
+    .filter(p => (searchFilterPageIds ? searchFilterPageIds.has(p.id) : true))
     .filter(p => activeTags.every(tag => p.tags.find(pageTag => pageTag.tag.id === tag.id)));
 
   $: grouped = groupBy(filteredPages, p => (p.draft ? 'draft' : 'live'));
 </script>
 
-<div class="container">
+<div class="cms-page-list">
   <div class="title">
     <a href="/cms">
       <span class="material-icons">navigate_before</span>
@@ -46,18 +65,23 @@
   </div>
 
   <div class="filters">
-    <PageListFilters tags={allTags} bind:activeTags bind:pageSearch />
+    <PageListFilters tags={allTags} bind:activeTags on:search={e => onSearch(e.detail)} />
   </div>
 
   <div class="pages">
+    {#if searching}
+      <div class="search-spinner">
+        <Spinner />
+        <h4>Searching</h4>
+      </div>
+    {/if}
     <h4>Draft</h4>
     {#if grouped.draft}
       <CollectionCards pages={grouped.draft} cms />
     {:else}
       No draft pages
     {/if}
-  </div>
-  <div class="pages">
+
     <h4>Live</h4>
     {#if grouped.live}
       <CollectionCards pages={grouped.live} cms />
@@ -68,7 +92,7 @@
 </div>
 
 <style lang="postcss">
-  .container {
+  .cms-page-list {
     width: 100%;
     box-sizing: border-box;
     padding: 20px;
@@ -81,6 +105,28 @@
 
     h4 {
       font: $f-h4-light;
+    }
+  }
+
+  .pages {
+    position: relative;
+  }
+
+  .search-spinner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(255 255 255 / 80%);
+    padding-top: 20px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    column-gap: 10px;
+
+    h4 {
+      margin: 0;
     }
   }
 

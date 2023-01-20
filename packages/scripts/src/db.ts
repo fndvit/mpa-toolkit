@@ -1,7 +1,7 @@
 import * as aws from './lib/aws';
 import ago from 's-ago';
 import { blue, magenta } from 'colorette';
-import { runMigrationRunnerCommand, resetLocalDbTasks } from './lib/tasks';
+import { runMigrationRunnerCommand, resetLocalDbTasks, createDatabase } from './lib/tasks';
 import type { ListrTask } from 'listr2';
 import { Listr } from 'listr2';
 import { prompt, runSingleTask } from './lib/helpers';
@@ -80,7 +80,9 @@ async function main() {
       ]
     });
 
-    await runSingleTask('Resetting database', async task => task?.newListr(resetLocalDbTasks(resetType)));
+    await runSingleTask('Resetting database', async task =>
+      task?.newListr([createDatabase({ recreate: true }), ...resetLocalDbTasks(resetType)])
+    );
   } else if (/^(deploy|seed|sql_dump|sql_load)$/.test(cmd)) {
     const stacks = await runSingleTask('Getting stacks', aws.getStacks);
     const stack = await promptStack(stacks.environment);

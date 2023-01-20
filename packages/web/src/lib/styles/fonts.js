@@ -16,17 +16,17 @@ const fonts = {
     'font-family-variable': "'MontserratVariable', sans-serif",
     styles: {
       'h1-light': '300 100px',
-      'h1': '68px',
+      'h1': '60px',
       'h1-mobile': '48px',
-      'h2': '48px',
+      'h2': '42px',
       'h2-mobile': '32px',
       'h3': '700 24px',
       'h3-mobile': '700 20px',
       'h3-light': '32px',
-      'h4': '700 20px',
+      'h4': '700 18px',
       'h4-light': '24px',
-      'h4-graphic': '700 20px',
-      'h4-graphic-mobile': '700 18px',
+      'h4-graphic': '700 18px',
+      'h4-graphic-mobile': '700 16px',
       'h5': '700 16px',
       'h5-mobile': '700 14px/20px',
       'h5-light': '20px',
@@ -44,8 +44,8 @@ const fonts = {
     styles: {
       'p': '400 18px/32px',
       'p-mobile': '400 16px/28px',
-      'p-medium': '400 22px/36px',
-      'p-large': '400 28px/42px'
+      'p-medium': '400 20px/36px',
+      'p-large': '400 24px/42px'
     }
   }
 };

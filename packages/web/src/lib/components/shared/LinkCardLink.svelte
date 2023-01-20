@@ -56,8 +56,6 @@
   target="_blank"
   class:linkcard-link--edit-url={editingURL}
 >
-  <!-- TODO a11y -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="linkcard-text">
     {#if loadingText}
       <Spinner />

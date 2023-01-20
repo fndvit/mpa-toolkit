@@ -59,12 +59,20 @@
       background: color($c-highlight-1 alpha(40%));
     }
 
-    :global(.collection-card) &,
-    :global(.content-carousel-card) & {
+    :global(.collection-card) & {
       background: $c-tag-bg-cards;
 
       &.secondary {
-        background: color($c-tag-bg-cards alpha(0.4));
+        background: color($c-tag-bg-cards alpha(100%));
+      }
+    }
+
+    :global(.landing-carousel) &,
+    :global(.content-carousel) & {
+      background: $c-highlight-1;
+
+      &.secondary {
+        background: color($c-highlight-1 alpha(100%));
       }
     }
 

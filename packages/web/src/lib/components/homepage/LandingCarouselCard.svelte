@@ -20,13 +20,6 @@
   <div class="preview-content">
     <div class="title">
       <span><h3>{getPageDisplayTitle(page)}</h3></span>
-      <!-- TODO: a11y -->
-      <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-      <div class="circle-button" tabindex="0">
-        <svg class="arrow-svg" viewBox="0 0 12 20">
-          <path class="arrow-path" d="M1.1814 19L9.81849 10L1.1814 1" />
-        </svg>
-      </div>
     </div>
 
     <div>
@@ -41,9 +34,9 @@
 </a>
 
 <style lang="postcss">
-  .landing-carousel-card {
-    --lcc-width: 766px;
 
+  .landing-carousel-card {
+    --lcc-width: 600px;
     display: flex;
     flex-direction: column;
     width: var(--lcc-width);
@@ -85,35 +78,6 @@
     text-decoration: none;
   }
 
-  .arrow-svg {
-    width: 12px;
-    height: 20px;
-    fill: none;
-    transform: translateX(2px);
-  }
-
-  .arrow-path {
-    stroke: $c-neutral-black;
-    stroke-width: 2.4px;
-  }
-
-  .circle-button {
-    display: flex;
-    flex: 0 0 72px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: $c-highlight-1;
-    box-shadow: 0 3px 16px rgb(0 0 0 / 15%);
-  }
-
-  .circle-button:hover {
-    box-shadow: 0 3px 16px rgb(0 0 0 / 35%);
-  }
-
   .tags-title {
     margin: 2.5rem 0 1rem;
 
@@ -140,7 +104,6 @@
 
     h3 {
       @mixin font-responsive h3-light;
-
       margin: 0;
     }
   }
@@ -169,7 +132,6 @@
       }
     }
 
-    .circle-button,
     .tags-title {
       display: none;
     }

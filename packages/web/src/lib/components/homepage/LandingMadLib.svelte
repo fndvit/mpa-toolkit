@@ -35,7 +35,6 @@
   .landing-madlib {
     color: white;
     width: auto;
-    margin-top: 35px;
     padding: 0.5rem var(--page-padding) 5rem;
     background: $c-primary-blue;
     height: 600px;

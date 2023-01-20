@@ -151,6 +151,7 @@
 
     @mixin breakpoint content, medium {
       margin: 0;
+      
     }
     @mixin breakpoint content, small {
       flex-direction: column;

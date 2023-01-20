@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import projectRoot from '@mpa/utils/projectRoot';
 import * as aws from './aws';
 import type { ListrTask, ListrTaskWrapper } from 'listr2';
 import { Listr } from 'listr2';
@@ -53,14 +52,28 @@ export async function runMigrationRunnerCommand(title: string, opts: MigrationRu
 export const emptyLocalDb = () =>
   execAsync(
     `docker compose -p mpa exec -T -e PGPASSWORD=prisma db psql -U prisma -d mpa -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"`,
-    { cwd: projectRoot('packages/db') }
+    { cwd: '../db' }
   );
 
 export const loadDumpIntoLocal = (dump: string) =>
   execAsync(`docker compose -p mpa exec -T -e PGPASSWORD=prisma db psql -U prisma -d mpa`, {
-    cwd: projectRoot('packages/db'),
+    cwd: '../db',
     input: dump
   });
+
+export function createDatabase({ recreate }: { recreate?: boolean } = {}): ListrTask {
+  return createTask({
+    title: 'Create database',
+    commands: ['pnpm db docker:up' + recreate ? ' --force-recreate' : '']
+  });
+}
+
+export function initDatabase({ seed }: { seed?: boolean } = {}): ListrTask {
+  return createTask({
+    title: 'Initialize database',
+    commands: ['pnpm db generate', 'pnpm db migrate', ...(seed ? ['pnpm scripts seed'] : [])]
+  });
+}
 
 export function resetLocalDbTasks(resetTo: 'empty' | 'synced' | 'seeded'): ListrTask[] {
   if (resetTo === 'empty') {

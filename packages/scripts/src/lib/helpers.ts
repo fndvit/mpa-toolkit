@@ -17,7 +17,7 @@ export type StringCommand = string;
 export type ShellCommand<T = any> = { title: string; cmd: string };
 export type FnCommand<T = any> = { title: string; fn: ListrTask<T>['task'] };
 export type CommandGroup = { title: string; commands: Command[] };
-export type Command<T = any> = StringCommand | FnCommand<T> | CommandGroup | ShellCommand;
+export type Command<T = any> = StringCommand | FnCommand<T> | CommandGroup | ShellCommand | ListrTask;
 
 export function createTask<T>(cmd: Command<T>): ListrTask {
   if (typeof cmd === 'string') {
@@ -43,14 +43,14 @@ export function createTask<T>(cmd: Command<T>): ListrTask {
         persistentOutput: true
       }
     };
-  } else {
+  } else if ('commands' in cmd) {
     return {
       title: cmd.title,
       task: async (_, task) => {
         return task.newListr(cmd.commands.map(createTask));
       }
     };
-  }
+  } else return cmd;
 }
 
 export const runCommands = async (cmds: Command[]) => {

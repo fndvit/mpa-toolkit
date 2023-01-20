@@ -19,7 +19,6 @@
     "migrate:local": "pnpm prisma migrate dev",
     "migrate:test": "dotenv -e ../../.env.test prisma migrate dev",
     "docker:up": "docker-compose -p mpa up -d",
-    "docker:down": "docker-compose -p mpa down",
     "testdb:dump": "docker-compose -p mpa exec db-test /data/dump.sh",
     "testdb:load": "esno ./test/db/up.ts",
     "test": "vitest --no-threads",

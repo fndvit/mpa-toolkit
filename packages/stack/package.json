@@ -28,6 +28,7 @@
     "@aws-cdk/aws-apigatewayv2-alpha": "2.17.0-alpha.0",
     "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.17.0-alpha.0",
     "@mpa/env": "workspace:*",
+    "@mpa/log": "workspace:^1.0.0",
     "@mpa/migration-runner": "workspace:*",
     "@mpa/utils": "workspace:^1.0.0",
     "@types/aws-lambda": "^8.10.93",

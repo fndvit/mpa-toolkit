@@ -193,6 +193,7 @@ importers:
       '@mpa/db': workspace:*
       '@mpa/env': workspace:*
       '@mpa/events': workspace:*
+      '@mpa/log': workspace:^1.0.0
       '@mpa/migration-runner': workspace:*
       '@mpa/utils': workspace:^1.0.0
       '@sveltejs/kit': 1.0.0-next.561
@@ -215,6 +216,7 @@ importers:
       '@aws-cdk/aws-apigatewayv2-alpha': 2.17.0-alpha.0_evgcgsaktjl2q7xrd3m3lq55ke
       '@aws-cdk/aws-apigatewayv2-integrations-alpha': 2.17.0-alpha.0_pmfelmyq2o43ym3bicz6ossapi
       '@mpa/env': link:../env
+      '@mpa/log': link:../log
       '@mpa/migration-runner': link:../migration-runner
       '@mpa/utils': link:../utils
       '@types/aws-lambda': 8.10.102

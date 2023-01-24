@@ -3,13 +3,14 @@ import type { Event } from '@mpa/events';
 import type { APIGatewayProxyResultV2, SQSEvent } from 'aws-lambda';
 import got from 'got';
 import { getEnv } from '@mpa/env';
+import { logger } from '@mpa/log';
 import AWSSDK from 'aws-sdk';
 import AWSXRay from 'aws-xray-sdk-core';
 
 AWSXRay.captureAWS(AWSSDK);
 AWSXRay.captureHTTPsGlobal(http);
 
-const log = AWSXRay.getLogger();
+const log = logger('cache-purger');
 
 const env = getEnv({ FASTLY_API_KEY: true, FASTLY_SERVICE_ID: true });
 

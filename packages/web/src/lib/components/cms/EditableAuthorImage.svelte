@@ -43,6 +43,8 @@
     position: relative;
     font-size: 0;
     cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
 
     &:hover {
       &::after {

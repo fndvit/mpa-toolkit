@@ -31,7 +31,7 @@
     <input type="text" bind:value={author.name} on:change={onChangeAuthor} placeholder="Enter a name..." />
   </div>
   <div>
-    <textarea rows="4" bind:value={author.bio} on:change={onChangeAuthor} placeholder="Enter a biography..." />
+    <textarea rows="8" bind:value={author.bio} on:change={onChangeAuthor} placeholder="Enter a biography..." />
   </div>
 </div>
 
@@ -40,7 +40,6 @@
     display: grid;
     grid-template-columns: 90px 1fr 2.25fr;
     column-gap: 15px;
-    margin-top: 20px;
     width: 90%;
 
     input,

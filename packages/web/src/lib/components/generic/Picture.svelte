@@ -28,7 +28,8 @@
   $: sources = Array.isArray(config) ? config : [config];
 </script>
 
-<picture class={className} data-original-src={src}>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<picture class={className} data-original-src={src} on:click>
   {#if _src || (fallback && error)}
     <PictureSources config={sources} {formats} src={error ? fallback : _src} />
   {/if}

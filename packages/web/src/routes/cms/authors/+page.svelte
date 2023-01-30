@@ -6,6 +6,7 @@
   import { DeleteModal, Searchbar } from '$lib/components/generic';
   import { toaster } from '$lib/components/generic/Toaster';
   import AuthorEditor from '$lib/components/cms/AuthorEditor.svelte';
+  import IconButton from '$lib/components/generic/IconButton.svelte';
 
   export let data: PageData;
   let { authors } = data;
@@ -46,16 +47,15 @@
   };
 
   async function onClickDeleteAuthor(author: Author.ForCMS) {
-    if (author.chapter.length === 0) {
-      await handleDelete(author);
-    } else {
-      openModal(DeleteModal, {
-        title: 'Delete Author',
-        message: 'This author is on some pages. Are you sure you want to delete it?',
-        confirmText: author.name,
-        onYes: () => handleDelete(author)
-      });
-    }
+    openModal(DeleteModal, {
+      title: 'Delete Author',
+      message:
+        author.chapter.length === 0
+          ? 'Are you sure you want to delete this author?'
+          : `This author is on ${author.chapter.length} pages. Are you sure?`,
+      confirmText: author.chapter.length === 0 ? null : author.name,
+      onYes: () => handleDelete(author)
+    });
   }
 
   $: searchRegex = new RegExp(authorSearch, 'i');
@@ -85,17 +85,13 @@
       {#if newAuthor}
         <li>
           <AuthorEditor bind:author={newAuthor} />
-          <button on:click|once={onClickSaveAuthor} class="icon-author">
-            <div class="material-icons">done</div>
-          </button>
+          <IconButton theme="toolbar" icon="done" on:click|once={onClickSaveAuthor} disabled={!newAuthor.name} />
         </li>
       {/if}
       {#each filteredAuthors as author (author.id)}
         <li>
           <AuthorEditor bind:author />
-          <button on:click|once={() => onClickDeleteAuthor(author)} class="icon-author">
-            <div class="material-icons">delete</div>
-          </button>
+          <IconButton theme="toolbar" icon="delete" on:click={() => onClickDeleteAuthor(author)} />
         </li>
       {/each}
     </ul>
@@ -165,17 +161,17 @@
     > * {
       display: flex;
       border-bottom: solid 3px #f5f5f5;
+      justify-content: space-between;
+      padding: 20px 0;
     }
 
-    .icon-author {
-      border: none;
-      background: none;
-      margin-left: auto;
-      margin-right: 0;
-      cursor: pointer;
+    :global(.icon-button) {
+      --ib-size: 50px;
 
-      &:hover {
-        transform: scale(1.2);
+      margin-top: 2rem;
+
+      &::before {
+        font-size: 24px;
       }
     }
   }

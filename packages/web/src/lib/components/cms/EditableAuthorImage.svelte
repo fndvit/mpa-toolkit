@@ -27,13 +27,14 @@
   };
 </script>
 
-<div class="editable-user-image">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="editable-user-image" on:click={() => inputEl.click()}>
   {#if saving}
     <div class="loading">
       <Spinner />
     </div>
   {/if}
-  <AuthorImage on:click={() => inputEl.click()} {author} />
+  <AuthorImage {author} />
   <input bind:this={inputEl} style="display: none;" type="file" on:change={onChangeFile} accept=".jpg,.png" />
 </div>
 
@@ -41,6 +42,25 @@
   .editable-user-image {
     position: relative;
     font-size: 0;
+    cursor: pointer;
+
+    &:hover {
+      &::after {
+        content: 'upload';
+        color: #000;
+        font-family: 'Material Icons';
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgba(255 255 255 / 70%);
+      }
+    }
   }
 
   .loading {
@@ -53,13 +73,5 @@
     justify-content: center;
     background: #2226;
     border-radius: 50%;
-  }
-
-  :global(.user-image) {
-    cursor: pointer;
-
-    &:hover {
-      filter: brightness(95%);
-    }
   }
 </style>

@@ -97,7 +97,7 @@
 
   .partners-grid-2 {
     display: inherit;
-    grid-template-columns: 39px 135px;
+    grid-template-columns: 135px 39px;
     align-items: inherit;
     gap: inherit;
     color: inherit;

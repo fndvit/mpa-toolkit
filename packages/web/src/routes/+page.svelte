@@ -26,18 +26,17 @@
     <Searchbar type={'top'} />
   </div>
   <div class="splash" style={`background-image: url(${landingSplash})`}>
-    <h1>Here it is.<br /><b>Your MPA toolkit.</b></h1>
+    <h1>Here it is.<br /><b>MPAth - your <i>Marine Protected Area Tool Hub</i></b></h1>
     <h4>
-      A brand-new, growing <b>educational platform</b> for the MPA community to share lessons, challenges and sustainable
-      solutions.
+      An educational platform that is practitioner-focused at every level and developed to help you with your personalised challenges.
     </h4>
-    <h5>In partnership with</h5>
+    <h5>UNEP, in partnership with</h5>
     <div class="partners-grid">
       <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab />
-      <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
+      <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
       <div class="partners-grid-2">
-        <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
         <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab />
+        <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       </div>
     </div>
   </div>
@@ -48,7 +47,7 @@
     </div>
 
     <div use:orderStyle={'chapters'}>
-      <LandingCarousel title="Get the <b>answers</b> to all your questions" type={'chapter'} />
+      <LandingCarousel title="A <b>smart</b> knowledge hub that <b>helps you</b> find what you need" type={'chapter'} />
     </div>
 
     <div use:orderStyle={'search'} class="ordered-component inline-searchbar">

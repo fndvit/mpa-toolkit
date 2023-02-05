@@ -26,17 +26,17 @@
     <Searchbar type={'top'} />
   </div>
   <div class="splash" style={`background-image: url(${landingSplash})`}>
-    <h1>Here it is:<b>MPAth</b></h1>
+    <h1>Here it is: <b>MPAth</b></h1>
     <h4>
       The “Marine Protected Area Tool Hub” is an educational platform that is practitioner-focused at every level and developed to help you with your personalised challenges.
     </h4>
     <h5>UNEP, in partnership with</h5>
     <div class="partners-grid">
       <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab />
-      <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
+      <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
       <div class="partners-grid-2">
-        <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
         <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab />
+        <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       </div>
     </div>
   </div>
@@ -90,14 +90,14 @@
 
   .partners-grid {
     display: grid;
-    grid-template-columns: 87px 39px 1fr;
+    grid-template-columns: 87px 148px 1fr;
     align-items: center;
     gap: 45px;
   }
 
   .partners-grid-2 {
     display: inherit;
-    grid-template-columns: 148px 135px;
+    grid-template-columns: 39px 135px;
     align-items: inherit;
     gap: inherit;
     color: inherit;
@@ -207,13 +207,13 @@
     }
 
     .partners-grid {
-      grid-template-columns: 87px 39px;
+      grid-template-columns: 87px 148px;
       grid-template-rows: auto;
       margin-top: 1rem;
     }
 
     .partners-grid-2 {
-      grid-template-columns: 148px 135px;
+      grid-template-columns: 135px 39px;
     }
 
     .top-searchbar {

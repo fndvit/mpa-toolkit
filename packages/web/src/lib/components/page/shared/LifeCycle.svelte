@@ -94,10 +94,7 @@
     <HelpPopup text={helpText}>
       <h3>What is the MPA lifecycle?</h3>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gravida laoreet leo scelerisque aliquet mattis
-        malesuada turpis volutpat. Ultrices lectus suspendisse sed pharetra. Proin elementum lacus volutpat felis, nulla
-        convallis aenean faucibus. Ante nisi, volutpat pretium diam porta eget. Egestas tempor, risus tortor malesuada.
-        Mus et cras risus dictum. Quisque sollicitudin nisi, feugiat aenean.
+        The MPA life cycle is a framework designed to ensure that, from design to implementation and revision, MPAs are built to withstand change and address the issues that inspired their creation.
       </p>
       <a href="/">More about this framework</a>
     </HelpPopup>

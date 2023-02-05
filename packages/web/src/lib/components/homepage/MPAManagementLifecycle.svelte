@@ -6,38 +6,38 @@
 
   const cardBlocks = [
     {
-      heading: '1. Identify the problem',
-      body: 'What are the forecast impacts of climate change on the MPA? MPAs are nature-based solutions to climate change, but MPAs, the species and habitats they protect and the communities and livelihoos associated with them are also vulnerable to the impacts of climate change.',
+      heading: '1. Problem-scoping',
+      body: 'The MPA life cycle begins as a response to threats to an area - whether they be to biodiversity or marine productivity. An “MPA idea” is developed to address those challenges or threats but it must have a clear purpose in its design and be “fit-for-purpose” in its approach to those issues.',
       type: 'default'
     },
     {
       heading: '2. Understand your system',
-      body: 'How to assess the level of threat to the MPA, its species, habitats, associated communities and livelihoods? A vulnerability assessment can guide planning for climate resilience and adaptation.',
+      body: 'Every MPA must be crafted taking into consideration the environmental, social, and political systems in which the MPA is located or will be located. Collecting information on conditions and trends in the environment, habitats, and species in the area, understanding human uses and values attached to the area, and examining existing management as well as broader governance frameworks and stakeholder composition will be essential.',
       type: 'default'
     },
     {
       heading: '3A. Engage stakeholders',
-      body: 'How will climate change impact communities associated with MPAs and their livelihoods? To build climate change resilience, ensuring gender equity and indigenous engagement in marine natural resource management are more important than ever. MPA managers can support national and international policy development related to climate change.',
+      body: 'To ensure that planning is participatory, stakeholders must be engaged, but even more importantly, identified. They are not always the loudest voices in the room, or the most visible. Establishing a stakeholder engagement plan is the best way to allocate time and resources to stakeholder engagement.Engaging stakeholders early in the MPA planning process, even before actual planning begins, can help ensure there will be lasting buy-in for the MPA.',
       type: 'default'
     },
     {
       heading: '3B. Set goals and objectives',
-      body: 'How to manage adaptively for climate change resilience? Restricting activities at a local scale does nothing to stop the threat of climate change, but it could increase resilience to climate change. Each MPA is unique and so are the most appropriate management actions. They will be driven by limits on political commitments, available resources, current understanding, time, and energy.',
+      body: 'A visioning exercise or process is meant to define the broader goal of the MPA  as well as the very site-specific objectives that the management regime will attempt to fulfil. Communicating the vision, goals and objectives will also be important at this stage, to ensure that miscommunication and deliberate anti-MPA propaganda do not derail the MPA planning and implementation.',
       type: 'default'
     },
     {
       heading: '3C. Designing MPAs',
-      body: "How can MPAs adapt to climate change? What actions can be taken for adaptation and mitigation? To be truly adaptive, the conceptual framing of MPAs needs to incorporate responsiveness to change. Species and ecological communities within an MPA have some capacity to adapt as changing conditions will promote new assemblages over time. Consider prioritizing the protection of 'future habitat' (establish MPAs today where habitats and species are likely to shift in the future, plan for dynamic MPAs to move as species/habitats move) and protecting areas predicted to experience relatively low impacts from climate change.",
+      body: "The final stage of planning is contingent on the previous two, but is often the only planning done. A strategy is crafted that can include the allocation of human and financial resources to developing MPA plans, decreeing protected areas (including accompanying legislation if needed), managing uses of the area, and undertaking surveillance and public education to maintain compliance with regulations.",
       type: 'default'
     },
     {
-      heading: '4. Implementation',
-      body: 'What management actions and adaptation strategies can MPA managers undertake to increase resilience, therefore minimising projected climate change impacts on MPAs as well as the communities and livelihoods associated with them? MPA management may steer change along the most positive trajectory possible. MPA managers have a role to play in helping lessen the impacts of climate change. MPAs can be managed to build resilience, including by reducing non-climate stressors. Local action planning can assist MPA stakeholders with developing adaptation strategies.',
+      heading: '4. Management',
+      body: 'A key part of MPA planning is ensuring that capacity is built to manage and fund it over the long term. Management must aim for effectiveness, and include adequate tracking to monitor the completion of goals and objectives.',
       type: 'default'
     },
     {
-      heading: '5. Future proofing and adaptation',
-      body: 'What to monitor and how? How do we account for uncertainty surrounding climate change projections in management decision-making? Monitoring the impacts of climate change is rarely a priority because the chance that local actions will abate the threat are low. In general, it is far more important to monitor things that tell us about threats that we can manage, such as poaching or nutrients. In turn, there is evidence that managing these local threats can improve the resilience of marine ecosystems to climate change impacts.',
+      heading: '5. Adaptation',
+      body: 'Everything changes over time, but effective management of an MPA includes adapting to changes from ecosystem to governance. Adaptive management completes the circle of the management cycle and is key to helping the MPA deliver benefits to the ocean and the humans who rely on it.',
       type: 'default'
     }
   ];

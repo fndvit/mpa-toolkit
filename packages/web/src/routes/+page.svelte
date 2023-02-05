@@ -26,17 +26,17 @@
     <Searchbar type={'top'} />
   </div>
   <div class="splash" style={`background-image: url(${landingSplash})`}>
-    <h1>Here it is.<br /><b>MPAth - your <i>Marine Protected Area Tool Hub</i></b></h1>
+    <h1>Here it is:<b>MPAth</b></h1>
     <h4>
-      An educational platform that is practitioner-focused at every level and developed to help you with your personalised challenges.
+      The “Marine Protected Area Tool Hub” is an educational platform that is practitioner-focused at every level and developed to help you with your personalised challenges.
     </h4>
     <h5>UNEP, in partnership with</h5>
     <div class="partners-grid">
       <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab />
-      <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
+      <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       <div class="partners-grid-2">
+        <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
         <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab />
-        <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       </div>
     </div>
   </div>

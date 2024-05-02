@@ -35,7 +35,7 @@
     'restore areas',
     'reduce user conflict',
     'meet targets',
-    'promote ecotorurism',
+    'promote ecotourism',
     "(I don't know)"
   ];
   const objectiveVerbList = ['plan new MPAs', 'evaluate progress', 'enable decision-making'];

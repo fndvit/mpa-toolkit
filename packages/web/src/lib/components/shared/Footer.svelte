@@ -13,7 +13,7 @@
         <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
         <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab />
       </div>
-      <div class="partners-grid-2">
+      <div class="partners-grid-3">
         <InlineSvgLink href="https://coralreefrescueinitiative.org/" svg="CRRI" newTab />
         <InlineSvgLink href="https://www.udg.edu/en/" svg="UdG" newTab />
         <InlineSvgLink href="https://www.fundaciovit.org/" svg="ViT" newTab />
@@ -65,6 +65,14 @@
     color: inherit;
   }
 
+  .partners-grid-3 {
+    display: inherit;
+    grid-template-columns: 90px 100px 64px;
+    align-items: inherit;
+    gap: inherit;
+    color: inherit;
+  }
+
   .links {
     font: $f-ui-small;
     margin: 40px 0;
@@ -91,6 +99,9 @@
 
     .partners-grid-2 {
       grid-template-columns: 148px 135px;
+    }
+    .partners-grid-3 {
+      grid-template-columns: 90px 100px 64px;
     }
   }
 </style>

@@ -20,7 +20,7 @@
 
 <div class="landing-page">
   <div class="mpath-logo">
-    <InlineSvgLink href="/" svg="MPATH_W" />
+    <InlineSvgLink href="/" svg="UNEP" />
   </div>
   <div class="top-searchbar">
     <Searchbar type={'top'} />
@@ -97,6 +97,7 @@
 
   .partners-grid {
     display: grid;
+    grid-template-columns: 260px 220px 100px;
     grid-template-rows: auto;
     align-items: center;
     gap: 45px;
@@ -246,6 +247,7 @@
     }
 
     .partners-grid {
+      grid-template-columns: auto;
       grid-template-rows: auto;
       margin-top: 1rem;
     }

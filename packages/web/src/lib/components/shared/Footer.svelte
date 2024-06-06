@@ -53,6 +53,7 @@
 
   .partners-grid {
     display: grid;
+    grid-template-columns: 260px 220px 100px;
     grid-template-rows: auto;
     align-items: center;
     gap: 45px;
@@ -101,19 +102,23 @@
   }
 
   @media (max-width: 1024px) {
-    .partners-grid {
-      grid-template-rows: auto;
-      margin-top: 1rem;
-    }
-    .partners-grid-1 {
-      grid-template-columns: 87px 39px;
+
+  .partners-grid-1 {
+      grid-template-columns: 87px 148px;
     }
 
     .partners-grid-2 {
       grid-template-columns: 135px 39px;
     }
+
     .partners-grid-3 {
       grid-template-columns: 90px 100px 64px;
+    }
+
+    .partners-grid {
+      grid-template-columns: auto;
+      grid-template-rows: auto;
+      margin-top: 1rem;
     }
   }
 </style>

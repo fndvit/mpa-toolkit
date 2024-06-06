@@ -32,6 +32,11 @@
     @mixin font-responsive h2;
   }
 
+  :global(h2) {
+    @mixin font-responsive h3;
+    margin-bottom: 0;
+  }
+
   :global(p) {
     @mixin font-responsive p;
   }

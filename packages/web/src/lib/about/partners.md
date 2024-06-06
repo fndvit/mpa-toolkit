@@ -3,11 +3,6 @@ MPAth is a platform designed to make marine information accessible to all seasca
 
 It is a collaborative initiative led by the United Nations Environment Programme (UNEP), in partnership with the University of Queensland, The Nature Conservancy, and the World Wildlife Fund. Our global advisory group of experts and practitioners contributes valuable insights and expertise to the platform's development.
 
-- MPAth aims to democratize access to marine conservation knowledge and empower all seascape stakeholders worldwide.
-- The platform provides practical tools and resources for effective, valuable, and sustainable marine conservation and management.
-- MPAth is a collaborative initiative led by UNEP in partnership with leading organizations in the field of marine conservation.
-- Contributions from a diverse group of experts and practitioners ensure the platform's relevance and effectiveness in addressing global marine conservation challenges.
-
 ## UNEP
 UNEP’s mission is to provide leadership and encourage partnership in caring for the environment by inspiring, informing, and enabling nations and peoples to improve their quality of life without compromising that of future generations.
 
@@ -23,5 +18,7 @@ AICS - the Italian Agency for Development Cooperation - is one of key innovation
 ## World Wildlife Foundation
 As the world’s leading conservation organization, World Wildlife Fund works in nearly 100 countries to tackle the most pressing issues at the intersection of nature, people, and climate. We collaborate with local communities to conserve the natural resources we all depend on and build a future in which people and nature thrive. Together with partners at all levels, we transform markets and policies toward sustainability, tackle the threats driving the climate crisis, and protect and restore wildlife and their habitats.
 
-## Visualization for Transparency Foundation
+## University of Girona and the Visualization for Transparency Foundation
+The University of Girona is a public institution that strives for excellence in teaching and research, and which participates in society’s progress and development through the creation, transmission, dissemination and criticism of science, technology, the humanities, social sciences and the arts.
+
 The ViT Foundation is a nonprofit focusing on making complex information clear and accessible through data visualization. Founded in Spain in 2020, the organization strives to increase transparency and help communities make better, informed decisions by offering guidance on visualization methods and promoting data-driven visual communication.

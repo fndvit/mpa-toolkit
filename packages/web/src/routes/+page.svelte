@@ -98,11 +98,20 @@
     grid-template-columns: 87px 148px 1fr;
     align-items: center;
     gap: 45px;
+    row-gap:24px;
   }
 
   .partners-grid-2 {
     display: inherit;
     grid-template-columns: 135px 39px;
+    align-items: inherit;
+    gap: inherit;
+    color: inherit;
+  }
+
+  .partners-grid-3 {
+    display: inherit;
+    grid-template-columns: 90px 100px 64px;
     align-items: inherit;
     gap: inherit;
     color: inherit;
@@ -235,6 +244,11 @@
     .partners-grid-2 {
       grid-template-columns: 135px 39px;
     }
+
+    .partners-grid-3 {
+      grid-template-columns: 90px 100px 64px;
+    }
+
 
     .top-searchbar {
       margin: 2rem 1rem;

@@ -1,5 +1,5 @@
 # What is MPAth
-The information will be used internally only for website traffic analysis. If the User provides unique identifying information, such as name, address, and other information on forms stored on this Site, such information will be used only for statistical purposes and will not be published for general access. UNEP, however, assumes no responsibility for the security of this information.
+MPAth is a platform designed to make marine information accessible to all seascape stakeholders, not just limited to marine protected area (MPA) management. It ensures accessibility by providing scientifically accurate content that is easy to read and load, regardless of connectivity. Developed by marine experts representing a broad spectrum of stakeholders, MPAth aims to democratize access to marine information and empower stakeholders to make informed decisions for marine conservation and management, aligning with goals from the Global Biodiversity Framework.
 
 ![UNEP logo](src/lib/svg/UNEP.svg)
 

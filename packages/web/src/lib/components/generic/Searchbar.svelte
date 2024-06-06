@@ -24,7 +24,7 @@
         {#if placeholder}
           {placeholder}
         {:else if type === 'top'}
-          Try <b>asking us</b> anything
+          <b>Search</b> for help
         {:else}
           Or, looking for <b>something else?</b>
         {/if}

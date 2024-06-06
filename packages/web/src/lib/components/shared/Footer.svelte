@@ -13,6 +13,11 @@
         <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
         <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab />
       </div>
+      <div class="partners-grid-2">
+        <InlineSvgLink href="https://coralreefrescueinitiative.org/" svg="CRRI" newTab />
+        <InlineSvgLink href="https://www.udg.edu/en/" svg="UdG" newTab />
+        <InlineSvgLink href="https://www.fundaciovit.org/" svg="ViT" newTab />
+      </div>
     </div>
 
     <div class="links">

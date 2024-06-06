@@ -20,7 +20,7 @@
 
 <div class="landing-page">
   <div class="mpath-logo">
-    <InlineSvgLink href="/" svg="UNEP" />
+    <InlineSvgLink href="/" svg="MPATH_W" />
   </div>
   <div class="top-searchbar">
     <Searchbar type={'top'} />
@@ -37,6 +37,11 @@
       <div class="partners-grid-2">
         <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab />
         <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
+      </div>
+      <div class="partners-grid-2">
+        <InlineSvgLink href="https://coralreefrescueinitiative.org/" svg="CRRI" newTab />
+        <InlineSvgLink href="https://www.udg.edu/en/" svg="UdG" newTab />
+        <InlineSvgLink href="https://www.fundaciovit.org/" svg="ViT" newTab />
       </div>
     </div>
   </div>

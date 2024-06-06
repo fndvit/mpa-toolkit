@@ -121,12 +121,12 @@
     opacity: .85;
     transition: 0.3s all;
     text-decoration: none;
-    border-bottom: 1px inherit dotted;
+    border-bottom: 1px black dotted;
   }
 
   .inline-link:hover {
     text-decoration: none;
-    border-bottom: 1px inherit solid;
+    border-bottom: 1px black solid;
   }
 
   @keyframes fade-in {

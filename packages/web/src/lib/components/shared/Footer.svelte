@@ -17,16 +17,13 @@
 
     <div class="links">
       <div>
-        <a href="/team" rel="external">Contact us</a>
-        <a href="/cms" rel="external">Follow us</a>
+        <a href="/partners" rel="external">About us</a>
       </div>
 
       <div>
-        <a href="/partners" rel="external">Partners</a>
         <a href="/team" rel="external">Team</a>
         <a href="/privacy-policy" rel="external">Privacy policy</a>
         <a href="/terms-of-use" rel="external">Terms of use</a>
-        <a href="/sitemap" rel="external">Sitemap</a>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
 
   export let current = 'Privacy policy';
 
-  const options: string[] = ['Partners', 'Team', 'Privacy policy', 'Terms of use', 'Sitemap'];
+  const options: string[] = ['Partners', 'Team', 'Privacy policy', 'Terms of use'];
 
   let expanded = false;
 

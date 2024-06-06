@@ -108,12 +108,14 @@
     opacity: .85;
     transition: 0.3s all;
     text-decoration: none;
-    border-bottom: 1px inherit dotted;
+    border-bottom: 1px white dotted;
+    font-weight: 600;
   }
 
   .inline-link:hover {
     text-decoration: none;
-    border-bottom: 1px inherit solid;
+    opacity: .6;
+    border-bottom: 1px white solid;
   }
 
   .top-searchbar {

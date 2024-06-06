@@ -43,7 +43,7 @@
   .landing-madlib {
     color: white;
     width: auto;
-    margin-top: 35px;
+    /* margin-top: 35px; */
     padding: 0.5rem var(--page-padding) 5rem;
     background: $c-primary-blue;
     height: 600px;
@@ -52,7 +52,7 @@
     background-image: var(--background-image);
 
     > :global(.madlib) {
-      margin-top: 0.5rem;
+      /* margin-top: 0.5rem; */
       line-height: 3rem;
       max-width: 700px;
 
@@ -111,7 +111,7 @@
       background-position: left;
 
       button {
-        margin: 2rem 0;
+        margin: 1rem 0 0 0;
       }
     }
   }
@@ -128,6 +128,7 @@
 
       button {
         padding: 0.55rem 0.95rem 0.45rem 0.85rem;
+        margin: 1rem 0 0 0;
       }
     }
   }

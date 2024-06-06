@@ -71,7 +71,7 @@
 
 <div class="landing-lifecycle" style="background-image: url({landingLifecycle});">
   <div class="column1">
-    <h2>What's the <b>MPA life cycle</b></h2>
+    <h2>What's the <a class="inline-link" href="/about-the-mpa-lifecycle/"><b>MPA life cycle</b></a></h2>
   </div>
   <div class="column2">
     <Cards cards={cardBlocks} progress={false} bind:currentPageIndex />
@@ -114,6 +114,19 @@
     box-shadow: 0 0 8px rgba(0 / 0 / 0 / 25%);
     white-space: nowrap;
     animation: fade-in ease-in-out 0.5s;
+  }
+
+  .inline-link {
+    color: inherit;
+    opacity: .85;
+    transition: 0.3s all;
+    text-decoration: none;
+    border-bottom: 1px inherit dotted;
+  }
+
+  .inline-link:hover {
+    text-decoration: none;
+    border-bottom: 1px inherit solid;
   }
 
   @keyframes fade-in {

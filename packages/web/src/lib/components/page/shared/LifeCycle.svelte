@@ -96,7 +96,7 @@
       <p>
         The MPA life cycle is a framework designed to ensure that, from design to implementation and revision, MPAs are built to withstand change and address the issues that inspired their creation.
       </p>
-      <a href="/">More about this framework</a>
+      <a href="/about-the-mpa-lifecycle/">More about this framework</a>
     </HelpPopup>
   </div>
   <div class="circle-menu-section">
@@ -183,6 +183,19 @@
     .top-section &:first-child {
       margin: 0;
     }
+  }
+
+  .inline-link {
+    color: inherit;
+    opacity: .85;
+    transition: 0.3s all;
+    text-decoration: none;
+    border-bottom: 1px inherit dotted;
+  }
+
+  .inline-link:hover {
+    text-decoration: none;
+    border-bottom: 1px inherit solid;
   }
 
   .circle-menu-section {

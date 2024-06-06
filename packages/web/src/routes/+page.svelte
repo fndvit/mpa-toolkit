@@ -28,7 +28,7 @@
   <div class="splash" style={`background-image: url(${landingSplash})`}>
     <h1>Here it is: <b>MPAth</b></h1>
     <h4>
-      The “Marine Protected Area Tool Hub” is an educational platform that is practitioner-focused at every level and developed to help you with your personalised challenges.
+      The “Marine Protected Area Tool Hub” is an <a class="inline-link" href="/using-mpath/">educational platform</a> that is practitioner-focused at every level and developed to help you with your personalised challenges.
     </h4>
     <h5>UNEP, in partnership with</h5>
     <div class="partners-grid">
@@ -101,6 +101,19 @@
     align-items: inherit;
     gap: inherit;
     color: inherit;
+  }
+
+  .inline-link {
+    color: inherit;
+    opacity: .85;
+    transition: 0.3s all;
+    text-decoration: none;
+    border-bottom: 1px inherit dotted;
+  }
+
+  .inline-link:hover {
+    text-decoration: none;
+    border-bottom: 1px inherit solid;
   }
 
   .top-searchbar {

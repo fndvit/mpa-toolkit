@@ -7,11 +7,13 @@
     <h5>A partnership between</h5>
 
     <div class="partners-grid">
-      <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab />
-      <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
-      <div class="partners-grid-2">
+      <div class="partners-grid-1">
+        <InlineSvgLink href="https://www.aics.gov.it/language/en/" svg="IAFDC" newTab />
         <InlineSvgLink href="https://www.uq.edu.au" svg="UoQ" newTab />
+      </div>
+      <div class="partners-grid-2">
         <InlineSvgLink href="https://www.nature.org/" svg="TNC" newTab />
+        <InlineSvgLink href="https://wwf.panda.org" svg="WWF" newTab />
       </div>
       <div class="partners-grid-3">
         <InlineSvgLink href="https://coralreefrescueinitiative.org/" svg="CRRI" newTab />
@@ -51,10 +53,18 @@
 
   .partners-grid {
     display: grid;
-    grid-template-columns: 87px 39px 1fr;
+    grid-template-rows: auto;
     align-items: center;
     gap: 45px;
-    color: $c-neutral-dark;
+    row-gap:24px;
+  }
+
+  .partners-grid-1 {
+    display: inherit;
+    grid-template-columns: 87px 148px 1fr;
+    align-items: inherit;
+    gap: inherit;
+    color: inherit;
   }
 
   .partners-grid-2 {
@@ -92,9 +102,11 @@
 
   @media (max-width: 1024px) {
     .partners-grid {
-      grid-template-columns: 87px 39px;
       grid-template-rows: auto;
       margin-top: 1rem;
+    }
+    .partners-grid-1 {
+      grid-template-columns: 87px 39px;
     }
 
     .partners-grid-2 {

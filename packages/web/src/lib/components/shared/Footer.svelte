@@ -69,7 +69,7 @@
 
   .partners-grid-2 {
     display: inherit;
-    grid-template-columns: 148px 135px;
+    grid-template-columns: 135px 39px;
     align-items: inherit;
     gap: inherit;
     color: inherit;
@@ -110,7 +110,7 @@
     }
 
     .partners-grid-2 {
-      grid-template-columns: 148px 135px;
+      grid-template-columns: 135px 39px;
     }
     .partners-grid-3 {
       grid-template-columns: 90px 100px 64px;

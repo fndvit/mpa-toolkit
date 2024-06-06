@@ -29,12 +29,21 @@
       </svg>
     </button>
   </form>
+  <a href="/tools-library/">
+    <button tabindex="0">
+      Find tools
+      <svg class="arrow" viewBox="0 0 13 22">
+        <path d="M1.44165 20.5881L10.4526 11.0587L1.44165 1.52931" stroke-width="2.4" />
+      </svg>
+    </button>
+  </a>
 </div>
 
 <style lang="postcss">
   .landing-madlib {
     color: white;
     width: auto;
+    margin-top: 35px;
     padding: 0.5rem var(--page-padding) 5rem;
     background: $c-primary-blue;
     height: 600px;
@@ -74,7 +83,7 @@
     border-radius: 24px;
     padding: 0.8rem 1.5rem 0.8rem 1.35rem;
     cursor: pointer;
-    margin: 2rem 0;
+    margin: 1rem 0 0 0;
 
     &:hover {
       box-shadow: 0 3px 16px rgb(0 0 0 / 30%);

@@ -8,7 +8,7 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       STACK_NAME: 'MPAth-production'
-      ORIGIN: https://mpath.freetls.fastly.net/
+      ORIGIN: https://mpath-fndvit.global.ssl.fastly.net/
       AWS_REGION: eu-west-1
       SVELTEKIT_APP_DIR: '_app/prod'
     secrets:

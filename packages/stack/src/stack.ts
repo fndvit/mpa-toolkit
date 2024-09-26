@@ -142,7 +142,7 @@ const app = new App();
 // created the SharedInfraStack with the VPC resource that we're going to share by making a variable
 const sharedInfra = new SharedInfraStack(app, 'MPAth-shared', {
   env: {
-    account: '335671600435',
+    account: '354108918187',
     region: 'eu-west-1'
   },
   tags: {
@@ -153,7 +153,7 @@ const sharedInfra = new SharedInfraStack(app, 'MPAth-shared', {
 
 new MpathStack(app, 'MPAth-production', {
   env: {
-    account: '335671600435',
+    account: '354108918187',
     region: 'eu-west-1'
   },
   shared: sharedInfra,
@@ -166,7 +166,7 @@ new MpathStack(app, 'MPAth-production', {
 
 new MpathStack(app, 'MPAth-staging', {
   env: {
-    account: '335671600435',
+    account: '354108918187',
     region: 'eu-west-1'
   },
   shared: sharedInfra,
